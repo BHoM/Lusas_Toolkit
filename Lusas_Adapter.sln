@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 14 for Windows Desktop
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Lusas_Adapter", "Lusas_Adapter\Lusas_Adapter.vbproj", "{CA39C95F-5359-4004-AB6A-B42630742269}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA39C95F-5359-4004-AB6A-B42630742269}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA39C95F-5359-4004-AB6A-B42630742269}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA39C95F-5359-4004-AB6A-B42630742269}.Debug|x86.ActiveCfg = Debug|x86
+		{CA39C95F-5359-4004-AB6A-B42630742269}.Debug|x86.Build.0 = Debug|x86
+		{CA39C95F-5359-4004-AB6A-B42630742269}.Debug|x86.Deploy.0 = Debug|x86
+		{CA39C95F-5359-4004-AB6A-B42630742269}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA39C95F-5359-4004-AB6A-B42630742269}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA39C95F-5359-4004-AB6A-B42630742269}.Release|x86.ActiveCfg = Release|x86
+		{CA39C95F-5359-4004-AB6A-B42630742269}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
