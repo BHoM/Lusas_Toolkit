@@ -29,6 +29,7 @@ Public Class distributed_global_z
         pManager.AddTextParameter("load_type", "lT", "Total, (per unit) length or (per unit) area", GH_ParamAccess.item)
         pManager.AddIntegerParameter("element_ID", "ID", "Points/lines/surfaces/volume to assign load to", GH_ParamAccess.list)
         pManager.AddTextParameter("object_type", "type", "point/line/surface/volume", GH_ParamAccess.item)
+        pManager.AddTextParameter("loadcase_name", "lc", "name of loadcase", GH_ParamAccess.list)
         pManager.AddBooleanParameter("active?", "act?", "active component?", GH_ParamAccess.item)
     End Sub
     Protected Overrides Sub RegisterOutputParams(ByVal pManager As GH_OutputParamManager)
@@ -37,7 +38,7 @@ Public Class distributed_global_z
 
     Protected Overrides Sub SolveInstance(ByVal Da As IGH_DataAccess)
         Dim activate As Boolean = False
-        If (Not Da.GetData(5, activate)) Then Return
+        If (Not Da.GetData(6, activate)) Then Return
         If activate Then
             Dim modeller As LusasWinApp = lusas_modeller.m_lusas
 
@@ -57,11 +58,17 @@ Public Class distributed_global_z
             If (Not Da.GetDataList(3, obj_ID)) Then Return
             Dim obj_type As String = ""
             If (Not Da.GetData(4, obj_type)) Then Return
+            Dim assignment_loadcase As New List(Of String)
+            If (Not Da.GetDataList(5, assignment_loadcase)) Then Return
 
             'Create object set and assign
             Dim obj_set As IFObjectSet = modeller.newObjectSet
             For Each value As Integer In obj_ID
                 obj_set.add(obj_type, value)
+            Next
+            Dim assignment As IFAssignment = modeller.newAssignment
+            For Each loadcase_name As String In assignment_loadcase
+                assignment.setLoadset(loadcase_name)
             Next
 
             dis_glo.assignTo(obj_set)

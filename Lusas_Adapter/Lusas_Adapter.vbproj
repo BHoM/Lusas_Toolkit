@@ -110,9 +110,11 @@
     <Compile Include="Geometry\create_lines.vb" />
     <Compile Include="Geometry\create_surfaces.vb" />
     <Compile Include="Geometry\create_surfaces_pl.vb" />
+    <Compile Include="Loading\beam_internal_point_load.vb" />
     <Compile Include="Loading\concentrated_load_fxyz.vb" />
     <Compile Include="Loading\concentrated_load.vb" />
     <Compile Include="Geometry\create_points.vb" />
+    <Compile Include="Loading\create_loadcase.vb" />
     <Compile Include="Loading\distributed_global_z.vb" />
     <Compile Include="Loading\distributed_global.vb" />
     <Compile Include="Attributes\isotropic_condensed.vb" />
@@ -195,6 +197,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\create_surface.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\internal_p_beam.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\create_loadcase.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Reusable\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

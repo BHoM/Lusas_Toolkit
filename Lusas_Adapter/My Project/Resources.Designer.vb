@@ -83,6 +83,16 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property create_loadcase() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("create_loadcase", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property create_point() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("create_point", resourceCulture)
@@ -116,6 +126,16 @@ Namespace My.Resources
         Friend ReadOnly Property global_distributed() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("global_distributed", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property internal_p_beam() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("internal_p_beam", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

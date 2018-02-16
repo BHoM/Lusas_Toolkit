@@ -35,6 +35,7 @@ Public Class concentrated_load
         pManager.AddNumberParameter("pore_pressure", "pore", "pore pressure", GH_ParamAccess.item)
         pManager.AddIntegerParameter("point_ID", "ID", "Points to assign support to", GH_ParamAccess.list)
         pManager.AddTextParameter("object_type", "type", "line or point", GH_ParamAccess.item)
+        pManager.AddTextParameter("loadcase_name", "lc", "name of loadcase", GH_ParamAccess.list)
         pManager.AddBooleanParameter("active?", "act?", "active component?", GH_ParamAccess.item)
     End Sub
     Protected Overrides Sub RegisterOutputParams(ByVal pManager As GH_OutputParamManager)
@@ -43,7 +44,7 @@ Public Class concentrated_load
 
     Protected Overrides Sub SolveInstance(ByVal Da As IGH_DataAccess)
         Dim activate As Boolean = False
-        If (Not Da.GetData(11, activate)) Then Return
+        If (Not Da.GetData(12, activate)) Then Return
         If activate Then
             Dim modeller As LusasWinApp = lusas_modeller.m_lusas
 
@@ -76,11 +77,17 @@ Public Class concentrated_load
             If (Not Da.GetDataList(9, obj_ID)) Then Return
             Dim obj_type As String = ""
             If (Not Da.GetData(10, obj_type)) Then Return
+            Dim assignment_loadcase As New List(Of String)
+            If (Not Da.GetDataList(11, assignment_loadcase)) Then Return
 
             'Create object set and assign
             Dim obj_set As IFObjectSet = modeller.newObjectSet
             For Each value As Integer In obj_ID
                 obj_set.add(obj_type, value)
+            Next
+            Dim assignment As IFAssignment = modeller.newAssignment
+            For Each loadcase_name As String In assignment_loadcase
+                assignment.setLoadset(loadcase_name)
             Next
 
             con_load.assignTo(obj_set)
