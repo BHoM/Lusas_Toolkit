@@ -92,8 +92,6 @@ Public Class create_surfaces_from_polyline
                 modeller.db.getGroupByName("temp").ungroup()
             Next polyline
 
-            'Hit test
-
             modeller.suppressMessages(0)
             Dim final_msg As String = surface_group.count("Surface") & " surfaces created and added to" & group_name
             modeller.textWin.writeLine(final_msg)

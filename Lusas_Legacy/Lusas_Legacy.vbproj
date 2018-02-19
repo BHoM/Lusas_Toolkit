@@ -103,10 +103,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\mesh_line_div_no_release.vb" />
-    <Compile Include="Attributes\mesh_line_len_no_release.vb" />
-    <Compile Include="Attributes\mesh_line_len.vb" />
-    <Compile Include="Attributes\support_pinned.vb" />
+    <Compile Include="Attributes\Mesh\align_mesh_point.vb" />
+    <Compile Include="Attributes\Mesh\mesh_line_div_no_release.vb" />
+    <Compile Include="Attributes\Materials\mesh_line_len_no_release.vb" />
+    <Compile Include="Attributes\Mesh\mesh_line_len.vb" />
+    <Compile Include="Attributes\Mesh\mesh_surface_regular_div.vb" />
+    <Compile Include="Attributes\Mesh\mesh_surface_regular_size.vb" />
+    <Compile Include="Attributes\Support\support_pinned.vb" />
     <Compile Include="Geometry\create_lines.vb" />
     <Compile Include="Geometry\create_surfaces.vb" />
     <Compile Include="Geometry\create_surfaces_pl.vb" />
@@ -117,8 +120,9 @@
     <Compile Include="Loading\create_loadcase.vb" />
     <Compile Include="Loading\distributed_global_z.vb" />
     <Compile Include="Loading\distributed_global.vb" />
-    <Compile Include="Attributes\isotropic_condensed.vb" />
-    <Compile Include="Attributes\isotropic_full.vb" />
+    <Compile Include="Attributes\Materials\isotropic_condensed.vb" />
+    <Compile Include="Attributes\Materials\isotropic_full.vb" />
+    <Compile Include="Modeller\message_visibility.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -135,8 +139,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Modeller\lusas_modeller.vb" />
-    <Compile Include="Attributes\mesh_line_div.vb" />
-    <Compile Include="Attributes\support.vb" />
+    <Compile Include="Attributes\Mesh\mesh_line_div.vb" />
+    <Compile Include="Attributes\Support\support.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -206,6 +210,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reusable\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\internal_p.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\surface_mesh.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
