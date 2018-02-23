@@ -76,6 +76,7 @@ Public Class mesh_surface_regular_div
             Next
 
             surface_mesh.assignTo(obj_set)
+            modeller.database.updateMesh()
 
             Da.SetData(0, surface_mesh.getID)
         End If

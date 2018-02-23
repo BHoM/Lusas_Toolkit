@@ -76,11 +76,16 @@ Public Class create_surfaces_from_polyline
                 Dim linesDB As IFLine
                 Dim temp_set As IFObjectSet = modeller.db.createGroup("temp")
                 For Each segment As Curve In polyline.DuplicateSegments
-                    linesDB = modeller.db.createLineByCoordinates(segment.PointAtStart.X, segment.PointAtStart.Y,
-                                                        segment.PointAtStart.Z, segment.PointAtEnd.X,
-                                                                  segment.PointAtEnd.Y,
-                                                        segment.PointAtEnd.Z)
-                    temp_set.add("Line", linesDB.getID)
+                    'Skip small lines
+                    If segment.GetLength < 0.001 Then
+                        Continue For
+                    Else
+                        linesDB = modeller.db.createLineByCoordinates(segment.PointAtStart.X, segment.PointAtStart.Y,
+                                    segment.PointAtStart.Z, segment.PointAtEnd.X,
+                                              segment.PointAtEnd.Y,
+                                    segment.PointAtEnd.Z)
+                        temp_set.add("Line", linesDB.getID)
+                    End If
                 Next segment
 
                 'Create surface in Lusas
@@ -89,6 +94,8 @@ Public Class create_surfaces_from_polyline
                 surfaceDB = modeller.db.createSurfaceBy(temp_set)
                 ID_list.Add(surfaceDB.getID())
                 surface_group.add("Surface", surfaceDB.getID)
+                surface_group.merge("Point")
+                surface_group.merge("Line")
                 modeller.db.getGroupByName("temp").ungroup()
             Next polyline
 

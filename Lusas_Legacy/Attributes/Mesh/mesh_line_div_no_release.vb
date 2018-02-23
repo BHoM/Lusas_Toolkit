@@ -73,6 +73,7 @@ Public Class mesh_line_div_no_release
             Next
 
             line_mesh.assignTo(obj_set)
+            modeller.database.updateMesh()
 
             Da.SetData(0, line_mesh.getID)
         End If

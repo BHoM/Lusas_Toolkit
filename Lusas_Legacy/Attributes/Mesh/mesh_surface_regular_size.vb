@@ -67,6 +67,7 @@ Public Class mesh_surface_regular_size
             Next
 
             surface_mesh.assignTo(obj_set)
+            modeller.database.updateMesh()
 
             Da.SetData(0, surface_mesh.getID)
         End If

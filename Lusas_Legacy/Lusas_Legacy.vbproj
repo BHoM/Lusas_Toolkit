@@ -141,6 +141,7 @@
     <Compile Include="Modeller\lusas_modeller.vb" />
     <Compile Include="Attributes\Mesh\mesh_line_div.vb" />
     <Compile Include="Attributes\Support\support.vb" />
+    <Compile Include="Post-Processing\set_seed_colours.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -203,9 +204,6 @@
     <None Include="Resources\create_surface.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\internal_p_beam.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\create_loadcase.png" />
   </ItemGroup>
   <ItemGroup>
@@ -216,6 +214,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\surface_mesh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\msg_supress.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

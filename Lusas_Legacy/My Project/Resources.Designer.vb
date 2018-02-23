@@ -133,9 +133,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property internal_p_beam() As System.Drawing.Bitmap
+        Friend ReadOnly Property internal_p() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("internal_p_beam", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("internal_p", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -156,6 +156,16 @@ Namespace My.Resources
         Friend ReadOnly Property lusas_modeller() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("lusas_modeller", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property msg_supress() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("msg_supress", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

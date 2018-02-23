@@ -29,8 +29,8 @@ Public Class create_lines
         pManager.AddBooleanParameter("active?", "act?", "active component?", GH_ParamAccess.item)
     End Sub
     Protected Overrides Sub RegisterOutputParams(ByVal pManager As GH_OutputParamManager)
-        pManager.Register_IntegerParam("line_ID", "lID", "To be used in other LUSAS components")
-        pManager.Register_IntegerParam("point_ID", "pID", "To be used in other LUSAS components", GH_ParamAccess.tree)
+        pManager.Register_IntegerParam("line_ID", "lID", "To be used in other LUSAS components", GH_ParamAccess.list)
+        pManager.Register_IntegerParam("point_ID", "pID", "To be used in other LUSAS components", GH_ParamAccess.list)
     End Sub
 
     Protected Overrides Sub SolveInstance(ByVal Da As IGH_DataAccess)
@@ -68,6 +68,7 @@ Public Class create_lines
                 linesDB = modeller.db.createLineByCoordinates(
             line.PointAtStart.X, line.PointAtStart.Y, line.PointAtStart.Z,
                 line.PointAtEnd.X, line.PointAtEnd.Y, line.PointAtEnd.Z)
+                linesDB.
                 ID_list.Add(linesDB.getID())
                 line_group.add("Line", linesDB.getID)
             Next line

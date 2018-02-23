@@ -23,8 +23,8 @@ Public Class create_points
                    "Bridges Tools", "Geometry")
     End Sub
     Protected Overrides Sub RegisterInputParams(ByVal pManager As GH_InputParamManager)
+        pManager.AddTextParameter("name", "n", "Name of geometry group", GH_ParamAccess.item)
         pManager.AddPointParameter("point_list", "pL", "Point list to create geometry: points", GH_ParamAccess.list)
-        pManager.AddBooleanParameter("delete?", "d", "Delete existing points?", GH_ParamAccess.item)
         pManager.AddBooleanParameter("active?", "act?", "active component?", GH_ParamAccess.item)
     End Sub
     Protected Overrides Sub RegisterOutputParams(ByVal pManager As GH_OutputParamManager)
@@ -36,28 +36,24 @@ Public Class create_points
         If activate Then
             Dim modeller As LusasM15_2.LusasWinApp = lusas_modeller.m_lusas
 
-            'Declare placeholder variables and assign initial invalid data.
             Dim points As New List(Of Rhino.Geometry.Point3d)
-
-            'Retrieve input data.
             If (Not Da.GetDataList(0, points)) Then Return
 
-            ' Get the geometry data object
             Dim geomData As LusasM15_2.IFGeometryData = modeller.geometryData()
-
-            modeller.textWin.writeLine("Set defaults")
-
-            ' Set the defaults
             geomData.setAllDefaults()
 
-            modeller.textWin.writeLine("Add coordinates")
+            Dim group_name As String = ""
+            If (Not Da.GetData(0, group_name)) Then Return
 
-            Dim delete As Boolean = False
-            'Retrieve input data.
-            If (Da.GetData(1, delete)) Then
-                'Remove all points in the model
-                geomData.removeAllCoords()
-                modeller.db.deleteContents(geomData)
+            Dim point_group As IFObjectSet
+
+            'Check if geometry group exists
+            If modeller.db.existsGroupByName(group_name) Then
+                point_group = modeller.db.getGroupByName(group_name)
+                point_group.Delete("Line")
+                point_group.Delete("Point")
+            Else
+                point_group = modeller.db.createGroup(group_name)
             End If
 
             For i = 0 To points.Count - 1
@@ -65,11 +61,11 @@ Public Class create_points
                 If Not points(i).IsValid Then Return
                 geomData.addCoords(points(i).X, points(i).Y, points(i).Z)
             Next
-            modeller.textWin.writeLine("Coordinates added")
 
-            modeller.textWin.writeLine("Create geometric points")
             Dim pointDB As IFObjectSet = modeller.db.createPoint(geomData)
-            modeller.textWin.writeLine("Geometric points created")
+
+            point_group.add(pointDB)
+
         End If
     End Sub
 

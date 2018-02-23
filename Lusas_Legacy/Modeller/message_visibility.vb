@@ -24,7 +24,8 @@ Public Class message_visibility
     End Sub
 
     Protected Overrides Sub RegisterInputParams(ByVal pManager As GH_InputParamManager)
-        pManager.AddIntegerParameter("Supression level", "Sprs", "0, 1 or 2", GH_ParamAccess.item)
+        pManager.AddBooleanParameter("active?", "act?", "active component?", GH_ParamAccess.item)
+        pManager.AddIntegerParameter("Supression level", "iS", "0, 1 or 2", GH_ParamAccess.item)
     End Sub
     Protected Overrides Sub RegisterOutputParams(ByVal pManager As GH_OutputParamManager)
         pManager.Register_StringParam("Supression level", "sL", "Supression level", GH_ParamAccess.item)
@@ -32,11 +33,11 @@ Public Class message_visibility
 
     Protected Overrides Sub SolveInstance(ByVal Da As IGH_DataAccess)
         Dim activate As Boolean = False
-        If (Not Da.GetData(1, activate)) Then Return
+        If (Not Da.GetData(0, activate)) Then Return
         If activate Then
             Dim modeller As LusasWinApp = lusas_modeller.m_lusas
             Dim iSupress As Integer
-            If (Not Da.GetData(0, iSupress)) Then Return
+            If (Not Da.GetData(1, iSupress)) Then Return
             modeller.suppressMessages(iSupress)
 
             Dim supression_level As String = ""
@@ -47,6 +48,8 @@ Public Class message_visibility
             Else
                 supression_level = "Show all messages (including popups) only in text output window."
             End If
+
+            Da.SetData(0, supression_level)
 
         End If
     End Sub
@@ -59,7 +62,7 @@ Public Class message_visibility
 
     Protected Overrides ReadOnly Property Internal_Icon_24x24() As System.Drawing.Bitmap
         Get
-            Return My.Resources.create_loadcase
+            Return My.Resources.msg_supress
         End Get
     End Property
 End Class

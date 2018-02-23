@@ -132,6 +132,7 @@ Public Class mesh_line_div
             Next
 
             line_mesh.assignTo(obj_set)
+            modeller.database.updateMesh()
 
             Da.SetData(0, line_mesh.getID)
         End If

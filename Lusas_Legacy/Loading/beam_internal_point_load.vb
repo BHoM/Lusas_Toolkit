@@ -121,7 +121,7 @@ Public Class beam_internal_point_load
 
     Protected Overrides ReadOnly Property Internal_Icon_24x24() As System.Drawing.Bitmap
         Get
-            Return My.Resources.internal_p_beam
+            Return My.Resources.internal_p
         End Get
     End Property
 End Class
