@@ -68,7 +68,6 @@ Public Class create_lines
                 linesDB = modeller.db.createLineByCoordinates(
             line.PointAtStart.X, line.PointAtStart.Y, line.PointAtStart.Z,
                 line.PointAtEnd.X, line.PointAtEnd.Y, line.PointAtEnd.Z)
-                linesDB.
                 ID_list.Add(linesDB.getID())
                 line_group.add("Line", linesDB.getID)
             Next line
