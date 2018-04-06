@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using BH.Adapter;
 using BH.Engine.Lusas;
+using System.Diagnostics;
+using System.IO;
+using LusasM15_2;
 
 namespace BH.Adapter.Lusas
 {
@@ -25,9 +28,68 @@ namespace BH.Adapter.Lusas
             Config.ProcessInMemory = false;     //Set to false to to update objects in the toolkit during the push
             Config.CloneBeforePush = true;      //Set to true to clone the objects before they are being pushed through the software. Required if any modifications at all, as adding a software ID is done to the objects
             Config.UseAdapterId = true;         //Tag objects with a software specific id in the CustomData. Requires the NextIndex method to be overridden and implemented
+
+            if (IsApplicationRunning())
+            {
+                Console.WriteLine("Instance of Lusas Modeller already running");
+            }
+            else
+            {
+                try
+                {
+                    LusasWinApp lusas_model = new LusasM15_2.LusasWinApp();           
+                    LusasM15_2.IFDatabase lusasdata = lusas_model.newDatabase();
+                    LusasM15_2.IFTextWindow lusaswindow = lusas_model.textWin();
+                    lusasdata.setLogicalUpAxis("Z");          
+                    lusasdata.setModelUnits("kN,m,t,s,C");
+                    lusasdata.setTimescaleUnits("Seconds");
+                    lusaswindow.writeLine("New Model Created");
+                }
+                catch
+                {
+                    Console.WriteLine("Cannot load Lusas, check that Lusas is correctly installed and a license is available");
+                }
+            }
+
         }
 
+        public LusasAdapter(string filePath = "") : this()
+        {
+            if (!string.IsNullOrWhiteSpace(filePath))
+            {
+                try
+                {
+                    LusasWinApp lusas_model = (LusasWinApp)System.IO.File.Open(filePath, FileMode.Open);
+                }
+                catch (FileNotFoundException e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            else if (IsApplicationRunning())
+            {
+                Console.WriteLine("Lusas Modeller file already running");
+            }
+            else
+            {
+                LusasWinApp lusas_model = new LusasM15_2.LusasWinApp();
+                LusasM15_2.IFDatabase lusasdata = lusas_model.newDatabase();
+                LusasM15_2.IFTextWindow lusaswindow = lusas_model.textWin();
+                lusasdata.setLogicalUpAxis("Z");
+                lusasdata.setModelUnits("kN,m,t,s,C");
+                lusasdata.setTimescaleUnits("Seconds");
+                lusaswindow.writeLine("New Model Created: file specified not found");
+            }
+        }
 
+        /***************************************************/
+        /**** Public  Fields                           ****/
+        /***************************************************/
+
+        public static bool IsApplicationRunning()
+        {
+            return (Process.GetProcessesByName("lusas_m").Length > 0) ? true : false;
+        }
 
 
         /***************************************************/

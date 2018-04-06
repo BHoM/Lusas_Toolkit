@@ -35,7 +35,6 @@ namespace BH.Adapter.Lusas
         {
             //Code for creating a collection of bars in the software
 
-
             foreach (Bar bar in bars)
             {
                 //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software):
