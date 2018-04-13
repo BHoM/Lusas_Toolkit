@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 14 for Windows Desktop
+# Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lusas_Engine", "Lusas_Engine\Lusas_Engine.csproj", "{41133F8E-E73A-415E-87F5-8E1D8BFC7EA0}"
@@ -10,17 +10,27 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{41133F8E-E73A-415E-87F5-8E1D8BFC7EA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{41133F8E-E73A-415E-87F5-8E1D8BFC7EA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41133F8E-E73A-415E-87F5-8E1D8BFC7EA0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{41133F8E-E73A-415E-87F5-8E1D8BFC7EA0}.Debug|x86.Build.0 = Debug|Any CPU
 		{41133F8E-E73A-415E-87F5-8E1D8BFC7EA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41133F8E-E73A-415E-87F5-8E1D8BFC7EA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41133F8E-E73A-415E-87F5-8E1D8BFC7EA0}.Release|x86.ActiveCfg = Release|Any CPU
+		{41133F8E-E73A-415E-87F5-8E1D8BFC7EA0}.Release|x86.Build.0 = Release|Any CPU
 		{896D021A-34E8-4EDA-B69D-8F92C6B5243B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{896D021A-34E8-4EDA-B69D-8F92C6B5243B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{896D021A-34E8-4EDA-B69D-8F92C6B5243B}.Debug|x86.ActiveCfg = Debug|x86
+		{896D021A-34E8-4EDA-B69D-8F92C6B5243B}.Debug|x86.Build.0 = Debug|x86
 		{896D021A-34E8-4EDA-B69D-8F92C6B5243B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{896D021A-34E8-4EDA-B69D-8F92C6B5243B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{896D021A-34E8-4EDA-B69D-8F92C6B5243B}.Release|x86.ActiveCfg = Release|x86
+		{896D021A-34E8-4EDA-B69D-8F92C6B5243B}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

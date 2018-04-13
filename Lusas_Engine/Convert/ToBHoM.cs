@@ -17,7 +17,14 @@ namespace BH.Engine.Lusas
         //Example:
         //public static Node ToBHoM(this LusasNode node)
         //{
-        //    //Insert code for convertion
+
+        //#region Geometry Converters
+
+        //public static BH.oM.Geometry.Point ToBHoMGeometry(double PX, double PY, double PZ)
+        //{
+        //    return new oM.Geometry.Point { X = PX, Y = PY, Z = PZ };
+        //}
+
         //}
 
         /***************************************************/

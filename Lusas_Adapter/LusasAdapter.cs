@@ -31,19 +31,20 @@ namespace BH.Adapter.Lusas
 
             if (IsApplicationRunning())
             {
-                Console.WriteLine("Instance of Lusas Modeller already running");
+                Console.WriteLine("test");
+                LusasWinApp m_LusasApplication = new LusasM15_2.LusasWinApp();
             }
             else
             {
                 try
                 {
-                    LusasWinApp lusas_model = new LusasM15_2.LusasWinApp();           
-                    LusasM15_2.IFDatabase lusasdata = lusas_model.newDatabase();
-                    LusasM15_2.IFTextWindow lusaswindow = lusas_model.textWin();
-                    lusasdata.setLogicalUpAxis("Z");          
-                    lusasdata.setModelUnits("kN,m,t,s,C");
-                    lusasdata.setTimescaleUnits("Seconds");
-                    lusaswindow.writeLine("New Model Created");
+                    LusasWinApp m_LusasApplication = new LusasM15_2.LusasWinApp();           
+                    LusasM15_2.IFDatabase d_lusasdata = m_LusasApplication.newDatabase();
+                    LusasM15_2.IFTextWindow w_lusaswindow = m_LusasApplication.textWin();
+                    d_lusasdata.setLogicalUpAxis("Z");          
+                    d_lusasdata.setModelUnits("kN,m,t,s,C");
+                    d_lusasdata.setTimescaleUnits("Seconds");
+                    w_lusaswindow.writeLine("New Model Created");
                 }
                 catch
                 {
@@ -59,7 +60,8 @@ namespace BH.Adapter.Lusas
             {
                 try
                 {
-                    LusasWinApp lusas_model = (LusasWinApp)System.IO.File.Open(filePath, FileMode.Open);
+                    LusasWinApp m_LusasApplication = new LusasWinApp();
+                    m_LusasApplication.fileOpen(filePath);
                 }
                 catch (FileNotFoundException e)
                 {
@@ -68,13 +70,13 @@ namespace BH.Adapter.Lusas
             }
             else if (IsApplicationRunning())
             {
-                Console.WriteLine("Lusas Modeller file already running");
+                LusasWinApp m_LusasApplication = new LusasM15_2.LusasWinApp();
             }
             else
             {
-                LusasWinApp lusas_model = new LusasM15_2.LusasWinApp();
-                LusasM15_2.IFDatabase lusasdata = lusas_model.newDatabase();
-                LusasM15_2.IFTextWindow lusaswindow = lusas_model.textWin();
+                LusasWinApp m_LusasApplication = new LusasM15_2.LusasWinApp();
+                LusasM15_2.IFDatabase lusasdata = m_LusasApplication.newDatabase();
+                LusasM15_2.IFTextWindow lusaswindow = m_LusasApplication.textWin();
                 lusasdata.setLogicalUpAxis("Z");
                 lusasdata.setModelUnits("kN,m,t,s,C");
                 lusasdata.setTimescaleUnits("Seconds");
@@ -98,7 +100,9 @@ namespace BH.Adapter.Lusas
 
         //Add any comlink object as a private field here, example named:
 
-        //private SoftwareComLink m_softwareNameCom;
+        //private LusasWinApp m_LusasApplication;
+
+        //private IFDatabase d_LusasApplication;
 
 
         /***************************************************/
