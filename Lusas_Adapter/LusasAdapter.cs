@@ -31,56 +31,46 @@ namespace BH.Adapter.Lusas
 
             if (IsApplicationRunning())
             {
-                Console.WriteLine("test");
-                LusasWinApp m_LusasApplication = new LusasM15_2.LusasWinApp();
+                throw new System.Exception("Lusas is already running, close and run again");
             }
             else
             {
                 try
                 {
-                    LusasWinApp m_LusasApplication = new LusasM15_2.LusasWinApp();           
-                    LusasM15_2.IFDatabase d_lusasdata = m_LusasApplication.newDatabase();
-                    LusasM15_2.IFTextWindow w_lusaswindow = m_LusasApplication.textWin();
-                    d_lusasdata.setLogicalUpAxis("Z");          
-                    d_lusasdata.setModelUnits("kN,m,t,s,C");
-                    d_lusasdata.setTimescaleUnits("Seconds");
-                    w_lusaswindow.writeLine("New Model Created");
-                }
+                m_LusasApplication = new LusasWinApp();
+                m_LusasApplication.enableUI(true);
+                m_LusasApplication.setVisible(true);
+                d_LusasData = m_LusasApplication.newDatabase();
+                IFTextWindow w_lusaswindow = m_LusasApplication.textWin();
+                d_LusasData.setLogicalUpAxis("Z");
+                d_LusasData.setModelUnits("kN,m,t,s,C");
+                w_lusaswindow.writeLine("New Model Created");
+            }
                 catch
                 {
-                    Console.WriteLine("Cannot load Lusas, check that Lusas is correctly installed and a license is available");
                 }
             }
-
         }
 
-        public LusasAdapter(string filePath = "") : this()
+
+        public LusasAdapter(string filePath)
         {
-            if (!string.IsNullOrWhiteSpace(filePath))
+            if (string.IsNullOrWhiteSpace(filePath))
             {
-                try
-                {
-                    LusasWinApp m_LusasApplication = new LusasWinApp();
-                    m_LusasApplication.fileOpen(filePath);
-                }
-                catch (FileNotFoundException e)
-                {
-                    Console.WriteLine(e);
-                }
-            }
+                throw new System.ArgumentException("No file path given");    
+            }      
             else if (IsApplicationRunning())
             {
-                LusasWinApp m_LusasApplication = new LusasM15_2.LusasWinApp();
+                throw new System.Exception("Lusas process already running");
             }
             else
             {
-                LusasWinApp m_LusasApplication = new LusasM15_2.LusasWinApp();
-                LusasM15_2.IFDatabase lusasdata = m_LusasApplication.newDatabase();
-                LusasM15_2.IFTextWindow lusaswindow = m_LusasApplication.textWin();
-                lusasdata.setLogicalUpAxis("Z");
-                lusasdata.setModelUnits("kN,m,t,s,C");
-                lusasdata.setTimescaleUnits("Seconds");
-                lusaswindow.writeLine("New Model Created: file specified not found");
+                m_LusasApplication = new LusasWinApp();
+                m_LusasApplication.enableUI(true);
+                m_LusasApplication.setVisible(true);
+                d_LusasData = m_LusasApplication.openDatabase(filePath);
+                IFTextWindow lusaswindow = m_LusasApplication.textWin();
+                lusaswindow.writeLine("Model has been opened");
             }
         }
 
@@ -100,10 +90,8 @@ namespace BH.Adapter.Lusas
 
         //Add any comlink object as a private field here, example named:
 
-        //private LusasWinApp m_LusasApplication;
-
-        //private IFDatabase d_LusasApplication;
-
+        private LusasWinApp m_LusasApplication;
+        private IFDatabase d_LusasData;
 
         /***************************************************/
 

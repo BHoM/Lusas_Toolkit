@@ -20,10 +20,10 @@ namespace BH.Engine.Lusas
 
         //#region Geometry Converters
 
-        //public static BH.oM.Geometry.Point ToBHoMGeometry(double PX, double PY, double PZ)
-        //{
-        //    return new oM.Geometry.Point { X = PX, Y = PY, Z = PZ };
-        //}
+        public static BH.oM.Geometry.Point ToBHoMGeometry(double PX, double PY, double PZ)
+        {
+            return new oM.Geometry.Point { X = PX, Y = PY, Z = PZ };
+        }
 
         //}
 

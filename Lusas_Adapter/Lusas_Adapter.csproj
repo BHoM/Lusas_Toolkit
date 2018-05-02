@@ -60,10 +60,6 @@
       <HintPath>..\..\BHoM_Engine\Build\BHoM_Engine.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Interop.LusasM15_2">
-      <HintPath>..\Lusas_Legacy\obj\Debug\Interop.LusasM15_2.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="Lusas.Interop, Version=15.2.1601.22607, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -75,6 +71,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -99,6 +96,17 @@
       <Name>Lusas_Engine</Name>
       <Private>False</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="LusasM15_2">
+      <Guid>{AC0CF861-1502-11CF-91D8-0020AFC19F64}</Guid>
+      <VersionMajor>15</VersionMajor>
+      <VersionMinor>2</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
