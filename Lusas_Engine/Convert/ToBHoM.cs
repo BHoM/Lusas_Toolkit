@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BH.oM.Structural.Elements;
+using BH.oM.Geometry;
 
 namespace BH.Engine.Lusas
 {
@@ -23,6 +24,11 @@ namespace BH.Engine.Lusas
         public static BH.oM.Geometry.Point ToBHoMGeometry(double PX, double PY, double PZ)
         {
             return new oM.Geometry.Point { X = PX, Y = PY, Z = PZ };
+        }
+
+        public static Node ToBHoMObject(double PX, double PY, double PZ)
+        {
+            return new Node { Position = new Point { X = PX, Y = PY, Z = PZ } };
         }
 
         //}

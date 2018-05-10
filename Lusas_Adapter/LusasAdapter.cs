@@ -37,15 +37,15 @@ namespace BH.Adapter.Lusas
             {
                 try
                 {
-                m_LusasApplication = new LusasWinApp();
-                m_LusasApplication.enableUI(true);
-                m_LusasApplication.setVisible(true);
-                d_LusasData = m_LusasApplication.newDatabase();
-                IFTextWindow w_lusaswindow = m_LusasApplication.textWin();
-                d_LusasData.setLogicalUpAxis("Z");
-                d_LusasData.setModelUnits("kN,m,t,s,C");
-                w_lusaswindow.writeLine("New Model Created");
-            }
+                    m_LusasApplication = new LusasWinApp();
+                    m_LusasApplication.enableUI(true);
+                    m_LusasApplication.setVisible(true);
+                    d_LusasData = m_LusasApplication.newDatabase();
+                    IFTextWindow w_lusaswindow = m_LusasApplication.textWin();
+                    d_LusasData.setLogicalUpAxis("Z");
+                    d_LusasData.setModelUnits("kN,m,t,s,C");
+                    w_lusaswindow.writeLine("New Model Created");
+                }
                 catch
                 {
                 }

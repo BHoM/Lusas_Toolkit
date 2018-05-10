@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BH.oM.Structural.Elements;
 using BH.oM.Structural.Properties;
 using BH.oM.Common.Materials;
+using LusasM15_2;
 
 namespace BH.Adapter.Lusas
 {
@@ -19,9 +20,16 @@ namespace BH.Adapter.Lusas
         {
             bool success = true;        //boolean returning if the creation was successfull or not
 
-            success = CreateCollection(objects as dynamic);
+            if (objects.Count()>0)
+            {
+                if (objects.First() is Node)
+                {
+                    success = CreateCollection(objects as IEnumerable<Node>);
+                }
+            }
 
-            //UpdateViews()             //If there exists a command for updating the views is the software call it now:
+            success = CreateCollection(objects as dynamic);
+            m_LusasApplication.updateAllViews();
 
             return success;             //Finally return if the creation was successful or not
 
@@ -59,11 +67,18 @@ namespace BH.Adapter.Lusas
 
             foreach (Node node in nodes)
             {
-                //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software):
+                List<double> ID_list = new List<double>();
+                IFGeometryData GeomData = m_LusasApplication.geometryData();
+                GeomData.setAllDefaults();
+                //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software
+                GeomData.addCoords(node.Position.X, node.Position.Y, node.Position.Z);
+                IFDatabaseOperations database_point = d_LusasData.createPoint(GeomData);
                 object nodeId = node.CustomData[AdapterId];
+                IFDatabase RecentPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
+                RecentPoint.setName(nodeId.ToString());
             }
 
-            throw new NotImplementedException();
+            return true; 
         }
 
         /***************************************************/

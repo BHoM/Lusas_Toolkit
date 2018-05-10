@@ -18,13 +18,13 @@ namespace BH.Adapter.Lusas
         /***************************************************/
         /**** Adapter overload method                   ****/
         /***************************************************/
-        protected override IEnumerable<IBHoMObject> Read(Type type, IList ids)
+        protected override IEnumerable<IBHoMObject> Read(Type type, IList ids = null)
         {
             //Choose what to pull out depending on the type. Also see example methods below for pulling out bars and dependencies
             if (type == typeof(Bar))
                 return ReadBars(ids as dynamic);
-            else if (type == typeof(Point))
-                return ReadPoints(ids as dynamic);
+            else if (type == typeof(Node))
+                return ReadNodes(ids as dynamic);
             else if (type == typeof(ISectionProperty) || type.GetInterfaces().Contains(typeof(ISectionProperty)))
                 return ReadSectionProperties(ids as dynamic);
             else if (type == typeof(Material))
@@ -47,23 +47,21 @@ namespace BH.Adapter.Lusas
 
         /***************************************/
 
-        private List<Point> ReadPoints(List<string> ids = null)
+        private List<Node> ReadNodes(List<string> ids = null)
         {
             int maxPointID = d_LusasData.getLargestPointID();
-            List<Point> bhomPoints = new List<Point>();
+            List<Node> bhomNodes = new List<Node>();
 
             for (int i = 1; i <= maxPointID; i++)
             {
                 if (d_LusasData.existsPointByID(i))
                 {
                     IFPoint LusasPoint = d_LusasData.getPointByNumber(i);
-                    double[] pointcoords = new double[] { 0, 0, 0 };
-                    LusasPoint.getXYZ(pointcoords);
-                    Point bhomPoint = BH.Engine.Lusas.Convert.ToBHoMGeometry(pointcoords[1], pointcoords[2], pointcoords[3]);
-                    bhomPoints.Add(bhomPoint);
+                    Node bhomNode = BH.Engine.Lusas.Convert.ToBHoMObject(LusasPoint.getX(), LusasPoint.getY(), LusasPoint.getZ());
+                    bhomNodes.Add(bhomNode);
                 }
             }
-            return bhomPoints;
+            return bhomNodes;
          }
 
         /***************************************/
