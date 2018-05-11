@@ -39,62 +39,15 @@ namespace BH.Adapter.Lusas
         /***************************************************/
         /**** Private methods                           ****/
         /***************************************************/
-
+        
         private bool CreateCollection(IEnumerable<Bar> bars)
         {
             //Code for creating a collection of bars in the software
   
             foreach (Bar bar in bars)
             {
-                Node startNode = bar.StartNode;
-                IFPoint startPoint;
-
-                if (d_LusasData.existsPointByName(startNode.Name))
-                {
-                    startPoint = d_LusasData.getPointByName(startNode.Name);
-                }
-                else
-                {
-                    IFGeometryData GeomData = m_LusasApplication.geometryData();
-                    GeomData.setAllDefaults();
-                    GeomData.addCoords(startNode.Position.X, startNode.Position.Y, startNode.Position.Z);
-                    IFDatabaseOperations database_point = d_LusasData.createPoint(GeomData);
-                    string nodeId = "ID" + startNode.Name;
-                    startPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
-                    startPoint.setName(nodeId);
-                }
-
-                Node endNode = bar.StartNode;
-                IFPoint endPoint;
-
-                if (d_LusasData.existsPointByName(endNode.Name))
-                {
-                    endPoint = d_LusasData.getPointByName(endNode.Name);
-                }
-                else
-                {
-                    IFGeometryData GeomData = m_LusasApplication.geometryData();
-                    GeomData.setAllDefaults();
-                    GeomData.addCoords(endNode.Position.X, endNode.Position.Y, endNode.Position.Z);
-                    IFDatabaseOperations database_point = d_LusasData.createPoint(GeomData);
-                    string nodeId = "ID" + endNode.Name;
-                    endPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
-                    endPoint.setName(nodeId);
-                }
-
-                IFLine newline = d_LusasData.createLineByPoints(startPoint, endPoint);
-                newline.setName(bar.Name);
-                //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software):
-                //object barId = bar.CustomData[AdapterId];
-                //If also the default implmentation for the DependencyTypes is used,
-                //one can from here get the id's of the subobjects by calling (cast into applicable type used by the software): 
-                //object startNodeId = bar.StartNode.CustomData[AdapterId];
-                //object endNodeId = bar.EndNode.CustomData[AdapterId];
-                //object SecPropId = bar.SectionProperty.CustomData[AdapterId];
-
+                IFLine newline = createline(bar);
             }
-
-
              return true;
         }
 
@@ -114,21 +67,13 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-
         private bool CreateCollection(IEnumerable<Node> nodes)
         {
             //Code for creating a collection of nodes in the software
 
             foreach (Node node in nodes)
             {
-                IFGeometryData GeomData = m_LusasApplication.geometryData();
-                GeomData.setAllDefaults();
-                //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software
-                GeomData.addCoords(node.Position.X, node.Position.Y, node.Position.Z);
-                IFDatabaseOperations database_point = d_LusasData.createPoint(GeomData);
-                string nodeId = "ID" + node.Name;
-                IFPoint newPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
-                newPoint.setName(nodeId);
+                IFPoint newpoint = createpoint(node);
             }
 
             return true;
@@ -162,6 +107,7 @@ namespace BH.Adapter.Lusas
             {
                 //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software):
                 object materialId = material.CustomData[AdapterId];
+
             }
 
             throw new NotImplementedException();
@@ -169,5 +115,46 @@ namespace BH.Adapter.Lusas
 
 
         /***************************************************/
+        
+        public IFPoint createpoint(Node node)
+        {
+            IFGeometryData GeomData = m_LusasApplication.geometryData();
+            GeomData.setAllDefaults();
+            GeomData.addCoords(node.Position.X, node.Position.Y, node.Position.Z);
+            IFDatabaseOperations database_point = d_LusasData.createPoint(GeomData);
+            string nodeId = "ID" + node.Name;
+            IFPoint newPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
+            newPoint.setName(nodeId);
+
+            return newPoint;
+        }
+
+        public IFLine createline(Bar bar)
+        {
+
+            IFPoint startPoint = existsPoint(bar.StartNode);
+            IFPoint endPoint = existsPoint(bar.EndNode);
+            IFLine newline = d_LusasData.createLineByPoints(startPoint, endPoint);
+
+            newline.setName(bar.Name);
+
+            return newline;
+        }
+
+        public IFPoint existsPoint(Node node)
+        {
+            IFPoint newPoint;
+            if (d_LusasData.existsPointByName(node.Name))
+            {
+                newPoint = d_LusasData.getPointByName(node.Name);
+            }
+            else
+            {
+                newPoint = createpoint(node);
+            }
+
+            return newPoint;
+        }
     }
 }
+
