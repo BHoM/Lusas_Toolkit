@@ -41,8 +41,21 @@ namespace BH.Adapter.Lusas
 
         private List<Bar> ReadBars(List<string> ids = null)
         {
-            //Implement code for reading bars
-            throw new NotImplementedException();
+            int maxlineid = d_LusasData.getLargestLineID();
+            List<Bar> bhomBars = new List<Bar>();
+            IEnumerable<Node> bhomNodesList = ReadNodes();
+            Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
+
+            for (int i = 1; i <= maxlineid; i++)
+            {
+                if (d_LusasData.existsLineByID(i))
+                {
+                    IFLine lusasline = d_LusasData.getLineByNumber(i);
+                    Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes);
+                    bhomBars.Add(bhomBar);
+                }
+            }
+            return bhomBars;
         }
 
         /***************************************/
@@ -56,8 +69,8 @@ namespace BH.Adapter.Lusas
             {
                 if (d_LusasData.existsPointByID(i))
                 {
-                    IFPoint LusasPoint = d_LusasData.getPointByNumber(i);
-                    Node bhomNode = BH.Engine.Lusas.Convert.ToBHoMObject(LusasPoint.getX(), LusasPoint.getY(), LusasPoint.getZ());
+                    IFPoint lusasPoint = d_LusasData.getPointByNumber(i);
+                    Node bhomNode = BH.Engine.Lusas.Convert.ToBHoMObject(lusasPoint);
                     bhomNodes.Add(bhomNode);
                 }
             }

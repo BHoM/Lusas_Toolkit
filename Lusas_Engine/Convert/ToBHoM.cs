@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BH.oM.Structural.Elements;
 using BH.oM.Geometry;
+using LusasM15_2;
 
 namespace BH.Engine.Lusas
 {
@@ -21,17 +22,34 @@ namespace BH.Engine.Lusas
 
         //#region Geometry Converters
 
-        public static BH.oM.Geometry.Point ToBHoMGeometry(double PX, double PY, double PZ)
+
+
+        public static Bar ToBHoMObject(this IFLine lusasLine, Dictionary<string, Node> bhomNodes)
         {
-            return new oM.Geometry.Point { X = PX, Y = PY, Z = PZ };
+            Node startNode = null;
+            
+            IFPoint startPoint = lusasLine.getLOFs()[0];
+            bhomNodes.TryGetValue(startPoint.getID().ToString(), out startNode);
+            Node endNode = null;
+            IFPoint endPoint = lusasLine.getLOFs()[1];
+            bhomNodes.TryGetValue(endPoint.getID().ToString(), out endNode);
+            Bar bhomBar = new Bar { StartNode = startNode, EndNode = endNode, Name = lusasLine.getName() };
+
+            bhomBar.CustomData[AdapterId] = lusasLine.getID();
+
+            return bhomBar;
         }
 
-        public static Node ToBHoMObject(double PX, double PY, double PZ)
+        public static Node ToBHoMObject(this IFPoint lusasPoint)
         {
-            return new Node { Position = new Point { X = PX, Y = PY, Z = PZ } };
+            Node newNode = new Node { Position = { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() }, Name = lusasPoint.getName() };
+            newNode.CustomData[AdapterId] = lusasPoint.getID();
+
+            return newNode;
         }
 
-        //}
+
+        //
 
         /***************************************************/
     }
