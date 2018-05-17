@@ -26,6 +26,10 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<Node>);
                 }
+                if (objects.First() is Bar)
+                {
+                    success = CreateCollection(objects as IEnumerable<Bar>);
+                }
             }
 
             //success = CreateCollection(objects as dynamic);
@@ -122,7 +126,7 @@ namespace BH.Adapter.Lusas
             GeomData.setAllDefaults();
             GeomData.addCoords(node.Position.X, node.Position.Y, node.Position.Z);
             IFDatabaseOperations database_point = d_LusasData.createPoint(GeomData);
-            string nodeId = "ID" + node.Name;
+            string nodeId = "P" + node.Name;
             IFPoint newPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
             newPoint.setName(nodeId);
 
@@ -136,7 +140,8 @@ namespace BH.Adapter.Lusas
             IFPoint endPoint = existsPoint(bar.EndNode);
             IFLine newline = d_LusasData.createLineByPoints(startPoint, endPoint);
 
-            newline.setName(bar.Name);
+            string barID = "L" + bar.Name;
+            newline.setName(barID);
 
             return newline;
         }
@@ -144,9 +149,9 @@ namespace BH.Adapter.Lusas
         public IFPoint existsPoint(Node node)
         {
             IFPoint newPoint;
-            if (d_LusasData.existsPointByName(node.Name))
+            if (d_LusasData.existsPointByName("P"+node.Name))
             {
-                newPoint = d_LusasData.getPointByName(node.Name);
+                newPoint = d_LusasData.getPointByName("P"+node.Name);
             }
             else
             {

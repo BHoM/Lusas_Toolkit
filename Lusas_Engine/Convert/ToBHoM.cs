@@ -23,16 +23,31 @@ namespace BH.Engine.Lusas
         //#region Geometry Converters
 
 
+        //public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf, Dictionary<string, Bar> bhomBars, Dictionary<string, Node> bhomNodes)
+        //{
+            ////method unfinished
+            //PanelPlanar bhomPanel = new PanelPlanar();
+            //IFObjectSet edges = lusasSurf.getLOFs();
+            //for (int i = 0; i < edges.countLines(); i++)
+            //{
+            //    
+
+            //    PanelPlanar bhomPanel = new PanelPlanar { ExternalEdges = }
+            //}
+
+            //return bhomPanel;
+        //}
 
         public static Bar ToBHoMObject(this IFLine lusasLine, Dictionary<string, Node> bhomNodes)
         {
             Node startNode = null;
-            
             IFPoint startPoint = lusasLine.getLOFs()[0];
             bhomNodes.TryGetValue(startPoint.getID().ToString(), out startNode);
+
             Node endNode = null;
             IFPoint endPoint = lusasLine.getLOFs()[1];
             bhomNodes.TryGetValue(endPoint.getID().ToString(), out endNode);
+
             Bar bhomBar = new Bar { StartNode = startNode, EndNode = endNode, Name = lusasLine.getName() };
 
             bhomBar.CustomData[AdapterId] = lusasLine.getID();
