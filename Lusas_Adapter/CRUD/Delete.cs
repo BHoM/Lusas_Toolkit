@@ -20,6 +20,8 @@ namespace BH.Adapter.Lusas
 
             if (type == typeof(Node))
                 success = DeleteNodes(ids);
+            if (type == typeof(Bar))
+                success = DeleteBars(ids);
 
             return 0;
         }
@@ -34,7 +36,7 @@ namespace BH.Adapter.Lusas
 
                 foreach (int ind in indicies)
                 {
-                    d_LusasData.deleteContents(d_LusasData.getPointByName(ind.ToString()));
+                    d_LusasData.deleteContents(d_LusasData.getPointByNumber(ind.ToString()));
                 }
             }
             else
@@ -44,6 +46,25 @@ namespace BH.Adapter.Lusas
             return success;
         }
 
+        public int DeleteBars(IEnumerable<object> ids)
+        {
+            int success = 1;
+
+            if (ids != null)
+            {
+                List<int> indicies = ids.Cast<int>().ToList();
+
+                foreach (int ind in indicies)
+                {
+                    d_LusasData.deleteContents(d_LusasData.getLineByNumber(ind.ToString()));
+                }
+            }
+            else
+            {
+                d_LusasData.deleteLines();
+            }
+            return success;
+        }
         /***************************************************/
     }
 }
