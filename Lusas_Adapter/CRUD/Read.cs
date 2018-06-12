@@ -71,6 +71,7 @@ namespace BH.Adapter.Lusas
                 {
                     IFPoint lusasPoint = d_LusasData.getPointByNumber(i);
                     Node bhomNode = BH.Engine.Lusas.Convert.ToBHoMObject(lusasPoint);
+                    bhomNode.CustomData[AdapterId] = lusasPoint.getID();
                     bhomNodes.Add(bhomNode);
                 }
             }

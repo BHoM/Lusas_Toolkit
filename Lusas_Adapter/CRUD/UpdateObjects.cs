@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BH.oM.Base;
 using BH.oM.Structural.Elements;
 using BH.oM.Geometry;
 using BH.oM.Structural.Properties;
@@ -23,7 +24,21 @@ namespace BH.Adapter.Lusas
 
         protected override bool UpdateObjects<T>(IEnumerable<T> objects)
         {
-            return base.UpdateObjects<T>(objects);
+            bool success = true;
+            if (objects.Count() > 0)
+            {
+                if (objects.First() is Node)
+                {
+                    success = Update(objects as IEnumerable<Node>);
+                }
+            }
+            m_LusasApplication.updateAllViews();
+            return success;
+        }
+
+        protected bool Update(IEnumerable<IBHoMObject> bhomObjects)
+        {
+            return true;
         }
 
         protected bool Update(IEnumerable<Node> nodes)
@@ -31,14 +46,14 @@ namespace BH.Adapter.Lusas
 
             foreach (Node node in nodes)
             {
-                IFPoint LusasNode = d_LusasData.getPointByName(node.CustomData[AdapterId].ToString());
+                IFPoint LusasNode = d_LusasData.getPointByName(node.Name);
 
                 if (LusasNode == null)
                 {
                     return false;
                 }
                     
-                if (!string.IsNullOrWhiteSpace(node.Constraint.Name))
+                if (!string.IsNullOrWhiteSpace(node.Name))
                 {
                     d_LusasData.Delete(LusasNode);
                     createpoint(node);

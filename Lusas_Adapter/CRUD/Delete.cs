@@ -36,7 +36,7 @@ namespace BH.Adapter.Lusas
 
                 foreach (int ind in indicies)
                 {
-                    d_LusasData.deleteContents(d_LusasData.getPointByNumber(ind.ToString()));
+                    d_LusasData.Delete(d_LusasData.getPointByNumber(ind.ToString()));
                 }
             }
             else
