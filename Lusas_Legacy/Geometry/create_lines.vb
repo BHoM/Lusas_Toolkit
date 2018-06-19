@@ -56,11 +56,13 @@ Public Class create_lines
                 line_group = modeller.db.createGroup(group_name)
             End If
 
-            Dim ID_list As New List(Of Double)
+            Dim ID_list As New List(Of Integer)
             Dim linesDB As IFLine
 
             Dim lines As New List(Of Curve)
             If (Not Da.GetDataList(1, lines)) Then Return
+
+            Dim pID_list As New List(Of Integer)
 
             For Each line As Curve In lines
                 'Skip over invalid inputs
@@ -68,6 +70,10 @@ Public Class create_lines
                 linesDB = modeller.db.createLineByCoordinates(
             line.PointAtStart.X, line.PointAtStart.Y, line.PointAtStart.Z,
                 line.PointAtEnd.X, line.PointAtEnd.Y, line.PointAtEnd.Z)
+                Dim startPoint As IFPoint = linesDB.getLOFs(0)
+                Dim endPoint As IFPoint = linesDB.getLOFs(1)
+                pID_list.Add(startPoint.getID)
+                pID_list.Add(endPoint.getID)
                 ID_list.Add(linesDB.getID())
                 line_group.add("Line", linesDB.getID)
             Next line
@@ -83,6 +89,8 @@ Public Class create_lines
             line_group.merge("Point")
 
             Da.SetDataList(0, ID_list)
+
+            Da.SetDataList(1, pID_list)
 
             modeller.suppressMessages(0)
 

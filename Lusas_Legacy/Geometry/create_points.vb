@@ -28,6 +28,7 @@ Public Class create_points
         pManager.AddBooleanParameter("active?", "act?", "active component?", GH_ParamAccess.item)
     End Sub
     Protected Overrides Sub RegisterOutputParams(ByVal pManager As GH_OutputParamManager)
+        pManager.Register_IntegerParam("point_ID", "pID", "To be used in other LUSAS components", GH_ParamAccess.list)
     End Sub
 
     Protected Overrides Sub SolveInstance(ByVal Da As IGH_DataAccess)
@@ -37,7 +38,7 @@ Public Class create_points
             Dim modeller As LusasM15_2.LusasWinApp = lusas_modeller.m_lusas
 
             Dim points As New List(Of Rhino.Geometry.Point3d)
-            If (Not Da.GetDataList(0, points)) Then Return
+            If (Not Da.GetDataList(1, points)) Then Return
 
             Dim geomData As LusasM15_2.IFGeometryData = modeller.geometryData()
             geomData.setAllDefaults()
@@ -56,15 +57,22 @@ Public Class create_points
                 point_group = modeller.db.createGroup(group_name)
             End If
 
+            Dim ID_list As New List(Of Double)
+
+
+
             For i = 0 To points.Count - 1
                 'Abort on invalid igrnputs.
                 If Not points(i).IsValid Then Return
+                geomData.removeAllCoords()
                 geomData.addCoords(points(i).X, points(i).Y, points(i).Z)
+                Dim pointDB As IFDatabaseOperations = modeller.db.createPoint(geomData)
+                Dim newPoint As IFPoint = modeller.db.getPointByNumber(modeller.db.getLargestPointID)
+                ID_list.Add(newPoint.getID)
+                'Doesn't work well when points merge...
             Next
 
-            Dim pointDB As IFObjectSet = modeller.db.createPoint(geomData)
-
-            point_group.add(pointDB)
+            Da.SetDataList(0, ID_list)
 
         End If
     End Sub
