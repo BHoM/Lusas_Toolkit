@@ -57,17 +57,17 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private bool CreateCollection(IEnumerable<PanelPlanar> panels)
-        {
-            //Code for creating a collection of nodes in the software
+        //private bool CreateCollection(IEnumerable<PanelPlanar> panels)
+        //{
+        //    //Code for creating a collection of nodes in the software
 
-            foreach (PanelPlanar panel in panels)
-            {
+        //    foreach (PanelPlanar panel in panels)
+        //    {
+        //        IFSurface newsurface = createsurface(panels);
+        //    }
 
-            }
-
-            return true; 
-        }
+        //    return true; 
+        //}
 
         /***************************************************/
 
@@ -127,7 +127,8 @@ namespace BH.Adapter.Lusas
             GeomData.addCoords(node.Position.X, node.Position.Y, node.Position.Z);
             IFDatabaseOperations database_point = d_LusasData.createPoint(GeomData);
             IFPoint newPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
-            newPoint.setName(node.Name);
+            int bhid = System.Convert.ToInt32(node.CustomData[AdapterId]);
+            newPoint.setName("P"+bhid.ToString());
 
             return newPoint;
         }
@@ -138,18 +139,23 @@ namespace BH.Adapter.Lusas
             IFPoint startPoint = existsPoint(bar.StartNode);
             IFPoint endPoint = existsPoint(bar.EndNode);
             IFLine newline = d_LusasData.createLineByPoints(startPoint, endPoint);
-
-            newline.setName(bar.Name);
-
+            newline.setName(bar.BHoM_Guid.ToString());
             return newline;
         }
+
+        //public IFLine createsurface(PanelPlanar panel)
+        //{
+
+
+        //    return newsurface;
+        //}
 
         public IFPoint existsPoint(Node node)
         {
             IFPoint newPoint;
-            if (d_LusasData.existsPointByName(node.Name))
+            if (d_LusasData.existsPointByName(node.BHoM_Guid.ToString()))
             {
-                newPoint = d_LusasData.getPointByName(node.Name);
+                newPoint = d_LusasData.getPointByName(node.BHoM_Guid.ToString());
             }
             else
             {
@@ -158,6 +164,21 @@ namespace BH.Adapter.Lusas
 
             return newPoint;
         }
+
+        //public IFPoint existsSurface(PanelPlanar panel)
+        //{
+        //    IFPoint newPoint;
+        //    if (d_LusasData.existsPointByName(node.Name))
+        //    {
+        //        newPoint = d_LusasData.getPointByName(node.Name);
+        //    }
+        //    else
+        //    {
+        //        newPoint = createpoint(node);
+        //    }
+
+        //    return newPoint;
+        //}
     }
 }
 
