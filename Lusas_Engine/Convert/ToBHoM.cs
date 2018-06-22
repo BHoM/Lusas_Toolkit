@@ -23,20 +23,30 @@ namespace BH.Engine.Lusas
         //#region Geometry Converters
 
 
-        //public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf, Dictionary<string, Bar> bhomBars, Dictionary<string, Node> bhomNodes)
-        //{
-            ////method unfinished
-            //PanelPlanar bhomPanel = new PanelPlanar();
-            //IFObjectSet edges = lusasSurf.getLOFs();
-            //for (int i = 0; i < edges.countLines(); i++)
-            //{
-            //    
+        public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf)
+        {
+            //method unfinished
+            PanelPlanar bhomPanel = new PanelPlanar();
+            Polyline bhompolyline = new Polyline();
+            IFLine edges = null;
 
-            //    PanelPlanar bhomPanel = new PanelPlanar { ExternalEdges = }
-            //}
+            for (int i = 0; i < lusasSurf.countBoundaries(); i++)
+            {
+                edges = lusasSurf.getLOFs()[i];
+                IFPoint point = edges.getLOFs()[0];
+                //Point newPoint = new Point { Position = { X = point.getX(), Y = point.getY(), Z = point.getZ() } };
+                //bhompolyline.ControlPoints.Add(point);
+                //PanelPlanar bhomPanel = new PanelPlanar { }
 
-            //return bhomPanel;
-        //}
+                //BH.Engine
+
+            }
+
+            bhompolyline.ControlPoints.Add(edges.getLOFs()[1]);
+
+
+            return bhomPanel;
+        }
 
         public static Bar ToBHoMObject(this IFLine lusasLine, Dictionary<string, Node> bhomNodes)
         {
@@ -58,11 +68,11 @@ namespace BH.Engine.Lusas
         public static Node ToBHoMObject(this IFPoint lusasPoint)
         {
             Node newNode = new Node { Position = { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() }, Name = lusasPoint.getName() };
+
             newNode.CustomData[AdapterId] = lusasPoint.getID();
 
             return newNode;
         }
-
 
         //
 

@@ -60,6 +60,9 @@
       <HintPath>..\..\BHoM_Engine\Build\BHoM_Engine.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Geometry_Engine">
+      <HintPath>..\..\BHoM_Engine\Geometry_Engine\obj\Debug\Geometry_Engine.dll</HintPath>
+    </Reference>
     <Reference Include="Lusas.Interop, Version=15.2.1601.22607, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>

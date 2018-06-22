@@ -29,6 +29,8 @@ namespace BH.Adapter.Lusas
                 return ReadSectionProperties(ids as dynamic);
             else if (type == typeof(Material))
                 return ReadMaterials(ids as dynamic);
+            else if (type == typeof(PanelPlanar))
+                return ReadSurfaces(ids as dynamic);
 
             return null;
         }
@@ -52,6 +54,7 @@ namespace BH.Adapter.Lusas
                 {
                     IFLine lusasline = d_LusasData.getLineByNumber(i);
                     Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes);
+                    bhomBar.CustomData[AdapterId] = lusasline.getName();
                     bhomBars.Add(bhomBar);
                 }
             }
@@ -71,12 +74,30 @@ namespace BH.Adapter.Lusas
                 {
                     IFPoint lusasPoint = d_LusasData.getPointByNumber(i);
                     Node bhomNode = BH.Engine.Lusas.Convert.ToBHoMObject(lusasPoint);
-                    bhomNode.CustomData[AdapterId] = lusasPoint.getID();
+                    bhomNode.CustomData[AdapterId] = lusasPoint.getName();
                     bhomNodes.Add(bhomNode);
                 }
             }
             return bhomNodes;
          }
+
+        private List<PanelPlanar> ReadSurfaces(List<string> ids = null)
+        {
+            int maxSurfID = d_LusasData.getLargestSurfaceID();
+            List<PanelPlanar> bhomSurfaces = new List<PanelPlanar>();
+
+            for (int i = 1; i <= maxSurfID; i++)
+            {
+                if (d_LusasData.existsSurfaceByID(i))
+                {
+                    IFSurface lusasSurface = d_LusasData.getSurfaceByNumber(i);
+                    PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMObject(lusasSurface);
+                    bhompanel.CustomData[AdapterId] = lusasSurface.getName();
+                    bhomSurfaces.Add(bhompanel);
+                }
+            }
+            return bhomSurfaces;
+        }
 
         /***************************************/
 
