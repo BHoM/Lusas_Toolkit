@@ -27,7 +27,7 @@ namespace BH.Engine.Lusas
         public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf, Dictionary<string, Bar> bhomBars, Dictionary<string, Node> bhomNodes)
         {
             //method unfinished
-            PanelPlanar bhomPanel = new PanelPlanar();
+
             Polyline bhomPolyline = new Polyline();
 
 
@@ -38,19 +38,13 @@ namespace BH.Engine.Lusas
             Bar bhomBar = null;
 
             List<Point> bhomPoints = new List<Point>();
-
             for(int i = 0 ;i < n-1; i++)
             {
                 IFLine edge = lusasSurf.getLOFs()[i];
 
                 bhomBars.TryGetValue(edge.getID().ToString(), out bhomBar);
 
-                Point bhomPointEnd = new Point
-                {
-                    X = bhomBar.EndNode.Position.X,
-                    Y = bhomBar.EndNode.Position.Y,
-                    Z = bhomBar.EndNode.Position.Z
-                };
+                Point bhomPointEnd = bhomBar.EndNode.Position;
 
                 bhomPoints.Add(bhomPointEnd);
 
@@ -58,23 +52,24 @@ namespace BH.Engine.Lusas
                 {
                     bhomBars.TryGetValue(lusasSurf.getLOFs()[0].getID().ToString(), out bhomBar);
 
-                    Point bhomPointStart = new Point
-                    {
-                        X = bhomBar.StartNode.Position.X,
-                        Y = bhomBar.StartNode.Position.Y,
-                        Z = bhomBar.StartNode.Position.Z
-                    };
+                    Point bhomPointStart = bhomBar.StartNode.Position;
 
                     bhomPoints.Add(bhomPointStart);
+
+                    Point bhomPointEnd2 = bhomBar.EndNode.Position;
+
+                    bhomPoints.Add(bhomPointEnd2);
                 }
             }
 
             Polyline bhomPLine = new Polyline {ControlPoints = bhomPoints};
-
+            ICurve bhomICurve = bhomPLine;
             List<ICurve> bhomICurves = new List<ICurve>();
+            //BH.oM.Structural.Properties.IProperty2D bhomIProperty2D = null;
+            PanelPlanar bhomPanel = BH.Engine.Structure.Create.PanelPlanar(bhomICurve, bhomICurves);
+            bhomPanel.CustomData[AdapterId] = lusasSurf.getName();
 
-            bhomPanel = BH.Engine.Structure.Create.PanelPlanar(bhomPLine, null,null,lusasSurf.getName());
-            //ambigious definition, unsure how to fix
+            //Read tags from objectsets
 
             return bhomPanel;
         }
@@ -91,7 +86,10 @@ namespace BH.Engine.Lusas
 
             Bar bhomBar = new Bar { StartNode = startNode, EndNode = endNode, Name = lusasLine.getName() };
 
-            bhomBar.CustomData[AdapterId] = lusasLine.getID();
+            //Remove L- if contained
+            bhomBar.CustomData[AdapterId] = lusasLine.getName();
+
+            //Read tags from objectsets
 
             return bhomBar;
         }
@@ -100,7 +98,10 @@ namespace BH.Engine.Lusas
         {
             Node newNode = new Node { Position = { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() }, Name = lusasPoint.getName() };
 
-            newNode.CustomData[AdapterId] = lusasPoint.getID();
+            //This nees to remove P- if visible
+            newNode.CustomData[AdapterId] = lusasPoint.getName();
+
+            //Read tags from objectsets
 
             return newNode;
         }
