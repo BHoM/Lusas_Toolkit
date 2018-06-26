@@ -26,23 +26,16 @@ namespace BH.Engine.Lusas
 
         public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf, Dictionary<string, Bar> bhomBars, Dictionary<string, Node> bhomNodes)
         {
-            //method unfinished
-
             Polyline bhomPolyline = new Polyline();
-
 
             Object[] surfLines = lusasSurf.getLOFs();
 
             int n = surfLines.Length;
 
-            Bar bhomBar = null;
-
             List<Point> bhomPoints = new List<Point>();
             for(int i = 0 ;i < n-1; i++)
             {
-                IFLine edge = lusasSurf.getLOFs()[i];
-
-                bhomBars.TryGetValue(edge.getID().ToString(), out bhomBar);
+                Bar bhomBar = getBar(lusasSurf, i, bhomBars);
 
                 Point bhomPointEnd = bhomBar.EndNode.Position;
 
@@ -50,22 +43,17 @@ namespace BH.Engine.Lusas
 
                 if(i == n-2)
                 {
-                    bhomBars.TryGetValue(lusasSurf.getLOFs()[0].getID().ToString(), out bhomBar);
+                    Bar bhomFirstBar = getBar(lusasSurf, 0, bhomBars);
 
-                    Point bhomPointStart = bhomBar.StartNode.Position;
+                    bhomPoints.Add(bhomFirstBar.StartNode.Position);
 
-                    bhomPoints.Add(bhomPointStart);
-
-                    Point bhomPointEnd2 = bhomBar.EndNode.Position;
-
-                    bhomPoints.Add(bhomPointEnd2);
+                    bhomPoints.Add(bhomFirstBar.EndNode.Position);
                 }
             }
 
             Polyline bhomPLine = new Polyline {ControlPoints = bhomPoints};
             ICurve bhomICurve = bhomPLine;
             List<ICurve> bhomICurves = new List<ICurve>();
-            //BH.oM.Structural.Properties.IProperty2D bhomIProperty2D = null;
             PanelPlanar bhomPanel = BH.Engine.Structure.Create.PanelPlanar(bhomICurve, bhomICurves);
             bhomPanel.CustomData[AdapterId] = lusasSurf.getName();
 
@@ -76,18 +64,16 @@ namespace BH.Engine.Lusas
 
         public static Bar ToBHoMObject(this IFLine lusasLine, Dictionary<string, Node> bhomNodes)
         {
-            Node startNode = null;
-            IFPoint startPoint = lusasLine.getLOFs()[0];
-            bhomNodes.TryGetValue(startPoint.getID().ToString(), out startNode);
 
-            Node endNode = null;
-            IFPoint endPoint = lusasLine.getLOFs()[1];
-            bhomNodes.TryGetValue(endPoint.getID().ToString(), out endNode);
+            Node startNode = getNode(lusasLine, 0, bhomNodes);
 
-            Bar bhomBar = new Bar { StartNode = startNode, EndNode = endNode, Name = lusasLine.getName() };
+            Node endNode = getNode(lusasLine, 1, bhomNodes);
 
-            //Remove L- if contained
-            bhomBar.CustomData[AdapterId] = lusasLine.getName();
+            Bar bhomBar = new Bar { StartNode = startNode, EndNode = endNode};
+
+            String lineName = removePrefix(lusasLine.getName(), "L-");
+
+            bhomBar.CustomData[AdapterId] = lineName;
 
             //Read tags from objectsets
 
@@ -96,18 +82,53 @@ namespace BH.Engine.Lusas
 
         public static Node ToBHoMObject(this IFPoint lusasPoint)
         {
-            Node newNode = new Node { Position = { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() }, Name = lusasPoint.getName() };
+            Node bhomNode = new Node { Position = { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() } };
 
-            //This nees to remove P- if visible
-            newNode.CustomData[AdapterId] = lusasPoint.getName();
+            String pointName = removePrefix(lusasPoint.getName(), "P-");
+
+            bhomNode.CustomData[AdapterId] = pointName;
 
             //Read tags from objectsets
 
-            return newNode;
+            return bhomNode;
+        }
+        /***************************************************/
+        /**** Additional Methods                        ****/
+        /***************************************************/
+
+        public static string removePrefix(string geometryName, string forRemoval)
+        {
+            if (geometryName.Contains(forRemoval))
+            {
+                geometryName.Replace(forRemoval, "");
+            }
+            return geometryName;
         }
 
+        public static Node getNode(IFLine lusasLine, int nodeIndex, Dictionary<string, Node> bhomNodes)
+        {
+            Node bhomNode = null;
+            IFPoint lusasPoint = lusasLine.getLOFs()[nodeIndex];
+            String pointName = removePrefix(lusasPoint.getName(), "P-");
+            bhomNodes.TryGetValue(pointName, out bhomNode);
+
+            return bhomNode;
+        }
+
+        public static Bar getBar(IFSurface lusasSurf, int lineIndex, Dictionary<string, Bar> bhomBars)
+        {
+            Bar bhomBar = null;
+            IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
+            String lineName = removePrefix(lusasEdge.getName(), "P-");
+            bhomBars.TryGetValue(lineName, out bhomBar);
+
+            return bhomBar;
+        }
         //
 
         /***************************************************/
     }
 }
+
+
+

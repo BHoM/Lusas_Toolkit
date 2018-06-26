@@ -53,7 +53,7 @@ namespace BH.Adapter.Lusas
   
             foreach (Bar bar in bars)
             {
-                IFLine newline = createline(bar);
+                IFLine newline = createLine(bar);
             }
              return true;
         }
@@ -66,7 +66,7 @@ namespace BH.Adapter.Lusas
 
             foreach (PanelPlanar panel in panels)
             {
-                IFSurface newsurface = createsurface(panel);
+                IFSurface newsurface = createSurface(panel);
             }
 
             return true; 
@@ -80,7 +80,7 @@ namespace BH.Adapter.Lusas
 
             foreach (Node node in nodes)
             {
-                IFPoint newpoint = createpoint(node);
+                IFPoint newpoint = createPoint(node);
             }
 
             return true;
@@ -123,43 +123,43 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
         
-        public IFPoint createpoint(Node node)
+        public IFPoint createPoint(Node node)
         {
-            IFGeometryData GeomData = m_LusasApplication.geometryData();
-            GeomData.setAllDefaults();
-            GeomData.addCoords(node.Position.X, node.Position.Y, node.Position.Z);
-            IFDatabaseOperations database_point = d_LusasData.createPoint(GeomData);
+            IFGeometryData geomData = m_LusasApplication.geometryData();
+            geomData.setAllDefaults();
+            geomData.addCoords(node.Position.X, node.Position.Y, node.Position.Z);
+            IFDatabaseOperations database_point = d_LusasData.createPoint(geomData);
             IFPoint newPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
-            int bhid = System.Convert.ToInt32(node.CustomData[AdapterId]);
-            newPoint.setName("P"+bhid.ToString());
+            int bhomID = System.Convert.ToInt32(node.CustomData[AdapterId]);
+            newPoint.setName("P"+ bhomID.ToString());
             return newPoint;
         }
 
-        public IFLine createline(Bar bar)
+        public IFLine createLine(Bar bar)
         {
 
             IFPoint startPoint = existsPoint(bar.StartNode);
             IFPoint endPoint = existsPoint(bar.EndNode);
-            IFLine newline = d_LusasData.createLineByPoints(startPoint, endPoint);
-            newline.setName("L" + bar.CustomData[AdapterId]);
-            return newline;
+            IFLine newLine = d_LusasData.createLineByPoints(startPoint, endPoint);
+            newLine.setName("L" + bar.CustomData[AdapterId]);
+            return newLine;
         }
 
-        public IFSurface createsurface(PanelPlanar panel)
+        public IFSurface createSurface(PanelPlanar panel)
         {
-            IFGeometryData bhomedges = m_LusasApplication.geometryData();
-            List<ICurve> panellines = new List<ICurve>();
+            IFGeometryData bhomEdges = m_LusasApplication.geometryData();
+            List<ICurve> panelLines = new List<ICurve>();
 
             foreach (Edge edge in panel.ExternalEdges)
             {
-                panellines.AddRange(Query.ISubParts(edge.Curve).ToList());
+                panelLines.AddRange(Query.ISubParts(edge.Curve).ToList());
             }
 
-            IFSurface lusassurface = d_LusasData.createSurfaceBy(panellines);
-            int bhid = System.Convert.ToInt32(panel.CustomData[AdapterId]);
-            lusassurface.setName("S" + bhid.ToString());
+            IFSurface lusasSurface = d_LusasData.createSurfaceBy(panelLines);
+            int bhomID = System.Convert.ToInt32(panel.CustomData[AdapterId]);
+            lusasSurface.setName("S" + bhomID.ToString());
 
-           return lusassurface;
+           return lusasSurface;
         }
 
         public IFPoint existsPoint(Node node)
@@ -171,7 +171,7 @@ namespace BH.Adapter.Lusas
             }
             else
             {
-                newPoint = createpoint(node);
+                newPoint = createPoint(node);
             }
 
             return newPoint;

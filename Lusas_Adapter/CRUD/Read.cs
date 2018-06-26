@@ -47,15 +47,12 @@ namespace BH.Adapter.Lusas
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
 
-            //remove P from bhomNodes
-
             for (int i = 1; i <= maxlineid; i++)
             {
                 if (d_LusasData.existsLineByID(i))
                 {
                     IFLine lusasline = d_LusasData.getLineByNumber(i);
                     Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes);
-                    bhomBar.CustomData[AdapterId] = lusasline.getName();
                     bhomBars.Add(bhomBar);
                 }
             }
@@ -82,7 +79,6 @@ namespace BH.Adapter.Lusas
                 {
                     IFSurface lusasSurface = d_LusasData.getSurfaceByNumber(i);
                     PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMObject(lusasSurface, bhomBars, bhomNodes);
-                    //bhompanel.CustomData[AdapterId] = lusasSurface.getName();
                     bhomSurfaces.Add(bhompanel);
                 }
             }
@@ -100,7 +96,6 @@ namespace BH.Adapter.Lusas
                 {
                     IFPoint lusasPoint = d_LusasData.getPointByNumber(i);
                     Node bhomNode = BH.Engine.Lusas.Convert.ToBHoMObject(lusasPoint);
-                    bhomNode.CustomData[AdapterId] = lusasPoint.getName();
                     bhomNodes.Add(bhomNode);
                 }
             }

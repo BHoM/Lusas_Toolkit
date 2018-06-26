@@ -56,7 +56,7 @@ namespace BH.Adapter.Lusas
                 if (!string.IsNullOrWhiteSpace(node.Name))
                 {
                     d_LusasData.Delete(LusasNode);
-                    createpoint(node);
+                    createPoint(node);
                 }
             }
             return true;
