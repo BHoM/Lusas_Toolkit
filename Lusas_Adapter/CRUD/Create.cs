@@ -33,6 +33,10 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<Bar>);
                 }
+                if (objects.First() is PanelPlanar)
+                {
+                    success = CreateCollection(objects as IEnumerable<PanelPlanar>);
+                }
             }
 
             //success = CreateCollection(objects as dynamic);
@@ -148,11 +152,15 @@ namespace BH.Adapter.Lusas
         public IFSurface createSurface(PanelPlanar panel)
         {
             IFGeometryData bhomEdges = m_LusasApplication.geometryData();
-            List<ICurve> panelLines = new List<ICurve>();
+            List<IFLine> panelLines = new List<IFLine>();
+            IFGeometryData geomData = m_LusasApplication.geometryData();
 
             foreach (Edge edge in panel.ExternalEdges)
             {
-                panelLines.AddRange(Query.ISubParts(edge.Curve).ToList());
+                IFPoint startPoint = existsPoint(PointtoNode(edge.Curve.IStartPoint()));
+                IFPoint EndPoint = existsPoint(PointtoNode(edge.Curve.IStartPoint()));
+                IFLine LusasLine = d_LusasData.createLineByPoints(startPoint, EndPoint);
+                panelLines.Add(LusasLine);
             }
 
             IFSurface lusasSurface = d_LusasData.createSurfaceBy(panelLines);
@@ -177,20 +185,12 @@ namespace BH.Adapter.Lusas
             return newPoint;
         }
 
-        //public IFPoint existsSurface(PanelPlanar panel)
-        //{
-        //    IFPoint newPoint;
-        //    if (d_LusasData.existsPointByName(node.Name))
-        //    {
-        //        newPoint = d_LusasData.getPointByName(node.Name);
-        //    }
-        //    else
-        //    {
-        //        newPoint = createpoint(node);
-        //    }
+        public Node PointtoNode(Point point)
+        {
+            Node newNode = new Node { Position = { X = point.X, Y = point.Y, Z = point.Z } };
+            return newNode;
+        }
 
-        //    return newPoint;
-        //}
     }
 }
 
