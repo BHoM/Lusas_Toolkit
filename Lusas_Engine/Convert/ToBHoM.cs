@@ -55,7 +55,7 @@ namespace BH.Engine.Lusas
             ICurve bhomICurve = bhomPLine;
             List<ICurve> bhomICurves = new List<ICurve>();
             PanelPlanar bhomPanel = BH.Engine.Structure.Create.PanelPlanar(bhomICurve, bhomICurves);
-            bhomPanel.CustomData[AdapterId] = lusasSurf.getName();
+            bhomPanel.CustomData["Lusas_id"] = lusasSurf.getName();
 
             //Read tags from objectsets
 
@@ -73,7 +73,7 @@ namespace BH.Engine.Lusas
 
             String lineName = removePrefix(lusasLine.getName(), "L-");
 
-            bhomBar.CustomData[AdapterId] = lineName;
+            bhomBar.CustomData["Lusas_id"] = lineName;
 
             //Read tags from objectsets
 
@@ -86,7 +86,7 @@ namespace BH.Engine.Lusas
 
             String pointName = removePrefix(lusasPoint.getName(), "P-");
 
-            bhomNode.CustomData[AdapterId] = pointName;
+            bhomNode.CustomData["Lusas_id"] = pointName;
 
             //Read tags from objectsets
 
