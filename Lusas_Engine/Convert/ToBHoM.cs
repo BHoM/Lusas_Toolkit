@@ -26,6 +26,9 @@ namespace BH.Engine.Lusas
 
         public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf, Dictionary<string, Bar> bhomBars, Dictionary<string, Node> bhomNodes)
         {
+
+            //Peter to read lines as bars, and use bar.centreline to create line. This will maintain the Adapter ID.
+            //The same can be done with node.position as a point
             Polyline bhomPolyline = new Polyline();
 
             Object[] surfLines = lusasSurf.getLOFs();
@@ -71,7 +74,7 @@ namespace BH.Engine.Lusas
 
             Bar bhomBar = new Bar { StartNode = startNode, EndNode = endNode};
 
-            String lineName = removePrefix(lusasLine.getName(), "L-");
+            String lineName = removePrefix(lusasLine.getName(), "L");
 
             bhomBar.CustomData["Lusas_id"] = lineName;
 
@@ -84,9 +87,14 @@ namespace BH.Engine.Lusas
         {
             Node bhomNode = new Node { Position = { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() } };
 
+<<<<<<< HEAD
             String pointName = removePrefix(lusasPoint.getName(), "P-");
 
             bhomNode.CustomData["Lusas_id"] = pointName;
+=======
+            String pointName = removePrefix(lusasPoint.getName(), "P");
+            bhomNode.CustomData[AdapterId] = pointName;
+>>>>>>> master
 
             //Read tags from objectsets
 
@@ -109,7 +117,7 @@ namespace BH.Engine.Lusas
         {
             Node bhomNode = null;
             IFPoint lusasPoint = lusasLine.getLOFs()[nodeIndex];
-            String pointName = removePrefix(lusasPoint.getName(), "P-");
+            String pointName = removePrefix(lusasPoint.getName(), "P");
             bhomNodes.TryGetValue(pointName, out bhomNode);
 
             return bhomNode;
@@ -119,7 +127,7 @@ namespace BH.Engine.Lusas
         {
             Bar bhomBar = null;
             IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
-            String lineName = removePrefix(lusasEdge.getName(), "P-");
+            String lineName = removePrefix(lusasEdge.getName(), "P");
             bhomBars.TryGetValue(lineName, out bhomBar);
 
             return bhomBar;
