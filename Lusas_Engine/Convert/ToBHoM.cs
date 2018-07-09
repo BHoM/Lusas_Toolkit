@@ -26,9 +26,6 @@ namespace BH.Engine.Lusas
 
         public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf, Dictionary<string, Bar> bhomBars, Dictionary<string, Node> bhomNodes)
         {
-
-            //Peter to read lines as bars, and use bar.centreline to create line. This will maintain the Adapter ID.
-            //The same can be done with node.position as a point
             Polyline bhomPolyline = new Polyline();
 
             Object[] surfLines = lusasSurf.getLOFs();
@@ -36,7 +33,7 @@ namespace BH.Engine.Lusas
             int n = surfLines.Length;
 
             List<Point> bhomPoints = new List<Point>();
-            for(int i = 0 ;i < n-1; i++)
+            for (int i = 0; i < n - 1; i++)
             {
                 Bar bhomBar = getBar(lusasSurf, i, bhomBars);
 
@@ -44,7 +41,7 @@ namespace BH.Engine.Lusas
 
                 bhomPoints.Add(bhomPointEnd);
 
-                if(i == n-2)
+                if (i == n - 2)
                 {
                     Bar bhomFirstBar = getBar(lusasSurf, 0, bhomBars);
 
@@ -54,11 +51,11 @@ namespace BH.Engine.Lusas
                 }
             }
 
-            Polyline bhomPLine = new Polyline {ControlPoints = bhomPoints};
+            Polyline bhomPLine = new Polyline { ControlPoints = bhomPoints };
             ICurve bhomICurve = bhomPLine;
             List<ICurve> bhomICurves = new List<ICurve>();
             PanelPlanar bhomPanel = BH.Engine.Structure.Create.PanelPlanar(bhomICurve, bhomICurves);
-            bhomPanel.CustomData[AdapterId] = lusasSurf.getName();
+            bhomPanel.CustomData["Lusas_id"] = lusasSurf.getName();
 
             //Read tags from objectsets
 
@@ -72,11 +69,11 @@ namespace BH.Engine.Lusas
 
             Node endNode = getNode(lusasLine, 1, bhomNodes);
 
-            Bar bhomBar = new Bar { StartNode = startNode, EndNode = endNode};
+            Bar bhomBar = new Bar { StartNode = startNode, EndNode = endNode };
 
-            String lineName = removePrefix(lusasLine.getName(), "L");
+            String lineName = removePrefix(lusasLine.getName(), "L-");
 
-            bhomBar.CustomData[AdapterId] = lineName;
+            bhomBar.CustomData["Lusas_id"] = lineName;
 
             //Read tags from objectsets
 
@@ -87,8 +84,9 @@ namespace BH.Engine.Lusas
         {
             Node bhomNode = new Node { Position = { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() } };
 
-            String pointName = removePrefix(lusasPoint.getName(), "P");
-            bhomNode.CustomData[AdapterId] = pointName;
+            String pointName = removePrefix(lusasPoint.getName(), "P-");
+
+            bhomNode.CustomData["Lusas_id"] = pointName;
 
             //Read tags from objectsets
 
@@ -111,7 +109,7 @@ namespace BH.Engine.Lusas
         {
             Node bhomNode = null;
             IFPoint lusasPoint = lusasLine.getLOFs()[nodeIndex];
-            String pointName = removePrefix(lusasPoint.getName(), "P");
+            String pointName = removePrefix(lusasPoint.getName(), "P-");
             bhomNodes.TryGetValue(pointName, out bhomNode);
 
             return bhomNode;
@@ -121,7 +119,7 @@ namespace BH.Engine.Lusas
         {
             Bar bhomBar = null;
             IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
-            String lineName = removePrefix(lusasEdge.getName(), "P");
+            String lineName = removePrefix(lusasEdge.getName(), "P-");
             bhomBars.TryGetValue(lineName, out bhomBar);
 
             return bhomBar;
@@ -131,6 +129,3 @@ namespace BH.Engine.Lusas
         /***************************************************/
     }
 }
-
-
-

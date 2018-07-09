@@ -3,6 +3,7 @@ using BH.oM.Structural.Elements;
 using BH.oM.Structural.Properties;
 using System;
 using System.Collections.Generic;
+using BH.oM.Geometry;
 
 namespace BH.Adapter.Lusas
 {
@@ -44,7 +45,7 @@ namespace BH.Adapter.Lusas
 
         private static Dictionary<Type, List<Type>> m_DependencyTypes = new Dictionary<Type, List<Type>>
         {
-            {typeof(PanelPlanar), new List<Type> {typeof(Bar), typeof(Node) } },
+            {typeof(PanelPlanar), new List<Type> {typeof(Edge), typeof(Point) } },
             {typeof(Bar), new List<Type> { typeof(Node) } },
             {typeof(ISectionProperty), new List<Type> { typeof(Material) } },
             {typeof(RigidLink), new List<Type> { typeof(LinkConstraint), typeof(Node) } },

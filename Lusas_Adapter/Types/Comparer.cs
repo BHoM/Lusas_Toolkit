@@ -3,6 +3,7 @@ using BH.oM.Common.Materials;
 using BH.oM.Structural.Elements;
 using BH.oM.Structural.Properties;
 using System;
+using BH.oM.Geometry;
 using System.Collections.Generic;
 
 namespace BH.Adapter.Lusas
@@ -41,6 +42,8 @@ namespace BH.Adapter.Lusas
         private static Dictionary<Type, object> m_Comparers = new Dictionary<Type, object>
         {
             {typeof(Node), new BH.Engine.Structure.NodeDistanceComparer(3) },   //The 3 in here sets how many decimal places to look at for node merging. 3 decimal places gives mm precision
+            {typeof(Edge), new BH.Engine.Structure.BarEndNodesDistanceComparer(3) },
+            {typeof(Point), new BH.Engine.Structure.NodeDistanceComparer(3) },
             {typeof(ISectionProperty), new BHoMObjectNameOrToStringComparer() },
             {typeof(Material), new BHoMObjectNameComparer() },
             {typeof(LinkConstraint), new BHoMObjectNameComparer() },

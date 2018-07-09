@@ -8,6 +8,7 @@ using BH.oM.Structural.Properties;
 using BH.oM.Structural.Loads;
 using BH.oM.Common.Materials;
 using BH.Engine.Geometry;
+using BH.Engine.Structure;
 
 using LusasM15_2;
 
@@ -62,15 +63,64 @@ namespace BH.Adapter.Lusas
              return true;
         }
 
+        private bool CreateCollection(IEnumerable<Edge> edges)
+        {
+            //Code for creating a collection of bars in the software
+
+            foreach (Edge edge in edges)
+            {
+                IFLine newline = createEdge(edge);
+            }
+            return true;
+        }
+
         /***************************************************/
 
         private bool CreateCollection(IEnumerable<PanelPlanar> panels)
         {
-            //Code for creating a collection of nodes in the software
+
+            List<Point> allPoints = new List<Point>();
+            List<ICurve> allEdges = new List<ICurve>();
+            List<double> coordsum = new List<double>();
+            List<IFPoint> LusasPoints = new List<IFPoint>();
+            List<IFLine> LusasLines = new List<IFLine>();
 
             foreach (PanelPlanar panel in panels)
             {
-                IFSurface newsurface = createSurface(panel);
+                allPoints.AddRange(panel.ControlPoints());
+                allEdges.AddRange(panel.AllEdgeCurves());
+            }
+
+            List<Point> distinctPoints = allPoints.GroupBy(m => new { X = Math.Round(m.X,3), Y=Math.Round(m.Y,3), Z=Math.Round(m.Z,3) })
+                             .Select(x => x.First())
+                             .ToList();
+
+            List<ICurve> distinctEdges = allEdges.GroupBy(m => new { X = Math.Round(m.IStartDir().SquareLength(), 3), Y = Math.Round(m.IEndDir().SquareLength(), 3) })
+                            .Select(x => x.First())
+                            .ToList();
+
+            distinctEdges[0].IArea();
+            //List<Point> distinctPoints = allPoints.Distinct().ToList();
+
+            foreach (Point point in distinctPoints)
+            {
+                Node newnode = PointToNode(point);
+                LusasPoints.Add(existsPoint(newnode));
+            }
+
+            foreach (ICurve edge in distinctEdges)
+            {
+                Point bhomStartPoint = edge.IStartPoint();
+                Point bhomEndPoint = edge.IEndPoint();
+                int startindex = distinctPoints.IndexOf(bhomStartPoint);
+                int endindex = distinctPoints.IndexOf(bhomEndPoint);
+                Bar bhomBar = LineToBar(PointToNode(bhomStartPoint), PointToNode(bhomEndPoint));
+                LusasLines.Add(existsLine(bhomBar, LusasPoints[startindex], LusasPoints[endindex]));
+            }
+
+            foreach (PanelPlanar panel in panels)
+            {
+                IFSurface newsurface = createSurface(panel, distinctPoints, LusasPoints, distinctEdges, LusasLines);
             }
 
             return true; 
@@ -134,14 +184,12 @@ namespace BH.Adapter.Lusas
             geomData.addCoords(node.Position.X, node.Position.Y, node.Position.Z);
             IFDatabaseOperations database_point = d_LusasData.createPoint(geomData);
             IFPoint newPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
-            int bhomID = System.Convert.ToInt32(node.CustomData[AdapterId]);
-            newPoint.setName("P"+ bhomID.ToString());
+            newPoint.setName("P"+ node.CustomData[AdapterId].ToString());
             return newPoint;
         }
 
         public IFLine createLine(Bar bar)
         {
-
             IFPoint startPoint = existsPoint(bar.StartNode);
             IFPoint endPoint = existsPoint(bar.EndNode);
             IFLine newLine = d_LusasData.createLineByPoints(startPoint, endPoint);
@@ -149,30 +197,44 @@ namespace BH.Adapter.Lusas
             return newLine;
         }
 
-        public IFSurface createSurface(PanelPlanar panel)
+        public IFLine createEdge(Edge edge)
         {
-            IFGeometryData bhomEdges = m_LusasApplication.geometryData();
-            List<IFLine> panelLines = new List<IFLine>();
-            IFGeometryData geomData = m_LusasApplication.geometryData();
+            //List<IFPoint> LusasPoints = ReadNodes();
+            IFPoint startPoint = createPoint(PointToNode(edge.Curve.IStartPoint()));
+            IFPoint endPoint = createPoint(PointToNode(edge.Curve.IEndPoint()));
+            IFLine newLine = d_LusasData.createLineByPoints(startPoint, endPoint);
+            newLine.setName("L" + edge.CustomData[AdapterId]);
+            return newLine;
+        }
 
-            foreach (Edge edge in panel.ExternalEdges)
+        public IFSurface createSurface(PanelPlanar panel, List<Point> distinctPoints, List<IFPoint> LusasPoints, List<ICurve> distinctEdges, List<IFLine> LusasLines)
+        {
+            IFObjectSet LusasGroup = d_LusasData.createGroup("temp");
+
+            foreach (ICurve edge in panel.AllEdgeCurves())
             {
-                IFPoint startPoint = existsPoint(PointtoNode(edge.Curve.IStartPoint()));
-                IFPoint EndPoint = existsPoint(PointtoNode(edge.Curve.IStartPoint()));
-                IFLine LusasLine = d_LusasData.createLineByPoints(startPoint, EndPoint);
-                panelLines.Add(LusasLine);
+                int edgeindex = distinctEdges.IndexOf(edge);
+                LusasGroup.add(LusasLines[edgeindex]);
             }
 
-            IFSurface lusasSurface = d_LusasData.createSurfaceBy(panelLines);
-            int bhomID = System.Convert.ToInt32(panel.CustomData[AdapterId]);
-            lusasSurface.setName("S" + bhomID.ToString());
-
-           return lusasSurface;
+            IFSurface lusasSurface =existsSurface(panel,LusasGroup);
+            d_LusasData.getGroupByName("temp").ungroup();
+            return lusasSurface;
         }
+       
 
         public IFPoint existsPoint(Node node)
         {
             IFPoint newPoint;
+
+            int bhomID;
+            if (node.CustomData.ContainsKey(AdapterId))
+                bhomID = System.Convert.ToInt32(node.CustomData[AdapterId]);
+            else
+                bhomID = System.Convert.ToInt32(NextId(node.GetType()));
+
+            node.CustomData[AdapterId] = bhomID;
+
             if (d_LusasData.existsPointByName("P"+node.CustomData[AdapterId]))
             {
                 newPoint = d_LusasData.getPointByName("P" + node.CustomData[AdapterId]);
@@ -185,10 +247,66 @@ namespace BH.Adapter.Lusas
             return newPoint;
         }
 
-        public Node PointtoNode(Point point)
+        
+
+        public IFLine existsLine(Bar bar, IFPoint startPoint, IFPoint endPoint)
         {
-            Node newNode = new Node { Position = { X = point.X, Y = point.Y, Z = point.Z } };
-            return newNode;
+            IFLine newLine;
+
+            int bhomID;
+            if (bar.CustomData.ContainsKey(AdapterId))
+                bhomID = System.Convert.ToInt32(bar.CustomData[AdapterId]);
+            else
+                bhomID = System.Convert.ToInt32(NextId(bar.GetType()));
+
+            bar.CustomData[AdapterId] = bhomID;
+
+            if (d_LusasData.existsLineByName("L" + bar.CustomData[AdapterId]))
+            {
+                newLine = d_LusasData.getLineByName("L" + bar.CustomData[AdapterId]);
+            }
+            else
+            {
+
+                newLine = d_LusasData.createLineByPoints(startPoint,endPoint);
+                newLine.setName("L" + bar.CustomData[AdapterId]);
+                return newLine;
+            }
+
+            return newLine;
+        }
+
+        public IFSurface existsSurface(PanelPlanar panel, IFObjectSet panelLines)
+        {
+
+            IFSurface newSurface;
+            if (d_LusasData.existsSurfaceByName("S" + panel.CustomData[AdapterId]))
+            {
+                newSurface = d_LusasData.getSurfaceByName("S" + panel.CustomData[AdapterId]);
+            }
+            else
+            {
+                newSurface = d_LusasData.createSurfaceBy(panelLines);
+                newSurface.setName("S" + panel.CustomData[AdapterId]);
+                return newSurface;
+            }
+
+            return newSurface;
+        }
+
+        public Node PointToNode(Point point)
+        {
+
+            Node NewNode = new Node { Position = { X = point.X, Y = point.Y, Z = point.Z} };
+
+            return NewNode;
+        }
+
+        public Bar LineToBar(Node startNode, Node endNode)
+        {
+            Bar NewBar = new Bar { StartNode = startNode, EndNode = endNode };
+
+            return NewBar;
         }
 
     }
