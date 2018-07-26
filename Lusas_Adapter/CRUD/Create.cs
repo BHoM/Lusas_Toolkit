@@ -63,30 +63,6 @@ namespace BH.Adapter.Lusas
              return true;
         }
 
-<<<<<<< HEAD
-        private bool CreateCollection(IEnumerable<Edge> edges)
-        {
-            //Code for creating a collection of bars in the software
-
-            foreach (Edge edge in edges)
-            {
-                IFLine newline = createEdge(edge);
-            }
-            return true;
-        }
-=======
-        //private bool CreateCollection(IEnumerable<Edge> edges)
-        //{
-        //    //Code for creating a collection of bars in the software
-
-        //    foreach (Edge edge in edges)
-        //    {
-        //        IFLine newline = createEdge(edge);
-        //    }
-        //    return true;
-        //}
->>>>>>> CS-Test
-
         /***************************************************/
 
         private bool CreateCollection(IEnumerable<PanelPlanar> panels)
@@ -108,20 +84,10 @@ namespace BH.Adapter.Lusas
                              .Select(x => x.First())
                              .ToList();
 
-<<<<<<< HEAD
-            List<ICurve> distinctEdges = allEdges.GroupBy(m => new { X = Math.Round(m.IStartDir().SquareLength(), 3), Y = Math.Round(m.IEndDir().SquareLength(), 3) })
-                            .Select(x => x.First())
-                            .ToList();
-
-            distinctEdges[0].IArea();
-            //List<Point> distinctPoints = allPoints.Distinct().ToList();
-
-=======
             List<ICurve> distinctEdges = allEdges.GroupBy(m => new { X = Math.Round(m.IPointAtParameter(0.5).X, 3), Y = Math.Round(m.IPointAtParameter(0.5).Y, 3), Z = Math.Round(m.IPointAtParameter(0.5).Z, 3) })
                             .Select(x => x.First())
                             .ToList();
 
->>>>>>> CS-Test
             foreach (Point point in distinctPoints)
             {
                 Node newnode = PointToNode(point);
@@ -132,17 +98,13 @@ namespace BH.Adapter.Lusas
             {
                 Point bhomStartPoint = edge.IStartPoint();
                 Point bhomEndPoint = edge.IEndPoint();
-<<<<<<< HEAD
-                int startindex = distinctPoints.IndexOf(bhomStartPoint);
-                int endindex = distinctPoints.IndexOf(bhomEndPoint);
-=======
                 int startindex = distinctPoints.FindIndex(m => Math.Round(m.X,3).Equals(Math.Round(bhomStartPoint.X, 3)) &&
                         Math.Round(m.Y,3).Equals(Math.Round(bhomStartPoint.Y, 3)) &&
                         Math.Round(m.Z,3).Equals(Math.Round(bhomStartPoint.Z, 3)));
                 int endindex = distinctPoints.FindIndex(m => Math.Round(m.X,3).Equals(Math.Round(bhomEndPoint.X, 3)) &&
         Math.Round(m.Y,3).Equals(Math.Round(bhomEndPoint.Y, 3)) &&
         Math.Round(m.Z,3).Equals(Math.Round(bhomEndPoint.Z, 3)));
->>>>>>> CS-Test
+
                 Bar bhomBar = LineToBar(PointToNode(bhomStartPoint), PointToNode(bhomEndPoint));
                 LusasLines.Add(existsLine(bhomBar, LusasPoints[startindex], LusasPoints[endindex]));
             }
@@ -226,28 +188,6 @@ namespace BH.Adapter.Lusas
             return newLine;
         }
 
-<<<<<<< HEAD
-        public IFLine createEdge(Edge edge)
-        {
-            //List<IFPoint> LusasPoints = ReadNodes();
-            IFPoint startPoint = createPoint(PointToNode(edge.Curve.IStartPoint()));
-            IFPoint endPoint = createPoint(PointToNode(edge.Curve.IEndPoint()));
-            IFLine newLine = d_LusasData.createLineByPoints(startPoint, endPoint);
-            newLine.setName("L" + edge.CustomData[AdapterId]);
-            return newLine;
-        }
-
-        public IFSurface createSurface(PanelPlanar panel, List<Point> distinctPoints, List<IFPoint> LusasPoints, List<ICurve> distinctEdges, List<IFLine> LusasLines)
-        {
-            IFObjectSet LusasGroup = d_LusasData.createGroup("temp");
-
-            foreach (ICurve edge in panel.AllEdgeCurves())
-            {
-                int edgeindex = distinctEdges.IndexOf(edge);
-                LusasGroup.add(LusasLines[edgeindex]);
-            }
-
-=======
         //public IFLine createEdge(Edge edge)
         //{
         //    IFPoint startPoint = createPoint(PointToNode(edge.Curve.IStartPoint()));
@@ -272,7 +212,6 @@ namespace BH.Adapter.Lusas
                 LusasGroup.add(LusasLines[edgeindex]);
             }
 
->>>>>>> CS-Test
             IFSurface lusasSurface =existsSurface(panel,LusasGroup);
             d_LusasData.getGroupByName("temp").ungroup();
             return lusasSurface;
@@ -303,11 +242,6 @@ namespace BH.Adapter.Lusas
             return newPoint;
         }
 
-<<<<<<< HEAD
-        
-
-=======
->>>>>>> CS-Test
         public IFLine existsLine(Bar bar, IFPoint startPoint, IFPoint endPoint)
         {
             IFLine newLine;
@@ -326,10 +260,6 @@ namespace BH.Adapter.Lusas
             }
             else
             {
-<<<<<<< HEAD
-
-=======
->>>>>>> CS-Test
                 newLine = d_LusasData.createLineByPoints(startPoint,endPoint);
                 newLine.setName("L" + bar.CustomData[AdapterId]);
                 return newLine;
@@ -339,29 +269,7 @@ namespace BH.Adapter.Lusas
         }
 
         public IFSurface existsSurface(PanelPlanar panel, IFObjectSet panelLines)
-<<<<<<< HEAD
-        {
 
-            IFSurface newSurface;
-            if (d_LusasData.existsSurfaceByName("S" + panel.CustomData[AdapterId]))
-            {
-                newSurface = d_LusasData.getSurfaceByName("S" + panel.CustomData[AdapterId]);
-            }
-            else
-            {
-                newSurface = d_LusasData.createSurfaceBy(panelLines);
-                newSurface.setName("S" + panel.CustomData[AdapterId]);
-                return newSurface;
-            }
-
-            return newSurface;
-        }
-
-        public Node PointToNode(Point point)
-        {
-
-            Node NewNode = new Node { Position = { X = point.X, Y = point.Y, Z = point.Z} };
-=======
         {
 
             IFSurface newSurface;
@@ -383,8 +291,6 @@ namespace BH.Adapter.Lusas
         {
 
             Node NewNode = new Node { Position = { X = point.X, Y = point.Y, Z = point.Z } };
->>>>>>> CS-Test
-
             return NewNode;
         }
 
