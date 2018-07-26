@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BH.oM.Structural.Elements;
 using BH.oM.Geometry;
+using BH.Engine.Geometry;
+
 using LusasM15_2;
 
 
@@ -79,6 +81,26 @@ namespace BH.Engine.Lusas
 
             return bhomBar;
         }
+
+        //public static Edge ToBHoMObject(this IFLine lusasLine, Dictionary<string, Node> bhomNodes)
+        //{
+
+        //    Node startNode = getNode(lusasLine, 0, bhomNodes);
+
+        //    Point startPoint = startNode.Position;
+
+        //    Node endNode = getNode(lusasLine, 1, bhomNodes);
+
+        //    Point endPoint = endNode.Position;
+
+        //    String lineName = removePrefix(lusasLine.getName(), "L-");
+
+        //    bhomEdge.CustomData["Lusas_id"] = lineName;
+
+        //    Read tags from objectsets
+
+        //    return bhomEdge;
+        //}
 
         public static Node ToBHoMObject(this IFPoint lusasPoint)
         {

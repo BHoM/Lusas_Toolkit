@@ -63,16 +63,16 @@ namespace BH.Adapter.Lusas
              return true;
         }
 
-        private bool CreateCollection(IEnumerable<Edge> edges)
-        {
-            //Code for creating a collection of bars in the software
+        //private bool CreateCollection(IEnumerable<Edge> edges)
+        //{
+        //    //Code for creating a collection of bars in the software
 
-            foreach (Edge edge in edges)
-            {
-                IFLine newline = createEdge(edge);
-            }
-            return true;
-        }
+        //    foreach (Edge edge in edges)
+        //    {
+        //        IFLine newline = createEdge(edge);
+        //    }
+        //    return true;
+        //}
 
         /***************************************************/
 
@@ -95,12 +95,9 @@ namespace BH.Adapter.Lusas
                              .Select(x => x.First())
                              .ToList();
 
-            //List<ICurve> distinctEdges = allEdges.GroupBy(m => new { X = Math.Round(m.IStartDir().SquareLength(), 3), Y = Math.Round(m.IEndDir().SquareLength(), 3) })
-            //                .Select(x => x.First())
-            //                .ToList();
-
-            distinctEdges[0].IArea();
-            //List<Point> distinctPoints = allPoints.Distinct().ToList();
+            List<ICurve> distinctEdges = allEdges.GroupBy(m => new { X = Math.Round(m.IPointAtParameter(0.5).X, 3), Y = Math.Round(m.IPointAtParameter(0.5).Y, 3), Z = Math.Round(m.IPointAtParameter(0.5).Z, 3) })
+                            .Select(x => x.First())
+                            .ToList();
 
             foreach (Point point in distinctPoints)
             {
@@ -197,15 +194,14 @@ namespace BH.Adapter.Lusas
             return newLine;
         }
 
-        public IFLine createEdge(Edge edge)
-        {
-            List<IFPoint> LusasPoints = ReadNodes()
-            IFPoint startPoint = createPoint(PointToNode(edge.Curve.IStartPoint()));
-            IFPoint endPoint = createPoint(PointToNode(edge.Curve.IEndPoint()));
-            IFLine newLine = d_LusasData.createLineByPoints(startPoint, endPoint);
-            newLine.setName("L" + edge.CustomData[AdapterId]);
-            return newLine;
-        }
+        //public IFLine createEdge(Edge edge)
+        //{
+        //    IFPoint startPoint = createPoint(PointToNode(edge.Curve.IStartPoint()));
+        //    IFPoint endPoint = createPoint(PointToNode(edge.Curve.IEndPoint()));
+        //    IFLine newLine = d_LusasData.createLineByPoints(startPoint, endPoint);
+        //    newLine.setName("L" + edge.CustomData[AdapterId]);
+        //    return newLine;
+        //}
 
         public IFSurface createSurface(PanelPlanar panel, List<Point> distinctPoints, List<IFPoint> LusasPoints, List<ICurve> distinctEdges, List<IFLine> LusasLines)
         {

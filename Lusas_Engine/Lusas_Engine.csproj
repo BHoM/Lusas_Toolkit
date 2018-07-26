@@ -34,6 +34,10 @@
       <HintPath>..\..\BHoM\Build\BHoM.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Geometry_Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BHoM_Engine\Geometry_Engine\obj\Debug\Geometry_Engine.dll</HintPath>
+    </Reference>
     <Reference Include="Interop.LusasM15_2">
       <HintPath>..\Lusas_Legacy\obj\Debug\Interop.LusasM15_2.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
