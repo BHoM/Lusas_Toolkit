@@ -104,6 +104,27 @@ namespace BH.Adapter.Lusas
 
         /***************************************/
 
+        //private List<Edge> ReadEdges(List<string> ids = null)
+        //{
+        //    int maxlineid = d_LusasData.getLargestLineID();
+        //    List<Edge> bhomEdges = new List<Edge>();
+        //    IEnumerable<Node> bhomNodesList = ReadNodes();
+        //    Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
+
+        //    for (int i = 1; i <= maxlineid; i++)
+        //    {
+        //        if (d_LusasData.existsLineByID(i))
+        //        {
+        //            IFLine lusasline = d_LusasData.getLineByNumber(i);
+        //            Edge bhomEdge = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes);
+        //            bhomEdges.Add(bhomBar);
+        //        }
+        //    }
+        //    return bhomEdges;
+        //}
+
+        /***************************************/
+
         private List<ISectionProperty> ReadSectionProperties(List<string> ids = null)
         {
             //Implement code for reading section properties
