@@ -109,8 +109,12 @@ namespace BH.Adapter.Lusas
             {
                 Point bhomStartPoint = edge.IStartPoint();
                 Point bhomEndPoint = edge.IEndPoint();
-                int startindex = distinctPoints.IndexOf(bhomStartPoint);
-                int endindex = distinctPoints.IndexOf(bhomEndPoint);
+                int startindex = distinctPoints.FindIndex(m => Math.Round(m.X,3).Equals(Math.Round(bhomStartPoint.X, 3)) &&
+                        Math.Round(m.Y,3).Equals(Math.Round(bhomStartPoint.Y, 3)) &&
+                        Math.Round(m.Z,3).Equals(Math.Round(bhomStartPoint.Z, 3)));
+                int endindex = distinctPoints.FindIndex(m => Math.Round(m.X,3).Equals(Math.Round(bhomEndPoint.X, 3)) &&
+        Math.Round(m.Y,3).Equals(Math.Round(bhomEndPoint.Y, 3)) &&
+        Math.Round(m.Z,3).Equals(Math.Round(bhomEndPoint.Z, 3)));
                 Bar bhomBar = LineToBar(PointToNode(bhomStartPoint), PointToNode(bhomEndPoint));
                 LusasLines.Add(existsLine(bhomBar, LusasPoints[startindex], LusasPoints[endindex]));
             }
@@ -207,9 +211,14 @@ namespace BH.Adapter.Lusas
         {
             IFObjectSet LusasGroup = d_LusasData.createGroup("temp");
 
+            List<ICurve> panelcurves = panel.AllEdgeCurves();
+
             foreach (ICurve edge in panel.AllEdgeCurves())
             {
-                int edgeindex = distinctEdges.IndexOf(edge);
+                int edgeindex = distinctEdges.FindIndex(m => Math.Round(m.IPointAtParameter(0.5).X, 3).Equals(Math.Round(edge.IPointAtParameter(0.5).X, 3)) &&
+                            Math.Round(m.IPointAtParameter(0.5).Y, 3).Equals(Math.Round(edge.IPointAtParameter(0.5).Y, 3)) &&
+                           Math.Round(m.IPointAtParameter(0.5).Z, 3).Equals(Math.Round(edge.IPointAtParameter(0.5).Z, 3)));
+
                 LusasGroup.add(LusasLines[edgeindex]);
             }
 
