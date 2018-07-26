@@ -61,7 +61,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Convert\ToBHoM.cs" />
+    <Compile Include="Convert\ToBHoM\Additional_Methods.cs" />
+    <Compile Include="Convert\ToBHoM\Bar.cs" />
+    <Compile Include="Convert\ToBHoM\Node.cs" />
+    <Compile Include="Convert\ToBHoM\PanelPlanar.cs" />
+    <Compile Include="Convert\ToBHoM\_ToBHoM.cs" />
     <Compile Include="Convert\ToLusas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
