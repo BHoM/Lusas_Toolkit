@@ -66,8 +66,10 @@ namespace BH.Adapter.Lusas
         private bool CreateCollection(IEnumerable<Bar> bars)
         {
             //Code for creating a collection of bars in the software
-  
 
+            Dictionary<int, HashSet<String>> barTags = GetTypeTags(typeof(Bar));
+
+            barTags.Distinct();
 
             foreach (Bar bar in bars)
             {
