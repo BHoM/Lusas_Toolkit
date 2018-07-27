@@ -34,6 +34,12 @@
       <HintPath>..\..\BHoM\Build\BHoM.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="BHoM_Adapter">
+      <HintPath>..\..\BHoM_Adapter\BHoM_Adapter\obj\Debug\BHoM_Adapter.dll</HintPath>
+    </Reference>
+    <Reference Include="BHoM_Engine">
+      <HintPath>..\..\BHoM_Engine\BHoM_Engine\obj\Debug\BHoM_Engine.dll</HintPath>
+    </Reference>
     <Reference Include="Geometry_Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BHoM_Engine\Geometry_Engine\obj\Debug\Geometry_Engine.dll</HintPath>
@@ -46,6 +52,10 @@
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Lusas152\Programs\Lusas.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Lusas_Adapter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lusas_Adapter\bin\x86\Debug\Lusas_Adapter.dll</HintPath>
     </Reference>
     <Reference Include="Structure_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Structure_Engine.dll</HintPath>
@@ -66,7 +76,7 @@
     <Compile Include="Convert\ToBHoM\Node.cs" />
     <Compile Include="Convert\ToBHoM\PanelPlanar.cs" />
     <Compile Include="Convert\ToBHoM\_ToBHoM.cs" />
-    <Compile Include="Convert\ToLusas.cs" />
+    <Compile Include="Convert\ToLusas\_ToLusas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

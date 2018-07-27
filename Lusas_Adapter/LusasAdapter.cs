@@ -98,8 +98,8 @@ namespace BH.Adapter.Lusas
 
         //Add any comlink object as a private field here, example named:
 
-        private LusasWinApp m_LusasApplication;
-        private IFDatabase d_LusasData;
+        public LusasWinApp m_LusasApplication;
+        public IFDatabase d_LusasData;
 
         /***************************************************/
 

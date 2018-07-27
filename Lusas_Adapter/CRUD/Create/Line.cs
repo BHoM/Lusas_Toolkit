@@ -39,6 +39,7 @@ namespace BH.Adapter.Lusas
                 newLine.setName("L" + bar.CustomData[AdapterId]);
             }
 
+            
             return newLine;
 
         }

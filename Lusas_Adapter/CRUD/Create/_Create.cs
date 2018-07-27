@@ -67,6 +67,8 @@ namespace BH.Adapter.Lusas
         {
             //Code for creating a collection of bars in the software
   
+
+
             foreach (Bar bar in bars)
             {
                 IFLine newline = CreateLine(bar);
