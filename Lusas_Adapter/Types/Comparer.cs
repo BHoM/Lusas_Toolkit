@@ -43,13 +43,8 @@ namespace BH.Adapter.Lusas
         {
             {typeof(Node), new BH.Engine.Structure.NodeDistanceComparer(3) },   //The 3 in here sets how many decimal places to look at for node merging. 3 decimal places gives mm precision
             //{typeof(Edge), new BH.Engine.Structure.BarEndNodesDistanceComparer(3) },
-<<<<<<< HEAD
             { typeof(Point), new BH.Engine.Structure.NodeDistanceComparer(3) },
             { typeof(ISectionProperty), new BHoMObjectNameOrToStringComparer() },
-=======
-            {typeof(Point), new BH.Engine.Structure.NodeDistanceComparer(3) },
-            {typeof(ISectionProperty), new BHoMObjectNameOrToStringComparer() },
->>>>>>> f282fdf8acfeeeaa6ae1a14d70ad608f6a7df742
             {typeof(Material), new BHoMObjectNameComparer() },
             {typeof(LinkConstraint), new BHoMObjectNameComparer() },
             {typeof(IProperty2D), new BHoMObjectNameComparer() },
