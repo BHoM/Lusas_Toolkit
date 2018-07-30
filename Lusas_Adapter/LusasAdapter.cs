@@ -91,6 +91,18 @@ namespace BH.Adapter.Lusas
             return (Process.GetProcessesByName("lusas_m").Length > 0) ? true : false;
         }
 
+        private Dictionary<int, HashSet<string>> GetTypeTags(Type t)
+        {
+            Dictionary<int, HashSet<string>> typeTags;
+
+            if (!m_tags.TryGetValue(t, out typeTags))
+                typeTags = new Dictionary<int, HashSet<string>>();
+
+            m_tags[t] = typeTags;
+
+            return typeTags;
+        }
+
 
         /***************************************************/
         /**** Private  Fields                           ****/
@@ -98,8 +110,10 @@ namespace BH.Adapter.Lusas
 
         //Add any comlink object as a private field here, example named:
 
-        private LusasWinApp m_LusasApplication;
-        private IFDatabase d_LusasData;
+        public LusasWinApp m_LusasApplication;
+        public IFDatabase d_LusasData;
+        private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
+
 
         /***************************************************/
 
