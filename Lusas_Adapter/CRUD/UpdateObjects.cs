@@ -22,6 +22,8 @@ namespace BH.Adapter.Lusas
         //Method being called for any object already existing in the model in terms of comparers is found.
         //Default implementation first deletes these objects, then creates new ones, if not applicable for the software, override this method
 
+
+            //I do not think the update method is applicable because of dependency from Higher Order Features (HOF)
         protected override bool UpdateObjects<T>(IEnumerable<T> objects)
         {
             bool success = true;
@@ -46,16 +48,17 @@ namespace BH.Adapter.Lusas
 
             foreach (Node node in nodes)
             {
-                IFPoint LusasNode = d_LusasData.getPointByName(node.Name);
+                int bhomID = System.Convert.ToInt32(node.CustomData[AdapterId]);
+                IFPoint lusasPoint = d_LusasData.getPointByName("P" + bhomID.ToString());
 
-                if (LusasNode == null)
+                if (lusasPoint == null)
                 {
                     return false;
                 }
                     
-                if (!string.IsNullOrWhiteSpace(node.Name))
+                if (!string.IsNullOrWhiteSpace(bhomID.ToString()))
                 {
-                    d_LusasData.Delete(LusasNode);
+                    d_LusasData.Delete(lusasPoint);
                     createPoint(node);
                 }
             }

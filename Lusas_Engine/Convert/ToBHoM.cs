@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 using BH.oM.Structural.Elements;
 using BH.oM.Geometry;
 using BH.Engine.Geometry;
-
 using LusasM15_2;
-
 
 namespace BH.Engine.Lusas
 {
@@ -61,6 +59,9 @@ namespace BH.Engine.Lusas
 
             //Read tags from objectsets
 
+
+
+
             return bhomPanel;
         }
 
@@ -78,6 +79,9 @@ namespace BH.Engine.Lusas
             bhomBar.CustomData["Lusas_id"] = lineName;
 
             //Read tags from objectsets
+
+            Line Peter = new Line { Start = startNode.Position, End = endNode.Position };
+            Edge Chris = new Edge { Curve = Peter };
 
             return bhomBar;
         }
@@ -120,11 +124,17 @@ namespace BH.Engine.Lusas
 
         public static string removePrefix(string geometryName, string forRemoval)
         {
+            string geometryID = "";
+
             if (geometryName.Contains(forRemoval))
             {
-                geometryName.Replace(forRemoval, "");
+                geometryID = geometryName.Replace(forRemoval, "");
             }
-            return geometryName;
+            else
+            {
+                geometryID = geometryName;
+            }
+            return geometryID;
         }
 
         public static Node getNode(IFLine lusasLine, int nodeIndex, Dictionary<string, Node> bhomNodes)
@@ -141,7 +151,7 @@ namespace BH.Engine.Lusas
         {
             Bar bhomBar = null;
             IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
-            String lineName = removePrefix(lusasEdge.getName(), "P-");
+            String lineName = removePrefix(lusasEdge.getName(), "L");
             bhomBars.TryGetValue(lineName, out bhomBar);
 
             return bhomBar;
