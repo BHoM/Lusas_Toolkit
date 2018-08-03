@@ -66,7 +66,7 @@
     <Reference Include="Lusas.Interop, Version=15.2.1601.22607, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Lusas152\Programs\Lusas.Interop.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\LUSAS152\Programs\Lusas.Interop.dll</HintPath>
     </Reference>
     <Reference Include="Structure_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Structure_Engine.dll</HintPath>
@@ -83,6 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CRUD\Create\Additional_Methods.cs" />
     <Compile Include="CRUD\Create\Surface.cs" />
     <Compile Include="CRUD\Create\Line.cs" />
     <Compile Include="CRUD\Create\Point.cs" />

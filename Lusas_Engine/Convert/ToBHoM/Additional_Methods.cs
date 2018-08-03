@@ -46,5 +46,21 @@ namespace BH.Engine.Lusas
 
             return bhomBar;
         }
+
+        public static List<String> isMemberOf(IFLine lusasLine, List<String> groupNames)
+        {
+
+            List<String> memberGroups = new List<string>();
+
+            foreach (String groupName in groupNames)
+            {
+                if (lusasLine.isMemberOfGroup(groupName))
+                {
+                    memberGroups.Add(groupName);
+                }
+            }
+
+            return memberGroups;
+        }
     }
 }

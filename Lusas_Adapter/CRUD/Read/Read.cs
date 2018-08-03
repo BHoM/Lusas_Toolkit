@@ -47,12 +47,14 @@ namespace BH.Adapter.Lusas
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
 
+            List<String> groupNames = ReadGroups();
+
             for (int i = 1; i <= maxlineid; i++)
             {
                 if (d_LusasData.existsLineByID(i))
                 {
                     IFLine lusasline = d_LusasData.getLineByNumber(i);
-                    Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes);
+                    Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes, groupNames);
                     bhomBars.Add(bhomBar);
                 }
             }
@@ -100,6 +102,23 @@ namespace BH.Adapter.Lusas
                 }
             }
             return bhomNodes;
+        }
+
+        private List<String> ReadGroups(List<string> ids = null)
+        {
+            int numGroups = d_LusasData.countGroups();
+
+            IFGroup lusasGroup = null;
+
+            List<String> groupNames = new List<String>();
+
+            for(int i=0; i<numGroups; i++)
+            {
+                lusasGroup = d_LusasData.getObjects("Groups")[i];
+                groupNames.Add(lusasGroup.getName());
+            }
+
+            return groupNames;
         }
 
         /***************************************/

@@ -42,6 +42,11 @@ namespace BH.Adapter.Lusas
             }
             d_LusasData.getGroupByName("temp").ungroup();
 
+            if (!(panel.Tags.Count == 0))
+            {
+                assignObjectSet(newSurface, panel.Tags);
+            }
+
             return newSurface;
         }
 

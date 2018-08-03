@@ -43,6 +43,11 @@ namespace BH.Adapter.Lusas
                 return newPoint;
             }
 
+            if(!(node.Tags.Count == 0))
+            {
+                assignObjectSet(newPoint, node.Tags);
+            }
+
             return newPoint;
         }
 
