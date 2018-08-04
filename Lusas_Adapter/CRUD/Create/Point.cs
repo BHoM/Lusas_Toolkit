@@ -40,7 +40,6 @@ namespace BH.Adapter.Lusas
                 IFDatabaseOperations database_point = d_LusasData.createPoint(geomData);
                 newPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
                 newPoint.setName("P" + node.CustomData[AdapterId].ToString());
-                return newPoint;
             }
 
             if(!(node.Tags.Count == 0))

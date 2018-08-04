@@ -12,9 +12,11 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static Node ToBHoMObject(this IFPoint lusasPoint)
+        public static Node ToBHoMObject(this IFPoint lusasPoint, HashSet<String> groupNames)
         {
-            Node bhomNode = new Node { Position = { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() } };
+            HashSet<String> tags = new HashSet<string>(isMemberOf(lusasPoint, groupNames));
+
+            Node bhomNode = new Node { Position = { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() }, Tags = tags };
 
             String pointName = removePrefix(lusasPoint.getName(), "P");
 

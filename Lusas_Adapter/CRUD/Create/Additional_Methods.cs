@@ -17,8 +17,6 @@ namespace BH.Adapter.Lusas
     {
         public void assignObjectSet(IFPoint newPoint, HashSet<String> tags)
         {
-            tags.ToList();
-
             foreach(string tag in tags)
             {
                 IFObjectSet objectSet = d_LusasData.getGroupByName(tag);
@@ -28,8 +26,6 @@ namespace BH.Adapter.Lusas
 
         public void assignObjectSet(IFLine newLine, HashSet<String> tags)
         {
-            tags.ToList();
-
             foreach (string tag in tags)
             {
                 IFObjectSet objectSet = d_LusasData.getGroupByName(tag);
@@ -39,8 +35,6 @@ namespace BH.Adapter.Lusas
 
         public void assignObjectSet(IFSurface newSurface, HashSet<String> tags)
         {
-            tags.ToList();
-
             foreach (string tag in tags)
             {
                 IFObjectSet objectSet = d_LusasData.getGroupByName(tag);

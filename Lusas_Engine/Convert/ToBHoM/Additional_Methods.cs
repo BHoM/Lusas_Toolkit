@@ -47,14 +47,14 @@ namespace BH.Engine.Lusas
             return bhomBar;
         }
 
-        public static List<String> isMemberOf(IFLine lusasLine, List<String> groupNames)
+        public static HashSet<String> isMemberOf(IFGeometry lusasGeometry, HashSet<String> groupNames)
         {
 
-            List<String> memberGroups = new List<string>();
+            HashSet<String> memberGroups = new HashSet<string>();
 
             foreach (String groupName in groupNames)
             {
-                if (lusasLine.isMemberOfGroup(groupName))
+                if (lusasGeometry.isMemberOfGroup(groupName))
                 {
                     memberGroups.Add(groupName);
                 }
