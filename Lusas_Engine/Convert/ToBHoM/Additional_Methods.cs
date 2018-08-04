@@ -46,5 +46,21 @@ namespace BH.Engine.Lusas
 
             return bhomBar;
         }
+
+        public static HashSet<String> isMemberOf(IFGeometry lusasGeometry, HashSet<String> groupNames)
+        {
+
+            HashSet<String> memberGroups = new HashSet<string>();
+
+            foreach (String groupName in groupNames)
+            {
+                if (lusasGeometry.isMemberOfGroup(groupName))
+                {
+                    memberGroups.Add(groupName);
+                }
+            }
+
+            return memberGroups;
+        }
     }
 }

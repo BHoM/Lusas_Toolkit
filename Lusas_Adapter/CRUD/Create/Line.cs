@@ -39,7 +39,11 @@ namespace BH.Adapter.Lusas
                 newLine.setName("L" + bar.CustomData[AdapterId]);
             }
 
-            
+            if (!(bar.Tags.Count == 0))
+            {
+                assignObjectSet(newLine, bar.Tags);
+            }
+
             return newLine;
 
         }
@@ -64,6 +68,11 @@ namespace BH.Adapter.Lusas
             {
                 newLine = d_LusasData.createLineByPoints(startPoint, endPoint);
                 newLine.setName("L" + bar.CustomData[AdapterId]);
+            }
+
+            if (!(bar.Tags.Count == 0))
+            {
+                assignObjectSet(newLine, bar.Tags);
             }
 
             return newLine;

@@ -47,12 +47,14 @@ namespace BH.Adapter.Lusas
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
 
+            HashSet<String> groupNames = ReadGroups();
+
             for (int i = 1; i <= maxlineid; i++)
             {
                 if (d_LusasData.existsLineByID(i))
                 {
                     IFLine lusasline = d_LusasData.getLineByNumber(i);
-                    Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes);
+                    Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes, groupNames);
                     bhomBars.Add(bhomBar);
                 }
             }
@@ -71,14 +73,14 @@ namespace BH.Adapter.Lusas
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
             IEnumerable<Bar> bhomBarsList = ReadBars();
             Dictionary<string, Bar> bhomBars = bhomBarsList.ToDictionary(x => x.CustomData[AdapterId].ToString());
-
+            HashSet<String> groupNames = ReadGroups();
 
             for (int i = 1; i <= maxSurfID; i++)
             {
                 if (d_LusasData.existsSurfaceByID(i))
                 {
                     IFSurface lusasSurface = d_LusasData.getSurfaceByNumber(i);
-                    PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMObject(lusasSurface, bhomBars, bhomNodes);
+                    PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMObject(lusasSurface, bhomBars, bhomNodes, groupNames);
                     bhomSurfaces.Add(bhompanel);
                 }
             }
@@ -89,17 +91,33 @@ namespace BH.Adapter.Lusas
         {
             int maxPointID = d_LusasData.getLargestPointID();
             List<Node> bhomNodes = new List<Node>();
+            HashSet<String> groupNames = ReadGroups();
 
             for (int i = 1; i <= maxPointID; i++)
             {
                 if (d_LusasData.existsPointByID(i))
                 {
                     IFPoint lusasPoint = d_LusasData.getPointByNumber(i);
-                    Node bhomNode = BH.Engine.Lusas.Convert.ToBHoMObject(lusasPoint);
+                    Node bhomNode = BH.Engine.Lusas.Convert.ToBHoMObject(lusasPoint, groupNames);
                     bhomNodes.Add(bhomNode);
                 }
             }
             return bhomNodes;
+        }
+
+        private HashSet<String> ReadGroups(List<string> ids = null)
+        {
+            int numGroups = d_LusasData.countGroups();
+            IFGroup lusasGroup = null;
+            HashSet<String> bhomTags = new HashSet<string>();
+
+            for (int i=0; i<numGroups; i++)
+            {
+                lusasGroup = d_LusasData.getObjects("Groups")[i];
+                bhomTags.Add(lusasGroup.getName());
+            }
+
+            return bhomTags;
         }
 
         /***************************************/

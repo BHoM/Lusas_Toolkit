@@ -24,13 +24,14 @@ namespace BH.Engine.Lusas
         //#region Geometry Converters
 
 
-        public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf, Dictionary<string, Bar> bhomBars, Dictionary<string, Node> bhomNodes)
+        public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf, Dictionary<string, Bar> bhomBars, Dictionary<string, Node> bhomNodes, HashSet<String> groupNames)
         {
             Polyline bhomPolyline = new Polyline();
 
             Object[] surfLines = lusasSurf.getLOFs();
 
             int n = surfLines.Length;
+            HashSet<String> tags = new HashSet<string>(isMemberOf(lusasSurf, groupNames));
 
             List<Point> bhomPoints = new List<Point>();
             for (int i = 0; i < n - 1; i++)
@@ -55,12 +56,8 @@ namespace BH.Engine.Lusas
             ICurve bhomICurve = bhomPLine;
             List<ICurve> bhomICurves = new List<ICurve>();
             PanelPlanar bhomPanel = BH.Engine.Structure.Create.PanelPlanar(bhomICurve, bhomICurves);
+            bhomPanel.Tags = tags;
             bhomPanel.CustomData["Lusas_id"] = lusasSurf.getName();
-
-            //Read tags from objectsets
-
-
-
 
             return bhomPanel;
         }

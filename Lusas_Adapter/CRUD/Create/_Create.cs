@@ -55,6 +55,16 @@ namespace BH.Adapter.Lusas
         {
             //Code for creating a collection of nodes in the software
 
+            List<String> barTags = nodes.SelectMany(x => x.Tags).Distinct().ToList();
+
+            foreach (String tag in barTags)
+            {
+                if (!d_LusasData.existsGroupByName(tag))
+                {
+                    d_LusasData.createGroup(tag);
+                }
+            }
+
             foreach (Node node in nodes)
             {
                 IFPoint newpoint = CreatePoint(node);
@@ -67,9 +77,16 @@ namespace BH.Adapter.Lusas
         {
             //Code for creating a collection of bars in the software
 
-            Dictionary<int, HashSet<String>> barTags = GetTypeTags(typeof(Bar));
+            List<String> barTags = bars.SelectMany(x => x.Tags).Distinct().ToList();
 
-            barTags.Distinct();
+            foreach(String tag in barTags)
+            {
+                if(!d_LusasData.existsGroupByName(tag))
+                {
+                    d_LusasData.createGroup(tag);
+                }
+            }
+
 
             foreach (Bar bar in bars)
             {
@@ -129,6 +146,16 @@ namespace BH.Adapter.Lusas
                         Math.Round(m.Z,3).Equals(Math.Round(bhomEndPoint.Z, 3)));
 
                 lusasLines.Add(CreateLine(edge, lusasPoints[startindex], lusasPoints[endindex]));
+            }
+
+            List<String> barTags = panels.SelectMany(x => x.Tags).Distinct().ToList();
+
+            foreach (String tag in barTags)
+            {
+                if (!d_LusasData.existsGroupByName(tag))
+                {
+                    d_LusasData.createGroup(tag);
+                }
             }
 
             foreach (PanelPlanar panel in panels)
