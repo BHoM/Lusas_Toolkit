@@ -39,7 +39,6 @@ namespace BH.Engine.Lusas
 
             bhomBar.CustomData["Lusas_id"] = lineName;
 
-
             return bhomBar;
         }
     }
