@@ -48,15 +48,16 @@ namespace BH.Adapter.Lusas
             List<Bar> bhomBars = new List<Bar>();
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
-
             HashSet<String> groupNames = ReadTags();
+            IEnumerable<Constraint6DOF> constraints6DOFList = ReadConstraint6DOF();
+            Dictionary<string, Constraint6DOF> constraints6DOF = constraints6DOFList.ToDictionary(x => x.Name.ToString());
 
             for (int i = 1; i <= maxlineid; i++)
             {
                 if (d_LusasData.existsLineByID(i))
                 {
                     IFLine lusasline = d_LusasData.getLineByNumber(i);
-                    Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes, groupNames);
+                    Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes, groupNames, constraints6DOF);
                     bhomBars.Add(bhomBar);
                 }
             }
@@ -76,13 +77,16 @@ namespace BH.Adapter.Lusas
             IEnumerable<Bar> bhomBarsList = ReadBars();
             Dictionary<string, Bar> bhomBars = bhomBarsList.ToDictionary(x => x.CustomData[AdapterId].ToString());
             HashSet<String> groupNames = ReadTags();
+            IEnumerable<Constraint6DOF> constraints6DOFList = ReadConstraint6DOF();
+            Dictionary<string, Constraint6DOF> constraints6DOF = constraints6DOFList.ToDictionary(x => x.Name.ToString());
+
 
             for (int i = 1; i <= maxSurfID; i++)
             {
                 if (d_LusasData.existsSurfaceByID(i))
                 {
                     IFSurface lusasSurface = d_LusasData.getSurfaceByNumber(i);
-                    PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMObject(lusasSurface, bhomBars, bhomNodes, groupNames);
+                    PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMObject(lusasSurface, bhomBars, bhomNodes, groupNames, constraints6DOF);
                     bhomSurfaces.Add(bhompanel);
                 }
             }
@@ -95,12 +99,15 @@ namespace BH.Adapter.Lusas
             List<Node> bhomNodes = new List<Node>();
             HashSet<String> groupNames = ReadTags();
 
+            IEnumerable<Constraint6DOF> constraints6DOFList = ReadConstraint6DOF();
+            Dictionary<string, Constraint6DOF> constraints6DOF = constraints6DOFList.ToDictionary(x => x.Name.ToString());
+
             for (int i = 1; i <= maxPointID; i++)
             {
                 if (d_LusasData.existsPointByID(i))
                 {
                     IFPoint lusasPoint = d_LusasData.getPointByNumber(i);
-                    Node bhomNode = BH.Engine.Lusas.Convert.ToBHoMObject(lusasPoint, groupNames);
+                    Node bhomNode = BH.Engine.Lusas.Convert.ToBHoMObject(lusasPoint, groupNames,constraints6DOF);
                     bhomNodes.Add(bhomNode);
                 }
             }
@@ -130,22 +137,16 @@ namespace BH.Adapter.Lusas
 
             int largestAttributeID = d_LusasData.getLargestAttributeID("Support");
 
-            
-
             for(int i = 1; i <= largestAttributeID; i++)
             {
-                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", i);
                 if(d_LusasData.existsAttribute("Support",i))
                 {
+                    IFAttribute lusasSupport = d_LusasData.getAttribute("Support", i);
                     Constraint6DOF bhomConstraint6DOF = BH.Engine.Lusas.Convert.ToBHoMObject(lusasSupport);
                     bhomConstraints6DOF.Add(bhomConstraint6DOF);
                 }
-
             }
-
             return bhomConstraints6DOF;
-
-
         }
 
         /***************************************/

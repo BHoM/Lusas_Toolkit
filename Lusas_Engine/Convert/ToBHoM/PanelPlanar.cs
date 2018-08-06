@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BH.oM.Structural.Elements;
+using BH.oM.Base;
 using BH.oM.Geometry;
-using BH.Engine.Geometry;
+using BH.oM.Structural.Elements;
+using BH.oM.Structural.Properties;
+using BH.oM.Common.Materials;
 using LusasM15_2;
-
 namespace BH.Engine.Lusas
 {
     public static partial class Convert
@@ -24,7 +26,8 @@ namespace BH.Engine.Lusas
         //#region Geometry Converters
 
 
-        public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf, Dictionary<string, Bar> bhomBars, Dictionary<string, Node> bhomNodes, HashSet<String> groupNames)
+        public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf, Dictionary<string, Bar> bhomBars, 
+            Dictionary<string, Node> bhomNodes, HashSet<String> groupNames, Dictionary<string, Constraint6DOF> constraints6DOF)
         {
             Polyline bhomPolyline = new Polyline();
 
@@ -58,6 +61,16 @@ namespace BH.Engine.Lusas
             PanelPlanar bhomPanel = BH.Engine.Structure.Create.PanelPlanar(bhomICurve, bhomICurves);
             bhomPanel.Tags = tags;
             bhomPanel.CustomData["Lusas_id"] = lusasSurf.getName();
+
+            List<String> supportAssignments = attributeAssignments(lusasSurf, "Support");
+
+            Constraint6DOF panelPlanarConstraint = null;
+            if (!(supportAssignments.Count() == 0))
+            {
+                constraints6DOF.TryGetValue(supportAssignments[0], out panelPlanarConstraint);
+            }
+
+            bhomPanel.Constraint = panelPlanarConstraint;
 
             return bhomPanel;
         }

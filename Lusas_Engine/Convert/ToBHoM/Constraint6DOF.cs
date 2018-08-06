@@ -47,15 +47,6 @@ namespace BH.Engine.Lusas
             Constraint6DOF bhomConstraint6DOF = BH.Engine.Structure.Create.Constraint6DOF(
                 lusasAttribute.getName(), fixity, stiffness);
 
-            Object[] attributeAssignments = lusasAttribute.getAssignments();
-
-            //int n = attributeAssignments.Count();
-            //for(int i = 0; i < n; i++)
-            //{
-            //    IFAttribute attributeAssignment = lusasAttribute.getAssignments()[i];
-            //    String assignment = attributeAssignment.getName();
-            //}
-
             return bhomConstraint6DOF;
         }
     }
