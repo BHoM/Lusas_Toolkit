@@ -57,7 +57,7 @@ namespace BH.Adapter.Lusas
                 if (d_LusasData.existsLineByID(i))
                 {
                     IFLine lusasline = d_LusasData.getLineByNumber(i);
-                    Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes, groupNames, constraints6DOF);
+                    Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes, groupNames);
                     bhomBars.Add(bhomBar);
                 }
             }
@@ -86,7 +86,7 @@ namespace BH.Adapter.Lusas
                 if (d_LusasData.existsSurfaceByID(i))
                 {
                     IFSurface lusasSurface = d_LusasData.getSurfaceByNumber(i);
-                    PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMObject(lusasSurface, bhomBars, bhomNodes, groupNames, constraints6DOF);
+                    PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMObject(lusasSurface, bhomBars, bhomNodes, groupNames);
                     bhomSurfaces.Add(bhompanel);
                 }
             }

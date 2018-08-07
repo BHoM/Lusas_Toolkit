@@ -28,7 +28,7 @@ namespace BH.Engine.Lusas
 
 
         public static Bar ToBHoMObject(this IFLine lusasLine, Dictionary<string, Node> bhomNodes, 
-            HashSet<String> groupNames, Dictionary<string, Constraint6DOF> constraints6DOF)
+            HashSet<String> groupNames)
         {
 
             Node startNode = getNode(lusasLine, 0, bhomNodes);
@@ -39,15 +39,14 @@ namespace BH.Engine.Lusas
 
             List<String> supportAssignments = attributeAssignments(lusasLine, "Support");
 
-            Constraint6DOF barConstraint = null;
-            if(!(supportAssignments.Count()==0))
-            {
-                constraints6DOF.TryGetValue(supportAssignments[0], out barConstraint);
-            }
+            //Constraint6DOF barConstraint = null;
+            //if(!(supportAssignments.Count()==0))
+            //{
+            //    constraints6DOF.TryGetValue(supportAssignments[0], out barConstraint);
+            //}
 
             Bar bhomBar = new Bar { StartNode = startNode, EndNode = endNode,
-                                    Tags = tags,
-                                    Constraint = barConstraint};
+                                    Tags = tags};
 
             String lineName = removePrefix(lusasLine.getName(), "L");
 

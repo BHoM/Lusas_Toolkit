@@ -36,11 +36,7 @@ namespace BH.Engine.Lusas
             String pointName = removePrefix(lusasPoint.getName(), "P");
 
             bhomNode.CustomData["Lusas_id"] = pointName;
-
-
-
-
-
+           
             return bhomNode;
         }
     }

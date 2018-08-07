@@ -27,7 +27,7 @@ namespace BH.Engine.Lusas
 
 
         public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf, Dictionary<string, Bar> bhomBars, 
-            Dictionary<string, Node> bhomNodes, HashSet<String> groupNames, Dictionary<string, Constraint6DOF> constraints6DOF)
+            Dictionary<string, Node> bhomNodes, HashSet<String> groupNames)
         {
             Polyline bhomPolyline = new Polyline();
 
@@ -64,13 +64,13 @@ namespace BH.Engine.Lusas
 
             List<String> supportAssignments = attributeAssignments(lusasSurf, "Support");
 
-            Constraint6DOF panelPlanarConstraint = null;
-            if (!(supportAssignments.Count() == 0))
-            {
-                constraints6DOF.TryGetValue(supportAssignments[0], out panelPlanarConstraint);
-            }
+            //Constraint6DOF panelPlanarConstraint = null;
+            //if (!(supportAssignments.Count() == 0))
+            //{
+            //    constraints6DOF.TryGetValue(supportAssignments[0], out panelPlanarConstraint);
+            //}
 
-            bhomPanel.Constraint = panelPlanarConstraint;
+            //bhomPanel.Constraint = panelPlanarConstraint;
 
             return bhomPanel;
         }

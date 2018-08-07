@@ -55,9 +55,27 @@ namespace BH.Adapter.Lusas
         {
             //Code for creating a collection of nodes in the software
 
-            List<String> barTags = nodes.SelectMany(x => x.Tags).Distinct().ToList();
+            List<String> nodeTags = nodes.SelectMany(x => x.Tags).Distinct().ToList();
 
-            foreach (String tag in barTags)
+            foreach (String tag in nodeTags)
+            {
+                if (!d_LusasData.existsGroupByName(tag))
+                {
+                    d_LusasData.createGroup(tag);
+                }
+            }
+
+            List<Constraint6DOF> nodeConstraints = nodes.Select(x => x.Constraint).Distinct().ToList();
+
+            foreach (Constraint6DOF constraint in nodeConstraints)
+            {
+                if (!(d_LusasData.existsAttribute("Support",constraint.Name)))
+                {
+                    IFAttribute lusasAttribute = CreateAttribute(constraint);
+                }
+            }
+
+            foreach (String tag in nodeTags)
             {
                 if (!d_LusasData.existsGroupByName(tag))
                 {
@@ -148,9 +166,9 @@ namespace BH.Adapter.Lusas
                 lusasLines.Add(CreateLine(edge, lusasPoints[startindex], lusasPoints[endindex]));
             }
 
-            List<String> barTags = panels.SelectMany(x => x.Tags).Distinct().ToList();
+            List<String> panelPlanarTags = panels.SelectMany(x => x.Tags).Distinct().ToList();
 
-            foreach (String tag in barTags)
+            foreach (String tag in panelPlanarTags)
             {
                 if (!d_LusasData.existsGroupByName(tag))
                 {
@@ -167,7 +185,6 @@ namespace BH.Adapter.Lusas
         }
 
         /***************************************************/
-
 
 
         /***************************************************/
