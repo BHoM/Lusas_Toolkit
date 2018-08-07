@@ -37,6 +37,10 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<PanelPlanar>);
                 }
+                if (objects.First().GetType().GetInterfaces().Contains(typeof(ISectionProperty)))
+                {
+                    success = CreateCollection(objects as IEnumerable<ISectionProperty>);
+                }
             }
 
             //success = CreateCollection(objects as dynamic);
@@ -88,9 +92,11 @@ namespace BH.Adapter.Lusas
             }
 
 
+            Tuple<List<Bar>,List<IFLine>> existingLines = ReadBars();
+
             foreach (Bar bar in bars)
             {
-                IFLine newline = CreateLine(bar);
+                IFLine newline = CreateLine(bar, existingLines);
             }
              return true;
         }
@@ -132,20 +138,21 @@ namespace BH.Adapter.Lusas
             }
 
             List<IFLine> lusasLines = new List<IFLine>();
+
             foreach (ICurve edge in distinctEdges)
             {
-                Point bhomStartPoint = edge.IStartPoint();
-                Point bhomEndPoint = edge.IEndPoint();
-                int startindex = distinctPoints.FindIndex(m => 
-                        Math.Round(m.X,3).Equals(Math.Round(bhomStartPoint.X, 3)) &&
-                        Math.Round(m.Y,3).Equals(Math.Round(bhomStartPoint.Y, 3)) &&
-                        Math.Round(m.Z,3).Equals(Math.Round(bhomStartPoint.Z, 3)));
-                int endindex = distinctPoints.FindIndex(m => 
-                        Math.Round(m.X,3).Equals(Math.Round(bhomEndPoint.X, 3)) &&
-                        Math.Round(m.Y,3).Equals(Math.Round(bhomEndPoint.Y, 3)) &&
-                        Math.Round(m.Z,3).Equals(Math.Round(bhomEndPoint.Z, 3)));
+                    Point bhomStartPoint = edge.IStartPoint();
+                    Point bhomEndPoint = edge.IEndPoint();
+                    int startindex = distinctPoints.FindIndex(m =>
+                            Math.Round(m.X, 3).Equals(Math.Round(bhomStartPoint.X, 3)) &&
+                            Math.Round(m.Y, 3).Equals(Math.Round(bhomStartPoint.Y, 3)) &&
+                            Math.Round(m.Z, 3).Equals(Math.Round(bhomStartPoint.Z, 3)));
+                    int endindex = distinctPoints.FindIndex(m =>
+                            Math.Round(m.X, 3).Equals(Math.Round(bhomEndPoint.X, 3)) &&
+                            Math.Round(m.Y, 3).Equals(Math.Round(bhomEndPoint.Y, 3)) &&
+                            Math.Round(m.Z, 3).Equals(Math.Round(bhomEndPoint.Z, 3)));
 
-                lusasLines.Add(CreateLine(edge, lusasPoints[startindex], lusasPoints[endindex]));
+                    lusasLines.Add(CreateLine(edge, lusasPoints[startindex], lusasPoints[endindex]));
             }
 
             List<String> barTags = panels.SelectMany(x => x.Tags).Distinct().ToList();
@@ -174,15 +181,13 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<ISectionProperty> sectionProperties)
         {
-            //Code for creating a collection of section properties in the software
+            List<ISectionProperty> secPropList = sectionProperties.ToList();
 
-            foreach (ISectionProperty sectionProperty in sectionProperties)
+            foreach (ISectionProperty secProp in secPropList)
             {
-                //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software):
-                object secPropId = sectionProperty.CustomData[AdapterId];
-                //If also the default implmentation for the DependencyTypes is used,
-                //one can from here get the id's of the subobjects by calling (cast into applicable type used by the software): 
-                object materialId = sectionProperty.Material.CustomData[AdapterId];
+                IFGeometricLine attribute = d_LusasData.createGeometricLine("beam");
+                attribute.setValue("elementType", "3D Thick Beam");
+                attribute.setBeam(secProp.Area, secProp.Iy, secProp.Iz, 0, secProp.J, secProp.Asz, secProp.Asy, secProp.CentreY, secProp.CentreZ);
             }
 
             throw new NotImplementedException();
@@ -204,6 +209,7 @@ namespace BH.Adapter.Lusas
             throw new NotImplementedException();
         }
 
+        /***************************************************/
 
         /***************************************************/
     }

@@ -40,10 +40,11 @@ namespace BH.Adapter.Lusas
 
         //The List<string> in the methods below can be changed to a list of any type of identification more suitable for the toolkit
 
-        private List<Bar> ReadBars(List<string> ids = null)
+        private Tuple<List<Bar>,List<IFLine>> ReadBars(List<string> ids = null)
         {
             int maxlineid = d_LusasData.getLargestLineID();
             List<Bar> bhomBars = new List<Bar>();
+            List<IFLine> lusasLines = new List<IFLine>();
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
 
@@ -55,10 +56,11 @@ namespace BH.Adapter.Lusas
                 {
                     IFLine lusasline = d_LusasData.getLineByNumber(i);
                     Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes, groupNames);
+                    lusasLines.Add(lusasline);
                     bhomBars.Add(bhomBar);
                 }
             }
-            return bhomBars;
+            return Tuple.Create(bhomBars, lusasLines);
         }
 
         /***************************************/
@@ -71,7 +73,7 @@ namespace BH.Adapter.Lusas
 
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
-            IEnumerable<Bar> bhomBarsList = ReadBars();
+            IEnumerable<Bar> bhomBarsList = ReadBars().Item1;
             Dictionary<string, Bar> bhomBars = bhomBarsList.ToDictionary(x => x.CustomData[AdapterId].ToString());
             HashSet<String> groupNames = ReadGroups();
 
@@ -146,6 +148,32 @@ namespace BH.Adapter.Lusas
         private List<ISectionProperty> ReadSectionProperties(List<string> ids = null)
         {
             //Implement code for reading section properties
+            int largestSecID = d_LusasData.getLargestAttributeID("Geometric");
+
+            for (int i = 0; i < largestSecID; i++)
+            {
+                IFAttribute lusasSecProp = d_LusasData.getAttribute("Geometric", i+1);
+                object[] secPropNames1 = lusasSecProp.getValueNames();
+                string[] secPropNames = ((IEnumerable)secPropNames1).Cast<object>()
+                                 .Select(x => x.ToString())
+                                 .ToArray();
+                string lusasSecType = lusasSecProp.getValue("elementType",0);
+
+                //if (lusasSecType == "I beam")
+                //{
+                //    ISectionProperty section = 
+                //}
+
+                //ISectionProperty bhomSection;
+                //bhomSection.
+                //bhomSection.Area = lusasSecProp.getValue()
+
+                //foreach (string value in secPropValues)
+                //{
+
+                //}
+            }
+
             throw new NotImplementedException();
         }
 

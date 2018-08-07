@@ -27,6 +27,7 @@ namespace BH.Adapter.Lusas
         protected override bool UpdateObjects<T>(IEnumerable<T> objects)
         {
             bool success = true;
+            int nobjects = objects.Count();
             if (objects.Count() > 0)
             {
                 if (objects.First() is Node)
@@ -58,8 +59,6 @@ namespace BH.Adapter.Lusas
                     
                 if (!string.IsNullOrWhiteSpace(bhomID.ToString()))
                 {
-                    d_LusasData.Delete(lusasPoint);
-                    CreatePoint(node);
                 }
             }
             return true;
