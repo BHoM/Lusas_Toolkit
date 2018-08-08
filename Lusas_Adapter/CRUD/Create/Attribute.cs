@@ -19,8 +19,8 @@ namespace BH.Adapter.Lusas
         {
             IFAttribute lusasSupport = d_LusasData.createSupportStructural(constraint.Name);
 
-            List<String> releaseNames = new List<string> { "U", "V", "W", "THX", "THY", "THZ" };
-            List<Double> stiffness = new List<Double> {constraint.TranslationalStiffnessX,
+            List<string> releaseNames = new List<string> { "U", "V", "W", "THX", "THY", "THZ" };
+            List<double> stiffness = new List<double> {constraint.TranslationalStiffnessX,
             constraint.TranslationalStiffnessY, constraint.TranslationalStiffnessZ,
             constraint.RotationalStiffnessX,constraint.RotationalStiffnessY,constraint.RotationalStiffnessZ};
             Boolean[] fixities = constraint.Fixities();

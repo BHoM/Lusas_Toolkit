@@ -69,10 +69,14 @@ namespace BH.Adapter.Lusas
 
             foreach (Constraint6DOF constraint in nodeConstraints)
             {
-                if (!(d_LusasData.existsAttribute("Support",constraint.Name)))
+                if(!(constraint == null))
                 {
-                    IFAttribute lusasAttribute = CreateAttribute(constraint);
+                    if (!(d_LusasData.existsAttribute("Support", constraint.Name)))
+                    {
+                        IFAttribute lusasAttribute = CreateAttribute(constraint);
+                    }
                 }
+
             }
 
             foreach (String tag in nodeTags)
