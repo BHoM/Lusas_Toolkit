@@ -37,6 +37,14 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<PanelPlanar>);
                 }
+                if (objects.First() is Edge)
+                {
+                    success = CreateCollection(objects as IEnumerable<Edge>);
+                }
+                if (objects.First() is Point)
+                {
+                    success = CreateCollection(objects as IEnumerable<Point>);
+                }
                 if (objects.First().GetType().GetInterfaces().Contains(typeof(ISectionProperty)))
                 {
                     success = CreateCollection(objects as IEnumerable<ISectionProperty>);
@@ -77,6 +85,36 @@ namespace BH.Adapter.Lusas
             return true;
         }
 
+        private bool CreateCollection(IEnumerable<Point> points)
+        {
+            //Code for creating a collection of nodes in the software
+
+            //List<String> barTags = points.SelectMany(x => x.Tags).Distinct().ToList();
+
+            //foreach (String tag in barTags)
+            //{
+            //    if (!d_LusasData.existsGroupByName(tag))
+            //    {
+            //        d_LusasData.createGroup(tag);
+            //    }
+            //}
+
+            List<Point> distinctPoints = points.GroupBy(m => new {
+                X = Math.Round(m.X, 3),
+                Y = Math.Round(m.Y, 3),
+                Z = Math.Round(m.Z, 3)
+            })
+                 .Select(x => x.First())
+                 .ToList();
+
+            foreach (Point point in distinctPoints)
+            {
+                IFPoint newpoint = CreatePoint(point);
+            }
+
+            return true;
+        }
+
         private bool CreateCollection(IEnumerable<Bar> bars)
         {
             //Code for creating a collection of bars in the software
@@ -90,9 +128,8 @@ namespace BH.Adapter.Lusas
                     d_LusasData.createGroup(tag);
                 }
             }
-
-
-            Tuple<List<Bar>,List<IFLine>> existingLines = ReadBars();
+ 
+            List<Bar> existingLines = ReadBars();
 
             foreach (Bar bar in bars)
             {
@@ -106,54 +143,54 @@ namespace BH.Adapter.Lusas
         private bool CreateCollection(IEnumerable<PanelPlanar> panels)
         {
 
-            List<Point> allPoints = new List<Point>();
-            List<ICurve> allEdges = new List<ICurve>();
+            List<Node> existingNodes = ReadNodes();
+            List<Edge> existingEdges = ReadEdges();
 
-            foreach (PanelPlanar panel in panels)
-            {
-                allPoints.AddRange(panel.ControlPoints());
-                allEdges.AddRange(panel.AllEdgeCurves());
-            }
+            //foreach (PanelPlanar panel in panels)
+            //{
+            //    allPoints.AddRange(panel.ControlPoints());
+            //    allEdges.AddRange(panel.AllEdgeCurves());
+            //}
 
-            List<Point> distinctPoints = allPoints.GroupBy(m => new {
-                X = Math.Round(m.X,3),
-                Y =Math.Round(m.Y,3),
-                Z =Math.Round(m.Z,3) })
-                             .Select(x => x.First())
-                             .ToList();
+            //List<Point> distinctPoints = allPoints.GroupBy(m => new {
+            //    X = Math.Round(m.X,3),
+            //    Y =Math.Round(m.Y,3),
+            //    Z =Math.Round(m.Z,3) })
+            //                 .Select(x => x.First())
+            //                 .ToList();
 
-            List<ICurve> distinctEdges = allEdges.GroupBy(m => new {
-                X = Math.Round(m.IPointAtParameter(0.5).X, 3),
-                Y = Math.Round(m.IPointAtParameter(0.5).Y, 3),
-                Z = Math.Round(m.IPointAtParameter(0.5).Z, 3) })
-                            .Select(x => x.First())
-                            .ToList();
+            //List<ICurve> distinctEdges = allEdges.GroupBy(m => new {
+            //    X = Math.Round(m.IPointAtParameter(0.5).X, 3),
+            //    Y = Math.Round(m.IPointAtParameter(0.5).Y, 3),
+            //    Z = Math.Round(m.IPointAtParameter(0.5).Z, 3) })
+            //                .Select(x => x.First())
+            //                .ToList();
 
 
-            List<IFPoint> lusasPoints = new List<IFPoint>();
-            foreach (Point point in distinctPoints)
-            {
-                IFPoint newPoint = CreatePoint(point);
-                lusasPoints.Add(newPoint);
-            }
+            //List<IFPoint> lusasPoints = new List<IFPoint>();
+            //foreach (Point point in distinctPoints)
+            //{
+            //    IFPoint newPoint = CreatePoint(point);
+            //    lusasPoints.Add(newPoint);
+            //}
 
-            List<IFLine> lusasLines = new List<IFLine>();
+            //List<IFLine> lusasLines = new List<IFLine>();
 
-            foreach (ICurve edge in distinctEdges)
-            {
-                    Point bhomStartPoint = edge.IStartPoint();
-                    Point bhomEndPoint = edge.IEndPoint();
-                    int startindex = distinctPoints.FindIndex(m =>
-                            Math.Round(m.X, 3).Equals(Math.Round(bhomStartPoint.X, 3)) &&
-                            Math.Round(m.Y, 3).Equals(Math.Round(bhomStartPoint.Y, 3)) &&
-                            Math.Round(m.Z, 3).Equals(Math.Round(bhomStartPoint.Z, 3)));
-                    int endindex = distinctPoints.FindIndex(m =>
-                            Math.Round(m.X, 3).Equals(Math.Round(bhomEndPoint.X, 3)) &&
-                            Math.Round(m.Y, 3).Equals(Math.Round(bhomEndPoint.Y, 3)) &&
-                            Math.Round(m.Z, 3).Equals(Math.Round(bhomEndPoint.Z, 3)));
+            //foreach (ICurve edge in distinctEdges)
+            //{
+            //        Point bhomStartPoint = edge.IStartPoint();
+            //        Point bhomEndPoint = edge.IEndPoint();
+            //        int startindex = distinctPoints.FindIndex(m =>
+            //                Math.Round(m.X, 3).Equals(Math.Round(bhomStartPoint.X, 3)) &&
+            //                Math.Round(m.Y, 3).Equals(Math.Round(bhomStartPoint.Y, 3)) &&
+            //                Math.Round(m.Z, 3).Equals(Math.Round(bhomStartPoint.Z, 3)));
+            //        int endindex = distinctPoints.FindIndex(m =>
+            //                Math.Round(m.X, 3).Equals(Math.Round(bhomEndPoint.X, 3)) &&
+            //                Math.Round(m.Y, 3).Equals(Math.Round(bhomEndPoint.Y, 3)) &&
+            //                Math.Round(m.Z, 3).Equals(Math.Round(bhomEndPoint.Z, 3)));
 
-                    lusasLines.Add(CreateLine(edge, lusasPoints[startindex], lusasPoints[endindex]));
-            }
+            //        lusasLines.Add(CreateLine(edge, lusasPoints[startindex], lusasPoints[endindex]));
+            //}
 
             List<String> barTags = panels.SelectMany(x => x.Tags).Distinct().ToList();
 
@@ -167,7 +204,7 @@ namespace BH.Adapter.Lusas
 
             foreach (PanelPlanar panel in panels)
             {
-                IFSurface newsurface = CreateSurface(panel, distinctPoints, lusasPoints, distinctEdges, lusasLines);
+                IFSurface newsurface = CreateSurface(panel, existingNodes, existingEdges);
             }
 
             return true; 
@@ -175,7 +212,36 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
+        private bool CreateCollection(IEnumerable<Edge> edges)
+        {
+            //Code for creating a collection of bars in the software
 
+            List<Edge> distinctEdges = edges.GroupBy(m => new {
+                X = Math.Round(m.Curve.IPointAtParameter(0.5).X, 3),
+                Y = Math.Round(m.Curve.IPointAtParameter(0.5).Y, 3),
+                Z = Math.Round(m.Curve.IPointAtParameter(0.5).Z, 3)
+            })
+                .Select(x => x.First())
+                .ToList();
+
+            List<String> edgesTags = edges.SelectMany(x => x.Tags).Distinct().ToList();
+
+            foreach (String tag in edgesTags)
+            {
+                if (!d_LusasData.existsGroupByName(tag))
+                {
+                    d_LusasData.createGroup(tag);
+                }
+            }
+
+            List<Edge> existingLines = ReadEdges();
+
+            foreach (Edge edge in distinctEdges)
+            {
+                IFLine newline = CreateEdge(edge, existingLines);
+            }
+            return true;
+        }
 
         /***************************************************/
 

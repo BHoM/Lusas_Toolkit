@@ -16,17 +16,17 @@ namespace BH.Adapter.Lusas
     public partial class LusasAdapter
     {
 
-        public IFSurface CreateSurface(PanelPlanar panel, List<Point> distinctPoints, List<IFPoint> LusasPoints, List<ICurve> distinctEdges, List<IFLine> LusasLines)
+        public IFSurface CreateSurface(PanelPlanar panel, List<Node> existingNodes, List<Edge> existingEdges)
         {
             IFObjectSet tempGroup = d_LusasData.createGroup("temp");
 
-            foreach (ICurve edge in panel.AllEdgeCurves())
+            foreach (Edge edge in panel.ExternalEdges)
             {
-                int edgeindex = distinctEdges.FindIndex(m => Math.Round(m.IPointAtParameter(0.5).X, 3).Equals(Math.Round(edge.IPointAtParameter(0.5).X, 3)) &&
-                            Math.Round(m.IPointAtParameter(0.5).Y, 3).Equals(Math.Round(edge.IPointAtParameter(0.5).Y, 3)) &&
-                           Math.Round(m.IPointAtParameter(0.5).Z, 3).Equals(Math.Round(edge.IPointAtParameter(0.5).Z, 3)));
+                int edgeindex = existingEdges.FindIndex(m => Math.Round(m.Curve.IPointAtParameter(0.5).X, 3).Equals(Math.Round(edge.Curve.IPointAtParameter(0.5).X, 3)) &&
+                            Math.Round(m.Curve.IPointAtParameter(0.5).Y, 3).Equals(Math.Round(edge.Curve.IPointAtParameter(0.5).Y, 3)) &&
+                           Math.Round(m.Curve.IPointAtParameter(0.5).Z, 3).Equals(Math.Round(edge.Curve.IPointAtParameter(0.5).Z, 3)));
 
-                tempGroup.add(LusasLines[edgeindex]);
+                tempGroup.add(d_LusasData.getLineByName(existingEdges[edgeindex].CustomData[AdapterId].ToString()));
             }
 
             IFSurface newSurface;
