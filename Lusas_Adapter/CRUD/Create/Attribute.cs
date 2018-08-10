@@ -42,6 +42,16 @@ namespace BH.Adapter.Lusas
                 }
             }
 
+            int bhomID;
+            if (constraint.CustomData.ContainsKey(AdapterId))
+                bhomID = System.Convert.ToInt32(constraint.CustomData[AdapterId]);
+            else
+                bhomID = System.Convert.ToInt32(NextId(constraint.GetType()));
+
+            constraint.CustomData[AdapterId] = bhomID;
+
+            lusasSupport.setName("Sp" + bhomID + "/" + constraint.Name);
+
             return lusasSupport;
         }
     }
