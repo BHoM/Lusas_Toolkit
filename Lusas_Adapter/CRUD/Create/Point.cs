@@ -49,10 +49,10 @@ namespace BH.Adapter.Lusas
 
             if(!(node.Constraint == null))
             {
-                String constraintName = "Sp" + node.Constraint.CustomData[AdapterId] + "/" +node.Constraint.Name;
-                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", constraintName);
+                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", node.Constraint.Name);
                 lusasSupport.assignTo(newPoint);
             }
+
 
             return newPoint;
         }

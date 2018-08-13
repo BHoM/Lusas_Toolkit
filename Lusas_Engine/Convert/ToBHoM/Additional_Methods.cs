@@ -74,46 +74,11 @@ namespace BH.Engine.Lusas
             for (int i = 0; i < n; i++)
             {
                 IFAssignment attributeAssignment = lusasGeometry.getAssignments()[i];
-                IFAttribute lusasAttribute = attributeAssignment.getAttribute();
-                string attributeName = getAttributeName(lusasAttribute);
-
-                attributeNames.Add(attributeName);
+                IFAttribute attribute = attributeAssignment.getAttribute();
+                attributeNames.Add(attribute.getName());
             }
 
             return attributeNames;
-        }
-
-        public static int getBHoMID(IFAttribute lusasAttribute, char lastCharacter)
-        {
-            int bhomID = 0;
-
-            if (lusasAttribute.getName().Contains("/"))
-            {
-                bhomID = Int32.Parse(lusasAttribute.getName().Split(lastCharacter, '/')[1]);
-            }
-            else
-            {
-                bhomID = lusasAttribute.getID();
-            }
-
-            return bhomID;
-        }
-
-        public static string getAttributeName(IFAttribute lusasAttribute)
-        {
-            string attributeName = "";
-
-            if (lusasAttribute.getName().Contains("/"))
-            {
-                attributeName = lusasAttribute.getName().Substring(
-                    lusasAttribute.getName().LastIndexOf("/") + 1);
-            }
-            else
-            {
-                attributeName = lusasAttribute.getName();
-            }
-
-            return attributeName;
         }
     }
 }
