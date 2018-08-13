@@ -15,9 +15,11 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFLine CreateLine(Bar bar, List<Bar> existingBars)
+        public IFLine CreateLine(Bar bar, Tuple<List<Bar>, List<IFLine>> existingLines)
         {
             IFLine newLine;
+            List<Bar> existingBhom = existingLines.Item1;
+            List<IFLine> existingLusas = existingLines.Item2;
 
             int bhomID;
             if (bar.CustomData.ContainsKey(AdapterId))
@@ -27,23 +29,28 @@ namespace BH.Adapter.Lusas
 
             bar.CustomData[AdapterId] = bhomID;
 
-            int position = existingBars.FindIndex(m =>
-                            Math.Round(m.Geometry().IPointAtParameter(0.5).X, 3).Equals(Math.Round(bar.Geometry().IPointAtParameter(0.5).X, 3)) &&
-                            Math.Round(m.Geometry().IPointAtParameter(0.5).Y, 3).Equals(Math.Round(bar.Geometry().IPointAtParameter(0.5).Y, 3)) &&
-                            Math.Round(m.Geometry().IPointAtParameter(0.5).Z, 3).Equals(Math.Round(bar.Geometry().IPointAtParameter(0.5).Z, 3)));
-
-            if (position == -1)
+            if (d_LusasData.existsLineByName("L" + bar.CustomData[AdapterId]))
             {
-                IFPoint startPoint = CreatePoint(bar.StartNode);
-                IFPoint endPoint = CreatePoint(bar.EndNode);
-                newLine = d_LusasData.createLineByPoints(startPoint, endPoint);
-                newLine.setName("L" + bar.CustomData[AdapterId]);
+                newLine = d_LusasData.getLineByName("L" + bar.CustomData[AdapterId]);
             }
             else
             {
-                newLine = d_LusasData.getLineByName("L"+existingBars[position].CustomData[AdapterId].ToString());
+                int position = existingBhom.FindIndex(m =>
+                                            Math.Round(m.Geometry().IPointAtParameter(0.5).X, 3).Equals(Math.Round(bar.Geometry().IPointAtParameter(0.5).X, 3)) &&
+                                            Math.Round(m.Geometry().IPointAtParameter(0.5).Y, 3).Equals(Math.Round(bar.Geometry().IPointAtParameter(0.5).Y, 3)) &&
+                                            Math.Round(m.Geometry().IPointAtParameter(0.5).Z, 3).Equals(Math.Round(bar.Geometry().IPointAtParameter(0.5).Z, 3)));
+                if (position == -1)
+                {
+                    IFPoint startPoint = CreatePoint(bar.StartNode);
+                    IFPoint endPoint = CreatePoint(bar.EndNode);
+                    newLine = d_LusasData.createLineByPoints(startPoint, endPoint);
+                    newLine.setName("L" + bar.CustomData[AdapterId]);
+                }
+                else
+                {
+                    newLine = existingLusas[position];
+                }
             }
-
             if (!(bar.Tags.Count == 0))
             {
                 assignObjectSet(newLine, bar.Tags);

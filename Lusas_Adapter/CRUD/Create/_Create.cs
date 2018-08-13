@@ -23,7 +23,7 @@ namespace BH.Adapter.Lusas
         {
             bool success = true;        //boolean returning if the creation was successfull or not
 
-            if (objects.Count() > 0)
+            if (objects.Count()>0)
             {
                 if (objects.First() is Node)
                 {
@@ -36,14 +36,6 @@ namespace BH.Adapter.Lusas
                 if (objects.First() is PanelPlanar)
                 {
                     success = CreateCollection(objects as IEnumerable<PanelPlanar>);
-                }
-                if (objects.First() is Edge)
-                {
-                    success = CreateCollection(objects as IEnumerable<Edge>);
-                }
-                if (objects.First() is Point)
-                {
-                    success = CreateCollection(objects as IEnumerable<Point>);
                 }
                 if (objects.First().GetType().GetInterfaces().Contains(typeof(ISectionProperty)))
                 {
@@ -107,56 +99,83 @@ namespace BH.Adapter.Lusas
             return true;
         }
 
-        private bool CreateCollection(IEnumerable<Point> points)
-        {
-
-            List<Point> distinctPoints = points.GroupBy(m => new {
-                X = Math.Round(m.X, 3),
-                Y = Math.Round(m.Y, 3),
-                Z = Math.Round(m.Z, 3)
-            })
-                 .Select(x => x.First())
-                 .ToList();
-
-            List<Point> existingPoints = ReadPoints();
-
-            List<Point> pointsToCreate = distinctPoints.Except(existingPoints).ToList();
-
-
-            foreach (Point point in pointsToCreate)
-            {
-                IFPoint newpoint = CreatePoint(point);
-            }
-
-            return true;
-        }
-
         private bool CreateCollection(IEnumerable<Bar> bars)
         {
+            //Code for creating a collection of bars in the software
 
             List<String> barTags = bars.SelectMany(x => x.Tags).Distinct().ToList();
 
-            foreach (String tag in barTags)
+            foreach(String tag in barTags)
             {
-                if (!d_LusasData.existsGroupByName(tag))
+                if(!d_LusasData.existsGroupByName(tag))
                 {
                     d_LusasData.createGroup(tag);
                 }
             }
 
-            List<Bar> existingLines = ReadBars();
+
+            Tuple<List<Bar>,List<IFLine>> existingLines = ReadBars();
 
             foreach (Bar bar in bars)
             {
                 IFLine newline = CreateLine(bar, existingLines);
             }
-            return true;
+             return true;
         }
 
         /***************************************************/
 
         private bool CreateCollection(IEnumerable<PanelPlanar> panels)
         {
+
+            List<Point> allPoints = new List<Point>();
+            List<ICurve> allEdges = new List<ICurve>();
+
+            foreach (PanelPlanar panel in panels)
+            {
+                allPoints.AddRange(panel.ControlPoints());
+                allEdges.AddRange(panel.AllEdgeCurves());
+            }
+
+            List<Point> distinctPoints = allPoints.GroupBy(m => new {
+                X = Math.Round(m.X,3),
+                Y =Math.Round(m.Y,3),
+                Z =Math.Round(m.Z,3) })
+                             .Select(x => x.First())
+                             .ToList();
+
+            List<ICurve> distinctEdges = allEdges.GroupBy(m => new {
+                X = Math.Round(m.IPointAtParameter(0.5).X, 3),
+                Y = Math.Round(m.IPointAtParameter(0.5).Y, 3),
+                Z = Math.Round(m.IPointAtParameter(0.5).Z, 3) })
+                            .Select(x => x.First())
+                            .ToList();
+
+
+            List<IFPoint> lusasPoints = new List<IFPoint>();
+            foreach (Point point in distinctPoints)
+            {
+                IFPoint newPoint = CreatePoint(point);
+                lusasPoints.Add(newPoint);
+            }
+
+            List<IFLine> lusasLines = new List<IFLine>();
+
+            foreach (ICurve edge in distinctEdges)
+            {
+                    Point bhomStartPoint = edge.IStartPoint();
+                    Point bhomEndPoint = edge.IEndPoint();
+                    int startindex = distinctPoints.FindIndex(m =>
+                            Math.Round(m.X, 3).Equals(Math.Round(bhomStartPoint.X, 3)) &&
+                            Math.Round(m.Y, 3).Equals(Math.Round(bhomStartPoint.Y, 3)) &&
+                            Math.Round(m.Z, 3).Equals(Math.Round(bhomStartPoint.Z, 3)));
+                    int endindex = distinctPoints.FindIndex(m =>
+                            Math.Round(m.X, 3).Equals(Math.Round(bhomEndPoint.X, 3)) &&
+                            Math.Round(m.Y, 3).Equals(Math.Round(bhomEndPoint.Y, 3)) &&
+                            Math.Round(m.Z, 3).Equals(Math.Round(bhomEndPoint.Z, 3)));
+
+                    lusasLines.Add(CreateLine(edge, lusasPoints[startindex], lusasPoints[endindex]));
+            }
 
             List<String> barTags = panels.SelectMany(x => x.Tags).Distinct().ToList();
 
@@ -168,63 +187,7 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            List <IFLine> lusasLines = ReadLusasEdges();
-
-            foreach (PanelPlanar panel in panels)
-            {
-                IFSurface newsurface = CreateSurface(panel, lusasLines);
-            }
-
-            return true;
-        }
-
-        /***************************************************/
-
-        private bool CreateCollection(IEnumerable<Edge> edges)
-        {
-            //Code for creating a collection of bars in the software
-
-            List<Edge> distinctEdges = edges.GroupBy(m => new {
-                X = Math.Round(m.Curve.IPointAtParameter(0.5).X, 3),
-                Y = Math.Round(m.Curve.IPointAtParameter(0.5).Y, 3),
-                Z = Math.Round(m.Curve.IPointAtParameter(0.5).Z, 3)
-            })
-                .Select(x => x.First())
-                .ToList();
-
-            List<Point> allPoints = new List<Point>();
-            List<IFPoint> lusasPoints = new List<IFPoint>();
-
-            foreach (Edge edge in distinctEdges)
-            {
-                allPoints.Add(edge.Curve.IStartPoint());
-                allPoints.Add(edge.Curve.IEndPoint());
-            }
-
-            List<Point> distinctPoints = allPoints.GroupBy(m => new {
-                X = Math.Round(m.X, 3),
-                Y = Math.Round(m.Y, 3),
-                Z = Math.Round(m.Z, 3)
-            })
-                .Select(x => x.First())
-                .ToList();
-
-            List<Point> existingPoints = ReadPoints();
-            List<Edge> existingLines = ReadEdges();
-
-            List<Edge> edgesToCreate = distinctEdges.Except(existingLines, new MidpointComparer()).ToList();
-            List<Point> pointsToCreate = distinctPoints.Except(existingPoints).ToList();
-
-            List<String> edgesTags = edges.SelectMany(x => x.Tags).Distinct().ToList();
-
-            foreach (String tag in edgesTags)
-            {
-                if (!d_LusasData.existsGroupByName(tag))
-                {
-                    d_LusasData.createGroup(tag);
-                }
-            }
-
+<<<<<<< HEAD
             List<String> panelPlanarTags = panels.SelectMany(x => x.Tags).Distinct().ToList();
 
             foreach (String tag in panelPlanarTags)
@@ -236,10 +199,14 @@ namespace BH.Adapter.Lusas
             }
 
             foreach (Point point in pointsToCreate)
+=======
+            foreach (PanelPlanar panel in panels)
+>>>>>>> parent of e79c679... Merge pull request #14 from BuroHappoldEngineering/CS_Line-Bug-fix
             {
-                IFPoint lusasPoint = CreatePoint(point);
+                IFSurface newsurface = CreateSurface(panel, distinctPoints, lusasPoints, distinctEdges, lusasLines);
             }
 
+<<<<<<< HEAD
             lusasPoints.AddRange(ReadLusasPoints());
 
 
@@ -248,7 +215,14 @@ namespace BH.Adapter.Lusas
                 IFLine newline = CreateEdge(edge, lusasPoints);
             }
             return true;
+=======
+            return true; 
+>>>>>>> parent of e79c679... Merge pull request #14 from BuroHappoldEngineering/CS_Line-Bug-fix
         }
+
+        /***************************************************/
+
+
 
         /***************************************************/
 
@@ -284,38 +258,7 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        public class MidpointComparer : IEqualityComparer<Edge>
-        {
-
-            #region IEqualityComparer<ThisClass> Members
-
-
-            public bool Equals(Edge x, Edge y)
-            {
-                //no null check here, you might want to do that, or correct that to compare just one part of your object
-                return x.Curve.IPointAtParameter(0.5) == y.Curve.IPointAtParameter(0.5);
-            }
-
-
-            public int GetHashCode(Edge obj)
-            {
-                unchecked
-                {
-                    var hash = 17;
-                    //same here, if you only want to get a hashcode on a, remove the line with b
-                    hash = hash * 23 + obj.Curve.IPointAtParameter(0.5).GetHashCode();
-                    hash = hash * 23 + obj.Curve.IPointAtParameter(0.5).GetHashCode();
-
-                    return hash;
-                }
-            }
-        }
-
-        #endregion
+        /***************************************************/
     }
-
-    /***************************************************/
-
 }
-
 
