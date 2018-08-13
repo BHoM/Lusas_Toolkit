@@ -18,7 +18,7 @@ namespace BH.Adapter.Lusas
 
         public IFPoint CreatePoint(Node node)
         {
-            IFPoint newPoint;
+            IFPoint newPoint;   
 
             int bhomID;
             if (node.CustomData.ContainsKey(AdapterId))
@@ -53,7 +53,10 @@ namespace BH.Adapter.Lusas
         public IFPoint CreatePoint(Point point)
         {
             Node newNode = new Node{Position = point};
-            IFPoint newPoint = CreatePoint(newNode);
+            IFPoint newPoint = null;
+
+                newPoint = CreatePoint(newNode);
+
             return newPoint;
         }
 

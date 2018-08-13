@@ -7,6 +7,7 @@ using BH.oM.Structural.Loads;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BH.oM.Geometry;
 using LusasM15_2;
 
 namespace BH.Adapter.Lusas
@@ -45,6 +46,14 @@ namespace BH.Adapter.Lusas
                 if (type == typeof(PanelPlanar))
                 {
                     index = d_LusasData.getLargestSurfaceID() + 1;
+                }
+                if (type == typeof(Edge))
+                {
+                    index = d_LusasData.getLargestLineID() + 1;
+                }
+                if (type == typeof(Point))
+                {
+                    index = d_LusasData.getLargestPointID() + 1;
                 }
                 m_indexDict[type] = index;
             }

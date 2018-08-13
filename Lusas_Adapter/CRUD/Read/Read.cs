@@ -25,12 +25,18 @@ namespace BH.Adapter.Lusas
                 return ReadBars(ids as dynamic);
             else if (type == typeof(Node))
                 return ReadNodes(ids as dynamic);
-            else if (type == typeof(ISectionProperty) || type.GetInterfaces().Contains(typeof(ISectionProperty)))
-                return ReadSectionProperties(ids as dynamic);
+            //else if (type == typeof(ISectionProperty) || type.GetInterfaces().Contains(typeof(ISectionProperty)))
+            //    return ReadSectionProperties(ids as dynamic);
             else if (type == typeof(Material))
                 return ReadMaterials(ids as dynamic);
             else if (type == typeof(PanelPlanar))
                 return ReadSurfaces(ids as dynamic);
+            else if (type == typeof(PanelPlanar))
+                return ReadSurfaces(ids as dynamic);
+            else if (type == typeof(Edge))
+                return ReadEdges(ids as dynamic);
+            else if (type == typeof(Point))
+                return ReadPoints(ids as dynamic);
             return null;
         }
 
@@ -40,11 +46,10 @@ namespace BH.Adapter.Lusas
 
         //The List<string> in the methods below can be changed to a list of any type of identification more suitable for the toolkit
 
-        private Tuple<List<Bar>,List<IFLine>> ReadBars(List<string> ids = null)
+        private List<Bar> ReadBars(List<string> ids = null)
         {
             int maxlineid = d_LusasData.getLargestLineID();
             List<Bar> bhomBars = new List<Bar>();
-            List<IFLine> lusasLines = new List<IFLine>();
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
 
@@ -56,11 +61,10 @@ namespace BH.Adapter.Lusas
                 {
                     IFLine lusasline = d_LusasData.getLineByNumber(i);
                     Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes, groupNames);
-                    lusasLines.Add(lusasline);
                     bhomBars.Add(bhomBar);
                 }
             }
-            return Tuple.Create(bhomBars, lusasLines);
+            return bhomBars;
         }
 
         /***************************************/
@@ -73,7 +77,7 @@ namespace BH.Adapter.Lusas
 
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
-            IEnumerable<Bar> bhomBarsList = ReadBars().Item1;
+            IEnumerable<Bar> bhomBarsList = ReadBars();
             Dictionary<string, Bar> bhomBars = bhomBarsList.ToDictionary(x => x.CustomData[AdapterId].ToString());
             HashSet<String> groupNames = ReadGroups();
 
@@ -107,6 +111,40 @@ namespace BH.Adapter.Lusas
             return bhomNodes;
         }
 
+        private List<Point> ReadPoints(List<string> ids = null)
+        {
+            int maxPointID = d_LusasData.getLargestPointID();
+            List<Point> bhomPoints = new List<Point>();
+            HashSet<String> groupNames = ReadGroups();
+
+            for (int i = 1; i <= maxPointID; i++)
+            {
+                if (d_LusasData.existsPointByID(i))
+                {
+                    IFPoint lusasPoint = d_LusasData.getPointByNumber(i);
+                    Point bhomNode = BH.Engine.Lusas.Convert.ToBHoMGeom(lusasPoint, groupNames);
+                    bhomPoints.Add(bhomNode);
+                }
+            }
+            return bhomPoints;
+        }
+
+        private List<IFPoint> ReadLusasPoints(List<string> ids = null)
+        {
+            int maxPointID = d_LusasData.getLargestPointID();
+            List<IFPoint> lusasPoints = new List<IFPoint>();
+
+            for (int i = 1; i <= maxPointID; i++)
+            {
+                if (d_LusasData.existsPointByID(i))
+                {
+                    IFPoint lusasPoint = d_LusasData.getPointByNumber(i);
+                    lusasPoints.Add(lusasPoint);
+                }
+            }
+            return lusasPoints;
+        }
+
         private HashSet<String> ReadGroups(List<string> ids = null)
         {
             int numGroups = d_LusasData.countGroups();
@@ -124,25 +162,44 @@ namespace BH.Adapter.Lusas
 
         /***************************************/
 
-        //private List<Edge> ReadEdges(List<string> ids = null)
-        //{
-        //    int maxlineid = d_LusasData.getLargestLineID();
-        //    List<Edge> bhomEdges = new List<Edge>();
-        //    IEnumerable<Node> bhomNodesList = ReadNodes();
-        //    Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
+        private List<Edge> ReadEdges(List<string> ids = null)
+        {
+            int maxlineid = d_LusasData.getLargestLineID();
+            List<Edge> bhomEdges = new List<Edge>();
+            List<Node> bhomNodesList = ReadNodes();
+            Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
+            HashSet<String> groupNames = ReadGroups();
 
-        //    for (int i = 1; i <= maxlineid; i++)
-        //    {
-        //        if (d_LusasData.existsLineByID(i))
-        //        {
-        //            IFLine lusasline = d_LusasData.getLineByNumber(i);
-        //            Edge bhomEdge = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes);
-        //            bhomEdges.Add(bhomBar);
-        //        }
-        //    }
-        //    return bhomEdges;
-        //}
+            for (int i = 1; i <= maxlineid; i++)
+            {
+                if (d_LusasData.existsLineByID(i))
+                {
+                    IFLine lusasline = d_LusasData.getLineByNumber(i);
+                    Edge bhomEdge = BH.Engine.Lusas.Convert.ToBHoMGeom(lusasline, bhomNodes, groupNames);
+                    bhomEdges.Add(bhomEdge);
 
+                }
+            }
+            return bhomEdges;
+        }
+
+
+        private List<IFLine> ReadLusasEdges(List<string> ids = null)
+        {
+            int maxlineid = d_LusasData.getLargestLineID();
+            List<IFLine> lusasEdges = new List<IFLine>();
+
+            for (int i = 1; i <= maxlineid; i++)
+            {
+                if (d_LusasData.existsLineByID(i))
+                {
+                    IFLine lusasline = d_LusasData.getLineByNumber(i);
+                    lusasEdges.Add(lusasline);
+
+                }
+            }
+            return lusasEdges;
+        } 
         /***************************************/
 
         private List<ISectionProperty> ReadSectionProperties(List<string> ids = null)
