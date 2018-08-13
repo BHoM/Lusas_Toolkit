@@ -15,30 +15,12 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public void assignObjectSet(IFPoint newPoint, HashSet<String> tags)
-        {
-            foreach(string tag in tags)
-            {
-                IFObjectSet objectSet = d_LusasData.getGroupByName(tag);
-                objectSet.add(newPoint);
-            }
-        }
-
-        public void assignObjectSet(IFLine newLine, HashSet<String> tags)
+        public void assignObjectSet(IFGeometry newGeometry, HashSet<String> tags)
         {
             foreach (string tag in tags)
             {
                 IFObjectSet objectSet = d_LusasData.getGroupByName(tag);
-                objectSet.add(newLine);
-            }
-        }
-
-        public void assignObjectSet(IFSurface newSurface, HashSet<String> tags)
-        {
-            foreach (string tag in tags)
-            {
-                IFObjectSet objectSet = d_LusasData.getGroupByName(tag);
-                objectSet.add(newSurface);
+                objectSet.add(newGeometry);
             }
         }
     }

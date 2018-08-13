@@ -50,7 +50,7 @@ Public Class set_seed_colours
 
     Public Overrides ReadOnly Property ComponentGuid() As Guid
         Get
-            Return New Guid("{ed30d6c8-c5ff-4083-a135-e56deb4d745c}")
+            Return New Guid("{8b7b0d51-395c-43e7-a4ff-9fcd9d6ac48b}")
         End Get
     End Property
 

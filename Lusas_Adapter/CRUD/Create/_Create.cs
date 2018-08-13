@@ -67,9 +67,31 @@ namespace BH.Adapter.Lusas
         {
             //Code for creating a collection of nodes in the software
 
-            List<String> barTags = nodes.SelectMany(x => x.Tags).Distinct().ToList();
+            List<String> nodeTags = nodes.SelectMany(x => x.Tags).Distinct().ToList();
 
-            foreach (String tag in barTags)
+            foreach (String tag in nodeTags)
+            {
+                if (!d_LusasData.existsGroupByName(tag))
+                {
+                    d_LusasData.createGroup(tag);
+                }
+            }
+
+            List<Constraint6DOF> nodeConstraints = nodes.Select(x => x.Constraint).Distinct().ToList();
+
+            foreach (Constraint6DOF constraint in nodeConstraints)
+            {
+                if(!(constraint == null))
+                {
+                    if (!(d_LusasData.existsAttribute("Support", "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name)))
+                    {
+                        IFAttribute lusasAttribute = CreateAttribute(constraint);
+                    }
+                }
+
+            }
+
+            foreach (String tag in nodeTags)
             {
                 if (!d_LusasData.existsGroupByName(tag))
                 {
@@ -203,12 +225,23 @@ namespace BH.Adapter.Lusas
                 }
             }
 
+            List<String> panelPlanarTags = panels.SelectMany(x => x.Tags).Distinct().ToList();
+
+            foreach (String tag in panelPlanarTags)
+            {
+                if (!d_LusasData.existsGroupByName(tag))
+                {
+                    d_LusasData.createGroup(tag);
+                }
+            }
+
             foreach (Point point in pointsToCreate)
             {
                 IFPoint lusasPoint = CreatePoint(point);
             }
 
             lusasPoints.AddRange(ReadLusasPoints());
+
 
             foreach (Edge edge in edgesToCreate)
             {
