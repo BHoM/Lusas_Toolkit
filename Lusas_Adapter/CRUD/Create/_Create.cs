@@ -71,7 +71,7 @@ namespace BH.Adapter.Lusas
             {
                 if(!(constraint == null))
                 {
-                    if (!(d_LusasData.existsAttribute("Support", constraint.Name)))
+                    if (!(d_LusasData.existsAttribute("Support", "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name)))
                     {
                         IFAttribute lusasAttribute = CreateAttribute(constraint);
                     }

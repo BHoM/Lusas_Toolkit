@@ -45,25 +45,14 @@ namespace BH.Engine.Lusas
                 }
             }
 
-            string attributeName = "";
-
-            if(lusasAttribute.getName().Contains("/"))
-            {
-                attributeName = lusasAttribute.getName().Substring(
-                    lusasAttribute.getName().LastIndexOf("/") + 1);
-            }
-            else
-            {
-                attributeName = lusasAttribute.getName();
-            }
+            string attributeName = getAttributeName(lusasAttribute);
 
             Constraint6DOF bhomConstraint6DOF = BH.Engine.Structure.Create.Constraint6DOF(
                attributeName, fixity, stiffness);
 
+            int bhomID = getBHoMID(lusasAttribute,'p');
 
-            String pointName = removePrefix(lusasAttribute.getName(), "P");
-
-            //Extract tags and set tags
+            bhomConstraint6DOF.CustomData["Lusas_id"] = bhomID;
 
             return bhomConstraint6DOF;
         }
