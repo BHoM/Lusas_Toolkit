@@ -15,34 +15,29 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFLine CreateEdge(Edge edge, List<Edge> existingEdges)
+        public IFLine CreateEdge(Edge edge, List<IFPoint> lusasPoints)
         {
-            IFLine newLine;
-
             int bhomID;
             if (edge.CustomData.ContainsKey(AdapterId))
                 bhomID = System.Convert.ToInt32(edge.CustomData[AdapterId]);
             else
                 bhomID = System.Convert.ToInt32(NextId(edge.GetType()));
 
+            Point startPoint = edge.Curve.IStartPoint();
+            Point endPoint = edge.Curve.IEndPoint();
+
             edge.CustomData[AdapterId] = bhomID;
 
-            int position = existingEdges.FindIndex(m =>
-                Math.Round(m.Curve.IPointAtParameter(0.5).X, 3).Equals(Math.Round(edge.Curve.IPointAtParameter(0.5).X, 3)) &&
-                Math.Round(m.Curve.IPointAtParameter(0.5).Y, 3).Equals(Math.Round(edge.Curve.IPointAtParameter(0.5).Y, 3)) &&
-                Math.Round(m.Curve.IPointAtParameter(0.5).Z, 3).Equals(Math.Round(edge.Curve.IPointAtParameter(0.5).Z, 3)));
+            int startIndex = lusasPoints.FindIndex(m => Math.Round(m.getX(),3).Equals(Math.Round(startPoint.X,3)) &&
+                                                        Math.Round(m.getY(), 3).Equals(Math.Round(startPoint.Y, 3)) &&
+                                                        Math.Round(m.getZ(), 3).Equals(Math.Round(startPoint.Z, 3)));
 
-            if (position == -1)
-            {
-                IFPoint startPoint = CreatePoint(edge.Curve.IStartPoint());
-                IFPoint endPoint = CreatePoint(edge.Curve.IEndPoint());
-                newLine = d_LusasData.createLineByPoints(startPoint, endPoint);
+            int endIndex = lusasPoints.FindIndex(m => Math.Round(m.getX(), 3).Equals(Math.Round(endPoint.X, 3)) &&
+                                                      Math.Round(m.getY(), 3).Equals(Math.Round(endPoint.Y, 3)) &&
+                                                      Math.Round(m.getZ(), 3).Equals(Math.Round(endPoint.Z, 3)));
+
+            IFLine newLine = d_LusasData.createLineByPoints(lusasPoints[startIndex], lusasPoints[endIndex]);
                 newLine.setName("L" + edge.CustomData[AdapterId]);
-            }
-            else
-            {
-                newLine = d_LusasData.getLineByName("L"+existingEdges[position].CustomData[AdapterId].ToString());
-            }
 
             if (!(edge.Tags.Count == 0))
             {
@@ -51,5 +46,6 @@ namespace BH.Adapter.Lusas
             return newLine;
         }
     }
+
 
 }

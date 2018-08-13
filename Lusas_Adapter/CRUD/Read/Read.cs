@@ -129,6 +129,22 @@ namespace BH.Adapter.Lusas
             return bhomPoints;
         }
 
+        private List<IFPoint> ReadLusasPoints(List<string> ids = null)
+        {
+            int maxPointID = d_LusasData.getLargestPointID();
+            List<IFPoint> lusasPoints = new List<IFPoint>();
+
+            for (int i = 1; i <= maxPointID; i++)
+            {
+                if (d_LusasData.existsPointByID(i))
+                {
+                    IFPoint lusasPoint = d_LusasData.getPointByNumber(i);
+                    lusasPoints.Add(lusasPoint);
+                }
+            }
+            return lusasPoints;
+        }
+
         private HashSet<String> ReadGroups(List<string> ids = null)
         {
             int numGroups = d_LusasData.countGroups();
@@ -167,6 +183,23 @@ namespace BH.Adapter.Lusas
             return bhomEdges;
         }
 
+
+        private List<IFLine> ReadLusasEdges(List<string> ids = null)
+        {
+            int maxlineid = d_LusasData.getLargestLineID();
+            List<IFLine> lusasEdges = new List<IFLine>();
+
+            for (int i = 1; i <= maxlineid; i++)
+            {
+                if (d_LusasData.existsLineByID(i))
+                {
+                    IFLine lusasline = d_LusasData.getLineByNumber(i);
+                    lusasEdges.Add(lusasline);
+
+                }
+            }
+            return lusasEdges;
+        } 
         /***************************************/
 
         private List<ISectionProperty> ReadSectionProperties(List<string> ids = null)
