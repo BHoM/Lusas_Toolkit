@@ -16,26 +16,17 @@ namespace BH.Adapter.Lusas
     public partial class LusasAdapter
     {
 
-        public IFSurface CreateSurface(PanelPlanar panel, List<IFLine> lusasLines)
+        public IFSurface CreateSurface(PanelPlanar panel, List<Point> distinctPoints, List<IFPoint> LusasPoints, List<ICurve> distinctEdges, List<IFLine> LusasLines)
         {
             IFObjectSet tempGroup = d_LusasData.createGroup("temp");
 
-            List<List<double>> lusascoords = new List<List<double>>();
-
-            for (int i = 0; i<lusasLines.Count; i++)
+            foreach (ICurve edge in panel.AllEdgeCurves())
             {
-                object[] coordinates = lusasLines[i].getInterpolatedPosition(0.5);
-                lusascoords.Add(new List<double> { (double)coordinates[0], (double)coordinates[1], (double)coordinates[2] });
-            }
+                int edgeindex = distinctEdges.FindIndex(m => Math.Round(m.IPointAtParameter(0.5).X, 3).Equals(Math.Round(edge.IPointAtParameter(0.5).X, 3)) &&
+                            Math.Round(m.IPointAtParameter(0.5).Y, 3).Equals(Math.Round(edge.IPointAtParameter(0.5).Y, 3)) &&
+                           Math.Round(m.IPointAtParameter(0.5).Z, 3).Equals(Math.Round(edge.IPointAtParameter(0.5).Z, 3)));
 
-            foreach (Edge edge in panel.ExternalEdges)
-            {
-                Point midwayPoint = edge.Curve.IPointAtParameter(0.5);
-
-                int index = lusascoords.FindIndex(m => Math.Round(m[0],3).Equals(Math.Round(midwayPoint.X,3)) &&
-                                                       Math.Round(m[1],3).Equals(Math.Round(midwayPoint.Y,3)) &&
-                                                       Math.Round(m[2],3).Equals(Math.Round(midwayPoint.Z,3)));
-                tempGroup.add(lusasLines[index]);
+                tempGroup.add(LusasLines[edgeindex]);
             }
 
             IFSurface newSurface;

@@ -7,7 +7,6 @@ using BH.oM.Structural.Loads;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BH.oM.Geometry;
 using LusasM15_2;
 
 namespace BH.Adapter.Lusas
@@ -26,7 +25,7 @@ namespace BH.Adapter.Lusas
             //The if statement below is designed to grab the first free index for the first object being created and after that increment.
 
             //Change from object to what the specific software is using
-            int index =1;
+            int index = 1;
 
             if (!refresh && m_indexDict.TryGetValue(type, out index))
             {
@@ -37,7 +36,7 @@ namespace BH.Adapter.Lusas
             {
                 if (type == typeof(Node))
                 {
-                    index = d_LusasData.getLargestPointID()+1;
+                    index = d_LusasData.getLargestPointID() + 1;
                 }
                 if (type == typeof(Bar))
                 {
@@ -46,14 +45,6 @@ namespace BH.Adapter.Lusas
                 if (type == typeof(PanelPlanar))
                 {
                     index = d_LusasData.getLargestSurfaceID() + 1;
-                }
-                if (type == typeof(Edge))
-                {
-                    index = d_LusasData.getLargestLineID() + 1;
-                }
-                if (type == typeof(Point))
-                {
-                    index = d_LusasData.getLargestPointID() + 1;
                 }
                 m_indexDict[type] = index;
             }

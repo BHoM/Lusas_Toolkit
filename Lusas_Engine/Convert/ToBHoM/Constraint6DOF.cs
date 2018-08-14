@@ -22,24 +22,24 @@ namespace BH.Engine.Lusas
             List<Boolean> fixity = new List<Boolean>();
             List<Double> stiffness = new List<double>();
 
-            foreach(String releaseName in releaseNames)
+            foreach (String releaseName in releaseNames)
             {
                 String fixityValue = lusasAttribute.getValue(releaseName);
-                
-                if(fixityValue == "F")
+
+                if (fixityValue == "F")
                 {
                     fixity.Add(false);
                     stiffness.Add(0.0);
                 }
-                else if(fixityValue == "R")
+                else if (fixityValue == "R")
                 {
                     fixity.Add(true);
                     stiffness.Add(0.0);
                 }
-                else if(fixityValue == "S")
+                else if (fixityValue == "S")
                 {
                     fixity.Add(false);
-                    Double stiffnessValue = lusasAttribute.getValue(releaseName+"stiff");
+                    Double stiffnessValue = lusasAttribute.getValue(releaseName + "stiff");
                     stiffness.Add(stiffnessValue);
 
                 }
@@ -50,7 +50,7 @@ namespace BH.Engine.Lusas
             Constraint6DOF bhomConstraint6DOF = BH.Engine.Structure.Create.Constraint6DOF(
                attributeName, fixity, stiffness);
 
-            int bhomID = getBHoMID(lusasAttribute,'p');
+            int bhomID = getBHoMID(lusasAttribute, 'p');
 
             bhomConstraint6DOF.CustomData["Lusas_id"] = bhomID;
 

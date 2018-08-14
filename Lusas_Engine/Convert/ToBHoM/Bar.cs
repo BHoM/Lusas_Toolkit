@@ -27,7 +27,7 @@ namespace BH.Engine.Lusas
         //#region Geometry Converters
 
 
-        public static Bar ToBHoMObject(this IFLine lusasLine, Dictionary<string, Node> bhomNodes, 
+        public static Bar ToBHoMObject(this IFLine lusasLine, Dictionary<string, Node> bhomNodes,
             HashSet<String> groupNames)
         {
 
@@ -45,8 +45,12 @@ namespace BH.Engine.Lusas
             //    constraints6DOF.TryGetValue(supportAssignments[0], out barConstraint);
             //}
 
-            Bar bhomBar = new Bar { StartNode = startNode, EndNode = endNode,
-                                    Tags = tags};
+            Bar bhomBar = new Bar
+            {
+                StartNode = startNode,
+                EndNode = endNode,
+                Tags = tags
+            };
 
             String lineName = removePrefix(lusasLine.getName(), "L");
 

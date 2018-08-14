@@ -26,7 +26,7 @@ namespace BH.Engine.Lusas
         //#region Geometry Converters
 
 
-        public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf, Dictionary<string, Bar> bhomBars, 
+        public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf, Dictionary<string, Bar> bhomBars,
             Dictionary<string, Node> bhomNodes, HashSet<String> groupNames)
         {
             Polyline bhomPolyline = new Polyline();

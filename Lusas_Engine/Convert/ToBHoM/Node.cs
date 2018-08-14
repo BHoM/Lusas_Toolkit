@@ -27,16 +27,19 @@ namespace BH.Engine.Lusas
                 constraints6DOF.TryGetValue(supportAssignments[0], out nodeConstraint);
             }
 
-            Node bhomNode = new Node { Position = { X = lusasPoint.getX(),
+            Node bhomNode = new Node
+            {
+                Position = { X = lusasPoint.getX(),
                                                     Y = lusasPoint.getY(),
                                                     Z = lusasPoint.getZ() },
-                                                    Tags = tags,
-                                                    Constraint = nodeConstraint};
+                Tags = tags,
+                Constraint = nodeConstraint
+            };
 
             String pointName = removePrefix(lusasPoint.getName(), "P");
 
             bhomNode.CustomData["Lusas_id"] = pointName;
-           
+
             return bhomNode;
         }
     }

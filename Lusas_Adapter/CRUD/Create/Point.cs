@@ -18,7 +18,7 @@ namespace BH.Adapter.Lusas
 
         public IFPoint CreatePoint(Node node)
         {
-            IFPoint newPoint;   
+            IFPoint newPoint;
 
             int bhomID;
             if (node.CustomData.ContainsKey(AdapterId))
@@ -42,14 +42,14 @@ namespace BH.Adapter.Lusas
                 newPoint.setName("P" + node.CustomData[AdapterId].ToString());
             }
 
-            if(!(node.Tags.Count == 0))
+            if (!(node.Tags.Count == 0))
             {
                 assignObjectSet(newPoint, node.Tags);
             }
 
-            if(!(node.Constraint == null))
+            if (!(node.Constraint == null))
             {
-                String constraintName = "Sp" + node.Constraint.CustomData[AdapterId] + "/" +node.Constraint.Name;
+                String constraintName = "Sp" + node.Constraint.CustomData[AdapterId] + "/" + node.Constraint.Name;
                 IFAttribute lusasSupport = d_LusasData.getAttribute("Support", constraintName);
                 lusasSupport.assignTo(newPoint);
             }
@@ -59,11 +59,8 @@ namespace BH.Adapter.Lusas
 
         public IFPoint CreatePoint(Point point)
         {
-            Node newNode = new Node{Position = point};
-            IFPoint newPoint = null;
-
-                newPoint = CreatePoint(newNode);
-
+            Node newNode = new Node { Position = point };
+            IFPoint newPoint = CreatePoint(newNode);
             return newPoint;
         }
 
