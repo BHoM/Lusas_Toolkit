@@ -25,13 +25,13 @@ namespace BH.Adapter.Lusas
             constraint.RotationalStiffnessX,constraint.RotationalStiffnessY,constraint.RotationalStiffnessZ};
             Boolean[] fixities = constraint.Fixities();
 
-            for(int i = 0; i < releaseNames.Count(); i++)
+            for (int i = 0; i < releaseNames.Count(); i++)
             {
-                if(fixities[i])
+                if (fixities[i])
                 {
                     lusasSupport.setValue(releaseNames[i], "R");
                 }
-                else if(stiffness[i]==0)
+                else if (stiffness[i] == 0)
                 {
                     lusasSupport.setValue(releaseNames[i], "F");
                 }

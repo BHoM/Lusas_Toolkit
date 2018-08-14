@@ -47,6 +47,13 @@ namespace BH.Adapter.Lusas
                 assignObjectSet(newPoint, node.Tags);
             }
 
+            if (!(node.Constraint == null))
+            {
+                String constraintName = "Sp" + node.Constraint.CustomData[AdapterId] + "/" + node.Constraint.Name;
+                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", constraintName);
+                lusasSupport.assignTo(newPoint);
+            }
+
             return newPoint;
         }
 

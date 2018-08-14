@@ -47,6 +47,7 @@ namespace BH.Adapter.Lusas
         {
             {typeof(PanelPlanar), new List<Type> {typeof(Edge) } },
             {typeof(Bar), new List<Type> { typeof(Node) } },
+            {typeof(Node), new List<Type> { typeof(Constraint6DOF) } },
             //{typeof(ISectionProperty), new List<Type> { typeof(Material) } },
             {typeof(RigidLink), new List<Type> { typeof(LinkConstraint), typeof(Node) } },
             {typeof(MeshFace), new List<Type> { typeof(IProperty2D), typeof(Node) } },
