@@ -24,23 +24,27 @@ namespace BH.Engine.Lusas
         //#region Geometry Converters
 
 
-        public static Bar ToBHoMObject(this IFLine lusasLine, Dictionary<string, Node> bhomNodes, HashSet<String> groupNames)
+        public static Edge ToBHoMGeom(this IFLine lusasLine, Dictionary<string, Node> bhomNodes, HashSet<String> groupNames)
         {
 
             Node startNode = getNode(lusasLine, 0, bhomNodes);
-
             Node endNode = getNode(lusasLine, 1, bhomNodes);
+
+            Point startPoint = new Point { X = startNode.Position.X, Y = startNode.Position.Y, Z = startNode.Position.Z };
+            Point endPoint = new Point { X = endNode.Position.X, Y = endNode.Position.Y, Z = endNode.Position.Z };
 
             HashSet<String> tags = new HashSet<string>(isMemberOf(lusasLine, groupNames));
 
-            Bar bhomBar = new Bar { StartNode = startNode, EndNode = endNode, Tags = tags };
+            Line bhomLine = new Line { Start = startPoint, End = endPoint };
+
+            Edge bhomEdge = new Edge { Curve = bhomLine, Tags = tags };
 
             String lineName = removePrefix(lusasLine.getName(), "L");
 
-            bhomBar.CustomData["Lusas_id"] = lineName;
+            bhomEdge.CustomData["Lusas_id"] = lineName;
 
 
-            return bhomBar;
+            return bhomEdge;
         }
     }
 }

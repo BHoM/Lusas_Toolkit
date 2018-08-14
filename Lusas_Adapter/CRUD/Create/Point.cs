@@ -42,25 +42,21 @@ namespace BH.Adapter.Lusas
                 newPoint.setName("P" + node.CustomData[AdapterId].ToString());
             }
 
-            if(!(node.Tags.Count == 0))
+            if (!(node.Tags.Count == 0))
             {
                 assignObjectSet(newPoint, node.Tags);
             }
-
-            if(!(node.Constraint == null))
-            {
-                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", node.Constraint.Name);
-                lusasSupport.assignTo(newPoint);
-            }
-
 
             return newPoint;
         }
 
         public IFPoint CreatePoint(Point point)
         {
-            Node newNode = new Node{Position = point};
-            IFPoint newPoint = CreatePoint(newNode);
+            Node newNode = new Node { Position = point };
+            IFPoint newPoint = null;
+
+            newPoint = CreatePoint(newNode);
+
             return newPoint;
         }
 

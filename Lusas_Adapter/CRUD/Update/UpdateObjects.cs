@@ -23,7 +23,7 @@ namespace BH.Adapter.Lusas
         //Default implementation first deletes these objects, then creates new ones, if not applicable for the software, override this method
 
 
-            //I do not think the update method is applicable because of dependency from Higher Order Features (HOF)
+        //I do not think the update method is applicable because of dependency from Higher Order Features (HOF)
         protected override bool UpdateObjects<T>(IEnumerable<T> objects)
         {
             bool success = true;
@@ -56,7 +56,7 @@ namespace BH.Adapter.Lusas
                 {
                     return false;
                 }
-                    
+
                 if (!string.IsNullOrWhiteSpace(bhomID.ToString()))
                 {
                 }

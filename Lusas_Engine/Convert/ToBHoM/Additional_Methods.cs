@@ -24,7 +24,6 @@ namespace BH.Engine.Lusas
             {
                 geometryID = geometryName;
             }
-
             return geometryID;
         }
 
@@ -62,23 +61,6 @@ namespace BH.Engine.Lusas
             }
 
             return memberGroups;
-        }
-
-        public static List<String> attributeAssignments(IFGeometry lusasGeometry, String attributeType)
-        {
-            Object[] attributeAssignments = lusasGeometry.getAssignments(attributeType);
-
-            List<String> attributeNames = new List<String>();
-
-            int n = attributeAssignments.Count();
-            for (int i = 0; i < n; i++)
-            {
-                IFAssignment attributeAssignment = lusasGeometry.getAssignments()[i];
-                IFAttribute attribute = attributeAssignment.getAttribute();
-                attributeNames.Add(attribute.getName());
-            }
-
-            return attributeNames;
         }
     }
 }

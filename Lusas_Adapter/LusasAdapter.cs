@@ -65,8 +65,8 @@ namespace BH.Adapter.Lusas
 
             if (string.IsNullOrWhiteSpace(filePath))
             {
-                throw new System.ArgumentException("No file path given");    
-            }      
+                throw new System.ArgumentException("No file path given");
+            }
             else if (IsApplicationRunning())
             {
                 throw new System.Exception("Lusas process already running");

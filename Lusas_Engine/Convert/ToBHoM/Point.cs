@@ -12,20 +12,19 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static Node ToBHoMObject(this IFPoint lusasPoint, HashSet<String> groupNames)
+        public static Point ToBHoMGeom(this IFPoint lusasPoint, HashSet<String> groupNames)
         {
             HashSet<String> tags = new HashSet<string>(isMemberOf(lusasPoint, groupNames));
 
-            Node bhomNode = new Node { Position = { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() }, Tags = tags };
+            Point bhomPoint = new Point { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() };
 
-            String pointName = removePrefix(lusasPoint.getName(), "P");
+            //String pointName = removePrefix(lusasPoint.getName(), "P");
 
-            bhomNode.CustomData["Lusas_id"] = pointName;
+            //bhomPoint.CustomData["Lusas_id"] = pointName;
 
             //Read tags from objectsets
 
-            return bhomNode;
+            return bhomPoint;
         }
     }
 }
-
