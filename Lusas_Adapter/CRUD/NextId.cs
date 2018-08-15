@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BH.oM.Geometry;
-using LusasM15_2;
+using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
