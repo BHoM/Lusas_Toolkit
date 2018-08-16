@@ -30,8 +30,8 @@ namespace BH.Engine.Lusas
             Node bhomNode = new Node
             {
                 Position = { X = lusasPoint.getX(),
-                                                    Y = lusasPoint.getY(),
-                                                    Z = lusasPoint.getZ() },
+                Y = lusasPoint.getY(),
+                Z = lusasPoint.getZ() },
                 Tags = tags,
                 Constraint = nodeConstraint
             };

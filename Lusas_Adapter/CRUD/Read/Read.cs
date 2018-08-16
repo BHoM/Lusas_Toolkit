@@ -36,7 +36,9 @@ namespace BH.Adapter.Lusas
             else if (type == typeof(Point))
                 return ReadPoints(ids as dynamic);
             else if (type == typeof(Constraint6DOF))
-                return ReadConstraint6DOF(ids as dynamic);
+                return ReadConstraint6DOFs(ids as dynamic);
+            else if (type == typeof(Material))
+                return ReadConstraint6DOFs(ids as dynamic);
             return null;
         }
 
@@ -52,7 +54,8 @@ namespace BH.Adapter.Lusas
             List<Bar> bhomBars = new List<Bar>();
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
-
+            IEnumerable<Material> materialList = ReadMaterials();
+            Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
             HashSet<String> groupNames = ReadGroups();
 
             for (int i = 1; i <= maxlineid; i++)
@@ -60,7 +63,7 @@ namespace BH.Adapter.Lusas
                 if (d_LusasData.existsLineByID(i))
                 {
                     IFLine lusasline = d_LusasData.getLineByNumber(i);
-                    Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes, groupNames);
+                    Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes, groupNames, materials);
                     bhomBars.Add(bhomBar);
                 }
             }
@@ -80,13 +83,15 @@ namespace BH.Adapter.Lusas
             IEnumerable<Bar> bhomBarsList = ReadBars();
             Dictionary<string, Bar> bhomBars = bhomBarsList.ToDictionary(x => x.CustomData[AdapterId].ToString());
             HashSet<String> groupNames = ReadGroups();
+            IEnumerable<Material> materialList = ReadMaterials();
+            Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
 
             for (int i = 1; i <= maxSurfID; i++)
             {
                 if (d_LusasData.existsSurfaceByID(i))
                 {
                     IFSurface lusasSurface = d_LusasData.getSurfaceByNumber(i);
-                    PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMObject(lusasSurface, bhomBars, bhomNodes, groupNames);
+                    PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMObject(lusasSurface, bhomBars, bhomNodes, groupNames, materials);
                     bhomSurfaces.Add(bhompanel);
                 }
             }
@@ -99,7 +104,7 @@ namespace BH.Adapter.Lusas
             List<Node> bhomNodes = new List<Node>();
             HashSet<String> groupNames = ReadGroups();
 
-            IEnumerable<Constraint6DOF> constraints6DOFList = ReadConstraint6DOF();
+            IEnumerable<Constraint6DOF> constraints6DOFList = ReadConstraint6DOFs();
             Dictionary<string, Constraint6DOF> constraints6DOF = constraints6DOFList.ToDictionary(x => x.Name.ToString());
 
             for (int i = 1; i <= maxPointID; i++)
@@ -206,7 +211,7 @@ namespace BH.Adapter.Lusas
 
         /***************************************/
 
-        private List<Constraint6DOF> ReadConstraint6DOF(List<String> ids = null)
+        private List<Constraint6DOF> ReadConstraint6DOFs(List<String> ids = null)
         {
             List<Constraint6DOF> bhomConstraints6DOF = new List<Constraint6DOF>();
 
@@ -217,7 +222,7 @@ namespace BH.Adapter.Lusas
                 if (d_LusasData.existsAttribute("Support", i))
                 {
                     IFAttribute lusasSupport = d_LusasData.getAttribute("Support", i);
-                    Constraint6DOF bhomConstraint6DOF = BH.Engine.Lusas.Convert.ToBHoMObject(lusasSupport);
+                    Constraint6DOF bhomConstraint6DOF = BH.Engine.Lusas.Convert.ToBHoMConstraint6DOF(lusasSupport);
                     bhomConstraints6DOF.Add(bhomConstraint6DOF);
                 }
             }
@@ -262,8 +267,20 @@ namespace BH.Adapter.Lusas
 
         private List<Material> ReadMaterials(List<string> ids = null)
         {
-            //Implement code for reading materials
-            throw new NotImplementedException();
+            List<Material> bhomMaterials = new List<Material>();
+
+            int largestAttributeID = d_LusasData.getLargestAttributeID("Material");
+
+            for (int i = 1; i <= largestAttributeID; i++)
+            {
+                if (d_LusasData.existsAttribute("Material", i))
+                {
+                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", i);
+                    Material bhomMaterial = BH.Engine.Lusas.Convert.ToBHoMMaterial(lusasMaterial);
+                    bhomMaterials.Add(bhomMaterial);
+                }
+            }
+            return bhomMaterials;
         }
 
         /***************************************************/
