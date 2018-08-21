@@ -63,7 +63,9 @@ namespace BH.Adapter.Lusas
                 if (d_LusasData.existsLineByID(i))
                 {
                     IFLine lusasline = d_LusasData.getLineByNumber(i);
-                    Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMObject(lusasline, bhomNodes, groupNames, materials);
+
+                    Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMBar(lusasline, bhomNodes, groupNames,materials);
+
                     bhomBars.Add(bhomBar);
                 }
             }
@@ -89,7 +91,7 @@ namespace BH.Adapter.Lusas
                 {
                     IFSurface lusasSurface = d_LusasData.getSurfaceByNumber(i);
 
-                    PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMObject(lusasSurface, bhomEdges, groupNames);
+                    PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMPanelPlanar(lusasSurface, bhomEdges, groupNames, materials);
 
                     bhomSurfaces.Add(bhompanel);
                 }
@@ -111,7 +113,7 @@ namespace BH.Adapter.Lusas
                 if (d_LusasData.existsPointByID(i))
                 {
                     IFPoint lusasPoint = d_LusasData.getPointByNumber(i);
-                    Node bhomNode = BH.Engine.Lusas.Convert.ToBHoMObject(lusasPoint, groupNames, constraints6DOF);
+                    Node bhomNode = BH.Engine.Lusas.Convert.ToBHoMNode(lusasPoint, groupNames, constraints6DOF);
                     bhomNodes.Add(bhomNode);
                 }
             }
@@ -129,7 +131,7 @@ namespace BH.Adapter.Lusas
                 if (d_LusasData.existsPointByID(i))
                 {
                     IFPoint lusasPoint = d_LusasData.getPointByNumber(i);
-                    Point bhomNode = BH.Engine.Lusas.Convert.ToBHoMGeom(lusasPoint, groupNames);
+                    Point bhomNode = BH.Engine.Lusas.Convert.ToBHoMPoint(lusasPoint, groupNames);
                     bhomPoints.Add(bhomNode);
                 }
             }
@@ -182,7 +184,7 @@ namespace BH.Adapter.Lusas
                 if (d_LusasData.existsLineByID(i))
                 {
                     IFLine lusasline = d_LusasData.getLineByNumber(i);
-                    Edge bhomEdge = BH.Engine.Lusas.Convert.ToBHoMGeom(lusasline, bhomNodes, groupNames);
+                    Edge bhomEdge = BH.Engine.Lusas.Convert.ToBHoMEdge(lusasline, bhomNodes, groupNames);
                     bhomEdges.Add(bhomEdge);
 
                 }

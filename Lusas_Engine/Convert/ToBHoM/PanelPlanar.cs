@@ -24,7 +24,8 @@ namespace BH.Engine.Lusas
 
         //#region Geometry Converters
 
-        public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf, Dictionary<string, Edge> bhomEdges, HashSet<String> groupNames)
+        public static PanelPlanar ToBHoMPanelPlanar(this IFSurface lusasSurf, Dictionary<string, Edge> bhomEdges, HashSet<String> groupNames, Dictionary<string, Material> bhomMaterials)
+
         {
             Object[] surfLines = lusasSurf.getLOFs();
             List<ICurve> dummyCurve = new List<ICurve>();
@@ -38,11 +39,20 @@ namespace BH.Engine.Lusas
                 Edge bhomEdge = getEdge(lusasSurf, i, bhomEdges);
                 surfEdges.Add(bhomEdge);
             }
-       
+
             PanelPlanar bhomPanel = BH.Engine.Structure.Create.PanelPlanar(surfEdges,dummyCurve);
 
             bhomPanel.Tags = tags;
             bhomPanel.CustomData["Lusas_id"] = lusasSurf.getName();
+
+            List<String> materialAssignments = attributeAssignments(lusasSurf, "Material");
+
+            Material panelMaterial = null;
+            if (!(materialAssignments.Count() == 0))
+            {
+                bhomMaterials.TryGetValue(materialAssignments[0], out panelMaterial);
+                bhomPanel.Property.Material = panelMaterial;
+            }
 
             return bhomPanel;
         }

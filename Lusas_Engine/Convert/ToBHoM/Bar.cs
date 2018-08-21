@@ -23,13 +23,14 @@ namespace BH.Engine.Lusas
 
         //Add methods for converting to BHoM from the specific software types, if possible to do without any BHoM calls
         //Example:
-        //public static Node ToBHoM(this LusasNode node)
+        //ToBHoMObject(thise ToBHoM(this LusasNode node)
         //{
 
         //#region Geometry Converters
 
 
-        public static Bar ToBHoMObject(this IFLine lusasLine, Dictionary<string, Node> bhomNodes, HashSet<String> groupNames, Dictionary<string, Material> bhomMaterials)
+        public static Bar ToBHoMBar(this IFLine lusasLine, Dictionary<string, Node> bhomNodes, HashSet<String> groupNames, Dictionary<string, Material> bhomMaterials)
+
         {
 
             Node startNode = getNode(lusasLine, 0, bhomNodes);
