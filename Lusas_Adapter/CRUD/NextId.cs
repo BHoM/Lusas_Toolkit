@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BH.oM.Geometry;
-using LusasM15_2;
+using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
@@ -37,23 +37,73 @@ namespace BH.Adapter.Lusas
             {
                 if (type == typeof(Node))
                 {
-                    index = d_LusasData.getLargestPointID() + 1;
+                    if (d_LusasData.getLargestNodeID() == 0)
+                    {
+                        index = 1;
+                    }
+                    else
+                    {
+
+                        IFPoint largestPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestNodeID());
+                        index = System.Convert.ToInt32(
+                               BH.Engine.Lusas.Convert.removePrefix(largestPoint.getName(), "P")) + 1;
+                    }
                 }
                 if (type == typeof(Bar))
                 {
-                    index = d_LusasData.getLargestLineID() + 1;
+                    if (d_LusasData.getLargestLineID() == 0)
+                    {
+                        index = 1;
+                    }
+                    else
+                    {
+
+                        IFLine largestLine = d_LusasData.getLineByNumber(d_LusasData.getLargestLineID());
+                        index = System.Convert.ToInt32(
+                               BH.Engine.Lusas.Convert.removePrefix(largestLine.getName(), "L")) + 1;
+                    }
                 }
                 if (type == typeof(PanelPlanar))
                 {
-                    index = d_LusasData.getLargestSurfaceID() + 1;
+                    if (d_LusasData.getLargestSurfaceID() == 0)
+                    {
+                        index = 1;
+                    }
+                    else
+                    {
+
+                        IFSurface largestSurface = d_LusasData.getSurfaceByNumber(d_LusasData.getLargestSurfaceID());
+                        index = System.Convert.ToInt32(
+                               BH.Engine.Lusas.Convert.removePrefix(largestSurface.getName(), "S")) + 1;
+                    }
                 }
                 if (type == typeof(Edge))
                 {
-                    index = d_LusasData.getLargestLineID() + 1;
+                    if (d_LusasData.getLargestLineID() == 0)
+                    {
+                        index = 1;
+                    }
+                    else
+                    {
+
+                        IFLine largestLine = d_LusasData.getLineByNumber(d_LusasData.getLargestLineID());
+                        index = System.Convert.ToInt32(
+                               BH.Engine.Lusas.Convert.removePrefix(largestLine.getName(), "L")) + 1;
+                    }
                 }
                 if (type == typeof(Point))
                 {
-                    index = d_LusasData.getLargestPointID() + 1;
+                    if (d_LusasData.getLargestNodeID() == 0)
+                    {
+                        index = 1;
+                    }
+                    else
+                    {
+
+                        IFPoint largestPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestNodeID());
+                        index = System.Convert.ToInt32(
+                               BH.Engine.Lusas.Convert.removePrefix(largestPoint.getName(), "P")) + 1;
+                    }
                 }
                 m_indexDict[type] = index;
             }
@@ -71,3 +121,4 @@ namespace BH.Adapter.Lusas
         /***************************************************/
     }
 }
+

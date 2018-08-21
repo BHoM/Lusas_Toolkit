@@ -9,7 +9,7 @@ using BH.oM.Structural.Loads;
 using BH.oM.Common.Materials;
 using BH.Engine.Geometry;
 using BH.Engine.Structure;
-using LusasM15_2;
+using Lusas.LPI;
 
 namespace BH.Engine.Lusas
 {
