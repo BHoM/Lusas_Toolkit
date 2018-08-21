@@ -15,7 +15,7 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static Constraint6DOF ToBHoMObject(this IFAttribute lusasAttribute)
+        public static Constraint6DOF ToBHoMConstraint6DOF(this IFAttribute lusasAttribute)
         {
             List<String> releaseNames = new List<string> { "U", "V", "W", "THX", "THY", "THZ" };
 

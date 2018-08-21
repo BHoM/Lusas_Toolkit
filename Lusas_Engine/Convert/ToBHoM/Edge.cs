@@ -24,7 +24,7 @@ namespace BH.Engine.Lusas
         //#region Geometry Converters
 
 
-        public static Edge ToBHoMGeom(this IFLine lusasLine, Dictionary<string, Node> bhomNodes, HashSet<String> groupNames)
+        public static Edge ToBHoMEdge(this IFLine lusasLine, Dictionary<string, Node> bhomNodes, HashSet<String> groupNames)
         {
 
             Node startNode = getNode(lusasLine, 0, bhomNodes);
