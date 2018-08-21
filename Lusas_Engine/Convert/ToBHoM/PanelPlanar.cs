@@ -24,38 +24,22 @@ namespace BH.Engine.Lusas
         //#region Geometry Converters
 
 
-        public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf, Dictionary<string, Bar> bhomBars, Dictionary<string, Node> bhomNodes, HashSet<String> groupNames)
+        public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf, Dictionary<string, Edge> bhomEdges, HashSet<String> groupNames)
         {
-            Polyline bhomPolyline = new Polyline();
-
             Object[] surfLines = lusasSurf.getLOFs();
+            List<ICurve> dummyCurve = new List<ICurve>();
 
             int n = surfLines.Length;
             HashSet<String> tags = new HashSet<string>(isMemberOf(lusasSurf, groupNames));
 
-            List<Point> bhomPoints = new List<Point>();
-            for (int i = 0; i < n - 1; i++)
+            List<Edge> surfEdges = new List<Edge>();
+            for (int i = 0; i < n; i++)
             {
-                Bar bhomBar = getBar(lusasSurf, i, bhomBars);
-
-                Point bhomPointEnd = bhomBar.EndNode.Position;
-
-                bhomPoints.Add(bhomPointEnd);
-
-                if (i == n - 2)
-                {
-                    Bar bhomFirstBar = getBar(lusasSurf, 0, bhomBars);
-
-                    bhomPoints.Add(bhomFirstBar.StartNode.Position);
-
-                    bhomPoints.Add(bhomFirstBar.EndNode.Position);
-                }
+                Edge bhomEdge = getEdge(lusasSurf, i, bhomEdges);
+                surfEdges.Add(bhomEdge);
             }
 
-            Polyline bhomPLine = new Polyline { ControlPoints = bhomPoints };
-            ICurve bhomICurve = bhomPLine;
-            List<ICurve> bhomICurves = new List<ICurve>();
-            PanelPlanar bhomPanel = BH.Engine.Structure.Create.PanelPlanar(bhomICurve, bhomICurves);
+            PanelPlanar bhomPanel = BH.Engine.Structure.Create.PanelPlanar(surfEdges,dummyCurve);
             bhomPanel.Tags = tags;
             bhomPanel.CustomData["Lusas_id"] = lusasSurf.getName();
 
