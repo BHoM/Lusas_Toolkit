@@ -12,7 +12,7 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static Point ToBHoMGeom(this IFPoint lusasPoint, HashSet<String> groupNames)
+        public static Point ToBHoMPoint(this IFPoint lusasPoint, HashSet<String> groupNames)
         {
             HashSet<String> tags = new HashSet<string>(isMemberOf(lusasPoint, groupNames));
 

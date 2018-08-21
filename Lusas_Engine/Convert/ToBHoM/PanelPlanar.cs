@@ -24,7 +24,7 @@ namespace BH.Engine.Lusas
         //#region Geometry Converters
 
 
-        public static PanelPlanar ToBHoMObject(this IFSurface lusasSurf, Dictionary<string, Edge> bhomEdges, HashSet<String> groupNames)
+        public static PanelPlanar ToBHoMPanelPlanar(this IFSurface lusasSurf, Dictionary<string, Edge> bhomEdges, HashSet<String> groupNames)
         {
             Object[] surfLines = lusasSurf.getLOFs();
             List<ICurve> dummyCurve = new List<ICurve>();
