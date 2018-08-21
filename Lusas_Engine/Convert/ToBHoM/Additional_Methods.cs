@@ -43,8 +43,16 @@ namespace BH.Engine.Lusas
             IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
             String lineName = removePrefix(lusasEdge.getName(), "L");
             bhomBars.TryGetValue(lineName, out bhomBar);
-
             return bhomBar;
+        }
+
+        public static Edge getEdge(IFSurface lusasSurf, int lineIndex, Dictionary<string, Edge> bhomBars)
+        {
+            Edge bhomEdge = null;
+            IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
+            String lineName = removePrefix(lusasEdge.getName(), "L");
+            bhomBars.TryGetValue(lineName, out bhomEdge);
+            return bhomEdge;
         }
 
         public static HashSet<String> isMemberOf(IFGeometry lusasGeometry, HashSet<String> groupNames)

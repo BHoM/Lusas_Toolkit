@@ -74,11 +74,8 @@ namespace BH.Adapter.Lusas
         {
             int maxSurfID = d_LusasData.getLargestSurfaceID();
             List<PanelPlanar> bhomSurfaces = new List<PanelPlanar>();
-
-            IEnumerable<Node> bhomNodesList = ReadNodes();
-            Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
-            IEnumerable<Bar> bhomBarsList = ReadBars();
-            Dictionary<string, Bar> bhomBars = bhomBarsList.ToDictionary(x => x.CustomData[AdapterId].ToString());
+            IEnumerable<Edge> bhomEdgesList = ReadEdges();
+            Dictionary<string, Edge> bhomEdges = bhomEdgesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
             HashSet<String> groupNames = ReadGroups();
 
             for (int i = 1; i <= maxSurfID; i++)
@@ -86,7 +83,7 @@ namespace BH.Adapter.Lusas
                 if (d_LusasData.existsSurfaceByID(i))
                 {
                     IFSurface lusasSurface = d_LusasData.getSurfaceByNumber(i);
-                    PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMObject(lusasSurface, bhomBars, bhomNodes, groupNames);
+                    PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMObject(lusasSurface, bhomEdges, groupNames);
                     bhomSurfaces.Add(bhompanel);
                 }
             }
