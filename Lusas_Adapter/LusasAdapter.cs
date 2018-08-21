@@ -7,7 +7,7 @@ using BH.Adapter;
 using BH.Engine.Lusas;
 using System.Diagnostics;
 using System.IO;
-using LusasM15_2;
+using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
