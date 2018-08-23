@@ -15,7 +15,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFAttribute CreateAttribute(Constraint6DOF constraint)
+        public IFAttribute CreateSupport(Constraint6DOF constraint)
         {
             IFAttribute lusasSupport = d_LusasData.createSupportStructural(constraint.Name);
 

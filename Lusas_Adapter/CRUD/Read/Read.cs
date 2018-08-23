@@ -91,7 +91,10 @@ namespace BH.Adapter.Lusas
                 {
                     IFSurface lusasSurface = d_LusasData.getSurfaceByNumber(i);
 
-                    PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMPanelPlanar(lusasSurface, bhomEdges, groupNames, materials);
+                    PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMPanelPlanar(lusasSurface,
+                        bhomEdges,
+                        groupNames,
+                        materials);
 
                     bhomSurfaces.Add(bhompanel);
                 }

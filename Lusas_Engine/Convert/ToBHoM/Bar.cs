@@ -29,7 +29,10 @@ namespace BH.Engine.Lusas
         //#region Geometry Converters
 
 
-        public static Bar ToBHoMBar(this IFLine lusasLine, Dictionary<string, Node> bhomNodes, HashSet<String> groupNames, Dictionary<string, Material> bhomMaterials)
+        public static Bar ToBHoMBar(this IFLine lusasLine, 
+            Dictionary<string, Node> bhomNodes, 
+            HashSet<String> groupNames, 
+            Dictionary<string, Material> bhomMaterials)
 
         {
 
