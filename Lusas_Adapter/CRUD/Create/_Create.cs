@@ -49,6 +49,10 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<Material>);
                 }
+                if (objects.First() is Constraint6DOF)
+                {
+                    success = CreateCollection(objects as IEnumerable<Constraint6DOF>);
+                }
                 //if (objects.First().GetType().GetInterfaces().Contains(typeof(ISectionProperty)))
                 //{
                 //    success = CreateCollection(objects as IEnumerable<ISectionProperty>);
@@ -282,9 +286,17 @@ namespace BH.Adapter.Lusas
         {
             foreach (Material material in materials)
             {
-                //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software):
-                object materialId = material.CustomData[AdapterId];
+                IFAttribute newMaterial = CreateMaterial(material);
+            }
 
+            return true;
+        }
+
+        private bool CreateCollection(IEnumerable<Constraint6DOF> constraints)
+        {
+            foreach (Constraint6DOF constraint in constraints)
+            {
+                IFAttribute newSupport = CreateSupport(constraint);
             }
 
             return true;

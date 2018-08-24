@@ -9,7 +9,6 @@ using BH.oM.Geometry;
 using BH.oM.Structural.Elements;
 using BH.oM.Structural.Properties;
 using BH.oM.Common.Materials;
-using LusasM15_2;
 using BH.Engine.Geometry;
 using Lusas.LPI;
 
