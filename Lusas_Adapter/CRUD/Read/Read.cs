@@ -37,8 +37,6 @@ namespace BH.Adapter.Lusas
                 return ReadPoints(ids as dynamic);
             else if (type == typeof(Constraint6DOF))
                 return ReadConstraint6DOFs(ids as dynamic);
-            else if (type == typeof(Material))
-                return ReadConstraint6DOFs(ids as dynamic);
             return null;
         }
 

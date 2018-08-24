@@ -49,10 +49,10 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<Material>);
                 }
-                if (objects.First().GetType().GetInterfaces().Contains(typeof(ISectionProperty)))
-                {
-                    success = CreateCollection(objects as IEnumerable<ISectionProperty>);
-                }
+                //if (objects.First().GetType().GetInterfaces().Contains(typeof(ISectionProperty)))
+                //{
+                //    success = CreateCollection(objects as IEnumerable<ISectionProperty>);
+                //}
             }
 
             //success = CreateCollection(objects as dynamic);
@@ -280,8 +280,6 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<Material> materials)
         {
-            //Code for creating a collection of materials in the software
-
             foreach (Material material in materials)
             {
                 //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software):
@@ -289,7 +287,7 @@ namespace BH.Adapter.Lusas
 
             }
 
-            throw new NotImplementedException();
+            return true;
         }
 
         /***************************************************/
