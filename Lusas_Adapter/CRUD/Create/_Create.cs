@@ -85,18 +85,18 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            List<Constraint6DOF> nodeConstraints = nodes.Select(x => x.Constraint).Distinct().ToList();
+            //List<Constraint6DOF> nodeConstraints = nodes.Select(x => x.Constraint).Distinct().ToList();
 
-            foreach (Constraint6DOF constraint in nodeConstraints)
-            {
-                if (!(constraint == null))
-                {
-                    if (!(d_LusasData.existsAttribute("Support", "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name)))
-                    {
-                        IFAttribute lusasAttribute = CreateSupport(constraint);
-                    }
-                }
-            }
+            //foreach (Constraint6DOF constraint in nodeConstraints)
+            //{
+            //    if (!(constraint == null))
+            //    {
+            //        if (!(d_LusasData.existsAttribute("Support", "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name)))
+            //        {
+            //            IFAttribute lusasAttribute = CreateSupport(constraint);
+            //        }
+            //    }
+            //}
 
             foreach (Node node in nodes)
             {
@@ -143,18 +143,20 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            List<Material> barMaterials = bars.Select(x => x.SectionProperty.Material).Distinct().ToList();
 
-            foreach (Material material in barMaterials)
-            {
-                if (!(material == null))
-                {
-                    if (!(d_LusasData.existsAttribute("Material", "M" + material.CustomData[AdapterId] + "/" + material.Name)))
-                    {
-                        IFAttribute lusasAttribute = CreateMaterial(material);
-                    }
-                }
-            }
+            //List<Material> barMaterials = bars.Select(x => x.SectionProperty.Material).Distinct().ToList();
+
+            //foreach (Material material in barMaterials)
+            //{
+            //    if (!(material == null))
+            //    {
+            //        if (!(d_LusasData.existsAttribute("Material", "M" + material.CustomData[AdapterId] + "/" + material.Name)))
+            //        {
+            //            IFAttribute lusasAttribute = CreateMaterial(material);
+            //        }
+            //    }
+            //}
+
 
             List<Bar> existingLines = ReadBars();
 
@@ -182,18 +184,19 @@ namespace BH.Adapter.Lusas
 
             List<IFLine> lusasLines = ReadLusasEdges();
 
-            List<Material> panelPlanarMaterials = panels.Select(x => x.Property.Material).Distinct().ToList();
 
-            foreach (Material material in panelPlanarMaterials)
-            {
-                if (!(material == null))
-                {
-                    if (!(d_LusasData.existsAttribute("Material", "M" + material.CustomData[AdapterId] + "/" + material.Name)))
-                    {
-                        IFAttribute lusasAttribute = CreateMaterial(material);
-                    }
-                }
-            }
+            //List<Material> panelPlanarMaterials = panels.Select(x => x.Property.Material).Distinct().ToList();
+
+            //foreach (Material material in panelPlanarMaterials)
+            //{
+            //    if (!(material == null))
+            //    {
+            //        if (!(d_LusasData.existsAttribute("Material", "M" + material.CustomData[AdapterId] + "/" + material.Name)))
+            //        {
+            //            IFAttribute lusasAttribute = CreateMaterial(material);
+            //        }
+            //    }
+
 
             foreach (PanelPlanar panel in panels)
             {

@@ -17,40 +17,51 @@ namespace BH.Adapter.Lusas
     {
         public IFAttribute CreateSupport(Constraint6DOF constraint)
         {
-            IFAttribute lusasSupport = d_LusasData.createSupportStructural(constraint.Name);
 
-            List<string> releaseNames = new List<string> { "U", "V", "W", "THX", "THY", "THZ" };
-            List<double> stiffness = new List<double> {constraint.TranslationalStiffnessX,
-            constraint.TranslationalStiffnessY, constraint.TranslationalStiffnessZ,
-            constraint.RotationalStiffnessX,constraint.RotationalStiffnessY,constraint.RotationalStiffnessZ};
-            Boolean[] fixities = constraint.Fixities();
+            IFAttribute lusasSupport = null;
 
-            for (int i = 0; i < releaseNames.Count(); i++)
+            if (d_LusasData.existsAttribute("Support", "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name))
             {
-                if (fixities[i])
-                {
-                    lusasSupport.setValue(releaseNames[i], "R");
-                }
-                else if (stiffness[i] == 0)
-                {
-                    lusasSupport.setValue(releaseNames[i], "F");
-                }
-                else
-                {
-                    lusasSupport.setValue(releaseNames[i], "S");
-                    lusasSupport.setValue(releaseNames[i] + "stiff", stiffness[i]);
-                }
+                lusasSupport = d_LusasData.getAttribute("Support", "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name);
             }
-
-            int bhomID;
-            if (constraint.CustomData.ContainsKey(AdapterId))
-                bhomID = System.Convert.ToInt32(constraint.CustomData[AdapterId]);
             else
-                bhomID = System.Convert.ToInt32(NextId(constraint.GetType()));
+            {
+                lusasSupport = d_LusasData.createSupportStructural("Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name);
 
-            constraint.CustomData[AdapterId] = bhomID;
+                List<string> releaseNames = new List<string> { "U", "V", "W", "THX", "THY", "THZ" };
+                List<double> stiffness = new List<double> {constraint.TranslationalStiffnessX,
+                    constraint.TranslationalStiffnessY, constraint.TranslationalStiffnessZ,
+                    constraint.RotationalStiffnessX,constraint.RotationalStiffnessY,constraint.RotationalStiffnessZ};
+                Boolean[] fixities = constraint.Fixities();
 
-            lusasSupport.setName("Sp" + bhomID + "/" + constraint.Name);
+                for (int i = 0; i < releaseNames.Count(); i++)
+                {
+                    if (fixities[i])
+                    {
+                        lusasSupport.setValue(releaseNames[i], "R");
+                    }
+                    else if (stiffness[i] == 0)
+                    {
+                        lusasSupport.setValue(releaseNames[i], "F");
+                    }
+                    else
+                    {
+                        lusasSupport.setValue(releaseNames[i], "S");
+                        lusasSupport.setValue(releaseNames[i] + "stiff", stiffness[i]);
+                    }
+                }
+
+                //if (constraint.CustomData.ContainsKey(AdapterId))
+                //    bhomID = System.Convert.ToInt32(constraint.CustomData[AdapterId]);
+                //else
+                //    bhomID = System.Convert.ToInt32(NextId(constraint.GetType()));
+
+                //constraint.CustomData[AdapterId] = bhomID;
+
+                
+
+                //lusasSupport.setName("Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name);
+            }
 
             return lusasSupport;
         }

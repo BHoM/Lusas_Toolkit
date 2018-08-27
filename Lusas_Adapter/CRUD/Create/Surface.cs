@@ -56,12 +56,16 @@ namespace BH.Adapter.Lusas
                 assignObjectSet(newSurface, panel.Tags);
             }
 
-            if (!(panel.Property.Material == null))
+            if(!(panel.Property == null))
             {
-                String materialName = "M" + panel.Property.Material.CustomData[AdapterId] + "/" + panel.Property.Material.Name;
-                IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
-                lusasMaterial.assignTo(newSurface);
+                if (!(panel.Property.Material == null))
+                {
+                    String materialName = "M" + panel.Property.Material.CustomData[AdapterId] + "/" + panel.Property.Material.Name;
+                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
+                    lusasMaterial.assignTo(newSurface);
+                }
             }
+
 
             return newSurface;
         }

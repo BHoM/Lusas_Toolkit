@@ -49,13 +49,16 @@ namespace BH.Adapter.Lusas
                 assignObjectSet(newLine, bar.Tags);
             }
 
-
-            if (!(bar.SectionProperty.Material == null))
+            if(!(bar.SectionProperty == null))
             {
-                String materialName = "M" + bar.SectionProperty.Material.CustomData[AdapterId] + "/" + bar.SectionProperty.Material.Name;
-                IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
-                lusasMaterial.assignTo(newLine);
+                if (!(bar.SectionProperty.Material == null))
+                {
+                    String materialName = "M" + bar.SectionProperty.Material.CustomData[AdapterId] + "/" + bar.SectionProperty.Material.Name;
+                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
+                    lusasMaterial.assignTo(newLine);
+                }
             }
+
 
             return newLine;
 
@@ -88,11 +91,14 @@ namespace BH.Adapter.Lusas
                 assignObjectSet(newLine, bar.Tags);
             }
 
-            if (!(bar.SectionProperty.Material == null))
+            if (!(bar.SectionProperty == null))
             {
-                String materialName = "M" + bar.SectionProperty.Material.CustomData[AdapterId] + "/" + bar.SectionProperty.Material.Name;
-                IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
-                lusasMaterial.assignTo(newLine);
+                if (!(bar.SectionProperty.Material == null))
+                {
+                    String materialName = "M" + bar.SectionProperty.Material.CustomData[AdapterId] + "/" + bar.SectionProperty.Material.Name;
+                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
+                    lusasMaterial.assignTo(newLine);
+                }
             }
 
             return newLine;

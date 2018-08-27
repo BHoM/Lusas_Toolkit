@@ -37,14 +37,15 @@ namespace BH.Adapter.Lusas
             {
                 if (type == typeof(Node))
                 {
-                    if (d_LusasData.getLargestNodeID() == 0)
+                    int largestPointID = d_LusasData.getLargestPointID();
+                    if (largestPointID == 0)
                     {
                         index = 1;
                     }
                     else
                     {
 
-                        IFPoint largestPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestNodeID());
+                        IFPoint largestPoint = d_LusasData.getPointByNumber(largestPointID);
                         index = System.Convert.ToInt32(
                                BH.Engine.Lusas.Convert.removePrefix(largestPoint.getName(), "P")) + 1;
                     }
@@ -93,14 +94,15 @@ namespace BH.Adapter.Lusas
                 }
                 if (type == typeof(Point))
                 {
-                    if (d_LusasData.getLargestNodeID() == 0)
+                    int largestPointID = d_LusasData.getLargestPointID();
+                    if (largestPointID == 0)
                     {
                         index = 1;
                     }
                     else
                     {
 
-                        IFPoint largestPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestNodeID());
+                        IFPoint largestPoint = d_LusasData.getPointByNumber(largestPointID);
                         index = System.Convert.ToInt32(
                                BH.Engine.Lusas.Convert.removePrefix(largestPoint.getName(), "P")) + 1;
                     }

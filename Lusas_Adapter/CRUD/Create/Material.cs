@@ -17,20 +17,29 @@ namespace BH.Adapter.Lusas
     {
         public IFAttribute CreateMaterial(Material material)
         {
-            IFAttribute lusasSupport = d_LusasData.createIsotropicMaterial(material.Name,
-                material.YoungsModulus,material.PoissonsRatio,material.Density,material.CoeffThermalExpansion);
+            IFAttribute lusasMaterial = null;
 
-            int bhomID;
-            if (material.CustomData.ContainsKey(AdapterId))
-                bhomID = System.Convert.ToInt32(material.CustomData[AdapterId]);
+            if (d_LusasData.existsAttribute("Material", "M" + material.CustomData[AdapterId] + "/" + material.Name))
+            {
+                lusasMaterial = d_LusasData.getAttribute("Support", "Sp" + material.CustomData[AdapterId] + "/" + material.Name);
+            }
             else
-                bhomID = System.Convert.ToInt32(NextId(material.GetType()));
+            {
+                lusasMaterial = d_LusasData.createIsotropicMaterial(material.Name,
+                material.YoungsModulus, material.PoissonsRatio, material.Density, material.CoeffThermalExpansion);
 
-            material.CustomData[AdapterId] = bhomID;
+                //int bhomID;
+                //if (material.CustomData.ContainsKey(AdapterId))
+                //    bhomID = System.Convert.ToInt32(material.CustomData[AdapterId]);
+                //else
+                //    bhomID = System.Convert.ToInt32(NextId(material.GetType()));
 
-            lusasSupport.setName("M" + bhomID + "/" + material.Name);
+                //material.CustomData[AdapterId] = bhomID;
 
-            return lusasSupport;
+                lusasMaterial.setName("M" + material.CustomData[AdapterId] + "/" + material.Name);
+            }
+
+            return lusasMaterial;
         }
     }
 }
