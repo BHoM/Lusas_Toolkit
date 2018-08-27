@@ -45,8 +45,8 @@ namespace BH.Adapter.Lusas
 
         private static Dictionary<Type, List<Type>> m_DependencyTypes = new Dictionary<Type, List<Type>>
         {
-            {typeof(PanelPlanar), new List<Type> {typeof(Edge) } },
-            {typeof(Bar), new List<Type> { typeof(Node) } },
+            {typeof(PanelPlanar), new List<Type> {typeof(Edge), typeof(Material) } },
+            {typeof(Bar), new List<Type> { typeof(Node) , typeof(Material)} },
             {typeof(Node), new List<Type> { typeof(Constraint6DOF) } },
             //{typeof(ISectionProperty), new List<Type> { typeof(Material) } },
             {typeof(RigidLink), new List<Type> { typeof(LinkConstraint), typeof(Node) } },

@@ -45,10 +45,18 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<Point>);
                 }
-                if (objects.First().GetType().GetInterfaces().Contains(typeof(ISectionProperty)))
+                if (objects.First() is Material)
                 {
-                    success = CreateCollection(objects as IEnumerable<ISectionProperty>);
+                    success = CreateCollection(objects as IEnumerable<Material>);
                 }
+                if (objects.First() is Constraint6DOF)
+                {
+                    success = CreateCollection(objects as IEnumerable<Constraint6DOF>);
+                }
+                //if (objects.First().GetType().GetInterfaces().Contains(typeof(ISectionProperty)))
+                //{
+                //    success = CreateCollection(objects as IEnumerable<ISectionProperty>);
+                //}
             }
 
             //success = CreateCollection(objects as dynamic);
@@ -77,18 +85,18 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            List<Constraint6DOF> nodeConstraints = nodes.Select(x => x.Constraint).Distinct().ToList();
+            //List<Constraint6DOF> nodeConstraints = nodes.Select(x => x.Constraint).Distinct().ToList();
 
-            foreach (Constraint6DOF constraint in nodeConstraints)
-            {
-                if (!(constraint == null))
-                {
-                    if (!(d_LusasData.existsAttribute("Support", "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name)))
-                    {
-                        IFAttribute lusasAttribute = CreateAttribute(constraint);
-                    }
-                }
-            }
+            //foreach (Constraint6DOF constraint in nodeConstraints)
+            //{
+            //    if (!(constraint == null))
+            //    {
+            //        if (!(d_LusasData.existsAttribute("Support", "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name)))
+            //        {
+            //            IFAttribute lusasAttribute = CreateSupport(constraint);
+            //        }
+            //    }
+            //}
 
             foreach (Node node in nodes)
             {
@@ -135,6 +143,21 @@ namespace BH.Adapter.Lusas
                 }
             }
 
+
+            //List<Material> barMaterials = bars.Select(x => x.SectionProperty.Material).Distinct().ToList();
+
+            //foreach (Material material in barMaterials)
+            //{
+            //    if (!(material == null))
+            //    {
+            //        if (!(d_LusasData.existsAttribute("Material", "M" + material.CustomData[AdapterId] + "/" + material.Name)))
+            //        {
+            //            IFAttribute lusasAttribute = CreateMaterial(material);
+            //        }
+            //    }
+            //}
+
+
             List<Bar> existingLines = ReadBars();
 
             foreach (Bar bar in bars)
@@ -160,6 +183,20 @@ namespace BH.Adapter.Lusas
             }
 
             List<IFLine> lusasLines = ReadLusasEdges();
+
+
+            //List<Material> panelPlanarMaterials = panels.Select(x => x.Property.Material).Distinct().ToList();
+
+            //foreach (Material material in panelPlanarMaterials)
+            //{
+            //    if (!(material == null))
+            //    {
+            //        if (!(d_LusasData.existsAttribute("Material", "M" + material.CustomData[AdapterId] + "/" + material.Name)))
+            //        {
+            //            IFAttribute lusasAttribute = CreateMaterial(material);
+            //        }
+            //    }
+
 
             foreach (PanelPlanar panel in panels)
             {
@@ -250,16 +287,22 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<Material> materials)
         {
-            //Code for creating a collection of materials in the software
-
             foreach (Material material in materials)
             {
-                //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software):
-                object materialId = material.CustomData[AdapterId];
-
+                IFAttribute newMaterial = CreateMaterial(material);
             }
 
-            throw new NotImplementedException();
+            return true;
+        }
+
+        private bool CreateCollection(IEnumerable<Constraint6DOF> constraints)
+        {
+            foreach (Constraint6DOF constraint in constraints)
+            {
+                IFAttribute newSupport = CreateSupport(constraint);
+            }
+
+            return true;
         }
 
         /***************************************************/

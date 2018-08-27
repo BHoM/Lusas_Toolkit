@@ -84,8 +84,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CRUD\Create\Additional_Methods.cs" />
-    <Compile Include="CRUD\Create\Attribute.cs" />
     <Compile Include="CRUD\Create\Edge.cs" />
+    <Compile Include="CRUD\Create\Material.cs" />
+    <Compile Include="CRUD\Create\Support.cs" />
     <Compile Include="CRUD\Create\Surface.cs" />
     <Compile Include="CRUD\Create\Line.cs" />
     <Compile Include="CRUD\Create\Point.cs" />

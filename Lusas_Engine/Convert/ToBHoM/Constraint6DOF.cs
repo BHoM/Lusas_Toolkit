@@ -56,5 +56,7 @@ namespace BH.Engine.Lusas
 
             return bhomConstraint6DOF;
         }
+
+
     }
 }

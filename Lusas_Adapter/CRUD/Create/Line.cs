@@ -48,7 +48,20 @@ namespace BH.Adapter.Lusas
             {
                 assignObjectSet(newLine, bar.Tags);
             }
+
+            if(!(bar.SectionProperty == null))
+            {
+                if (!(bar.SectionProperty.Material == null))
+                {
+                    String materialName = "M" + bar.SectionProperty.Material.CustomData[AdapterId] + "/" + bar.SectionProperty.Material.Name;
+                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
+                    lusasMaterial.assignTo(newLine);
+                }
+            }
+
+
             return newLine;
+
         }
 
         public IFLine CreateLine(Bar bar, IFPoint startPoint, IFPoint endPoint)
@@ -76,6 +89,16 @@ namespace BH.Adapter.Lusas
             if (!(bar.Tags.Count == 0))
             {
                 assignObjectSet(newLine, bar.Tags);
+            }
+
+            if (!(bar.SectionProperty == null))
+            {
+                if (!(bar.SectionProperty.Material == null))
+                {
+                    String materialName = "M" + bar.SectionProperty.Material.CustomData[AdapterId] + "/" + bar.SectionProperty.Material.Name;
+                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
+                    lusasMaterial.assignTo(newLine);
+                }
             }
 
             return newLine;
