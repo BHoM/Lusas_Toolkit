@@ -15,7 +15,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFLine CreateLine(Bar bar, List<Bar> existingBars)
+        public IFLine CreateLine(Bar bar)
         {
             IFLine newLine;
 
@@ -27,22 +27,10 @@ namespace BH.Adapter.Lusas
 
             bar.CustomData[AdapterId] = bhomID;
 
-            int position = existingBars.FindIndex(m =>
-                            Math.Round(m.Geometry().IPointAtParameter(0.5).X, 3).Equals(Math.Round(bar.Geometry().IPointAtParameter(0.5).X, 3)) &&
-                            Math.Round(m.Geometry().IPointAtParameter(0.5).Y, 3).Equals(Math.Round(bar.Geometry().IPointAtParameter(0.5).Y, 3)) &&
-                            Math.Round(m.Geometry().IPointAtParameter(0.5).Z, 3).Equals(Math.Round(bar.Geometry().IPointAtParameter(0.5).Z, 3)));
-
-            if (position == -1)
-            {
                 IFPoint startPoint = d_LusasData.getPointByName(bar.StartNode.CustomData[AdapterId].ToString());
                 IFPoint endPoint = d_LusasData.getPointByName(bar.EndNode.CustomData[AdapterId].ToString());
                 newLine = d_LusasData.createLineByPoints(startPoint, endPoint);
                 newLine.setName("L" + bar.CustomData[AdapterId]);
-            }
-            else
-            {
-                newLine = d_LusasData.getLineByName("L" + existingBars[position].CustomData[AdapterId].ToString());
-            }
 
             if (!(bar.Tags.Count == 0))
             {

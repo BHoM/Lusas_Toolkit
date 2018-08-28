@@ -85,19 +85,6 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            //List<Constraint6DOF> nodeConstraints = nodes.Select(x => x.Constraint).Distinct().ToList();
-
-            //foreach (Constraint6DOF constraint in nodeConstraints)
-            //{
-            //    if (!(constraint == null))
-            //    {
-            //        if (!(d_LusasData.existsAttribute("Support", "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name)))
-            //        {
-            //            IFAttribute lusasAttribute = CreateSupport(constraint);
-            //        }
-            //    }
-            //}
-
             foreach (Node node in nodes)
             {
                 IFPoint newpoint = CreatePoint(node);
@@ -132,6 +119,14 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<Bar> bars)
         {
+            //List<Bar> distinctBars = bars.GroupBy(m => new {
+            //    X = Math.Round(m.Geometry().IPointAtParameter(0.5).X, 3),
+            //    Y = Math.Round(m.Geometry().IPointAtParameter(0.5).Y, 3),
+            //    Z = Math.Round(m.Geometry().IPointAtParameter(0.5).Z, 3)
+            //})
+            //.Select(x => x.First())
+            //.ToList();
+
 
             List<String> barTags = bars.SelectMany(x => x.Tags).Distinct().ToList();
 
@@ -143,26 +138,9 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-
-            //List<Material> barMaterials = bars.Select(x => x.SectionProperty.Material).Distinct().ToList();
-
-            //foreach (Material material in barMaterials)
-            //{
-            //    if (!(material == null))
-            //    {
-            //        if (!(d_LusasData.existsAttribute("Material", "M" + material.CustomData[AdapterId] + "/" + material.Name)))
-            //        {
-            //            IFAttribute lusasAttribute = CreateMaterial(material);
-            //        }
-            //    }
-            //}
-
-
-            List<Bar> existingLines = ReadBars();
-
             foreach (Bar bar in bars)
             {
-                IFLine newline = CreateLine(bar, existingLines);
+                IFLine newline = CreateLine(bar);
             }
             return true;
         }

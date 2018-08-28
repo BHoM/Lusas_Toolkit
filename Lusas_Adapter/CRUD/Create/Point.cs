@@ -28,19 +28,19 @@ namespace BH.Adapter.Lusas
 
             node.CustomData[AdapterId] = bhomID;
 
-            if (d_LusasData.existsPointByName("P" + node.CustomData[AdapterId]))
-            {
-                newPoint = d_LusasData.getPointByName("P" + node.CustomData[AdapterId]);
-            }
-            else
-            {
+            //if (d_LusasData.existsPointByName("P" + node.CustomData[AdapterId]))
+            //{
+            //    newPoint = d_LusasData.getPointByName("P" + node.CustomData[AdapterId]);
+            //}
+            //else
+            //{
                 IFGeometryData geomData = m_LusasApplication.geometryData();
                 geomData.setAllDefaults();
                 geomData.addCoords(node.Position.X, node.Position.Y, node.Position.Z);
                 IFDatabaseOperations database_point = d_LusasData.createPoint(geomData);
                 newPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
                 newPoint.setName("P" + node.CustomData[AdapterId].ToString());
-            }
+            //}
 
             if (!(node.Tags.Count == 0))
             {
