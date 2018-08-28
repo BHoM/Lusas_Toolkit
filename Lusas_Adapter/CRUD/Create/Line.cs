@@ -34,8 +34,8 @@ namespace BH.Adapter.Lusas
 
             if (position == -1)
             {
-                IFPoint startPoint = CreatePoint(bar.StartNode);
-                IFPoint endPoint = CreatePoint(bar.EndNode);
+                IFPoint startPoint = d_LusasData.getPointByName(bar.StartNode.CustomData[AdapterId].ToString());
+                IFPoint endPoint = d_LusasData.getPointByName(bar.EndNode.CustomData[AdapterId].ToString());
                 newLine = d_LusasData.createLineByPoints(startPoint, endPoint);
                 newLine.setName("L" + bar.CustomData[AdapterId]);
             }
