@@ -4,8 +4,6 @@ C:\Users\cself\Documents\GitHub\Lusas_Toolkit\Build\Lusas_Adapter.pdb
 C:\Users\cself\Documents\GitHub\Lusas_Toolkit\Lusas_Adapter\obj\Debug\Lusas_Adapter.csprojResolveAssemblyReference.cache
 C:\Users\cself\Documents\GitHub\Lusas_Toolkit\Lusas_Adapter\obj\Debug\Lusas_Adapter.dll
 C:\Users\cself\Documents\GitHub\Lusas_Toolkit\Lusas_Adapter\obj\Debug\Lusas_Adapter.pdb
-C:\Users\cself\Documents\GitHub\Lusas_Toolkit\Lusas_Adapter\obj\Debug\Lusas_Adapter.csproj.ResolveComReference.cache
-C:\Users\cself\Documents\GitHub\Lusas_Toolkit\Lusas_Adapter\obj\Debug\Interop.LusasM15_2.dll
 C:\Users\pnugent\Documents\GitHub\Lusas_Toolkit\Build\Lusas_Adapter.dll
 C:\Users\pnugent\Documents\GitHub\Lusas_Toolkit\Build\Lusas_Adapter.pdb
 C:\Users\pnugent\Documents\GitHub\Lusas_Toolkit\Lusas_Adapter\obj\Debug\Lusas_Adapter.dll

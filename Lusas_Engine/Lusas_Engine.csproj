@@ -77,6 +77,9 @@
     <Compile Include="Convert\ToBHoM\Point.cs" />
     <Compile Include="Convert\ToBHoM\_ToBHoM.cs" />
     <Compile Include="Convert\ToLusas\_ToLusas.cs" />
+    <Compile Include="Object_Comparer\Equality Comparer\BarMidPointComparer.cs" />
+    <Compile Include="Object_Comparer\Equality Comparer\PointDistanceComparer.cs" />
+    <Compile Include="Object_Comparer\Equality Comparer\EdgeMidPointComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
