@@ -82,7 +82,7 @@ namespace BH.Engine.Lusas
             {
                 IFAssignment attributeAssignment = lusasGeometry.getAssignments()[i];
                 IFAttribute lusasAttribute = attributeAssignment.getAttribute();
-                string attributeName = getAttributeName(lusasAttribute);
+                string attributeName = getName(lusasAttribute);
 
                 attributeNames.Add(attributeName);
             }
@@ -106,7 +106,23 @@ namespace BH.Engine.Lusas
             return bhomID;
         }
 
-        public static string getAttributeName(IFAttribute lusasAttribute)
+        public static int getBHoMID(IFLoadcase lusasLoadcase, char lastCharacter)
+        {
+            int bhomID = 0;
+
+            if (lusasLoadcase.getName().Contains("/"))
+            {
+                bhomID = Int32.Parse(lusasLoadcase.getName().Split(lastCharacter, '/')[1]);
+            }
+            else
+            {
+                bhomID = lusasLoadcase.getID();
+            }
+
+            return bhomID;
+        }
+
+        public static string getName(IFAttribute lusasAttribute)
         {
             string attributeName = "";
 
@@ -121,6 +137,23 @@ namespace BH.Engine.Lusas
             }
 
             return attributeName;
+        }
+
+        public static string getName(IFLoadcase lusasLoadcase)
+        {
+            string loadcaseName = "";
+
+            if (lusasLoadcase.getName().Contains("/"))
+            {
+                loadcaseName = lusasLoadcase.getName().Substring(
+                    lusasLoadcase.getName().LastIndexOf("/") + 1);
+            }
+            else
+            {
+                loadcaseName = lusasLoadcase.getName();
+            }
+
+            return loadcaseName;
         }
     }
 }
