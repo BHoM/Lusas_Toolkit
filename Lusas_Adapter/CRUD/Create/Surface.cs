@@ -20,23 +20,11 @@ namespace BH.Adapter.Lusas
         {
             IFObjectSet tempGroup = d_LusasData.createGroup("temp");
 
-            List<List<double>> lusascoords = new List<List<double>>();
-
-            for (int i = 0; i < lusasLines.Count; i++)
+            foreach (IFLine line in lusasLines)
             {
-                object[] coordinates = lusasLines[i].getInterpolatedPosition(0.5);
-                lusascoords.Add(new List<double> { (double)coordinates[0], (double)coordinates[1], (double)coordinates[2] });
+                tempGroup.add(line);
             }
 
-            foreach (Edge edge in panel.ExternalEdges)
-            {
-                Point midwayPoint = edge.Curve.IPointAtParameter(0.5);
-
-                int index = lusascoords.FindIndex(m => Math.Round(m[0], 3).Equals(Math.Round(midwayPoint.X, 3)) &&
-                                                       Math.Round(m[1], 3).Equals(Math.Round(midwayPoint.Y, 3)) &&
-                                                       Math.Round(m[2], 3).Equals(Math.Round(midwayPoint.Z, 3)));
-                tempGroup.add(lusasLines[index]);
-            }
 
             IFSurface newSurface;
 
