@@ -96,7 +96,8 @@ namespace BH.Adapter.Lusas
         private bool CreateCollection(IEnumerable<Point> points)
         {
 
-            List<Point> distinctPoints = points.GroupBy(m => new {
+            List<Point> distinctPoints = points.GroupBy(m => new
+            {
                 X = Math.Round(m.X, 3),
                 Y = Math.Round(m.Y, 3),
                 Z = Math.Round(m.Z, 3)
@@ -160,25 +161,40 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            List<IFLine> lusasLines = ReadLusasEdges();
-
-
-            //List<Material> panelPlanarMaterials = panels.Select(x => x.Property.Material).Distinct().ToList();
-
-            //foreach (Material material in panelPlanarMaterials)
-            //{
-            //    if (!(material == null))
-            //    {
-            //        if (!(d_LusasData.existsAttribute("Material", "M" + material.CustomData[AdapterId] + "/" + material.Name)))
-            //        {
-            //            IFAttribute lusasAttribute = CreateMaterial(material);
-            //        }
-            //    }
-
+            List<Edge> allEdges = new List<Edge>();
 
             foreach (PanelPlanar panel in panels)
             {
+                allEdges.AddRange(panel.ExternalEdges);
+            }
+
+            List<Edge> distinctEdges = allEdges.GroupBy(m => new
+            {
+                X = Math.Round(m.Curve.IPointAtParameter(0.5).X, 3),
+                Y = Math.Round(m.Curve.IPointAtParameter(0.5).Y, 3),
+                Z = Math.Round(m.Curve.IPointAtParameter(0.5).Z, 3)
+            })
+                .Select(x => x.First())
+                .ToList();
+
+            List<Point> midpoints = new List<Point>();
+
+            foreach (Edge edge in distinctEdges)
+            {
+                midpoints.Add(edge.Curve.IPointAtParameter(0.5));
+            }
+
+            List<IFLine> lusasLines = new List<IFLine>();
+
+            foreach (PanelPlanar panel in panels)
+            {
+                foreach (Edge edge in panel.ExternalEdges)
+                {
+                    Edge correctEdge = distinctEdges[midpoints.FindIndex(m => m.Equals(edge.Curve.IPointAtParameter(0.5).ClosestPoint(midpoints)))];
+                    lusasLines.Add(d_LusasData.getLineByName("L" + correctEdge.CustomData[AdapterId].ToString()));
+                }
                 IFSurface newsurface = CreateSurface(panel, lusasLines);
+                lusasLines.Clear();
             }
 
             return true;
@@ -190,7 +206,8 @@ namespace BH.Adapter.Lusas
         {
             //Code for creating a collection of bars in the software
 
-            List<Edge> distinctEdges = edges.GroupBy(m => new {
+            List<Edge> distinctEdges = edges.GroupBy(m => new
+            {
                 X = Math.Round(m.Curve.IPointAtParameter(0.5).X, 3),
                 Y = Math.Round(m.Curve.IPointAtParameter(0.5).Y, 3),
                 Z = Math.Round(m.Curve.IPointAtParameter(0.5).Z, 3)
@@ -201,13 +218,14 @@ namespace BH.Adapter.Lusas
             List<Point> allPoints = new List<Point>();
             List<IFPoint> lusasPoints = new List<IFPoint>();
 
-            foreach (Edge edge in distinctEdges)
+            foreach (Edge edge in edges)
             {
                 allPoints.Add(edge.Curve.IStartPoint());
                 allPoints.Add(edge.Curve.IEndPoint());
             }
 
-            List<Point> distinctPoints = allPoints.GroupBy(m => new {
+            List<Point> distinctPoints = allPoints.GroupBy(m => new
+            {
                 X = Math.Round(m.X, 3),
                 Y = Math.Round(m.Y, 3),
                 Z = Math.Round(m.Z, 3)
@@ -215,13 +233,7 @@ namespace BH.Adapter.Lusas
                 .Select(x => x.First())
                 .ToList();
 
-            List<Point> existingPoints = ReadPoints();
-            List<Edge> existingLines = ReadEdges();
-
-            List<Edge> edgesToCreate = distinctEdges.Except(existingLines, new MidpointComparer()).ToList();
-            List<Point> pointsToCreate = distinctPoints.Except(existingPoints).ToList();
-
-            List<String> edgesTags = edges.SelectMany(x => x.Tags).Distinct().ToList();
+            List<String> edgesTags = distinctEdges.SelectMany(x => x.Tags).Distinct().ToList();
 
             foreach (String tag in edgesTags)
             {
@@ -231,16 +243,18 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            foreach (Point point in pointsToCreate)
+            foreach (Point point in distinctPoints)
             {
                 IFPoint lusasPoint = CreatePoint(point);
+                lusasPoints.Add(lusasPoint);
+
             }
 
-            lusasPoints.AddRange(ReadLusasPoints());
-
-            foreach (Edge edge in edgesToCreate)
+            foreach (Edge edge in distinctEdges)
             {
-                IFLine newline = CreateEdge(edge, lusasPoints);
+                IFPoint startPoint = lusasPoints[distinctPoints.FindIndex(m => m.Equals(edge.Curve.IStartPoint().ClosestPoint(distinctPoints)))];
+                IFPoint endPoint = lusasPoints[distinctPoints.FindIndex(m => m.Equals(edge.Curve.IEndPoint().ClosestPoint(distinctPoints)))];
+                IFLine newline = CreateEdge(edge, startPoint, endPoint);
             }
             return true;
         }
@@ -282,39 +296,8 @@ namespace BH.Adapter.Lusas
 
             return true;
         }
-
-        /***************************************************/
-
-        public class MidpointComparer : IEqualityComparer<Edge>
-        {
-
-            #region IEqualityComparer<ThisClass> Members
-
-
-            public bool Equals(Edge x, Edge y)
-            {
-                //no null check here, you might want to do that, or correct that to compare just one part of your object
-                return x.Curve.IPointAtParameter(0.5) == y.Curve.IPointAtParameter(0.5);
-            }
-
-
-            public int GetHashCode(Edge obj)
-            {
-                unchecked
-                {
-                    var hash = 17;
-                    //same here, if you only want to get a hashcode on a, remove the line with b
-                    hash = hash * 23 + obj.Curve.IPointAtParameter(0.5).GetHashCode();
-                    hash = hash * 23 + obj.Curve.IPointAtParameter(0.5).GetHashCode();
-
-                    return hash;
-                }
-            }
-        }
-
-        #endregion
     }
+}
+
 
     /***************************************************/
-
-}

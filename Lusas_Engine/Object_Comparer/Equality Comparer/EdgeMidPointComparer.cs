@@ -53,10 +53,6 @@ namespace BH.Engine.Lusas.Object_Comparer.Equality_Comparer
             {
                 return m_pointComparer.Equals(edge1.Curve.IPointAtParameter(0.5), edge2.Curve.IPointAtParameter(0.5));
             }
-            else if (m_pointComparer.Equals(edge1.Curve.IPointAtParameter(0.5), edge2.Curve.IPointAtParameter(0.5)))
-            {
-                return m_pointComparer.Equals(edge1.Curve.IPointAtParameter(0.5), edge2.Curve.IPointAtParameter(0.5));
-            }
 
             return false;
         }
@@ -68,7 +64,7 @@ namespace BH.Engine.Lusas.Object_Comparer.Equality_Comparer
             //Check whether the object is null
             if (System.Object.ReferenceEquals(edge, null)) return 0;
 
-            return edge.Curve.IStartPoint().GetHashCode() ^ edge.Curve.IEndPoint().GetHashCode();
+            return edge.Curve.IPointAtParameter(0.5).GetHashCode();
         }
 
 

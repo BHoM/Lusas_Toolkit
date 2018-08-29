@@ -19,14 +19,6 @@ namespace BH.Adapter.Lusas
         {
             IFLine newLine;
 
-            int bhomID;
-            if (bar.CustomData.ContainsKey(AdapterId))
-                bhomID = System.Convert.ToInt32(bar.CustomData[AdapterId]);
-            else
-                bhomID = System.Convert.ToInt32(NextId(bar.GetType()));
-
-            bar.CustomData[AdapterId] = bhomID;
-
                 IFPoint startPoint = d_LusasData.getPointByName(bar.StartNode.CustomData[AdapterId].ToString());
                 IFPoint endPoint = d_LusasData.getPointByName(bar.EndNode.CustomData[AdapterId].ToString());
                 newLine = d_LusasData.createLineByPoints(startPoint, endPoint);
