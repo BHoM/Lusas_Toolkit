@@ -12,17 +12,17 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static string removePrefix(string geometryName, string forRemoval)
+        public static string removePrefix(string name, string forRemoval)
         {
             string geometryID = "";
 
-            if (geometryName.Contains(forRemoval))
+            if (name.Contains(forRemoval))
             {
-                geometryID = geometryName.Replace(forRemoval, "");
+                geometryID = name.Replace(forRemoval, "");
             }
             else
             {
-                geometryID = geometryName;
+                geometryID = name;
             }
             return geometryID;
         }

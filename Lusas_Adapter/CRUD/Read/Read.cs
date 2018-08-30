@@ -292,37 +292,29 @@ namespace BH.Adapter.Lusas
 
         private List<Loadcase> ReadLoadcases(List<string> ids = null)
         {
+            //This method only works for a single analysis. When retrieving the largest loadcase ID
+            //it only loops through that analysis. 
+
             List<Loadcase> bhomLoadcases = new List<Loadcase>();
 
-            object[] lusasAnalyses = d_LusasData.getAnalyses();
+            int largestLoadcaseID = d_LusasData.getNextAvailableLoadcaseID() - 1;
+            bool firstLoadcase = false;
 
-            string dummy_loadcase = "8a5720a1-cc8e-4948-9413-84d42c63ca3d";
+            IFLoadcase lusasLoadcase = (IFLoadcase)d_LusasData.getLoadset(largestLoadcaseID);
+            Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(lusasLoadcase);
+            List<string> analysisName = new List<string> { lusasLoadcase.getAnalysis().getName() };
+            bhomLoadcase.Tags = new HashSet<string>(analysisName);
+            bhomLoadcases.Add(bhomLoadcase);
+            firstLoadcase = Convert.ToBoolean(lusasLoadcase.isFirst());
 
-            for (int i = 0; i < lusasAnalyses.Count(); i++)
+            while (firstLoadcase == false)
             {
-                IFAnalysisBaseClass lusasAnalysis = d_LusasData.getAnalyses()[i];
-                int largestLoadcaseID = d_LusasData.getNextAvailableLoadcaseID();
-                if (d_LusasData.existsLoadset(dummy_loadcase))
-                {
-                    d_LusasData.deleteLoadset(dummy_loadcase);
-                }
-
-                bool firstLoadcase = false;
-                List<string> analysisName = new List<String> { lusasAnalysis.getName() };
-                IFLoadcase lusasLoadcase = d_LusasData.createLoadcase(dummy_loadcase,
-                    lusasAnalysis.getName(), largestLoadcaseID);
-
-
-                while (firstLoadcase == false)
-                {
-                    lusasLoadcase = lusasLoadcase.getPrevious();
-                    Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(lusasLoadcase);
-                    bhomLoadcase.Tags = new HashSet<string>(analysisName);
-                    bhomLoadcases.Add(bhomLoadcase);
-                    firstLoadcase = Convert.ToBoolean(lusasLoadcase.isFirst());
-                }
-
-                d_LusasData.deleteLoadset(dummy_loadcase);
+                lusasLoadcase = lusasLoadcase.getPrevious();
+                bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(lusasLoadcase);
+                analysisName = new List<string> { lusasLoadcase.getAnalysis().getName() };
+                bhomLoadcase.Tags = new HashSet<string>(analysisName);
+                bhomLoadcases.Add(bhomLoadcase);
+                firstLoadcase = Convert.ToBoolean(lusasLoadcase.isFirst());
             }
 
             bhomLoadcases.Reverse();

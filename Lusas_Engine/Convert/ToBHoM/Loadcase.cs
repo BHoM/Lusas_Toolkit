@@ -18,7 +18,6 @@ namespace BH.Engine.Lusas
     {
         public static Loadcase ToBHoMLoadcase(this IFLoadcase lusasLoadcase)
         {
-
             Loadcase BHoMLoadcase = new Loadcase { Name = getName(lusasLoadcase),
                 Number = lusasLoadcase.getID()};
 

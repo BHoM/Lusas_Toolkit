@@ -53,6 +53,10 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<Constraint6DOF>);
                 }
+                if (objects.First() is Loadcase)
+                {
+                    success = CreateCollection(objects as IEnumerable<Loadcase>);
+                }
                 //if (objects.First().GetType().GetInterfaces().Contains(typeof(ISectionProperty)))
                 //{
                 //    success = CreateCollection(objects as IEnumerable<ISectionProperty>);
@@ -282,6 +286,16 @@ namespace BH.Adapter.Lusas
             foreach (Material material in materials)
             {
                 IFAttribute newMaterial = CreateMaterial(material);
+            }
+
+            return true;
+        }
+
+        private bool CreateCollection(IEnumerable<Loadcase> loadcases)
+        {
+            foreach (Loadcase loadcase in loadcases)
+            {
+                IFLoadcase newLoadcase = CreateLoadcase(loadcase);
             }
 
             return true;
