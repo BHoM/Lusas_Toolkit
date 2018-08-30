@@ -8,6 +8,7 @@ using BH.oM.Base;
 using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Properties;
+using BH.oM.Structure.Loads;
 using BH.oM.Common.Materials;
 using Lusas.LPI;
 
@@ -37,6 +38,8 @@ namespace BH.Adapter.Lusas
                 return ReadPoints(ids as dynamic);
             else if (type == typeof(Constraint6DOF))
                 return ReadConstraint6DOFs(ids as dynamic);
+            else if (type == typeof(Loadcase))
+                return ReadLoadcases(ids as dynamic);
             return null;
         }
 
@@ -283,6 +286,40 @@ namespace BH.Adapter.Lusas
                 }
             }
             return bhomMaterials;
+        }
+
+        /***************************************************/
+
+        private List<Loadcase> ReadLoadcases(List<string> ids = null)
+        {
+            //This method only works for a single analysis. When retrieving the largest loadcase ID
+            //it only loops through that analysis. 
+
+            List<Loadcase> bhomLoadcases = new List<Loadcase>();
+
+            int largestLoadcaseID = d_LusasData.getNextAvailableLoadcaseID() - 1;
+            bool firstLoadcase = false;
+
+            IFLoadcase lusasLoadcase = (IFLoadcase)d_LusasData.getLoadset(largestLoadcaseID);
+            Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(lusasLoadcase);
+            List<string> analysisName = new List<string> { lusasLoadcase.getAnalysis().getName() };
+            bhomLoadcase.Tags = new HashSet<string>(analysisName);
+            bhomLoadcases.Add(bhomLoadcase);
+            firstLoadcase = Convert.ToBoolean(lusasLoadcase.isFirst());
+
+            while (firstLoadcase == false)
+            {
+                lusasLoadcase = lusasLoadcase.getPrevious();
+                bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(lusasLoadcase);
+                analysisName = new List<string> { lusasLoadcase.getAnalysis().getName() };
+                bhomLoadcase.Tags = new HashSet<string>(analysisName);
+                bhomLoadcases.Add(bhomLoadcase);
+                firstLoadcase = Convert.ToBoolean(lusasLoadcase.isFirst());
+            }
+
+            bhomLoadcases.Reverse();
+
+            return bhomLoadcases;
         }
 
         /***************************************************/

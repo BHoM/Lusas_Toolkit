@@ -45,7 +45,7 @@ namespace BH.Engine.Lusas
                 }
             }
 
-            string attributeName = getAttributeName(lusasAttribute);
+            string attributeName = getName(lusasAttribute);
 
             Constraint6DOF bhomConstraint6DOF = BH.Engine.Structure.Create.Constraint6DOF(
                attributeName, fixity, stiffness);

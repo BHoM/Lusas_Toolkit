@@ -17,7 +17,7 @@ namespace BH.Engine.Lusas
     {
         public static Material ToBHoMMaterial(this IFAttribute lusasAttribute)
         {
-            string attributeName = getAttributeName(lusasAttribute);
+            string attributeName = getName(lusasAttribute);
 
             object[] valueNames = lusasAttribute.getValueNames();
 
