@@ -10,6 +10,7 @@ using BH.oM.Common.Materials;
 using BH.Engine.Geometry;
 using BH.Engine.Structure;
 using Lusas.LPI;
+using BH.Engine.Lusas.Object_Comparer.Equality_Comparer;
 
 namespace BH.Adapter.Lusas
 {
@@ -188,17 +189,18 @@ namespace BH.Adapter.Lusas
                 midpoints.Add(edge.Curve.IPointAtParameter(0.5));
             }
 
-            List<IFLine> lusasLines = new List<IFLine>();
-
             foreach (PanelPlanar panel in panels)
             {
-                foreach (Edge edge in panel.ExternalEdges)
+                IFLine[] lusasLines = new IFLine[panel.ExternalEdges.Count];
+                List<Edge> edges = panel.ExternalEdges;
+
+                for (int i = 0; i < panel.ExternalEdges.Count; i++)
                 {
-                    Edge correctEdge = distinctEdges[midpoints.FindIndex(m => m.Equals(edge.Curve.IPointAtParameter(0.5).ClosestPoint(midpoints)))];
-                    lusasLines.Add(d_LusasData.getLineByName("L" + correctEdge.CustomData[AdapterId].ToString()));
+                    Edge correctEdge = distinctEdges[midpoints.FindIndex(m => m.Equals(edges[i].Curve.IPointAtParameter(0.5).ClosestPoint(midpoints)))];
+                    lusasLines[i] = d_LusasData.getLineByName("L" + correctEdge.CustomData[AdapterId].ToString());
                 }
+
                 IFSurface newsurface = CreateSurface(panel, lusasLines);
-                lusasLines.Clear();
             }
 
             return true;
@@ -208,7 +210,7 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<Edge> edges)
         {
-            //Code for creating a collection of bars in the software
+            List<Point> allPoints = new List<Point>();
 
             List<Edge> distinctEdges = edges.GroupBy(m => new
             {
@@ -216,13 +218,10 @@ namespace BH.Adapter.Lusas
                 Y = Math.Round(m.Curve.IPointAtParameter(0.5).Y, 3),
                 Z = Math.Round(m.Curve.IPointAtParameter(0.5).Z, 3)
             })
-                .Select(x => x.First())
-                .ToList();
+        .Select(x => x.First())
+        .ToList();
 
-            List<Point> allPoints = new List<Point>();
-            List<IFPoint> lusasPoints = new List<IFPoint>();
-
-            foreach (Edge edge in edges)
+            foreach (Edge edge in distinctEdges)
             {
                 allPoints.Add(edge.Curve.IStartPoint());
                 allPoints.Add(edge.Curve.IEndPoint());
@@ -237,6 +236,22 @@ namespace BH.Adapter.Lusas
                 .Select(x => x.First())
                 .ToList();
 
+            List<Point> existingPoints = ReadPoints();
+            List<Point> pointsToPush = distinctPoints.Except(existingPoints, new PointDistanceComparer()).ToList();
+
+            foreach (Point point in pointsToPush)
+            {
+                IFPoint lusasPoint = CreatePoint(point);
+            }
+
+            List<IFPoint> lusasPoints = ReadLusasPoints();
+            List<Point> bhomPoints = new List<Point>();
+            
+            foreach (IFPoint point in lusasPoints)
+            {
+                bhomPoints.Add(BH.Engine.Lusas.Convert.ToBHoMPoint(point));
+            }
+
             List<String> edgesTags = distinctEdges.SelectMany(x => x.Tags).Distinct().ToList();
 
             foreach (String tag in edgesTags)
@@ -247,17 +262,10 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            foreach (Point point in distinctPoints)
-            {
-                IFPoint lusasPoint = CreatePoint(point);
-                lusasPoints.Add(lusasPoint);
-
-            }
-
             foreach (Edge edge in distinctEdges)
             {
-                IFPoint startPoint = lusasPoints[distinctPoints.FindIndex(m => m.Equals(edge.Curve.IStartPoint().ClosestPoint(distinctPoints)))];
-                IFPoint endPoint = lusasPoints[distinctPoints.FindIndex(m => m.Equals(edge.Curve.IEndPoint().ClosestPoint(distinctPoints)))];
+                IFPoint startPoint = lusasPoints[bhomPoints.FindIndex(m => m.Equals(edge.Curve.IStartPoint().ClosestPoint(bhomPoints)))];
+                IFPoint endPoint = lusasPoints[bhomPoints.FindIndex(m => m.Equals(edge.Curve.IEndPoint().ClosestPoint(bhomPoints)))];
                 IFLine newline = CreateEdge(edge, startPoint, endPoint);
             }
             return true;

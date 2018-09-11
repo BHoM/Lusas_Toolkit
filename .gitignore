@@ -240,3 +240,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+Build/Lusas_Engine.dll
+Build/Lusas_Engine.pdb

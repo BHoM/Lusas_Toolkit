@@ -51,7 +51,9 @@ namespace BH.Adapter.Lusas
 
         private List<Bar> ReadBars(List<string> ids = null)
         {
-            int maxlineid = d_LusasData.getLargestLineID();
+            IFObjectSet selection = m_LusasApplication.getVisibleSet();
+            object[] eleArray = selection.getObjects("Line");
+
             List<Bar> bhomBars = new List<Bar>();
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
@@ -59,16 +61,12 @@ namespace BH.Adapter.Lusas
             Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
             HashSet<String> groupNames = ReadGroups();
 
-            for (int i = 1; i <= maxlineid; i++)
+            for (int i = 0; i < eleArray.Count(); i++)
             {
-                if (d_LusasData.existsLineByID(i))
-                {
-                    IFLine lusasline = d_LusasData.getLineByNumber(i);
-
-                    Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMBar(lusasline, bhomNodes, groupNames,materials);
+                    IFLine lusasLine = (IFLine) eleArray[i];
+                    Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMBar(lusasLine, bhomNodes, groupNames,materials);
 
                     bhomBars.Add(bhomBar);
-                }
             }
             return bhomBars;
         }
@@ -78,20 +76,21 @@ namespace BH.Adapter.Lusas
 
         private List<PanelPlanar> ReadSurfaces(List<string> ids = null)
         {
-            int maxSurfID = d_LusasData.getLargestSurfaceID();
+            IFObjectSet selection = m_LusasApplication.getVisibleSet();
+            object[] eleArray = selection.getObjects("Surface");
             List<PanelPlanar> bhomSurfaces = new List<PanelPlanar>();
-            IEnumerable<Edge> bhomEdgesList = ReadEdges();
-            Dictionary<string, Edge> bhomEdges = bhomEdgesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
-            HashSet<String> groupNames = ReadGroups();
-            IEnumerable<Material> materialList = ReadMaterials();
-            Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
 
-            for (int i = 1; i <= maxSurfID; i++)
+            if (eleArray.Count()!=0)
             {
-                if (d_LusasData.existsSurfaceByID(i))
-                {
-                    IFSurface lusasSurface = d_LusasData.getSurfaceByNumber(i);
+                IEnumerable<Edge> bhomEdgesList = ReadEdges();
+                Dictionary<string, Edge> bhomEdges = bhomEdgesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
+                HashSet<String> groupNames = ReadGroups();
+                IEnumerable<Material> materialList = ReadMaterials();
+                Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
 
+                for (int i = 0; i < eleArray.Count(); i++)
+                {
+                    IFSurface lusasSurface = (IFSurface)eleArray[i];
                     PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMPanelPlanar(lusasSurface,
                         bhomEdges,
                         groupNames,
@@ -100,73 +99,71 @@ namespace BH.Adapter.Lusas
                     bhomSurfaces.Add(bhompanel);
                 }
             }
+
             return bhomSurfaces;
         }
 
         private List<Node> ReadNodes(List<string> ids = null)
         {
-            int maxPointID = d_LusasData.getLargestPointID();
+            IFObjectSet selection = m_LusasApplication.getVisibleSet();
+            object[] eleArray = selection.getObjects("Point");
+
             List<Node> bhomNodes = new List<Node>();
             HashSet<String> groupNames = ReadGroups();
 
             IEnumerable<Constraint6DOF> constraints6DOFList = ReadConstraint6DOFs();
             Dictionary<string, Constraint6DOF> constraints6DOF = constraints6DOFList.ToDictionary(x => x.Name.ToString());
 
-            for (int i = 1; i <= maxPointID; i++)
+            for (int i = 0; i < eleArray.Count(); i++)
             {
-                if (d_LusasData.existsPointByID(i))
-                {
-                    IFPoint lusasPoint = d_LusasData.getPointByNumber(i);
-                    Node bhomNode = BH.Engine.Lusas.Convert.ToBHoMNode(lusasPoint, groupNames, constraints6DOF);
-                    bhomNodes.Add(bhomNode);
-                }
+                IFPoint lusasPoint = (IFPoint)eleArray[i];
+                Node bhomNode = BH.Engine.Lusas.Convert.ToBHoMNode(lusasPoint, groupNames, constraints6DOF);
+                bhomNodes.Add(bhomNode);
             }
             return bhomNodes;
         }
 
         private List<Point> ReadPoints(List<string> ids = null)
         {
-            int maxPointID = d_LusasData.getLargestPointID();
+            IFObjectSet selection = m_LusasApplication.getVisibleSet();
+            object[] eleArray = selection.getObjects("Point");
+
             List<Point> bhomPoints = new List<Point>();
             HashSet<String> groupNames = ReadGroups();
 
-            for (int i = 1; i <= maxPointID; i++)
+            for (int i = 0; i < eleArray.Count(); i++)
             {
-                if (d_LusasData.existsPointByID(i))
-                {
-                    IFPoint lusasPoint = d_LusasData.getPointByNumber(i);
-                    Point bhomNode = BH.Engine.Lusas.Convert.ToBHoMPoint(lusasPoint, groupNames);
-                    bhomPoints.Add(bhomNode);
-                }
+                IFPoint lusasPoint = (IFPoint)eleArray[i];
+                Point bhomNode = BH.Engine.Lusas.Convert.ToBHoMPoint(lusasPoint, groupNames);
+                bhomPoints.Add(bhomNode);
             }
             return bhomPoints;
         }
 
         private List<IFPoint> ReadLusasPoints(List<string> ids = null)
         {
-            int maxPointID = d_LusasData.getLargestPointID();
+            IFObjectSet selection = m_LusasApplication.getVisibleSet();
+            object[] eleArray = selection.getObjects("Point");
+
             List<IFPoint> lusasPoints = new List<IFPoint>();
 
-            for (int i = 1; i <= maxPointID; i++)
+            for (int i = 0; i < eleArray.Count(); i++)
             {
-                if (d_LusasData.existsPointByID(i))
-                {
-                    IFPoint lusasPoint = d_LusasData.getPointByNumber(i);
-                    lusasPoints.Add(lusasPoint);
-                }
+                IFPoint lusasPoint = (IFPoint)eleArray[i];
+                lusasPoints.Add(lusasPoint);
             }
             return lusasPoints;
         }
 
         private HashSet<String> ReadGroups(List<string> ids = null)
         {
-            int numGroups = d_LusasData.countGroups();
-            IFGroup lusasGroup = null;
+            IFObjectSet selection = m_LusasApplication.getVisibleSet();
+            object[] eleArray = selection.getObjects("Groups");
             HashSet<String> bhomTags = new HashSet<string>();
 
-            for (int i = 0; i < numGroups; i++)
+            for (int i = 0; i < eleArray.Count(); i++)
             {
-                lusasGroup = d_LusasData.getObjects("Groups")[i];
+                IFGroup lusasGroup = (IFGroup)eleArray[i];
                 bhomTags.Add(lusasGroup.getName());
             }
 
@@ -177,40 +174,40 @@ namespace BH.Adapter.Lusas
 
         private List<Edge> ReadEdges(List<string> ids = null)
         {
-            int maxlineid = d_LusasData.getLargestLineID();
+            IFObjectSet selection = m_LusasApplication.getVisibleSet();
+            object[] eleArray = selection.getObjects("Line");
             List<Edge> bhomEdges = new List<Edge>();
-            List<Node> bhomNodesList = ReadNodes();
-            Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
-            HashSet<String> groupNames = ReadGroups();
 
-            for (int i = 1; i <= maxlineid; i++)
+            if(eleArray.Count()!=0)
             {
-                if (d_LusasData.existsLineByID(i))
+                List<Node> bhomNodesList = ReadNodes();
+                Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
+                HashSet<String> groupNames = ReadGroups();
+
+                for (int i = 0; i < eleArray.Count(); i++)
                 {
-                    IFLine lusasline = d_LusasData.getLineByNumber(i);
+                    IFLine lusasline = (IFLine)eleArray[i];
                     Edge bhomEdge = BH.Engine.Lusas.Convert.ToBHoMEdge(lusasline, bhomNodes, groupNames);
                     bhomEdges.Add(bhomEdge);
-
                 }
             }
+
             return bhomEdges;
         }
 
 
         private List<IFLine> ReadLusasEdges(List<string> ids = null)
         {
-            int maxlineid = d_LusasData.getLargestLineID();
+            IFObjectSet selection = m_LusasApplication.getVisibleSet();
+            object[] eleArray = selection.getObjects("Line");
             List<IFLine> lusasEdges = new List<IFLine>();
 
-            for (int i = 1; i <= maxlineid; i++)
+            for (int i = 0; i < eleArray.Count(); i++)
             {
-                if (d_LusasData.existsLineByID(i))
-                {
                     IFLine lusasline = d_LusasData.getLineByNumber(i);
                     lusasEdges.Add(lusasline);
-
-                }
             }
+
             return lusasEdges;
         }
 
@@ -218,19 +215,17 @@ namespace BH.Adapter.Lusas
 
         private List<Constraint6DOF> ReadConstraint6DOFs(List<String> ids = null)
         {
+            IFObjectSet selection = m_LusasApplication.getVisibleSet();
+            object[] eleArray = selection.getObjects("Support");
             List<Constraint6DOF> bhomConstraints6DOF = new List<Constraint6DOF>();
 
-            int largestAttributeID = d_LusasData.getLargestAttributeID("Support");
-
-            for (int i = 1; i <= largestAttributeID; i++)
+            for (int i = 0; i < eleArray.Count(); i++)
             {
-                if (d_LusasData.existsAttribute("Support", i))
-                {
-                    IFAttribute lusasSupport = d_LusasData.getAttribute("Support", i);
+                    IFAttribute lusasSupport = (IFAttribute) eleArray[i];
                     Constraint6DOF bhomConstraint6DOF = BH.Engine.Lusas.Convert.ToBHoMConstraint6DOF(lusasSupport);
                     bhomConstraints6DOF.Add(bhomConstraint6DOF);
-                }
             }
+
             return bhomConstraints6DOF;
         }
 
@@ -272,19 +267,17 @@ namespace BH.Adapter.Lusas
 
         private List<Material> ReadMaterials(List<string> ids = null)
         {
+            IFObjectSet selection = m_LusasApplication.getVisibleSet();
+            object[] eleArray = selection.getObjects("Material");
             List<Material> bhomMaterials = new List<Material>();
 
-            int largestAttributeID = d_LusasData.getLargestAttributeID("Material");
-
-            for (int i = 1; i <= largestAttributeID; i++)
+            for (int i = 0; i < eleArray.Count(); i++)
             {
-                if (d_LusasData.existsAttribute("Material", i))
-                {
-                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", i);
+                    IFAttribute lusasMaterial = (IFAttribute)eleArray[i];
                     Material bhomMaterial = BH.Engine.Lusas.Convert.ToBHoMMaterial(lusasMaterial);
                     bhomMaterials.Add(bhomMaterial);
-                }
             }
+
             return bhomMaterials;
         }
 

@@ -37,6 +37,7 @@ namespace BH.Engine.Lusas
             HashSet<String> tags = new HashSet<string>(isMemberOf(lusasSurf, groupNames));
 
             List<Edge> surfEdges = new List<Edge>();
+
             for (int i = 0; i < n; i++)
             {
                 Edge bhomEdge = getEdge(lusasSurf, i, bhomEdges);

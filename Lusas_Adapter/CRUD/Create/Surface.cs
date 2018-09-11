@@ -16,15 +16,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasAdapter
     {
 
-        public IFSurface CreateSurface(PanelPlanar panel, List<IFLine> lusasLines)
+        public IFSurface CreateSurface(PanelPlanar panel, IFLine[] lusasLines)
         {
-            IFObjectSet tempGroup = d_LusasData.createGroup("temp");
-
-            foreach (IFLine line in lusasLines)
-            {
-                tempGroup.add(line);
-            }
-
 
             IFSurface newSurface;
 
@@ -34,10 +27,9 @@ namespace BH.Adapter.Lusas
             }
             else
             {
-                newSurface = d_LusasData.createSurfaceBy(tempGroup);
+                newSurface = d_LusasData.createSurfaceBy(lusasLines);
                 newSurface.setName("S" + panel.CustomData[AdapterId]);
             }
-            d_LusasData.getGroupByName("temp").ungroup();
 
             if (!(panel.Tags.Count == 0))
             {
