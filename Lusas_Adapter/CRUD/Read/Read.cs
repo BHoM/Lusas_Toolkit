@@ -144,7 +144,7 @@ namespace BH.Adapter.Lusas
 
             List<IFPoint> lusasPoints = new List<IFPoint>();
 
-            for (int i = 0; i <= eleArray.Count(); i++)
+            for (int i = 0; i < eleArray.Count(); i++)
             {
                 IFPoint lusasPoint = (IFPoint)eleArray[i];
                 lusasPoints.Add(lusasPoint);
