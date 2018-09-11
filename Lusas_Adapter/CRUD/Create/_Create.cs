@@ -206,7 +206,6 @@ namespace BH.Adapter.Lusas
         private bool CreateCollection(IEnumerable<Edge> edges)
         {
             List<Point> allPoints = new List<Point>();
-            List<IFPoint> lusasPoints = new List<IFPoint>();
 
             foreach (Edge edge in edges)
             {
@@ -229,9 +228,9 @@ namespace BH.Adapter.Lusas
             foreach (Point point in pointsToPush)
             {
                 IFPoint lusasPoint = CreatePoint(point);
-                lusasPoints.Add(lusasPoint);
             }
 
+            List<IFPoint> lusasPoints = ReadLusasPoints();
             List<String> edgesTags = edges.SelectMany(x => x.Tags).Distinct().ToList();
 
             foreach (String tag in edgesTags)
