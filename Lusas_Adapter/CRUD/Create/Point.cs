@@ -18,12 +18,8 @@ namespace BH.Adapter.Lusas
 
         public IFPoint CreatePoint(Node node)
         {
-            IFPoint newPoint;
-
-                IFGeometryData geomData = m_LusasApplication.geometryData();
-                geomData.setAllDefaults();
-                geomData.addCoords(node.Position.X, node.Position.Y, node.Position.Z);
-                IFDatabaseOperations database_point = d_LusasData.createPoint(geomData);
+                IFPoint newPoint;
+                IFDatabaseOperations database_point = d_LusasData.createPoint(node.Position.X, node.Position.Y, node.Position.Z);
                 newPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
                 newPoint.setName("P" + node.CustomData[AdapterId].ToString());
 

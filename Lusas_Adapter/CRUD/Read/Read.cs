@@ -60,7 +60,7 @@ namespace BH.Adapter.Lusas
 
             for (int i = 0; i < eleArray.Count(); i++)
             {
-                IFLine lusasLine = (IFLine) eleArray[i];
+                    IFLine lusasLine = (IFLine) eleArray[i];
                     Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMBar(lusasLine, bhomNodes, groupNames,materials);
 
                     bhomBars.Add(bhomBar);
@@ -75,24 +75,28 @@ namespace BH.Adapter.Lusas
         {
             IFObjectSet selection = m_LusasApplication.getVisibleSet();
             object[] eleArray = selection.getObjects("Surface");
-
             List<PanelPlanar> bhomSurfaces = new List<PanelPlanar>();
-            IEnumerable<Edge> bhomEdgesList = ReadEdges();
-            Dictionary<string, Edge> bhomEdges = bhomEdgesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
-            HashSet<String> groupNames = ReadGroups();
-            IEnumerable<Material> materialList = ReadMaterials();
-            Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
 
-            for (int i = 0; i < eleArray.Count(); i++)
+            if (eleArray.Count()!=0)
             {
-                IFSurface lusasSurface = (IFSurface)eleArray[i];
+                IEnumerable<Edge> bhomEdgesList = ReadEdges();
+                Dictionary<string, Edge> bhomEdges = bhomEdgesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
+                HashSet<String> groupNames = ReadGroups();
+                IEnumerable<Material> materialList = ReadMaterials();
+                Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
+
+                for (int i = 0; i < eleArray.Count(); i++)
+                {
+                    IFSurface lusasSurface = (IFSurface)eleArray[i];
                     PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMPanelPlanar(lusasSurface,
                         bhomEdges,
                         groupNames,
                         materials);
 
                     bhomSurfaces.Add(bhompanel);
+                }
             }
+
             return bhomSurfaces;
         }
 
@@ -169,17 +173,20 @@ namespace BH.Adapter.Lusas
         {
             IFObjectSet selection = m_LusasApplication.getVisibleSet();
             object[] eleArray = selection.getObjects("Line");
-
             List<Edge> bhomEdges = new List<Edge>();
-            List<Node> bhomNodesList = ReadNodes();
-            Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
-            HashSet<String> groupNames = ReadGroups();
 
-            for (int i = 0; i < eleArray.Count(); i++)
+            if(eleArray.Count()!=0)
             {
-                IFLine lusasline = (IFLine)eleArray[i];
-                Edge bhomEdge = BH.Engine.Lusas.Convert.ToBHoMEdge(lusasline, bhomNodes, groupNames);
-                bhomEdges.Add(bhomEdge);
+                List<Node> bhomNodesList = ReadNodes();
+                Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
+                HashSet<String> groupNames = ReadGroups();
+
+                for (int i = 0; i < eleArray.Count(); i++)
+                {
+                    IFLine lusasline = (IFLine)eleArray[i];
+                    Edge bhomEdge = BH.Engine.Lusas.Convert.ToBHoMEdge(lusasline, bhomNodes, groupNames);
+                    bhomEdges.Add(bhomEdge);
+                }
             }
 
             return bhomEdges;
@@ -211,7 +218,7 @@ namespace BH.Adapter.Lusas
 
             for (int i = 0; i < eleArray.Count(); i++)
             {
-                IFAttribute lusasSupport = (IFAttribute)eleArray[i];
+                    IFAttribute lusasSupport = (IFAttribute) eleArray[i];
                     Constraint6DOF bhomConstraint6DOF = BH.Engine.Lusas.Convert.ToBHoMConstraint6DOF(lusasSupport);
                     bhomConstraints6DOF.Add(bhomConstraint6DOF);
             }
