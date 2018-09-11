@@ -2,10 +2,10 @@
 using System.Linq;
 using System;
 using BH.oM.Base;
-using BH.oM.Structural.Elements;
+using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
-using BH.oM.Structural.Properties;
-using BH.oM.Structural.Loads;
+using BH.oM.Structure.Properties;
+using BH.oM.Structure.Loads;
 using BH.oM.Common.Materials;
 using BH.Engine.Geometry;
 using BH.Engine.Structure;
@@ -17,7 +17,6 @@ namespace BH.Adapter.Lusas
     {
         public IFAttribute CreateSupport(Constraint6DOF constraint)
         {
-
             IFAttribute lusasSupport = null;
 
             if (d_LusasData.existsAttribute("Support", "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name))
@@ -50,17 +49,6 @@ namespace BH.Adapter.Lusas
                         lusasSupport.setValue(releaseNames[i] + "stiff", stiffness[i]);
                     }
                 }
-
-                //if (constraint.CustomData.ContainsKey(AdapterId))
-                //    bhomID = System.Convert.ToInt32(constraint.CustomData[AdapterId]);
-                //else
-                //    bhomID = System.Convert.ToInt32(NextId(constraint.GetType()));
-
-                //constraint.CustomData[AdapterId] = bhomID;
-
-                
-
-                //lusasSupport.setName("Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name);
             }
 
             return lusasSupport;

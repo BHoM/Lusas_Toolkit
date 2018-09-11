@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BH.oM.Base;
 using BH.oM.Geometry;
-using BH.oM.Structural.Elements;
-using BH.oM.Structural.Properties;
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.Properties;
 using BH.oM.Common.Materials;
 using Lusas.LPI;
 
@@ -45,7 +45,7 @@ namespace BH.Engine.Lusas
                 }
             }
 
-            string attributeName = getAttributeName(lusasAttribute);
+            string attributeName = getName(lusasAttribute);
 
             Constraint6DOF bhomConstraint6DOF = BH.Engine.Structure.Create.Constraint6DOF(
                attributeName, fixity, stiffness);

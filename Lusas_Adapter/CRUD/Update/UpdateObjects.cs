@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BH.oM.Base;
-using BH.oM.Structural.Elements;
+using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
-using BH.oM.Structural.Properties;
-using BH.oM.Structural.Loads;
+using BH.oM.Structure.Properties;
+using BH.oM.Structure.Loads;
 using BH.oM.Common.Materials;
 using Lusas.LPI;
 

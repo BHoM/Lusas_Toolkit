@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using BH.oM.Common.Materials;
-using BH.oM.Structural.Properties;
-using BH.oM.Structural.Elements;
-using BH.oM.Structural.Loads;
+using BH.oM.Structure.Properties;
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.Loads;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BH.oM.Geometry;
+using BH.Engine.Lusas;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -105,6 +106,20 @@ namespace BH.Adapter.Lusas
                         IFPoint largestPoint = d_LusasData.getPointByNumber(largestPointID);
                         index = System.Convert.ToInt32(
                                BH.Engine.Lusas.Convert.removePrefix(largestPoint.getName(), "P")) + 1;
+                    }
+                }
+                if (type == typeof(Loadcase))
+                {
+                    int largestLoadcaseID = d_LusasData.getNextAvailableLoadcaseID() - 1;
+                    if (largestLoadcaseID == 0)
+                    {
+                        index = 1;
+                    }
+                    else
+                    {
+
+                        IFLoadcase largestLoadcase = (IFLoadcase)d_LusasData.getLoadset(largestLoadcaseID);
+                        index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.getBHoMID(largestLoadcase,'c')) + 1;
                     }
                 }
                 m_indexDict[type] = index;

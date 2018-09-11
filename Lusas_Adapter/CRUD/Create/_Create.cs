@@ -2,10 +2,10 @@
 using System.Linq;
 using System;
 using BH.oM.Base;
-using BH.oM.Structural.Elements;
+using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
-using BH.oM.Structural.Properties;
-using BH.oM.Structural.Loads;
+using BH.oM.Structure.Properties;
+using BH.oM.Structure.Loads;
 using BH.oM.Common.Materials;
 using BH.Engine.Geometry;
 using BH.Engine.Structure;
@@ -53,6 +53,10 @@ namespace BH.Adapter.Lusas
                 if (objects.First() is Constraint6DOF)
                 {
                     success = CreateCollection(objects as IEnumerable<Constraint6DOF>);
+                }
+                if (objects.First() is Loadcase)
+                {
+                    success = CreateCollection(objects as IEnumerable<Loadcase>);
                 }
                 //if (objects.First().GetType().GetInterfaces().Contains(typeof(ISectionProperty)))
                 //{
@@ -290,6 +294,16 @@ namespace BH.Adapter.Lusas
             foreach (Material material in materials)
             {
                 IFAttribute newMaterial = CreateMaterial(material);
+            }
+
+            return true;
+        }
+
+        private bool CreateCollection(IEnumerable<Loadcase> loadcases)
+        {
+            foreach (Loadcase loadcase in loadcases)
+            {
+                IFLoadcase newLoadcase = CreateLoadcase(loadcase);
             }
 
             return true;
