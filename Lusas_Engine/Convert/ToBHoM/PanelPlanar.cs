@@ -51,12 +51,13 @@ namespace BH.Engine.Lusas
 
             List<String> materialAssignments = attributeAssignments(lusasSurf, "Material");
 
-            Material panelMaterial = null;
-            if (!(materialAssignments.Count() == 0))
-            {
-                bhomMaterials.TryGetValue(materialAssignments[0], out panelMaterial);
-                bhomPanel.Property.Material = panelMaterial;
-            }
+            //This will be needed when Property is added
+            //Material panelMaterial = null;
+            //if (!(materialAssignments.Count() == 0))
+            //{
+            //    bhomMaterials.TryGetValue(materialAssignments[0], out panelMaterial);
+            //    bhomPanel.Property.Material = panelMaterial;
+            //}
 
             return bhomPanel;
         }
