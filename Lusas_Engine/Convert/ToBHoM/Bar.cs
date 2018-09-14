@@ -45,12 +45,13 @@ namespace BH.Engine.Lusas
 
             List<String> materialAssignments = attributeAssignments(lusasLine, "Material");
 
-            Material barMaterial = null;
-            if (!(materialAssignments.Count() == 0))
-            {
-                bhomMaterials.TryGetValue(materialAssignments[0], out barMaterial);
-                bhomBar.SectionProperty.Material = barMaterial;
-            }
+            //This will be wrapped in with the SectionProperties when they are defined
+            //Material barMaterial = null;
+            //if (!(materialAssignments.Count() == 0))
+            //{
+            //    bhomMaterials.TryGetValue(materialAssignments[0], out barMaterial);
+            //    bhomBar.SectionProperty.Material = barMaterial;
+            //}
 
             String lineName = removePrefix(lusasLine.getName(), "L");
 
