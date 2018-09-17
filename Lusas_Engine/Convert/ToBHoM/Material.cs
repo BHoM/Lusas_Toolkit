@@ -19,8 +19,6 @@ namespace BH.Engine.Lusas
         {
             string attributeName = getName(lusasAttribute);
 
-            object[] valueNames = lusasAttribute.getValueNames();
-
             Material bhomMaterial = new Material
             {
                 YoungsModulus = lusasAttribute.getValue("E"),
