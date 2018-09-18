@@ -319,13 +319,10 @@ namespace BH.Adapter.Lusas
             object[] lusasThicknesses = d_LusasData.getAttributes("GeometricSurface");
             List<ConstantThickness> bhomThicknesess = new List<ConstantThickness>();
 
-            IEnumerable<Material> bhomMaterialsList = ReadMaterials();
-            Dictionary<string, Material> bhomMaterials = bhomMaterialsList.ToDictionary(x => x.CustomData[AdapterId].ToString());
-
             for (int i = 0; i < lusasThicknesses.Count(); i++)
             {
                 IFAttribute lusasThickness = (IFAttribute)lusasThicknesses[i];
-                ConstantThickness bhomThickness = BH.Engine.Lusas.Convert.ToBHoMConstantThickness(lusasThickness, bhomMaterials);
+                ConstantThickness bhomThickness = BH.Engine.Lusas.Convert.ToBHoMConstantThickness(lusasThickness);
                 bhomThicknesess.Add(bhomThickness);
             }
 

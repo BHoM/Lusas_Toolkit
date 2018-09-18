@@ -15,7 +15,7 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static ConstantThickness ToBHoMConstantThickness(this IFAttribute lusasAttribute, Dictionary<string, Material> bhomMaterials)
+        public static ConstantThickness ToBHoMConstantThickness(this IFAttribute lusasAttribute)
         {
             string attributeName = getName(lusasAttribute);
 
