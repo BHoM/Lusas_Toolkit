@@ -1,9 +1,15 @@
-﻿using BH.oM.Common.Materials;
-using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System;
-using System.Collections.Generic;
+using BH.oM.Base;
+using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
+using BH.oM.Structure.Properties;
+using BH.oM.Structure.Loads;
+using BH.oM.Common.Materials;
+using BH.Engine.Geometry;
+using BH.Engine.Structure;
+using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
@@ -38,7 +44,6 @@ namespace BH.Adapter.Lusas
             return new List<Type>();
         }
 
-
         /***************************************************/
         /**** Private Fields                            ****/
         /***************************************************/
@@ -53,6 +58,7 @@ namespace BH.Adapter.Lusas
             {typeof(RigidLink), new List<Type> { typeof(LinkConstraint), typeof(Node) } },
             {typeof(MeshFace), new List<Type> { typeof(IProperty2D), typeof(Node) } },
             {typeof(IProperty2D), new List<Type> { typeof(Material) } },
+            {typeof(PointForce), new List<Type> {typeof(Loadcase) } }
         };
 
 

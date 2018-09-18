@@ -40,6 +40,8 @@ namespace BH.Adapter.Lusas
                 return ReadConstraint6DOFs(ids as dynamic);
             else if (type == typeof(Loadcase))
                 return ReadLoadcases(ids as dynamic);
+            else if (type == typeof(PointForce))
+                return ReadPointForce(ids as dynamic);
             return null;
         }
 
@@ -51,8 +53,7 @@ namespace BH.Adapter.Lusas
 
         private List<Bar> ReadBars(List<string> ids = null)
         {
-            IFDatabase database = m_LusasApplication.getDatabase();
-            object[] lusasLines = database.getObjects("Line");
+            object[] lusasLines = d_LusasData.getObjects("Line");
 
             List<Bar> bhomBars = new List<Bar>();
             IEnumerable<Node> bhomNodesList = ReadNodes();
@@ -63,10 +64,10 @@ namespace BH.Adapter.Lusas
 
             for (int i = 0; i < lusasLines.Count(); i++)
             {
-                    IFLine lusasLine = (IFLine) lusasLines[i];
-                    Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMBar(lusasLine, bhomNodes, groupNames,materials);
+                IFLine lusasLine = (IFLine)lusasLines[i];
+                Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMBar(lusasLine, bhomNodes, groupNames, materials);
 
-                    bhomBars.Add(bhomBar);
+                bhomBars.Add(bhomBar);
             }
             return bhomBars;
         }
@@ -76,11 +77,10 @@ namespace BH.Adapter.Lusas
 
         private List<PanelPlanar> ReadSurfaces(List<string> ids = null)
         {
-            IFDatabase database = m_LusasApplication.getDatabase();
-            object[] eleArray = database.getObjects("Surface");
+            object[] eleArray = d_LusasData.getObjects("Surface");
             List<PanelPlanar> bhomSurfaces = new List<PanelPlanar>();
 
-            if (eleArray.Count()!=0)
+            if (eleArray.Count() != 0)
             {
                 IEnumerable<Edge> bhomEdgesList = ReadEdges();
                 Dictionary<string, Edge> bhomEdges = bhomEdgesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
@@ -105,8 +105,7 @@ namespace BH.Adapter.Lusas
 
         private List<Node> ReadNodes(List<string> ids = null)
         {
-            IFDatabase database = m_LusasApplication.getDatabase();
-            object[] lusasPoints = database.getObjects("Point");
+            object[] lusasPoints = d_LusasData.getObjects("Point");
 
             List<Node> bhomNodes = new List<Node>();
             HashSet<String> groupNames = ReadGroups();
@@ -125,8 +124,7 @@ namespace BH.Adapter.Lusas
 
         private List<Point> ReadPoints(List<string> ids = null)
         {
-            IFDatabase database = m_LusasApplication.getDatabase();
-            object[] lusasPoints = database.getObjects("Point");
+            object[] lusasPoints = d_LusasData.getObjects("Point");
 
             List<Point> bhomPoints = new List<Point>();
             HashSet<String> groupNames = ReadGroups();
@@ -142,8 +140,7 @@ namespace BH.Adapter.Lusas
 
         private List<IFPoint> ReadLusasPoints(List<string> ids = null)
         {
-            IFDatabase database = m_LusasApplication.getDatabase();
-            object[] pointArray = database.getObjects("Point");
+            object[] pointArray = d_LusasData.getObjects("Point");
 
             List<IFPoint> lusasPoints = new List<IFPoint>();
 
@@ -157,8 +154,7 @@ namespace BH.Adapter.Lusas
 
         private HashSet<String> ReadGroups(List<string> ids = null)
         {
-            IFDatabase database = m_LusasApplication.getDatabase();
-            object[] eleArray = database.getObjects("Groups");
+            object[] eleArray = d_LusasData.getObjects("Groups");
             HashSet<String> bhomTags = new HashSet<string>();
 
             for (int i = 0; i < eleArray.Count(); i++)
@@ -174,11 +170,10 @@ namespace BH.Adapter.Lusas
 
         private List<Edge> ReadEdges(List<string> ids = null)
         {
-            IFDatabase database = m_LusasApplication.getDatabase();
-            object[] lusasLines = database.getObjects("Line");
+            object[] lusasLines = d_LusasData.getObjects("Line");
             List<Edge> bhomEdges = new List<Edge>();
 
-            if(lusasLines.Count()!=0)
+            if (lusasLines.Count() != 0)
             {
                 List<Node> bhomNodesList = ReadNodes();
                 Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
@@ -197,14 +192,13 @@ namespace BH.Adapter.Lusas
 
         private List<IFLine> ReadLusasEdges(List<string> ids = null)
         {
-            IFDatabase database = m_LusasApplication.getDatabase();
-            object[] lusasLines = database.getObjects("Line");
+            object[] lusasLines = d_LusasData.getObjects("Line");
             List<IFLine> lusasEdges = new List<IFLine>();
 
             for (int i = 0; i < lusasLines.Count(); i++)
             {
-                    IFLine lusasline = d_LusasData.getLineByNumber(i);
-                    lusasEdges.Add(lusasline);
+                IFLine lusasline = d_LusasData.getLineByNumber(i);
+                lusasEdges.Add(lusasline);
             }
             return lusasEdges;
         }
@@ -213,15 +207,14 @@ namespace BH.Adapter.Lusas
 
         private List<Constraint6DOF> ReadConstraint6DOFs(List<String> ids = null)
         {
-            IFDatabase database = m_LusasApplication.getDatabase();
-            object[] lusasSupports = database.getAttributes("Support");
+            object[] lusasSupports = d_LusasData.getAttributes("Support");
             List<Constraint6DOF> bhomConstraints6DOF = new List<Constraint6DOF>();
 
             for (int i = 0; i < lusasSupports.Count(); i++)
             {
-                    IFSupportStructural lusasSupport = (IFSupportStructural) lusasSupports[i];
-                    Constraint6DOF bhomConstraint6DOF = BH.Engine.Lusas.Convert.ToBHoMConstraint6DOF(lusasSupport);
-                    bhomConstraints6DOF.Add(bhomConstraint6DOF);
+                IFSupportStructural lusasSupport = (IFSupportStructural)lusasSupports[i];
+                Constraint6DOF bhomConstraint6DOF = BH.Engine.Lusas.Convert.ToBHoMConstraint6DOF(lusasSupport);
+                bhomConstraints6DOF.Add(bhomConstraint6DOF);
             }
             return bhomConstraints6DOF;
         }
@@ -264,8 +257,7 @@ namespace BH.Adapter.Lusas
 
         private List<Material> ReadMaterials(List<string> ids = null)
         {
-            IFDatabase database = m_LusasApplication.getDatabase();
-            object[] lusasMaterials = database.getAttributes("Material");
+            object[] lusasMaterials = d_LusasData.getAttributes("Material");
             List<Material> bhomMaterials = new List<Material>();
 
             for (int i = 0; i < lusasMaterials.Count(); i++)
@@ -282,38 +274,58 @@ namespace BH.Adapter.Lusas
 
         private List<Loadcase> ReadLoadcases(List<string> ids = null)
         {
-            //This method only works for a single analysis. When retrieving the largest loadcase ID
-            //it only loops through that analysis. 
-
             List<Loadcase> bhomLoadcases = new List<Loadcase>();
+            object[] allLoadcases = d_LusasData.getLoadsets("loadcase", "all");
 
-            int largestLoadcaseID = d_LusasData.getNextAvailableLoadcaseID() - 1;
-            bool firstLoadcase = false;
-
-            IFLoadcase lusasLoadcase = (IFLoadcase)d_LusasData.getLoadset(largestLoadcaseID);
-            Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(lusasLoadcase);
-            List<string> analysisName = new List<string> { lusasLoadcase.getAnalysis().getName() };
-            bhomLoadcase.Tags = new HashSet<string>(analysisName);
-            bhomLoadcases.Add(bhomLoadcase);
-            firstLoadcase = Convert.ToBoolean(lusasLoadcase.isFirst());
-
-            while (firstLoadcase == false)
+            for (int i = 0; i < allLoadcases.Count(); i++)
             {
-                lusasLoadcase = lusasLoadcase.getPrevious();
-                bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(lusasLoadcase);
-                analysisName = new List<string> { lusasLoadcase.getAnalysis().getName() };
+                IFLoadcase lusasLoadcase = (IFLoadcase)allLoadcases[i];
+                Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(lusasLoadcase);
+                List<string> analysisName = new List<string> { lusasLoadcase.getAnalysis().getName() };
                 bhomLoadcase.Tags = new HashSet<string>(analysisName);
                 bhomLoadcases.Add(bhomLoadcase);
-                firstLoadcase = Convert.ToBoolean(lusasLoadcase.isFirst());
             }
-
-            bhomLoadcases.Reverse();
 
             return bhomLoadcases;
         }
 
         /***************************************************/
 
-        /***************************************************/
+        private List<PointForce> ReadPointForce(List<string> ids = null)
+        {
+            List<PointForce> bhomPointForces = new List<PointForce>();
+            object[] lusasPointForces = d_LusasData.getAttributes("Loading", "PointLoad");
+            HashSet<String> groupNames = ReadGroups();
+            IEnumerable<Constraint6DOF> constraints6DOFList = ReadConstraint6DOFs();
+            Dictionary<string, Constraint6DOF> constraints6DOF = constraints6DOFList.ToDictionary(x => x.Name.ToString());
+            List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
+
+            for (int i = 0; i < lusasPointForces.Count(); i++)
+            {
+                IFLoadingConcentrated lusasPointForce = (IFLoadingConcentrated)lusasPointForces[i];
+                object[] assignmentObjects = lusasPointForce.getAssignments();
+                List<IFAssignment> assignments = new List<IFAssignment>();
+
+                for (int j = 0; j < assignmentObjects.Count(); j++)
+                {
+                    IFAssignment assignment = (IFAssignment)assignmentObjects[j];
+                    assignments.Add(assignment);
+                }
+
+                IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = assignments.GroupBy(m => m.getAssignmentLoadset().getName());
+
+                foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
+                {
+                    PointForce bhomPointForce = BH.Engine.Lusas.Convert.ToBHoMPointLoad(lusasPointForce, groupedAssignment, groupNames, constraints6DOF);
+                    List<string> analysisName = new List<string> { lusasPointForce.getAttributeType() };
+                    bhomPointForce.Tags = new HashSet<string>(analysisName);
+                    bhomPointForces.Add(bhomPointForce);
+                }
+            }
+
+            return bhomPointForces;
+
+            /***************************************************/
+        }
     }
 }

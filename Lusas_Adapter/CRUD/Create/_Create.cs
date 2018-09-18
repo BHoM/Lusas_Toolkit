@@ -58,6 +58,10 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<Loadcase>);
                 }
+                if (objects.First() is PointForce)
+                {
+                    success = CreateCollection(objects as IEnumerable<PointForce>);
+                }
                 //if (objects.First().GetType().GetInterfaces().Contains(typeof(ISectionProperty)))
                 //{
                 //    success = CreateCollection(objects as IEnumerable<ISectionProperty>);
@@ -125,14 +129,6 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<Bar> bars)
         {
-            //List<Bar> distinctBars = bars.GroupBy(m => new {
-            //    X = Math.Round(m.Geometry().IPointAtParameter(0.5).X, 3),
-            //    Y = Math.Round(m.Geometry().IPointAtParameter(0.5).Y, 3),
-            //    Z = Math.Round(m.Geometry().IPointAtParameter(0.5).Z, 3)
-            //})
-            //.Select(x => x.First())
-            //.ToList();
-
 
             List<String> barTags = bars.SelectMany(x => x.Tags).Distinct().ToList();
 
@@ -304,6 +300,32 @@ namespace BH.Adapter.Lusas
             foreach (Loadcase loadcase in loadcases)
             {
                 IFLoadcase newLoadcase = CreateLoadcase(loadcase);
+            }
+
+            return true;
+        }
+
+        private bool CreateCollection(IEnumerable<PointForce> pointforces)
+        {
+            List<IFPoint> lusasPoints = ReadLusasPoints();
+            List<Point> bhomPoints = new List<Point>();
+            List<IFPoint> assignedPoints = new List<IFPoint>();
+
+            foreach (IFPoint point in lusasPoints)
+            {
+                bhomPoints.Add(BH.Engine.Lusas.Convert.ToBHoMPoint(point));
+            }
+
+            foreach (PointForce pointforce in pointforces)
+            {
+                foreach (Node node in pointforce.Objects.Elements)
+                {
+                    IFPoint lusasPoint = lusasPoints[bhomPoints.FindIndex(m => m.Equals(node.Position))];
+                    assignedPoints.Add(lusasPoint);
+                }
+
+                IFPoint[] arrayPoints = assignedPoints.ToArray();
+                IFLoadingConcentrated newPointForce = CreatePointForce(pointforce, arrayPoints);
             }
 
             return true;
