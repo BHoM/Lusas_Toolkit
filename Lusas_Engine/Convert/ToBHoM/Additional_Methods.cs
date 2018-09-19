@@ -155,5 +155,22 @@ namespace BH.Engine.Lusas
 
             return loadcaseName;
         }
+
+        public static string getName(string loadname)
+        {
+            string bhomLoadName = "";
+
+            if (loadname.Contains("/"))
+            {
+                bhomLoadName = loadname.Substring(
+                    loadname.LastIndexOf("/") + 1);
+            }
+            else
+            {
+                bhomLoadName = loadname;
+            }
+
+            return bhomLoadName;
+        }
     }
 }
