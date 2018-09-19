@@ -51,7 +51,7 @@ namespace BH.Engine.Lusas
             bhomPanel.Tags = tags;
             bhomPanel.CustomData["Lusas_id"] = lusasSurf.getName();
 
-            List<String> geometricAssignments = attributeAssignments(lusasSurf, "GeometricSurface");
+            List<String> geometricAssignments = attributeAssignments(lusasSurf, "Geometric");
             List<String> materialAssignments = attributeAssignments(lusasSurf, "Material");
 
             //This will be needed when Property is added

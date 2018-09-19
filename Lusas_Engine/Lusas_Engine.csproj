@@ -69,11 +69,8 @@
   <ItemGroup>
     <Compile Include="Convert\ToBHoM\Additional_Methods.cs" />
     <Compile Include="Convert\ToBHoM\Bar.cs" />
-<<<<<<< HEAD
     <Compile Include="Convert\ToBHoM\ConstantThickness.cs" />
-=======
     <Compile Include="Convert\ToBHoM\Load.cs" />
->>>>>>> master
     <Compile Include="Convert\ToBHoM\Constraint6DOF.cs" />
     <Compile Include="Convert\ToBHoM\Edge.cs" />
     <Compile Include="Convert\ToBHoM\Loadcase.cs" />

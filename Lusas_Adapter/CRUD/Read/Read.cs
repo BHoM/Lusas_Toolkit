@@ -87,6 +87,8 @@ namespace BH.Adapter.Lusas
                 HashSet<String> groupNames = ReadGroups();
                 IEnumerable<Material> materialList = ReadMaterials();
                 Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
+                IEnumerable<ConstantThickness> geometricList = ReadThicknesses();
+                Dictionary<string, ConstantThickness> geometrics = geometricList.ToDictionary(x => x.Name.ToString());
 
                 for (int i = 0; i < eleArray.Count(); i++)
                 {
@@ -94,6 +96,7 @@ namespace BH.Adapter.Lusas
                     PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMPanelPlanar(lusasSurface,
                         bhomEdges,
                         groupNames,
+                        geometrics,
                         materials);
 
                     bhomSurfaces.Add(bhompanel);
@@ -290,16 +293,17 @@ namespace BH.Adapter.Lusas
         }
 
         /***************************************************/
-
-<<<<<<< HEAD
         private List<ConstantThickness> ReadThicknesses(List<string> ids = null)
         {
-            object[] lusasThicknesses = d_LusasData.getAttributes("GeometricSurface");
+            object[] lusasThicknesses = d_LusasData.getAttributes("Surface Geometric");
             List<ConstantThickness> bhomThicknesess = new List<ConstantThickness>();
 
             for (int i = 0; i < lusasThicknesses.Count(); i++)
             {
                 IFAttribute lusasThickness = (IFAttribute)lusasThicknesses[i];
+                string attributeType = lusasThickness.getAttributeType();
+                string subType = lusasThickness.getSubType();
+                Type type = lusasThickness.GetType();
                 ConstantThickness bhomThickness = BH.Engine.Lusas.Convert.ToBHoMConstantThickness(lusasThickness);
                 bhomThicknesess.Add(bhomThickness);
             }
@@ -308,7 +312,7 @@ namespace BH.Adapter.Lusas
         }
 
         /***************************************************/
-=======
+
         private List<PointForce> ReadPointForce(List<string> ids = null)
         {
             List<PointForce> bhomPointForces = new List<PointForce>();
@@ -345,6 +349,5 @@ namespace BH.Adapter.Lusas
 
             /***************************************************/
         }
->>>>>>> master
     }
 }
