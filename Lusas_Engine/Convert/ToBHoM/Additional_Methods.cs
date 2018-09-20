@@ -74,21 +74,17 @@ namespace BH.Engine.Lusas
         public static List<String> attributeAssignments(IFGeometry lusasGeometry, String attributeType)
         {
             Object[] attributeAssignments = lusasGeometry.getAssignments(attributeType);
-            //There's a problem in here with reading the geometric assignment, for some
-            //reason it reads the material instead..
 
             List<String> attributeNames = new List<String>();
 
             int n = attributeAssignments.Count();
             for (int i = 0; i < n; i++)
             {
-                IFAssignment attributeAssignment = lusasGeometry.getAssignments()[i];
+                IFAssignment attributeAssignment = lusasGeometry.getAssignments(attributeType)[i];
                 IFAttribute lusasAttribute = attributeAssignment.getAttribute();
                 string attributeName = getName(lusasAttribute);
-
                 attributeNames.Add(attributeName);
             }
-
             return attributeNames;
         }
 

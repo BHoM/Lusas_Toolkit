@@ -25,6 +25,7 @@ namespace BH.Engine.Lusas
                 PoissonsRatio = lusasAttribute.getValue("nu"),
                 Density = lusasAttribute.getValue("rho"),
                 CoeffThermalExpansion = lusasAttribute.getValue("alpha"),
+                Name = attributeName
             };
 
             //How to combine the mass Rayleigh and stiffness Rayleigh in to a single damping constant

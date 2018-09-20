@@ -54,7 +54,6 @@ namespace BH.Engine.Lusas
             List<String> geometricAssignments = attributeAssignments(lusasSurf, "Geometric");
             List<String> materialAssignments = attributeAssignments(lusasSurf, "Material");
 
-            //This will be needed when Property is added
             Material panelMaterial = null;
             ConstantThickness panelGeometric = null;
 
