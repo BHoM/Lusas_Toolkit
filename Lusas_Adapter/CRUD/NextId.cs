@@ -122,6 +122,34 @@ namespace BH.Adapter.Lusas
                         index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.getBHoMID(largestLoadcase,'c')) + 1;
                     }
                 }
+                if (type == typeof(Material))
+                {
+                    int largestMaterialID = d_LusasData.getLargestAttributeID("Material") ;
+                    if (largestMaterialID == 0)
+                    {
+                        index = 1;
+                    }
+                    else
+                    {
+
+                        IFAttribute largestAttribute = d_LusasData.getAttribute("Material",largestMaterialID);
+                        index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.getBHoMID(largestAttribute, 'M')) + 1;
+                    }
+                }
+                if (type == typeof(ConstantThickness))
+                {
+                    int largestThicknessID = d_LusasData.getLargestAttributeID("Surface Geometric");
+                    if (largestThicknessID == 0)
+                    {
+                        index = 1;
+                    }
+                    else
+                    {
+
+                        IFAttribute largestAttribute = d_LusasData.getAttribute("Surface Geometric", largestThicknessID);
+                        index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.getBHoMID(largestAttribute, 'G')) + 1;
+                    }
+                }
                 m_indexDict[type] = index;
             }
             return index;

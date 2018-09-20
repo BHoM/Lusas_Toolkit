@@ -42,6 +42,8 @@ namespace BH.Adapter.Lusas
                 return ReadLoadcases(ids as dynamic);
             else if (type == typeof(PointForce))
                 return ReadPointForce(ids as dynamic);
+            else if (type == typeof(ConstantThickness))
+                return ReadThicknesses(ids as dynamic);
             return null;
         }
 
@@ -316,7 +318,8 @@ namespace BH.Adapter.Lusas
         private List<PointForce> ReadPointForce(List<string> ids = null)
         {
             List<PointForce> bhomPointForces = new List<PointForce>();
-            object[] lusasPointForces = d_LusasData.getAttributes("Loading", "PointLoad");
+            object[] lusasPointForces = d_LusasData.getAttributes("Concentrated Load");
+
             HashSet<String> groupNames = ReadGroups();
             IEnumerable<Constraint6DOF> constraints6DOFList = ReadConstraint6DOFs();
             Dictionary<string, Constraint6DOF> constraints6DOF = constraints6DOFList.ToDictionary(x => x.Name.ToString());

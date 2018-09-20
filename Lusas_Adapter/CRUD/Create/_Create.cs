@@ -62,6 +62,10 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<PointForce>);
                 }
+                if (objects.First() is ConstantThickness)
+                {
+                    success = CreateCollection(objects as IEnumerable<ConstantThickness>);
+                }
                 //if (objects.First().GetType().GetInterfaces().Contains(typeof(ISectionProperty)))
                 //{
                 //    success = CreateCollection(objects as IEnumerable<ISectionProperty>);
@@ -290,6 +294,16 @@ namespace BH.Adapter.Lusas
             foreach (Material material in materials)
             {
                 IFAttribute newMaterial = CreateMaterial(material);
+            }
+
+            return true;
+        }
+
+        private bool CreateCollection(IEnumerable<ConstantThickness> thicknesses)
+        {
+            foreach (ConstantThickness thickness in thicknesses)
+            {
+                IFAttribute newGeometricSurface = CreateGeometricSurface(thickness);
             }
 
             return true;
