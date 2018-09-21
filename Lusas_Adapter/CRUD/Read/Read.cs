@@ -40,10 +40,10 @@ namespace BH.Adapter.Lusas
                 return ReadConstraint6DOFs(ids as dynamic);
             else if (type == typeof(Loadcase))
                 return ReadLoadcases(ids as dynamic);
-            else if (type == typeof(PointForce))
+            else if (type ==typeof(PointForce))
                 return ReadPointForce(ids as dynamic);
-            else if (type == typeof(ConstantThickness))
-                return ReadThicknesses(ids as dynamic);
+            else if (typeof(IProperty2D).IsAssignableFrom(type))
+                return ReadProperty2D(ids as dynamic);
             return null;
         }
 
@@ -89,8 +89,8 @@ namespace BH.Adapter.Lusas
                 HashSet<String> groupNames = ReadGroups();
                 IEnumerable<Material> materialList = ReadMaterials();
                 Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
-                IEnumerable<ConstantThickness> geometricList = ReadThicknesses();
-                Dictionary<string, ConstantThickness> geometrics = geometricList.ToDictionary(x => x.Name.ToString());
+                IEnumerable<IProperty2D> geometricList = ReadProperty2D();
+                Dictionary<string, IProperty2D> geometrics = geometricList.ToDictionary(x => x.Name.ToString());
 
                 for (int i = 0; i < eleArray.Count(); i++)
                 {
@@ -295,10 +295,10 @@ namespace BH.Adapter.Lusas
         }
 
         /***************************************************/
-        private List<ConstantThickness> ReadThicknesses(List<string> ids = null)
+        private List<IProperty2D> ReadProperty2D(List<string> ids = null)
         {
             object[] lusasThicknesses = d_LusasData.getAttributes("Surface Geometric");
-            List<ConstantThickness> bhomThicknesess = new List<ConstantThickness>();
+            List<IProperty2D> bhomProperties2D = new List<IProperty2D>();
 
             for (int i = 0; i < lusasThicknesses.Count(); i++)
             {
@@ -306,11 +306,11 @@ namespace BH.Adapter.Lusas
                 string attributeType = lusasThickness.getAttributeType();
                 string subType = lusasThickness.getSubType();
                 Type type = lusasThickness.GetType();
-                ConstantThickness bhomThickness = BH.Engine.Lusas.Convert.ToBHoMConstantThickness(lusasThickness);
-                bhomThicknesess.Add(bhomThickness);
+                IProperty2D bhomProperty2D = BH.Engine.Lusas.Convert.ToBHoMProperty2D(lusasThickness);
+                bhomProperties2D.Add(bhomProperty2D);
             }
 
-            return bhomThicknesess;
+            return bhomProperties2D;
         }
 
         /***************************************************/

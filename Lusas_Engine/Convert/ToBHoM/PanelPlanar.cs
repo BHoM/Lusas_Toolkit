@@ -28,7 +28,7 @@ namespace BH.Engine.Lusas
         public static PanelPlanar ToBHoMPanelPlanar(this IFSurface lusasSurf, 
             Dictionary<string, Edge> bhomEdges, 
             HashSet<String> groupNames,
-            Dictionary<string, ConstantThickness> bhomGeometrics,
+            Dictionary<string, IProperty2D> bhomProperties2D,
             Dictionary<string, Material> bhomMaterials)
 
         {
@@ -55,18 +55,18 @@ namespace BH.Engine.Lusas
             List<String> materialAssignments = attributeAssignments(lusasSurf, "Material");
 
             Material panelMaterial = null;
-            ConstantThickness panelGeometric = null;
+            IProperty2D bhomProperty2D = null;
 
             if (!(geometricAssignments.Count() == 0))
             {
-                bhomGeometrics.TryGetValue(geometricAssignments[0], out panelGeometric);
+                bhomProperties2D.TryGetValue(geometricAssignments[0], out bhomProperty2D);
                 if (!(materialAssignments.Count() == 0))
                 {
                     bhomMaterials.TryGetValue(materialAssignments[0], out panelMaterial);
-                    panelGeometric.Material = panelMaterial;
+                    bhomProperty2D.Material = panelMaterial;
                 }
 
-                bhomPanel.Property = panelGeometric;
+                bhomPanel.Property = bhomProperty2D;
             }
 
             return bhomPanel;

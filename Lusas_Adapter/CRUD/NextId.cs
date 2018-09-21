@@ -145,7 +145,6 @@ namespace BH.Adapter.Lusas
                     }
                     else
                     {
-
                         IFAttribute largestAttribute = d_LusasData.getAttribute("Surface Geometric", largestThicknessID);
                         index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.getBHoMID(largestAttribute, 'G')) + 1;
                     }

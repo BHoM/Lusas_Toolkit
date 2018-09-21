@@ -15,18 +15,20 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFAttribute CreateGeometricSurface(ConstantThickness thickness)
+        public IFAttribute CreateGeometricSurface(IProperty2D property2D)
         {
             IFAttribute lusasGeometricSurface = null;
 
-            if (d_LusasData.existsAttribute("Surface Geometric", "G" + thickness.CustomData[AdapterId] + "/" + thickness.Name))
+            ConstantThickness constantThickness = property2D as ConstantThickness;
+
+            if (d_LusasData.existsAttribute("Surface Geometric", "G" + constantThickness.CustomData[AdapterId] + "/" + constantThickness.Name))
             {
-                lusasGeometricSurface = d_LusasData.getAttribute("Surface Geometric", "G" + thickness.CustomData[AdapterId] + "/" + thickness.Name);
+                lusasGeometricSurface = d_LusasData.getAttribute("Surface Geometric", "G" + constantThickness.CustomData[AdapterId] + "/" + constantThickness.Name);
             }
             else
             {
-                lusasGeometricSurface = d_LusasData.createGeometricSurface("G" + thickness.CustomData[AdapterId] + "/" + thickness.Name);
-                lusasGeometricSurface.setValue("t", thickness.Thickness);
+                lusasGeometricSurface = d_LusasData.createGeometricSurface("G" + constantThickness.CustomData[AdapterId] + "/" + constantThickness.Name);
+                lusasGeometricSurface.setValue("t", constantThickness.Thickness);
             }
 
             return lusasGeometricSurface;

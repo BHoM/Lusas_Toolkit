@@ -15,22 +15,22 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static ConstantThickness ToBHoMConstantThickness(this IFAttribute lusasAttribute)
+        public static IProperty2D ToBHoMProperty2D(this IFAttribute lusasAttribute)
         {
             string attributeName = getName(lusasAttribute);
 
-            ConstantThickness bhomThickness = new ConstantThickness
+            IProperty2D bhomProperty2D = new ConstantThickness
             {
                 Name = attributeName,
                 Thickness = lusasAttribute.getValue("t")
             };
 
             
-            int bhomID = getBHoMID(lusasAttribute, 'T');
+            int bhomID = getBHoMID(lusasAttribute, 'G');
 
-            bhomThickness.CustomData["Lusas_id"] = bhomID;
+            bhomProperty2D.CustomData["Lusas_id"] = bhomID;
 
-            return bhomThickness;
+            return bhomProperty2D;
         }
 
 

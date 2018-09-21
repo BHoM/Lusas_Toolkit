@@ -40,7 +40,6 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-
             return new List<Type>();
         }
 
@@ -50,7 +49,7 @@ namespace BH.Adapter.Lusas
 
         private static Dictionary<Type, List<Type>> m_DependencyTypes = new Dictionary<Type, List<Type>>
         {
-            {typeof(PanelPlanar), new List<Type> { typeof(ConstantThickness), typeof(Edge)} },
+            {typeof(PanelPlanar), new List<Type> { typeof(IProperty2D), typeof(Edge)} },
             //{typeof(Edge), new List<Type> {typeof(Point) } },
             {typeof(Bar), new List<Type> { typeof(Node) , typeof(Material)} },
             {typeof(Node), new List<Type> { typeof(Constraint6DOF) } },
@@ -59,7 +58,6 @@ namespace BH.Adapter.Lusas
             {typeof(MeshFace), new List<Type> { typeof(IProperty2D), typeof(Node) } },
             {typeof(IProperty2D), new List<Type> { typeof(Material) } },
             {typeof(PointForce), new List<Type> {typeof(Loadcase) } },
-            {typeof(ConstantThickness), new List<Type> {typeof(Material) } }
         };
 
 
