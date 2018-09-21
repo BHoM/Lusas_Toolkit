@@ -19,14 +19,13 @@ namespace BH.Engine.Lusas
         {
             string attributeName = getName(lusasAttribute);
 
-            object[] valueNames = lusasAttribute.getValueNames();
-
             Material bhomMaterial = new Material
             {
                 YoungsModulus = lusasAttribute.getValue("E"),
                 PoissonsRatio = lusasAttribute.getValue("nu"),
                 Density = lusasAttribute.getValue("rho"),
                 CoeffThermalExpansion = lusasAttribute.getValue("alpha"),
+                Name = attributeName
             };
 
             //How to combine the mass Rayleigh and stiffness Rayleigh in to a single damping constant

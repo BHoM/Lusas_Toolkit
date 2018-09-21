@@ -21,20 +21,12 @@ namespace BH.Adapter.Lusas
 
             if (d_LusasData.existsAttribute("Material", "M" + material.CustomData[AdapterId] + "/" + material.Name))
             {
-                lusasMaterial = d_LusasData.getAttribute("Support", "Sp" + material.CustomData[AdapterId] + "/" + material.Name);
+                lusasMaterial = d_LusasData.getAttribute("Material", "M" + material.CustomData[AdapterId] + "/" + material.Name);
             }
             else
             {
                 lusasMaterial = d_LusasData.createIsotropicMaterial(material.Name,
                 material.YoungsModulus, material.PoissonsRatio, material.Density, material.CoeffThermalExpansion);
-
-                //int bhomID;
-                //if (material.CustomData.ContainsKey(AdapterId))
-                //    bhomID = System.Convert.ToInt32(material.CustomData[AdapterId]);
-                //else
-                //    bhomID = System.Convert.ToInt32(NextId(material.GetType()));
-
-                //material.CustomData[AdapterId] = bhomID;
 
                 lusasMaterial.setName("M" + material.CustomData[AdapterId] + "/" + material.Name);
             }

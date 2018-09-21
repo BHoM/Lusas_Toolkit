@@ -40,8 +40,10 @@ namespace BH.Adapter.Lusas
                 return ReadConstraint6DOFs(ids as dynamic);
             else if (type == typeof(Loadcase))
                 return ReadLoadcases(ids as dynamic);
-            else if (type == typeof(PointForce))
+            else if (type ==typeof(PointForce))
                 return ReadPointForce(ids as dynamic);
+            else if (typeof(IProperty2D).IsAssignableFrom(type))
+                return ReadProperty2D(ids as dynamic);
             return null;
         }
 
@@ -87,6 +89,8 @@ namespace BH.Adapter.Lusas
                 HashSet<String> groupNames = ReadGroups();
                 IEnumerable<Material> materialList = ReadMaterials();
                 Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
+                IEnumerable<IProperty2D> geometricList = ReadProperty2D();
+                Dictionary<string, IProperty2D> geometrics = geometricList.ToDictionary(x => x.Name.ToString());
 
                 for (int i = 0; i < eleArray.Count(); i++)
                 {
@@ -94,6 +98,7 @@ namespace BH.Adapter.Lusas
                     PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMPanelPlanar(lusasSurface,
                         bhomEdges,
                         groupNames,
+                        geometrics,
                         materials);
 
                     bhomSurfaces.Add(bhompanel);
@@ -290,11 +295,31 @@ namespace BH.Adapter.Lusas
         }
 
         /***************************************************/
+        private List<IProperty2D> ReadProperty2D(List<string> ids = null)
+        {
+            object[] lusasThicknesses = d_LusasData.getAttributes("Surface Geometric");
+            List<IProperty2D> bhomProperties2D = new List<IProperty2D>();
+
+            for (int i = 0; i < lusasThicknesses.Count(); i++)
+            {
+                IFAttribute lusasThickness = (IFAttribute)lusasThicknesses[i];
+                string attributeType = lusasThickness.getAttributeType();
+                string subType = lusasThickness.getSubType();
+                Type type = lusasThickness.GetType();
+                IProperty2D bhomProperty2D = BH.Engine.Lusas.Convert.ToBHoMProperty2D(lusasThickness);
+                bhomProperties2D.Add(bhomProperty2D);
+            }
+
+            return bhomProperties2D;
+        }
+
+        /***************************************************/
 
         private List<PointForce> ReadPointForce(List<string> ids = null)
         {
             List<PointForce> bhomPointForces = new List<PointForce>();
-            object[] lusasPointForces = d_LusasData.getAttributes("Loading", "PointLoad");
+            object[] lusasPointForces = d_LusasData.getAttributes("Concentrated Load");
+
             HashSet<String> groupNames = ReadGroups();
             IEnumerable<Constraint6DOF> constraints6DOFList = ReadConstraint6DOFs();
             Dictionary<string, Constraint6DOF> constraints6DOF = constraints6DOFList.ToDictionary(x => x.Name.ToString());

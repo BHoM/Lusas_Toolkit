@@ -80,13 +80,11 @@ namespace BH.Engine.Lusas
             int n = attributeAssignments.Count();
             for (int i = 0; i < n; i++)
             {
-                IFAssignment attributeAssignment = lusasGeometry.getAssignments()[i];
+                IFAssignment attributeAssignment = lusasGeometry.getAssignments(attributeType)[i];
                 IFAttribute lusasAttribute = attributeAssignment.getAttribute();
                 string attributeName = getName(lusasAttribute);
-
                 attributeNames.Add(attributeName);
             }
-
             return attributeNames;
         }
 

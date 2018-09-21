@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BH.oM.Structure.Elements;
+using BH.oM.Structure.Properties;
 using BH.oM.Geometry;
 using BH.Engine.Geometry;
 using BH.oM.Common.Materials;
@@ -26,7 +27,8 @@ namespace BH.Engine.Lusas
 
         public static PanelPlanar ToBHoMPanelPlanar(this IFSurface lusasSurf, 
             Dictionary<string, Edge> bhomEdges, 
-            HashSet<String> groupNames, 
+            HashSet<String> groupNames,
+            Dictionary<string, IProperty2D> bhomProperties2D,
             Dictionary<string, Material> bhomMaterials)
 
         {
@@ -49,15 +51,23 @@ namespace BH.Engine.Lusas
             bhomPanel.Tags = tags;
             bhomPanel.CustomData["Lusas_id"] = lusasSurf.getName();
 
+            List<String> geometricAssignments = attributeAssignments(lusasSurf, "Geometric");
             List<String> materialAssignments = attributeAssignments(lusasSurf, "Material");
 
-            //This will be needed when Property is added
-            //Material panelMaterial = null;
-            //if (!(materialAssignments.Count() == 0))
-            //{
-            //    bhomMaterials.TryGetValue(materialAssignments[0], out panelMaterial);
-            //    bhomPanel.Property.Material = panelMaterial;
-            //}
+            Material panelMaterial = null;
+            IProperty2D bhomProperty2D = null;
+
+            if (!(geometricAssignments.Count() == 0))
+            {
+                bhomProperties2D.TryGetValue(geometricAssignments[0], out bhomProperty2D);
+                if (!(materialAssignments.Count() == 0))
+                {
+                    bhomMaterials.TryGetValue(materialAssignments[0], out panelMaterial);
+                    bhomProperty2D.Material = panelMaterial;
+                }
+
+                bhomPanel.Property = bhomProperty2D;
+            }
 
             return bhomPanel;
         }
