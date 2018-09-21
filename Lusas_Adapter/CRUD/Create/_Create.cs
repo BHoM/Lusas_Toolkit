@@ -24,6 +24,11 @@ namespace BH.Adapter.Lusas
         {
             bool success = true;        //boolean returning if the creation was successfull or not
 
+            m_LusasApplication.setManualRefresh(true);
+            m_LusasApplication.suppressMessages(1);
+            m_LusasApplication.enableTrees(false);
+
+
             if (objects.Count() > 0)
             {
                 if (objects.First() is Node)
@@ -62,7 +67,7 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<PointForce>);
                 }
-                if (objects.First() is IProperty2D)
+                if (typeof(IProperty2D).IsAssignableFrom(objects.First().GetType()))
                 {
                     success = CreateCollection(objects as IEnumerable<IProperty2D>);
                 }
@@ -71,6 +76,10 @@ namespace BH.Adapter.Lusas
                 //    success = CreateCollection(objects as IEnumerable<ISectionProperty>);
                 //}
             }
+
+            m_LusasApplication.setManualRefresh(false);
+            m_LusasApplication.suppressMessages(0);
+            m_LusasApplication.enableTrees(true);
 
             //success = CreateCollection(objects as dynamic);
             m_LusasApplication.updateAllViews();
