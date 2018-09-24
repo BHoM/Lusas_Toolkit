@@ -80,7 +80,6 @@ namespace BH.Adapter.Lusas
             m_LusasApplication.setManualRefresh(false);
             m_LusasApplication.suppressMessages(0);
             m_LusasApplication.enableTrees(true);
-
             //success = CreateCollection(objects as dynamic);
             m_LusasApplication.updateAllViews();
 
