@@ -21,12 +21,15 @@ namespace BH.Engine.Lusas
             Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(assignedLoadcase);
             List<Node> assignedNodes = new List<Node>();
 
+            //Why is assignment a var and not an IFAssignment?
+            //Why are we creating Nodes in the PointLoad case, surely we should read them?
             foreach (var assignment in assignmentList)
             {
                 IFPoint lusasPoint = (IFPoint) assignment.getDatabaseObject();
                 Node bhomNode = BH.Engine.Lusas.Convert.ToBHoMNode(lusasPoint, groupNames, constraints6DOF);
                 assignedNodes.Add(bhomNode);
             }
+
 
             BHoMGroup<Node> bhomNodes = new BHoMGroup<Node> { Elements = assignedNodes };
 
