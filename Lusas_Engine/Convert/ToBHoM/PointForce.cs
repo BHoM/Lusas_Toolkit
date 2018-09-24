@@ -15,30 +15,19 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static PointForce ToBHoMPointLoad(IFLoadingConcentrated lusasPointForce, IEnumerable<IFAssignment> assignmentList, HashSet<string> groupNames, Dictionary<string, Constraint6DOF> constraints6DOF)
+        public static PointForce ToBHoMPointLoad(IFLoading lusasPointForce, IEnumerable<IFAssignment> assignmentList, Dictionary<string, Node> nodes)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)assignmentList.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(assignedLoadcase);
-            List<Node> assignedNodes = new List<Node>();
 
-            //Why is assignment a var and not an IFAssignment?
-            //Why are we creating Nodes in the PointLoad case, surely we should read them?
-            foreach (var assignment in assignmentList)
-            {
-                IFPoint lusasPoint = (IFPoint) assignment.getDatabaseObject();
-                Node bhomNode = BH.Engine.Lusas.Convert.ToBHoMNode(lusasPoint, groupNames, constraints6DOF);
-                assignedNodes.Add(bhomNode);
-            }
-
-
-            BHoMGroup<Node> bhomNodes = new BHoMGroup<Node> { Elements = assignedNodes };
+            BHoMGroup<Node> bhomNodes = GetNodeAssignments(assignmentList, nodes);
 
             Vector forceVector = new Vector { X = lusasPointForce.getValue("px"), Y = lusasPointForce.getValue("py"), Z = lusasPointForce.getValue("pz") };
             Vector momentVector = new Vector { X = lusasPointForce.getValue("mx"), Y = lusasPointForce.getValue("my"), Z = lusasPointForce.getValue("mz") };
 
-            PointForce bhomPointForce = new PointForce { Loadcase=bhomLoadcase, Name = getName(lusasPointForce), Objects = bhomNodes, Force = forceVector, Moment = momentVector };
+            PointForce bhomPointForce = new PointForce { Loadcase=bhomLoadcase, Name = GetName(lusasPointForce), Objects = bhomNodes, Force = forceVector, Moment = momentVector };
 
-            int bhomID = getBHoMID(lusasPointForce, 'l');
+            int bhomID = GetBHoMID(lusasPointForce, 'l');
             bhomPointForce.CustomData["Lusas_id"] = bhomID;
             return bhomPointForce;
         }

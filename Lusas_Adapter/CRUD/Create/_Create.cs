@@ -329,14 +329,10 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<PointForce> pointforces)
         {
-            List<IFPoint> lusasPoints = ReadLusasPoints();
-            List<Point> bhomPoints = new List<Point>();
             List<IFPoint> assignedPoints = new List<IFPoint>();
 
-            foreach (IFPoint point in lusasPoints)
-            {
-                bhomPoints.Add(BH.Engine.Lusas.Convert.ToBHoMPoint(point));
-            }
+            List<IFPoint> lusasPoints = ReadLusasPoints();
+            List<Point> bhomPoints = ReadPoints();
 
             foreach (PointForce pointforce in pointforces)
             {
@@ -347,7 +343,7 @@ namespace BH.Adapter.Lusas
                 }
 
                 IFPoint[] arrayPoints = assignedPoints.ToArray();
-                IFLoadingConcentrated newPointForce = CreatePointForce(pointforce, arrayPoints);
+                IFLoadingConcentrated newPointForce = CreateConcentratedLoad(pointforce, arrayPoints);
             }
 
             return true;

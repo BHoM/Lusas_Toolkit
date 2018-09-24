@@ -15,7 +15,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFLoadingConcentrated CreatePointForce(PointForce pointForce, IFPoint[] lusasPoints)
+        public IFLoadingConcentrated CreateConcentratedLoad(PointForce pointForce, IFPoint[] lusasPoints)
         {
 
             IFLoadingConcentrated lusasPointForce = null;

@@ -17,9 +17,9 @@ namespace BH.Engine.Lusas
     {
         public static Node ToBHoMNode(this IFPoint lusasPoint, HashSet<String> groupNames, Dictionary<string, Constraint6DOF> constraints6DOF)
         {
-            HashSet<String> tags = new HashSet<string>(isMemberOf(lusasPoint, groupNames));
+            HashSet<String> tags = new HashSet<string>(IsMemberOf(lusasPoint, groupNames));
 
-            List<String> supportAssignments = attributeAssignments(lusasPoint, "Support");
+            List<String> supportAssignments = AttributeAssignments(lusasPoint, "Support");
 
             Constraint6DOF nodeConstraint = null;
             if (!(supportAssignments.Count() == 0))

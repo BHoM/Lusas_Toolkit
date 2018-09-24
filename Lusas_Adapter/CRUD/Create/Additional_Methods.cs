@@ -15,7 +15,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public void assignObjectSet(IFGeometry newGeometry, HashSet<String> tags)
+        public void AssignObjectSet(IFGeometry newGeometry, HashSet<String> tags)
         {
             foreach (string tag in tags)
             {
@@ -23,5 +23,22 @@ namespace BH.Adapter.Lusas
                 objectSet.add(newGeometry);
             }
         }
+
+        public static IEnumerable<IGrouping<string, IFAssignment>> GetLoadAssignments(IFLoading lusasPointForce)
+        {
+            object[] assignmentObjects = lusasPointForce.getAssignments();
+            List<IFAssignment> assignments = new List<IFAssignment>();
+
+            for (int j = 0; j < assignmentObjects.Count(); j++)
+            {
+                IFAssignment assignment = (IFAssignment)assignmentObjects[j];
+                assignments.Add(assignment);
+            }
+
+            IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = assignments.GroupBy(m => m.getAssignmentLoadset().getName());
+
+            return groupedByLoadcases;
+        }
+
     }
 }

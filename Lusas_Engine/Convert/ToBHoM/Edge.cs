@@ -27,13 +27,13 @@ namespace BH.Engine.Lusas
         public static Edge ToBHoMEdge(this IFLine lusasLine, Dictionary<string,Node> bhomNodes, HashSet<String> groupNames)
         {
 
-            Node startNode = getNode(lusasLine, 0, bhomNodes);
-            Node endNode = getNode(lusasLine, 1, bhomNodes);
+            Node startNode = GetNode(lusasLine, 0, bhomNodes);
+            Node endNode = GetNode(lusasLine, 1, bhomNodes);
 
             Point startPoint = new Point { X = startNode.Position.X, Y = startNode.Position.Y, Z = startNode.Position.Z };
             Point endPoint = new Point { X = endNode.Position.X, Y = endNode.Position.Y, Z = endNode.Position.Z };
 
-            HashSet<String> tags = new HashSet<string>(isMemberOf(lusasLine, groupNames));
+            HashSet<String> tags = new HashSet<string>(IsMemberOf(lusasLine, groupNames));
 
             Line bhomLine = new Line { Start = startPoint, End = endPoint };
 

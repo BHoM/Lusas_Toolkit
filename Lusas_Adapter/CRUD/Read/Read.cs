@@ -10,6 +10,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Properties;
 using BH.oM.Structure.Loads;
 using BH.oM.Common.Materials;
+using BH.Engine.Lusas;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -40,7 +41,7 @@ namespace BH.Adapter.Lusas
                 return ReadConstraint6DOFs(ids as dynamic);
             else if (type == typeof(Loadcase))
                 return ReadLoadcases(ids as dynamic);
-            else if (type ==typeof(PointForce))
+            else if (type ==typeof(ILoad))
                 return ReadPointForce(ids as dynamic);
             else if (typeof(IProperty2D).IsAssignableFrom(type))
                 return ReadProperty2D(ids as dynamic);
@@ -304,8 +305,6 @@ namespace BH.Adapter.Lusas
             {
                 IFAttribute lusasThickness = (IFAttribute)lusasThicknesses[i];
                 string attributeType = lusasThickness.getAttributeType();
-                string subType = lusasThickness.getSubType();
-                Type type = lusasThickness.GetType();
                 IProperty2D bhomProperty2D = BH.Engine.Lusas.Convert.ToBHoMProperty2D(lusasThickness);
                 bhomProperties2D.Add(bhomProperty2D);
             }
@@ -319,29 +318,20 @@ namespace BH.Adapter.Lusas
         {
             List<PointForce> bhomPointForces = new List<PointForce>();
             object[] lusasPointForces = d_LusasData.getAttributes("Concentrated Load");
+            IEnumerable<Node> bhomNodesList = ReadNodes();
+            Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
 
-            HashSet<String> groupNames = ReadGroups();
-            IEnumerable<Constraint6DOF> constraints6DOFList = ReadConstraint6DOFs();
-            Dictionary<string, Constraint6DOF> constraints6DOF = constraints6DOFList.ToDictionary(x => x.Name.ToString());
             List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
 
             for (int i = 0; i < lusasPointForces.Count(); i++)
             {
-                IFLoadingConcentrated lusasPointForce = (IFLoadingConcentrated)lusasPointForces[i];
-                object[] assignmentObjects = lusasPointForce.getAssignments();
-                List<IFAssignment> assignments = new List<IFAssignment>();
+                IFLoading lusasPointForce = (IFLoading)lusasPointForces[i];
 
-                for (int j = 0; j < assignmentObjects.Count(); j++)
-                {
-                    IFAssignment assignment = (IFAssignment)assignmentObjects[j];
-                    assignments.Add(assignment);
-                }
-
-                IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = assignments.GroupBy(m => m.getAssignmentLoadset().getName());
+                IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(lusasPointForce);
 
                 foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                 {
-                    PointForce bhomPointForce = BH.Engine.Lusas.Convert.ToBHoMPointLoad(lusasPointForce, groupedAssignment, groupNames, constraints6DOF);
+                    PointForce bhomPointForce = BH.Engine.Lusas.Convert.ToBHoMPointLoad(lusasPointForce, groupedAssignment, bhomNodes);
                     List<string> analysisName = new List<string> { lusasPointForce.getAttributeType() };
                     bhomPointForce.Tags = new HashSet<string>(analysisName);
                     bhomPointForces.Add(bhomPointForce);

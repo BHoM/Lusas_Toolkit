@@ -17,7 +17,7 @@ namespace BH.Engine.Lusas
     {
         public static Material ToBHoMMaterial(this IFAttribute lusasAttribute)
         {
-            string attributeName = getName(lusasAttribute);
+            string attributeName = GetName(lusasAttribute);
 
             Material bhomMaterial = new Material
             {
@@ -31,7 +31,7 @@ namespace BH.Engine.Lusas
             //How to combine the mass Rayleigh and stiffness Rayleigh in to a single damping constant
             //https://www.orcina.com/SoftwareProducts/OrcaFlex/Documentation/Help/Content/html/RayleighDamping.htm
 
-            int bhomID = getBHoMID(lusasAttribute, 'M');
+            int bhomID = GetBHoMID(lusasAttribute, 'M');
 
             bhomMaterial.CustomData["Lusas_id"] = bhomID;
 

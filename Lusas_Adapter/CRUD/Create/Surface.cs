@@ -33,7 +33,7 @@ namespace BH.Adapter.Lusas
 
             if (!(panel.Tags.Count == 0))
             {
-                assignObjectSet(newSurface, panel.Tags);
+                AssignObjectSet(newSurface, panel.Tags);
             }
 
             if(!(panel.Property == null))

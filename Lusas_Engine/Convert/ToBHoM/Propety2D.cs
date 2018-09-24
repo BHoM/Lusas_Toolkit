@@ -17,7 +17,7 @@ namespace BH.Engine.Lusas
     {
         public static IProperty2D ToBHoMProperty2D(this IFAttribute lusasAttribute)
         {
-            string attributeName = getName(lusasAttribute);
+            string attributeName = GetName(lusasAttribute);
 
             IProperty2D bhomProperty2D = new ConstantThickness
             {
@@ -26,7 +26,7 @@ namespace BH.Engine.Lusas
             };
 
             
-            int bhomID = getBHoMID(lusasAttribute, 'G');
+            int bhomID = GetBHoMID(lusasAttribute, 'G');
 
             bhomProperty2D.CustomData["Lusas_id"] = bhomID;
 

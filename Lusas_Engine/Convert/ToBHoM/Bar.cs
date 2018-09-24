@@ -35,15 +35,15 @@ namespace BH.Engine.Lusas
 
         {
 
-            Node startNode = getNode(lusasLine, 0, bhomNodes);
+            Node startNode = GetNode(lusasLine, 0, bhomNodes);
 
-            Node endNode = getNode(lusasLine, 1, bhomNodes);
+            Node endNode = GetNode(lusasLine, 1, bhomNodes);
 
-            HashSet<String> tags = new HashSet<string>(isMemberOf(lusasLine, groupNames));
+            HashSet<String> tags = new HashSet<string>(IsMemberOf(lusasLine, groupNames));
 
             Bar bhomBar = new Bar { StartNode = startNode, EndNode = endNode, Tags = tags };
 
-            List<String> materialAssignments = attributeAssignments(lusasLine, "Material");
+            List<String> materialAssignments = AttributeAssignments(lusasLine, "Material");
 
             //This will be wrapped in with the SectionProperties when they are defined
             //Material barMaterial = null;

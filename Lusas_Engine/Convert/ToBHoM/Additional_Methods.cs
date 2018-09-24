@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 using BH.Engine.Geometry;
+using BH.oM.Base;
 using Lusas.LPI;
 
 namespace BH.Engine.Lusas
@@ -27,7 +28,7 @@ namespace BH.Engine.Lusas
             return geometryID;
         }
 
-        public static Node getNode(IFLine lusasLine, int nodeIndex, Dictionary<string, Node> bhomNodes)
+        public static Node GetNode(IFLine lusasLine, int nodeIndex, Dictionary<string, Node> bhomNodes)
         {
             Node bhomNode = null;
             IFPoint lusasPoint = lusasLine.getLOFs()[nodeIndex];
@@ -37,7 +38,7 @@ namespace BH.Engine.Lusas
             return bhomNode;
         }
 
-        public static Bar getBar(IFSurface lusasSurf, int lineIndex, Dictionary<string, Bar> bhomBars)
+        public static Bar GetBar(IFSurface lusasSurf, int lineIndex, Dictionary<string, Bar> bhomBars)
         {
             Bar bhomBar = null;
             IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
@@ -46,7 +47,7 @@ namespace BH.Engine.Lusas
             return bhomBar;
         }
 
-        public static Edge getEdge(IFSurface lusasSurf, int lineIndex, Dictionary<string, Edge> bhomBars)
+        public static Edge GetEdge(IFSurface lusasSurf, int lineIndex, Dictionary<string, Edge> bhomBars)
         {
             Edge bhomEdge = null;
             IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
@@ -55,7 +56,7 @@ namespace BH.Engine.Lusas
             return bhomEdge;
         }
 
-        public static HashSet<String> isMemberOf(IFGeometry lusasGeometry, HashSet<String> groupNames)
+        public static HashSet<String> IsMemberOf(IFGeometry lusasGeometry, HashSet<String> groupNames)
         {
 
             HashSet<String> memberGroups = new HashSet<string>();
@@ -71,7 +72,7 @@ namespace BH.Engine.Lusas
             return memberGroups;
         }
 
-        public static List<String> attributeAssignments(IFGeometry lusasGeometry, String attributeType)
+        public static List<String> AttributeAssignments(IFGeometry lusasGeometry, String attributeType)
         {
             Object[] attributeAssignments = lusasGeometry.getAssignments(attributeType);
 
@@ -82,13 +83,13 @@ namespace BH.Engine.Lusas
             {
                 IFAssignment attributeAssignment = lusasGeometry.getAssignments(attributeType)[i];
                 IFAttribute lusasAttribute = attributeAssignment.getAttribute();
-                string attributeName = getName(lusasAttribute);
+                string attributeName = GetName(lusasAttribute);
                 attributeNames.Add(attributeName);
             }
             return attributeNames;
         }
 
-        public static int getBHoMID(IFAttribute lusasAttribute, char lastCharacter)
+        public static int GetBHoMID(IFAttribute lusasAttribute, char lastCharacter)
         {
             int bhomID = 0;
 
@@ -104,7 +105,7 @@ namespace BH.Engine.Lusas
             return bhomID;
         }
 
-        public static int getBHoMID(IFLoadcase lusasLoadcase, char lastCharacter)
+        public static int GetBHoMID(IFLoadcase lusasLoadcase, char lastCharacter)
         {
             int bhomID = 0;
 
@@ -120,7 +121,7 @@ namespace BH.Engine.Lusas
             return bhomID;
         }
 
-        public static string getName(IFAttribute lusasAttribute)
+        public static string GetName(IFAttribute lusasAttribute)
         {
             string attributeName = "";
 
@@ -137,7 +138,7 @@ namespace BH.Engine.Lusas
             return attributeName;
         }
 
-        public static string getName(IFLoadcase lusasLoadcase)
+        public static string GetName(IFLoadcase lusasLoadcase)
         {
             string loadcaseName = "";
 
@@ -154,7 +155,7 @@ namespace BH.Engine.Lusas
             return loadcaseName;
         }
 
-        public static string getName(string loadname)
+        public static string GetName(string loadname)
         {
             string bhomLoadName = "";
 
@@ -169,6 +170,24 @@ namespace BH.Engine.Lusas
             }
 
             return bhomLoadName;
+        }
+
+        public static BHoMGroup<Node> GetNodeAssignments(IEnumerable<IFAssignment> assignmentList, Dictionary<string, Node> nodes)
+        {
+            List<Node> assignedNodes = new List<Node>();
+            Node bhomNode = new Node();
+
+            foreach (IFAssignment assignment in assignmentList)
+            {
+                IFPoint lusasPoint = (IFPoint)assignment.getDatabaseObject();
+                nodes.TryGetValue(removePrefix(lusasPoint.getName(), "P"), out bhomNode);
+                assignedNodes.Add(bhomNode);
+            }
+
+            BHoMGroup<Node> bhomNodes = new BHoMGroup<Node> { Elements = assignedNodes };
+
+
+            return bhomNodes;
         }
     }
 }
