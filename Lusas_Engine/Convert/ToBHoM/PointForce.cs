@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,13 +10,14 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Properties;
 using BH.oM.Structure.Loads;
 using BH.oM.Common.Materials;
+using BH.Engine.Lusas;
 using Lusas.LPI;
 
 namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static PointForce ToBHoMPointLoad(IFLoading lusasPointForce, IEnumerable<IFAssignment> assignmentList, Dictionary<string, Node> nodes)
+        public static PointForce ToBHoMLoad(IFLoading lusasPointForce, IEnumerable<IFAssignment> assignmentList, Dictionary<string,Node> nodes)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)assignmentList.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(assignedLoadcase);

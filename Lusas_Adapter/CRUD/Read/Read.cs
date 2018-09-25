@@ -41,8 +41,8 @@ namespace BH.Adapter.Lusas
                 return ReadConstraint6DOFs(ids as dynamic);
             else if (type == typeof(Loadcase))
                 return ReadLoadcases(ids as dynamic);
-            else if (type ==typeof(ILoad))
-                return ReadPointForce(ids as dynamic);
+            else if (typeof(ILoad).IsAssignableFrom(type))
+                return chooseLoad(type, ids as dynamic);
             else if (typeof(IProperty2D).IsAssignableFrom(type))
                 return ReadProperty2D(ids as dynamic);
             return null;
@@ -314,13 +314,26 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private List<PointForce> ReadPointForce(List<string> ids = null)
+        private List<ILoad> chooseLoad(Type type, List<string> ids = null)
         {
-            List<PointForce> bhomPointForces = new List<PointForce>();
-            object[] lusasPointForces = d_LusasData.getAttributes("Concentrated Load");
-            IEnumerable<Node> bhomNodesList = ReadNodes();
-            Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
+            var @switch = new Dictionary<Type, List<ILoad>> {
+                {typeof(PointForce), ReadPointLoad(ids as dynamic)},
+                {typeof(GravityLoad), ReadGravityLoad(ids as dynamic)}
+            };
 
+            return @switch[type];
+
+        }
+
+        /***************************************************/
+
+        private List<ILoad> ReadPointLoad(List<string> ids = null)
+        {
+            List<ILoad> bhomPointForces = new List<ILoad>();
+            object[] lusasPointForces = d_LusasData.getAttributes("Concentrated Load");
+
+            List<Node> bhomNodes = ReadNodes();
+            Dictionary<string, Node> nodeDict = bhomNodes.ToDictionary(x => x.CustomData[AdapterId].ToString());
             List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
 
             for (int i = 0; i < lusasPointForces.Count(); i++)
@@ -331,7 +344,7 @@ namespace BH.Adapter.Lusas
 
                 foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                 {
-                    PointForce bhomPointForce = BH.Engine.Lusas.Convert.ToBHoMPointLoad(lusasPointForce, groupedAssignment, bhomNodes);
+                    PointForce bhomPointForce = BH.Engine.Lusas.Convert.ToBHoMLoad(lusasPointForce, groupedAssignment, nodeDict);
                     List<string> analysisName = new List<string> { lusasPointForce.getAttributeType() };
                     bhomPointForce.Tags = new HashSet<string>(analysisName);
                     bhomPointForces.Add(bhomPointForce);
@@ -339,8 +352,36 @@ namespace BH.Adapter.Lusas
             }
 
             return bhomPointForces;
-
-            /***************************************************/
         }
+
+        /***************************************************/
+
+        private List<ILoad> ReadGravityLoad(List<string> ids = null)
+        {
+            List<ILoad> bhomPointForces = null;
+            //List<ILoad> bhomPointForces = new List<ILoad>();
+            //object[] lusasPointForces = d_LusasData.getAttributes("Concentrated Load");
+            //List<Node> bhomNodes = ReadNodes();
+            //List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
+
+            //for (int i = 0; i < lusasPointForces.Count(); i++)
+            //{
+            //    IFLoading lusasPointForce = (IFLoading)lusasPointForces[i];
+
+            //    IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(lusasPointForce);
+
+            //    foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
+            //    {
+            //        PointForce bhomPointForce = BH.Engine.Lusas.Convert.ToBHoMLoad(lusasPointForce, groupedAssignment, bhomNodes);
+            //        List<string> analysisName = new List<string> { lusasPointForce.getAttributeType() };
+            //        bhomPointForce.Tags = new HashSet<string>(analysisName);
+            //        bhomPointForces.Add(bhomPointForce);
+            //    }
+            //}
+
+            return bhomPointForces;
+        }
+
+        /***************************************************/
     }
 }
