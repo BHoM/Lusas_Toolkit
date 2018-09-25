@@ -17,22 +17,13 @@ namespace BH.Adapter.Lusas
     {
         public IFLoadingBody CreateGravityLoad(GravityLoad gravityLoad, object[] lusasGeom,string assignedType)
         {
-            //if (assignedType=="Bar")
-            //{
-            //    IFLine[] lusasGeometry = (IFLine[]) lusasGeom;
-            //}
-            //else
-            //{
-            //    IFSurface[] lusasGeometry = (IFSurface[]) lusasGeom;
-            //}
-
             IFLoadingBody lusasGravityLoad = null;
             IFAssignment assignToGeom = m_LusasApplication.assignment();
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + gravityLoad.Loadcase.CustomData[AdapterId] + "/" + gravityLoad.Loadcase.Name);
 
             if (d_LusasData.existsAttribute("Loading", "Gl" + gravityLoad.CustomData[AdapterId] + "/" + gravityLoad.Name))
             {
-                object[] attribute = d_LusasData.getAttributes("Loading", "Pl" + gravityLoad.CustomData[AdapterId] + "/" + gravityLoad.Name);
+                object[] attribute = d_LusasData.getAttributes("Loading", "Gl" + gravityLoad.CustomData[AdapterId] + "/" + gravityLoad.Name);
                 lusasGravityLoad = (IFLoadingBody)attribute[0];
             }
             else
