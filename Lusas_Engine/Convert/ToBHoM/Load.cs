@@ -56,5 +56,32 @@ namespace BH.Engine.Lusas
             bhomGravityLoad.CustomData["Lusas_id"] = bhomID;
             return bhomGravityLoad;
         }
+
+        public static BarUniformlyDistributedLoad ToBHoMLoad(IFLoading lusasDistributed, IEnumerable<IFAssignment> assignmentList, Dictionary<string, Bar> bars)
+        {
+            IFLoadcase assignedLoadcase = (IFLoadcase)assignmentList.First().getAssignmentLoadset();
+            Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(assignedLoadcase);
+
+            IEnumerable<Bar> bhomBars = GetBarAssignments(assignmentList, bars);
+
+            object[] getValues = lusasDistributed.getValueNames();
+
+            Vector forceVector = new Vector { X = lusasDistributed.getValue("px"), Y = lusasDistributed.getValue("py"), Z = lusasDistributed.getValue("pz") };
+            Vector momentVector = new Vector { X = lusasDistributed.getValue("mx"), Y = lusasDistributed.getValue("my"), Z = lusasDistributed.getValue("mz") };
+
+            BarUniformlyDistributedLoad bhomBarUniformlyDistributed = BH.Engine.Structure.Create.BarUniformlyDistributedLoad(
+                bhomLoadcase, 
+                bhomBars, 
+                forceVector, 
+                momentVector, 
+                LoadAxis.Global, 
+                true,
+                GetName(lusasDistributed));
+
+
+            int bhomID = GetBHoMID(lusasDistributed, 'D');
+            bhomBarUniformlyDistributed.CustomData["Lusas_id"] = bhomID;
+            return bhomBarUniformlyDistributed;
+        }
     }
 }
