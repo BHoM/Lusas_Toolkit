@@ -25,7 +25,7 @@ namespace BH.Adapter.Lusas
 
             if (!(node.Tags.Count == 0))
             {
-                assignObjectSet(newPoint, node.Tags);
+                AssignObjectSet(newPoint, node.Tags);
             }
 
             if (!(node.Constraint == null))

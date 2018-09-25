@@ -26,7 +26,7 @@ namespace BH.Adapter.Lusas
 
             if (!(bar.Tags.Count == 0))
             {
-                assignObjectSet(newLine, bar.Tags);
+                AssignObjectSet(newLine, bar.Tags);
             }
 
             if(!(bar.SectionProperty == null))
@@ -68,7 +68,7 @@ namespace BH.Adapter.Lusas
 
             if (!(bar.Tags.Count == 0))
             {
-                assignObjectSet(newLine, bar.Tags);
+                AssignObjectSet(newLine, bar.Tags);
             }
 
             if (!(bar.SectionProperty == null))

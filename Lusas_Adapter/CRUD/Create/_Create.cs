@@ -24,9 +24,9 @@ namespace BH.Adapter.Lusas
         {
             bool success = true;        //boolean returning if the creation was successfull or not
 
-            m_LusasApplication.setManualRefresh(true);
-            m_LusasApplication.suppressMessages(1);
-            m_LusasApplication.enableTrees(false);
+            //m_LusasApplication.setManualRefresh(true);
+            //m_LusasApplication.suppressMessages(1);
+            //m_LusasApplication.enableTrees(false);
 
 
             if (objects.Count() > 0)
@@ -63,9 +63,19 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<Loadcase>);
                 }
-                if (objects.First() is PointForce)
+                if (typeof(ILoad).IsAssignableFrom(objects.First().GetType()))
                 {
-                    success = CreateCollection(objects as IEnumerable<PointForce>);
+                    string loadType = objects.First().GetType().ToString();
+
+                    switch (loadType)
+                    {
+                        case "BH.oM.Structure.Loads.PointForce":
+                            success = CreateCollection(objects as IEnumerable<PointForce>);
+                            break;
+                        case "BH.oM.Structure.Loads.GravityLoad":
+                            success = CreateCollection(objects as IEnumerable<GravityLoad>);
+                            break;
+                    }
                 }
                 if (typeof(IProperty2D).IsAssignableFrom(objects.First().GetType()))
                 {
@@ -77,11 +87,11 @@ namespace BH.Adapter.Lusas
                 //}
             }
 
-            m_LusasApplication.setManualRefresh(false);
-            m_LusasApplication.suppressMessages(0);
-            m_LusasApplication.enableTrees(true);
-            //success = CreateCollection(objects as dynamic);
-            m_LusasApplication.updateAllViews();
+            //m_LusasApplication.setManualRefresh(false);
+            //m_LusasApplication.suppressMessages(0);
+            //m_LusasApplication.enableTrees(true);
+            ////success = CreateCollection(objects as dynamic);
+            //m_LusasApplication.updateAllViews();
 
             return success;             //Finally return if the creation was successful or not
 
@@ -327,27 +337,57 @@ namespace BH.Adapter.Lusas
             return true;
         }
 
+
         private bool CreateCollection(IEnumerable<PointForce> pointforces)
         {
-            List<IFPoint> lusasPoints = ReadLusasPoints();
-            List<Point> bhomPoints = new List<Point>();
             List<IFPoint> assignedPoints = new List<IFPoint>();
-
-            foreach (IFPoint point in lusasPoints)
-            {
-                bhomPoints.Add(BH.Engine.Lusas.Convert.ToBHoMPoint(point));
-            }
 
             foreach (PointForce pointforce in pointforces)
             {
                 foreach (Node node in pointforce.Objects.Elements)
                 {
-                    IFPoint lusasPoint = lusasPoints[bhomPoints.FindIndex(m => m.Equals(node.Position))];
+                    IFPoint lusasPoint = d_LusasData.getPointByName(node.CustomData[AdapterId].ToString());
                     assignedPoints.Add(lusasPoint);
                 }
 
                 IFPoint[] arrayPoints = assignedPoints.ToArray();
-                IFLoadingConcentrated newPointForce = CreatePointForce(pointforce, arrayPoints);
+                IFLoadingConcentrated newPointForce = CreateConcentratedLoad(pointforce, arrayPoints);
+            }
+
+            return true;
+        }
+
+        private bool CreateCollection(IEnumerable<GravityLoad> gravityLoads)
+        {
+            List<IFLine> assignedLines = new List<IFLine>();
+            List<IFSurface> assignedSurfaces = new List<IFSurface>();
+
+            foreach (GravityLoad gravityLoad in gravityLoads)
+            {
+                foreach (BHoMObject bhomGeometry in gravityLoad.Objects.Elements)
+                {
+                    if (bhomGeometry.GetType().ToString()== "BH.oM.Structure.Elements.Bar")
+                    {
+                        IFLine lusasLine = d_LusasData.getLineByName(bhomGeometry.CustomData[AdapterId].ToString());
+                        assignedLines.Add(lusasLine);
+                    }
+                    else
+                    {
+                        IFSurface lusasSurface = d_LusasData.getSurfaceByName(bhomGeometry.CustomData[AdapterId].ToString());
+                        assignedSurfaces.Add(lusasSurface);
+                    }
+                }
+
+                if (assignedLines.Count!=0)
+                {
+                    object[] arrayLines = assignedLines.ToArray();
+                    IFLoadingBody newGravityLoad = CreateGravityLoad(gravityLoad, arrayLines,"Bar");
+                }
+                else
+                {
+                    object[] arraySurfaces = assignedSurfaces.ToArray();
+                    IFLoadingBody newGravityLoad = CreateGravityLoad(gravityLoad, arraySurfaces,"Surface");
+                }
             }
 
             return true;

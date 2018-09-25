@@ -84,8 +84,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CRUD\Create\Additional_Methods.cs" />
+    <Compile Include="CRUD\Create\GravityLoad.cs" />
     <Compile Include="CRUD\Create\GeometricSurface.cs" />
-    <Compile Include="CRUD\Create\Load.cs" />
+    <Compile Include="CRUD\Create\ConcentratedLoad.cs" />
     <Compile Include="CRUD\Create\Edge.cs" />
     <Compile Include="CRUD\Create\Loadcase.cs" />
     <Compile Include="CRUD\Create\Material.cs" />

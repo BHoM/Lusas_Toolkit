@@ -45,12 +45,12 @@ namespace BH.Engine.Lusas
                 }
             }
 
-            string attributeName = getName(lusasAttribute);
+            string attributeName = GetName(lusasAttribute);
 
             Constraint6DOF bhomConstraint6DOF = BH.Engine.Structure.Create.Constraint6DOF(
                attributeName, fixity, stiffness);
 
-            int bhomID = getBHoMID(lusasAttribute, 'p');
+            int bhomID = GetBHoMID(lusasAttribute, 'p');
 
             bhomConstraint6DOF.CustomData["Lusas_id"] = bhomID;
 

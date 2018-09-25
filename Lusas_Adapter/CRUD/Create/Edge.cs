@@ -22,7 +22,7 @@ namespace BH.Adapter.Lusas
 
             if (!(edge.Tags.Count == 0))
             {
-                assignObjectSet(newLine, edge.Tags);
+                AssignObjectSet(newLine, edge.Tags);
             }
             return newLine;
         }
