@@ -358,28 +358,60 @@ namespace BH.Adapter.Lusas
 
         private List<ILoad> ReadGravityLoad(List<string> ids = null)
         {
-            List<ILoad> bhomPointForces = null;
-            //List<ILoad> bhomPointForces = new List<ILoad>();
-            //object[] lusasPointForces = d_LusasData.getAttributes("Concentrated Load");
-            //List<Node> bhomNodes = ReadNodes();
-            //List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
+            List<ILoad> bhomGravityLoads = new List<ILoad>();
+            object[] lusasGravityLoads = d_LusasData.getAttributes("Body Force Load");
 
-            //for (int i = 0; i < lusasPointForces.Count(); i++)
-            //{
-            //    IFLoading lusasPointForce = (IFLoading)lusasPointForces[i];
+            List<Bar> bhomBars = ReadBars();
+            List<PanelPlanar> bhomPanels = ReadSurfaces();
+            Dictionary<string, Bar> barDict = bhomBars.ToDictionary(x => x.CustomData[AdapterId].ToString());
+            Dictionary<string, PanelPlanar> surfDict = bhomPanels.ToDictionary(x => x.CustomData[AdapterId].ToString());
+            List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
 
-            //    IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(lusasPointForce);
+            for (int i = 0; i < lusasGravityLoads.Count(); i++)
+            {
+                IFLoading lusasGravityLoad = (IFLoading) lusasGravityLoads[i];
 
-            //    foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
-            //    {
-            //        PointForce bhomPointForce = BH.Engine.Lusas.Convert.ToBHoMLoad(lusasPointForce, groupedAssignment, bhomNodes);
-            //        List<string> analysisName = new List<string> { lusasPointForce.getAttributeType() };
-            //        bhomPointForce.Tags = new HashSet<string>(analysisName);
-            //        bhomPointForces.Add(bhomPointForce);
-            //    }
-            //}
+                IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(lusasGravityLoad);
 
-            return bhomPointForces;
+                foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
+                {
+                    List<IFAssignment> barAssignments = new List<IFAssignment>();
+                    List<IFAssignment> surfaceAssignments = new List<IFAssignment>();
+
+                    foreach (IFAssignment assignment in groupedAssignment)
+                    {
+                        IFLine tryLine = assignment.getDatabaseObject() as IFLine;
+                        IFSurface trySurf = assignment.getDatabaseObject() as IFSurface;
+
+                        if (tryLine != null)
+                        {
+                            barAssignments.Add(assignment);
+                        }
+                        else
+                        {
+                            surfaceAssignments.Add(assignment);
+                        }
+                    }
+
+                    List<string> analysisName = new List<string> { lusasGravityLoad.getAttributeType() };
+
+                    if (barAssignments.Count!=0)
+                    {
+                        GravityLoad bhomBarGravityLoad = BH.Engine.Lusas.Convert.ToBHoMLoad(lusasGravityLoad, barAssignments, "Bar", barDict, surfDict);
+                        bhomBarGravityLoad.Tags = new HashSet<string>(analysisName);
+                        bhomGravityLoads.Add(bhomBarGravityLoad);
+                    }
+
+                    if (surfaceAssignments.Count != 0)
+                    {
+                        GravityLoad bhomSurfGravityLoad = BH.Engine.Lusas.Convert.ToBHoMLoad(lusasGravityLoad, surfaceAssignments, "Surface", barDict, surfDict);
+                        bhomSurfGravityLoad.Tags = new HashSet<string>(analysisName);
+                        bhomGravityLoads.Add(bhomSurfGravityLoad);
+                    }
+                }
+            }
+
+            return bhomGravityLoads;
         }
 
         /***************************************************/

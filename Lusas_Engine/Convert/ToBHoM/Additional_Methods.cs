@@ -172,7 +172,7 @@ namespace BH.Engine.Lusas
             return bhomLoadName;
         }
 
-        public static BHoMGroup<Node> GetNodeAssignments(IEnumerable<IFAssignment> assignmentList, Dictionary<string, Node> nodes)
+        public static IEnumerable<Node> GetNodeAssignments(IEnumerable<IFAssignment> assignmentList, Dictionary<string, Node> nodes)
         {
             List<Node> assignedNodes = new List<Node>();
             Node bhomNode = new Node();
@@ -183,11 +183,38 @@ namespace BH.Engine.Lusas
                 nodes.TryGetValue(removePrefix(lusasPoint.getName(), "P"), out bhomNode);
                 assignedNodes.Add(bhomNode);
             }
-
-            BHoMGroup<Node> bhomNodes = new BHoMGroup<Node> { Elements = assignedNodes };
-
-
-            return bhomNodes;
+            return assignedNodes;
         }
+
+        public static IEnumerable<Bar> GetBarAssignments(IEnumerable<IFAssignment> assignmentList, Dictionary<string, Bar> bars)
+        {
+            List<Bar> assignedBars = new List<Bar>();
+            Bar bhomBar = new Bar();
+
+            foreach (IFAssignment assignment in assignmentList)
+            {
+                IFLine lusasLine = (IFLine) assignment.getDatabaseObject();
+                bars.TryGetValue(removePrefix(lusasLine.getName(), "L"), out bhomBar);
+                assignedBars.Add(bhomBar);
+            }
+
+            return assignedBars;
+        }
+
+        public static IEnumerable<PanelPlanar> GetSurfaceAssignments(IEnumerable<IFAssignment> assignmentList, Dictionary<string, PanelPlanar> surfs)
+        {
+            List<PanelPlanar> assignedSurfs = new List<PanelPlanar>();
+            PanelPlanar bhomSurf = new PanelPlanar();
+
+            foreach (IFAssignment assignment in assignmentList)
+            {
+                IFSurface lusasSurf = (IFSurface) assignment.getDatabaseObject();
+                surfs.TryGetValue(removePrefix(lusasSurf.getName(), "S"), out bhomSurf);
+                assignedSurfs.Add(bhomSurf);
+            }
+
+            return assignedSurfs;
+        }
+
     }
 }
