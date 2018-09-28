@@ -75,6 +75,9 @@ namespace BH.Adapter.Lusas
                         case "BH.oM.Structure.Loads.GravityLoad":
                             success = CreateCollection(objects as IEnumerable<GravityLoad>);
                             break;
+                        case "BH.oM.Structure.Loads.BarUniformlyDistributedLoad":
+                            success = CreateCollection(objects as IEnumerable<BarUniformlyDistributedLoad>);
+                            break;
                     }
                 }
                 if (typeof(IProperty2D).IsAssignableFrom(objects.First().GetType()))
@@ -346,7 +349,7 @@ namespace BH.Adapter.Lusas
             {
                 foreach (Node node in pointforce.Objects.Elements)
                 {
-                    IFPoint lusasPoint = d_LusasData.getPointByName(node.CustomData[AdapterId].ToString());
+                    IFPoint lusasPoint = d_LusasData.getPointByName("P" + node.CustomData[AdapterId].ToString());
                     assignedPoints.Add(lusasPoint);
                 }
 
@@ -368,12 +371,12 @@ namespace BH.Adapter.Lusas
                 {
                     if (bhomGeometry.GetType().ToString()== "BH.oM.Structure.Elements.Bar")
                     {
-                        IFLine lusasLine = d_LusasData.getLineByName(bhomGeometry.CustomData[AdapterId].ToString());
+                        IFLine lusasLine = d_LusasData.getLineByName("L" + bhomGeometry.CustomData[AdapterId].ToString());
                         assignedLines.Add(lusasLine);
                     }
                     else
                     {
-                        IFSurface lusasSurface = d_LusasData.getSurfaceByName(bhomGeometry.CustomData[AdapterId].ToString());
+                        IFSurface lusasSurface = d_LusasData.getSurfaceByName("S" + bhomGeometry.CustomData[AdapterId].ToString());
                         assignedSurfaces.Add(lusasSurface);
                     }
                 }
@@ -387,6 +390,32 @@ namespace BH.Adapter.Lusas
                 {
                     object[] arraySurfaces = assignedSurfaces.ToArray();
                     IFLoadingBody newGravityLoad = CreateGravityLoad(gravityLoad, arraySurfaces,"Surface");
+                }
+            }
+
+            return true;
+        }
+
+        private bool CreateCollection(IEnumerable<BarUniformlyDistributedLoad> barUniformlyDistributedLoads)
+        {
+            List<IFLine> assignedLines = new List<IFLine>();
+
+            foreach (BarUniformlyDistributedLoad barUniformlyDistributedLoad in barUniformlyDistributedLoads)
+            {
+                foreach (Bar bar in barUniformlyDistributedLoad.Objects.Elements)
+                {
+                    IFLine lusasLine = d_LusasData.getLineByName("L" + bar.CustomData[AdapterId].ToString());
+                    assignedLines.Add(lusasLine);
+                }
+
+                IFLine[] arrayLines = assignedLines.ToArray();
+                if(barUniformlyDistributedLoad.Axis == LoadAxis.Global)
+                {
+                    IFLoadingGlobalDistributed newGlobalDistributed = CreateGlobalDistributedLoad(barUniformlyDistributedLoad, arrayLines);
+                }
+                else if(barUniformlyDistributedLoad.Axis == LoadAxis.Local)
+                {
+                    IFLoadingLocalDistributed newLocalDistributed = CreateLocalDistributedLoad(barUniformlyDistributedLoad, arrayLines);
                 }
             }
 

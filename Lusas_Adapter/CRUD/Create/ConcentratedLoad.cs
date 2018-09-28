@@ -19,21 +19,24 @@ namespace BH.Adapter.Lusas
         {
 
             IFLoadingConcentrated lusasPointForce = null;
-            IFAssignment assignToNodes = m_LusasApplication.assignment();
             IFLoadcase assignedLoadcase = (IFLoadcase) d_LusasData.getLoadset("Lc" + pointForce.Loadcase.CustomData[AdapterId] + "/" + pointForce.Loadcase.Name);
+            string lusasAttributeName = "Pl" + pointForce.CustomData[AdapterId] + "/" + pointForce.Name;
 
-            if (d_LusasData.existsAttribute("Loading","Pl"+ pointForce.CustomData[AdapterId] + "/" + pointForce.Name))
+            if (d_LusasData.existsAttribute("Loading", lusasAttributeName))
             {
-                object[] attribute = d_LusasData.getAttributes("Loading", "Pl" + pointForce.CustomData[AdapterId] + "/" + pointForce.Name);
-                lusasPointForce = (IFLoadingConcentrated)attribute[0];
+                lusasPointForce = (IFLoadingConcentrated)d_LusasData.getAttribute("Loading", lusasAttributeName);
             }
             else
             {
-                lusasPointForce = d_LusasData.createLoadingConcentrated("Pl" + pointForce.CustomData[AdapterId] + "/" + pointForce.Name);
+                lusasPointForce = d_LusasData.createLoadingConcentrated(lusasAttributeName);
                 lusasPointForce.setConcentrated(pointForce.Force.X, pointForce.Force.Y, pointForce.Force.Z, pointForce.Moment.X, pointForce.Moment.Y, pointForce.Moment.Z);
-                assignToNodes.setLoadset(assignedLoadcase);
-                lusasPointForce.assignTo(lusasPoints,assignToNodes);
+
             }
+
+            IFAssignment assignToNodes = m_LusasApplication.assignment();
+            assignToNodes.setLoadset(assignedLoadcase);
+            lusasPointForce.assignTo(lusasPoints, assignToNodes);
+
             return lusasPointForce;
         }
     }

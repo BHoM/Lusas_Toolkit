@@ -17,16 +17,16 @@ namespace BH.Adapter.Lusas
     {
         public IFLoadcase CreateLoadcase(Loadcase loadcase)
         {
-
             IFLoadcase lusasLoadcase = null;
+            string lusasAttributeName = "Lc" + loadcase.CustomData[AdapterId] + "/" + loadcase.Name;
 
-            if (d_LusasData.existsLoadset("Lc" + loadcase.CustomData[AdapterId] + "/" + loadcase.Name))
+            if (d_LusasData.existsLoadset(lusasAttributeName))
             {
-                lusasLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + loadcase.CustomData[AdapterId] + "/" + loadcase.Name);
+                lusasLoadcase = (IFLoadcase)d_LusasData.getLoadset(lusasAttributeName);
             }
             else
             {
-                lusasLoadcase = d_LusasData.createLoadcase("Lc" + loadcase.CustomData[AdapterId] + "/" + loadcase.Name,"",loadcase.Number);
+                lusasLoadcase = d_LusasData.createLoadcase(lusasAttributeName, "",loadcase.Number);
             }
             return lusasLoadcase;
         }

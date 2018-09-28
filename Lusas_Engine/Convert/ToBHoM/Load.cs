@@ -64,22 +64,36 @@ namespace BH.Engine.Lusas
 
             IEnumerable<Bar> bhomBars = GetBarAssignments(assignmentList, bars);
 
-            object[] getValues = lusasDistributed.getValueNames();
+            Vector forceVector = new Vector { X = lusasDistributed.getValue("WX"), Y = lusasDistributed.getValue("WY"), Z = lusasDistributed.getValue("WZ") };
 
-            Vector forceVector = new Vector { X = lusasDistributed.getValue("px"), Y = lusasDistributed.getValue("py"), Z = lusasDistributed.getValue("pz") };
-            Vector momentVector = new Vector { X = lusasDistributed.getValue("mx"), Y = lusasDistributed.getValue("my"), Z = lusasDistributed.getValue("mz") };
+            BarUniformlyDistributedLoad bhomBarUniformlyDistributed = null;
 
-            BarUniformlyDistributedLoad bhomBarUniformlyDistributed = BH.Engine.Structure.Create.BarUniformlyDistributedLoad(
-                bhomLoadcase, 
-                bhomBars, 
-                forceVector, 
-                momentVector, 
-                LoadAxis.Global, 
-                true,
-                GetName(lusasDistributed));
+            if (lusasDistributed.getAttributeType() == "Global Distributed Load")
+            {
+                Vector momentVector = new Vector { X = lusasDistributed.getValue("MX"), Y = lusasDistributed.getValue("MY"), Z = lusasDistributed.getValue("MZ") };
 
+                bhomBarUniformlyDistributed = BH.Engine.Structure.Create.BarUniformlyDistributedLoad(
+                    bhomLoadcase,
+                    bhomBars,
+                    forceVector,
+                    momentVector,
+                    LoadAxis.Global,
+                    true,
+                    GetName(lusasDistributed));
+            }
+            else if(lusasDistributed.getAttributeType() == "Distributed Load")
+            {
+                bhomBarUniformlyDistributed = BH.Engine.Structure.Create.BarUniformlyDistributedLoad(
+                    bhomLoadcase,
+                    bhomBars,
+                    forceVector,
+                    null,
+                    LoadAxis.Local,
+                    true,
+                    GetName(lusasDistributed));
+            }
 
-            int bhomID = GetBHoMID(lusasDistributed, 'D');
+            int bhomID = GetBHoMID(lusasDistributed, 'l');
             bhomBarUniformlyDistributed.CustomData["Lusas_id"] = bhomID;
             return bhomBarUniformlyDistributed;
         }

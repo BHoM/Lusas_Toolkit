@@ -18,19 +18,18 @@ namespace BH.Adapter.Lusas
         public IFAttribute CreateMaterial(Material material)
         {
             IFAttribute lusasMaterial = null;
-
-            if (d_LusasData.existsAttribute("Material", "M" + material.CustomData[AdapterId] + "/" + material.Name))
+            string lusasAttributeName = "M" + material.CustomData[AdapterId] + "/" + material.Name;
+            if (d_LusasData.existsAttribute("Material", lusasAttributeName))
             {
-                lusasMaterial = d_LusasData.getAttribute("Material", "M" + material.CustomData[AdapterId] + "/" + material.Name);
+                lusasMaterial = d_LusasData.getAttribute("Material", lusasAttributeName);
             }
             else
             {
                 lusasMaterial = d_LusasData.createIsotropicMaterial(material.Name,
                 material.YoungsModulus, material.PoissonsRatio, material.Density, material.CoeffThermalExpansion);
 
-                lusasMaterial.setName("M" + material.CustomData[AdapterId] + "/" + material.Name);
+                lusasMaterial.setName(lusasAttributeName);
             }
-
             return lusasMaterial;
         }
     }
