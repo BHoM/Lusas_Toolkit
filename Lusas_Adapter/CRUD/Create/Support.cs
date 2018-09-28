@@ -18,14 +18,15 @@ namespace BH.Adapter.Lusas
         public IFAttribute CreateSupport(Constraint6DOF constraint)
         {
             IFAttribute lusasSupport = null;
+            string lusasAttributeName = "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name;
 
-            if (d_LusasData.existsAttribute("Support", "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name))
+            if (d_LusasData.existsAttribute("Support", lusasAttributeName))
             {
-                lusasSupport = d_LusasData.getAttribute("Support", "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name);
+                lusasSupport = d_LusasData.getAttribute("Support", lusasAttributeName);
             }
             else
             {
-                lusasSupport = d_LusasData.createSupportStructural("Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name);
+                lusasSupport = d_LusasData.createSupportStructural(lusasAttributeName);
 
                 List<string> releaseNames = new List<string> { "U", "V", "W", "THX", "THY", "THZ" };
                 List<double> stiffness = new List<double> {constraint.TranslationalStiffnessX,

@@ -56,5 +56,46 @@ namespace BH.Engine.Lusas
             bhomGravityLoad.CustomData["Lusas_id"] = bhomID;
             return bhomGravityLoad;
         }
+
+        public static BarUniformlyDistributedLoad ToBHoMLoad(IFLoading lusasDistributed, IEnumerable<IFAssignment> assignmentList, Dictionary<string, Bar> bars)
+        {
+            IFLoadcase assignedLoadcase = (IFLoadcase)assignmentList.First().getAssignmentLoadset();
+            Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(assignedLoadcase);
+
+            IEnumerable<Bar> bhomBars = GetBarAssignments(assignmentList, bars);
+
+            Vector forceVector = new Vector { X = lusasDistributed.getValue("WX"), Y = lusasDistributed.getValue("WY"), Z = lusasDistributed.getValue("WZ") };
+
+            BarUniformlyDistributedLoad bhomBarUniformlyDistributed = null;
+
+            if (lusasDistributed.getAttributeType() == "Global Distributed Load")
+            {
+                Vector momentVector = new Vector { X = lusasDistributed.getValue("MX"), Y = lusasDistributed.getValue("MY"), Z = lusasDistributed.getValue("MZ") };
+
+                bhomBarUniformlyDistributed = BH.Engine.Structure.Create.BarUniformlyDistributedLoad(
+                    bhomLoadcase,
+                    bhomBars,
+                    forceVector,
+                    momentVector,
+                    LoadAxis.Global,
+                    true,
+                    GetName(lusasDistributed));
+            }
+            else if(lusasDistributed.getAttributeType() == "Distributed Load")
+            {
+                bhomBarUniformlyDistributed = BH.Engine.Structure.Create.BarUniformlyDistributedLoad(
+                    bhomLoadcase,
+                    bhomBars,
+                    forceVector,
+                    null,
+                    LoadAxis.Local,
+                    true,
+                    GetName(lusasDistributed));
+            }
+
+            int bhomID = GetBHoMID(lusasDistributed, 'l');
+            bhomBarUniformlyDistributed.CustomData["Lusas_id"] = bhomID;
+            return bhomBarUniformlyDistributed;
+        }
     }
 }

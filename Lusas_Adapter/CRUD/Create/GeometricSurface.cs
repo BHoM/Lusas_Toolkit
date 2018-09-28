@@ -18,12 +18,12 @@ namespace BH.Adapter.Lusas
         public IFAttribute CreateGeometricSurface(IProperty2D property2D)
         {
             IFAttribute lusasGeometricSurface = null;
-
             ConstantThickness constantThickness = property2D as ConstantThickness;
+            string lusasAttributeName = "G" + constantThickness.CustomData[AdapterId] + "/" + constantThickness.Name;
 
-            if (d_LusasData.existsAttribute("Surface Geometric", "G" + constantThickness.CustomData[AdapterId] + "/" + constantThickness.Name))
+            if (d_LusasData.existsAttribute("Surface Geometric", lusasAttributeName))
             {
-                lusasGeometricSurface = d_LusasData.getAttribute("Surface Geometric", "G" + constantThickness.CustomData[AdapterId] + "/" + constantThickness.Name);
+                lusasGeometricSurface = d_LusasData.getAttribute("Surface Geometric", lusasAttributeName);
             }
             else
             {

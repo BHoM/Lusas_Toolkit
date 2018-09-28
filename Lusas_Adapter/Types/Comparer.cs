@@ -4,6 +4,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Properties;
 using System;
 using BH.oM.Geometry;
+using BH.oM.Structure.Loads;
 using System.Collections.Generic;
 using BH.Engine.Lusas;
 
@@ -51,6 +52,8 @@ namespace BH.Adapter.Lusas
             {typeof(LinkConstraint), new BHoMObjectNameComparer() },
             {typeof(IProperty2D), new BHoMObjectNameComparer() },
             {typeof(ConstantThickness), new BHoMObjectNameComparer() },
+            {typeof(Loadcase), new BHoMObjectNameComparer()
+            },
         };
         /***************************************************/
     }
