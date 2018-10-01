@@ -446,7 +446,6 @@ namespace BH.Adapter.Lusas
 
             foreach (AreaUniformalyDistributedLoad areaUniformlyDistributedLoad in areaUniformlyDistributedLoads)
             {
-                int count = 0;
                 foreach (IAreaElement panel in areaUniformlyDistributedLoad.Objects.Elements)
                 {
                     IFSurface lusasSurface = d_LusasData.getSurfaceByName("S" + panel.CustomData[AdapterId].ToString());
