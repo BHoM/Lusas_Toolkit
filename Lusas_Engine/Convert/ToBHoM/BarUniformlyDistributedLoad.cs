@@ -17,7 +17,7 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static BarUniformlyDistributedLoad ToBarUniformlyDistributed(IFLoading lusasDistributed, IEnumerable<IFAssignment> assignmentList, Dictionary<string, Bar> bars)
+        public static BarUniformlyDistributedLoad ToBarUniformallyDistributed(IFLoading lusasDistributed, IEnumerable<IFAssignment> assignmentList, Dictionary<string, Bar> bars)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)assignmentList.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(assignedLoadcase);

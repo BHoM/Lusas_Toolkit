@@ -460,7 +460,7 @@ namespace BH.Adapter.Lusas
                 {
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
-                        BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad = BH.Engine.Lusas.Convert.ToBHoMLoad(lusasDistributedLoad, groupedAssignment, barDictionary);
+                        BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad = BH.Engine.Lusas.Convert.ToBarUniformallyDistributed(lusasDistributedLoad, groupedAssignment, barDictionary);
                         List<string> analysisName = new List<string> { lusasDistributedLoad.getAttributeType() };
                         bhomBarUniformlyDistributedLoad.Tags = new HashSet<string>(analysisName);
                         bhomBarUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
@@ -552,7 +552,7 @@ namespace BH.Adapter.Lusas
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
-                        AreaUniformalyDistributedLoad bhomBarUniformlyDistributedLoad = BH.Engine.Lusas.Convert.ToBHoMLoad(lusasDistributedLoad, groupedAssignment, surfaceDictionary);
+                        AreaUniformalyDistributedLoad bhomBarUniformlyDistributedLoad = BH.Engine.Lusas.Convert.ToAreaUniformallyDistributed(lusasDistributedLoad, groupedAssignment, surfaceDictionary);
                         List<string> analysisName = new List<string> { lusasDistributedLoad.getAttributeType() };
                         bhomBarUniformlyDistributedLoad.Tags = new HashSet<string>(analysisName);
                         bhomPanelUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);

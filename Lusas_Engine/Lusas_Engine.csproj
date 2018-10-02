@@ -72,6 +72,7 @@
     <Compile Include="Convert\ToBHoM\Bar.cs" />
     <Compile Include="Convert\ToBHoM\BarTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\BarUniformlyDistributedLoad.cs" />
+    <Compile Include="Convert\ToBHoM\AreaUniformallyDistributedLoad.cs" />
     <Compile Include="Convert\ToBHoM\PointForce.cs" />
     <Compile Include="Convert\ToBHoM\Propety2D.cs" />
     <Compile Include="Convert\ToBHoM\Constraint6DOF.cs" />
