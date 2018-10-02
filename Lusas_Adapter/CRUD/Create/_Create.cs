@@ -78,6 +78,9 @@ namespace BH.Adapter.Lusas
                         case "BH.oM.Structure.Loads.BarUniformlyDistributedLoad":
                             success = CreateCollection(objects as IEnumerable<BarUniformlyDistributedLoad>);
                             break;
+                        case "BH.oM.Structure.Loads.AreaUniformalyDistributedLoad":
+                            success = CreateCollection(objects as IEnumerable<AreaUniformalyDistributedLoad>);
+                            break;
                     }
                 }
                 if (typeof(IProperty2D).IsAssignableFrom(objects.First().GetType()))
@@ -127,6 +130,8 @@ namespace BH.Adapter.Lusas
             return true;
         }
 
+        /***************************************************/
+
         private bool CreateCollection(IEnumerable<Point> points)
         {
 
@@ -151,6 +156,8 @@ namespace BH.Adapter.Lusas
 
             return true;
         }
+
+        /***************************************************/
 
         private bool CreateCollection(IEnumerable<Bar> bars)
         {
@@ -320,6 +327,8 @@ namespace BH.Adapter.Lusas
             return true;
         }
 
+        /***************************************************/
+
         private bool CreateCollection(IEnumerable<IProperty2D> thicknesses)
         {
             foreach (IProperty2D thickness in thicknesses)
@@ -329,6 +338,8 @@ namespace BH.Adapter.Lusas
 
             return true;
         }
+
+        /***************************************************/
 
         private bool CreateCollection(IEnumerable<Loadcase> loadcases)
         {
@@ -340,6 +351,7 @@ namespace BH.Adapter.Lusas
             return true;
         }
 
+        /***************************************************/
 
         private bool CreateCollection(IEnumerable<PointForce> pointforces)
         {
@@ -359,6 +371,8 @@ namespace BH.Adapter.Lusas
 
             return true;
         }
+
+        /***************************************************/
 
         private bool CreateCollection(IEnumerable<GravityLoad> gravityLoads)
         {
@@ -396,6 +410,8 @@ namespace BH.Adapter.Lusas
             return true;
         }
 
+        /***************************************************/
+
         private bool CreateCollection(IEnumerable<BarUniformlyDistributedLoad> barUniformlyDistributedLoads)
         {
             List<IFLine> assignedLines = new List<IFLine>();
@@ -422,6 +438,36 @@ namespace BH.Adapter.Lusas
             return true;
         }
 
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<AreaUniformalyDistributedLoad> areaUniformlyDistributedLoads)
+        {
+            List<IFSurface> assignedSurfaces = new List<IFSurface>();
+
+            foreach (AreaUniformalyDistributedLoad areaUniformlyDistributedLoad in areaUniformlyDistributedLoads)
+            {
+                foreach (IAreaElement panel in areaUniformlyDistributedLoad.Objects.Elements)
+                {
+                    IFSurface lusasSurface = d_LusasData.getSurfaceByName("S" + panel.CustomData[AdapterId].ToString());
+                    assignedSurfaces.Add(lusasSurface);
+                }
+
+                IFSurface[] arraySurfaces = assignedSurfaces.ToArray();
+                if (areaUniformlyDistributedLoad.Axis == LoadAxis.Global)
+                {
+                    IFLoadingGlobalDistributed newGlobalDistributed = CreateGlobalDistributedLoad(areaUniformlyDistributedLoad, arraySurfaces);
+                }
+                else if (areaUniformlyDistributedLoad.Axis == LoadAxis.Local)
+                {
+                    IFLoadingLocalDistributed newLocalDistributed = CreateLocalDistributedLoad(areaUniformlyDistributedLoad, arraySurfaces);
+                }
+            }
+
+            return true;
+        }
+
+        /***************************************************/
+
         private bool CreateCollection(IEnumerable<Constraint6DOF> constraints)
         {
             foreach (Constraint6DOF constraint in constraints)
@@ -431,8 +477,8 @@ namespace BH.Adapter.Lusas
 
             return true;
         }
+
+        /***************************************************/
     }
 }
 
-
-    /***************************************************/
