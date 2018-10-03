@@ -81,6 +81,12 @@ namespace BH.Adapter.Lusas
                         case "BH.oM.Structure.Loads.AreaUniformalyDistributedLoad":
                             success = CreateCollection(objects as IEnumerable<AreaUniformalyDistributedLoad>);
                             break;
+                        case "BH.oM.Structure.Loads.BarTemperatureLoad":
+                            success = CreateCollection(objects as IEnumerable<BarTemperatureLoad>);
+                            break;
+                        case "BH.oM.Structure.Loads.AreaTemperatureLoad":
+                            success = CreateCollection(objects as IEnumerable<AreaTemperatureLoad>);
+                            break;
                     }
                 }
                 if (typeof(IProperty2D).IsAssignableFrom(objects.First().GetType()))
@@ -427,11 +433,11 @@ namespace BH.Adapter.Lusas
                 IFLine[] arrayLines = assignedLines.ToArray();
                 if(barUniformlyDistributedLoad.Axis == LoadAxis.Global)
                 {
-                    IFLoadingGlobalDistributed newGlobalDistributed = CreateGlobalDistributedLoad(barUniformlyDistributedLoad, arrayLines);
+                    IFLoadingGlobalDistributed newGlobalDistributed = CreateGlobalDistributedLine(barUniformlyDistributedLoad, arrayLines);
                 }
                 else if(barUniformlyDistributedLoad.Axis == LoadAxis.Local)
                 {
-                    IFLoadingLocalDistributed newLocalDistributed = CreateLocalDistributedLoad(barUniformlyDistributedLoad, arrayLines);
+                    IFLoadingLocalDistributed newLocalDistributed = CreateLocalDistributedBar(barUniformlyDistributedLoad, arrayLines);
                 }
             }
 
@@ -459,7 +465,7 @@ namespace BH.Adapter.Lusas
                 }
                 else if (areaUniformlyDistributedLoad.Axis == LoadAxis.Local)
                 {
-                    IFLoadingLocalDistributed newLocalDistributed = CreateLocalDistributedLoad(areaUniformlyDistributedLoad, arraySurfaces);
+                    IFLoadingLocalDistributed newLocalDistributed = CreateLocalDistributedSurface(areaUniformlyDistributedLoad, arraySurfaces);
                 }
             }
 
@@ -467,6 +473,42 @@ namespace BH.Adapter.Lusas
         }
 
         /***************************************************/
+
+        private bool CreateCollection(IEnumerable<BarTemperatureLoad> barTemperatureLoads)
+        {
+            List<IFLine> assignedLines = new List<IFLine>();
+
+            foreach (BarTemperatureLoad barTemperatureLoad in barTemperatureLoads)
+            {
+                foreach (Bar bar in barTemperatureLoad.Objects.Elements)
+                {
+                    IFLine lusasLine = d_LusasData.getLineByName("L" + bar.CustomData[AdapterId].ToString());
+                    assignedLines.Add(lusasLine);
+                }
+
+                IFLine[] arrayLines = assignedLines.ToArray();
+                IFLoadingTemperature newTemperatureLoad = CreateBarTemperatureLoad(barTemperatureLoad, arrayLines);
+            }
+            return true;
+        }
+
+        private bool CreateCollection(IEnumerable<AreaTemperatureLoad> areaTemperatureLoads)
+        {
+            List<IFSurface> assignedSurfaces = new List<IFSurface>();
+
+            foreach (AreaTemperatureLoad areaTemperatureLoad in areaTemperatureLoads)
+            {
+                foreach (PanelPlanar panel in areaTemperatureLoad.Objects.Elements)
+                {
+                    IFSurface lusasSurface = d_LusasData.getSurfaceByName("S" + panel.CustomData[AdapterId].ToString());
+                    assignedSurfaces.Add(lusasSurface);
+                }
+
+                IFSurface[] arrayLines = assignedSurfaces.ToArray();
+                IFLoadingTemperature newTemperatureLoad = CreateAreaTemperatureLoad(areaTemperatureLoad, arrayLines);
+            }
+            return true;
+        }
 
         private bool CreateCollection(IEnumerable<Constraint6DOF> constraints)
         {

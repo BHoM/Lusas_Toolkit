@@ -30,8 +30,7 @@ namespace BH.Engine.Lusas
 
         public static Bar ToBHoMBar(this IFLine lusasLine, 
             Dictionary<string, Node> bhomNodes, 
-            HashSet<String> groupNames, 
-            Dictionary<string, Material> bhomMaterials)
+            HashSet<String> groupNames)
 
         {
 
@@ -43,7 +42,7 @@ namespace BH.Engine.Lusas
 
             Bar bhomBar = new Bar { StartNode = startNode, EndNode = endNode, Tags = tags };
 
-            List<String> materialAssignments = AttributeAssignments(lusasLine, "Material");
+            //List<String> materialAssignments = AttributeAssignments(lusasLine, "Material");
 
             //This will be wrapped in with the SectionProperties when they are defined
             //Material barMaterial = null;
@@ -53,7 +52,7 @@ namespace BH.Engine.Lusas
             //    bhomBar.SectionProperty.Material = barMaterial;
             //}
 
-            String lineName = removePrefix(lusasLine.getName(), "L");
+            string lineName = removePrefix(lusasLine.getName(), "L");
 
             bhomBar.CustomData["Lusas_id"] = lineName;
 

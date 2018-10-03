@@ -68,9 +68,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Convert\ToBHoM\Additional_Methods.cs" />
+    <Compile Include="Convert\ToBHoM\AreaTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Bar.cs" />
+    <Compile Include="Convert\ToBHoM\BarTemperatureLoad.cs" />
+    <Compile Include="Convert\ToBHoM\BarUniformlyDistributedLoad.cs" />
+    <Compile Include="Convert\ToBHoM\AreaUniformallyDistributedLoad.cs" />
+    <Compile Include="Convert\ToBHoM\PointForce.cs" />
     <Compile Include="Convert\ToBHoM\Propety2D.cs" />
-    <Compile Include="Convert\ToBHoM\Load.cs" />
     <Compile Include="Convert\ToBHoM\Constraint6DOF.cs" />
     <Compile Include="Convert\ToBHoM\Edge.cs" />
     <Compile Include="Convert\ToBHoM\Loadcase.cs" />
@@ -78,6 +82,7 @@
     <Compile Include="Convert\ToBHoM\Node.cs" />
     <Compile Include="Convert\ToBHoM\PanelPlanar.cs" />
     <Compile Include="Convert\ToBHoM\Point.cs" />
+    <Compile Include="Convert\ToBHoM\GravityLoad.cs" />
     <Compile Include="Convert\ToBHoM\_ToBHoM.cs" />
     <Compile Include="Convert\ToLusas\_ToLusas.cs" />
     <Compile Include="Object_Comparer\Equality Comparer\BarMidPointComparer.cs" />
