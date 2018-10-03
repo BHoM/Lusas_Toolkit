@@ -149,6 +149,20 @@ namespace BH.Adapter.Lusas
                         index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.GetBHoMID(largestAttribute, 'G')) + 1;
                     }
                 }
+                if (type == typeof(ILoad))
+                {
+                    int largestLoadID = d_LusasData.getLargestAttributeID("Loading");
+                    if (largestLoadID == 0)
+                    {
+                        index = 1;
+                    }
+                    else
+                    {
+
+                        IFAttribute largestAttribute = d_LusasData.getAttribute("Loading", largestLoadID);
+                        index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.GetBHoMID(largestAttribute, 'l')) + 1;
+                    }
+                }
                 m_indexDict[type] = index;
             }
             return index;

@@ -31,7 +31,7 @@ namespace BH.Engine.Lusas
             }
             else
             {
-                IEnumerable<PanelPlanar> bhomSurfs = GetSurfaceAssignments(assignmentList, surfaces);
+                IEnumerable<IAreaElement> bhomSurfs = GetSurfaceAssignments(assignmentList, surfaces);
                 bhomGravityLoad = BH.Engine.Structure.Create.GravityLoad(bhomLoadcase, gravityVector, bhomSurfs, GetName(lusasGravityLoad));
             }
 

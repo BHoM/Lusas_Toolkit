@@ -72,11 +72,11 @@ namespace BH.Engine.Lusas
             return memberGroups;
         }
 
-        public static List<String> AttributeAssignments(IFGeometry lusasGeometry, String attributeType)
+        public static List<string> AttributeAssignments(IFGeometry lusasGeometry, string attributeType)
         {
-            Object[] attributeAssignments = lusasGeometry.getAssignments(attributeType);
+            object[] attributeAssignments = lusasGeometry.getAssignments(attributeType);
 
-            List<String> attributeNames = new List<String>();
+            List<string> attributeNames = new List<string>();
 
             int n = attributeAssignments.Count();
             for (int i = 0; i < n; i++)
@@ -201,14 +201,14 @@ namespace BH.Engine.Lusas
             return assignedBars;
         }
 
-        public static IEnumerable<PanelPlanar> GetSurfaceAssignments(IEnumerable<IFAssignment> assignmentList, Dictionary<string, PanelPlanar> surfs)
+        public static IEnumerable<IAreaElement> GetSurfaceAssignments(IEnumerable<IFAssignment> assignmentList, Dictionary<string, PanelPlanar> surfs)
         {
-            List<PanelPlanar> assignedSurfs = new List<PanelPlanar>();
+            List<IAreaElement> assignedSurfs = new List<IAreaElement>();
             PanelPlanar bhomSurf = new PanelPlanar();
 
             foreach (IFAssignment assignment in assignmentList)
             {
-                IFSurface lusasSurf = (IFSurface) assignment.getDatabaseObject();
+                IFSurface lusasSurf = (IFSurface)assignment.getDatabaseObject();
                 surfs.TryGetValue(removePrefix(lusasSurf.getName(), "S"), out bhomSurf);
                 assignedSurfs.Add(bhomSurf);
             }

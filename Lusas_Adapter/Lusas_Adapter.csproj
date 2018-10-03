@@ -95,6 +95,7 @@
     <Compile Include="CRUD\Create\Surface.cs" />
     <Compile Include="CRUD\Create\Line.cs" />
     <Compile Include="CRUD\Create\Point.cs" />
+    <Compile Include="CRUD\Create\TemperatureLoad.cs" />
     <Compile Include="CRUD\Create\_Create.cs" />
     <Compile Include="CRUD\Delete\Delete.cs" />
     <Compile Include="CRUD\NextId.cs" />
