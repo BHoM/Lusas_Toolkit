@@ -38,8 +38,6 @@ namespace BH.Adapter.Lusas
                 lusasLoadcombination.setValue("loadsetArray", loadcases);
                 lusasLoadcombination.setValue("factorArray", loadFactors);
             }
-
-
             return lusasLoadcombination;
         }
     }

@@ -168,6 +168,20 @@ namespace BH.Adapter.Lusas
                         index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.GetBHoMID(largestAttribute, 'l')) + 1;
                     }
                 }
+                if (type == typeof(LoadCombination))
+                {
+                    int largestLoadID = d_LusasData.getLargestAttributeID("Combinations");
+                    if (largestLoadID == 0)
+                    {
+                        index = 1;
+                    }
+                    else
+                    {
+
+                        IFBasicCombination largestLoadCombination = (IFBasicCombination)d_LusasData.getLoadset("Combination", largestLoadID);
+                        index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.GetBHoMID(largestLoadCombination, 'l')) + 1;
+                    }
+                }
                 m_indexDict[type] = index;
             }
             return index;
