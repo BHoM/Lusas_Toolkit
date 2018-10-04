@@ -121,6 +121,22 @@ namespace BH.Engine.Lusas
             return bhomID;
         }
 
+        public static int GetBHoMID(IFBasicCombination lusasLoadCombination, char lastCharacter)
+        {
+            int bhomID = 0;
+
+            if (lusasLoadCombination.getName().Contains("/"))
+            {
+                bhomID = Int32.Parse(lusasLoadCombination.getName().Split(lastCharacter, '/')[1]);
+            }
+            else
+            {
+                bhomID = lusasLoadCombination.getID();
+            }
+
+            return bhomID;
+        }
+
         public static string GetName(IFAttribute lusasAttribute)
         {
             string attributeName = "";
@@ -150,6 +166,23 @@ namespace BH.Engine.Lusas
             else
             {
                 loadcaseName = lusasLoadcase.getName();
+            }
+
+            return loadcaseName;
+        }
+
+        public static string GetName(IFBasicCombination lusasLoadCombination)
+        {
+            string loadcaseName = "";
+
+            if (lusasLoadCombination.getName().Contains("/"))
+            {
+                loadcaseName = lusasLoadCombination.getName().Substring(
+                    lusasLoadCombination.getName().LastIndexOf("/") + 1);
+            }
+            else
+            {
+                loadcaseName = lusasLoadCombination.getName();
             }
 
             return loadcaseName;
