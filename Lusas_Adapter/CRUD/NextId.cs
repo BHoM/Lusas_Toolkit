@@ -149,7 +149,12 @@ namespace BH.Adapter.Lusas
                         index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.GetBHoMID(largestAttribute, 'G')) + 1;
                     }
                 }
-                if (type == typeof(ILoad))
+                if (type == typeof(PointForce) ||
+                    type == typeof(GravityLoad) ||
+                    type == typeof(BarUniformlyDistributedLoad) ||
+                    type == typeof(AreaUniformalyDistributedLoad) ||
+                    type == typeof(BarTemperatureLoad) ||
+                    type == typeof(AreaTemperatureLoad))
                 {
                     int largestLoadID = d_LusasData.getLargestAttributeID("Loading");
                     if (largestLoadID == 0)
