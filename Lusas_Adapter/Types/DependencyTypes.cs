@@ -57,7 +57,6 @@ namespace BH.Adapter.Lusas
             {typeof(RigidLink), new List<Type> { typeof(LinkConstraint), typeof(Node) } },
             {typeof(MeshFace), new List<Type> { typeof(IProperty2D), typeof(Node) } },
             {typeof(IProperty2D), new List<Type> { typeof(Material) } },
-            {typeof(LoadCombination), new List<Type> { typeof(Loadcase) } },
             {typeof(ILoad), new List<Type> {typeof(Loadcase) } },
         };
 

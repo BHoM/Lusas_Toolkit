@@ -90,13 +90,11 @@
     <Compile Include="CRUD\Create\ConcentratedLoad.cs" />
     <Compile Include="CRUD\Create\Edge.cs" />
     <Compile Include="CRUD\Create\Loadcase.cs" />
-    <Compile Include="CRUD\Create\LoadCombination.cs" />
     <Compile Include="CRUD\Create\Material.cs" />
     <Compile Include="CRUD\Create\Support.cs" />
     <Compile Include="CRUD\Create\Surface.cs" />
     <Compile Include="CRUD\Create\Line.cs" />
     <Compile Include="CRUD\Create\Point.cs" />
-    <Compile Include="CRUD\Create\TemperatureLoad.cs" />
     <Compile Include="CRUD\Create\_Create.cs" />
     <Compile Include="CRUD\Delete\Delete.cs" />
     <Compile Include="CRUD\NextId.cs" />

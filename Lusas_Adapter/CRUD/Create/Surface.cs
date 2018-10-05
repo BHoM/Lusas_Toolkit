@@ -20,6 +20,7 @@ namespace BH.Adapter.Lusas
         {
 
             IFSurface newSurface;
+
             if (d_LusasData.existsSurfaceByName("S" + panel.CustomData[AdapterId]))
             {
                 newSurface = d_LusasData.getSurfaceByName("S" + panel.CustomData[AdapterId]);

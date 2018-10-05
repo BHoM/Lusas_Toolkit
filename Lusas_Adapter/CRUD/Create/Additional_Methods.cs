@@ -24,9 +24,9 @@ namespace BH.Adapter.Lusas
             }
         }
 
-        public static IEnumerable<IGrouping<string, IFAssignment>> GetLoadAssignments(IFLoading lusasForce)
+        public static IEnumerable<IGrouping<string, IFAssignment>> GetLoadAssignments(IFLoading lusasPointForce)
         {
-            object[] assignmentObjects = lusasForce.getAssignments();
+            object[] assignmentObjects = lusasPointForce.getAssignments();
             List<IFAssignment> assignments = new List<IFAssignment>();
 
             for (int j = 0; j < assignmentObjects.Count(); j++)
