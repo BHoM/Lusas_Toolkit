@@ -30,7 +30,8 @@ namespace BH.Engine.Lusas
 
         public static Bar ToBHoMBar(this IFLine lusasLine, 
             Dictionary<string, Node> bhomNodes, 
-            HashSet<String> groupNames)
+            Dictionary<string, Constraint4DOF> bhomSupports,
+            HashSet<string> groupNames)
 
         {
 
@@ -38,9 +39,20 @@ namespace BH.Engine.Lusas
 
             Node endNode = GetNode(lusasLine, 1, bhomNodes);
 
-            HashSet<String> tags = new HashSet<string>(IsMemberOf(lusasLine, groupNames));
+            HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasLine, groupNames));
 
-            Bar bhomBar = new Bar { StartNode = startNode, EndNode = endNode, Tags = tags };
+            List<string> supportAssignments = AttributeAssignments(lusasLine, "Support");
+
+            Constraint4DOF barConstraint = null;
+            if (!(supportAssignments.Count() == 0))
+            {
+                bhomSupports.TryGetValue(supportAssignments[0], out barConstraint);
+            }
+
+            Bar bhomBar = new Bar { StartNode = startNode,
+                EndNode = endNode,
+                Tags = tags,
+                Spring = barConstraint};
 
             //List<String> materialAssignments = AttributeAssignments(lusasLine, "Material");
 
