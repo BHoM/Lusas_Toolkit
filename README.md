@@ -33,6 +33,10 @@ BHoM object are constainted within the `Structure` namespace unless specified ot
 - `Global Distributed Load` (`Loads.BarUniformlyDistributedLoad` - set `LoadAxis.Global`)
 - `Local Distributed Load` (`Loads.BarUniformlyDistributedLoad` - set `LoadAxis.Local`)
 
+### Post-Processing
+### Load Combinations
+- `Basic Combination` (`Loads.LoadCombination`)
+
 ## What is currently being developed?
 
 Check the Cities Planning board to see what is being developed:
