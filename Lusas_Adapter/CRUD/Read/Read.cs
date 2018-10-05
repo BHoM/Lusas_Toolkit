@@ -45,6 +45,8 @@ namespace BH.Adapter.Lusas
                 return chooseLoad(type, ids as dynamic);
             else if (typeof(IProperty2D).IsAssignableFrom(type))
                 return ReadProperty2D(ids as dynamic);
+            else if (type == typeof(LoadCombination))
+                return ReadLoadCombination(ids as dynamic);
             return null;
         }
 
@@ -61,14 +63,14 @@ namespace BH.Adapter.Lusas
             List<Bar> bhomBars = new List<Bar>();
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
-            IEnumerable<Material> materialList = ReadMaterials();
-            Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
+            //IEnumerable<Material> materialList = ReadMaterials();
+            //Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
             HashSet<String> groupNames = ReadGroups();
 
             for (int i = 0; i < lusasLines.Count(); i++)
             {
                 IFLine lusasLine = (IFLine)lusasLines[i];
-                Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMBar(lusasLine, bhomNodes, groupNames, materials);
+                Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMBar(lusasLine, bhomNodes, groupNames);
 
                 bhomBars.Add(bhomBar);
             }
@@ -330,7 +332,7 @@ namespace BH.Adapter.Lusas
             switch(typeName)
             {
                 case "PointForce":
-                    readLoads = ReadPointLoad(ids as dynamic);
+                    readLoads = ReadPointForce(ids as dynamic);
                     break;
                 case "GravityLoad":
                     readLoads = ReadGravityLoad(ids as dynamic);
@@ -341,6 +343,12 @@ namespace BH.Adapter.Lusas
                 case "AreaUniformalyDistributedLoad":
                     readLoads = ReadAreaUniformlyDistributedLoad(ids as dynamic);
                     break;
+                case "BarTemperatureLoad":
+                    readLoads = ReadBarTemperatureLoad(ids as dynamic);
+                    break;
+                case "AreaTemperatureLoad":
+                    readLoads = ReadAreaTemperatureLoad(ids as dynamic);
+                    break;
 
             }
             return readLoads;
@@ -349,7 +357,7 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private List<ILoad> ReadPointLoad(List<string> ids = null)
+        private List<ILoad> ReadPointForce(List<string> ids = null)
         {
             List<ILoad> bhomPointForces = new List<ILoad>();
             object[] lusasPointForces = d_LusasData.getAttributes("Concentrated Load");
@@ -362,6 +370,7 @@ namespace BH.Adapter.Lusas
 
                 for (int i = 0; i < lusasPointForces.Count(); i++)
                 {
+<<<<<<< HEAD
                     IFLoading lusasPointForce = (IFLoading)lusasPointForces[i];
 
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(lusasPointForce);
@@ -373,6 +382,12 @@ namespace BH.Adapter.Lusas
                         bhomPointForce.Tags = new HashSet<string>(analysisName);
                         bhomPointForces.Add(bhomPointForce);
                     }
+=======
+                    PointForce bhomPointForce = BH.Engine.Lusas.Convert.ToPointForce(lusasPointForce, groupedAssignment, nodeDict);
+                    List<string> analysisName = new List<string> { lusasPointForce.getAttributeType() };
+                    bhomPointForce.Tags = new HashSet<string>(analysisName);
+                    bhomPointForces.Add(bhomPointForce);
+>>>>>>> master
                 }
             }
             return bhomPointForces;
@@ -421,6 +436,7 @@ namespace BH.Adapter.Lusas
 
                         List<string> analysisName = new List<string> { lusasGravityLoad.getAttributeType() };
 
+<<<<<<< HEAD
                         if (barAssignments.Count != 0)
                         {
                             GravityLoad bhomBarGravityLoad = BH.Engine.Lusas.Convert.ToBHoMLoad(lusasGravityLoad, barAssignments, "Bar", barDictionary, panelDictionary);
@@ -434,6 +450,20 @@ namespace BH.Adapter.Lusas
                             bhomSurfGravityLoad.Tags = new HashSet<string>(analysisName);
                             bhomGravityLoads.Add(bhomSurfGravityLoad);
                         }
+=======
+                    if (barAssignments.Count!=0)
+                    {
+                        GravityLoad bhomBarGravityLoad = BH.Engine.Lusas.Convert.ToGravityLoad(lusasGravityLoad, barAssignments, "Bar", barDictionary, panelDictionary);
+                        bhomBarGravityLoad.Tags = new HashSet<string>(analysisName);
+                        bhomGravityLoads.Add(bhomBarGravityLoad);
+                    }
+
+                    if (surfaceAssignments.Count != 0)
+                    {
+                        GravityLoad bhomSurfGravityLoad = BH.Engine.Lusas.Convert.ToGravityLoad(lusasGravityLoad, surfaceAssignments, "Surface", barDictionary, panelDictionary);
+                        bhomSurfGravityLoad.Tags = new HashSet<string>(analysisName);
+                        bhomGravityLoads.Add(bhomSurfGravityLoad);
+>>>>>>> master
                     }
                 }
             }
@@ -448,6 +478,16 @@ namespace BH.Adapter.Lusas
             List<ILoad> bhomBarUniformlyDistributedLoads = new List<ILoad>();
             object[] lusasGlobalDistributedLoads = d_LusasData.getAttributes("Global Distributed Load");
             object[] lusasLocalDistributedLoads = d_LusasData.getAttributes("Distributed Load");
+<<<<<<< HEAD
+=======
+
+            object[] lusasDistributedLoads = lusasGlobalDistributedLoads.Concat(
+                lusasLocalDistributedLoads).ToArray();
+
+            List<Bar> bhomBars = ReadBars();
+            Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(x => x.CustomData[AdapterId].ToString());
+            List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
+>>>>>>> master
 
             if (lusasGlobalDistributedLoads.Count() != 0 && lusasLocalDistributedLoads.Count() != 0)
             {
@@ -466,6 +506,7 @@ namespace BH.Adapter.Lusas
 
                     if (lusasDistributedLoad.getValue("type") == "Length")
                     {
+<<<<<<< HEAD
                         foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                         {
                             BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad = BH.Engine.Lusas.Convert.ToBHoMLoad(lusasDistributedLoad, groupedAssignment, barDictionary);
@@ -473,11 +514,104 @@ namespace BH.Adapter.Lusas
                             bhomBarUniformlyDistributedLoad.Tags = new HashSet<string>(analysisName);
                             bhomBarUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
                         }
+=======
+                        BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad = BH.Engine.Lusas.Convert.ToBarUniformallyDistributed(lusasDistributedLoad, groupedAssignment, barDictionary);
+                        List<string> analysisName = new List<string> { lusasDistributedLoad.getAttributeType() };
+                        bhomBarUniformlyDistributedLoad.Tags = new HashSet<string>(analysisName);
+                        bhomBarUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
+>>>>>>> master
                     }
                 }
             }
 
             return bhomBarUniformlyDistributedLoads;
+        }
+
+        private List<ILoad> ReadBarTemperatureLoad(List<string> ids = null)
+        {
+            List<ILoad> bhomBarTemperatureLoads = new List<ILoad>();
+            object[] lusasTemperatureLoads = d_LusasData.getAttributes("Temperature");
+
+            List<Bar> bhomBars = ReadBars();
+            Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(x => x.CustomData[AdapterId].ToString());
+            List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
+
+            for (int i = 0; i < lusasTemperatureLoads.Count(); i++)
+            {
+                IFLoading lusasTemperatureLoad = (IFLoading)lusasTemperatureLoads[i];
+
+                IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(lusasTemperatureLoad);
+
+                foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
+                {
+                    List<IFAssignment> barAssignments = new List<IFAssignment>();
+
+                    foreach (IFAssignment assignment in groupedAssignment)
+                    {
+                        IFLine tryLine = assignment.getDatabaseObject() as IFLine;
+
+                        if (tryLine != null)
+                        {
+                            barAssignments.Add(assignment);
+                        }
+                    }
+
+                    List<string> analysisName = new List<string> { lusasTemperatureLoad.getAttributeType() };
+
+                    if (barAssignments.Count != 0)
+                    {
+                        BarTemperatureLoad bhomBarTemperatureLoad = BH.Engine.Lusas.Convert.ToBarTemperatureLoad(lusasTemperatureLoad, groupedAssignment, barDictionary);
+                        bhomBarTemperatureLoad.Tags = new HashSet<string>(analysisName);
+                        bhomBarTemperatureLoads.Add(bhomBarTemperatureLoad);
+                    }
+                }
+            }
+
+            return bhomBarTemperatureLoads;
+        }
+
+        private List<ILoad> ReadAreaTemperatureLoad(List<string> ids = null)
+        {
+            List<ILoad> bhomAreaTemperatureLoads = new List<ILoad>();
+            object[] lusasTemperatureLoads = d_LusasData.getAttributes("Temperature");
+
+            List<PanelPlanar> bhomPanelPlanar = ReadSurfaces();
+            Dictionary<string, PanelPlanar> surfaceDictionary = bhomPanelPlanar.ToDictionary(x => x.CustomData[AdapterId].ToString());
+            List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
+
+            for (int i = 0; i < lusasTemperatureLoads.Count(); i++)
+            {
+                IFLoading lusasTemperatureLoad = (IFLoading)lusasTemperatureLoads[i];
+
+                IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(lusasTemperatureLoad);
+
+                foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
+                {
+                    List<IFAssignment> surfaceAssignments = new List<IFAssignment>();
+
+                    foreach (IFAssignment assignment in groupedAssignment)
+                    {
+                        IFSurface trySurf = assignment.getDatabaseObject() as IFSurface;
+
+                        if(trySurf != null)
+                        {
+                            surfaceAssignments.Add(assignment);
+                        }
+                    }
+
+                    List<string> analysisName = new List<string> { lusasTemperatureLoad.getAttributeType() };
+
+                    if (surfaceAssignments.Count != 0)
+                    {
+                        AreaTemperatureLoad bhomAreaTemperatureLoad = BH.Engine.Lusas.Convert.ToAreaTempratureLoad(lusasTemperatureLoad, groupedAssignment, surfaceDictionary);
+                        bhomAreaTemperatureLoad.Tags = new HashSet<string>(analysisName);
+                        bhomAreaTemperatureLoads.Add(bhomAreaTemperatureLoad);
+                    }
+                }
+
+            }
+
+            return bhomAreaTemperatureLoads;
         }
 
         /***************************************************/
@@ -504,6 +638,7 @@ namespace BH.Adapter.Lusas
 
                     if (lusasDistributedLoad.getValue("type") == "Area")
                     {
+<<<<<<< HEAD
                         IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(lusasDistributedLoad);
 
                         foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
@@ -513,11 +648,36 @@ namespace BH.Adapter.Lusas
                             bhomBarUniformlyDistributedLoad.Tags = new HashSet<string>(analysisName);
                             bhomPanelUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
                         }
+=======
+                        AreaUniformalyDistributedLoad bhomBarUniformlyDistributedLoad = BH.Engine.Lusas.Convert.ToAreaUniformallyDistributed(lusasDistributedLoad, groupedAssignment, surfaceDictionary);
+                        List<string> analysisName = new List<string> { lusasDistributedLoad.getAttributeType() };
+                        bhomBarUniformlyDistributedLoad.Tags = new HashSet<string>(analysisName);
+                        bhomPanelUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
+>>>>>>> master
                     }
                 }
             }
 
             return bhomPanelUniformlyDistributedLoads;
+        }
+
+        private List<LoadCombination> ReadLoadCombination(List<string> ids = null)
+        {
+            List<LoadCombination> bhomLoadCombintations = new List<LoadCombination>();
+
+            object[] lusasCombinations = d_LusasData.getLoadsets("Combinations");
+
+            List<Loadcase> lusasLoadcases = ReadLoadcases();
+            Dictionary<string, Loadcase> loadcaseDictionary = lusasLoadcases.ToDictionary(x => x.Number.ToString());
+
+            for (int i = 0; i < lusasCombinations.Count(); i++)
+            {
+                IFBasicCombination lusasCombination = (IFBasicCombination)lusasCombinations[i];
+                LoadCombination bhomLoadCombination = BH.Engine.Lusas.Convert.ToBHoMLoadCombination(lusasCombination, loadcaseDictionary);
+                bhomLoadCombintations.Add(bhomLoadCombination);
+            }
+
+            return bhomLoadCombintations;
         }
 
         /***************************************************/

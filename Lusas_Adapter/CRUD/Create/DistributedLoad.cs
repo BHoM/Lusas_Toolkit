@@ -15,38 +15,54 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFLoadingGlobalDistributed CreateGlobalDistributedLoad(BarUniformlyDistributedLoad distributedLoad, IFLine[] lusasLines)
+        public IFLoadingGlobalDistributed CreateGlobalDistributedLine(BarUniformlyDistributedLoad distributedLoad, IFLine[] lusasLines)
         {
-            IFLoadingGlobalDistributed lusasGlobalDistributed = null;
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + distributedLoad.Loadcase.CustomData[AdapterId] + "/" + distributedLoad.Loadcase.Name);
             string lusasAttributeName = "Dl" + distributedLoad.CustomData[AdapterId] + "/" + distributedLoad.Name;
 
-            if (d_LusasData.existsAttribute("Loading",lusasAttributeName))
-            {
-                lusasGlobalDistributed = (IFLoadingGlobalDistributed)d_LusasData.getAttribute("Loading",
-                    lusasAttributeName);
-            }
-            else
-            {
-                lusasGlobalDistributed = d_LusasData.createLoadingGlobalDistributed(lusasAttributeName);
-                lusasGlobalDistributed.setGlobalDistributed("Length",
-                    distributedLoad.Force.X, distributedLoad.Force.Y, distributedLoad.Force.Z,
-                    distributedLoad.Moment.X, distributedLoad.Moment.Y, distributedLoad.Moment.Z);
-
-            }
-
-            IFAssignment assignToLines = m_LusasApplication.assignment();
-            assignToLines.setLoadset(assignedLoadcase);
-            lusasGlobalDistributed.assignTo(lusasLines, assignToLines);
+            IFLoadingGlobalDistributed lusasGlobalDistributed = CreateGlobalDistributed(lusasAttributeName,
+                "Length", assignedLoadcase, distributedLoad.Force, distributedLoad.Moment, lusasLines);
 
             return lusasGlobalDistributed;
         }
 
         public IFLoadingGlobalDistributed CreateGlobalDistributedLoad(AreaUniformalyDistributedLoad distributedLoad, IFSurface[] lusasSurfaces)
         {
-            IFLoadingGlobalDistributed lusasGlobalDistributed = null;
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + distributedLoad.Loadcase.CustomData[AdapterId] + "/" + distributedLoad.Loadcase.Name);
             string lusasAttributeName = "Dl" + distributedLoad.CustomData[AdapterId] + "/" + distributedLoad.Name;
+
+            IFLoadingGlobalDistributed lusasGlobalDistributed = CreateGlobalDistributed(lusasAttributeName,
+                "Area", assignedLoadcase, distributedLoad.Pressure, null, lusasSurfaces);
+
+            return lusasGlobalDistributed;
+        }
+
+        public IFLoadingLocalDistributed CreateLocalDistributedBar(BarUniformlyDistributedLoad distributedLoad, object[] lusasLines)
+        {
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + distributedLoad.Loadcase.CustomData[AdapterId] + "/" + distributedLoad.Loadcase.Name);
+            string lusasAttributeName = "Dl" + distributedLoad.CustomData[AdapterId] + "/" + distributedLoad.Name;
+
+            IFLoadingLocalDistributed lusasLocalDistributed = CreateLocalDistributed(lusasAttributeName,
+                "Line", assignedLoadcase, distributedLoad.Force, lusasLines);
+
+            return lusasLocalDistributed;
+        }
+
+        public IFLoadingLocalDistributed CreateLocalDistributedSurface(AreaUniformalyDistributedLoad distributedLoad, IFSurface[] lusasSurfaces)
+        {
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + distributedLoad.Loadcase.CustomData[AdapterId] + "/" + distributedLoad.Loadcase.Name);
+            string lusasAttributeName = "Dl" + distributedLoad.CustomData[AdapterId] + "/" + distributedLoad.Name;
+
+            IFLoadingLocalDistributed lusasLocalDistributed = CreateLocalDistributed(lusasAttributeName,
+                "Area", assignedLoadcase, distributedLoad.Pressure, lusasSurfaces);
+
+            return lusasLocalDistributed;
+        }
+
+        public IFLoadingGlobalDistributed CreateGlobalDistributed(string lusasAttributeName,
+            string type, IFLoadcase assignedLoadcase, Vector force, Vector moment, object[] lusasGeometry)
+        {
+            IFLoadingGlobalDistributed lusasGlobalDistributed = null;
 
             if (d_LusasData.existsAttribute("Loading", lusasAttributeName))
             {
@@ -56,50 +72,29 @@ namespace BH.Adapter.Lusas
             else
             {
                 lusasGlobalDistributed = d_LusasData.createLoadingGlobalDistributed(lusasAttributeName);
-                lusasGlobalDistributed.setGlobalDistributed("Area",
-                    distributedLoad.Pressure.X, distributedLoad.Pressure.Y, distributedLoad.Pressure.Z);
-
-            }
-
-            IFAssignment assignToSurfaces = m_LusasApplication.assignment();
-            assignToSurfaces.setLoadset(assignedLoadcase);
-            lusasGlobalDistributed.assignTo(lusasSurfaces, assignToSurfaces);
-
-            return lusasGlobalDistributed;
-        }
-
-        public IFLoadingLocalDistributed CreateLocalDistributedLoad(BarUniformlyDistributedLoad distributedLoad, IFLine[] lusasLines)
-        {
-            IFLoadingLocalDistributed lusasLocalDistributed = null;
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + distributedLoad.Loadcase.CustomData[AdapterId] + "/" + distributedLoad.Loadcase.Name);
-            string lusasAttributeName = "Dl" + distributedLoad.CustomData[AdapterId] + "/" + distributedLoad.Name;
-
-            if (d_LusasData.existsAttribute("Loading", lusasAttributeName))
-            {
-                lusasLocalDistributed = (IFLoadingLocalDistributed)d_LusasData.getAttribute("Loading",
-                    lusasAttributeName);
-            }
-            else
-            {
-                lusasLocalDistributed = d_LusasData.createLoadingLocalDistributed(lusasAttributeName);
-                lusasLocalDistributed.setLocalDistributed(
-                    distributedLoad.Force.X, distributedLoad.Force.Y, distributedLoad.Force.Z,
-                    "Line");
-
+                if (type == "Length")
+                {
+                    lusasGlobalDistributed.setGlobalDistributed(type,
+                        force.X, force.Y, force.Z, moment.X, moment.Y, moment.Z);
+                }
+                else if (type == "Area")
+                {
+                    lusasGlobalDistributed.setGlobalDistributed(type,
+                        force.X, force.Y, force.Z);
+                }
             }
 
             IFAssignment assignToLines = m_LusasApplication.assignment();
             assignToLines.setLoadset(assignedLoadcase);
-            lusasLocalDistributed.assignTo(lusasLines, assignToLines);
+            lusasGlobalDistributed.assignTo(lusasGeometry, assignToLines);
 
-            return lusasLocalDistributed;
+            return lusasGlobalDistributed;
         }
 
-        public IFLoadingLocalDistributed CreateLocalDistributedLoad(AreaUniformalyDistributedLoad distributedLoad, IFSurface[] lusasSurfaces)
+        public IFLoadingLocalDistributed CreateLocalDistributed(string lusasAttributeName,
+            string type, IFLoadcase assignedLoadcase, Vector force, object[] lusasGeometry)
         {
             IFLoadingLocalDistributed lusasLocalDistributed = null;
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + distributedLoad.Loadcase.CustomData[AdapterId] + "/" + distributedLoad.Loadcase.Name);
-            string lusasAttributeName = "Dl" + distributedLoad.CustomData[AdapterId] + "/" + distributedLoad.Name;
 
             if (d_LusasData.existsAttribute("Loading", lusasAttributeName))
             {
@@ -109,14 +104,12 @@ namespace BH.Adapter.Lusas
             else
             {
                 lusasLocalDistributed = d_LusasData.createLoadingLocalDistributed(lusasAttributeName);
-                lusasLocalDistributed.setLocalDistributed("Area",
-                    distributedLoad.Pressure.X, distributedLoad.Pressure.Y, distributedLoad.Pressure.Z);
-
+                lusasLocalDistributed.setLocalDistributed(force.X, force.Y, force.Z,type);
             }
 
-            IFAssignment assignToSurfaces = m_LusasApplication.assignment();
-            assignToSurfaces.setLoadset(assignedLoadcase);
-            lusasLocalDistributed.assignTo(lusasSurfaces, assignToSurfaces);
+            IFAssignment assignToLines = m_LusasApplication.assignment();
+            assignToLines.setLoadset(assignedLoadcase);
+            lusasLocalDistributed.assignTo(lusasGeometry, assignToLines);
 
             return lusasLocalDistributed;
         }

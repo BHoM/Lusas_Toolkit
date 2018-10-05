@@ -72,11 +72,11 @@ namespace BH.Engine.Lusas
             return memberGroups;
         }
 
-        public static List<String> AttributeAssignments(IFGeometry lusasGeometry, String attributeType)
+        public static List<string> AttributeAssignments(IFGeometry lusasGeometry, string attributeType)
         {
-            Object[] attributeAssignments = lusasGeometry.getAssignments(attributeType);
+            object[] attributeAssignments = lusasGeometry.getAssignments(attributeType);
 
-            List<String> attributeNames = new List<String>();
+            List<string> attributeNames = new List<string>();
 
             int n = attributeAssignments.Count();
             for (int i = 0; i < n; i++)
@@ -121,6 +121,22 @@ namespace BH.Engine.Lusas
             return bhomID;
         }
 
+        public static int GetBHoMID(IFBasicCombination lusasLoadCombination, char lastCharacter)
+        {
+            int bhomID = 0;
+
+            if (lusasLoadCombination.getName().Contains("/"))
+            {
+                bhomID = Int32.Parse(lusasLoadCombination.getName().Split(lastCharacter, '/')[1]);
+            }
+            else
+            {
+                bhomID = lusasLoadCombination.getID();
+            }
+
+            return bhomID;
+        }
+
         public static string GetName(IFAttribute lusasAttribute)
         {
             string attributeName = "";
@@ -150,6 +166,23 @@ namespace BH.Engine.Lusas
             else
             {
                 loadcaseName = lusasLoadcase.getName();
+            }
+
+            return loadcaseName;
+        }
+
+        public static string GetName(IFBasicCombination lusasLoadCombination)
+        {
+            string loadcaseName = "";
+
+            if (lusasLoadCombination.getName().Contains("/"))
+            {
+                loadcaseName = lusasLoadCombination.getName().Substring(
+                    lusasLoadCombination.getName().LastIndexOf("/") + 1);
+            }
+            else
+            {
+                loadcaseName = lusasLoadCombination.getName();
             }
 
             return loadcaseName;
@@ -201,14 +234,14 @@ namespace BH.Engine.Lusas
             return assignedBars;
         }
 
-        public static IEnumerable<PanelPlanar> GetSurfaceAssignments(IEnumerable<IFAssignment> assignmentList, Dictionary<string, PanelPlanar> surfs)
+        public static IEnumerable<IAreaElement> GetSurfaceAssignments(IEnumerable<IFAssignment> assignmentList, Dictionary<string, PanelPlanar> surfs)
         {
-            List<PanelPlanar> assignedSurfs = new List<PanelPlanar>();
+            List<IAreaElement> assignedSurfs = new List<IAreaElement>();
             PanelPlanar bhomSurf = new PanelPlanar();
 
             foreach (IFAssignment assignment in assignmentList)
             {
-                IFSurface lusasSurf = (IFSurface) assignment.getDatabaseObject();
+                IFSurface lusasSurf = (IFSurface)assignment.getDatabaseObject();
                 surfs.TryGetValue(removePrefix(lusasSurf.getName(), "S"), out bhomSurf);
                 assignedSurfs.Add(bhomSurf);
             }

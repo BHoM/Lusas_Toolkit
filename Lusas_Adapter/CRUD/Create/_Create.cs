@@ -63,6 +63,10 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<Loadcase>);
                 }
+                if (objects.First() is LoadCombination)
+                {
+                    success = CreateCollection(objects as IEnumerable<LoadCombination>);
+                }
                 if (typeof(ILoad).IsAssignableFrom(objects.First().GetType()))
                 {
                     string loadType = objects.First().GetType().ToString();
@@ -80,6 +84,12 @@ namespace BH.Adapter.Lusas
                             break;
                         case "BH.oM.Structure.Loads.AreaUniformalyDistributedLoad":
                             success = CreateCollection(objects as IEnumerable<AreaUniformalyDistributedLoad>);
+                            break;
+                        case "BH.oM.Structure.Loads.BarTemperatureLoad":
+                            success = CreateCollection(objects as IEnumerable<BarTemperatureLoad>);
+                            break;
+                        case "BH.oM.Structure.Loads.AreaTemperatureLoad":
+                            success = CreateCollection(objects as IEnumerable<AreaTemperatureLoad>);
                             break;
                     }
                 }
@@ -274,7 +284,7 @@ namespace BH.Adapter.Lusas
 
             List<IFPoint> lusasPoints = ReadLusasPoints();
             List<Point> bhomPoints = new List<Point>();
-            
+
             foreach (IFPoint point in lusasPoints)
             {
                 bhomPoints.Add(BH.Engine.Lusas.Convert.ToBHoMPoint(point));
@@ -383,7 +393,7 @@ namespace BH.Adapter.Lusas
             {
                 foreach (BHoMObject bhomGeometry in gravityLoad.Objects.Elements)
                 {
-                    if (bhomGeometry.GetType().ToString()== "BH.oM.Structure.Elements.Bar")
+                    if (bhomGeometry.GetType().ToString() == "BH.oM.Structure.Elements.Bar")
                     {
                         IFLine lusasLine = d_LusasData.getLineByName("L" + bhomGeometry.CustomData[AdapterId].ToString());
                         assignedLines.Add(lusasLine);
@@ -395,15 +405,15 @@ namespace BH.Adapter.Lusas
                     }
                 }
 
-                if (assignedLines.Count!=0)
+                if (assignedLines.Count != 0)
                 {
                     object[] arrayLines = assignedLines.ToArray();
-                    IFLoadingBody newGravityLoad = CreateGravityLoad(gravityLoad, arrayLines,"Bar");
+                    IFLoadingBody newGravityLoad = CreateGravityLoad(gravityLoad, arrayLines, "Bar");
                 }
                 else
                 {
                     object[] arraySurfaces = assignedSurfaces.ToArray();
-                    IFLoadingBody newGravityLoad = CreateGravityLoad(gravityLoad, arraySurfaces,"Surface");
+                    IFLoadingBody newGravityLoad = CreateGravityLoad(gravityLoad, arraySurfaces, "Surface");
                 }
             }
 
@@ -425,13 +435,13 @@ namespace BH.Adapter.Lusas
                 }
 
                 IFLine[] arrayLines = assignedLines.ToArray();
-                if(barUniformlyDistributedLoad.Axis == LoadAxis.Global)
+                if (barUniformlyDistributedLoad.Axis == LoadAxis.Global)
                 {
-                    IFLoadingGlobalDistributed newGlobalDistributed = CreateGlobalDistributedLoad(barUniformlyDistributedLoad, arrayLines);
+                    IFLoadingGlobalDistributed newGlobalDistributed = CreateGlobalDistributedLine(barUniformlyDistributedLoad, arrayLines);
                 }
-                else if(barUniformlyDistributedLoad.Axis == LoadAxis.Local)
+                else if (barUniformlyDistributedLoad.Axis == LoadAxis.Local)
                 {
-                    IFLoadingLocalDistributed newLocalDistributed = CreateLocalDistributedLoad(barUniformlyDistributedLoad, arrayLines);
+                    IFLoadingLocalDistributed newLocalDistributed = CreateLocalDistributedBar(barUniformlyDistributedLoad, arrayLines);
                 }
             }
 
@@ -459,7 +469,7 @@ namespace BH.Adapter.Lusas
                 }
                 else if (areaUniformlyDistributedLoad.Axis == LoadAxis.Local)
                 {
-                    IFLoadingLocalDistributed newLocalDistributed = CreateLocalDistributedLoad(areaUniformlyDistributedLoad, arraySurfaces);
+                    IFLoadingLocalDistributed newLocalDistributed = CreateLocalDistributedSurface(areaUniformlyDistributedLoad, arraySurfaces);
                 }
             }
 
@@ -468,11 +478,57 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
+        private bool CreateCollection(IEnumerable<BarTemperatureLoad> barTemperatureLoads)
+        {
+            List<IFLine> assignedLines = new List<IFLine>();
+
+            foreach (BarTemperatureLoad barTemperatureLoad in barTemperatureLoads)
+            {
+                foreach (Bar bar in barTemperatureLoad.Objects.Elements)
+                {
+                    IFLine lusasLine = d_LusasData.getLineByName("L" + bar.CustomData[AdapterId].ToString());
+                    assignedLines.Add(lusasLine);
+                }
+
+                IFLine[] arrayLines = assignedLines.ToArray();
+                IFLoadingTemperature newTemperatureLoad = CreateBarTemperatureLoad(barTemperatureLoad, arrayLines);
+            }
+            return true;
+        }
+
+        private bool CreateCollection(IEnumerable<AreaTemperatureLoad> areaTemperatureLoads)
+        {
+            List<IFSurface> assignedSurfaces = new List<IFSurface>();
+
+            foreach (AreaTemperatureLoad areaTemperatureLoad in areaTemperatureLoads)
+            {
+                foreach (PanelPlanar panel in areaTemperatureLoad.Objects.Elements)
+                {
+                    IFSurface lusasSurface = d_LusasData.getSurfaceByName("S" + panel.CustomData[AdapterId].ToString());
+                    assignedSurfaces.Add(lusasSurface);
+                }
+
+                IFSurface[] arrayLines = assignedSurfaces.ToArray();
+                IFLoadingTemperature newTemperatureLoad = CreateAreaTemperatureLoad(areaTemperatureLoad, arrayLines);
+            }
+            return true;
+        }
+
         private bool CreateCollection(IEnumerable<Constraint6DOF> constraints)
         {
             foreach (Constraint6DOF constraint in constraints)
             {
                 IFAttribute newSupport = CreateSupport(constraint);
+            }
+
+            return true;
+        }
+
+        private bool CreateCollection(IEnumerable<LoadCombination> loadcombinations)
+        {
+            foreach (LoadCombination loadcombination in loadcombinations)
+            {
+                IFBasicCombination newLoadCombination = CreateLoadCombination(loadcombination);
             }
 
             return true;
