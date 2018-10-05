@@ -45,6 +45,8 @@ namespace BH.Adapter.Lusas
                 return chooseLoad(type, ids as dynamic);
             else if (typeof(IProperty2D).IsAssignableFrom(type))
                 return ReadProperty2D(ids as dynamic);
+            else if (type == typeof(LoadCombination))
+                return ReadLoadCombination(ids as dynamic);
             return null;
         }
 
@@ -601,6 +603,25 @@ namespace BH.Adapter.Lusas
             }
 
             return bhomPanelUniformlyDistributedLoads;
+        }
+
+        private List<LoadCombination> ReadLoadCombination(List<string> ids = null)
+        {
+            List<LoadCombination> bhomLoadCombintations = new List<LoadCombination>();
+
+            object[] lusasCombinations = d_LusasData.getLoadsets("Combinations");
+
+            List<Loadcase> lusasLoadcases = ReadLoadcases();
+            Dictionary<string, Loadcase> loadcaseDictionary = lusasLoadcases.ToDictionary(x => x.Number.ToString());
+
+            for (int i = 0; i < lusasCombinations.Count(); i++)
+            {
+                IFBasicCombination lusasCombination = (IFBasicCombination)lusasCombinations[i];
+                LoadCombination bhomLoadCombination = BH.Engine.Lusas.Convert.ToBHoMLoadCombination(lusasCombination, loadcaseDictionary);
+                bhomLoadCombintations.Add(bhomLoadCombination);
+            }
+
+            return bhomLoadCombintations;
         }
 
         /***************************************************/

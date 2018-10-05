@@ -53,7 +53,8 @@ namespace BH.Adapter.Lusas
             {typeof(IProperty2D), new BHoMObjectNameComparer() },
             {typeof(ConstantThickness), new BHoMObjectNameComparer() },
             {typeof(ILoad), new BHoMObjectNameComparer() },
-            {typeof(Loadcase), new BHoMObjectNameComparer()}
+            {typeof(Loadcase), new BHoMObjectNameComparer()},
+            {typeof(LoadCombination), new BHoMObjectNameComparer()}
         };
         /***************************************************/
     }
