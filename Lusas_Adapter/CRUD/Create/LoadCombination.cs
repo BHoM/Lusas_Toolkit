@@ -21,7 +21,7 @@ namespace BH.Adapter.Lusas
             string lusasLoadCombinationName = "Lc" + loadCombination.CustomData[AdapterId] + "/" + loadCombination.Name;
 
             List<double> loadFactors = new List<double>();
-            List<ICase> loadcases = new List<ICase>();
+            List<int> loadcases = new List<int>();
 
             if (d_LusasData.existsLoadset(lusasLoadCombinationName))
             {
@@ -32,11 +32,17 @@ namespace BH.Adapter.Lusas
                 lusasLoadcombination = d_LusasData.createCombinationBasic(lusasLoadCombinationName,"", loadCombination.Number);
                 foreach(Tuple<double,ICase> factoredLoad in loadCombination.LoadCases)
                 {
-                    loadFactors.Add(factoredLoad.Item1);
-                    loadcases.Add(factoredLoad.Item2);
+                    //loadFactors.Add(factoredLoad.Item1);
+                    //loadcases.Add(factoredLoad.Item2.Number);
+                    //lusasLoadcombination.addEntry(factoredLoad.Item1,factoredLoad.Item2.Number);
+                    //lusasLoadcombination.addEntry(25, 2);
+                    string lusasAttributeName = "Lc" + factoredLoad.Item2.CustomData[AdapterId] + "/" + factoredLoad.Item2.Name;
+                    double factor = factoredLoad.Item1;
+                    IFLoadset lusasLoadcase = d_LusasData.getLoadset(lusasAttributeName);
+                    lusasLoadcombination.addEntry(factor, lusasLoadcase);
                 }
-                lusasLoadcombination.setValue("loadsetArray", loadcases);
-                lusasLoadcombination.setValue("factorArray", loadFactors);
+                //lusasLoadcombination.setValue("loadsetArray", loadcases);
+                //lusasLoadcombination.setValue("factorArray", loadFactors);
             }
             return lusasLoadcombination;
         }
