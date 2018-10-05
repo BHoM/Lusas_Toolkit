@@ -31,14 +31,14 @@ BHoM object are constainted within the `Structure` namespace unless specified ot
 - `Concentrated Load` (`Loads.PointForce`)
 - `Body Force` (`Loads.GravityLoad`)
 - `Global Distributed Load` 
- - Bar: (`Loads.BarUniformlyDistributedLoad` - set `LoadAxis.Global`)
- - PanelPlanar: (`Loads.AreaUniformlyDistributedLoad` - set `LoadAxis.Global`)
+  - Bar: (`Loads.BarUniformlyDistributedLoad` - set `LoadAxis.Global`)
+  - PanelPlanar: (`Loads.AreaUniformlyDistributedLoad` - set `LoadAxis.Global`)
 - `Local Distributed Load` 
- - Bar: (`Loads.BarUniformlyDistributedLoad` - set `LoadAxis.Local`)
- - PanelPlanar: (`Loads.AreaUniformlyDistributedLoad` - set `LoadAxis.Local`)
- - `Temperature Load` 
- - Bar: (`Loads.BarTemperatureLoad`)
- - PanelPlanar: (`Loads.AreaTemperatureLoad`)
+  - Bar: (`Loads.BarUniformlyDistributedLoad` - set `LoadAxis.Local`)
+  - PanelPlanar: (`Loads.AreaUniformlyDistributedLoad` - set `LoadAxis.Local`)
+- `Temperature Load` 
+  - Bar: (`Loads.BarTemperatureLoad`)
+  - PanelPlanar: (`Loads.AreaTemperatureLoad`)
 
 ### Post-Processing
 ### Load Combinations
