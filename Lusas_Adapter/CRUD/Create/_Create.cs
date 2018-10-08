@@ -59,6 +59,10 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<Constraint6DOF>);
                 }
+                if (objects.First() is Constraint4DOF)
+                {
+                    success = CreateCollection(objects as IEnumerable<Constraint4DOF>);
+                }
                 if (objects.First() is Loadcase)
                 {
                     success = CreateCollection(objects as IEnumerable<Loadcase>);
@@ -516,6 +520,16 @@ namespace BH.Adapter.Lusas
         private bool CreateCollection(IEnumerable<Constraint6DOF> constraints)
         {
             foreach (Constraint6DOF constraint in constraints)
+            {
+                IFAttribute newSupport = CreateSupport(constraint);
+            }
+
+            return true;
+        }
+
+        private bool CreateCollection(IEnumerable<Constraint4DOF> constraints)
+        {
+            foreach (Constraint4DOF constraint in constraints)
             {
                 IFAttribute newSupport = CreateSupport(constraint);
             }
