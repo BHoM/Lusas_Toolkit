@@ -24,6 +24,14 @@ namespace BH.Adapter.Lusas
             {
                 AssignObjectSet(newLine, edge.Tags);
             }
+
+            if (!(edge.Constraint == null))
+            {
+                string supportName  = "Sp" + edge.Constraint.CustomData[AdapterId] + "/" + edge.Constraint.Name;
+                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", supportName);
+                lusasSupport.assignTo(newLine);
+            }
+
             return newLine;
         }
     }

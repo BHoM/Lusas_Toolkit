@@ -68,11 +68,18 @@ namespace BH.Adapter.Lusas
                 lusasSupport = d_LusasData.createSupportStructural(lusasAttributeName);
 
                 List<string> releaseNames = new List<string> { "U", "V", "W", "THX"};
-                List<double> stiffness = new List<double> {constraint.TranslationalStiffnessX,
-                    constraint.TranslationalStiffnessY, constraint.TranslationalStiffnessZ,
-                    constraint.RotationalStiffnessX};
-                List<DOFType> fixities = new List<DOFType> {constraint.TranslationX,
-                    constraint.TranslationY, constraint.TranslationZ, constraint.RotationX };
+                List<double> stiffness = new List<double> {
+                    constraint.TranslationalStiffnessX,
+                    constraint.TranslationalStiffnessY,
+                    constraint.TranslationalStiffnessZ,
+                    constraint.RotationalStiffnessX
+                };
+                List<DOFType> fixities = new List<DOFType> {
+                    constraint.TranslationX,
+                    constraint.TranslationY,
+                    constraint.TranslationZ,
+                    constraint.RotationX
+                };
 
                 for (int i = 0; i < releaseNames.Count(); i++)
                 {
@@ -91,7 +98,6 @@ namespace BH.Adapter.Lusas
                     }
                 }
             }
-
             return lusasSupport;
         }
     }
