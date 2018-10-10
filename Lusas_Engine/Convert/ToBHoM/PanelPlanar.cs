@@ -29,7 +29,8 @@ namespace BH.Engine.Lusas
             Dictionary<string, Edge> bhomEdges, 
             HashSet<string> groupNames,
             Dictionary<string, IProperty2D> bhomProperties2D,
-            Dictionary<string, Material> bhomMaterials)
+            Dictionary<string, Material> bhomMaterials,
+            Dictionary<string, Constraint4DOF> bhomSupports)
 
         {
             Object[] surfLines = lusasSurf.getLOFs();
@@ -46,7 +47,10 @@ namespace BH.Engine.Lusas
                 surfEdges.Add(bhomEdge);
             }
 
+
+
             PanelPlanar bhomPanel = BH.Engine.Structure.Create.PanelPlanar(surfEdges,dummyCurve);
+
 
             bhomPanel.Tags = tags;
             bhomPanel.CustomData["Lusas_id"] = lusasSurf.getName();
@@ -68,6 +72,16 @@ namespace BH.Engine.Lusas
 
                 bhomPanel.Property = bhomProperty2D;
             }
+
+            //List<string> supportAssignments = AttributeAssignments(lusasSurf, "Support");
+
+            //Constraint4DOF barConstraint = null;
+            //if (!(supportAssignments.Count() == 0))
+            //{
+            //    bhomSupports.TryGetValue(supportAssignments[0], out barConstraint);
+                
+            //}
+
 
             return bhomPanel;
         }

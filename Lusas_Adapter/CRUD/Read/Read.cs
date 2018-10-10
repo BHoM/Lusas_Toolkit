@@ -97,6 +97,8 @@ namespace BH.Adapter.Lusas
                 Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
                 IEnumerable<IProperty2D> geometricList = ReadProperty2D();
                 Dictionary<string, IProperty2D> geometrics = geometricList.ToDictionary(x => x.Name.ToString());
+                IEnumerable<Constraint4DOF> bhomSupportList = ReadConstraint4DOFs();
+                Dictionary<string, Constraint4DOF> bhomSupports = bhomSupportList.ToDictionary(x => x.Name);
 
                 for (int i = 0; i < eleArray.Count(); i++)
                 {
@@ -105,7 +107,8 @@ namespace BH.Adapter.Lusas
                         bhomEdges,
                         groupNames,
                         geometrics,
-                        materials);
+                        materials,
+                        bhomSupports);
 
                     bhomSurfaces.Add(bhompanel);
                 }
