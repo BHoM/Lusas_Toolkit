@@ -47,10 +47,7 @@ namespace BH.Engine.Lusas
                 surfEdges.Add(bhomEdge);
             }
 
-
-
             PanelPlanar bhomPanel = BH.Engine.Structure.Create.PanelPlanar(surfEdges,dummyCurve);
-
 
             bhomPanel.Tags = tags;
             bhomPanel.CustomData["Lusas_id"] = lusasSurf.getName();

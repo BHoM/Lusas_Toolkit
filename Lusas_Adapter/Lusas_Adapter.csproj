@@ -93,6 +93,7 @@
     <Compile Include="CRUD\Create\LoadCombination.cs" />
     <Compile Include="CRUD\Create\LocalCoordinate.cs" />
     <Compile Include="CRUD\Create\Material.cs" />
+    <Compile Include="CRUD\Create\PrescribedDisplacement.cs" />
     <Compile Include="CRUD\Create\Support.cs" />
     <Compile Include="CRUD\Create\Surface.cs" />
     <Compile Include="CRUD\Create\Line.cs" />

@@ -372,7 +372,9 @@ namespace BH.Adapter.Lusas
                 case "AreaTemperatureLoad":
                     readLoads = ReadAreaTemperatureLoad(ids as dynamic);
                     break;
-
+                case "PointDisplacement":
+                    readLoads = ReadPointDisplacement(ids as dynamic);
+                    break;
             }
             return readLoads;
 
@@ -645,6 +647,33 @@ namespace BH.Adapter.Lusas
             }
 
             return bhomLoadCombintations;
+        }
+
+        private List<ILoad> ReadPointDisplacement(List<string> ids = null)
+        {
+            List<ILoad> bhomPointDisplacements = new List<ILoad>();
+            object[] lusasPointDisplacements = d_LusasData.getAttributes("Prescribed Load");
+
+            List<Node> bhomNodes = ReadNodes();
+            Dictionary<string, Node> nodeDict = bhomNodes.ToDictionary(x => x.CustomData[AdapterId].ToString());
+            List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
+
+            for (int i = 0; i < lusasPointDisplacements.Count(); i++)
+            {
+                IFLoading lusasPointForce = (IFLoading)lusasPointDisplacements[i];
+
+                IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(lusasPointForce);
+
+                foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
+                {
+                    PointDisplacement bhomPointDisplacement = BH.Engine.Lusas.Convert.ToPointDisplacement(lusasPointForce, groupedAssignment, nodeDict);
+                    List<string> analysisName = new List<string> { lusasPointForce.getAttributeType() };
+                    bhomPointDisplacement.Tags = new HashSet<string>(analysisName);
+                    bhomPointDisplacements.Add(bhomPointDisplacement);
+                }
+            }
+
+            return bhomPointDisplacements;
         }
 
         /***************************************************/

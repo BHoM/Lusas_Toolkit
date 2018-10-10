@@ -95,6 +95,9 @@ namespace BH.Adapter.Lusas
                         case "BH.oM.Structure.Loads.AreaTemperatureLoad":
                             success = CreateCollection(objects as IEnumerable<AreaTemperatureLoad>);
                             break;
+                        case "BH.oM.Structure.Loads.PointDisplacement":
+                            success = CreateCollection(objects as IEnumerable<PointDisplacement>);
+                            break;
                     }
                 }
                 if (typeof(IProperty2D).IsAssignableFrom(objects.First().GetType()))
@@ -113,7 +116,7 @@ namespace BH.Adapter.Lusas
             ////success = CreateCollection(objects as dynamic);
             //m_LusasApplication.updateAllViews();
 
-            return success;             //Finally return if the creation was successful or not
+            return success;
 
         }
 
@@ -514,6 +517,25 @@ namespace BH.Adapter.Lusas
                 IFSurface[] arrayLines = assignedSurfaces.ToArray();
                 IFLoadingTemperature newTemperatureLoad = CreateAreaTemperatureLoad(areaTemperatureLoad, arrayLines);
             }
+            return true;
+        }
+
+        private bool CreateCollection(IEnumerable<PointDisplacement> pointDisplacements)
+        {
+            List<IFPoint> assignedPoints = new List<IFPoint>();
+
+            foreach (PointDisplacement pointDisplacement in pointDisplacements)
+            {
+                foreach (Node node in pointDisplacement.Objects.Elements)
+                {
+                    IFPoint lusasPoint = d_LusasData.getPointByName("P" + node.CustomData[AdapterId].ToString());
+                    assignedPoints.Add(lusasPoint);
+                }
+
+                IFPoint[] arrayPoints = assignedPoints.ToArray();
+                IFPrescribedDisplacementLoad newPointDisplacement = CreatePrescribedDisplacement(pointDisplacement, arrayPoints);
+            }
+
             return true;
         }
 
