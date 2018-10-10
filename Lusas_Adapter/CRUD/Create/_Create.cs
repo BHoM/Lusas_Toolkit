@@ -293,9 +293,9 @@ namespace BH.Adapter.Lusas
                 bhomPoints.Add(BH.Engine.Lusas.Convert.ToBHoMPoint(point));
             }
 
-            List<String> edgesTags = distinctEdges.SelectMany(x => x.Tags).Distinct().ToList();
+            List<string> edgesTags = distinctEdges.SelectMany(x => x.Tags).Distinct().ToList();
 
-            foreach (String tag in edgesTags)
+            foreach (string tag in edgesTags)
             {
                 if (!d_LusasData.existsGroupByName(tag))
                 {

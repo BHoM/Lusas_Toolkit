@@ -27,7 +27,7 @@ namespace BH.Engine.Lusas
 
         public static PanelPlanar ToBHoMPanelPlanar(this IFSurface lusasSurf, 
             Dictionary<string, Edge> bhomEdges, 
-            HashSet<String> groupNames,
+            HashSet<string> groupNames,
             Dictionary<string, IProperty2D> bhomProperties2D,
             Dictionary<string, Material> bhomMaterials)
 
@@ -36,7 +36,7 @@ namespace BH.Engine.Lusas
             List<ICurve> dummyCurve = new List<ICurve>();
 
             int n = surfLines.Length;
-            HashSet<String> tags = new HashSet<string>(IsMemberOf(lusasSurf, groupNames));
+            HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasSurf, groupNames));
 
             List<Edge> surfEdges = new List<Edge>();
 
@@ -51,8 +51,8 @@ namespace BH.Engine.Lusas
             bhomPanel.Tags = tags;
             bhomPanel.CustomData["Lusas_id"] = lusasSurf.getName();
 
-            List<String> geometricAssignments = AttributeAssignments(lusasSurf, "Geometric");
-            List<String> materialAssignments = AttributeAssignments(lusasSurf, "Material");
+            List<string> geometricAssignments = AttributeAssignments(lusasSurf, "Geometric");
+            List<string> materialAssignments = AttributeAssignments(lusasSurf, "Material");
 
             Material panelMaterial = null;
             IProperty2D bhomProperty2D = null;

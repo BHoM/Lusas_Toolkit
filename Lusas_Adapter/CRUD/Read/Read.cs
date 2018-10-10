@@ -69,7 +69,7 @@ namespace BH.Adapter.Lusas
             Dictionary<string, Constraint4DOF> bhomSupports = bhomSupportList.ToDictionary(x => x.Name);
             //IEnumerable<Material> materialList = ReadMaterials();
             //Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
-            HashSet<String> groupNames = ReadGroups();
+            HashSet<string> groupNames = ReadGroups();
 
             for (int i = 0; i < lusasLines.Count(); i++)
             {
@@ -92,7 +92,7 @@ namespace BH.Adapter.Lusas
             {
                 IEnumerable<Edge> bhomEdgesList = ReadEdges();
                 Dictionary<string, Edge> bhomEdges = bhomEdgesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
-                HashSet<String> groupNames = ReadGroups();
+                HashSet<string> groupNames = ReadGroups();
                 IEnumerable<Material> materialList = ReadMaterials();
                 Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
                 IEnumerable<IProperty2D> geometricList = ReadProperty2D();
@@ -121,7 +121,7 @@ namespace BH.Adapter.Lusas
             object[] lusasPoints = d_LusasData.getObjects("Point");
 
             List<Node> bhomNodes = new List<Node>();
-            HashSet<String> groupNames = ReadGroups();
+            HashSet<string> groupNames = ReadGroups();
 
             IEnumerable<Constraint6DOF> constraints6DOFList = ReadConstraint6DOFs();
             Dictionary<string, Constraint6DOF> constraints6DOF = constraints6DOFList.ToDictionary(x => x.Name.ToString());
@@ -142,7 +142,7 @@ namespace BH.Adapter.Lusas
             object[] lusasPoints = d_LusasData.getObjects("Point");
 
             List<Point> bhomPoints = new List<Point>();
-            HashSet<String> groupNames = ReadGroups();
+            HashSet<string> groupNames = ReadGroups();
 
             for (int i = 0; i < lusasPoints.Count(); i++)
             {
@@ -171,10 +171,10 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private HashSet<String> ReadGroups(List<string> ids = null)
+        private HashSet<string> ReadGroups(List<string> ids = null)
         {
             object[] eleArray = d_LusasData.getObjects("Groups");
-            HashSet<String> bhomTags = new HashSet<string>();
+            HashSet<string> bhomTags = new HashSet<string>();
 
             for (int i = 0; i < eleArray.Count(); i++)
             {
@@ -196,7 +196,7 @@ namespace BH.Adapter.Lusas
             {
                 List<Node> bhomNodesList = ReadNodes();
                 Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
-                HashSet<String> groupNames = ReadGroups();
+                HashSet<string> groupNames = ReadGroups();
 
                 for (int i = 0; i < lusasLines.Count(); i++)
                 {
@@ -226,7 +226,7 @@ namespace BH.Adapter.Lusas
 
         /***************************************/
 
-        private List<Constraint6DOF> ReadConstraint6DOFs(List<String> ids = null)
+        private List<Constraint6DOF> ReadConstraint6DOFs(List<string> ids = null)
         {
             object[] lusasSupports = d_LusasData.getAttributes("Support");
             List<Constraint6DOF> bhomConstraints6DOF = new List<Constraint6DOF>();
@@ -242,7 +242,7 @@ namespace BH.Adapter.Lusas
 
         /***************************************/
 
-        private List<Constraint4DOF> ReadConstraint4DOFs(List<String> ids = null)
+        private List<Constraint4DOF> ReadConstraint4DOFs(List<string> ids = null)
         {
             object[] lusasSupports = d_LusasData.getAttributes("Support");
             List<Constraint4DOF> bhomConstraints4DOFs = new List<Constraint4DOF>();

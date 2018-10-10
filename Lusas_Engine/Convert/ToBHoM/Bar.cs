@@ -54,7 +54,7 @@ namespace BH.Engine.Lusas
                 Tags = tags,
                 Spring = barConstraint};
 
-            //List<String> materialAssignments = AttributeAssignments(lusasLine, "Material");
+            //List<string> materialAssignments = AttributeAssignments(lusasLine, "Material");
 
             //This will be wrapped in with the SectionProperties when they are defined
             //Material barMaterial = null;
