@@ -136,6 +136,21 @@ namespace BH.Adapter.Lusas
                         index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.GetBHoMID(largestAttribute, 'M')) + 1;
                     }
                 }
+                if (type == typeof(Constraint6DOF) ||
+                    type == typeof(Constraint4DOF))
+                {
+                    int largestestSupportID = d_LusasData.getLargestAttributeID("Support");
+                    if (largestestSupportID == 0)
+                    {
+                        index = 1;
+                    }
+                    else
+                    {
+
+                        IFAttribute largestAttribute = d_LusasData.getAttribute("Support", largestestSupportID);
+                        index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.GetBHoMID(largestAttribute, 'p')) + 1;
+                    }
+                }
                 if (type == typeof(ConstantThickness))
                 {
                     int largestThicknessID = d_LusasData.getLargestAttributeID("Surface Geometric");

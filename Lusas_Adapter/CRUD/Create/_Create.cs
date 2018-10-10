@@ -59,6 +59,10 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<Constraint6DOF>);
                 }
+                if (objects.First() is Constraint4DOF)
+                {
+                    success = CreateCollection(objects as IEnumerable<Constraint4DOF>);
+                }
                 if (objects.First() is Loadcase)
                 {
                     success = CreateCollection(objects as IEnumerable<Loadcase>);
@@ -113,7 +117,6 @@ namespace BH.Adapter.Lusas
 
         }
 
-
         /***************************************************/
         /**** Private methods                           ****/
         /***************************************************/
@@ -122,9 +125,9 @@ namespace BH.Adapter.Lusas
         {
             //Code for creating a collection of nodes in the software
 
-            List<String> nodeTags = nodes.SelectMany(x => x.Tags).Distinct().ToList();
+            List<string> nodeTags = nodes.SelectMany(x => x.Tags).Distinct().ToList();
 
-            foreach (String tag in nodeTags)
+            foreach (string tag in nodeTags)
             {
                 if (!d_LusasData.existsGroupByName(tag))
                 {
@@ -172,9 +175,9 @@ namespace BH.Adapter.Lusas
         private bool CreateCollection(IEnumerable<Bar> bars)
         {
 
-            List<String> barTags = bars.SelectMany(x => x.Tags).Distinct().ToList();
+            List<string> barTags = bars.SelectMany(x => x.Tags).Distinct().ToList();
 
-            foreach (String tag in barTags)
+            foreach (string tag in barTags)
             {
                 if (!d_LusasData.existsGroupByName(tag))
                 {
@@ -194,9 +197,9 @@ namespace BH.Adapter.Lusas
         private bool CreateCollection(IEnumerable<PanelPlanar> panels)
         {
 
-            List<String> barTags = panels.SelectMany(x => x.Tags).Distinct().ToList();
+            List<string> barTags = panels.SelectMany(x => x.Tags).Distinct().ToList();
 
-            foreach (String tag in barTags)
+            foreach (string tag in barTags)
             {
                 if (!d_LusasData.existsGroupByName(tag))
                 {
@@ -517,6 +520,16 @@ namespace BH.Adapter.Lusas
         private bool CreateCollection(IEnumerable<Constraint6DOF> constraints)
         {
             foreach (Constraint6DOF constraint in constraints)
+            {
+                IFAttribute newSupport = CreateSupport(constraint);
+            }
+
+            return true;
+        }
+
+        private bool CreateCollection(IEnumerable<Constraint4DOF> constraints)
+        {
+            foreach (Constraint4DOF constraint in constraints)
             {
                 IFAttribute newSupport = CreateSupport(constraint);
             }

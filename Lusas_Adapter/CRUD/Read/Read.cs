@@ -39,6 +39,8 @@ namespace BH.Adapter.Lusas
                 return ReadPoints(ids as dynamic);
             else if (type == typeof(Constraint6DOF))
                 return ReadConstraint6DOFs(ids as dynamic);
+            else if(type == typeof(Constraint4DOF))
+                return ReadConstraint4DOFs(ids as dynamic);
             else if (type == typeof(Loadcase))
                 return ReadLoadcases(ids as dynamic);
             else if (typeof(ILoad).IsAssignableFrom(type))
@@ -63,6 +65,8 @@ namespace BH.Adapter.Lusas
             List<Bar> bhomBars = new List<Bar>();
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
+            IEnumerable<Constraint4DOF> bhomSupportList = ReadConstraint4DOFs();
+            Dictionary<string, Constraint4DOF> bhomSupports = bhomSupportList.ToDictionary(x => x.Name);
             //IEnumerable<Material> materialList = ReadMaterials();
             //Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
             HashSet<String> groupNames = ReadGroups();
@@ -70,7 +74,7 @@ namespace BH.Adapter.Lusas
             for (int i = 0; i < lusasLines.Count(); i++)
             {
                 IFLine lusasLine = (IFLine)lusasLines[i];
-                Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMBar(lusasLine, bhomNodes, groupNames);
+                Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMBar(lusasLine, bhomNodes, bhomSupports, groupNames);
 
                 bhomBars.Add(bhomBar);
             }
@@ -234,6 +238,22 @@ namespace BH.Adapter.Lusas
                 bhomConstraints6DOF.Add(bhomConstraint6DOF);
             }
             return bhomConstraints6DOF;
+        }
+
+        /***************************************/
+
+        private List<Constraint4DOF> ReadConstraint4DOFs(List<String> ids = null)
+        {
+            object[] lusasSupports = d_LusasData.getAttributes("Support");
+            List<Constraint4DOF> bhomConstraints4DOFs = new List<Constraint4DOF>();
+
+            for (int i = 0; i < lusasSupports.Count(); i++)
+            {
+                IFSupportStructural lusasSupport = (IFSupportStructural)lusasSupports[i];
+                Constraint4DOF bhomConstraint4DOF = BH.Engine.Lusas.Convert.ToBHoMConstraint4DOF(lusasSupport);
+                bhomConstraints4DOFs.Add(bhomConstraint4DOF);
+            }
+            return bhomConstraints4DOFs;
         }
 
         /***************************************/

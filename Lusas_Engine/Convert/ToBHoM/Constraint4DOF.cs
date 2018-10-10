@@ -15,11 +15,11 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static Constraint6DOF ToBHoMConstraint6DOF(this IFSupportStructural lusasAttribute)
+        public static Constraint4DOF ToBHoMConstraint4DOF(this IFSupportStructural lusasAttribute)
         {
-            List<String> releaseNames = new List<string> { "U", "V", "W", "THX", "THY", "THZ" };
+            List<String> releaseNames = new List<string> { "U", "V", "W", "THX" };
 
-            List<Boolean> fixity = new List<Boolean>();
+            List<DOFType> fixity = new List<DOFType>();
             List<Double> stiffness = new List<double>();
 
             foreach (String releaseName in releaseNames)
@@ -28,33 +28,41 @@ namespace BH.Engine.Lusas
 
                 if (fixityValue == "F")
                 {
-                    fixity.Add(false);
+                    fixity.Add(DOFType.Free);
                     stiffness.Add(0.0);
                 }
                 else if (fixityValue == "R")
                 {
-                    fixity.Add(true);
+                    fixity.Add(DOFType.Fixed);
                     stiffness.Add(0.0);
                 }
                 else if (fixityValue == "S")
                 {
-                    fixity.Add(false);
+                    fixity.Add(DOFType.Spring);
                     Double stiffnessValue = lusasAttribute.getValue(releaseName + "stiff");
                     stiffness.Add(stiffnessValue);
-
                 }
             }
 
             string attributeName = GetName(lusasAttribute);
 
-            Constraint6DOF bhomConstraint6DOF = BH.Engine.Structure.Create.Constraint6DOF(
-               attributeName, fixity, stiffness);
+            Constraint4DOF bhomConstraint4DOF = BH.Engine.Structure.Create.Constraint4DOF(attributeName);
+
+            bhomConstraint4DOF.TranslationX = fixity[0];
+            bhomConstraint4DOF.TranslationY = fixity[1];
+            bhomConstraint4DOF.TranslationZ = fixity[2];
+            bhomConstraint4DOF.RotationX = fixity[3];
+
+            bhomConstraint4DOF.RotationalStiffnessX = stiffness[0];
+            bhomConstraint4DOF.TranslationalStiffnessX = stiffness[1];
+            bhomConstraint4DOF.TranslationalStiffnessX = stiffness[2];
+            bhomConstraint4DOF.TranslationalStiffnessX = stiffness[3];
 
             int bhomID = GetBHoMID(lusasAttribute, 'p');
 
-            bhomConstraint6DOF.CustomData["Lusas_id"] = bhomID;
+            bhomConstraint4DOF.CustomData["Lusas_id"] = bhomID;
 
-            return bhomConstraint6DOF;
+            return bhomConstraint4DOF;
         }
     }
 }
