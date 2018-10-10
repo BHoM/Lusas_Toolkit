@@ -30,7 +30,7 @@ namespace BH.Adapter.Lusas
 
             if (!(node.Constraint == null))
             {
-                String constraintName = "Sp" + node.Constraint.CustomData[AdapterId] + "/" + node.Constraint.Name;
+                string constraintName = "Sp" + node.Constraint.CustomData[AdapterId] + "/" + node.Constraint.Name;
                 IFAttribute lusasSupport = d_LusasData.getAttribute("Support", constraintName);
                 lusasSupport.assignTo(newPoint);
             }

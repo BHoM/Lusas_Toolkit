@@ -32,7 +32,7 @@ namespace BH.Engine.Lusas
         {
             Node bhomNode = null;
             IFPoint lusasPoint = lusasLine.getLOFs()[nodeIndex];
-            String pointName = removePrefix(lusasPoint.getName(), "P");
+            string pointName = removePrefix(lusasPoint.getName(), "P");
             bhomNodes.TryGetValue(pointName, out bhomNode);
 
             return bhomNode;
@@ -42,7 +42,7 @@ namespace BH.Engine.Lusas
         {
             Bar bhomBar = null;
             IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
-            String lineName = removePrefix(lusasEdge.getName(), "L");
+            string lineName = removePrefix(lusasEdge.getName(), "L");
             bhomBars.TryGetValue(lineName, out bhomBar);
             return bhomBar;
         }
@@ -51,17 +51,17 @@ namespace BH.Engine.Lusas
         {
             Edge bhomEdge = null;
             IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
-            String lineName = removePrefix(lusasEdge.getName(), "L");
+            string lineName = removePrefix(lusasEdge.getName(), "L");
             bhomBars.TryGetValue(lineName, out bhomEdge);
             return bhomEdge;
         }
 
-        public static HashSet<String> IsMemberOf(IFGeometry lusasGeometry, HashSet<String> groupNames)
+        public static HashSet<string> IsMemberOf(IFGeometry lusasGeometry, HashSet<string> groupNames)
         {
 
-            HashSet<String> memberGroups = new HashSet<string>();
+            HashSet<string> memberGroups = new HashSet<string>();
 
-            foreach (String groupName in groupNames)
+            foreach (string groupName in groupNames)
             {
                 if (lusasGeometry.isMemberOfGroup(groupName))
                 {

@@ -96,7 +96,7 @@ namespace BH.Adapter.Lusas
             {
                 if (!(bar.SectionProperty.Material == null))
                 {
-                    String materialName = "M" + bar.SectionProperty.Material.CustomData[AdapterId] + "/" + bar.SectionProperty.Material.Name;
+                    string materialName = "M" + bar.SectionProperty.Material.CustomData[AdapterId] + "/" + bar.SectionProperty.Material.Name;
                     IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
                     lusasMaterial.assignTo(newLine);
                 }

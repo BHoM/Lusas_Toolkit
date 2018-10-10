@@ -17,14 +17,14 @@ namespace BH.Engine.Lusas
     {
         public static Constraint4DOF ToBHoMConstraint4DOF(this IFSupportStructural lusasAttribute)
         {
-            List<String> releaseNames = new List<string> { "U", "V", "W", "THX" };
+            List<string> releaseNames = new List<string> { "U", "V", "W", "THX" };
 
             List<DOFType> fixity = new List<DOFType>();
-            List<Double> stiffness = new List<double>();
+            List<double> stiffness = new List<double>();
 
-            foreach (String releaseName in releaseNames)
+            foreach (string releaseName in releaseNames)
             {
-                String fixityValue = lusasAttribute.getValue(releaseName);
+                string fixityValue = lusasAttribute.getValue(releaseName);
 
                 if (fixityValue == "F")
                 {
@@ -39,7 +39,7 @@ namespace BH.Engine.Lusas
                 else if (fixityValue == "S")
                 {
                     fixity.Add(DOFType.Spring);
-                    Double stiffnessValue = lusasAttribute.getValue(releaseName + "stiff");
+                    double stiffnessValue = lusasAttribute.getValue(releaseName + "stiff");
                     stiffness.Add(stiffnessValue);
                 }
             }

@@ -15,11 +15,11 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static Node ToBHoMNode(this IFPoint lusasPoint, HashSet<String> groupNames, Dictionary<string, Constraint6DOF> constraints6DOF)
+        public static Node ToBHoMNode(this IFPoint lusasPoint, HashSet<string> groupNames, Dictionary<string, Constraint6DOF> constraints6DOF)
         {
-            HashSet<String> tags = new HashSet<string>(IsMemberOf(lusasPoint, groupNames));
+            HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasPoint, groupNames));
 
-            List<String> supportAssignments = AttributeAssignments(lusasPoint, "Support");
+            List<string> supportAssignments = AttributeAssignments(lusasPoint, "Support");
 
             Constraint6DOF nodeConstraint = null;
             if (!(supportAssignments.Count() == 0))
@@ -36,7 +36,7 @@ namespace BH.Engine.Lusas
                 Constraint = nodeConstraint
             };
 
-            String pointName = removePrefix(lusasPoint.getName(), "P");
+            string pointName = removePrefix(lusasPoint.getName(), "P");
 
             bhomNode.CustomData["Lusas_id"] = pointName;
 

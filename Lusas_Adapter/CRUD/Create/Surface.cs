@@ -37,12 +37,12 @@ namespace BH.Adapter.Lusas
 
             if(!(panel.Property == null))
             {
-                String geometricSurfaceName = "G" + panel.Property.CustomData[AdapterId] + "/" + panel.Property.Name;
+                string geometricSurfaceName = "G" + panel.Property.CustomData[AdapterId] + "/" + panel.Property.Name;
                 IFAttribute lusasGeometricSurface = d_LusasData.getAttribute("Surface Geometric", geometricSurfaceName);
                 lusasGeometricSurface.assignTo(newSurface);
                 if (!(panel.Property.Material == null))
                 {
-                    String materialName = "M" + panel.Property.Material.CustomData[AdapterId] + "/" + panel.Property.Material.Name;
+                    string materialName = "M" + panel.Property.Material.CustomData[AdapterId] + "/" + panel.Property.Material.Name;
                     IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
                     lusasMaterial.assignTo(newSurface);
                 }

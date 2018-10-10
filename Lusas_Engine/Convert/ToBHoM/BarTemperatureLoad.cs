@@ -24,7 +24,7 @@ namespace BH.Engine.Lusas
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)assignmentList.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(assignedLoadcase);
-            Double temperatureChange = lusasTemperatureLoad.getValue("T")
+            double temperatureChange = lusasTemperatureLoad.getValue("T")
                 - lusasTemperatureLoad.getValue("T0");
 
             IEnumerable<Bar> bhomBars = GetBarAssignments(assignmentList, bars);
