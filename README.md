@@ -23,6 +23,8 @@ BHoM object are constainted within the `Structure` namespace unless specified ot
 #### Supports
 1. Point
 - `Support` (`Properties.Constraint6DOF`)
+2. Line
+- `Support` (`Properties.Constraint4DOF`)
 
 #### Materials
 - `Material` (`Common.Materials.Material`)
@@ -32,6 +34,12 @@ BHoM object are constainted within the `Structure` namespace unless specified ot
 - `Body Force` (`Loads.GravityLoad`)
 - `Global Distributed Load` (`Loads.BarUniformlyDistributedLoad` - set `LoadAxis.Global`)
 - `Local Distributed Load` (`Loads.BarUniformlyDistributedLoad` - set `LoadAxis.Local`)
+- `Global Distributed Load` (`Loads.AreaUniformlyDistributedLoad` - set `LoadAxis.Global`)
+- `Local Distributed Load` (`Loads.AreaUniformlyDistributedLoad` - set `LoadAxis.Local`)
+- `Temperature Load` (`Loads.BarTemperatureLoad`)
+- `Temperature Load (`Loads.AreaTemperatureLoad`)
+- `Prescribed Displacement (`Loads.PointDisplacement`)
+
 
 ## What is currently being developed?
 
