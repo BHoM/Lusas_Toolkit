@@ -37,8 +37,8 @@ BHoM object are constainted within the `Structure` namespace unless specified ot
 - `Global Distributed Load` (`Loads.AreaUniformlyDistributedLoad` - set `LoadAxis.Global`)
 - `Local Distributed Load` (`Loads.AreaUniformlyDistributedLoad` - set `LoadAxis.Local`)
 - `Temperature Load` (`Loads.BarTemperatureLoad`)
-- `Temperature Load (`Loads.AreaTemperatureLoad`)
-- `Prescribed Displacement (`Loads.PointDisplacement`)
+- `Temperature Load` (`Loads.AreaTemperatureLoad`)
+- `Prescribed Displacement` (`Loads.PointDisplacement`)
 
 
 ## What is currently being developed?
