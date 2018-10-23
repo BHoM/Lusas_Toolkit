@@ -86,6 +86,7 @@
     <Compile Include="Convert\ToBHoM\PanelPlanar.cs" />
     <Compile Include="Convert\ToBHoM\Point.cs" />
     <Compile Include="Convert\ToBHoM\GravityLoad.cs" />
+    <Compile Include="Convert\ToBHoM\SectionProperty.cs" />
     <Compile Include="Convert\ToBHoM\_ToBHoM.cs" />
     <Compile Include="Convert\ToLusas\_ToLusas.cs" />
     <Compile Include="Object_Comparer\Equality Comparer\BarMidPointComparer.cs" />
