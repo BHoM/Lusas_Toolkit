@@ -341,6 +341,9 @@ namespace BH.Adapter.Lusas
                 case "AreaUniformalyDistributedLoad":
                     readLoads = ReadAreaUniformlyDistributedLoad(ids as dynamic);
                     break;
+                case "BarPointLoad":
+                    readLoads = ReadBarPointLoad(ids as dynamic);
+                    break;
 
             }
             return readLoads;
@@ -518,6 +521,38 @@ namespace BH.Adapter.Lusas
             }
 
             return bhomPanelUniformlyDistributedLoads;
+        }
+
+        /***************************************************/
+
+        private List<ILoad> ReadBarPointLoad(List<string> ids = null)
+        {
+            List<ILoad> bhomBarPointLoads = new List<ILoad>();
+
+            object[] lusasBarPointLoads = d_LusasData.getAttributes("Beam Point Load");
+
+            if (lusasBarPointLoads.Count() != 0)
+            {
+                List<Bar> bhomSurfaces = ReadBars();
+                Dictionary<string, Bar> barDictionary = bhomSurfaces.ToDictionary(x => x.CustomData[AdapterId].ToString());
+                List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
+
+                for (int i = 0; i < lusasBarPointLoads.Count(); i++)
+                {
+                    IFLoading lusasBarPointLoad = (IFLoading)lusasBarPointLoads[i];
+                    IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(lusasBarPointLoad);
+
+                        foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
+                        {
+                            BarPointLoad bhomBarPointLoad = BH.Engine.Lusas.Convert.ToBHoMBarPointLoad(lusasBarPointLoad, groupedAssignment, barDictionary);
+                            List<string> analysisName = new List<string> { lusasBarPointLoad.getAttributeType() };
+                            bhomBarPointLoad.Tags = new HashSet<string>(analysisName);
+                            bhomBarPointLoads.Add(bhomBarPointLoad);
+                        }
+                }
+            }
+
+            return bhomBarPointLoads;
         }
 
         /***************************************************/
