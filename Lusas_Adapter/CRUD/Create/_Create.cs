@@ -98,6 +98,9 @@ namespace BH.Adapter.Lusas
                         case "BH.oM.Structure.Loads.PointDisplacement":
                             success = CreateCollection(objects as IEnumerable<PointDisplacement>);
                             break;
+                        case "BH.oM.Structure.Loads.BarPointLoad":
+                            success = CreateCollection(objects as IEnumerable<BarPointLoad>);
+                            break;
                     }
                 }
                 if (typeof(IProperty2D).IsAssignableFrom(objects.First().GetType()))
@@ -564,6 +567,27 @@ namespace BH.Adapter.Lusas
             foreach (LoadCombination loadcombination in loadcombinations)
             {
                 IFBasicCombination newLoadCombination = CreateLoadCombination(loadcombination);
+            }
+
+            return true;
+        }
+
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<BarPointLoad> barPointLoads)
+        {
+            
+            foreach (BarPointLoad barPointLoad in barPointLoads)
+            {
+                List<IFLine> assignedBars = new List<IFLine>();
+                foreach (Bar bar in barPointLoad.Objects.Elements)
+                {
+                    IFLine lusasBar = d_LusasData.getLineByName("L" + bar.CustomData[AdapterId].ToString());
+                    assignedBars.Add(lusasBar);
+                }
+
+                IFLine[] arrayBars = assignedBars.ToArray();
+                IFLoadingBeamPoint newGlobalDistributed = CreateBarPointLoad(barPointLoad, arrayBars);
             }
 
             return true;
