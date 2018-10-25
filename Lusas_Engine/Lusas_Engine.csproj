@@ -74,6 +74,7 @@
     <Compile Include="Convert\ToBHoM\BarUniformlyDistributedLoad.cs" />
     <Compile Include="Convert\ToBHoM\AreaUniformallyDistributedLoad.cs" />
     <Compile Include="Convert\ToBHoM\BarPointLoad.cs" />
+    <Compile Include="Convert\ToBHoM\BarDistributedLoad.cs" />
     <Compile Include="Convert\ToBHoM\PointDisplacement.cs" />
     <Compile Include="Convert\ToBHoM\Constraint4DOF.cs" />
     <Compile Include="Convert\ToBHoM\LoadCombination.cs" />
