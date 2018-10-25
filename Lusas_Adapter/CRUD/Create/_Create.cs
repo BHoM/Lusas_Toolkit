@@ -101,6 +101,9 @@ namespace BH.Adapter.Lusas
                         case "BH.oM.Structure.Loads.BarPointLoad":
                             success = CreateCollection(objects as IEnumerable<BarPointLoad>);
                             break;
+                        case "BH.oM.Structure.Loads.BarVaryingDistributedLoad":
+                            success = CreateCollection(objects as IEnumerable<BarVaryingDistributedLoad>);
+                            break;
                     }
                 }
                 if (typeof(IProperty2D).IsAssignableFrom(objects.First().GetType()))
@@ -588,6 +591,27 @@ namespace BH.Adapter.Lusas
 
                 IFLine[] arrayBars = assignedBars.ToArray();
                 IFLoadingBeamPoint newGlobalDistributed = CreateBarPointLoad(barPointLoad, arrayBars);
+            }
+
+            return true;
+        }
+
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<BarVaryingDistributedLoad> barDistributedLoads)
+        {
+
+            foreach (BarVaryingDistributedLoad barDistributedLoad in barDistributedLoads)
+            {
+                List<IFLine> assignedBars = new List<IFLine>();
+                foreach (Bar bar in barDistributedLoad.Objects.Elements)
+                {
+                    IFLine lusasBar = d_LusasData.getLineByName("L" + bar.CustomData[AdapterId].ToString());
+                    assignedBars.Add(lusasBar);
+                }
+
+                IFLine[] arrayBars = assignedBars.ToArray();
+                List<IFLoadingBeamDistributed> newGlobalDistributed = CreateBarDistributedLoad(barDistributedLoad, arrayBars);
             }
 
             return true;
