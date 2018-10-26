@@ -358,6 +358,12 @@ namespace BH.Adapter.Lusas
                 case "PointDisplacement":
                     readLoads = ReadPointDisplacement(ids as dynamic);
                     break;
+                case "BarPointLoad":
+                    readLoads = ReadBarPointLoad(ids as dynamic);
+                    break;
+                case "BarVaryingDistributedLoad":
+                    readLoads = ReadBarDistributedLoad(ids as dynamic);
+                    break;
             }
             return readLoads;
 
@@ -660,5 +666,70 @@ namespace BH.Adapter.Lusas
         }
 
         /***************************************************/
+
+        private List<ILoad> ReadBarPointLoad(List<string> ids = null)
+        {
+            List<ILoad> bhomBarPointLoads = new List<ILoad>();
+
+            object[] lusasBarPointLoads = d_LusasData.getAttributes("Beam Point Load");
+
+            if (lusasBarPointLoads.Count() != 0)
+            {
+                List<Bar> bhomBars = ReadBars();
+                Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(x => x.CustomData[AdapterId].ToString());
+                List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
+
+                for (int i = 0; i < lusasBarPointLoads.Count(); i++)
+                {
+                    IFLoading lusasBarPointLoad = (IFLoading)lusasBarPointLoads[i];
+                    IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(lusasBarPointLoad);
+
+                    foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
+                    {
+                        BarPointLoad bhomBarPointLoad = BH.Engine.Lusas.Convert.ToBHoMBarPointLoad(lusasBarPointLoad, groupedAssignment, barDictionary);
+                        List<string> analysisName = new List<string> { lusasBarPointLoad.getAttributeType() };
+                        bhomBarPointLoad.Tags = new HashSet<string>(analysisName);
+                        bhomBarPointLoads.Add(bhomBarPointLoad);
+                    }
+                }
+            }
+
+            return bhomBarPointLoads;
+        }
+
+        /***************************************************/
+
+        private List<ILoad> ReadBarDistributedLoad(List<string> ids = null)
+        {
+            List<ILoad> bhomBarDistributedLoads = new List<ILoad>();
+
+            object[] lusasBarDistributedLoads = d_LusasData.getAttributes("Beam Distributed Load");
+
+            if (lusasBarDistributedLoads.Count() != 0)
+            {
+                List<Bar> bhomBars = ReadBars();
+                Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(x => x.CustomData[AdapterId].ToString());
+                List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
+
+                for (int i = 0; i < lusasBarDistributedLoads.Count(); i++)
+                {
+                    IFLoading lusasBarDistributedLoad = (IFLoading)lusasBarDistributedLoads[i];
+                    IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(lusasBarDistributedLoad);
+
+                    foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
+                    {
+                        BarVaryingDistributedLoad bhomBarDistributedLoad = BH.Engine.Lusas.Convert.ToBHoMBarDistributedLoad(lusasBarDistributedLoad, groupedAssignment, barDictionary);
+                        List<string> analysisName = new List<string> { lusasBarDistributedLoad.getAttributeType() };
+                        bhomBarDistributedLoad.Tags = new HashSet<string>(analysisName);
+                        bhomBarDistributedLoads.Add(bhomBarDistributedLoad);
+                    }
+                }
+            }
+
+            return bhomBarDistributedLoads;
+        }
+
+        /***************************************************/
+
     }
 }

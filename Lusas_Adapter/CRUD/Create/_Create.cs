@@ -98,6 +98,12 @@ namespace BH.Adapter.Lusas
                         case "BH.oM.Structure.Loads.PointDisplacement":
                             success = CreateCollection(objects as IEnumerable<PointDisplacement>);
                             break;
+                        case "BH.oM.Structure.Loads.BarPointLoad":
+                            success = CreateCollection(objects as IEnumerable<BarPointLoad>);
+                            break;
+                        case "BH.oM.Structure.Loads.BarVaryingDistributedLoad":
+                            success = CreateCollection(objects as IEnumerable<BarVaryingDistributedLoad>);
+                            break;
                     }
                 }
                 if (typeof(IProperty2D).IsAssignableFrom(objects.First().GetType()))
@@ -371,10 +377,10 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<PointForce> pointforces)
         {
-            List<IFPoint> assignedPoints = new List<IFPoint>();
 
             foreach (PointForce pointforce in pointforces)
             {
+                List<IFPoint> assignedPoints = new List<IFPoint>();
                 foreach (Node node in pointforce.Objects.Elements)
                 {
                     IFPoint lusasPoint = d_LusasData.getPointByName("P" + node.CustomData[AdapterId].ToString());
@@ -392,11 +398,10 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<GravityLoad> gravityLoads)
         {
-            List<IFLine> assignedLines = new List<IFLine>();
-            List<IFSurface> assignedSurfaces = new List<IFSurface>();
-
             foreach (GravityLoad gravityLoad in gravityLoads)
             {
+                List<IFLine> assignedLines = new List<IFLine>();
+                List<IFSurface> assignedSurfaces = new List<IFSurface>();
                 foreach (BHoMObject bhomGeometry in gravityLoad.Objects.Elements)
                 {
                     if (bhomGeometry.GetType().ToString() == "BH.oM.Structure.Elements.Bar")
@@ -430,10 +435,11 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<BarUniformlyDistributedLoad> barUniformlyDistributedLoads)
         {
-            List<IFLine> assignedLines = new List<IFLine>();
+
 
             foreach (BarUniformlyDistributedLoad barUniformlyDistributedLoad in barUniformlyDistributedLoads)
             {
+                List<IFLine> assignedLines = new List<IFLine>();
                 foreach (Bar bar in barUniformlyDistributedLoad.Objects.Elements)
                 {
                     IFLine lusasLine = d_LusasData.getLineByName("L" + bar.CustomData[AdapterId].ToString());
@@ -458,10 +464,11 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<AreaUniformalyDistributedLoad> areaUniformlyDistributedLoads)
         {
-            List<IFSurface> assignedSurfaces = new List<IFSurface>();
+
 
             foreach (AreaUniformalyDistributedLoad areaUniformlyDistributedLoad in areaUniformlyDistributedLoads)
             {
+                List<IFSurface> assignedSurfaces = new List<IFSurface>();
                 foreach (IAreaElement panel in areaUniformlyDistributedLoad.Objects.Elements)
                 {
                     IFSurface lusasSurface = d_LusasData.getSurfaceByName("S" + panel.CustomData[AdapterId].ToString());
@@ -486,10 +493,11 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<BarTemperatureLoad> barTemperatureLoads)
         {
-            List<IFLine> assignedLines = new List<IFLine>();
+
 
             foreach (BarTemperatureLoad barTemperatureLoad in barTemperatureLoads)
             {
+                List<IFLine> assignedLines = new List<IFLine>();
                 foreach (Bar bar in barTemperatureLoad.Objects.Elements)
                 {
                     IFLine lusasLine = d_LusasData.getLineByName("L" + bar.CustomData[AdapterId].ToString());
@@ -504,10 +512,9 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<AreaTemperatureLoad> areaTemperatureLoads)
         {
-            List<IFSurface> assignedSurfaces = new List<IFSurface>();
-
             foreach (AreaTemperatureLoad areaTemperatureLoad in areaTemperatureLoads)
             {
+                List<IFSurface> assignedSurfaces = new List<IFSurface>();
                 foreach (PanelPlanar panel in areaTemperatureLoad.Objects.Elements)
                 {
                     IFSurface lusasSurface = d_LusasData.getSurfaceByName("S" + panel.CustomData[AdapterId].ToString());
@@ -522,10 +529,9 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<PointDisplacement> pointDisplacements)
         {
-            List<IFPoint> assignedPoints = new List<IFPoint>();
-
             foreach (PointDisplacement pointDisplacement in pointDisplacements)
             {
+                List<IFPoint> assignedPoints = new List<IFPoint>();
                 foreach (Node node in pointDisplacement.Objects.Elements)
                 {
                     IFPoint lusasPoint = d_LusasData.getPointByName("P" + node.CustomData[AdapterId].ToString());
@@ -564,6 +570,48 @@ namespace BH.Adapter.Lusas
             foreach (LoadCombination loadcombination in loadcombinations)
             {
                 IFBasicCombination newLoadCombination = CreateLoadCombination(loadcombination);
+            }
+
+            return true;
+        }
+
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<BarPointLoad> barPointLoads)
+        {
+            
+            foreach (BarPointLoad barPointLoad in barPointLoads)
+            {
+                List<IFLine> assignedBars = new List<IFLine>();
+                foreach (Bar bar in barPointLoad.Objects.Elements)
+                {
+                    IFLine lusasBar = d_LusasData.getLineByName("L" + bar.CustomData[AdapterId].ToString());
+                    assignedBars.Add(lusasBar);
+                }
+
+                IFLine[] arrayBars = assignedBars.ToArray();
+                IFLoadingBeamPoint newGlobalDistributed = CreateBarPointLoad(barPointLoad, arrayBars);
+            }
+
+            return true;
+        }
+
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<BarVaryingDistributedLoad> barDistributedLoads)
+        {
+
+            foreach (BarVaryingDistributedLoad barDistributedLoad in barDistributedLoads)
+            {
+                List<IFLine> assignedBars = new List<IFLine>();
+                foreach (Bar bar in barDistributedLoad.Objects.Elements)
+                {
+                    IFLine lusasBar = d_LusasData.getLineByName("L" + bar.CustomData[AdapterId].ToString());
+                    assignedBars.Add(lusasBar);
+                }
+
+                IFLine[] arrayBars = assignedBars.ToArray();
+                List<IFLoadingBeamDistributed> newGlobalDistributed = CreateBarDistributedLoad(barDistributedLoad, arrayBars);
             }
 
             return true;
