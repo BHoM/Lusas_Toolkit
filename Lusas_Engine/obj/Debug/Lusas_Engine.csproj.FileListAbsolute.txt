@@ -1,10 +1,10 @@
-C:\Users\pnugent\Documents\GitHub\Lusas_Toolkit\Build\Lusas_Engine.dll
-C:\Users\pnugent\Documents\GitHub\Lusas_Toolkit\Build\Lusas_Engine.pdb
-C:\Users\pnugent\Documents\GitHub\Lusas_Toolkit\Lusas_Engine\obj\Debug\Lusas_Engine.csprojResolveAssemblyReference.cache
-C:\Users\pnugent\Documents\GitHub\Lusas_Toolkit\Lusas_Engine\obj\Debug\Lusas_Engine.dll
-C:\Users\pnugent\Documents\GitHub\Lusas_Toolkit\Lusas_Engine\obj\Debug\Lusas_Engine.pdb
 C:\Users\cself\Documents\GitHub\Lusas_Toolkit\Build\Lusas_Engine.dll
 C:\Users\cself\Documents\GitHub\Lusas_Toolkit\Build\Lusas_Engine.pdb
 C:\Users\cself\Documents\GitHub\Lusas_Toolkit\Lusas_Engine\obj\Debug\Lusas_Engine.dll
 C:\Users\cself\Documents\GitHub\Lusas_Toolkit\Lusas_Engine\obj\Debug\Lusas_Engine.pdb
 C:\Users\cself\Documents\GitHub\Lusas_Toolkit\Lusas_Engine\obj\Debug\Lusas_Engine.csprojResolveAssemblyReference.cache
+C:\Users\pnugent\Documents\GitHub\Lusas_Toolkit\Build\Lusas_Engine.dll
+C:\Users\pnugent\Documents\GitHub\Lusas_Toolkit\Build\Lusas_Engine.pdb
+C:\Users\pnugent\Documents\GitHub\Lusas_Toolkit\Lusas_Engine\obj\Debug\Lusas_Engine.csprojResolveAssemblyReference.cache
+C:\Users\pnugent\Documents\GitHub\Lusas_Toolkit\Lusas_Engine\obj\Debug\Lusas_Engine.dll
+C:\Users\pnugent\Documents\GitHub\Lusas_Toolkit\Lusas_Engine\obj\Debug\Lusas_Engine.pdb
