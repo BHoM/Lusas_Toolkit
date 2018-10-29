@@ -169,7 +169,10 @@ namespace BH.Adapter.Lusas
                     type == typeof(BarUniformlyDistributedLoad) ||
                     type == typeof(AreaUniformalyDistributedLoad) ||
                     type == typeof(BarTemperatureLoad) ||
-                    type == typeof(AreaTemperatureLoad))
+                    type == typeof(AreaTemperatureLoad) ||
+                    type == typeof(BarPointLoad) ||
+                    type == typeof(BarVaryingDistributedLoad) ||
+                    type == typeof(PointDisplacement))
                 {
                     int largestLoadID = d_LusasData.getLargestAttributeID("Loading");
                     if (largestLoadID == 0)

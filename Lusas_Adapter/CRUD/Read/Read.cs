@@ -51,6 +51,8 @@ namespace BH.Adapter.Lusas
                 return ReadSectionProperties(ids as dynamic);
             else if (type == typeof(LoadCombination))
                 return ReadLoadCombination(ids as dynamic);
+            else if(type == typeof(BHoMObject))
+                return ReadAll(ids as dynamic);
             return null;
         }
 
@@ -59,6 +61,30 @@ namespace BH.Adapter.Lusas
         /***************************************************/
 
         //The List<string> in the methods below can be changed to a list of any type of identification more suitable for the toolkit
+
+        private List<IBHoMObject> ReadAll(List<string> ids = null)
+        {
+            List<IBHoMObject> objects = new List<IBHoMObject>();
+
+            objects.AddRange(ReadNodes());
+            objects.AddRange(ReadBars());
+            objects.AddRange(ReadSurfaces());
+            objects.AddRange(ReadProperty2D());
+            objects.AddRange(ReadMaterials());
+            objects.AddRange(ReadConstraint4DOFs());
+            objects.AddRange(ReadConstraint6DOFs());
+            objects.AddRange(ReadLoadcases());
+            objects.AddRange(ReadLoadCombination());
+            //objects.AddRange(ReadAreaTemperatureLoad());
+            //objects.AddRange(ReadAreaUniformlyDistributedLoad());
+            //objects.AddRange(ReadBarDistributedLoad());
+            //objects.AddRange(ReadBarPointLoad());
+            //objects.AddRange(ReadBarTemperatureLoad());
+            //objects.AddRange(ReadBarUniformlyDistributedLoad());
+            //objects.AddRange(ReadGravityLoad());
+            return objects;
+        }
+
 
         private List<Bar> ReadBars(List<string> ids = null)
         {
