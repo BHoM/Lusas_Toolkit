@@ -31,7 +31,10 @@ namespace BH.Engine.Lusas
         public static Bar ToBHoMBar(this IFLine lusasLine, 
             Dictionary<string, Node> bhomNodes, 
             Dictionary<string, Constraint4DOF> bhomSupports,
-            HashSet<string> groupNames)
+            HashSet<string> groupNames,
+            Dictionary<string, Material> bhomMaterials,
+            Dictionary<string, ISectionProperty> bhomSections
+            )
 
         {
 
@@ -54,15 +57,22 @@ namespace BH.Engine.Lusas
                 Tags = tags,
                 Spring = barConstraint};
 
-            //List<string> materialAssignments = AttributeAssignments(lusasLine, "Material");
+            List<string> geometricAssignments = AttributeAssignments(lusasLine, "Geometric");
+            List<string> materialAssignments = AttributeAssignments(lusasLine, "Material");
 
-            //This will be wrapped in with the SectionProperties when they are defined
-            //Material barMaterial = null;
-            //if (!(materialAssignments.Count() == 0))
-            //{
-            //    bhomMaterials.TryGetValue(materialAssignments[0], out barMaterial);
-            //    bhomBar.SectionProperty.Material = barMaterial;
-            //}
+            Material lineMaterial = null;
+            ISectionProperty lineSection = null;
+
+            if (!(geometricAssignments.Count() == 0))
+            {
+                bhomSections.TryGetValue(geometricAssignments[0], out lineSection);
+                if (!(materialAssignments.Count() == 0))
+                {
+                    bhomMaterials.TryGetValue(materialAssignments[0], out lineMaterial);
+                    lineSection.Material = lineMaterial;
+                }
+                bhomBar.SectionProperty = lineSection;
+            }
 
             string lineName = removePrefix(lusasLine.getName(), "L");
 
