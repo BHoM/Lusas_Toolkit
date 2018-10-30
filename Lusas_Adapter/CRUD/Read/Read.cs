@@ -75,16 +75,17 @@ namespace BH.Adapter.Lusas
             objects.AddRange(ReadConstraint6DOFs());
             objects.AddRange(ReadLoadcases());
             objects.AddRange(ReadLoadCombination());
-            //objects.AddRange(ReadAreaTemperatureLoad());
-            //objects.AddRange(ReadAreaUniformlyDistributedLoad());
-            //objects.AddRange(ReadBarDistributedLoad());
-            //objects.AddRange(ReadBarPointLoad());
-            //objects.AddRange(ReadBarTemperatureLoad());
-            //objects.AddRange(ReadBarUniformlyDistributedLoad());
-            //objects.AddRange(ReadGravityLoad());
+            objects.AddRange(ReadPointForce());
+            objects.AddRange(ReadPointDisplacement());
+            objects.AddRange(ReadBarUniformlyDistributedLoad());
+            objects.AddRange(ReadBarPointLoad());
+            objects.AddRange(ReadBarVaryingDistributedLoad());
+            objects.AddRange(ReadAreaUniformlyDistributedLoad());
+            objects.AddRange(ReadBarTemperatureLoad());
+            objects.AddRange(ReadAreaTemperatureLoad());
+            objects.AddRange(ReadGravityLoad());
             return objects;
         }
-
 
         private List<Bar> ReadBars(List<string> ids = null)
         {
@@ -388,7 +389,7 @@ namespace BH.Adapter.Lusas
                     readLoads = ReadBarPointLoad(ids as dynamic);
                     break;
                 case "BarVaryingDistributedLoad":
-                    readLoads = ReadBarDistributedLoad(ids as dynamic);
+                    readLoads = ReadBarVaryingDistributedLoad(ids as dynamic);
                     break;
             }
             return readLoads;
@@ -725,7 +726,7 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private List<ILoad> ReadBarDistributedLoad(List<string> ids = null)
+        private List<ILoad> ReadBarVaryingDistributedLoad(List<string> ids = null)
         {
             List<ILoad> bhomBarDistributedLoads = new List<ILoad>();
 
