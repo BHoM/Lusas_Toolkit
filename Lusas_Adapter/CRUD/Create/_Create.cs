@@ -110,6 +110,10 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<IProperty2D>);
                 }
+                if (typeof(IProperty2D).IsAssignableFrom(objects.First().GetType()))
+                {
+                    success = CreateCollection(objects as IEnumerable<IProperty2D>);
+                }
                 //if (objects.First().GetType().GetInterfaces().Contains(typeof(ISectionProperty)))
                 //{
                 //    success = CreateCollection(objects as IEnumerable<ISectionProperty>);
@@ -325,16 +329,12 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<ISectionProperty> sectionProperties)
         {
-            List<ISectionProperty> secPropList = sectionProperties.ToList();
-
-            foreach (ISectionProperty secProp in secPropList)
+            foreach (ISectionProperty sectionProperty in sectionProperties)
             {
-                IFGeometricLine attribute = d_LusasData.createGeometricLine("beam");
-                attribute.setValue("elementType", "3D Thick Beam");
-                attribute.setBeam(secProp.Area, secProp.Iy, secProp.Iz, 0, secProp.J, secProp.Asz, secProp.Asy, secProp.CentreY, secProp.CentreZ);
+                IFGeometricLine attribute = CreateGeometricLine(sectionProperty)
             }
 
-            throw new NotImplementedException();
+            return true;
         }
 
         /***************************************************/

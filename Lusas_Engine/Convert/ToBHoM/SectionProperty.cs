@@ -19,8 +19,6 @@ namespace BH.Engine.Lusas
         {
             string attributeName = GetName(lusasAttribute);
 
-            lusasAttribute.getValueNames();
-
             IProfile sectionProfile = createProfile(lusasAttribute);
 
             double area = lusasAttribute.getValue("A");

@@ -17,7 +17,6 @@ namespace BH.Adapter.Lusas
         public IFLine CreateLine(Bar bar)
         {
             IFLine newLine;
-
             IFPoint startPoint = d_LusasData.getPointByName(bar.StartNode.CustomData[AdapterId].ToString());
             IFPoint endPoint = d_LusasData.getPointByName(bar.EndNode.CustomData[AdapterId].ToString());
             newLine = d_LusasData.createLineByPoints(startPoint, endPoint);
