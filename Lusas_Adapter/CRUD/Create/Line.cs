@@ -17,7 +17,6 @@ namespace BH.Adapter.Lusas
         public IFLine CreateLine(Bar bar)
         {
             IFLine newLine;
-
             IFPoint startPoint = d_LusasData.getPointByName(bar.StartNode.CustomData[AdapterId].ToString());
             IFPoint endPoint = d_LusasData.getPointByName(bar.EndNode.CustomData[AdapterId].ToString());
             newLine = d_LusasData.createLineByPoints(startPoint, endPoint);
@@ -30,6 +29,9 @@ namespace BH.Adapter.Lusas
 
             if (!(bar.SectionProperty == null))
             {
+                string geometricLineName = "G" + bar.SectionProperty.CustomData[AdapterId] + "/" + bar.SectionProperty.Name;
+                IFAttribute lusasGeometricLine = d_LusasData.getAttribute("Line Geometric", geometricLineName);
+                lusasGeometricLine.assignTo(newLine);
                 if (!(bar.SectionProperty.Material == null))
                 {
                     string materialName = "M" + bar.SectionProperty.Material.CustomData[AdapterId] + "/" + bar.SectionProperty.Material.Name;
@@ -46,7 +48,6 @@ namespace BH.Adapter.Lusas
                 IFLocalCoord barLocalAxis = CreateLocalCoordinate(newLine);
                 barLocalAxis.assignTo(newLine);
             }
-
 
             return newLine;
 

@@ -47,6 +47,8 @@ namespace BH.Adapter.Lusas
                 return chooseLoad(type, ids as dynamic);
             else if (typeof(IProperty2D).IsAssignableFrom(type))
                 return ReadProperty2D(ids as dynamic);
+            else if (typeof(ISectionProperty).IsAssignableFrom(type))
+                return ReadSectionProperties(ids as dynamic);
             else if (type == typeof(LoadCombination))
                 return ReadLoadCombination(ids as dynamic);
             else if(type == typeof(BHoMObject))
@@ -94,14 +96,16 @@ namespace BH.Adapter.Lusas
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
             IEnumerable<Constraint4DOF> bhomSupportList = ReadConstraint4DOFs();
             Dictionary<string, Constraint4DOF> bhomSupports = bhomSupportList.ToDictionary(x => x.Name);
-            //IEnumerable<Material> materialList = ReadMaterials();
-            //Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
+            IEnumerable<Material> materialList = ReadMaterials();
+            Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
+            IEnumerable<ISectionProperty> geometricList = ReadSectionProperties();
+            Dictionary<string, ISectionProperty> geometrics = geometricList.ToDictionary(x => x.Name.ToString());
             HashSet<string> groupNames = ReadGroups();
 
             for (int i = 0; i < lusasLines.Count(); i++)
             {
                 IFLine lusasLine = (IFLine)lusasLines[i];
-                Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMBar(lusasLine, bhomNodes, bhomSupports, groupNames);
+                Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMBar(lusasLine, bhomNodes, bhomSupports, groupNames,materials,geometrics);
 
                 bhomBars.Add(bhomBar);
             }
@@ -290,34 +294,16 @@ namespace BH.Adapter.Lusas
 
         private List<ISectionProperty> ReadSectionProperties(List<string> ids = null)
         {
-            //Implement code for reading section properties
-            int largestSecID = d_LusasData.getLargestAttributeID("Geometric");
+            object[] lusasSections = d_LusasData.getAttributes("Line Geometric");
+            List<ISectionProperty> bhomSections = new List<ISectionProperty>();
 
-            for (int i = 0; i < largestSecID; i++)
+            for (int i = 0; i < lusasSections.Count(); i++)
             {
-                IFAttribute lusasSecProp = d_LusasData.getAttribute("Geometric", i + 1);
-                object[] secPropNames1 = lusasSecProp.getValueNames();
-                string[] secPropNames = ((IEnumerable)secPropNames1).Cast<object>()
-                                 .Select(x => x.ToString())
-                                 .ToArray();
-                string lusasSecType = lusasSecProp.getValue("elementType", 0);
-
-                //if (lusasSecType == "I beam")
-                //{
-                //    ISectionProperty section = 
-                //}
-
-                //ISectionProperty bhomSection;
-                //bhomSection.
-                //bhomSection.Area = lusasSecProp.getValue()
-
-                //foreach (string value in secPropValues)
-                //{
-
-                //}
+                IFAttribute lusasSection = (IFAttribute)lusasSections[i];
+                ISectionProperty bhomSection = BH.Engine.Lusas.Convert.ToBHoMSection(lusasSection);
+                bhomSections.Add(bhomSection);
             }
-
-            throw new NotImplementedException();
+            return bhomSections;
         }
 
         /***************************************/
@@ -352,7 +338,6 @@ namespace BH.Adapter.Lusas
                 bhomLoadcase.Tags = new HashSet<string>(analysisName);
                 bhomLoadcases.Add(bhomLoadcase);
             }
-
             return bhomLoadcases;
         }
 

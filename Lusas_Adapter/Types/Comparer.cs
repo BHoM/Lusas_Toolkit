@@ -47,11 +47,11 @@ namespace BH.Adapter.Lusas
             {typeof(Bar), new BH.Engine.Lusas.Object_Comparer.Equality_Comparer.BarMidPointComparer(3)},
             {typeof(Edge), new BH.Engine.Lusas.Object_Comparer.Equality_Comparer.EdgeMidPointComparer(3) },
             { typeof(Point), new BH.Engine.Lusas.Object_Comparer.Equality_Comparer.PointDistanceComparer(3) },
-            // { typeof(ISectionProperty), new BHoMObjectNameOrToStringComparer() },
             {typeof(Material), new BHoMObjectNameComparer() },
             {typeof(LinkConstraint), new BHoMObjectNameComparer() },
             {typeof(IProperty2D), new BHoMObjectNameComparer() },
             {typeof(ConstantThickness), new BHoMObjectNameComparer() },
+            {typeof(ISectionProperty), new BHoMObjectNameComparer() },
             {typeof(ILoad), new BHoMObjectNameComparer() },
             {typeof(Loadcase), new BHoMObjectNameComparer()},
             {typeof(LoadCombination), new BHoMObjectNameComparer()}

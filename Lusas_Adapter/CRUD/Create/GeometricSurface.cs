@@ -19,6 +19,12 @@ namespace BH.Adapter.Lusas
         {
             IFAttribute lusasGeometricSurface = null;
             ConstantThickness constantThickness = property2D as ConstantThickness;
+            if (constantThickness == null)
+            {
+                Engine.Reflection.Compute.RecordWarning("Lusas only supports ConstantThickness proeprties");
+
+                return null;
+            }
             string lusasAttributeName = "G" + constantThickness.CustomData[AdapterId] + "/" + constantThickness.Name;
 
             if (d_LusasData.existsAttribute("Surface Geometric", lusasAttributeName))
