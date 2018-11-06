@@ -97,7 +97,6 @@
     <Compile Include="CRUD\Create\Loadcase.cs" />
     <Compile Include="CRUD\Create\LoadCombination.cs" />
     <Compile Include="CRUD\Create\LocalCoordinate.cs" />
-    <Compile Include="CRUD\Create\Geom.cs" />
     <Compile Include="CRUD\Create\GeometricLine.cs" />
     <Compile Include="CRUD\Create\Material.cs" />
     <Compile Include="CRUD\Create\PrescribedDisplacement.cs" />

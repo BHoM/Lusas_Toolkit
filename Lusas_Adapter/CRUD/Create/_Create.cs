@@ -110,14 +110,10 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<IProperty2D>);
                 }
-                if (typeof(IProperty2D).IsAssignableFrom(objects.First().GetType()))
+                if (typeof(ISectionProperty).IsAssignableFrom(objects.First().GetType()))
                 {
-                    success = CreateCollection(objects as IEnumerable<IProperty2D>);
+                    success = CreateCollection(objects as IEnumerable<ISectionProperty>);
                 }
-                //if (objects.First().GetType().GetInterfaces().Contains(typeof(ISectionProperty)))
-                //{
-                //    success = CreateCollection(objects as IEnumerable<ISectionProperty>);
-                //}
             }
 
             //m_LusasApplication.setManualRefresh(false);
@@ -331,7 +327,7 @@ namespace BH.Adapter.Lusas
         {
             foreach (ISectionProperty sectionProperty in sectionProperties)
             {
-                IFGeometricLine attribute = CreateGeometricLine(sectionProperty)
+                IFAttribute attribute = CreateGeometricLine(sectionProperty);
             }
 
             return true;

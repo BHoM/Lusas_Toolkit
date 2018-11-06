@@ -151,16 +151,17 @@ namespace BH.Adapter.Lusas
                         index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.GetBHoMID(largestAttribute, 'p')) + 1;
                     }
                 }
-                if (type == typeof(ConstantThickness))
+                if (type == typeof(ConstantThickness) ||
+                    type == typeof(ISectionProperty))
                 {
-                    int largestThicknessID = d_LusasData.getLargestAttributeID("Surface Geometric");
+                    int largestThicknessID = d_LusasData.getLargestAttributeID("Geometric");
                     if (largestThicknessID == 0)
                     {
                         index = 1;
                     }
                     else
                     {
-                        IFAttribute largestAttribute = d_LusasData.getAttribute("Surface Geometric", largestThicknessID);
+                        IFAttribute largestAttribute = d_LusasData.getAttribute("Geometric", largestThicknessID);
                         index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.GetBHoMID(largestAttribute, 'G')) + 1;
                     }
                 }

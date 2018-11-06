@@ -47,7 +47,7 @@ namespace BH.Engine.Lusas
 
             bhomSection.Name = attributeName;
 
-            int bhomID = GetBHoMID(lusasAttribute, 'M');
+            int bhomID = GetBHoMID(lusasAttribute, 'G');
 
             bhomSection.CustomData["Lusas_id"] = bhomID;
 
@@ -78,7 +78,7 @@ namespace BH.Engine.Lusas
                     lusasAttribute.getValue("r")
                 );
             }
-            else if(sectionType == 3)
+            else if (sectionType == 3)
             {
                 sectionProfile = BH.Engine.Structure.Create.CircleProfile(
                     lusasAttribute.getValue("D")
@@ -93,13 +93,12 @@ namespace BH.Engine.Lusas
             }
             else if (sectionType == 5)
             {
-                sectionProfile = BH.Engine.Structure.Create.FabricatedISectionProfile(
+                sectionProfile = BH.Engine.Structure.Create.ISectionProfile(
                     lusasAttribute.getValue("D"),
-                    lusasAttribute.getValue("B"),
                     lusasAttribute.getValue("B"),
                     lusasAttribute.getValue("tw"),
                     lusasAttribute.getValue("tf"),
-                    lusasAttribute.getValue("tf"),
+                    lusasAttribute.getValue("r"),
                     lusasAttribute.getValue("r")
                 );
             }
