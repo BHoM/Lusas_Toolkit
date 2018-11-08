@@ -29,8 +29,9 @@ namespace BH.Adapter.Lusas
             }
             else
             {
-                List<double> values = new List<double> { bhomBarDistributedLoad.ForceA.X, bhomBarDistributedLoad.ForceA.Y, bhomBarDistributedLoad.ForceA.Z, bhomBarDistributedLoad.MomentA.X, bhomBarDistributedLoad.MomentA.Y, bhomBarDistributedLoad.MomentA.Z};
-                List<string> keys = new List<string> { "FX", "FY", "FZ", "MX", "MY", "MZ"};
+                List<double> values = new List<double> { bhomBarDistributedLoad.ForceA.X, bhomBarDistributedLoad.ForceA.Y, bhomBarDistributedLoad.ForceA.Z, bhomBarDistributedLoad.MomentA.X, bhomBarDistributedLoad.MomentA.Y, bhomBarDistributedLoad.MomentA.Z
+                                                         bhomBarDistributedLoad.ForceB.X, bhomBarDistributedLoad.ForceB.Y, bhomBarDistributedLoad.ForceA.Z, bhomBarDistributedLoad.MomentA.X, bhomBarDistributedLoad.MomentA.Y, bhomBarDistributedLoad.MomentA.Z};
+                List<string> keys = new List<string> { "FX", "FY", "FZ", "MX", "MY", "MZ", "FX1", "FY1", "FZ1", "MX1", "MY1", "MZ1", };
                 Dictionary<string, double> dict = keys.Zip(values, (k, v) => new { k, v }).ToDictionary(x => x.k, x => x.v);
 
                 foreach (string key in dict.Keys)
