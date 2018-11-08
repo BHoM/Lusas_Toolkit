@@ -9,6 +9,7 @@ using BH.oM.Structure.Loads;
 using BH.oM.Common.Materials;
 using BH.Engine.Geometry;
 using BH.Engine.Structure;
+using BH.Engine.Reflection;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -64,13 +65,30 @@ namespace BH.Adapter.Lusas
 
         private void CreateProfile(BoxProfile bhomProfile, IFGeometricLine lusasGeometricLine)
         {
-            List<double> dimensionList = new List<double> { bhomProfile.Width, bhomProfile.Height, bhomProfile.Thickness };
+            List<double> dimensionList = new List<double> { bhomProfile.Width, bhomProfile.Height, bhomProfile.Thickness,
+            bhomProfile.InnerRadius};
             double[] dimensionArray = dimensionList.ToArray();
 
-            List<string> valueList = new List<string> { "B", "D", "t" };
+            List<string> valueList = new List<string> { "B", "D", "t", "r" };
             string[] valueArray = valueList.ToArray();
 
             int lusasType = 2;
+            CreateLibrarySection(lusasGeometricLine, dimensionArray, valueArray, lusasType);
+        }
+
+        private void CreateProfile(FabricatedBoxProfile bhomProfile, IFGeometricLine lusasGeometricLine)
+        {
+            Engine.Reflection.Compute.RecordWarning("Unequal flange thickness not supported in Lusas for FabricatedBoxProfile, top flange thickness used as flange thickness");
+            Engine.Reflection.Compute.RecordWarning("Weld size assumed to be inner radius for FabricatedBoxProfile");
+
+            List<double> dimensionList = new List<double> { bhomProfile.Width, bhomProfile.Height, bhomProfile.TopFlangeThickness,
+            bhomProfile.WebThickness, bhomProfile.WeldSize};
+            double[] dimensionArray = dimensionList.ToArray();
+
+            List<string> valueList = new List<string> { "B", "D", "tf", "tw", "r"};
+            string[] valueArray = valueList.ToArray();
+
+            int lusasType = 15;
             CreateLibrarySection(lusasGeometricLine, dimensionArray, valueArray, lusasType);
         }
 
@@ -101,10 +119,10 @@ namespace BH.Adapter.Lusas
         private void CreateProfile(ISectionProfile bhomProfile, IFGeometricLine lusasGeometricLine)
         {
             List<double> dimensionList = new List<double> { bhomProfile.Height, bhomProfile.Width,
-            bhomProfile.WebThickness, bhomProfile.FlangeThickness};
+            bhomProfile.WebThickness, bhomProfile.FlangeThickness, bhomProfile.RootRadius};
             double[] dimensionArray = dimensionList.ToArray();
 
-            List<string> valueList = new List<string> { "D", "B", "tw", "tf" };
+            List<string> valueList = new List<string> { "D", "B", "tw", "tf", "r" };
             string[] valueArray = valueList.ToArray();
 
             int lusasType = 5;
@@ -114,10 +132,10 @@ namespace BH.Adapter.Lusas
         private void CreateProfile(TSectionProfile bhomProfile, IFGeometricLine lusasGeometricLine)
         {
             List<double> dimensionList = new List<double> { bhomProfile.Height, bhomProfile.Width,
-            bhomProfile.FlangeThickness, bhomProfile.WebThickness};
+            bhomProfile.FlangeThickness, bhomProfile.WebThickness, bhomProfile.RootRadius};
             double[] dimensionArray = dimensionList.ToArray();
 
-            List<string> valueList = new List<string> { "D", "B", "tf", "tw" };
+            List<string> valueList = new List<string> { "D", "B", "tf", "tw", "r" };
             string[] valueArray = valueList.ToArray();
 
             int lusasType = 8;
@@ -126,17 +144,61 @@ namespace BH.Adapter.Lusas
 
         private void CreateProfile(FabricatedISectionProfile bhomProfile, IFGeometricLine lusasGeometricLine)
         {
+            Engine.Reflection.Compute.RecordWarning("Weld size assumed to be root radius for FabricatedISection");
             List<double> dimensionList = new List<double> { bhomProfile.Height, bhomProfile.TopFlangeWidth,
                 bhomProfile.BotFlangeWidth, bhomProfile.TopFlangeWidth, bhomProfile.TopFlangeThickness,
-            bhomProfile.WebThickness};
+            bhomProfile.WebThickness, bhomProfile.WeldSize};
             double[] dimensionArray = dimensionList.ToArray();
 
-            List<string> valueList = new List<string> { "D", "Bt", "Bb", "tft", "bft", "tw" };
+            List<string> valueList = new List<string> { "D", "Bt", "Bb", "tft", "bft", "tw", "r" };
             string[] valueArray = valueList.ToArray();
 
             int lusasType = 14;
             CreateLibrarySection(lusasGeometricLine, dimensionArray, valueArray, lusasType);
         }
+
+        private void CreateProfile(AngleProfile bhomProfile, IFGeometricLine lusasGeometricLine)
+        {
+            List<double> dimensionList = new List<double> { bhomProfile.Height, bhomProfile.Width, bhomProfile.FlangeThickness,
+            bhomProfile.WebThickness, bhomProfile.RootRadius, bhomProfile.ToeRadius};
+            double[] dimensionArray = dimensionList.ToArray();
+
+            List<string> valueList = new List<string> { "D", "B","tf", "tw", "r1", "r2" };
+            string[] valueArray = valueList.ToArray();
+
+            int lusasType = 7;
+            CreateLibrarySection(lusasGeometricLine, dimensionArray, valueArray, lusasType);
+        }
+
+        private void CreateProfile(ChannelProfile bhomProfile, IFGeometricLine lusasGeometricLine)
+        {
+            Engine.Reflection.Compute.RecordWarning("Toe radius not support for ChannelSection");
+            List<double> dimensionList = new List<double> { bhomProfile.Height, bhomProfile.FlangeWidth,
+            bhomProfile.FlangeThickness, bhomProfile.WebThickness, bhomProfile.RootRadius};
+            double[] dimensionArray = dimensionList.ToArray();
+
+            List<string> valueList = new List<string> { "D", "B", "tf", "tw", "r" };
+            string[] valueArray = valueList.ToArray();
+
+            int lusasType = 10;
+            CreateLibrarySection(lusasGeometricLine, dimensionArray, valueArray, lusasType);
+        }
+
+        private void CreateProfile(ZSectionProfile bhomProfile, IFGeometricLine lusasGeometricLine)
+        {
+            Engine.Reflection.Compute.RecordWarning("Lusas only supports constant thickness Z sections, flange thickness used as thickness");
+            Engine.Reflection.Compute.RecordWarning("Toe radius not supported for ZSection");
+            List<double> dimensionList = new List<double> { bhomProfile.Height, bhomProfile.FlangeWidth, bhomProfile.FlangeWidth,
+            bhomProfile.FlangeThickness, bhomProfile.RootRadius};
+            double[] dimensionArray = dimensionList.ToArray();
+
+            List<string> valueList = new List<string> { "D", "E", "F", "t", "r"};
+            string[] valueArray = valueList.ToArray();
+
+            int lusasType = 16;
+            CreateLibrarySection(lusasGeometricLine, dimensionArray, valueArray, lusasType);
+        }
+
 
         private void CreateLibrarySection(IFGeometricLine lusasGeometricLine, double[] dimensionArray, string[] valueArray, int lusasType)
         {
