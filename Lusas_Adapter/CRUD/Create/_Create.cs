@@ -327,7 +327,11 @@ namespace BH.Adapter.Lusas
         {
             foreach (ISectionProperty sectionProperty in sectionProperties)
             {
-                IFAttribute attribute = CreateGeometricLine(sectionProperty);
+                IFAttribute newSectionProperty = CreateGeometricLine(sectionProperty);
+                if (newSectionProperty == null)
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -347,13 +351,16 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private bool CreateCollection(IEnumerable<IProperty2D> thicknesses)
+        private bool CreateCollection(IEnumerable<IProperty2D> properties2D)
         {
-            foreach (IProperty2D thickness in thicknesses)
+            foreach (IProperty2D property2D in properties2D)
             {
-                IFAttribute newGeometricSurface = CreateGeometricSurface(thickness);
+                IFAttribute newGeometricSurface = CreateGeometricSurface(property2D);
+                if(newGeometricSurface == null)
+                {
+                    return false;
+                }
             }
-
             return true;
         }
 
