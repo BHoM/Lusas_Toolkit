@@ -152,7 +152,7 @@ namespace BH.Adapter.Lusas
                     }
                 }
                 if (type == typeof(ConstantThickness) ||
-                    type == typeof(ISectionProperty))
+                    type == typeof(SteelSection))
                 {
                     int largestThicknessID = d_LusasData.getLargestAttributeID("Geometric");
                     if (largestThicknessID == 0)
