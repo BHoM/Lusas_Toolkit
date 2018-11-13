@@ -8,7 +8,7 @@
 
 ## What is supported?
 
-Everything listed below can be pushed and pulled from Grasshopper to Lusas.
+Everything listed below can be pushed and pulled from the BHoM to Lusas.
 
 The format is as follows: Lusas Object (BHoM Object)
 
@@ -28,6 +28,19 @@ BHoM object are constainted within the `Structure` namespace unless specified ot
 
 #### Materials
 - `Material` (`Common.Materials.Material`)
+
+#### Properties
+- `Geometric Line` (`Properties.SteelSection`)
+  1. `Angle` (`Properties.SteelSection.AngleSection`)
+  2. `Rectangular Hollow` (`Properties.SteelSection.BoxSection`) 
+  3. `Circular Hollow` (`Properties.SteelSection.CircularSection`)
+  4. `Channel` (`Properties.SteelSection.SteelSectionFromProfile`)
+  5. `I Section Unequal Flange` (`Proprties.SteelSection.FabricatedISection`)
+  6. `I Section` (`Properties.SteelSection.ISection`)
+  7. `T Section` (`Properties.SteelSection.TSection`)
+  8. `Circular Hollow` (`Properties.SteelSection.Tube`)
+- `Geometric Surface`
+  1. `Thickness` (`Properties.ConstantThickness`)
 
 #### Loading
 - `Concentrated Load` (`Loads.PointForce`)
