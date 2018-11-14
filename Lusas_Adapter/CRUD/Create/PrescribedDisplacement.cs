@@ -21,6 +21,7 @@ namespace BH.Adapter.Lusas
             IFPrescribedDisplacementLoad lusasPrescribedDisplacement = null;
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + pointDisplacement.Loadcase.CustomData[AdapterId] + "/" + pointDisplacement.Loadcase.Name);
             string lusasAttributeName = "Pd" + pointDisplacement.CustomData[AdapterId] + "/" + pointDisplacement.Name;
+            NameSearch("Pd", pointDisplacement.CustomData[AdapterId].ToString(), pointDisplacement.Name, ref lusasAttributeName);
 
             if (d_LusasData.existsAttribute("Loading", lusasAttributeName))
             {

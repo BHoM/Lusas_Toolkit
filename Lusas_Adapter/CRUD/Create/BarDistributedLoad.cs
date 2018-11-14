@@ -20,7 +20,8 @@ namespace BH.Adapter.Lusas
             List<IFLoadingBeamDistributed> lusasBarDistributedLoads = new List<IFLoadingBeamDistributed>();
             IFAssignment assignToBars = m_LusasApplication.assignment();
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + bhomBarDistributedLoad.Loadcase.CustomData[AdapterId] + "/" + bhomBarDistributedLoad.Loadcase.Name);
-            string lusasAttributeName = "Pl" + bhomBarDistributedLoad.CustomData[AdapterId] + "/" + bhomBarDistributedLoad.Name;
+            string lusasAttributeName = "BDl" + bhomBarDistributedLoad.CustomData[AdapterId] + "/" + bhomBarDistributedLoad.Name;
+            NameSearch("BDl", bhomBarDistributedLoad.CustomData[AdapterId].ToString(), bhomBarDistributedLoad.Name, ref lusasAttributeName);
 
             if (d_LusasData.existsAttribute("Loading", lusasAttributeName))
             {
