@@ -40,5 +40,17 @@ namespace BH.Adapter.Lusas
             return groupedByLoadcases;
         }
 
+        public void NameSearch(string prefix, string customID, string suffix, ref string name)
+        {
+            for (int i = 1; i < Int32.Parse(customID); i++)
+            {
+                name = prefix + i.ToString() + "/" + suffix;
+                if (d_LusasData.existsAttribute("Loading", name))
+                {
+                    break;
+                }
+            }
+        }
+
     }
 }

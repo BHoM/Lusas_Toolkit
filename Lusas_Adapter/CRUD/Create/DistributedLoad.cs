@@ -19,6 +19,7 @@ namespace BH.Adapter.Lusas
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + distributedLoad.Loadcase.CustomData[AdapterId] + "/" + distributedLoad.Loadcase.Name);
             string lusasAttributeName = "Dl" + distributedLoad.CustomData[AdapterId] + "/" + distributedLoad.Name;
+            NameSearch("Dl", distributedLoad.CustomData[AdapterId].ToString(), distributedLoad.Name, ref lusasAttributeName);
 
             IFLoadingGlobalDistributed lusasGlobalDistributed = CreateGlobalDistributed(lusasAttributeName,
                 "Length", assignedLoadcase, distributedLoad.Force, distributedLoad.Moment, lusasLines);
