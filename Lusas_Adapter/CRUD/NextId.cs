@@ -151,16 +151,17 @@ namespace BH.Adapter.Lusas
                         index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.GetBHoMID(largestAttribute, 'p')) + 1;
                     }
                 }
-                if (type == typeof(ConstantThickness))
+                if (type == typeof(ConstantThickness) ||
+                    type == typeof(SteelSection))
                 {
-                    int largestThicknessID = d_LusasData.getLargestAttributeID("Surface Geometric");
+                    int largestThicknessID = d_LusasData.getLargestAttributeID("Geometric");
                     if (largestThicknessID == 0)
                     {
                         index = 1;
                     }
                     else
                     {
-                        IFAttribute largestAttribute = d_LusasData.getAttribute("Surface Geometric", largestThicknessID);
+                        IFAttribute largestAttribute = d_LusasData.getAttribute("Geometric", largestThicknessID);
                         index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.GetBHoMID(largestAttribute, 'G')) + 1;
                     }
                 }
@@ -169,7 +170,10 @@ namespace BH.Adapter.Lusas
                     type == typeof(BarUniformlyDistributedLoad) ||
                     type == typeof(AreaUniformalyDistributedLoad) ||
                     type == typeof(BarTemperatureLoad) ||
-                    type == typeof(AreaTemperatureLoad))
+                    type == typeof(AreaTemperatureLoad) ||
+                    type == typeof(BarPointLoad) ||
+                    type == typeof(BarVaryingDistributedLoad) ||
+                    type == typeof(PointDisplacement))
                 {
                     int largestLoadID = d_LusasData.getLargestAttributeID("Loading");
                     if (largestLoadID == 0)

@@ -17,22 +17,46 @@ namespace BH.Adapter.Lusas
     {
         public IFAttribute CreateGeometricSurface(IProperty2D property2D)
         {
-            IFAttribute lusasGeometricSurface = null;
-            ConstantThickness constantThickness = property2D as ConstantThickness;
-            string lusasAttributeName = "G" + constantThickness.CustomData[AdapterId] + "/" + constantThickness.Name;
+            IFAttribute lusasAttribute = null;
+            string lusasAttributeName = "G" + property2D.CustomData[AdapterId] + "/" + property2D.Name;
 
             if (d_LusasData.existsAttribute("Surface Geometric", lusasAttributeName))
             {
-                lusasGeometricSurface = d_LusasData.getAttribute("Surface Geometric", lusasAttributeName);
+                lusasAttribute = d_LusasData.getAttribute("Surface Geometric", lusasAttributeName);
             }
             else
             {
-                lusasGeometricSurface = d_LusasData.createGeometricSurface("G" + constantThickness.CustomData[AdapterId] + "/" + constantThickness.Name);
-                lusasGeometricSurface.setValue("t", constantThickness.Thickness);
+                IFGeometricSurface lusasGeometricSurface = CreateSurfraceProfile(property2D as dynamic, lusasAttributeName);
+                lusasAttribute = lusasGeometricSurface;
             }
+            return lusasAttribute;
+        }
 
+        private IFAttribute CreateSurfraceProfile(ConstantThickness bhomThickness, string lusasAttributeName)
+        {
+            IFGeometricSurface lusasGeometricSurface = d_LusasData.createGeometricSurface(lusasAttributeName);
+            lusasGeometricSurface.setValue("t", bhomThickness.Thickness);
             return lusasGeometricSurface;
         }
+
+        private IFGeometricSurface CreateSurfraceProfile(LoadingPanelProperty bhomThickness, string lusasAttributeName)
+        {
+            Engine.Reflection.Compute.RecordError("LoadingPanelProperty not supported in Lusas_Toolkit");
+            return null;
+        }
+
+        private IFGeometricSurface CreateSurfraceProfile(Ribbed bhomThickness, string lusasAttributeName)
+        {
+            Engine.Reflection.Compute.RecordError("Ribbed not supported in Lusas_Toolkit");
+            return null;
+        }
+
+        private IFGeometricSurface CreateSurfraceProfile(Waffle bhomThickness, string lusasAttributeName)
+        {
+            Engine.Reflection.Compute.RecordError("Waffle not supported in Lusas_Toolkit");
+            return null;
+        }
+
     }
 }
 

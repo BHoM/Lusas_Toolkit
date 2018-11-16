@@ -19,6 +19,7 @@ namespace BH.Adapter.Lusas
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + temperatureLoad.Loadcase.CustomData[AdapterId] + "/" + temperatureLoad.Loadcase.Name);
             string lusasAttributeName = "Tl" + temperatureLoad.CustomData[AdapterId] + "/" + temperatureLoad.Name;
+            NameSearch("Tl", temperatureLoad.CustomData[AdapterId].ToString(), temperatureLoad.Name, ref lusasAttributeName);
 
             IFLoadingTemperature lusasTemperatureLoad = CreateTemperatureLoad(lusasAttributeName,
                 temperatureLoad.TemperatureChange, lusasGeom, assignedLoadcase);

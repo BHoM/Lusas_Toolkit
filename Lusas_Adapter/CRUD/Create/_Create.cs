@@ -110,10 +110,10 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<IProperty2D>);
                 }
-                //if (objects.First().GetType().GetInterfaces().Contains(typeof(ISectionProperty)))
-                //{
-                //    success = CreateCollection(objects as IEnumerable<ISectionProperty>);
-                //}
+                if (typeof(ISectionProperty).IsAssignableFrom(objects.First().GetType()))
+                {
+                    success = CreateCollection(objects as IEnumerable<ISectionProperty>);
+                }
             }
 
             //m_LusasApplication.setManualRefresh(false);
@@ -325,16 +325,16 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<ISectionProperty> sectionProperties)
         {
-            List<ISectionProperty> secPropList = sectionProperties.ToList();
-
-            foreach (ISectionProperty secProp in secPropList)
+            foreach (ISectionProperty sectionProperty in sectionProperties)
             {
-                IFGeometricLine attribute = d_LusasData.createGeometricLine("beam");
-                attribute.setValue("elementType", "3D Thick Beam");
-                attribute.setBeam(secProp.Area, secProp.Iy, secProp.Iz, 0, secProp.J, secProp.Asz, secProp.Asy, secProp.CentreY, secProp.CentreZ);
+                IFAttribute newSectionProperty = CreateGeometricLine(sectionProperty);
+                if (newSectionProperty == null)
+                {
+                    return false;
+                }
             }
 
-            throw new NotImplementedException();
+            return true;
         }
 
         /***************************************************/
@@ -351,13 +351,16 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private bool CreateCollection(IEnumerable<IProperty2D> thicknesses)
+        private bool CreateCollection(IEnumerable<IProperty2D> properties2D)
         {
-            foreach (IProperty2D thickness in thicknesses)
+            foreach (IProperty2D property2D in properties2D)
             {
-                IFAttribute newGeometricSurface = CreateGeometricSurface(thickness);
+                IFAttribute newGeometricSurface = CreateGeometricSurface(property2D);
+                if(newGeometricSurface == null)
+                {
+                    return false;
+                }
             }
-
             return true;
         }
 

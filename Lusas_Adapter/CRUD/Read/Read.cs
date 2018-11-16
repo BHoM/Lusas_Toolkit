@@ -47,8 +47,12 @@ namespace BH.Adapter.Lusas
                 return chooseLoad(type, ids as dynamic);
             else if (typeof(IProperty2D).IsAssignableFrom(type))
                 return ReadProperty2D(ids as dynamic);
+            else if (typeof(ISectionProperty).IsAssignableFrom(type))
+                return ReadSectionProperties(ids as dynamic);
             else if (type == typeof(LoadCombination))
                 return ReadLoadCombination(ids as dynamic);
+            else if(type == typeof(BHoMObject))
+                return ReadAll(ids as dynamic);
             return null;
         }
 
@@ -57,6 +61,31 @@ namespace BH.Adapter.Lusas
         /***************************************************/
 
         //The List<string> in the methods below can be changed to a list of any type of identification more suitable for the toolkit
+
+        private List<IBHoMObject> ReadAll(List<string> ids = null)
+        {
+            List<IBHoMObject> objects = new List<IBHoMObject>();
+
+            objects.AddRange(ReadNodes());
+            objects.AddRange(ReadBars());
+            objects.AddRange(ReadSurfaces());
+            objects.AddRange(ReadProperty2D());
+            objects.AddRange(ReadMaterials());
+            objects.AddRange(ReadConstraint4DOFs());
+            objects.AddRange(ReadConstraint6DOFs());
+            objects.AddRange(ReadLoadcases());
+            objects.AddRange(ReadLoadCombination());
+            objects.AddRange(ReadPointForce());
+            objects.AddRange(ReadPointDisplacement());
+            objects.AddRange(ReadBarUniformlyDistributedLoad());
+            objects.AddRange(ReadBarPointLoad());
+            objects.AddRange(ReadBarVaryingDistributedLoad());
+            objects.AddRange(ReadAreaUniformlyDistributedLoad());
+            objects.AddRange(ReadBarTemperatureLoad());
+            objects.AddRange(ReadAreaTemperatureLoad());
+            objects.AddRange(ReadGravityLoad());
+            return objects;
+        }
 
         private List<Bar> ReadBars(List<string> ids = null)
         {
@@ -67,14 +96,16 @@ namespace BH.Adapter.Lusas
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
             IEnumerable<Constraint4DOF> bhomSupportList = ReadConstraint4DOFs();
             Dictionary<string, Constraint4DOF> bhomSupports = bhomSupportList.ToDictionary(x => x.Name);
-            //IEnumerable<Material> materialList = ReadMaterials();
-            //Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
+            IEnumerable<Material> materialList = ReadMaterials();
+            Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
+            IEnumerable<ISectionProperty> geometricList = ReadSectionProperties();
+            Dictionary<string, ISectionProperty> geometrics = geometricList.ToDictionary(x => x.Name.ToString());
             HashSet<string> groupNames = ReadGroups();
 
             for (int i = 0; i < lusasLines.Count(); i++)
             {
                 IFLine lusasLine = (IFLine)lusasLines[i];
-                Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMBar(lusasLine, bhomNodes, bhomSupports, groupNames);
+                Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMBar(lusasLine, bhomNodes, bhomSupports, groupNames,materials,geometrics);
 
                 bhomBars.Add(bhomBar);
             }
@@ -263,34 +294,16 @@ namespace BH.Adapter.Lusas
 
         private List<ISectionProperty> ReadSectionProperties(List<string> ids = null)
         {
-            //Implement code for reading section properties
-            int largestSecID = d_LusasData.getLargestAttributeID("Geometric");
+            object[] lusasSections = d_LusasData.getAttributes("Line Geometric");
+            List<ISectionProperty> bhomSections = new List<ISectionProperty>();
 
-            for (int i = 0; i < largestSecID; i++)
+            for (int i = 0; i < lusasSections.Count(); i++)
             {
-                IFAttribute lusasSecProp = d_LusasData.getAttribute("Geometric", i + 1);
-                object[] secPropNames1 = lusasSecProp.getValueNames();
-                string[] secPropNames = ((IEnumerable)secPropNames1).Cast<object>()
-                                 .Select(x => x.ToString())
-                                 .ToArray();
-                string lusasSecType = lusasSecProp.getValue("elementType", 0);
-
-                //if (lusasSecType == "I beam")
-                //{
-                //    ISectionProperty section = 
-                //}
-
-                //ISectionProperty bhomSection;
-                //bhomSection.
-                //bhomSection.Area = lusasSecProp.getValue()
-
-                //foreach (string value in secPropValues)
-                //{
-
-                //}
+                IFAttribute lusasSection = (IFAttribute)lusasSections[i];
+                ISectionProperty bhomSection = BH.Engine.Lusas.Convert.ToBHoMSection(lusasSection);
+                bhomSections.Add(bhomSection);
             }
-
-            throw new NotImplementedException();
+            return bhomSections;
         }
 
         /***************************************/
@@ -325,7 +338,6 @@ namespace BH.Adapter.Lusas
                 bhomLoadcase.Tags = new HashSet<string>(analysisName);
                 bhomLoadcases.Add(bhomLoadcase);
             }
-
             return bhomLoadcases;
         }
 
@@ -379,7 +391,7 @@ namespace BH.Adapter.Lusas
                     readLoads = ReadBarPointLoad(ids as dynamic);
                     break;
                 case "BarVaryingDistributedLoad":
-                    readLoads = ReadBarDistributedLoad(ids as dynamic);
+                    readLoads = ReadBarVaryingDistributedLoad(ids as dynamic);
                     break;
             }
             return readLoads;
@@ -716,7 +728,7 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private List<ILoad> ReadBarDistributedLoad(List<string> ids = null)
+        private List<ILoad> ReadBarVaryingDistributedLoad(List<string> ids = null)
         {
             List<ILoad> bhomBarDistributedLoads = new List<ILoad>();
 
