@@ -53,6 +53,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lusas_Adapter\bin\x86\Debug\Lusas_Adapter.dll</HintPath>
     </Reference>
+    <Reference Include="Lusas_oM">
+      <HintPath>..\Lusas_oM\bin\Debug\Lusas_oM.dll</HintPath>
+    </Reference>
     <Reference Include="Structure_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Structure_Engine.dll</HintPath>
       <Private>False</Private>
@@ -75,6 +78,7 @@
     <Compile Include="Convert\ToBHoM\AreaUniformallyDistributedLoad.cs" />
     <Compile Include="Convert\ToBHoM\BarPointLoad.cs" />
     <Compile Include="Convert\ToBHoM\BarDistributedLoad.cs" />
+    <Compile Include="Convert\ToBHoM\MeshSettings1D.cs" />
     <Compile Include="Convert\ToBHoM\PointDisplacement.cs" />
     <Compile Include="Convert\ToBHoM\Constraint4DOF.cs" />
     <Compile Include="Convert\ToBHoM\LoadCombination.cs" />
@@ -91,6 +95,7 @@
     <Compile Include="Convert\ToBHoM\SectionProperty.cs" />
     <Compile Include="Convert\ToBHoM\_ToBHoM.cs" />
     <Compile Include="Convert\ToLusas\_ToLusas.cs" />
+    <Compile Include="Create\MeshSettings.cs" />
     <Compile Include="Object_Comparer\Equality Comparer\BarMidPointComparer.cs" />
     <Compile Include="Object_Comparer\Equality Comparer\PointDistanceComparer.cs" />
     <Compile Include="Object_Comparer\Equality Comparer\EdgeMidPointComparer.cs" />

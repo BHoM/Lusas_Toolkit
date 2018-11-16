@@ -12,6 +12,7 @@ using BH.oM.Structure.Loads;
 using BH.oM.Common.Materials;
 using BH.Engine.Lusas;
 using Lusas.LPI;
+using BH.oM.Adapter.Lusas;
 
 namespace BH.Adapter.Lusas
 {
@@ -53,6 +54,8 @@ namespace BH.Adapter.Lusas
                 return ReadLoadCombination(ids as dynamic);
             else if(type == typeof(BHoMObject))
                 return ReadAll(ids as dynamic);
+            else if (type == typeof(MeshSettings1D))
+                return ReadMeshSettings1D(ids as dynamic);
             return null;
         }
 
@@ -760,5 +763,28 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
+        private List<MeshSettings1D> ReadMeshSettings1D(List<string> ids = null)
+        {
+            List<MeshSettings1D> bhomMeshSettings1Ds = new List<MeshSettings1D>();
+
+            object[] lusasMesh1Ds = d_LusasData.getAttributes("Mesh");
+
+            for (int i = 0; i < lusasMesh1Ds.Count(); i++)
+            {
+                IFAttribute lusasMesh1D = (IFAttribute)lusasMesh1Ds[i];
+
+                if (lusasMesh1D.getAttributeType() == "Line Mesh")
+                {
+                        MeshSettings1D bhomMeshSettings1D = BH.Engine.Lusas.Convert.ToBHoMMeshSettings1D();
+                        List<string> analysisName = new List<string> { lusasBarDistributedLoad.getAttributeType() };
+                        bhomMeshSettings1D.Tags = new HashSet<string>(analysisName);
+                        bhomMeshSettings1Ds.Add(bhomMeshSettings1D);
+                }
+            }
+
+            return bhomMeshSettings1Ds;
+        }
+
+        /***************************************************/
     }
 }

@@ -11,6 +11,7 @@ using BH.Engine.Geometry;
 using BH.Engine.Structure;
 using Lusas.LPI;
 using BH.Engine.Lusas.Object_Comparer.Equality_Comparer;
+using BH.oM.Adapter.Lusas;
 
 namespace BH.Adapter.Lusas
 {
@@ -113,6 +114,10 @@ namespace BH.Adapter.Lusas
                 if (typeof(ISectionProperty).IsAssignableFrom(objects.First().GetType()))
                 {
                     success = CreateCollection(objects as IEnumerable<ISectionProperty>);
+                }
+                if (objects.First() is MeshSettings1D)
+                {
+                    success = CreateCollection(objects as IEnumerable<MeshSettings1D>);
                 }
             }
 
@@ -615,6 +620,27 @@ namespace BH.Adapter.Lusas
 
                 IFLine[] arrayBars = assignedBars.ToArray();
                 List<IFLoadingBeamDistributed> newGlobalDistributed = CreateBarDistributedLoad(barDistributedLoad, arrayBars);
+            }
+
+            return true;
+        }
+
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<MeshSettings1D> meshSettings1Ds)
+        {
+
+            foreach (MeshSettings1D meshSettings1D in meshSettings1Ds)
+            {
+                //List<IFLine> assignedBars = new List<IFLine>();
+                //foreach (Bar bar in barDistributedLoad.Objects.Elements)
+                //{
+                //    IFLine lusasBar = d_LusasData.getLineByName("L" + bar.CustomData[AdapterId].ToString());
+                //    assignedBars.Add(lusasBar);
+                //}
+
+                //IFLine[] arrayBars = assignedBars.ToArray();
+                //List<IFLoadingBeamDistributed> newGlobalDistributed = CreateBarDistributedLoad(barDistributedLoad, arrayBars);
             }
 
             return true;
