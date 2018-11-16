@@ -8,7 +8,6 @@ using BH.oM.Structure.Properties;
 using BH.oM.Structure.Loads;
 using BH.oM.Common.Materials;
 using BH.Engine.Geometry;
-using BH.Engine.Structure;
 using Lusas.LPI;
 using BH.Engine.Lusas.Object_Comparer.Equality_Comparer;
 
