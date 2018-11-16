@@ -775,10 +775,11 @@ namespace BH.Adapter.Lusas
 
                 if (lusasMesh1D.getAttributeType() == "Line Mesh")
                 {
-                        MeshSettings1D bhomMeshSettings1D = BH.Engine.Lusas.Convert.ToBHoMMeshSettings1D();
-                        List<string> analysisName = new List<string> { lusasBarDistributedLoad.getAttributeType() };
-                        bhomMeshSettings1D.Tags = new HashSet<string>(analysisName);
-                        bhomMeshSettings1Ds.Add(bhomMeshSettings1D);
+                    IFMeshLine lusasLineMesh = (IFMeshLine)lusasMesh1D;
+                    MeshSettings1D bhomMeshSettings1D = BH.Engine.Lusas.Convert.ToBHoMMeshSettings1D(lusasLineMesh);
+                    List<string> analysisName = new List<string> { lusasLineMesh.getAttributeType() };
+                    bhomMeshSettings1D.Tags = new HashSet<string>(analysisName);
+                    bhomMeshSettings1Ds.Add(bhomMeshSettings1D);
                 }
             }
 

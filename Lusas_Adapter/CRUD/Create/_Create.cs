@@ -632,15 +632,7 @@ namespace BH.Adapter.Lusas
 
             foreach (MeshSettings1D meshSettings1D in meshSettings1Ds)
             {
-                //List<IFLine> assignedBars = new List<IFLine>();
-                //foreach (Bar bar in barDistributedLoad.Objects.Elements)
-                //{
-                //    IFLine lusasBar = d_LusasData.getLineByName("L" + bar.CustomData[AdapterId].ToString());
-                //    assignedBars.Add(lusasBar);
-                //}
-
-                //IFLine[] arrayBars = assignedBars.ToArray();
-                //List<IFLoadingBeamDistributed> newGlobalDistributed = CreateBarDistributedLoad(barDistributedLoad, arrayBars);
+                IFMeshLine newMeshSettings1D = CreateMeshSettings1D(meshSettings1D);
             }
 
             return true;

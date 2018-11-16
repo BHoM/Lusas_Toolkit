@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BH.oM.Adapter.Lusas;
 
 
-namespace BH.Engine.Lusas.Create
+namespace BH.Engine.Adapters.Lusas
 {
     public static partial class Create
     {
@@ -14,26 +14,29 @@ namespace BH.Engine.Lusas.Create
         /****           Public Constructors             ****/
         /***************************************************/
 
-        public static MeshSettings1D MeshSettings1D(MeshType meshType, ElementType1D elementType1D, Split splitMethod, double divider)
+        public static MeshSettings1D MeshSettings1D(ElementType1D elementType1D, Split splitMethod, double divider =0, string name = null)
         {
             return new MeshSettings1D
             {
-                MeshType = meshType,
+                SplitMethod = splitMethod,
                 ElementType1D = elementType1D,
-                SplitMethod = splitMethod,
-                NumberDivisions = divider
+                SplitParameter = divider,
+                Name = name
             };
+
+
+            //};
         }
 
 
-        public static MeshSettings2D MeshSettings2D(MeshType meshType, Split splitMethod, double divider)
-        {
-            return new MeshSettings2D
-            {
-                MeshType = meshType,
-                SplitMethod = splitMethod,
-                NumberDivisions = divider
-            };
-        }
+        //public static MeshSettings2D MeshSettings2D(ElementType2D elementType1D = ElementType1D.BarL, Split splitMethod = Split.Divisions, double divider = 0)
+        //{
+        //    return new MeshSettings2D
+        //    {
+        //        ElementType2D = elementType1D,
+        //        SplitMethod = splitMethod,
+        //        Value = divider
+        //    };
+        //}
     }
 }

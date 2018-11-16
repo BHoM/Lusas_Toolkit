@@ -6,10 +6,6 @@ using System.Threading.Tasks;
 
 namespace BH.oM.Adapter.Lusas
 {
-    public enum MeshType
-    {
-        Line, Surface
-    }
 
     public enum Split
     {
@@ -18,24 +14,7 @@ namespace BH.oM.Adapter.Lusas
 
     public enum ElementType1D
     {
-            BarL,
-            ThickBeamL,
-            ThickCrossSectionBeamL,
-            ThickBeamWithTorsionalWarpingL,
-            ThickCrossSectionBeamWithTorsionalWarpingL,
-            BarQ,
-            ThickBeamQ,
-            ThickCrossSectionBeamQ,
-            ThickBeamWithTorsionalWarpingQ,
-            ThinBeam,
-            SemiloofBeam,
-            SemiloofCrossSectionBeam,
-            JointForBeams,
-            JointForSemiloof,
-            JointNoRotationalStiffness,
-            JointInterfaceL,
-            JointInterfaceQ,
-            NonStructuralMassL,
-            NonStructuralMassQ
+            Bar,
+            Beam
     }
 }
