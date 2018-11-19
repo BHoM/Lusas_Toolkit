@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BH.oM.Base;
-using BH.oM.Geometry;
-using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties;
-using BH.oM.Common.Materials;
-using Lusas.LPI;
-using BH.oM.Adapter.Lusas;
+﻿using Lusas.LPI;
+using BH.oM.Adapters.Lusas;
 
 namespace BH.Engine.Lusas
 {
@@ -20,14 +9,14 @@ namespace BH.Engine.Lusas
         {
             string attributeName = lusasMeshSurface.getName();
             object[] elnames = lusasMeshSurface.getElementNames();
-            ElementType2D elementType2D = ElementType2D.ThickShell;
-            foreach (object name in elnames)
-            {
-                if (name.ToString() == "QTS4")
-                    continue;
-                else
-                    elementType2D = ElementType2D.ThinShell;
-            }
+
+            //foreach (object name in elnames)
+            //{
+            //    if (name.ToString() == "QTS4")
+            //        continue;
+            //    else
+            //        elementType2D = ElementType2D.ThinShell;
+            //}
 
             int xDivisions = 0;
             int yDivisions = 0;
@@ -51,7 +40,6 @@ namespace BH.Engine.Lusas
             MeshSettings2D bhomMeshSettings2D = new MeshSettings2D
             {
                 Name = attributeName,
-                ElementType2D = elementType2D,
                 SplitMethod = splitMethod,
                 xDivisions = xDivisions,
                 yDivisions = yDivisions

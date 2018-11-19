@@ -1,17 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System;
-using BH.oM.Base;
-using BH.oM.Structure.Elements;
-using BH.oM.Geometry;
-using BH.oM.Structure.Properties;
-using BH.oM.Structure.Loads;
-using BH.oM.Common.Materials;
-using BH.Engine.Geometry;
-using BH.Engine.Structure;
-using Lusas.LPI;
-using BH.oM.Adapter.Lusas;
-using BH.Engine.Reflection;
+﻿using Lusas.LPI;
+using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
 {
@@ -38,11 +26,7 @@ namespace BH.Adapter.Lusas
                 {
                     lusasSurfaceMesh.setValue("size", meshSettings2D.ElementSize);
                 }
-
-                if (meshSettings2D.ElementType2D == ElementType2D.ThickShell)
-                    lusasSurfaceMesh.addElementName("QTS4");
-                else
-                    lusasSurfaceMesh.addElementName("QSI4");
+                lusasSurfaceMesh.addElementName("QTS4");
             }
             return lusasSurfaceMesh;
         }

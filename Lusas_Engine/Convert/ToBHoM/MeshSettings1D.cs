@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BH.oM.Base;
-using BH.oM.Geometry;
-using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties;
-using BH.oM.Common.Materials;
+﻿using System.Linq;
 using Lusas.LPI;
-using BH.oM.Adapter.Lusas;
+using BH.oM.Adapters.Lusas;
 
 namespace BH.Engine.Lusas
 {
@@ -24,15 +14,15 @@ namespace BH.Engine.Lusas
             if (ndivisions == 0)
                 ndivisions = 4;
 
-            object[] elnames = lusasMeshLine.getElementNames();
-            ElementType1D elementType1D = ElementType1D.Bar;
-            foreach (object name in elnames)
-            {
-                if (name.ToString() == "BRS2")
-                    continue;
-                else
-                    elementType1D = ElementType1D.Beam;
-            }
+            //object[] elnames = lusasMeshLine.getElementNames();
+            //ElementType1D elementType1D = ElementType1D.Bar;
+            //foreach (object name in elnames)
+            //{
+            //    if (name.ToString() == "BRS2")
+            //        continue;
+            //    else
+            //        elementType1D = ElementType1D.Beam;
+            //}
 
             double value = 0;
             Split1D splitMethod = Split1D.Divisions;
@@ -47,36 +37,33 @@ namespace BH.Engine.Lusas
                 value = lusasMeshLine.getValue("size");
             }
 
-            object[] startReleases = lusasMeshLine.getValue("start");
-            object[] endReleases = lusasMeshLine.getValue("end");
+            //object[] startReleases = lusasMeshLine.getValue("start");
+            //object[] endReleases = lusasMeshLine.getValue("end");
 
-            List<int> bhomStartReleases = new List<int>();
-            List<int> bhomEndReleases = new List<int>();
+            //List<int> bhomStartReleases = new List<int>();
+            //List<int> bhomEndReleases = new List<int>();
 
-            for (int i = 1; i<7; i++)
-            {
-                bool sr = (bool)startReleases[i];
-                bool er = (bool)endReleases[i];
+            //for (int i = 1; i<7; i++)
+            //{
+            //    bool sr = (bool)startReleases[i];
+            //    bool er = (bool)endReleases[i];
 
-                if (sr)
-                    bhomStartReleases.Add(1);
-                else
-                    bhomStartReleases.Add(0);
+            //    if (sr)
+            //        bhomStartReleases.Add(1);
+            //    else
+            //        bhomStartReleases.Add(0);
 
-                if (er)
-                    bhomEndReleases.Add(1);
-                else
-                    bhomEndReleases.Add(0);
-            }
+            //    if (er)
+            //        bhomEndReleases.Add(1);
+            //    else
+            //        bhomEndReleases.Add(0);
+            //}
 
             MeshSettings1D bhomMeshSettings1D = new MeshSettings1D
                 {
                     Name = attributeName,
-                    ElementType1D = elementType1D,
                     SplitMethod = splitMethod,
-                    SplitParameter = value,
-                    StartReleases = bhomStartReleases,
-                    EndReleases = bhomEndReleases
+                    SplitParameter = value
                 };
 
             int bhomID = GetBHoMID(lusasMeshLine, 'e');

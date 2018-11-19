@@ -12,7 +12,7 @@ using BH.oM.Structure.Loads;
 using BH.oM.Common.Materials;
 using BH.Engine.Lusas;
 using Lusas.LPI;
-using BH.oM.Adapter.Lusas;
+using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
 {

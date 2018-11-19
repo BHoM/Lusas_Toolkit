@@ -11,7 +11,7 @@ using BH.Engine.Geometry;
 using BH.Engine.Structure;
 using Lusas.LPI;
 using BH.Engine.Lusas.Object_Comparer.Equality_Comparer;
-using BH.oM.Adapter.Lusas;
+using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
 {

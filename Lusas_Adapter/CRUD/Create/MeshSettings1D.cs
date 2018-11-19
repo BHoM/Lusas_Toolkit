@@ -1,17 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System;
-using BH.oM.Base;
-using BH.oM.Structure.Elements;
-using BH.oM.Geometry;
-using BH.oM.Structure.Properties;
-using BH.oM.Structure.Loads;
-using BH.oM.Common.Materials;
-using BH.Engine.Geometry;
-using BH.Engine.Structure;
-using Lusas.LPI;
-using BH.oM.Adapter.Lusas;
-using BH.Engine.Reflection;
+﻿using Lusas.LPI;
+using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
 {
@@ -29,54 +17,54 @@ namespace BH.Adapter.Lusas
             {
                 lusasLineMesh = d_LusasData.createMeshLine(lusasAttributeName);
 
-                if (meshSettings1D.SplitMethod==Split1D.Divisions)
+                if (meshSettings1D.SplitMethod == Split1D.Divisions)
                 {
-                    int ndivisions = (int) meshSettings1D.SplitParameter;
-                    int[] ratios = new int[ndivisions]; 
-                    for (int i=0; i<ndivisions; i++)
+                    int ndivisions = (int)meshSettings1D.SplitParameter;
+                    int[] ratios = new int[ndivisions];
+                    for (int i = 0; i < ndivisions; i++)
                     {
                         ratios[i] = 1;
                     }
                     lusasLineMesh.setValue("ratio", ratios);
                 }
-                else if (meshSettings1D.SplitMethod==Split1D.Length)
+                else if (meshSettings1D.SplitMethod == Split1D.Length)
                 {
                     lusasLineMesh.setValue("size", meshSettings1D.SplitParameter);
                 }
 
-                if (meshSettings1D.ElementType1D == ElementType1D.Bar)
-                    lusasLineMesh.addElementName("BRS2");
-                else
-                    lusasLineMesh.addElementName("BMX21");
+                //if (meshSettings1D.ElementType1D == ElementType1D.Bar)
+                //    lusasLineMesh.addElementName("BRS2");
+                //else
+                //    lusasLineMesh.addElementName("BMX21");
 
-                List<string> dof = new List<string> { "u", "v", "w", "thx", "thy", "thz" };
-                
+                //List<string> dof = new List<string> { "u", "v", "w", "thx", "thy", "thz" };
 
-                if(meshSettings1D.StartReleases.Concat(meshSettings1D.EndReleases).Contains(1)&&meshSettings1D.ElementType1D==ElementType1D.Bar)
-                    BH.Engine.Reflection.Compute.RecordWarning("End Releases only supported with Beam elements in Lusas");
 
-                if (meshSettings1D.StartReleases.Contains(1) && meshSettings1D.ElementType1D == ElementType1D.Beam)
-                {
-                   for (int i =0; i<6; i++)
-                    {
-                        if (meshSettings1D.StartReleases[i] == 1)
-                            lusasLineMesh.setEndRelease("Start", dof[i], "free");
-                    }
-                }
+                //if(meshSettings1D.StartReleases.Concat(meshSettings1D.EndReleases).Contains(1)&&meshSettings1D.ElementType1D==ElementType1D.Bar)
+                //    BH.Engine.Reflection.Compute.RecordWarning("End Releases only supported with Beam elements in Lusas");
 
-                if (meshSettings1D.EndReleases.Contains(1)&& meshSettings1D.ElementType1D == ElementType1D.Beam)
-                {
-                    if (meshSettings1D.EndReleases.Equals(meshSettings1D.StartReleases))
-                        lusasLineMesh.setEndReleasesSameAsStart(true);
-                    else
-                    {
-                        for (int i = 0; i < 6; i++)
-                        {
-                            if (meshSettings1D.EndReleases[i] == 1)
-                                lusasLineMesh.setEndRelease("End", dof[i], "free");
-                        }
-                    }
-                }
+                //if (meshSettings1D.StartReleases.Contains(1) && meshSettings1D.ElementType1D == ElementType1D.Beam)
+                //{
+                //   for (int i =0; i<6; i++)
+                //    {
+                //        if (meshSettings1D.StartReleases[i] == 1)
+                //            lusasLineMesh.setEndRelease("Start", dof[i], "free");
+                //    }
+                //}
+
+                //if (meshSettings1D.EndReleases.Contains(1)&& meshSettings1D.ElementType1D == ElementType1D.Beam)
+                //{
+                //    if (meshSettings1D.EndReleases.Equals(meshSettings1D.StartReleases))
+                //        lusasLineMesh.setEndReleasesSameAsStart(true);
+                //    else
+                //    {
+                //        for (int i = 0; i < 6; i++)
+                //        {
+                //            if (meshSettings1D.EndReleases[i] == 1)
+                //                lusasLineMesh.setEndRelease("End", dof[i], "free");
+                //        }
+                //    }
+                //}
 
             }
             return lusasLineMesh;
