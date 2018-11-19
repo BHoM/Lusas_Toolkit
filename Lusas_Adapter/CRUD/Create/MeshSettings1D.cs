@@ -29,7 +29,7 @@ namespace BH.Adapter.Lusas
             {
                 lusasLineMesh = d_LusasData.createMeshLine(lusasAttributeName);
 
-                if (meshSettings1D.SplitMethod==Split.Divisions)
+                if (meshSettings1D.SplitMethod==Split1D.Divisions)
                 {
                     int ndivisions = (int) meshSettings1D.SplitParameter;
                     int[] ratios = new int[ndivisions]; 
@@ -38,19 +38,16 @@ namespace BH.Adapter.Lusas
                         ratios[i] = 1;
                     }
                     lusasLineMesh.setValue("ratio", ratios);
-                    if (meshSettings1D.ElementType1D == ElementType1D.Bar)
-                        lusasLineMesh.addElementName("BRS2");
-                    else
-                        lusasLineMesh.addElementName("BMX21");
                 }
-                else
+                else if (meshSettings1D.SplitMethod==Split1D.Length)
                 {
                     lusasLineMesh.setValue("size", meshSettings1D.SplitParameter);
-                    if (meshSettings1D.ElementType1D == ElementType1D.Bar)
-                        lusasLineMesh.addElementName("BRS2");
-                    else
-                        lusasLineMesh.addElementName("BMX21");
                 }
+
+                if (meshSettings1D.ElementType1D == ElementType1D.Bar)
+                    lusasLineMesh.addElementName("BRS2");
+                else
+                    lusasLineMesh.addElementName("BMX21");
 
                 List<string> dof = new List<string> { "u", "v", "w", "thx", "thy", "thz" };
                 

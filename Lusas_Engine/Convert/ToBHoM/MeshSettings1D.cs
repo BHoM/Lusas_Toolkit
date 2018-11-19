@@ -34,16 +34,16 @@ namespace BH.Engine.Lusas
                     elementType1D = ElementType1D.Beam;
             }
 
-            double value;
-            Split splitMethod = Split.Divisions;
+            double value = 0;
+            Split1D splitMethod = Split1D.Divisions;
             if (lusasMeshLine.getValue("size")==0)
             {
-                splitMethod = Split.Divisions;
+                splitMethod = Split1D.Divisions;
                 value = ndivisions;
             }
             else
             {
-                splitMethod = Split.Length;
+                splitMethod = Split1D.Length;
                 value = lusasMeshLine.getValue("size");
             }
 
@@ -70,14 +70,14 @@ namespace BH.Engine.Lusas
             }
 
             MeshSettings1D bhomMeshSettings1D = new MeshSettings1D
-            {
-                Name = attributeName,
-                ElementType1D = elementType1D,
-                SplitMethod = splitMethod,
-                SplitParameter = value,
-                StartReleases = bhomStartReleases,
-                EndReleases = bhomEndReleases
-            };
+                {
+                    Name = attributeName,
+                    ElementType1D = elementType1D,
+                    SplitMethod = splitMethod,
+                    SplitParameter = value,
+                    StartReleases = bhomStartReleases,
+                    EndReleases = bhomEndReleases
+                };
 
             int bhomID = GetBHoMID(lusasMeshLine, 'e');
             bhomMeshSettings1D.CustomData["Lusas_id"] = bhomID;

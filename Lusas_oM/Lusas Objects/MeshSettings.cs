@@ -11,7 +11,7 @@ namespace BH.oM.Adapter.Lusas
         /****            Public Properties              ****/
         /***************************************************/
 
-        public Split SplitMethod { get; set; }
+        public Split1D SplitMethod { get; set; }
         public ElementType1D ElementType1D { get; set; }
         public List<int> StartReleases { get; set; }
         public List<int> EndReleases { get; set; }
@@ -20,16 +20,18 @@ namespace BH.oM.Adapter.Lusas
         /***************************************************/
     }
 
-    //public class MeshSettings2D : BHoMObject
-    //{
-    //    /***************************************************/
-    //    /****            Public Properties              ****/
-    //    /***************************************************/
+    public class MeshSettings2D : BHoMObject
+    {
+        /***************************************************/
+        /****            Public Properties              ****/
+        /***************************************************/
 
-    //    public MeshType MeshType { get; set; }
-    //    public Split SplitMethod { get; set; }
-    //    public double Value { get; set; }
+        public Split2D SplitMethod { get; set; }
+        public ElementType2D ElementType2D { get; set; }
+        public int xDivisions { get; set; }
+        public int yDivisions { get; set; }
+        public double ElementSize { get; set; }
 
-    //    /***************************************************/
-    //}
+        /***************************************************/
+    }
 }

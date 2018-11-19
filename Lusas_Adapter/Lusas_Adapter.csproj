@@ -93,6 +93,7 @@
     <Compile Include="CRUD\Create\Additional_Methods.cs" />
     <Compile Include="CRUD\Create\BarPointLoad.cs" />
     <Compile Include="CRUD\Create\BarDistributedLoad.cs" />
+    <Compile Include="CRUD\Create\MeshSettings2D.cs" />
     <Compile Include="CRUD\Create\MeshSettings1D.cs" />
     <Compile Include="CRUD\Create\DistributedLoad.cs" />
     <Compile Include="CRUD\Create\GravityLoad.cs" />

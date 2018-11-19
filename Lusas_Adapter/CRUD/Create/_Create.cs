@@ -119,6 +119,10 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<MeshSettings1D>);
                 }
+                if (objects.First() is MeshSettings2D)
+                {
+                    success = CreateCollection(objects as IEnumerable<MeshSettings2D>);
+                }
             }
 
             //m_LusasApplication.setManualRefresh(false);
@@ -633,6 +637,19 @@ namespace BH.Adapter.Lusas
             foreach (MeshSettings1D meshSettings1D in meshSettings1Ds)
             {
                 IFMeshLine newMeshSettings1D = CreateMeshSettings1D(meshSettings1D);
+            }
+
+            return true;
+        }
+
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<MeshSettings2D> meshSettings2Ds)
+        {
+
+            foreach (MeshSettings2D meshSettings2D in meshSettings2Ds)
+            {
+                IFMeshSurface newMeshSettings1D = CreateMeshSettings2D(meshSettings2D);
             }
 
             return true;

@@ -14,7 +14,7 @@ namespace BH.Engine.Adapters.Lusas
         /****           Public Constructors             ****/
         /***************************************************/
 
-        public static MeshSettings1D MeshSettings1D(ElementType1D ElementType, Split SplitMethod, double SplitParameter =4, List<int> StartReleases = null, List<int> EndReleases = null, string name = null)
+        public static MeshSettings1D MeshSettings1D(Split1D SplitMethod, ElementType1D ElementType, double SplitParameter =4, List<int> StartReleases = null, List<int> EndReleases = null, string name = null)
         {
             return new MeshSettings1D
             {
@@ -25,20 +25,20 @@ namespace BH.Engine.Adapters.Lusas
                 EndReleases = EndReleases,
                 Name = name
             };
-
-
-            //};
         }
 
 
-        //public static MeshSettings2D MeshSettings2D(ElementType2D elementType1D = ElementType1D.BarL, Split splitMethod = Split.Divisions, double divider = 0)
-        //{
-        //    return new MeshSettings2D
-        //    {
-        //        ElementType2D = elementType1D,
-        //        SplitMethod = splitMethod,
-        //        Value = divider
-        //    };
-        //}
+        public static MeshSettings2D MeshSettings2D(Split2D splitMethod, ElementType2D elementType2D, int xDivisions = 0, int yDivisions = 0, double size = 1, string name = null)
+        {
+            return new MeshSettings2D
+            {
+                SplitMethod = splitMethod,
+                ElementType2D = elementType2D,
+                xDivisions = xDivisions,
+                yDivisions = yDivisions,
+                ElementSize = size,
+                Name = name
+            };
+        }
     }
 }
