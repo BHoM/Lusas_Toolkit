@@ -14,13 +14,15 @@ namespace BH.Engine.Adapters.Lusas
         /****           Public Constructors             ****/
         /***************************************************/
 
-        public static MeshSettings1D MeshSettings1D(ElementType1D elementType1D, Split splitMethod, double divider =0, string name = null)
+        public static MeshSettings1D MeshSettings1D(ElementType1D ElementType, Split SplitMethod, double SplitParameter =4, List<int> StartReleases = null, List<int> EndReleases = null, string name = null)
         {
             return new MeshSettings1D
             {
-                SplitMethod = splitMethod,
-                ElementType1D = elementType1D,
-                SplitParameter = divider,
+                SplitMethod = SplitMethod,
+                ElementType1D = ElementType,
+                SplitParameter = SplitParameter,
+                StartReleases = StartReleases,
+                EndReleases = EndReleases,
                 Name = name
             };
 

@@ -17,4 +17,5 @@ namespace BH.oM.Adapter.Lusas
             Bar,
             Beam
     }
+
 }

@@ -1,5 +1,7 @@
 ﻿using BH.oM.Base;
 using BH.oM.Adapter.Lusas;
+using System;
+using System.Collections.Generic;
 
 namespace BH.oM.Adapter.Lusas
 {
@@ -11,6 +13,8 @@ namespace BH.oM.Adapter.Lusas
 
         public Split SplitMethod { get; set; }
         public ElementType1D ElementType1D { get; set; }
+        public List<int> StartReleases { get; set; }
+        public List<int> EndReleases { get; set; }
         public double SplitParameter { get; set; }
 
         /***************************************************/

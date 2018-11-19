@@ -47,12 +47,36 @@ namespace BH.Engine.Lusas
                 value = lusasMeshLine.getValue("size");
             }
 
+            object[] startReleases = lusasMeshLine.getValue("start");
+            object[] endReleases = lusasMeshLine.getValue("end");
+
+            List<int> bhomStartReleases = new List<int>();
+            List<int> bhomEndReleases = new List<int>();
+
+            for (int i = 1; i<7; i++)
+            {
+                bool sr = (bool)startReleases[i];
+                bool er = (bool)endReleases[i];
+
+                if (sr)
+                    bhomStartReleases.Add(1);
+                else
+                    bhomStartReleases.Add(0);
+
+                if (er)
+                    bhomEndReleases.Add(1);
+                else
+                    bhomEndReleases.Add(0);
+            }
+
             MeshSettings1D bhomMeshSettings1D = new MeshSettings1D
             {
                 Name = attributeName,
                 ElementType1D = elementType1D,
                 SplitMethod = splitMethod,
                 SplitParameter = value,
+                StartReleases = bhomStartReleases,
+                EndReleases = bhomEndReleases
             };
 
             int bhomID = GetBHoMID(lusasMeshLine, 'e');
