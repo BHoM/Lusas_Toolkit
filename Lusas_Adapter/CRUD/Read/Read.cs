@@ -12,6 +12,7 @@ using BH.oM.Structure.Loads;
 using BH.oM.Common.Materials;
 using BH.Engine.Lusas;
 using Lusas.LPI;
+using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
 {
@@ -53,6 +54,10 @@ namespace BH.Adapter.Lusas
                 return ReadLoadCombination(ids as dynamic);
             else if(type == typeof(BHoMObject))
                 return ReadAll(ids as dynamic);
+            else if (type == typeof(MeshSettings1D))
+                return ReadMeshSettings1D(ids as dynamic);
+            else if (type == typeof(MeshSettings2D))
+                return ReadMeshSettings2D(ids as dynamic);
             return null;
         }
 
@@ -760,5 +765,50 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
+        private List<MeshSettings1D> ReadMeshSettings1D(List<string> ids = null)
+        {
+            List<MeshSettings1D> bhomMeshSettings1Ds = new List<MeshSettings1D>();
+
+            object[] lusasMesh1Ds = d_LusasData.getAttributes("Line Mesh");
+
+            for (int i = 0; i < lusasMesh1Ds.Count(); i++)
+            {
+                //IFAttribute meshAttribute = (IFAttribute)lusasMesh1Ds[i];
+                //if (meshAttribute.getAttributeType() == "Line Mesh")
+                //{
+                    IFMeshLine lusasMesh1D = (IFMeshLine)lusasMesh1Ds[i];
+                    MeshSettings1D bhomMeshSettings1D = BH.Engine.Lusas.Convert.ToBHoMMeshSettings1D(lusasMesh1D);
+                    List<string> analysisName = new List<string> { lusasMesh1D.getAttributeType() };
+                    bhomMeshSettings1D.Tags = new HashSet<string>(analysisName);
+                    bhomMeshSettings1Ds.Add(bhomMeshSettings1D);
+                //}
+            }
+            return bhomMeshSettings1Ds;
+        }
+
+        /***************************************************/
+
+        private List<MeshSettings2D> ReadMeshSettings2D(List<string> ids = null)
+        {
+            List<MeshSettings2D> bhomMeshSettings2Ds = new List<MeshSettings2D>();
+
+            object[] lusasMesh2Ds = d_LusasData.getAttributes("Surface Mesh");
+
+            for (int i = 0; i < lusasMesh2Ds.Count(); i++)
+            {
+                //IFAttribute meshAttribute = (IFAttribute)lusasMesh2Ds[i];
+                //if (meshAttribute.getAttributeType() == "Surface Mesh")
+                //{
+                    IFMeshSurface lusasMesh2D = (IFMeshSurface)lusasMesh2Ds[i];
+                    MeshSettings2D bhomMeshSettings2D = BH.Engine.Lusas.Convert.ToBHoMMeshSettings2D(lusasMesh2D);
+                    List<string> analysisName = new List<string> { lusasMesh2D.getAttributeType() };
+                    bhomMeshSettings2D.Tags = new HashSet<string>(analysisName);
+                    bhomMeshSettings2Ds.Add(bhomMeshSettings2D);
+                //}
+            }
+            return bhomMeshSettings2Ds;
+        }
+
+        /***************************************************/
     }
 }

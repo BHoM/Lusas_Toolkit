@@ -4,8 +4,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lusas_Engine", "Lusas_Engine\Lusas_Engine.csproj", "{41133F8E-E73A-415E-87F5-8E1D8BFC7EA0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{963A4A5C-0455-40A5-BA48-01838DD5BB5B} = {963A4A5C-0455-40A5-BA48-01838DD5BB5B}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lusas_Adapter", "Lusas_Adapter\Lusas_Adapter.csproj", "{896D021A-34E8-4EDA-B69D-8F92C6B5243B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{963A4A5C-0455-40A5-BA48-01838DD5BB5B} = {963A4A5C-0455-40A5-BA48-01838DD5BB5B}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lusas_oM", "Lusas_oM\Lusas_oM.csproj", "{963A4A5C-0455-40A5-BA48-01838DD5BB5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +39,14 @@ Global
 		{896D021A-34E8-4EDA-B69D-8F92C6B5243B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{896D021A-34E8-4EDA-B69D-8F92C6B5243B}.Release|x86.ActiveCfg = Release|x86
 		{896D021A-34E8-4EDA-B69D-8F92C6B5243B}.Release|x86.Build.0 = Release|x86
+		{963A4A5C-0455-40A5-BA48-01838DD5BB5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{963A4A5C-0455-40A5-BA48-01838DD5BB5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{963A4A5C-0455-40A5-BA48-01838DD5BB5B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{963A4A5C-0455-40A5-BA48-01838DD5BB5B}.Debug|x86.Build.0 = Debug|Any CPU
+		{963A4A5C-0455-40A5-BA48-01838DD5BB5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{963A4A5C-0455-40A5-BA48-01838DD5BB5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{963A4A5C-0455-40A5-BA48-01838DD5BB5B}.Release|x86.ActiveCfg = Release|Any CPU
+		{963A4A5C-0455-40A5-BA48-01838DD5BB5B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
