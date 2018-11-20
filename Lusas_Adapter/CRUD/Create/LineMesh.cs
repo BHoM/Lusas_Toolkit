@@ -17,19 +17,17 @@ namespace BH.Adapter.Lusas
             {
                 lusasLineMesh = d_LusasData.createMeshLine(lusasAttributeName);
 
-                if (meshSettings1D.SplitMethod == Split1D.Divisions)
+                if (meshSettings1D.SplitMethod == Split1D.Automatic)
                 {
-                    int ndivisions = (int)meshSettings1D.SplitParameter;
-                    int[] ratios = new int[ndivisions];
-                    for (int i = 0; i < ndivisions; i++)
-                    {
-                        ratios[i] = 1;
-                    }
-                    lusasLineMesh.setValue("ratio", ratios);
+                    lusasLineMesh.setValue("uiSpacing", "uniform");
+                }
+                else if(meshSettings1D.SplitMethod == Split1D.Divisions)
+                {
+                    lusasLineMesh.addSpacing(System.Convert.ToInt32(meshSettings1D.SplitParameter), 1);
                 }
                 else if (meshSettings1D.SplitMethod == Split1D.Length)
                 {
-                    lusasLineMesh.setValue("size", meshSettings1D.SplitParameter);
+                    lusasLineMesh.setSize("NULL", meshSettings1D.SplitParameter);
                 }
 
                 //if (meshSettings1D.ElementType1D == ElementType1D.Bar)

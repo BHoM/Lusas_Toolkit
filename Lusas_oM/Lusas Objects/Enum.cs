@@ -3,11 +3,11 @@
 
     public enum Split1D
     {
-        Divisions, Length
+        Divisions, Length, Automatic
     }
 
     public enum Split2D
     {
-        Divisions, Size
+        Divisions, Size, Automatic
     }
 }

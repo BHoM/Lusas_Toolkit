@@ -5,11 +5,9 @@ using BH.oM.Structure.Properties;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BH.oM.Geometry;
-using BH.Engine.Lusas;
 using Lusas.LPI;
+using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
 {
@@ -192,7 +190,7 @@ namespace BH.Adapter.Lusas
                     object[] combinationObjects = d_LusasData.getLoadsets("Combinations");
                     if (combinationObjects.Count() == 0)
                     {
-                       index = 1;
+                        index = 1;
                     }
                     else
                     {
@@ -207,6 +205,20 @@ namespace BH.Adapter.Lusas
 
                         IFBasicCombination largestLoadCombination = (IFBasicCombination)d_LusasData.getLoadset("Combinations", largestLoadCombinationID);
                         index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.GetBHoMID(largestLoadCombination, 'l')) + 1;
+                    }
+                }
+                if (type == typeof(MeshSettings1D) ||
+                    type == typeof(MeshSettings2D))
+                {
+                    int largestThicknessID = d_LusasData.getLargestAttributeID("Mesh");
+                    if (largestThicknessID == 0)
+                    {
+                        index = 1;
+                    }
+                    else
+                    {
+                        IFAttribute largestAttribute = d_LusasData.getAttribute("Mesh", largestThicknessID);
+                        index = System.Convert.ToInt32(BH.Engine.Lusas.Convert.GetBHoMID(largestAttribute, 'e')) + 1;
                     }
                 }
                 m_indexDict[type] = index;

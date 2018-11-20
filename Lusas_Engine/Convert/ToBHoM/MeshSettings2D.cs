@@ -8,7 +8,7 @@ namespace BH.Engine.Lusas
         public static MeshSettings2D ToBHoMMeshSettings2D(this IFMeshSurface lusasMeshSurface)
         {
             string attributeName = lusasMeshSurface.getName();
-            object[] elnames = lusasMeshSurface.getElementNames();
+            //object[] elementNames = lusasMeshSurface.getElementNames();
 
             //foreach (object name in elnames)
             //{
@@ -20,11 +20,17 @@ namespace BH.Engine.Lusas
 
             int xDivisions = 0;
             int yDivisions = 0;
-            double size = 1;
+            double size = 0;
 
-            Split2D splitMethod = Split2D.Divisions;
+            Split2D splitMethod = Split2D.Automatic;
 
-            if (lusasMeshSurface.getValue("size") == 0)
+
+            if ((lusasMeshSurface.getValue("size") == 0) && 
+                (lusasMeshSurface.getValue("xDivisions") ==0 &&
+                lusasMeshSurface.getValue("yDivisions") == 0))
+            {
+            }
+            else if (lusasMeshSurface.getValue("size") == 0)
             {
                 splitMethod = Split2D.Divisions;
                 xDivisions = lusasMeshSurface.getValue("xDivisions");
@@ -42,7 +48,8 @@ namespace BH.Engine.Lusas
                 Name = attributeName,
                 SplitMethod = splitMethod,
                 xDivisions = xDivisions,
-                yDivisions = yDivisions
+                yDivisions = yDivisions,
+                ElementSize = size
             };
 
             int bhomID = GetBHoMID(lusasMeshSurface, 'e');

@@ -9,11 +9,6 @@ namespace BH.Engine.Lusas
         public static MeshSettings1D ToBHoMMeshSettings1D(this IFMeshLine lusasMeshLine)
         {
             string attributeName = lusasMeshLine.getName();
-            object[] ratios = lusasMeshLine.getValue("ratio");
-            int ndivisions = ratios.Count();
-            if (ndivisions == 0)
-                ndivisions = 4;
-
             //object[] elnames = lusasMeshLine.getElementNames();
             //ElementType1D elementType1D = ElementType1D.Bar;
             //foreach (object name in elnames)
@@ -25,13 +20,22 @@ namespace BH.Engine.Lusas
             //}
 
             double value = 0;
-            Split1D splitMethod = Split1D.Divisions;
-            if (lusasMeshLine.getValue("size")==0)
+            Split1D splitMethod = Split1D.Automatic;
+            int meshType = 0;
+            lusasMeshLine.getMeshDivisions(ref meshType);
+            if (meshType ==0)
+            {
+                value = 0;
+            }
+            else if(meshType == 1)
             {
                 splitMethod = Split1D.Divisions;
-                value = ndivisions;
+                object[] ratios = lusasMeshLine.getValue("ratio");
+                value = ratios.Count();
+                if (value == 0)
+                    value = 4;
             }
-            else
+            else if(meshType == 2)
             {
                 splitMethod = Split1D.Length;
                 value = lusasMeshLine.getValue("size");

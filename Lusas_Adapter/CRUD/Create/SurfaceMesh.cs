@@ -16,17 +16,18 @@ namespace BH.Adapter.Lusas
             else
             {
                 lusasSurfaceMesh = d_LusasData.createMeshSurface(lusasAttributeName);
-
-                if (meshSettings2D.SplitMethod == Split2D.Divisions)
+                if (meshSettings2D.SplitMethod == Split2D.Automatic)
                 {
-                    lusasSurfaceMesh.setValue("xDivisions", meshSettings2D.xDivisions);
-                    lusasSurfaceMesh.setValue("yDivisions", meshSettings2D.yDivisions);
+                    lusasSurfaceMesh.addElementName("QTS4");
+                }
+                else if (meshSettings2D.SplitMethod == Split2D.Divisions)
+                {
+                    lusasSurfaceMesh.setRegular("QTS4", meshSettings2D.xDivisions, meshSettings2D.yDivisions);
                 }
                 else if (meshSettings2D.SplitMethod == Split2D.Size)
                 {
-                    lusasSurfaceMesh.setValue("size", meshSettings2D.ElementSize);
+                    lusasSurfaceMesh.setRegularSize("QTS4", meshSettings2D.ElementSize);
                 }
-                lusasSurfaceMesh.addElementName("QTS4");
             }
             return lusasSurfaceMesh;
         }

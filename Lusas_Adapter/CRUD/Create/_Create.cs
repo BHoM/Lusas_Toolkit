@@ -636,7 +636,7 @@ namespace BH.Adapter.Lusas
 
             foreach (MeshSettings1D meshSettings1D in meshSettings1Ds)
             {
-                IFMeshLine newMeshSettings1D = CreateMeshSettings1D(meshSettings1D);
+                IFMeshLine newLineMesh = CreateMeshSettings1D(meshSettings1D);
             }
 
             return true;
@@ -649,7 +649,7 @@ namespace BH.Adapter.Lusas
 
             foreach (MeshSettings2D meshSettings2D in meshSettings2Ds)
             {
-                IFMeshSurface newMeshSettings1D = CreateMeshSettings2D(meshSettings2D);
+                IFMeshSurface newSurfaceMesh = CreateMeshSettings2D(meshSettings2D);
             }
 
             return true;
