@@ -2,7 +2,6 @@
 using System.Linq;
 using BH.oM.Structure.Loads;
 using Lusas.LPI;
-using BH.Engine.Reflection;
 
 namespace BH.Adapter.Lusas
 {

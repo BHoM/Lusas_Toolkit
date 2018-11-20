@@ -6,7 +6,6 @@ using System;
 using BH.oM.Geometry;
 using BH.oM.Structure.Loads;
 using System.Collections.Generic;
-using BH.Engine.Lusas;
 
 namespace BH.Adapter.Lusas
 {
