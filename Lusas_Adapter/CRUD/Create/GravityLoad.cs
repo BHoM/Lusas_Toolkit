@@ -5,7 +5,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFLoadingBody CreateGravityLoad(GravityLoad gravityLoad, object[] lusasGeom,string assignedType)
+        public IFLoadingBody CreateGravityLoad(GravityLoad gravityLoad, IFGeometry[] lusasGeometry)
         {
             IFLoadingBody lusasGravityLoad = null;
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + gravityLoad.Loadcase.CustomData[AdapterId] + "/" + gravityLoad.Loadcase.Name);
@@ -24,7 +24,7 @@ namespace BH.Adapter.Lusas
 
             IFAssignment assignToGeom = m_LusasApplication.assignment();
             assignToGeom.setLoadset(assignedLoadcase);
-            lusasGravityLoad.assignTo(lusasGeom, assignToGeom);
+            lusasGravityLoad.assignTo(lusasGeometry, assignToGeom);
 
             return lusasGravityLoad;
         }

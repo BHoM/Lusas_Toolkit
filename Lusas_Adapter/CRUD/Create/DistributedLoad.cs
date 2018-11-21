@@ -29,7 +29,7 @@ namespace BH.Adapter.Lusas
             return lusasGlobalDistributed;
         }
 
-        public IFLoadingLocalDistributed CreateLocalDistributedBar(BarUniformlyDistributedLoad distributedLoad, object[] lusasLines)
+        public IFLoadingLocalDistributed CreateLocalDistributedLine(BarUniformlyDistributedLoad distributedLoad, IFLine[] lusasLines)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + distributedLoad.Loadcase.CustomData[AdapterId] + "/" + distributedLoad.Loadcase.Name);
             string lusasAttributeName = "Dl" + distributedLoad.CustomData[AdapterId] + "/" + distributedLoad.Name;

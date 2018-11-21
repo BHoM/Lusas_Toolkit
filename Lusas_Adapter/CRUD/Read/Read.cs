@@ -25,8 +25,6 @@ namespace BH.Adapter.Lusas
                 return ReadBars(ids as dynamic);
             else if (type == typeof(Node))
                 return ReadNodes(ids as dynamic);
-            //else if (type == typeof(ISectionProperty) || type.GetInterfaces().Contains(typeof(ISectionProperty)))
-            //    return ReadSectionProperties(ids as dynamic);
             else if (type == typeof(Material))
                 return ReadMaterials(ids as dynamic);
             else if (type == typeof(PanelPlanar))
@@ -107,7 +105,15 @@ namespace BH.Adapter.Lusas
             for (int i = 0; i < lusasLines.Count(); i++)
             {
                 IFLine lusasLine = (IFLine)lusasLines[i];
-                Bar bhomBar = BH.Engine.Lusas.Convert.ToBHoMBar(lusasLine, bhomNodes, bhomSupports, groupNames,materials,geometrics);
+                Bar bhomBar = Engine.Lusas.Convert.ToBHoMBar
+                    (
+                    lusasLine, 
+                    bhomNodes, 
+                    bhomSupports, 
+                    groupNames,
+                    materials,
+                    geometrics
+                    );
 
                 bhomBars.Add(bhomBar);
             }
@@ -118,33 +124,30 @@ namespace BH.Adapter.Lusas
 
         private List<PanelPlanar> ReadSurfaces(List<string> ids = null)
         {
-            object[] eleArray = d_LusasData.getObjects("Surface");
+            object[] lusasSurfaces = d_LusasData.getObjects("Surface");
             List<PanelPlanar> bhomSurfaces = new List<PanelPlanar>();
 
-            if (eleArray.Count() != 0)
+            IEnumerable<Edge> bhomEdgesList = ReadEdges();
+            Dictionary<string, Edge> bhomEdges = bhomEdgesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
+            HashSet<string> groupNames = ReadGroups();
+            IEnumerable<Material> materialList = ReadMaterials();
+            Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
+            IEnumerable<IProperty2D> geometricList = ReadProperty2D();
+            Dictionary<string, IProperty2D> geometrics = geometricList.ToDictionary(x => x.Name.ToString());
+            IEnumerable<Constraint4DOF> bhomSupportList = ReadConstraint4DOFs();
+            Dictionary<string, Constraint4DOF> bhomSupports = bhomSupportList.ToDictionary(x => x.Name);
+
+            for (int i = 0; i < lusasSurfaces.Count(); i++)
             {
-                IEnumerable<Edge> bhomEdgesList = ReadEdges();
-                Dictionary<string, Edge> bhomEdges = bhomEdgesList.ToDictionary(x => x.CustomData[AdapterId].ToString());
-                HashSet<string> groupNames = ReadGroups();
-                IEnumerable<Material> materialList = ReadMaterials();
-                Dictionary<string, Material> materials = materialList.ToDictionary(x => x.Name.ToString());
-                IEnumerable<IProperty2D> geometricList = ReadProperty2D();
-                Dictionary<string, IProperty2D> geometrics = geometricList.ToDictionary(x => x.Name.ToString());
-                IEnumerable<Constraint4DOF> bhomSupportList = ReadConstraint4DOFs();
-                Dictionary<string, Constraint4DOF> bhomSupports = bhomSupportList.ToDictionary(x => x.Name);
+                IFSurface lusasSurface = (IFSurface)lusasSurfaces[i];
+                PanelPlanar bhomPanel = Engine.Lusas.Convert.ToBHoMPanelPlanar(lusasSurface,
+                    bhomEdges,
+                    groupNames,
+                    geometrics,
+                    materials,
+                    bhomSupports);
 
-                for (int i = 0; i < eleArray.Count(); i++)
-                {
-                    IFSurface lusasSurface = (IFSurface)eleArray[i];
-                    PanelPlanar bhompanel = BH.Engine.Lusas.Convert.ToBHoMPanelPlanar(lusasSurface,
-                        bhomEdges,
-                        groupNames,
-                        geometrics,
-                        materials,
-                        bhomSupports);
-
-                    bhomSurfaces.Add(bhompanel);
-                }
+                bhomSurfaces.Add(bhomPanel);
             }
 
             return bhomSurfaces;
@@ -165,7 +168,7 @@ namespace BH.Adapter.Lusas
             for (int i = 0; i < lusasPoints.Count(); i++)
             {
                 IFPoint lusasPoint = (IFPoint)lusasPoints[i];
-                Node bhomNode = BH.Engine.Lusas.Convert.ToBHoMNode(lusasPoint, groupNames, constraints6DOF);
+                Node bhomNode = Engine.Lusas.Convert.ToBHoMNode(lusasPoint, groupNames, constraints6DOF);
                 bhomNodes.Add(bhomNode);
             }
             return bhomNodes;
@@ -183,7 +186,7 @@ namespace BH.Adapter.Lusas
             for (int i = 0; i < lusasPoints.Count(); i++)
             {
                 IFPoint lusasPoint = (IFPoint)lusasPoints[i];
-                Point bhomPoint = BH.Engine.Lusas.Convert.ToBHoMPoint(lusasPoint, groupNames);
+                Point bhomPoint = Engine.Lusas.Convert.ToBHoMPoint(lusasPoint, groupNames);
                 bhomPoints.Add(bhomPoint);
             }
             return bhomPoints;
@@ -193,28 +196,28 @@ namespace BH.Adapter.Lusas
 
         private List<IFPoint> ReadLusasPoints(List<string> ids = null)
         {
-            object[] pointArray = d_LusasData.getObjects("Point");
+            object[] lusasPoints = d_LusasData.getObjects("Point");
 
-            List<IFPoint> lusasPoints = new List<IFPoint>();
+            List<IFPoint> lusasPointList = new List<IFPoint>();
 
-            for (int i = 0; i < pointArray.Count(); i++)
+            for (int i = 0; i < lusasPoints.Count(); i++)
             {
-                IFPoint lusasPoint = (IFPoint)pointArray[i];
-                lusasPoints.Add(lusasPoint);
+                IFPoint lusasPoint = (IFPoint)lusasPoints[i];
+                lusasPointList.Add(lusasPoint);
             }
-            return lusasPoints;
+            return lusasPointList;
         }
 
         /***************************************************/
 
         private HashSet<string> ReadGroups(List<string> ids = null)
         {
-            object[] eleArray = d_LusasData.getObjects("Groups");
+            object[] lusasGroups = d_LusasData.getObjects("Groups");
             HashSet<string> bhomTags = new HashSet<string>();
 
-            for (int i = 0; i < eleArray.Count(); i++)
+            for (int i = 0; i < lusasGroups.Count(); i++)
             {
-                IFGroup lusasGroup = (IFGroup)eleArray[i];
+                IFGroup lusasGroup = (IFGroup)lusasGroups[i];
                 bhomTags.Add(lusasGroup.getName());
             }
 
@@ -236,8 +239,8 @@ namespace BH.Adapter.Lusas
 
                 for (int i = 0; i < lusasLines.Count(); i++)
                 {
-                    IFLine lusasline = (IFLine)lusasLines[i];
-                    Edge bhomEdge = BH.Engine.Lusas.Convert.ToBHoMEdge(lusasline, bhomNodes, groupNames);
+                    IFLine lusasLine = (IFLine)lusasLines[i];
+                    Edge bhomEdge = Engine.Lusas.Convert.ToBHoMEdge(lusasLine, bhomNodes, groupNames);
                     bhomEdges.Add(bhomEdge);
                 }
             }
@@ -247,18 +250,18 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private List<IFLine> ReadLusasEdges(List<string> ids = null)
-        {
-            object[] lusasLines = d_LusasData.getObjects("Line");
-            List<IFLine> lusasEdges = new List<IFLine>();
+        //private List<IFLine> ReadLusasEdges(List<string> ids = null)
+        //{
+        //    object[] lusasLines = d_LusasData.getObjects("Line");
+        //    List<IFLine> lusasEdges = new List<IFLine>();
 
-            for (int i = 0; i < lusasLines.Count(); i++)
-            {
-                IFLine lusasline = d_LusasData.getLineByNumber(i);
-                lusasEdges.Add(lusasline);
-            }
-            return lusasEdges;
-        }
+        //    for (int i = 0; i < lusasLines.Count(); i++)
+        //    {
+        //        IFLine lusasline = d_LusasData.getLineByNumber(i);
+        //        lusasEdges.Add(lusasline);
+        //    }
+        //    return lusasEdges;
+        //}
 
         /***************************************/
 
@@ -270,9 +273,10 @@ namespace BH.Adapter.Lusas
             for (int i = 0; i < lusasSupports.Count(); i++)
             {
                 IFSupportStructural lusasSupport = (IFSupportStructural)lusasSupports[i];
-                Constraint6DOF bhomConstraint6DOF = BH.Engine.Lusas.Convert.ToBHoMConstraint6DOF(lusasSupport);
+                Constraint6DOF bhomConstraint6DOF = Engine.Lusas.Convert.ToBHoMConstraint6DOF(lusasSupport);
                 bhomConstraints6DOF.Add(bhomConstraint6DOF);
             }
+
             return bhomConstraints6DOF;
         }
 
@@ -286,9 +290,10 @@ namespace BH.Adapter.Lusas
             for (int i = 0; i < lusasSupports.Count(); i++)
             {
                 IFSupportStructural lusasSupport = (IFSupportStructural)lusasSupports[i];
-                Constraint4DOF bhomConstraint4DOF = BH.Engine.Lusas.Convert.ToBHoMConstraint4DOF(lusasSupport);
+                Constraint4DOF bhomConstraint4DOF = Engine.Lusas.Convert.ToBHoMConstraint4DOF(lusasSupport);
                 bhomConstraints4DOFs.Add(bhomConstraint4DOF);
             }
+
             return bhomConstraints4DOFs;
         }
 
@@ -302,7 +307,7 @@ namespace BH.Adapter.Lusas
             for (int i = 0; i < lusasSections.Count(); i++)
             {
                 IFAttribute lusasSection = (IFAttribute)lusasSections[i];
-                ISectionProperty bhomSection = BH.Engine.Lusas.Convert.ToBHoMSection(lusasSection);
+                ISectionProperty bhomSection = Engine.Lusas.Convert.ToBHoMSection(lusasSection);
                 bhomSections.Add(bhomSection);
             }
             return bhomSections;
@@ -318,7 +323,7 @@ namespace BH.Adapter.Lusas
             for (int i = 0; i < lusasMaterials.Count(); i++)
             {
                 IFAttribute lusasMaterial = (IFAttribute)lusasMaterials[i];
-                Material bhomMaterial = BH.Engine.Lusas.Convert.ToBHoMMaterial(lusasMaterial);
+                Material bhomMaterial = Engine.Lusas.Convert.ToBHoMMaterial(lusasMaterial);
                 bhomMaterials.Add(bhomMaterial);
             }
 
@@ -335,25 +340,25 @@ namespace BH.Adapter.Lusas
             for (int i = 0; i < allLoadcases.Count(); i++)
             {
                 IFLoadcase lusasLoadcase = (IFLoadcase)allLoadcases[i];
-                Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(lusasLoadcase);
+                Loadcase bhomLoadcase = Engine.Lusas.Convert.ToBHoMLoadcase(lusasLoadcase);
                 List<string> analysisName = new List<string> { lusasLoadcase.getAnalysis().getName() };
                 bhomLoadcase.Tags = new HashSet<string>(analysisName);
                 bhomLoadcases.Add(bhomLoadcase);
             }
+
             return bhomLoadcases;
         }
 
         /***************************************************/
         private List<IProperty2D> ReadProperty2D(List<string> ids = null)
         {
-            object[] lusasThicknesses = d_LusasData.getAttributes("Surface Geometric");
+            object[] lusasGeometrics = d_LusasData.getAttributes("Surface Geometric");
             List<IProperty2D> bhomProperties2D = new List<IProperty2D>();
 
-            for (int i = 0; i < lusasThicknesses.Count(); i++)
+            for (int i = 0; i < lusasGeometrics.Count(); i++)
             {
-                IFAttribute lusasThickness = (IFAttribute)lusasThicknesses[i];
-                string attributeType = lusasThickness.getAttributeType();
-                IProperty2D bhomProperty2D = BH.Engine.Lusas.Convert.ToBHoMProperty2D(lusasThickness);
+                IFAttribute lusasGeometric = (IFAttribute)lusasGeometrics[i];
+                IProperty2D bhomProperty2D = Engine.Lusas.Convert.ToBHoMProperty2D(lusasGeometric);
                 bhomProperties2D.Add(bhomProperty2D);
             }
 
@@ -405,22 +410,22 @@ namespace BH.Adapter.Lusas
         private List<ILoad> ReadPointForce(List<string> ids = null)
         {
             List<ILoad> bhomPointForces = new List<ILoad>();
-            object[] lusasPointForces = d_LusasData.getAttributes("Concentrated Load");
+            object[] lusasConcentratedLoads = d_LusasData.getAttributes("Concentrated Load");
 
             List<Node> bhomNodes = ReadNodes();
             Dictionary<string, Node> nodeDict = bhomNodes.ToDictionary(x => x.CustomData[AdapterId].ToString());
             List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
 
-            for (int i = 0; i < lusasPointForces.Count(); i++)
+            for (int i = 0; i < lusasConcentratedLoads.Count(); i++)
             {
-                IFLoading lusasPointForce = (IFLoading)lusasPointForces[i];
+                IFLoading lusasConcentratedLoad = (IFLoading)lusasConcentratedLoads[i];
 
-                IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(lusasPointForce);
+                IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(lusasConcentratedLoad);
 
                 foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                 {
-                    PointForce bhomPointForce = BH.Engine.Lusas.Convert.ToPointForce(lusasPointForce, groupedAssignment, nodeDict);
-                    List<string> analysisName = new List<string> { lusasPointForce.getAttributeType() };
+                    PointForce bhomPointForce = Engine.Lusas.Convert.ToPointForce(lusasConcentratedLoad, groupedAssignment, nodeDict);
+                    List<string> analysisName = new List<string> { lusasConcentratedLoad.getAttributeType() };
                     bhomPointForce.Tags = new HashSet<string>(analysisName);
                     bhomPointForces.Add(bhomPointForce);
                 }
@@ -434,19 +439,19 @@ namespace BH.Adapter.Lusas
         private List<ILoad> ReadGravityLoad(List<string> ids = null)
         {
             List<ILoad> bhomGravityLoads = new List<ILoad>();
-            object[] lusasGravityLoads = d_LusasData.getAttributes("Body Force Load");
+            object[] lusasBodyForces = d_LusasData.getAttributes("Body Force Load");
 
             List<Bar> bhomBars = ReadBars();
             List<PanelPlanar> bhomPanels = ReadSurfaces();
             Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(x => x.CustomData[AdapterId].ToString());
-            Dictionary<string, PanelPlanar> panelDictionary = bhomPanels.ToDictionary(x => x.CustomData[AdapterId].ToString());
+            Dictionary<string, PanelPlanar> panelPlanarDictionary = bhomPanels.ToDictionary(x => x.CustomData[AdapterId].ToString());
             List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
 
-            for (int i = 0; i < lusasGravityLoads.Count(); i++)
+            for (int i = 0; i < lusasBodyForces.Count(); i++)
             {
-                IFLoading lusasGravityLoad = (IFLoading) lusasGravityLoads[i];
+                IFLoading lusasBodyForce = (IFLoading) lusasBodyForces[i];
 
-                IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(lusasGravityLoad);
+                IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(lusasBodyForce);
 
                 foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                 {
@@ -468,18 +473,18 @@ namespace BH.Adapter.Lusas
                         }
                     }
 
-                    List<string> analysisName = new List<string> { lusasGravityLoad.getAttributeType() };
+                    List<string> analysisName = new List<string> { lusasBodyForce.getAttributeType() };
 
                     if (barAssignments.Count!=0)
                     {
-                        GravityLoad bhomBarGravityLoad = BH.Engine.Lusas.Convert.ToGravityLoad(lusasGravityLoad, barAssignments, "Bar", barDictionary, panelDictionary);
+                        GravityLoad bhomBarGravityLoad = Engine.Lusas.Convert.ToGravityLoad(lusasBodyForce, barAssignments, "Bar", barDictionary, panelPlanarDictionary);
                         bhomBarGravityLoad.Tags = new HashSet<string>(analysisName);
                         bhomGravityLoads.Add(bhomBarGravityLoad);
                     }
 
                     if (surfaceAssignments.Count != 0)
                     {
-                        GravityLoad bhomSurfGravityLoad = BH.Engine.Lusas.Convert.ToGravityLoad(lusasGravityLoad, surfaceAssignments, "Surface", barDictionary, panelDictionary);
+                        GravityLoad bhomSurfGravityLoad = Engine.Lusas.Convert.ToGravityLoad(lusasBodyForce, surfaceAssignments, "Surface", barDictionary, panelPlanarDictionary);
                         bhomSurfGravityLoad.Tags = new HashSet<string>(analysisName);
                         bhomGravityLoads.Add(bhomSurfGravityLoad);
                     }
@@ -514,7 +519,7 @@ namespace BH.Adapter.Lusas
                 {
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
-                        BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad = BH.Engine.Lusas.Convert.ToBarUniformallyDistributed(lusasDistributedLoad, groupedAssignment, barDictionary);
+                        BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad = Engine.Lusas.Convert.ToBarUniformallyDistributed(lusasDistributedLoad, groupedAssignment, barDictionary);
                         List<string> analysisName = new List<string> { lusasDistributedLoad.getAttributeType() };
                         bhomBarUniformlyDistributedLoad.Tags = new HashSet<string>(analysisName);
                         bhomBarUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
