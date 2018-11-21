@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
-using BH.oM.Geometry;;
+using BH.oM.Geometry;
 
 namespace BH.Engine.Lusas.Object_Comparer.Equality_Comparer
 {
