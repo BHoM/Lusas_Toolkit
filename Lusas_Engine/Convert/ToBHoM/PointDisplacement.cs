@@ -28,8 +28,8 @@ namespace BH.Engine.Lusas
 
             Vector rotationVector = new Vector
             {
-                X = lusasPrescribedDisplacement.getValue("THX")
-                 Y = lusasPrescribedDisplacement.getValue("THY"),
+                X = lusasPrescribedDisplacement.getValue("THX"),
+                Y = lusasPrescribedDisplacement.getValue("THY"),
                 Z = lusasPrescribedDisplacement.getValue("THZ")
             };
 
