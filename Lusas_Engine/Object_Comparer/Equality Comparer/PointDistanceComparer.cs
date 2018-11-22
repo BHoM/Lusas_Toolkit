@@ -31,10 +31,10 @@ namespace BH.Engine.Lusas.Object_Comparer.Equality_Comparer
         public bool Equals(Point point1, Point point2)
         {
             //Check whether the compared objects reference the same data.
-            if (System.Object.ReferenceEquals(point1, point2)) return true;
+            if (ReferenceEquals(point1, point2)) return true;
 
             //Check whether any of the compared objects is null.
-            if (System.Object.ReferenceEquals(point1, null) || System.Object.ReferenceEquals(point2, null))
+            if (ReferenceEquals(point1, null) || System.Object.ReferenceEquals(point2, null))
                 return false;
 
             if ((int)Math.Round(point1.X * m_multiplier) != (int)Math.Round(point2.X * m_multiplier))
@@ -54,7 +54,7 @@ namespace BH.Engine.Lusas.Object_Comparer.Equality_Comparer
         public int GetHashCode(Point point)
         {
             //Check whether the object is null
-            if (System.Object.ReferenceEquals(point, null)) return 0;
+            if (ReferenceEquals(point, null)) return 0;
 
             int x = ((int)Math.Round(point.X * m_multiplier)).GetHashCode();
             int y = ((int)Math.Round(point.Y * m_multiplier)).GetHashCode();

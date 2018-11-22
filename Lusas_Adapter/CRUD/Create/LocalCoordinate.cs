@@ -47,19 +47,15 @@ namespace BH.Adapter.Lusas
                 worldZAxis.Zip(localZAxis, (d1,d2) => d1 * d2).Sum(),
             };
 
-            string customID = BH.Engine.Lusas.Convert.removePrefix(lusasLine.getName(),"L");
+            string customID = Engine.Lusas.Convert.removePrefix(lusasLine.getName(), "L");
 
             string lusasAttributeName = "L" + customID + "/ Local Axis";
 
 
 
             IFLocalCoord barLocalAxis = d_LusasData.createLocalCartesianAttr(
-            lusasAttributeName,
-            barorigin,
-            matrixCol0,
-            matrixCol1,
-            matrixCol2
-            );
+            lusasAttributeName, barorigin,
+            matrixCol0, matrixCol1, matrixCol2);
 
             return barLocalAxis;
         }

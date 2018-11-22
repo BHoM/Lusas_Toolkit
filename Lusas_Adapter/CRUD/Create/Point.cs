@@ -9,37 +9,39 @@ namespace BH.Adapter.Lusas
 
         public IFPoint CreatePoint(Node node)
         {
-                IFPoint newPoint;
-                IFDatabaseOperations database_point = d_LusasData.createPoint(node.Position.X, node.Position.Y, node.Position.Z);
-                newPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
-                newPoint.setName("P" + node.CustomData[AdapterId].ToString());
+            IFPoint lusasPoint;
+            IFDatabaseOperations database_point = d_LusasData.createPoint(
+                node.Position.X, node.Position.Y, node.Position.Z);
+
+            lusasPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
+            lusasPoint.setName("P" + node.CustomData[AdapterId].ToString());
 
             if (!(node.Tags.Count == 0))
             {
-                AssignObjectSet(newPoint, node.Tags);
+                AssignObjectSet(lusasPoint, node.Tags);
             }
 
             if (!(node.Constraint == null))
             {
                 string constraintName = "Sp" + node.Constraint.CustomData[AdapterId] + "/" + node.Constraint.Name;
                 IFAttribute lusasSupport = d_LusasData.getAttribute("Support", constraintName);
-                lusasSupport.assignTo(newPoint);
+                lusasSupport.assignTo(lusasPoint);
             }
 
-            return newPoint;
+            return lusasPoint;
         }
 
         public IFPoint CreatePoint(Point point)
         {
             Node newNode = new Node { Position = point };
 
-            int bhomID;
+            int adapterID;
             if (newNode.CustomData.ContainsKey(AdapterId))
-                bhomID = System.Convert.ToInt32(newNode.CustomData[AdapterId]);
+               adapterID= System.Convert.ToInt32(newNode.CustomData[AdapterId]);
             else
-                bhomID = System.Convert.ToInt32(NextId(newNode.GetType()));
+               adapterID= System.Convert.ToInt32(NextId(newNode.GetType()));
 
-            newNode.CustomData[AdapterId] = bhomID;
+            newNode.CustomData[AdapterId] = adapterID;
 
             IFPoint newPoint = CreatePoint(newNode);
 

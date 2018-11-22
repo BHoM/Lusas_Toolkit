@@ -10,9 +10,10 @@ namespace BH.Engine.Lusas
             Loadcase BHoMLoadcase = new Loadcase { Name = GetName(lusasLoadcase),
                 Number = lusasLoadcase.getID()};
 
-            int bhomID = GetBHoMID(lusasLoadcase, 'c');
+            int adapterID = GetAdapterID(lusasLoadcase, 'c');
 
-            BHoMLoadcase.CustomData["Lusas_id"] = bhomID;
+            BHoMLoadcase.CustomData["Lusas_id"] = adapterID;
+
             return BHoMLoadcase;
         }
     }

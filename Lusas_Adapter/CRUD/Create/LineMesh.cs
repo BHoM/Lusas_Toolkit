@@ -11,7 +11,7 @@ namespace BH.Adapter.Lusas
             string lusasAttributeName = "Me" + meshSettings1D.CustomData[AdapterId] + "/" + meshSettings1D.Name;
             if (d_LusasData.existsAttribute("Mesh", lusasAttributeName))
             {
-                lusasLineMesh = (IFMeshLine) d_LusasData.getAttribute("Mesh", lusasAttributeName);
+                lusasLineMesh = (IFMeshLine)d_LusasData.getAttribute("Mesh", lusasAttributeName);
             }
             else
             {
@@ -21,7 +21,7 @@ namespace BH.Adapter.Lusas
                 {
                     lusasLineMesh.setValue("uiSpacing", "uniform");
                 }
-                else if(meshSettings1D.SplitMethod == Split1D.Divisions)
+                else if (meshSettings1D.SplitMethod == Split1D.Divisions)
                 {
                     lusasLineMesh.addSpacing(System.Convert.ToInt32(meshSettings1D.SplitParameter), 1);
                 }

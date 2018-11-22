@@ -16,7 +16,9 @@ namespace BH.Adapter.Lusas
             }
             else
             {
-                IFGeometricSurface lusasGeometricSurface = CreateSurfraceProfile(property2D as dynamic, lusasAttributeName);
+                IFGeometricSurface lusasGeometricSurface = CreateSurfraceProfile(
+                    property2D as dynamic, lusasAttributeName);
+
                 lusasAttribute = lusasGeometricSurface;
             }
             return lusasAttribute;

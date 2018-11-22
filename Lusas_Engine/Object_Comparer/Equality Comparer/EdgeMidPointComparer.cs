@@ -31,10 +31,10 @@ namespace BH.Engine.Lusas.Object_Comparer.Equality_Comparer
         public bool Equals(Edge edge1, Edge edge2)
         {
             //Check whether the compared objects reference the same data.
-            if (System.Object.ReferenceEquals(edge1, edge2)) return true;
+            if (ReferenceEquals(edge1, edge2)) return true;
 
             //Check whether any of the compared objects is null.
-            if (System.Object.ReferenceEquals(edge1, null) || System.Object.ReferenceEquals(edge2, null))
+            if (ReferenceEquals(edge1, null) || ReferenceEquals(edge2, null))
                 return false;
 
             //Check if the GUIDs are the same
@@ -54,7 +54,7 @@ namespace BH.Engine.Lusas.Object_Comparer.Equality_Comparer
         public int GetHashCode(Edge edge)
         {
             //Check whether the object is null
-            if (System.Object.ReferenceEquals(edge, null)) return 0;
+            if (ReferenceEquals(edge, null)) return 0;
 
             return edge.Curve.IPointAtParameter(0.5).GetHashCode();
         }

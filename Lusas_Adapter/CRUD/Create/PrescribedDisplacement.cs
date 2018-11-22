@@ -11,13 +11,19 @@ namespace BH.Adapter.Lusas
         {
 
             IFPrescribedDisplacementLoad lusasPrescribedDisplacement = null;
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + pointDisplacement.Loadcase.CustomData[AdapterId] + "/" + pointDisplacement.Loadcase.Name);
-            string lusasAttributeName = "Pd" + pointDisplacement.CustomData[AdapterId] + "/" + pointDisplacement.Name;
-            NameSearch("Pd", pointDisplacement.CustomData[AdapterId].ToString(), pointDisplacement.Name, ref lusasAttributeName);
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
+                "Lc" + pointDisplacement.Loadcase.CustomData[AdapterId] + "/" + pointDisplacement.Loadcase.Name);
+
+            string lusasAttributeName = "Pd" + 
+                pointDisplacement.CustomData[AdapterId] + "/" + pointDisplacement.Name;
+
+            NameSearch("Pd", pointDisplacement.CustomData[AdapterId].ToString(), 
+                pointDisplacement.Name, ref lusasAttributeName);
 
             if (d_LusasData.existsAttribute("Loading", lusasAttributeName))
             {
-                lusasPrescribedDisplacement = (IFPrescribedDisplacementLoad)d_LusasData.getAttribute("Loading", lusasAttributeName);
+                lusasPrescribedDisplacement = (IFPrescribedDisplacementLoad)d_LusasData.getAttribute(
+                    "Loading", lusasAttributeName);
             }
             else
             {
@@ -26,11 +32,14 @@ namespace BH.Adapter.Lusas
                     "haveRotX", "haveRotY", "haveRotZ" };
                 List<double> displacements = new List<double>
                 {
-                    pointDisplacement.Translation.X, pointDisplacement.Translation.Y, pointDisplacement.Translation.Z,
-                    pointDisplacement.Rotation.X,pointDisplacement.Rotation.Y, pointDisplacement.Rotation.Z
+                    pointDisplacement.Translation.X, pointDisplacement.Translation.Y,
+                    pointDisplacement.Translation.Z,
+                    pointDisplacement.Rotation.X,pointDisplacement.Rotation.Y,
+                    pointDisplacement.Rotation.Z
                 };
 
-                lusasPrescribedDisplacement = d_LusasData.createPrescribedDisplacementLoad(lusasAttributeName, "Total");
+                lusasPrescribedDisplacement = d_LusasData.createPrescribedDisplacementLoad(
+                    lusasAttributeName, "Total");
 
                 for(int i=0; i < valueNames.Count(); i++)
                 {
@@ -47,9 +56,9 @@ namespace BH.Adapter.Lusas
 
             }
 
-            IFAssignment assignToNodes = m_LusasApplication.assignment();
-            assignToNodes.setLoadset(assignedLoadcase);
-            lusasPrescribedDisplacement.assignTo(lusasPoints, assignToNodes);
+            IFAssignment lusasAssignment = m_LusasApplication.assignment();
+            lusasAssignment.setLoadset(assignedLoadcase);
+            lusasPrescribedDisplacement.assignTo(lusasPoints, lusasAssignment);
 
             return lusasPrescribedDisplacement;
         }

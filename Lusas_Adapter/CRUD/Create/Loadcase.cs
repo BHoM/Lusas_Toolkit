@@ -16,7 +16,7 @@ namespace BH.Adapter.Lusas
             }
             else
             {
-                lusasLoadcase = d_LusasData.createLoadcase(lusasAttributeName, "",loadcase.Number);
+                lusasLoadcase = d_LusasData.createLoadcase(lusasAttributeName, "", loadcase.Number);
             }
             return lusasLoadcase;
         }

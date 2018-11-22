@@ -8,23 +8,26 @@ namespace BH.Adapter.Lusas
         public IFLoadingBody CreateGravityLoad(GravityLoad gravityLoad, IFGeometry[] lusasGeometry)
         {
             IFLoadingBody lusasGravityLoad = null;
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + gravityLoad.Loadcase.CustomData[AdapterId] + "/" + gravityLoad.Loadcase.Name);
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
+                "Lc" + gravityLoad.Loadcase.CustomData[AdapterId] + "/" + gravityLoad.Loadcase.Name);
+
             string lusasAttributeName = "Gl" + gravityLoad.CustomData[AdapterId] + "/" + gravityLoad.Name;
             NameSearch("Gl", gravityLoad.CustomData[AdapterId].ToString(), gravityLoad.Name, ref lusasAttributeName);
 
             if (d_LusasData.existsAttribute("Loading", lusasAttributeName))
             {
-                lusasGravityLoad = (IFLoadingBody)d_LusasData.getAttributes("Loading",lusasAttributeName);
+                lusasGravityLoad = (IFLoadingBody)d_LusasData.getAttributes("Loading", lusasAttributeName);
             }
             else
             {
                 lusasGravityLoad = d_LusasData.createLoadingBody(lusasAttributeName);
-                lusasGravityLoad.setBody(gravityLoad.GravityDirection.X, gravityLoad.GravityDirection.Y, gravityLoad.GravityDirection.Z);
+                lusasGravityLoad.setBody(
+                    gravityLoad.GravityDirection.X, gravityLoad.GravityDirection.Y, gravityLoad.GravityDirection.Z);
             }
 
-            IFAssignment assignToGeom = m_LusasApplication.assignment();
-            assignToGeom.setLoadset(assignedLoadcase);
-            lusasGravityLoad.assignTo(lusasGeometry, assignToGeom);
+            IFAssignment lusasAssignment = m_LusasApplication.assignment();
+            lusasAssignment.setLoadset(assignedLoadcase);
+            lusasGravityLoad.assignTo(lusasGeometry, lusasAssignment);
 
             return lusasGravityLoad;
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BH.oM.Structure.Elements;
 using Lusas.LPI;
+using BH.oM.Base;
 
 namespace BH.Engine.Lusas
 {
@@ -10,17 +11,17 @@ namespace BH.Engine.Lusas
     {
         public static string removePrefix(string name, string forRemoval)
         {
-            string geometryID = "";
+            string adapterID = "";
 
             if (name.Contains(forRemoval))
             {
-                geometryID = name.Replace(forRemoval, "");
+                adapterID = name.Replace(forRemoval, "");
             }
             else
             {
-                geometryID = name;
+                adapterID = name;
             }
-            return geometryID;
+            return adapterID;
         }
 
         public static Node GetNode(IFLine lusasLine, int nodeIndex, Dictionary<string, Node> bhomNodes)
@@ -51,85 +52,85 @@ namespace BH.Engine.Lusas
             return bhomEdge;
         }
 
-        public static HashSet<string> IsMemberOf(IFGeometry lusasGeometry, HashSet<string> groupNames)
+        public static HashSet<string> IsMemberOf(IFGeometry lusasGeometry, HashSet<string> bhomTags)
         {
 
-            HashSet<string> memberGroups = new HashSet<string>();
+            HashSet<string> geometryTag = new HashSet<string>();
 
-            foreach (string groupName in groupNames)
+            foreach (string tag in bhomTags)
             {
-                if (lusasGeometry.isMemberOfGroup(groupName))
+                if (lusasGeometry.isMemberOfGroup(tag))
                 {
-                    memberGroups.Add(groupName);
+                    geometryTag.Add(tag);
                 }
             }
 
-            return memberGroups;
+            return geometryTag;
         }
 
         public static List<string> AttributeAssignments(IFGeometry lusasGeometry, string attributeType)
         {
-            object[] attributeAssignments = lusasGeometry.getAssignments(attributeType);
+            object[] lusasAssignments = lusasGeometry.getAssignments(attributeType);
 
             List<string> attributeNames = new List<string>();
 
-            int n = attributeAssignments.Count();
+            int n = lusasAssignments.Count();
             for (int i = 0; i < n; i++)
             {
-                IFAssignment attributeAssignment = lusasGeometry.getAssignments(attributeType)[i];
-                IFAttribute lusasAttribute = attributeAssignment.getAttribute();
+                IFAssignment lusasAssignment = lusasGeometry.getAssignments(attributeType)[i];
+                IFAttribute lusasAttribute = lusasAssignment.getAttribute();
                 string attributeName = GetName(lusasAttribute);
                 attributeNames.Add(attributeName);
             }
             return attributeNames;
         }
 
-        public static int GetBHoMID(IFAttribute lusasAttribute, char lastCharacter)
+        public static int GetAdapterID(IFAttribute lusasAttribute, char lastCharacter)
         {
-            int bhomID = 0;
+            int adapterID = 0;
 
             if (lusasAttribute.getName().Contains("/"))
             {
-                bhomID = Int32.Parse(lusasAttribute.getName().Split(lastCharacter, '/')[1]);
+                adapterID = int.Parse(lusasAttribute.getName().Split(lastCharacter, '/')[1]);
             }
             else
             {
-                bhomID = lusasAttribute.getID();
+                adapterID = lusasAttribute.getID();
             }
 
-            return bhomID;
+            return adapterID;
         }
 
-        public static int GetBHoMID(IFLoadcase lusasLoadcase, char lastCharacter)
+        public static int GetAdapterID(IFLoadcase lusasLoadcase, char lastCharacter)
         {
-            int bhomID = 0;
+            int adapterID = 0;
 
             if (lusasLoadcase.getName().Contains("/"))
             {
-                bhomID = Int32.Parse(lusasLoadcase.getName().Split(lastCharacter, '/')[1]);
+                adapterID = int.Parse(lusasLoadcase.getName().Split(lastCharacter, '/')[1]);
             }
             else
             {
-                bhomID = lusasLoadcase.getID();
+                adapterID = lusasLoadcase.getID();
             }
 
-            return bhomID;
+            return adapterID;
         }
 
-        public static int GetBHoMID(IFBasicCombination lusasLoadCombination, char lastCharacter)
+        public static int GetAdapterID(IFBasicCombination lusasLoadCombination, char lastCharacter)
         {
-            int bhomID = 0;
+            int adapterID = 0;
 
             if (lusasLoadCombination.getName().Contains("/"))
             {
-                bhomID = Int32.Parse(lusasLoadCombination.getName().Split(lastCharacter, '/')[1]);
+                adapterID = int.Parse(lusasLoadCombination.getName().Split(lastCharacter, '/')[1]);
             }
             else
             {
-                bhomID = lusasLoadCombination.getID();
+                adapterID = lusasLoadCombination.getID();
             }
 
-            return bhomID;
+            return adapterID;
         }
 
         public static string GetName(IFAttribute lusasAttribute)
@@ -183,65 +184,102 @@ namespace BH.Engine.Lusas
             return loadcaseName;
         }
 
-        public static string GetName(string loadname)
+        public static string GetName(string loadName)
         {
             string bhomLoadName = "";
 
-            if (loadname.Contains("/"))
+            if (loadName.Contains("/"))
             {
-                bhomLoadName = loadname.Substring(
-                    loadname.LastIndexOf("/") + 1);
+                bhomLoadName = loadName.Substring(
+                    loadName.LastIndexOf("/") + 1);
             }
             else
             {
-                bhomLoadName = loadname;
+                bhomLoadName = loadName;
             }
 
             return bhomLoadName;
         }
 
-        public static IEnumerable<Node> GetNodeAssignments(IEnumerable<IFAssignment> assignmentList, Dictionary<string, Node> nodes)
+        public static IEnumerable<Node> GetNodeAssignments(IEnumerable<IFAssignment> lusasAssignments,
+            Dictionary<string, Node> bhomNodes)
         {
             List<Node> assignedNodes = new List<Node>();
             Node bhomNode = new Node();
 
-            foreach (IFAssignment assignment in assignmentList)
+            foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
-                IFPoint lusasPoint = (IFPoint)assignment.getDatabaseObject();
-                nodes.TryGetValue(removePrefix(lusasPoint.getName(), "P"), out bhomNode);
+                IFPoint lusasPoint = (IFPoint)lusasAssignment.getDatabaseObject();
+                bhomNodes.TryGetValue(removePrefix(lusasPoint.getName(), "P"), out bhomNode);
                 assignedNodes.Add(bhomNode);
             }
             return assignedNodes;
         }
 
-        public static IEnumerable<Bar> GetBarAssignments(IEnumerable<IFAssignment> assignmentList, Dictionary<string, Bar> bars)
+        public static IEnumerable<Bar> GetBarAssignments(IEnumerable<IFAssignment> lusasAssignments,
+            Dictionary<string, Bar> bhomBars)
         {
             List<Bar> assignedBars = new List<Bar>();
             Bar bhomBar = new Bar();
 
-            foreach (IFAssignment assignment in assignmentList)
+            foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
-                IFLine lusasLine = (IFLine) assignment.getDatabaseObject();
-                bars.TryGetValue(removePrefix(lusasLine.getName(), "L"), out bhomBar);
+                IFLine lusasLine = (IFLine)lusasAssignment.getDatabaseObject();
+                bhomBars.TryGetValue(removePrefix(lusasLine.getName(), "L"), out bhomBar);
                 assignedBars.Add(bhomBar);
             }
 
             return assignedBars;
         }
 
-        public static IEnumerable<IAreaElement> GetSurfaceAssignments(IEnumerable<IFAssignment> assignmentList, Dictionary<string, PanelPlanar> surfs)
+        public static IEnumerable<IAreaElement> GetSurfaceAssignments(IEnumerable<IFAssignment> lusasAssignments,
+            Dictionary<string, PanelPlanar> bhomPlanarPanels)
         {
             List<IAreaElement> assignedSurfs = new List<IAreaElement>();
-            PanelPlanar bhomSurf = new PanelPlanar();
+            PanelPlanar bhomPanelPlanar = new PanelPlanar();
 
-            foreach (IFAssignment assignment in assignmentList)
+            foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
-                IFSurface lusasSurf = (IFSurface)assignment.getDatabaseObject();
-                surfs.TryGetValue(removePrefix(lusasSurf.getName(), "S"), out bhomSurf);
-                assignedSurfs.Add(bhomSurf);
+                IFSurface lusasSurface = (IFSurface)lusasAssignment.getDatabaseObject();
+                bhomPlanarPanels.TryGetValue(removePrefix(lusasSurface.getName(), "S"), out bhomPanelPlanar);
+                assignedSurfs.Add(bhomPanelPlanar);
             }
 
             return assignedSurfs;
+        }
+
+        public static IEnumerable<BHoMObject> GetGeometryAssignments(IEnumerable<IFAssignment> lusasAssignments,
+            Dictionary<string, Node> bhomNodes, Dictionary<string, Bar> bhomBars,
+            Dictionary<string, PanelPlanar> bhomPlanarPanels)
+        {
+            List<BHoMObject> assignedObjects = new List<BHoMObject>();
+
+            Node bhomNode = new Node();
+            Bar bhomBar = new Bar();
+            PanelPlanar bhomPanelPlanar = new PanelPlanar();
+
+            foreach (IFAssignment lusasAssignment in lusasAssignments)
+            {
+                IFGeometry lusasGeometry = (IFGeometry)lusasAssignment.getDatabaseObject();
+
+                if (lusasGeometry is IFPoint)
+                {
+                    bhomNodes.TryGetValue(removePrefix(lusasGeometry.getName(), "P"), out bhomNode);
+                    assignedObjects.Add(bhomNode);
+                }
+                else if (lusasGeometry is IFLine)
+                {
+                    bhomBars.TryGetValue(removePrefix(lusasGeometry.getName(), "L"), out bhomBar);
+                    assignedObjects.Add(bhomBar);
+                }
+                else if (lusasGeometry is IFSurface)
+                {
+                    bhomPlanarPanels.TryGetValue(removePrefix(lusasGeometry.getName(), "S"), out bhomPanelPlanar);
+                    assignedObjects.Add(bhomPanelPlanar);
+                }
+            }
+
+            return assignedObjects;
         }
 
     }

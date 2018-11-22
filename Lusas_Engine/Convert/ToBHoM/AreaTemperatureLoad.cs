@@ -10,24 +10,26 @@ namespace BH.Engine.Lusas
     {
         public static AreaTemperatureLoad ToAreaTempratureLoad(
             IFLoading lusasTemperatureLoad,
-            IEnumerable<IFAssignment> assignmentList,
-            Dictionary<string, PanelPlanar> panels)
+            IEnumerable<IFAssignment> lusasAssignments,
+            Dictionary<string, PanelPlanar> panelPlanarDictionary)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)assignmentList.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(assignedLoadcase);
+            IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
+            Loadcase bhomLoadcase = ToBHoMLoadcase(assignedLoadcase);
             double temperatureChange = lusasTemperatureLoad.getValue("T")
                 - lusasTemperatureLoad.getValue("T0");
 
-            IEnumerable<IAreaElement> bhomPanels = GetSurfaceAssignments(assignmentList, panels);
-            AreaTemperatureLoad bhomAreaTemperatureLoad = BH.Engine.Structure.Create.AreaTemperatureLoad(
+            IEnumerable<IAreaElement> bhomPlanarPanels = GetSurfaceAssignments(lusasAssignments, panelPlanarDictionary);
+            AreaTemperatureLoad bhomAreaTemperatureLoad = Structure.Create.AreaTemperatureLoad(
                 bhomLoadcase,
                 temperatureChange,
-                bhomPanels,
+                bhomPlanarPanels,
                 LoadAxis.Local,
                 false,
                 GetName(lusasTemperatureLoad));
-            int bhomID = GetBHoMID(lusasTemperatureLoad, 'l');
-            bhomAreaTemperatureLoad.CustomData["Lusas_id"] = bhomID;
+
+            int adapterID = GetAdapterID(lusasTemperatureLoad, 'l');
+            bhomAreaTemperatureLoad.CustomData["Lusas_id"] = adapterID;
+
             return bhomAreaTemperatureLoad;
         }
     }
