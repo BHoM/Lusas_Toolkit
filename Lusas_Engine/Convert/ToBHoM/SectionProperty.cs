@@ -38,9 +38,9 @@ namespace BH.Engine.Lusas
 
             bhomSection.Name = attributeName;
 
-            int bhomID = GetBHoMID(lusasAttribute, 'G');
+            int adapterID = GetAdapterID(lusasAttribute, 'G');
 
-            bhomSection.CustomData["Lusas_id"] = bhomID;
+            bhomSection.CustomData["Lusas_id"] = adapterID;
 
             return bhomSection;
         }
@@ -161,7 +161,6 @@ namespace BH.Engine.Lusas
                 );
             }
             return sectionProfile;
-
         }
     }
 }

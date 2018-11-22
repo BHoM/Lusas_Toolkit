@@ -141,7 +141,7 @@ namespace BH.Adapter.Lusas
 
             foreach (Node node in nodes)
             {
-                IFPoint newpoint = CreatePoint(node);
+                IFPoint lusasPoint = CreatePoint(node);
             }
             return true;
         }
@@ -155,11 +155,11 @@ namespace BH.Adapter.Lusas
 
             List<Point> existingPoints = ReadPoints();
 
-            List<Point> newPoints = distinctPoints.Except(existingPoints).ToList();
+            List<Point> lusasPoints = distinctPoints.Except(existingPoints).ToList();
 
-            foreach (Point point in newPoints)
+            foreach (Point point in lusasPoints)
             {
-                IFPoint newpoint = CreatePoint(point);
+                IFPoint lusasPoint = CreatePoint(point);
             }
 
             return true;
@@ -174,7 +174,7 @@ namespace BH.Adapter.Lusas
 
             foreach (Bar bar in bars)
             {
-                IFLine newline = CreateLine(bar);
+                IFLine lusasLines = CreateLine(bar);
             }
             return true;
         }
@@ -209,11 +209,13 @@ namespace BH.Adapter.Lusas
 
                 for (int i = 0; i < panelPlanar.ExternalEdges.Count; i++)
                 {
-                    Edge edge = distinctEdges[midPoints.FindIndex(m => m.Equals(edges[i].Curve.IPointAtParameter(0.5).ClosestPoint(midPoints)))];
+                    Edge edge = distinctEdges[midPoints.FindIndex(
+                        m => m.Equals(edges[i].Curve.IPointAtParameter(0.5).ClosestPoint(midPoints)))];
+
                     lusasLines[i] = d_LusasData.getLineByName("L" + edge.CustomData[AdapterId].ToString());
                 }
 
-                IFSurface newSurface = CreateSurface(panelPlanar, lusasLines);
+                IFSurface lusasSurface = CreateSurface(panelPlanar, lusasLines);
             }
             return true;
         }
@@ -235,7 +237,8 @@ namespace BH.Adapter.Lusas
             List<Point> distinctPoints = GetDistinctPoints(allPoints);
 
             List<Point> existingPoints = ReadPoints();
-            List<Point> pointsToPush = distinctPoints.Except(existingPoints, new PointDistanceComparer()).ToList();
+            List<Point> pointsToPush = distinctPoints.Except(
+                existingPoints, new PointDistanceComparer()).ToList();
 
             foreach (Point point in pointsToPush)
             {
@@ -254,9 +257,11 @@ namespace BH.Adapter.Lusas
 
             foreach (Edge edge in distinctEdges)
             {
-                IFPoint startPoint = lusasPoints[bhomPoints.FindIndex(m => m.Equals(edge.Curve.IStartPoint().ClosestPoint(bhomPoints)))];
-                IFPoint endPoint = lusasPoints[bhomPoints.FindIndex(m => m.Equals(edge.Curve.IEndPoint().ClosestPoint(bhomPoints)))];
-                IFLine newLine = CreateEdge(edge, startPoint, endPoint);
+                IFPoint startPoint = lusasPoints[bhomPoints.FindIndex(
+                    m => m.Equals(edge.Curve.IStartPoint().ClosestPoint(bhomPoints)))];
+                IFPoint endPoint = lusasPoints[bhomPoints.FindIndex(
+                    m => m.Equals(edge.Curve.IEndPoint().ClosestPoint(bhomPoints)))];
+                IFLine lusasLine = CreateEdge(edge, startPoint, endPoint);
             }
 
             return true;
@@ -268,9 +273,9 @@ namespace BH.Adapter.Lusas
         {
             foreach (ISectionProperty sectionProperty in sectionProperties)
             {
-                IFAttribute newGeometricLine = CreateGeometricLine(sectionProperty);
+                IFAttribute lusasGeometricLine = CreateGeometricLine(sectionProperty);
 
-                if (newGeometricLine == null)
+                if (lusasGeometricLine == null)
                 {
                     return false;
                 }
@@ -285,7 +290,7 @@ namespace BH.Adapter.Lusas
         {
             foreach (Material material in materials)
             {
-                IFAttribute newMaterial = CreateMaterial(material);
+                IFAttribute lusasMaterial = CreateMaterial(material);
             }
 
             return true;
@@ -297,9 +302,9 @@ namespace BH.Adapter.Lusas
         {
             foreach (IProperty2D property2D in properties2D)
             {
-                IFAttribute newGeometricSurface = CreateGeometricSurface(property2D);
+                IFAttribute lusasGeometricSurface = CreateGeometricSurface(property2D);
 
-                if(newGeometricSurface == null)
+                if (lusasGeometricSurface == null)
                 {
                     return false;
                 }
@@ -314,7 +319,7 @@ namespace BH.Adapter.Lusas
         {
             foreach (Loadcase loadcase in loadcases)
             {
-                IFLoadcase newLoadcase = CreateLoadcase(loadcase);
+                IFLoadcase lusasLoadcase = CreateLoadcase(loadcase);
             }
 
             return true;
@@ -328,7 +333,7 @@ namespace BH.Adapter.Lusas
             foreach (PointForce pointForce in pointForces)
             {
                 IFPoint[] assignedPoints = GetAssignedPoints(pointForce);
-                IFLoadingConcentrated newPointForce = CreateConcentratedLoad(pointForce, assignedPoints);
+                IFLoadingConcentrated lusasPointForce = CreateConcentratedLoad(pointForce, assignedPoints);
             }
 
             return true;
@@ -341,7 +346,7 @@ namespace BH.Adapter.Lusas
             foreach (GravityLoad gravityLoad in gravityLoads)
             {
                 IFGeometry[] assignedGeometry = GetAssignedObjects(gravityLoad);
-                IFLoadingBody newGravityLoad = CreateGravityLoad(gravityLoad, assignedGeometry);
+                IFLoadingBody lusasGravityLoad = CreateGravityLoad(gravityLoad, assignedGeometry);
             }
 
             return true;
@@ -357,11 +362,13 @@ namespace BH.Adapter.Lusas
 
                 if (barUniformlyDistributedLoad.Axis == LoadAxis.Global)
                 {
-                    IFLoadingGlobalDistributed newGlobalDistributed = CreateGlobalDistributedLine(barUniformlyDistributedLoad, assignedLines);
+                    IFLoadingGlobalDistributed lusasGlobalDistributed =
+                        CreateGlobalDistributedLine(barUniformlyDistributedLoad, assignedLines);
                 }
                 else if (barUniformlyDistributedLoad.Axis == LoadAxis.Local)
                 {
-                    IFLoadingLocalDistributed newLocalDistributed = CreateLocalDistributedLine(barUniformlyDistributedLoad, assignedLines);
+                    IFLoadingLocalDistributed lusasLocalDistributed =
+                        CreateLocalDistributedLine(barUniformlyDistributedLoad, assignedLines);
                 }
             }
 
@@ -377,11 +384,13 @@ namespace BH.Adapter.Lusas
                 IFSurface[] assignedSurfaces = GetAssignedSurfaces(areaUniformlyDistributedLoad);
                 if (areaUniformlyDistributedLoad.Axis == LoadAxis.Global)
                 {
-                    IFLoadingGlobalDistributed newGlobalDistributed = CreateGlobalDistributedLoad(areaUniformlyDistributedLoad, assignedSurfaces);
+                    IFLoadingGlobalDistributed lusasGlobalDistributed =
+                        CreateGlobalDistributedLoad(areaUniformlyDistributedLoad, assignedSurfaces);
                 }
                 else if (areaUniformlyDistributedLoad.Axis == LoadAxis.Local)
                 {
-                    IFLoadingLocalDistributed newLocalDistributed = CreateLocalDistributedSurface(areaUniformlyDistributedLoad, assignedSurfaces);
+                    IFLoadingLocalDistributed lusasLocalDistributed =
+                        CreateLocalDistributedSurface(areaUniformlyDistributedLoad, assignedSurfaces);
                 }
             }
 
@@ -395,7 +404,8 @@ namespace BH.Adapter.Lusas
             foreach (BarTemperatureLoad barTemperatureLoad in barTemperatureLoads)
             {
                 IFLine[] arrayLines = GetAssignedLines(barTemperatureLoad);
-                IFLoadingTemperature newBarTemperatureLoad = CreateBarTemperatureLoad(barTemperatureLoad, arrayLines);
+                IFLoadingTemperature lusasBarTemperatureLoad =
+                    CreateBarTemperatureLoad(barTemperatureLoad, arrayLines);
             }
 
             return true;
@@ -408,7 +418,8 @@ namespace BH.Adapter.Lusas
             foreach (AreaTemperatureLoad areaTemperatureLoad in areaTemperatureLoads)
             {
                 IFSurface[] assignedLines = GetAssignedSurfaces(areaTemperatureLoad);
-                IFLoadingTemperature newAreaTemperatureLoad = CreateAreaTemperatureLoad(areaTemperatureLoad, assignedLines);
+                IFLoadingTemperature lusasAreaTemperatureLoad =
+                    CreateAreaTemperatureLoad(areaTemperatureLoad, assignedLines);
             }
 
             return true;
@@ -421,7 +432,8 @@ namespace BH.Adapter.Lusas
             foreach (PointDisplacement pointDisplacement in pointDisplacements)
             {
                 IFPoint[] assignedPoints = GetAssignedPoints(pointDisplacement);
-                IFPrescribedDisplacementLoad newPrescribedDisplacement = CreatePrescribedDisplacement(pointDisplacement, assignedPoints);
+                IFPrescribedDisplacementLoad lusasPrescribedDisplacement =
+                    CreatePrescribedDisplacement(pointDisplacement, assignedPoints);
             }
 
             return true;
@@ -435,7 +447,8 @@ namespace BH.Adapter.Lusas
             foreach (BarPointLoad barPointLoad in barPointLoads)
             {
                 IFLine[] assignedLines = GetAssignedLines(barPointLoad);
-                IFLoadingBeamPoint newGlobalDistributed = CreateBarPointLoad(barPointLoad, assignedLines);
+                IFLoadingBeamPoint lusasGlobalDistributed =
+                    CreateBarPointLoad(barPointLoad, assignedLines);
             }
 
             return true;
@@ -449,7 +462,8 @@ namespace BH.Adapter.Lusas
             foreach (BarVaryingDistributedLoad barDistributedLoad in barDistributedLoads)
             {
                 IFLine[] assignedBars = GetAssignedLines(barDistributedLoad);
-                List<IFLoadingBeamDistributed> newGlobalDistributed = CreateBarDistributedLoad(barDistributedLoad, assignedBars);
+                List<IFLoadingBeamDistributed> lusasGlobalDistributed =
+                    CreateBarDistributedLoad(barDistributedLoad, assignedBars);
             }
 
             return true;
@@ -461,7 +475,7 @@ namespace BH.Adapter.Lusas
         {
             foreach (Constraint6DOF constraint in constraints)
             {
-                IFAttribute newSupport = CreateSupport(constraint);
+                IFAttribute lusasSupport = CreateSupport(constraint);
             }
 
             return true;
@@ -471,7 +485,7 @@ namespace BH.Adapter.Lusas
         {
             foreach (Constraint4DOF constraint in constraints)
             {
-                IFAttribute newSupport = CreateSupport(constraint);
+                IFAttribute lusasSupport = CreateSupport(constraint);
             }
 
             return true;
@@ -481,7 +495,7 @@ namespace BH.Adapter.Lusas
         {
             foreach (LoadCombination loadcombination in loadcombinations)
             {
-                IFBasicCombination newLoadCombination = CreateLoadCombination(loadcombination);
+                IFBasicCombination lusasLoadCombination = CreateLoadCombination(loadcombination);
             }
 
             return true;
@@ -494,7 +508,7 @@ namespace BH.Adapter.Lusas
 
             foreach (MeshSettings1D meshSettings1D in meshSettings1Ds)
             {
-                IFMeshLine newLineMesh = CreateMeshSettings1D(meshSettings1D);
+                IFMeshLine lusasLineMesh = CreateMeshSettings1D(meshSettings1D);
             }
 
             return true;
@@ -507,7 +521,7 @@ namespace BH.Adapter.Lusas
 
             foreach (MeshSettings2D meshSettings2D in meshSettings2Ds)
             {
-                IFMeshSurface newSurfaceMesh = CreateMeshSettings2D(meshSettings2D);
+                IFMeshSurface lusasSurfaceMesh = CreateMeshSettings2D(meshSettings2D);
             }
 
             return true;

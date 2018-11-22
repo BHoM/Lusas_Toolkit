@@ -15,14 +15,11 @@ namespace BH.Engine.Lusas
                 Thickness = lusasAttribute.getValue("t")
             };
 
-            
-            int bhomID = GetBHoMID(lusasAttribute, 'G');
+            int adapterID = GetAdapterID(lusasAttribute, 'G');
 
-            bhomProperty2D.CustomData["Lusas_id"] = bhomID;
+            bhomProperty2D.CustomData["Lusas_id"] = adapterID;
 
             return bhomProperty2D;
         }
-
-
     }
 }

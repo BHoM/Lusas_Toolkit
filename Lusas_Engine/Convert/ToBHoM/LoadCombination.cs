@@ -8,9 +8,10 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static LoadCombination ToBHoMLoadCombination(this IFBasicCombination lusasLoadCombination, Dictionary<string, Loadcase> loadcases)
+        public static LoadCombination ToBHoMLoadCombination(
+            this IFBasicCombination lusasLoadCombination,
+            Dictionary<string, Loadcase> bhomLoadcases)
         {
-
             object[] loadcaseIDs = lusasLoadCombination.getLoadcaseIDs();
             object[] loadcaseFactors = lusasLoadCombination.getFactors();
 
@@ -21,8 +22,8 @@ namespace BH.Engine.Lusas
             {
                 int loadcaseID = (int)loadcaseIDs[i];
                 double loadcaseFactor = (double)loadcaseFactors[i];
-                loadcases.TryGetValue(loadcaseID.ToString(), out bhomLoadcase);
-                ICase bhomICase = (ICase)bhomLoadcase;
+                bhomLoadcases.TryGetValue(loadcaseID.ToString(), out bhomLoadcase);
+                ICase bhomICase = bhomLoadcase;
                 Tuple<double, ICase> factoredLoadcase = new Tuple<double, ICase>(loadcaseFactor, bhomICase);
                 factoredLoadcases.Add(factoredLoadcase);
             }
@@ -34,8 +35,9 @@ namespace BH.Engine.Lusas
                 LoadCases = factoredLoadcases
             };
 
-            int bhomID = GetBHoMID(lusasLoadCombination, 'c');
-            BHoMLoadCombination.CustomData["Lusas_id"] = bhomID;
+            int adapterID = GetAdapterID(lusasLoadCombination, 'c');
+            BHoMLoadCombination.CustomData["Lusas_id"] = adapterID;
+
             return BHoMLoadCombination;
         }
     }

@@ -9,20 +9,33 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static BarPointLoad ToBHoMBarPointLoad(IFLoading lusasBarPointLoad, IEnumerable<IFAssignment> assignmentList, Dictionary<string, Bar> bars)
+        public static BarPointLoad ToBHoMBarPointLoad(IFLoading lusasBarPointLoad,
+            IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Bar> bhomBarDictionary)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)assignmentList.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(assignedLoadcase);
+            IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
+            Loadcase bhomLoadcase = ToBHoMLoadcase(assignedLoadcase);
 
-            IEnumerable<Bar> bhomBars = GetBarAssignments(assignmentList, bars);
+            IEnumerable<Bar> bhomBars = GetBarAssignments(lusasAssignments, bhomBarDictionary);
 
-            Vector forceVector = new Vector { X = lusasBarPointLoad.getValue("PX"), Y = lusasBarPointLoad.getValue("PY"), Z = lusasBarPointLoad.getValue("PZ") };
-            Vector momentVector = new Vector { X = lusasBarPointLoad.getValue("MX"), Y = lusasBarPointLoad.getValue("MY"), Z = lusasBarPointLoad.getValue("MZ") };
+            Vector forceVector = new Vector
+            {
+                X = lusasBarPointLoad.getValue("PX"),
+                Y = lusasBarPointLoad.getValue("PY"),
+                Z = lusasBarPointLoad.getValue("PZ")
+            };
+
+            Vector momentVector = new Vector
+            {
+                X = lusasBarPointLoad.getValue("MX"),
+                Y = lusasBarPointLoad.getValue("MY"),
+                Z = lusasBarPointLoad.getValue("MZ")
+            };
+
             double forcePosition = lusasBarPointLoad.getValue("Distance");
 
             BarPointLoad bhomBarPointLoad = null;
 
-            bhomBarPointLoad = BH.Engine.Structure.Create.BarPointLoad(
+            bhomBarPointLoad = Structure.Create.BarPointLoad(
                 bhomLoadcase,
                 forcePosition,
                 bhomBars,
@@ -31,8 +44,9 @@ namespace BH.Engine.Lusas
                 LoadAxis.Global,
                 GetName(lusasBarPointLoad));
 
-            int bhomID = GetBHoMID(lusasBarPointLoad, 'l');
-            bhomBarPointLoad.CustomData["Lusas_id"] = bhomID;
+            int adapterID = GetAdapterID(lusasBarPointLoad, 'l');
+            bhomBarPointLoad.CustomData["Lusas_id"] = adapterID;
+
             return bhomBarPointLoad;
         }
     }

@@ -25,7 +25,7 @@ namespace BH.Adapter.Lusas
 
             if (IsApplicationRunning())
             {
-                throw new System.Exception("Lusas is already running, close and run again");
+                throw new Exception("Lusas is already running, close and run again");
             }
             else
             {
@@ -59,11 +59,11 @@ namespace BH.Adapter.Lusas
 
             if (string.IsNullOrWhiteSpace(filePath))
             {
-                throw new System.ArgumentException("No file path given");
+                throw new ArgumentException("No file path given");
             }
             else if (IsApplicationRunning())
             {
-                throw new System.Exception("Lusas process already running");
+                throw new Exception("Lusas process already running");
             }
             else
             {

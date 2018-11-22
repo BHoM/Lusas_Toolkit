@@ -9,22 +9,33 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static BarUniformlyDistributedLoad ToBarUniformallyDistributed(IFLoading lusasDistributed, IEnumerable<IFAssignment> assignmentList, Dictionary<string, Bar> bars)
+        public static BarUniformlyDistributedLoad ToBarUniformallyDistributed(IFLoading lusasDistributed,
+            IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Bar> bhomBarDictionary)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)assignmentList.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(assignedLoadcase);
+            IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
+            Loadcase bhomLoadcase = ToBHoMLoadcase(assignedLoadcase);
 
-            IEnumerable<Bar> bhomBars = GetBarAssignments(assignmentList, bars);
+            IEnumerable<Bar> bhomBars = GetBarAssignments(lusasAssignments, bhomBarDictionary);
 
-            Vector forceVector = new Vector { X = lusasDistributed.getValue("WX"), Y = lusasDistributed.getValue("WY"), Z = lusasDistributed.getValue("WZ") };
+            Vector forceVector = new Vector
+            {
+                X = lusasDistributed.getValue("WX"),
+                Y = lusasDistributed.getValue("WY"),
+                Z = lusasDistributed.getValue("WZ")
+            };
 
             BarUniformlyDistributedLoad bhomBarUniformlyDistributed = null;
 
             if (lusasDistributed.getAttributeType() == "Global Distributed Load")
             {
-                Vector momentVector = new Vector { X = lusasDistributed.getValue("MX"), Y = lusasDistributed.getValue("MY"), Z = lusasDistributed.getValue("MZ") };
+                Vector momentVector = new Vector
+                {
+                    X = lusasDistributed.getValue("MX"),
+                    Y = lusasDistributed.getValue("MY"),
+                    Z = lusasDistributed.getValue("MZ")
+                };
 
-                bhomBarUniformlyDistributed = BH.Engine.Structure.Create.BarUniformlyDistributedLoad(
+                bhomBarUniformlyDistributed = Structure.Create.BarUniformlyDistributedLoad(
                     bhomLoadcase,
                     bhomBars,
                     forceVector,
@@ -35,7 +46,7 @@ namespace BH.Engine.Lusas
             }
             else if (lusasDistributed.getAttributeType() == "Distributed Load")
             {
-                bhomBarUniformlyDistributed = BH.Engine.Structure.Create.BarUniformlyDistributedLoad(
+                bhomBarUniformlyDistributed = Structure.Create.BarUniformlyDistributedLoad(
                     bhomLoadcase,
                     bhomBars,
                     forceVector,
@@ -45,8 +56,9 @@ namespace BH.Engine.Lusas
                     GetName(lusasDistributed));
             }
 
-            int bhomID = GetBHoMID(lusasDistributed, 'l');
-            bhomBarUniformlyDistributed.CustomData["Lusas_id"] = bhomID;
+            int adapterID = GetAdapterID(lusasDistributed, 'l');
+            bhomBarUniformlyDistributed.CustomData["Lusas_id"] = adapterID;
+
             return bhomBarUniformlyDistributed;
         }
     }

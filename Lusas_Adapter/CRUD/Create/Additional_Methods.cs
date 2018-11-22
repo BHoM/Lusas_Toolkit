@@ -32,7 +32,8 @@ namespace BH.Adapter.Lusas
                 assignments.Add(assignment);
             }
 
-            IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = assignments.GroupBy(m => m.getAssignmentLoadset().getName());
+            IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
+                assignments.GroupBy(m => m.getAssignmentLoadset().getName());
 
             return groupedByLoadcases;
         }
@@ -97,7 +98,9 @@ namespace BH.Adapter.Lusas
             List<IFPoint> assignedGeometry = new List<IFPoint>();
             foreach (BHoMObject bhomObject in bhomLoads.Objects.Elements)
             {
-                IFPoint lusasPoint = d_LusasData.getPointByName("P" + bhomObject.CustomData[AdapterId].ToString());
+                IFPoint lusasPoint = d_LusasData.getPointByName(
+                    "P" + bhomObject.CustomData[AdapterId].ToString());
+
                 assignedGeometry.Add(lusasPoint);
             }
 
@@ -111,7 +114,9 @@ namespace BH.Adapter.Lusas
             List<IFLine> assignedGeometry = new List<IFLine>();
             foreach (BHoMObject bhomObject in bhomLoads.Objects.Elements)
             {
-                IFLine lusasLine = d_LusasData.getLineByName("L" + bhomObject.CustomData[AdapterId].ToString());
+                IFLine lusasLine = d_LusasData.getLineByName(
+                    "L" + bhomObject.CustomData[AdapterId].ToString());
+
                 assignedGeometry.Add(lusasLine);
             }
 
@@ -125,7 +130,9 @@ namespace BH.Adapter.Lusas
             List<IFSurface> assignedGeometry = new List<IFSurface>();
             foreach (BHoMObject bhomObject in bhomLoads.Objects.Elements)
             {
-                IFSurface lusasSurface = d_LusasData.getSurfaceByName("S" + bhomObject.CustomData[AdapterId].ToString());
+                IFSurface lusasSurface = d_LusasData.getSurfaceByName(
+                    "S" + bhomObject.CustomData[AdapterId].ToString());
+
                 assignedGeometry.Add(lusasSurface);
             }
 
@@ -140,19 +147,25 @@ namespace BH.Adapter.Lusas
 
             foreach (BHoMObject bhomObject in bhomLoads.Objects.Elements)
             {
-                if(bhomObject is Node)
+                if (bhomObject is Node)
                 {
-                    IFGeometry lusasPoint = d_LusasData.getPointByName("P" + bhomObject.CustomData[AdapterId].ToString());
+                    IFGeometry lusasPoint = d_LusasData.getPointByName(
+                        "P" + bhomObject.CustomData[AdapterId].ToString());
+
                     assignedGeometry.Add(lusasPoint);
                 }
                 else if (bhomObject is Bar)
                 {
-                    IFGeometry lusasBar = d_LusasData.getLineByName("L" + bhomObject.CustomData[AdapterId].ToString());
+                    IFGeometry lusasBar = d_LusasData.getLineByName(
+                        "L" + bhomObject.CustomData[AdapterId].ToString());
+
                     assignedGeometry.Add(lusasBar);
                 }
-                else if(bhomObject is PanelPlanar)
+                else if (bhomObject is PanelPlanar)
                 {
-                    IFGeometry lusasSurface = d_LusasData.getSurfaceByName("S" + bhomObject.CustomData[AdapterId].ToString());
+                    IFGeometry lusasSurface = d_LusasData.getSurfaceByName(
+                        "S" + bhomObject.CustomData[AdapterId].ToString());
+
                     assignedGeometry.Add(lusasSurface);
                 }
             }

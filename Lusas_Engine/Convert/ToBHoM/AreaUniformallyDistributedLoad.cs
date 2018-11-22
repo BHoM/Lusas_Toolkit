@@ -9,40 +9,49 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static AreaUniformalyDistributedLoad ToAreaUniformallyDistributed(IFLoading lusasDistributed, IEnumerable<IFAssignment> assignmentList, Dictionary<string, PanelPlanar> surfs)
+        public static AreaUniformalyDistributedLoad ToAreaUniformallyDistributed(
+            IFLoading lusasDistributed, IEnumerable<IFAssignment> lusasAssignments,
+            Dictionary<string, PanelPlanar> panelPlanarDictionary)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)assignmentList.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(assignedLoadcase);
+            IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
+            Loadcase bhomLoadcase = ToBHoMLoadcase(assignedLoadcase);
 
-            IEnumerable<IAreaElement> bhomSurfs = GetSurfaceAssignments(assignmentList, surfs);
+            IEnumerable<IAreaElement> bhomPlanarPanels = GetSurfaceAssignments(
+                lusasAssignments, panelPlanarDictionary);
 
-            Vector pressureVector = new Vector { X = lusasDistributed.getValue("WX"), Y = lusasDistributed.getValue("WY"), Z = lusasDistributed.getValue("WZ") };
+            Vector pressureVector = new Vector
+            {
+                X = lusasDistributed.getValue("WX"),
+                Y = lusasDistributed.getValue("WY"),
+                Z = lusasDistributed.getValue("WZ")
+            };
 
             AreaUniformalyDistributedLoad bhomSurfaceUniformlyDistributed = null;
 
             if (lusasDistributed.getAttributeType() == "Global Distributed Load")
             {
-                bhomSurfaceUniformlyDistributed = BH.Engine.Structure.Create.AreaUniformalyDistributedLoad(
+                bhomSurfaceUniformlyDistributed = Structure.Create.AreaUniformalyDistributedLoad(
                 bhomLoadcase,
                 pressureVector,
-                bhomSurfs,
+                bhomPlanarPanels,
                 LoadAxis.Global,
                 true,
                 GetName(lusasDistributed));
             }
             else if (lusasDistributed.getAttributeType() == "Distributed Load")
             {
-                bhomSurfaceUniformlyDistributed = BH.Engine.Structure.Create.AreaUniformalyDistributedLoad(
+                bhomSurfaceUniformlyDistributed = Structure.Create.AreaUniformalyDistributedLoad(
                 bhomLoadcase,
                 pressureVector,
-                bhomSurfs,
+                bhomPlanarPanels,
                 LoadAxis.Local,
                 true,
                 GetName(lusasDistributed));
             }
 
-            int bhomID = GetBHoMID(lusasDistributed, 'l');
-            bhomSurfaceUniformlyDistributed.CustomData["Lusas_id"] = bhomID;
+            int adapterID = GetAdapterID(lusasDistributed, 'l');
+            bhomSurfaceUniformlyDistributed.CustomData["Lusas_id"] = adapterID;
+
             return bhomSurfaceUniformlyDistributed;
         }
     }

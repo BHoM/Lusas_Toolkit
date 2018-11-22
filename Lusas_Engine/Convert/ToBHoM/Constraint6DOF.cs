@@ -11,7 +11,7 @@ namespace BH.Engine.Lusas
         {
             List<string> releaseNames = new List<string> { "U", "V", "W", "THX", "THY", "THZ" };
 
-            List<Boolean> fixity = new List<Boolean>();
+            List<bool> fixity = new List<bool>();
             List<double> stiffness = new List<double>();
 
             foreach (string releaseName in releaseNames)
@@ -33,18 +33,16 @@ namespace BH.Engine.Lusas
                     fixity.Add(false);
                     double stiffnessValue = lusasAttribute.getValue(releaseName + "stiff");
                     stiffness.Add(stiffnessValue);
-
                 }
             }
 
             string attributeName = GetName(lusasAttribute);
 
-            Constraint6DOF bhomConstraint6DOF = BH.Engine.Structure.Create.Constraint6DOF(
+            Constraint6DOF bhomConstraint6DOF = Structure.Create.Constraint6DOF(
                attributeName, fixity, stiffness);
 
-            int bhomID = GetBHoMID(lusasAttribute, 'p');
-
-            bhomConstraint6DOF.CustomData["Lusas_id"] = bhomID;
+            int adapterID = GetAdapterID(lusasAttribute, 'p');
+            bhomConstraint6DOF.CustomData["Lusas_id"] = adapterID;
 
             return bhomConstraint6DOF;
         }

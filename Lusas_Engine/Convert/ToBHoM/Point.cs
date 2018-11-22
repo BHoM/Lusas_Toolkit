@@ -12,12 +12,6 @@ namespace BH.Engine.Lusas
 
             Point bhomPoint = new Point { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() };
 
-            //string pointName = removePrefix(lusasPoint.getName(), "P");
-
-            //bhomPoint.CustomData["Lusas_id"] = pointName;
-
-            //Read tags from objectsets
-
             return bhomPoint;
         }
 

@@ -9,22 +9,10 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        /***************************************************/
-        /**** Public Methods                            ****/
-        /***************************************************/
-
-        //Add methods for converting to BHoM from the specific software types, if possible to do without any BHoM calls
-        //Example:
-        //ToBHoMObject(thise ToBHoM(this LusasNode node)
-        //{
-
-        //#region Geometry Converters
-
-
         public static Bar ToBHoMBar(this IFLine lusasLine, 
             Dictionary<string, Node> bhomNodes, 
             Dictionary<string, Constraint4DOF> bhomSupports,
-            HashSet<string> groupNames,
+            HashSet<string> lusasGroups,
             Dictionary<string, Material> bhomMaterials,
             Dictionary<string, ISectionProperty> bhomSections
             )
@@ -35,7 +23,7 @@ namespace BH.Engine.Lusas
 
             Node endNode = GetNode(lusasLine, 1, bhomNodes);
 
-            HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasLine, groupNames));
+            HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasLine, lusasGroups));
 
             List<string> supportAssignments = AttributeAssignments(lusasLine, "Support");
 
@@ -67,9 +55,9 @@ namespace BH.Engine.Lusas
                 bhomBar.SectionProperty = lineSection;
             }
 
-            string lineName = removePrefix(lusasLine.getName(), "L");
+            string adapterID = removePrefix(lusasLine.getName(), "L");
 
-            bhomBar.CustomData["Lusas_id"] = lineName;
+            bhomBar.CustomData["Lusas_id"] = adapterID;
 
             return bhomBar;
         }

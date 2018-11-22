@@ -25,8 +25,8 @@ namespace BH.Engine.Lusas
             Split2D splitMethod = Split2D.Automatic;
 
 
-            if ((lusasMeshSurface.getValue("size") == 0) && 
-                (lusasMeshSurface.getValue("xDivisions") ==0 &&
+            if ((lusasMeshSurface.getValue("size") == 0) &&
+                (lusasMeshSurface.getValue("xDivisions") == 0 &&
                 lusasMeshSurface.getValue("yDivisions") == 0))
             {
             }
@@ -52,8 +52,9 @@ namespace BH.Engine.Lusas
                 ElementSize = size
             };
 
-            int bhomID = GetBHoMID(lusasMeshSurface, 'e');
-            bhomMeshSettings2D.CustomData["Lusas_id"] = bhomID;
+            int adapterID = GetAdapterID(lusasMeshSurface, 'e');
+            bhomMeshSettings2D.CustomData["Lusas_id"] = adapterID;
+
             return bhomMeshSettings2D;
         }
 

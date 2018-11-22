@@ -42,15 +42,15 @@ namespace BH.Adapter.Lusas
 
             foreach (Node node in nodes)
             {
-                int bhomID = System.Convert.ToInt32(node.CustomData[AdapterId]);
-                IFPoint lusasPoint = d_LusasData.getPointByName("P" + bhomID.ToString());
+                int adapterID = System.Convert.ToInt32(node.CustomData[AdapterId]);
+                IFPoint lusasPoint = d_LusasData.getPointByName("P" + adapterID.ToString());
 
                 if (lusasPoint == null)
                 {
                     return false;
                 }
 
-                if (!string.IsNullOrWhiteSpace(bhomID.ToString()))
+                if (!string.IsNullOrWhiteSpace(adapterID.ToString()))
                 {
                 }
             }

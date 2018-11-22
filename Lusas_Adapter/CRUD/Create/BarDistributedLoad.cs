@@ -7,17 +7,26 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public List<IFLoadingBeamDistributed> CreateBarDistributedLoad(BarVaryingDistributedLoad bhomBarDistributedLoad, IFLine[] lusasLines)
+        public List<IFLoadingBeamDistributed> CreateBarDistributedLoad(
+            BarVaryingDistributedLoad bhomBarDistributedLoad, IFLine[] lusasLines)
         {
             List<IFLoadingBeamDistributed> lusasBarDistributedLoads = new List<IFLoadingBeamDistributed>();
-            IFAssignment assignToBars = m_LusasApplication.assignment();
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + bhomBarDistributedLoad.Loadcase.CustomData[AdapterId] + "/" + bhomBarDistributedLoad.Loadcase.Name);
-            string lusasAttributeName = "BDl" + bhomBarDistributedLoad.CustomData[AdapterId] + "/" + bhomBarDistributedLoad.Name;
-            NameSearch("BDl", bhomBarDistributedLoad.CustomData[AdapterId].ToString(), bhomBarDistributedLoad.Name, ref lusasAttributeName);
+            IFAssignment lusasAssignment = m_LusasApplication.assignment();
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
+                "Lc" + bhomBarDistributedLoad.Loadcase.CustomData[AdapterId] +
+                "/" + bhomBarDistributedLoad.Loadcase.Name);
+
+            string lusasAttributeName =
+                "BDl" + bhomBarDistributedLoad.CustomData[AdapterId] + "/" + bhomBarDistributedLoad.Name;
+
+            NameSearch("BDl", bhomBarDistributedLoad.CustomData[AdapterId].ToString(),
+                bhomBarDistributedLoad.Name, ref lusasAttributeName);
 
             if (d_LusasData.existsAttribute("Loading", lusasAttributeName))
             {
-                IFLoadingBeamDistributed lusasBarDistributedLoad = (IFLoadingBeamDistributed)d_LusasData.getAttribute("Loading", lusasAttributeName);
+                IFLoadingBeamDistributed lusasBarDistributedLoad =
+                    (IFLoadingBeamDistributed)d_LusasData.getAttribute("Loading", lusasAttributeName);
+
                 lusasBarDistributedLoads.Add(lusasBarDistributedLoad);
             }
             else
@@ -27,13 +36,17 @@ namespace BH.Adapter.Lusas
                     );
 
                 List<double> valuesAtA = new List<double> {
-                    bhomBarDistributedLoad.ForceA.X, bhomBarDistributedLoad.ForceA.Y, bhomBarDistributedLoad.ForceA.Z,
-                    bhomBarDistributedLoad.MomentA.X, bhomBarDistributedLoad.MomentA.Y, bhomBarDistributedLoad.MomentA.Z
+                    bhomBarDistributedLoad.ForceA.X, bhomBarDistributedLoad.ForceA.Y,
+                    bhomBarDistributedLoad.ForceA.Z,
+                    bhomBarDistributedLoad.MomentA.X, bhomBarDistributedLoad.MomentA.Y,
+                    bhomBarDistributedLoad.MomentA.Z
                 };
 
                 List<double> valuesAtB = new List<double> {
-                    bhomBarDistributedLoad.ForceB.X, bhomBarDistributedLoad.ForceB.Y, bhomBarDistributedLoad.ForceB.Z,
-                    bhomBarDistributedLoad.MomentB.X, bhomBarDistributedLoad.MomentB.Y, bhomBarDistributedLoad.MomentB.Z
+                    bhomBarDistributedLoad.ForceB.X, bhomBarDistributedLoad.ForceB.Y,
+                    bhomBarDistributedLoad.ForceB.Z,
+                    bhomBarDistributedLoad.MomentB.X, bhomBarDistributedLoad.MomentB.Y,
+                    bhomBarDistributedLoad.MomentB.Z
                 };
 
                 List<string> keys = new List<string>() { "FX", "FY", "FZ", "MX", "MY", "MZ" };
@@ -46,7 +59,8 @@ namespace BH.Adapter.Lusas
 
                     if ((valueAtA != 0) || (valueAtB != 0))
                     {
-                        IFLoadingBeamDistributed lusasBarDistributedLoad = d_LusasData.createLoadingBeamDistributed(bhomBarDistributedLoad.Name + key);
+                        IFLoadingBeamDistributed lusasBarDistributedLoad =
+                            d_LusasData.createLoadingBeamDistributed(bhomBarDistributedLoad.Name + key);
 
                         if (bhomBarDistributedLoad.Axis.ToString() == "Global")
                             lusasBarDistributedLoad.setBeamDistributed("parametric", "global", "beam");
@@ -56,57 +70,68 @@ namespace BH.Adapter.Lusas
                         switch (key)
                         {
                             case "FX":
-                                lusasBarDistributedLoad.addRow(bhomBarDistributedLoad.DistanceFromA, valueAtA, 0, 0, 0, 0, 0,
+                                lusasBarDistributedLoad.addRow(
+                                    bhomBarDistributedLoad.DistanceFromA, valueAtA, 0, 0, 0, 0, 0,
                                     bhomBarDistributedLoad.DistanceFromB, valueAtB, 0, 0, 0, 0, 0);
+
                                 lusasBarDistributedLoads.Add(lusasBarDistributedLoad);
-                                assignToBars.setLoadset(assignedLoadcase);
-                                lusasBarDistributedLoad.assignTo(lusasLines, assignToBars);
+                                lusasAssignment.setLoadset(assignedLoadcase);
+                                lusasBarDistributedLoad.assignTo(lusasLines, lusasAssignment);
                                 break;
 
                             case "FY":
-                                lusasBarDistributedLoad.addRow(bhomBarDistributedLoad.DistanceFromA, 0, valueAtA, 0, 0, 0, 0,
+                                lusasBarDistributedLoad.addRow(
+                                    bhomBarDistributedLoad.DistanceFromA, 0, valueAtA, 0, 0, 0, 0,
                                     bhomBarDistributedLoad.DistanceFromB, 0, valueAtB, 0, 0, 0, 0);
+
                                 lusasBarDistributedLoads.Add(lusasBarDistributedLoad);
-                                assignToBars.setLoadset(assignedLoadcase);
-                                lusasBarDistributedLoad.assignTo(lusasLines, assignToBars);
+                                lusasAssignment.setLoadset(assignedLoadcase);
+                                lusasBarDistributedLoad.assignTo(lusasLines, lusasAssignment);
                                 break;
 
                             case "FZ":
-                                lusasBarDistributedLoad.addRow(bhomBarDistributedLoad.DistanceFromA, 0, 0, valueAtA, 0, 0, 0,
+                                lusasBarDistributedLoad.addRow(
+                                    bhomBarDistributedLoad.DistanceFromA, 0, 0, valueAtA, 0, 0, 0,
                                     bhomBarDistributedLoad.DistanceFromB, 0, 0, valueAtB, 0, 0, 0);
+
                                 lusasBarDistributedLoads.Add(lusasBarDistributedLoad);
-                                assignToBars.setLoadset(assignedLoadcase);
-                                lusasBarDistributedLoad.assignTo(lusasLines, assignToBars);
+                                lusasAssignment.setLoadset(assignedLoadcase);
+                                lusasBarDistributedLoad.assignTo(lusasLines, lusasAssignment);
                                 break;
 
                             case "MX":
-                                lusasBarDistributedLoad.addRow(bhomBarDistributedLoad.DistanceFromA, 0, 0, 0, valueAtA, 0, 0,
+                                lusasBarDistributedLoad.addRow(
+                                    bhomBarDistributedLoad.DistanceFromA, 0, 0, 0, valueAtA, 0, 0,
                                     bhomBarDistributedLoad.DistanceFromB, 0, 0, 0, valueAtB, 0, 0);
+
                                 lusasBarDistributedLoads.Add(lusasBarDistributedLoad);
-                                assignToBars.setLoadset(assignedLoadcase);
-                                lusasBarDistributedLoad.assignTo(lusasLines, assignToBars);
+                                lusasAssignment.setLoadset(assignedLoadcase);
+                                lusasBarDistributedLoad.assignTo(lusasLines, lusasAssignment);
                                 break;
 
                             case "MY":
-                                lusasBarDistributedLoad.addRow(bhomBarDistributedLoad.DistanceFromA, 0, 0, 0, 0, valueAtA, 0,
+                                lusasBarDistributedLoad.addRow(
+                                    bhomBarDistributedLoad.DistanceFromA, 0, 0, 0, 0, valueAtA, 0,
                                     bhomBarDistributedLoad.DistanceFromB, 0, 0, 0, 0, valueAtB, 0);
+
                                 lusasBarDistributedLoads.Add(lusasBarDistributedLoad);
-                                assignToBars.setLoadset(assignedLoadcase);
-                                lusasBarDistributedLoad.assignTo(lusasLines, assignToBars);
+                                lusasAssignment.setLoadset(assignedLoadcase);
+                                lusasBarDistributedLoad.assignTo(lusasLines, lusasAssignment);
                                 break;
 
                             case "MZ":
-                                lusasBarDistributedLoad.addRow(bhomBarDistributedLoad.DistanceFromA, 0, 0, 0, 0, 0, valueAtA,
+                                lusasBarDistributedLoad.addRow(
+                                    bhomBarDistributedLoad.DistanceFromA, 0, 0, 0, 0, 0, valueAtA,
                                     bhomBarDistributedLoad.DistanceFromB, 0, 0, 0, 0, 0, valueAtB);
+
                                 lusasBarDistributedLoads.Add(lusasBarDistributedLoad);
-                                assignToBars.setLoadset(assignedLoadcase);
-                                lusasBarDistributedLoad.assignTo(lusasLines, assignToBars);
+                                lusasAssignment.setLoadset(assignedLoadcase);
+                                lusasBarDistributedLoad.assignTo(lusasLines, lusasAssignment);
                                 break;
                         }
 
                     }
                 }
-
             }
             return lusasBarDistributedLoads;
         }

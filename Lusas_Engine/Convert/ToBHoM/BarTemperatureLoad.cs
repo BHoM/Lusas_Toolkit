@@ -9,17 +9,17 @@ namespace BH.Engine.Lusas
     public static partial class Convert
     {
         public static BarTemperatureLoad ToBarTemperatureLoad(
-            IFLoading lusasTemperatureLoad, 
-            IEnumerable<IFAssignment> assignmentList, 
+            IFLoading lusasTemperatureLoad,
+            IEnumerable<IFAssignment> lusasAssignments,
             Dictionary<string, Bar> bars)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)assignmentList.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(assignedLoadcase);
+            IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
+            Loadcase bhomLoadcase = ToBHoMLoadcase(assignedLoadcase);
             double temperatureChange = lusasTemperatureLoad.getValue("T")
                 - lusasTemperatureLoad.getValue("T0");
 
-            IEnumerable<Bar> bhomBars = GetBarAssignments(assignmentList, bars);
-            BarTemperatureLoad bhomBarTemperatureLoad = BH.Engine.Structure.Create.BarTemperatureLoad(
+            IEnumerable<Bar> bhomBars = GetBarAssignments(lusasAssignments, bars);
+            BarTemperatureLoad bhomBarTemperatureLoad = Structure.Create.BarTemperatureLoad(
                 bhomLoadcase,
                 temperatureChange,
                 bhomBars,
@@ -27,8 +27,8 @@ namespace BH.Engine.Lusas
                 false,
                 GetName(lusasTemperatureLoad));
 
-            int bhomID = GetBHoMID(lusasTemperatureLoad, 'l');
-            bhomBarTemperatureLoad.CustomData["Lusas_id"] = bhomID;
+            int adapterID = GetAdapterID(lusasTemperatureLoad, 'l');
+            bhomBarTemperatureLoad.CustomData["Lusas_id"] = adapterID;
             return bhomBarTemperatureLoad;
         }
     }

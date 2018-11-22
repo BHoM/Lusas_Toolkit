@@ -3,32 +3,37 @@ using System.Linq;
 using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
+using BH.oM.Base;
 using Lusas.LPI;
 
 namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static GravityLoad ToGravityLoad(IFLoading lusasGravityLoad, IEnumerable<IFAssignment> assignmentList, string geometry, Dictionary<string, Bar> bars, Dictionary<string, PanelPlanar> surfaces)
+        public static GravityLoad ToGravityLoad(IFLoading lusasGravityLoad,
+            IEnumerable<IFAssignment> lusasAssignments,
+            Dictionary<string, Bar> bhomBars,
+            Dictionary<string, PanelPlanar> bhomPlanarPanels)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)assignmentList.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = BH.Engine.Lusas.Convert.ToBHoMLoadcase(assignedLoadcase);
-            Vector gravityVector = new Vector { X = lusasGravityLoad.getValue("accX"), Y = lusasGravityLoad.getValue("accY"), Z = lusasGravityLoad.getValue("accZ") };
+            IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
+            Loadcase bhomLoadcase = ToBHoMLoadcase(assignedLoadcase);
+            Vector gravityVector = new Vector
+            {
+                X = lusasGravityLoad.getValue("accX"),
+                Y = lusasGravityLoad.getValue("accY"),
+                Z = lusasGravityLoad.getValue("accZ")
+            };
+
             GravityLoad bhomGravityLoad = new GravityLoad();
 
-            if (geometry == "Bar")
-            {
-                IEnumerable<Bar> bhomBars = GetBarAssignments(assignmentList, bars);
-                bhomGravityLoad = BH.Engine.Structure.Create.GravityLoad(bhomLoadcase, gravityVector, bhomBars, GetName(lusasGravityLoad));
-            }
-            else
-            {
-                IEnumerable<IAreaElement> bhomSurfs = GetSurfaceAssignments(assignmentList, surfaces);
-                bhomGravityLoad = BH.Engine.Structure.Create.GravityLoad(bhomLoadcase, gravityVector, bhomSurfs, GetName(lusasGravityLoad));
-            }
+            IEnumerable<BHoMObject> bhomObjects = GetGeometryAssignments(
+                lusasAssignments, null, bhomBars, bhomPlanarPanels);
+            bhomGravityLoad = Structure.Create.GravityLoad(
+                bhomLoadcase, gravityVector, bhomObjects, GetName(lusasGravityLoad));
 
-            int bhomID = GetBHoMID(lusasGravityLoad, 'l');
-            bhomGravityLoad.CustomData["Lusas_id"] = bhomID;
+            int adapterID = GetAdapterID(lusasGravityLoad, 'l');
+            bhomGravityLoad.CustomData["Lusas_id"] = adapterID;
+
             return bhomGravityLoad;
         }
     }

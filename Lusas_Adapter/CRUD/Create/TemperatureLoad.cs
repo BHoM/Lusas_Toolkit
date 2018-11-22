@@ -7,9 +7,12 @@ namespace BH.Adapter.Lusas
     {
         public IFLoadingTemperature CreateBarTemperatureLoad(BarTemperatureLoad temperatureLoad, IFLine[] lusasLines)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + temperatureLoad.Loadcase.CustomData[AdapterId] + "/" + temperatureLoad.Loadcase.Name);
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
+                "Lc" + temperatureLoad.Loadcase.CustomData[AdapterId] + "/" + temperatureLoad.Loadcase.Name);
+
             string lusasAttributeName = "Tl" + temperatureLoad.CustomData[AdapterId] + "/" + temperatureLoad.Name;
-            NameSearch("Tl", temperatureLoad.CustomData[AdapterId].ToString(), temperatureLoad.Name, ref lusasAttributeName);
+            NameSearch("Tl", temperatureLoad.CustomData[AdapterId].ToString(), 
+                temperatureLoad.Name, ref lusasAttributeName);
 
             IFLoadingTemperature lusasTemperatureLoad = CreateTemperatureLoad(lusasAttributeName,
                 temperatureLoad.TemperatureChange, lusasLines, assignedLoadcase);
@@ -17,10 +20,13 @@ namespace BH.Adapter.Lusas
             return lusasTemperatureLoad;
         }
 
-        public IFLoadingTemperature CreateAreaTemperatureLoad(AreaTemperatureLoad temperatureLoad, IFSurface[] lusasSurfaces)
+        public IFLoadingTemperature CreateAreaTemperatureLoad(AreaTemperatureLoad temperatureLoad, 
+            IFSurface[] lusasSurfaces)
         {
 
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + temperatureLoad.Loadcase.CustomData[AdapterId] + "/" + temperatureLoad.Loadcase.Name);
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
+                "Lc" + temperatureLoad.Loadcase.CustomData[AdapterId] + "/" + temperatureLoad.Loadcase.Name);
+
             string lusasAttributeName = "Tl" + temperatureLoad.CustomData[AdapterId] + "/" + temperatureLoad.Name;
 
             IFLoadingTemperature lusasTemperatureLoad = CreateTemperatureLoad(lusasAttributeName,
@@ -35,7 +41,8 @@ namespace BH.Adapter.Lusas
             IFLoadingTemperature lusasTemperatureLoad = null;
             if (d_LusasData.existsAttribute("Loading", lusasAttributeName))
             {
-                lusasTemperatureLoad = (IFLoadingTemperature)d_LusasData.getAttributes("Loading", lusasAttributeName);
+                lusasTemperatureLoad = (IFLoadingTemperature)d_LusasData.getAttributes(
+                    "Loading", lusasAttributeName);
             }
             else
             {
@@ -44,9 +51,9 @@ namespace BH.Adapter.Lusas
                 lusasTemperatureLoad.setValue("T", temperatureChange);
             }
 
-            IFAssignment assignToGeom = m_LusasApplication.assignment();
-            assignToGeom.setLoadset(assignedLoadcase);
-            lusasTemperatureLoad.assignTo(lusasGeometry, assignToGeom);
+            IFAssignment lusasAssignment = m_LusasApplication.assignment();
+            lusasAssignment.setLoadset(assignedLoadcase);
+            lusasTemperatureLoad.assignTo(lusasGeometry, lusasAssignment);
 
             return lusasTemperatureLoad;
         }

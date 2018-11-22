@@ -23,11 +23,12 @@ namespace BH.Engine.Lusas
             Split1D splitMethod = Split1D.Automatic;
             int meshType = 0;
             lusasMeshLine.getMeshDivisions(ref meshType);
-            if (meshType ==0)
+
+            if (meshType == 0)
             {
                 value = 0;
             }
-            else if(meshType == 1)
+            else if (meshType == 1)
             {
                 splitMethod = Split1D.Divisions;
                 object[] ratios = lusasMeshLine.getValue("ratio");
@@ -35,7 +36,7 @@ namespace BH.Engine.Lusas
                 if (value == 0)
                     value = 4;
             }
-            else if(meshType == 2)
+            else if (meshType == 2)
             {
                 splitMethod = Split1D.Length;
                 value = lusasMeshLine.getValue("size");
@@ -64,14 +65,15 @@ namespace BH.Engine.Lusas
             //}
 
             MeshSettings1D bhomMeshSettings1D = new MeshSettings1D
-                {
-                    Name = attributeName,
-                    SplitMethod = splitMethod,
-                    SplitParameter = value
-                };
+            {
+                Name = attributeName,
+                SplitMethod = splitMethod,
+                SplitParameter = value
+            };
 
-            int bhomID = GetBHoMID(lusasMeshLine, 'e');
-            bhomMeshSettings1D.CustomData["Lusas_id"] = bhomID;
+            int adapterID = GetAdapterID(lusasMeshLine, 'e');
+            bhomMeshSettings1D.CustomData["Lusas_id"] = adapterID;
+
             return bhomMeshSettings1D;
         }
 
