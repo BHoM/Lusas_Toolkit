@@ -45,8 +45,8 @@ namespace BH.Adapter.Lusas
                     {
 
                         IFPoint largestPoint = d_LusasData.getPointByNumber(largestPointID);
-                        index = System.Convert.ToInt32(
-                               BH.Engine.Lusas.Convert.removePrefix(largestPoint.getName(), "P")) + 1;
+                        index = Convert.ToInt32(
+                               Engine.Lusas.Convert.removePrefix(largestPoint.getName(), "P")) + 1;
                     }
                 }
                 if (type == typeof(Bar))
