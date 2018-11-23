@@ -184,10 +184,18 @@ namespace BH.Adapter.Lusas
                     }
                     else
                     {
-
                         IFAttribute largestAttribute = d_LusasData.getAttribute("Loading", largestLoadID);
-                        index = Convert.ToInt32(
-                            Engine.Lusas.Convert.GetAdapterID(largestAttribute, 'l')) + 1;
+                        if(largestAttribute is IFPrescribedDisplacementLoad)
+                        {
+                            index = Convert.ToInt32(
+                                Engine.Lusas.Convert.GetAdapterID(largestAttribute, 'd')) + 1;
+                        }
+                        else
+                        {
+                            index = Convert.ToInt32(
+                                Engine.Lusas.Convert.GetAdapterID(largestAttribute, 'l')) + 1;
+                        }
+
                     }
                 }
                 if (type == typeof(LoadCombination))
