@@ -8,14 +8,14 @@ namespace BH.Adapter.Lusas
         public IFMeshLine CreateMeshSettings1D(MeshSettings1D meshSettings1D)
         {
             IFMeshLine lusasLineMesh = null;
-            string lusasAttributeName = "Me" + meshSettings1D.CustomData[AdapterId] + "/" + meshSettings1D.Name;
-            if (d_LusasData.existsAttribute("Mesh", lusasAttributeName))
+            string lusasName = "Me" + meshSettings1D.CustomData[AdapterId] + "/" + meshSettings1D.Name;
+            if (d_LusasData.existsAttribute("Mesh", lusasName))
             {
-                lusasLineMesh = (IFMeshLine)d_LusasData.getAttribute("Mesh", lusasAttributeName);
+                lusasLineMesh = (IFMeshLine)d_LusasData.getAttribute("Mesh", lusasName);
             }
             else
             {
-                lusasLineMesh = d_LusasData.createMeshLine(lusasAttributeName);
+                lusasLineMesh = d_LusasData.createMeshLine(lusasName);
 
                 if (meshSettings1D.SplitMethod == Split1D.Automatic)
                 {

@@ -8,17 +8,17 @@ namespace BH.Adapter.Lusas
         public IFAttribute CreateMaterial(Material material)
         {
             IFAttribute lusasMaterial = null;
-            string lusasAttributeName = "M" + material.CustomData[AdapterId] + "/" + material.Name;
-            if (d_LusasData.existsAttribute("Material", lusasAttributeName))
+            string lusasName = "M" + material.CustomData[AdapterId] + "/" + material.Name;
+            if (d_LusasData.existsAttribute("Material", lusasName))
             {
-                lusasMaterial = d_LusasData.getAttribute("Material", lusasAttributeName);
+                lusasMaterial = d_LusasData.getAttribute("Material", lusasName);
             }
             else
             {
                 lusasMaterial = d_LusasData.createIsotropicMaterial(material.Name,
                 material.YoungsModulus, material.PoissonsRatio, material.Density, material.CoeffThermalExpansion);
 
-                lusasMaterial.setName(lusasAttributeName);
+                lusasMaterial.setName(lusasName);
             }
             return lusasMaterial;
         }

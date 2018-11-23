@@ -12,15 +12,15 @@ namespace BH.Adapter.Lusas
         public IFAttribute CreateSupport(Constraint6DOF constraint)
         {
             IFAttribute lusasSupport = null;
-            string lusasAttributeName = "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name;
+            string lusasName = "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name;
 
-            if (d_LusasData.existsAttribute("Support", lusasAttributeName))
+            if (d_LusasData.existsAttribute("Support", lusasName))
             {
-                lusasSupport = d_LusasData.getAttribute("Support", lusasAttributeName);
+                lusasSupport = d_LusasData.getAttribute("Support", lusasName);
             }
             else
             {
-                lusasSupport = d_LusasData.createSupportStructural(lusasAttributeName);
+                lusasSupport = d_LusasData.createSupportStructural(lusasName);
 
                 List<string> releaseNames = new List<string> { "U", "V", "W", "THX", "THY", "THZ" };
                 List<double> stiffness = new List<double> {
@@ -54,15 +54,15 @@ namespace BH.Adapter.Lusas
         public IFAttribute CreateSupport(Constraint4DOF constraint)
         {
             IFAttribute lusasSupport = null;
-            string lusasAttributeName = "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name;
+            string lusasName = "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name;
 
-            if (d_LusasData.existsAttribute("Support", lusasAttributeName))
+            if (d_LusasData.existsAttribute("Support", lusasName))
             {
-                lusasSupport = d_LusasData.getAttribute("Support", lusasAttributeName);
+                lusasSupport = d_LusasData.getAttribute("Support", lusasName);
             }
             else
             {
-                lusasSupport = d_LusasData.createSupportStructural(lusasAttributeName);
+                lusasSupport = d_LusasData.createSupportStructural(lusasName);
 
                 List<string> releaseNames = new List<string> { "U", "V", "W", "THX"};
                 List<double> stiffness = new List<double> {

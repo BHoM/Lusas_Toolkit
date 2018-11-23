@@ -10,11 +10,11 @@ namespace BH.Adapter.Lusas
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
                 "Lc" + temperatureLoad.Loadcase.CustomData[AdapterId] + "/" + temperatureLoad.Loadcase.Name);
 
-            string lusasAttributeName = "Tl" + temperatureLoad.CustomData[AdapterId] + "/" + temperatureLoad.Name;
+            string lusasName = "Tl" + temperatureLoad.CustomData[AdapterId] + "/" + temperatureLoad.Name;
             NameSearch("Tl", temperatureLoad.CustomData[AdapterId].ToString(), 
-                temperatureLoad.Name, ref lusasAttributeName);
+                temperatureLoad.Name, ref lusasName);
 
-            IFLoadingTemperature lusasTemperatureLoad = CreateTemperatureLoad(lusasAttributeName,
+            IFLoadingTemperature lusasTemperatureLoad = CreateTemperatureLoad(lusasName,
                 temperatureLoad.TemperatureChange, lusasLines, assignedLoadcase);
 
             return lusasTemperatureLoad;
@@ -27,26 +27,26 @@ namespace BH.Adapter.Lusas
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
                 "Lc" + temperatureLoad.Loadcase.CustomData[AdapterId] + "/" + temperatureLoad.Loadcase.Name);
 
-            string lusasAttributeName = "Tl" + temperatureLoad.CustomData[AdapterId] + "/" + temperatureLoad.Name;
+            string lusasName = "Tl" + temperatureLoad.CustomData[AdapterId] + "/" + temperatureLoad.Name;
 
-            IFLoadingTemperature lusasTemperatureLoad = CreateTemperatureLoad(lusasAttributeName,
+            IFLoadingTemperature lusasTemperatureLoad = CreateTemperatureLoad(lusasName,
                 temperatureLoad.TemperatureChange, lusasSurfaces, assignedLoadcase);
 
             return lusasTemperatureLoad;
         }
 
-        public IFLoadingTemperature CreateTemperatureLoad(string lusasAttributeName, 
+        public IFLoadingTemperature CreateTemperatureLoad(string lusasName, 
             double temperatureChange, IFGeometry[] lusasGeometry, IFLoadcase assignedLoadcase)
         {
             IFLoadingTemperature lusasTemperatureLoad = null;
-            if (d_LusasData.existsAttribute("Loading", lusasAttributeName))
+            if (d_LusasData.existsAttribute("Loading", lusasName))
             {
                 lusasTemperatureLoad = (IFLoadingTemperature)d_LusasData.getAttributes(
-                    "Loading", lusasAttributeName);
+                    "Loading", lusasName);
             }
             else
             {
-                lusasTemperatureLoad = d_LusasData.createLoadingTemperature(lusasAttributeName);
+                lusasTemperatureLoad = d_LusasData.createLoadingTemperature(lusasName);
                 lusasTemperatureLoad.setValue("T0", 0);
                 lusasTemperatureLoad.setValue("T", temperatureChange);
             }
