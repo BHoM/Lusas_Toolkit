@@ -40,12 +40,12 @@ namespace BH.Adapter.Lusas
 
         public void NameSearch(string prefix, string customID, string suffix, ref string name)
         {
-            for (int i = 1; i < Int32.Parse(customID); i++)
+            for (int i = 1; i < int.Parse(customID); i++)
             {
-                name = prefix + i.ToString() + "/" + suffix;
-                if (d_LusasData.existsAttribute("Loading", name))
+                string searchName = prefix + i.ToString() + "/" + suffix;
+                if (d_LusasData.existsAttribute("Loading", searchName))
                 {
-                    break;
+                    name = searchName;
                 }
             }
         }
