@@ -106,7 +106,8 @@ namespace BH.Adapter.Lusas
                             Engine.Lusas.Convert.removePrefix(largestPoint.getName(), "P")) + 1;
                     }
                 }
-                if (type == typeof(Loadcase))
+                if (type == typeof(Loadcase) ||
+                    type == typeof(LoadCombination))
                 {
                     int largestLoadcaseID = d_LusasData.getNextAvailableLoadcaseID() - 1;
                     if (largestLoadcaseID == 0)
@@ -115,10 +116,19 @@ namespace BH.Adapter.Lusas
                     }
                     else
                     {
-
-                        IFLoadcase largestLoadcase = (IFLoadcase)d_LusasData.getLoadset(largestLoadcaseID);
-                        index = Convert.ToInt32(
-                            Engine.Lusas.Convert.GetAdapterID(largestLoadcase, 'c')) + 1;
+                        IFLoadset largestLoadset = d_LusasData.getLoadset(largestLoadcaseID);
+                        if(largestLoadset is IFLoadcase)
+                        {
+                            IFLoadcase largestLoadcase = (IFLoadcase)largestLoadset;
+                            index = Convert.ToInt32(
+                                Engine.Lusas.Convert.GetAdapterID(largestLoadcase, 'c')) + 1;
+                        }
+                        else if (largestLoadset is IFBasicCombination)
+                        {
+                            IFBasicCombination largestLoadCombination = (IFBasicCombination)largestLoadset;
+                            index = Convert.ToInt32(
+                                Engine.Lusas.Convert.GetAdapterID(largestLoadCombination, 'l')) + 1;
+                        }
                     }
                 }
                 if (type == typeof(Material))
@@ -197,31 +207,31 @@ namespace BH.Adapter.Lusas
                         }
                     }
                 }
-                if (type == typeof(LoadCombination))
-                {
-                    object[] combinationObjects = d_LusasData.getLoadsets("Combinations");
-                    if (combinationObjects.Count() == 0)
-                    {
-                        index = 1;
-                    }
-                    else
-                    {
-                        List<IFBasicCombination> loadCombinations = new List<IFBasicCombination>();
-                        for (int i = 0; i < loadCombinations.Count(); i++)
-                        {
-                            IFBasicCombination loadCombination = (IFBasicCombination)combinationObjects[i];
-                            loadCombinations.Add(loadCombination);
-                        }
+                //if (type == typeof(LoadCombination))
+                //{
+                //    object[] combinationObjects = d_LusasData.getLoadsets("Combinations");
+                //    if (combinationObjects.Count() == 0)
+                //    {
+                //        index = 1;
+                //    }
+                //    else
+                //    {
+                //        List<IFBasicCombination> loadCombinations = new List<IFBasicCombination>();
+                //        for (int i = 0; i < loadCombinations.Count(); i++)
+                //        {
+                //            IFBasicCombination loadCombination = (IFBasicCombination)combinationObjects[i];
+                //            loadCombinations.Add(loadCombination);
+                //        }
 
-                        int largestLoadCombinationID = loadCombinations.Max(x => x.getID());
+                //        int largestLoadCombinationID = loadCombinations.Max(x => x.getID());
 
-                        IFBasicCombination largestLoadCombination = 
-                            (IFBasicCombination)d_LusasData.getLoadset("Combinations", largestLoadCombinationID);
+                //        IFBasicCombination largestLoadCombination = 
+                //            (IFBasicCombination)d_LusasData.getLoadset("Combinations", largestLoadCombinationID);
 
-                        index = Convert.ToInt32(
-                            Engine.Lusas.Convert.GetAdapterID(largestLoadCombination, 'l')) + 1;
-                    }
-                }
+                //        index = Convert.ToInt32(
+                //            Engine.Lusas.Convert.GetAdapterID(largestLoadCombination, 'l')) + 1;
+                //    }
+                //}
                 if (type == typeof(MeshSettings1D) ||
                     type == typeof(MeshSettings2D))
                 {
