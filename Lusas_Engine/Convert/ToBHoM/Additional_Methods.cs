@@ -89,6 +89,8 @@ namespace BH.Engine.Lusas
         {
             int adapterID = 0;
 
+            lusasAttribute.getName();
+
             if (lusasAttribute.getName().Contains("/"))
             {
                 adapterID = int.Parse(lusasAttribute.getName().Split(lastCharacter, '/')[1]);
@@ -105,6 +107,8 @@ namespace BH.Engine.Lusas
         {
             int adapterID = 0;
 
+            lusasLoadcase.getName();
+
             if (lusasLoadcase.getName().Contains("/"))
             {
                 adapterID = int.Parse(lusasLoadcase.getName().Split(lastCharacter, '/')[1]);
@@ -120,6 +124,8 @@ namespace BH.Engine.Lusas
         public static int GetAdapterID(IFBasicCombination lusasLoadCombination, char lastCharacter)
         {
             int adapterID = 0;
+
+            lusasLoadCombination.getName();
 
             if (lusasLoadCombination.getName().Contains("/"))
             {
