@@ -2,6 +2,7 @@
 using System;
 using BH.oM.Structure.Loads;
 using Lusas.LPI;
+using BH.Engine.Reflection;
 
 namespace BH.Adapter.Lusas
 {
@@ -22,8 +23,17 @@ namespace BH.Adapter.Lusas
             }
             else
             {
-                lusasLoadcombination = d_LusasData.createCombinationBasic(lusasLoadCombinationName, "",
-                    loadCombination.Number);
+                if(loadCombination.Number == 0)
+                {
+                    lusasLoadcombination = d_LusasData.createCombinationBasic(lusasLoadCombinationName);
+                    Compute.RecordWarning("0 used for LoadCombination number,"
+                        + "therefore LoadCombination number will not be forced");
+                }
+                else
+                {
+                    lusasLoadcombination = d_LusasData.createCombinationBasic(lusasLoadCombinationName, "",
+                        loadCombination.Number);
+                }
                 foreach (Tuple<double, ICase> factoredLoad in loadCombination.LoadCases)
                 {
                     string lusasAttributeName = "Lc" + factoredLoad.Item2.CustomData[AdapterId] + "/"
