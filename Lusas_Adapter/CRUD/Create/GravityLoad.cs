@@ -11,16 +11,16 @@ namespace BH.Adapter.Lusas
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
                 "Lc" + gravityLoad.Loadcase.CustomData[AdapterId] + "/" + gravityLoad.Loadcase.Name);
 
-            string lusasAttributeName = "Gl" + gravityLoad.CustomData[AdapterId] + "/" + gravityLoad.Name;
-            NameSearch("Gl", gravityLoad.CustomData[AdapterId].ToString(), gravityLoad.Name, ref lusasAttributeName);
+            string lusasName = "Gl" + gravityLoad.CustomData[AdapterId] + "/" + gravityLoad.Name;
+            NameSearch("Gl", gravityLoad.CustomData[AdapterId].ToString(), gravityLoad.Name, ref lusasName);
 
-            if (d_LusasData.existsAttribute("Loading", lusasAttributeName))
+            if (d_LusasData.existsAttribute("Loading", lusasName))
             {
-                lusasGravityLoad = (IFLoadingBody)d_LusasData.getAttributes("Loading", lusasAttributeName);
+                lusasGravityLoad = (IFLoadingBody)d_LusasData.getAttributes("Loading", lusasName);
             }
             else
             {
-                lusasGravityLoad = d_LusasData.createLoadingBody(lusasAttributeName);
+                lusasGravityLoad = d_LusasData.createLoadingBody(lusasName);
                 lusasGravityLoad.setBody(
                     gravityLoad.GravityDirection.X, gravityLoad.GravityDirection.Y, gravityLoad.GravityDirection.Z);
             }

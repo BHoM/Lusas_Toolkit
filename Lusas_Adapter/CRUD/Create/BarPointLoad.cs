@@ -11,15 +11,15 @@ namespace BH.Adapter.Lusas
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
                 "Lc" + bhomBarPointLoad.Loadcase.CustomData[AdapterId] + "/" + bhomBarPointLoad.Loadcase.Name);
 
-            string lusasAttributeName =
+            string lusasName =
                 "BPl" + bhomBarPointLoad.CustomData[AdapterId] + "/" + bhomBarPointLoad.Name;
 
             NameSearch("BPl", bhomBarPointLoad.CustomData[AdapterId].ToString(),
-                bhomBarPointLoad.Name, ref lusasAttributeName);
+                bhomBarPointLoad.Name, ref lusasName);
 
-            if (d_LusasData.existsAttribute("Loading", lusasAttributeName))
+            if (d_LusasData.existsAttribute("Loading", lusasName))
             {
-                lusasBarPointLoad = (IFLoadingBeamPoint)d_LusasData.getAttribute("Loading", lusasAttributeName);
+                lusasBarPointLoad = (IFLoadingBeamPoint)d_LusasData.getAttribute("Loading", lusasName);
             }
             else
             {

@@ -49,12 +49,12 @@ namespace BH.Adapter.Lusas
 
             string customID = Engine.Lusas.Convert.removePrefix(lusasLine.getName(), "L");
 
-            string lusasAttributeName = "L" + customID + "/ Local Axis";
+            string lusasName = "L" + customID + "/ Local Axis";
 
 
 
             IFLocalCoord barLocalAxis = d_LusasData.createLocalCartesianAttr(
-            lusasAttributeName, barorigin,
+            lusasName, barorigin,
             matrixCol0, matrixCol1, matrixCol2);
 
             return barLocalAxis;

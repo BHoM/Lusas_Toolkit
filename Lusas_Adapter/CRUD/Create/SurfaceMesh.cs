@@ -8,14 +8,14 @@ namespace BH.Adapter.Lusas
         public IFMeshSurface CreateMeshSettings2D(MeshSettings2D meshSettings2D)
         {
             IFMeshSurface lusasSurfaceMesh = null;
-            string lusasAttributeName = "Me" + meshSettings2D.CustomData[AdapterId] + "/" + meshSettings2D.Name;
-            if (d_LusasData.existsAttribute("Mesh", lusasAttributeName))
+            string lusasName = "Me" + meshSettings2D.CustomData[AdapterId] + "/" + meshSettings2D.Name;
+            if (d_LusasData.existsAttribute("Mesh", lusasName))
             {
-                lusasSurfaceMesh = (IFMeshSurface)d_LusasData.getAttribute("Mesh", lusasAttributeName);
+                lusasSurfaceMesh = (IFMeshSurface)d_LusasData.getAttribute("Mesh", lusasName);
             }
             else
             {
-                lusasSurfaceMesh = d_LusasData.createMeshSurface(lusasAttributeName);
+                lusasSurfaceMesh = d_LusasData.createMeshSurface(lusasName);
                 if (meshSettings2D.SplitMethod == Split2D.Automatic)
                 {
                     lusasSurfaceMesh.addElementName("QTS4");

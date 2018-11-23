@@ -12,16 +12,16 @@ namespace BH.Adapter.Lusas
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
                 "Lc" + pointForce.Loadcase.CustomData[AdapterId] + "/" + pointForce.Loadcase.Name);
 
-            string lusasAttributeName = "Pl" + pointForce.CustomData[AdapterId] + "/" + pointForce.Name;
-            NameSearch("Pl", pointForce.CustomData[AdapterId].ToString(), pointForce.Name, ref lusasAttributeName);
+            string lusasName = "Pl" + pointForce.CustomData[AdapterId] + "/" + pointForce.Name;
+            NameSearch("Pl", pointForce.CustomData[AdapterId].ToString(), pointForce.Name, ref lusasName);
 
-            if (d_LusasData.existsAttribute("Loading", lusasAttributeName))
+            if (d_LusasData.existsAttribute("Loading", lusasName))
             {
-                lusasPointForce = (IFLoadingConcentrated)d_LusasData.getAttribute("Loading", lusasAttributeName);
+                lusasPointForce = (IFLoadingConcentrated)d_LusasData.getAttribute("Loading", lusasName);
             }
             else
             {
-                lusasPointForce = d_LusasData.createLoadingConcentrated(lusasAttributeName);
+                lusasPointForce = d_LusasData.createLoadingConcentrated(lusasName);
                 lusasPointForce.setConcentrated(
                     pointForce.Force.X, pointForce.Force.Y, pointForce.Force.Z,
                     pointForce.Moment.X, pointForce.Moment.Y, pointForce.Moment.Z);

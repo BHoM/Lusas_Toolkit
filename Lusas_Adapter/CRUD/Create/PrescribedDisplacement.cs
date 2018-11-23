@@ -14,16 +14,16 @@ namespace BH.Adapter.Lusas
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
                 "Lc" + pointDisplacement.Loadcase.CustomData[AdapterId] + "/" + pointDisplacement.Loadcase.Name);
 
-            string lusasAttributeName = "Pd" + 
+            string lusasName = "Pd" + 
                 pointDisplacement.CustomData[AdapterId] + "/" + pointDisplacement.Name;
 
             NameSearch("Pd", pointDisplacement.CustomData[AdapterId].ToString(), 
-                pointDisplacement.Name, ref lusasAttributeName);
+                pointDisplacement.Name, ref lusasName);
 
-            if (d_LusasData.existsAttribute("Loading", lusasAttributeName))
+            if (d_LusasData.existsAttribute("Loading", lusasName))
             {
                 lusasPrescribedDisplacement = (IFPrescribedDisplacementLoad)d_LusasData.getAttribute(
-                    "Loading", lusasAttributeName);
+                    "Loading", lusasName);
             }
             else
             {
@@ -39,7 +39,7 @@ namespace BH.Adapter.Lusas
                 };
 
                 lusasPrescribedDisplacement = d_LusasData.createPrescribedDisplacementLoad(
-                    lusasAttributeName, "Total");
+                    lusasName, "Total");
 
                 for(int i=0; i < valueNames.Count(); i++)
                 {

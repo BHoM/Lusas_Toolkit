@@ -36,10 +36,10 @@ namespace BH.Adapter.Lusas
                 }
                 foreach (Tuple<double, ICase> factoredLoad in loadCombination.LoadCases)
                 {
-                    string lusasAttributeName = "Lc" + factoredLoad.Item2.CustomData[AdapterId] + "/"
+                    string lusasName = "Lc" + factoredLoad.Item2.CustomData[AdapterId] + "/"
                         + factoredLoad.Item2.Name;
                     double factor = factoredLoad.Item1;
-                    IFLoadset lusasLoadcase = d_LusasData.getLoadset(lusasAttributeName);
+                    IFLoadset lusasLoadcase = d_LusasData.getLoadset(lusasName);
                     lusasLoadcombination.addEntry(factor, lusasLoadcase);
                 }
             }

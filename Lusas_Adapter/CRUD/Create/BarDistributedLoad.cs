@@ -16,16 +16,16 @@ namespace BH.Adapter.Lusas
                 "Lc" + bhomBarDistributedLoad.Loadcase.CustomData[AdapterId] +
                 "/" + bhomBarDistributedLoad.Loadcase.Name);
 
-            string lusasAttributeName =
+            string lusasName =
                 "BDl" + bhomBarDistributedLoad.CustomData[AdapterId] + "/" + bhomBarDistributedLoad.Name;
 
             NameSearch("BDl", bhomBarDistributedLoad.CustomData[AdapterId].ToString(),
-                bhomBarDistributedLoad.Name, ref lusasAttributeName);
+                bhomBarDistributedLoad.Name, ref lusasName);
 
-            if (d_LusasData.existsAttribute("Loading", lusasAttributeName))
+            if (d_LusasData.existsAttribute("Loading", lusasName))
             {
                 IFLoadingBeamDistributed lusasBarDistributedLoad =
-                    (IFLoadingBeamDistributed)d_LusasData.getAttribute("Loading", lusasAttributeName);
+                    (IFLoadingBeamDistributed)d_LusasData.getAttribute("Loading", lusasName);
 
                 lusasBarDistributedLoads.Add(lusasBarDistributedLoad);
             }
