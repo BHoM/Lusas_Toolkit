@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BH.oM.Structure.Elements;
 using Lusas.LPI;
 using BH.oM.Base;
+using BH.Engine.Reflection;
 
 namespace BH.Engine.Lusas
 {
@@ -215,10 +215,19 @@ namespace BH.Engine.Lusas
 
             foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
-                IFPoint lusasPoint = (IFPoint)lusasAssignment.getDatabaseObject();
-                bhomNodes.TryGetValue(removePrefix(lusasPoint.getName(), "P"), out bhomNode);
-                assignedNodes.Add(bhomNode);
+                if(lusasAssignment.getDatabaseObject() is IFPoint)
+                {
+                    IFPoint lusasPoint = (IFPoint)lusasAssignment.getDatabaseObject();
+                    bhomNodes.TryGetValue(removePrefix(lusasPoint.getName(), "P"), out bhomNode);
+                    assignedNodes.Add(bhomNode);
+                }
+                else
+                {
+                    WarningLineAssignment(lusasAssignment);
+                    WarningSurfaceAssignment(lusasAssignment);
+                }
             }
+
             return assignedNodes;
         }
 
@@ -230,9 +239,18 @@ namespace BH.Engine.Lusas
 
             foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
-                IFLine lusasLine = (IFLine)lusasAssignment.getDatabaseObject();
-                bhomBars.TryGetValue(removePrefix(lusasLine.getName(), "L"), out bhomBar);
-                assignedBars.Add(bhomBar);
+                if(lusasAssignment.getDatabaseObject() is IFLine)
+                {
+                    IFLine lusasLine = (IFLine)lusasAssignment.getDatabaseObject();
+                    bhomBars.TryGetValue(removePrefix(lusasLine.getName(), "L"), out bhomBar);
+                    assignedBars.Add(bhomBar);
+                }
+                else
+                {
+                    WarningPointAssignment(lusasAssignment);
+                    WarningSurfaceAssignment(lusasAssignment);
+                }
+
             }
 
             return assignedBars;
@@ -246,9 +264,17 @@ namespace BH.Engine.Lusas
 
             foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
-                IFSurface lusasSurface = (IFSurface)lusasAssignment.getDatabaseObject();
-                bhomPlanarPanels.TryGetValue(removePrefix(lusasSurface.getName(), "S"), out bhomPanelPlanar);
-                assignedSurfs.Add(bhomPanelPlanar);
+                if(lusasAssignment.getDatabaseObject() is IFSurface)
+                {
+                    IFSurface lusasSurface = (IFSurface)lusasAssignment.getDatabaseObject();
+                    bhomPlanarPanels.TryGetValue(removePrefix(lusasSurface.getName(), "S"), out bhomPanelPlanar);
+                    assignedSurfs.Add(bhomPanelPlanar);
+                }
+                else
+                {
+                    WarningPointAssignment(lusasAssignment);
+                    WarningLineAssignment(lusasAssignment);
+                }
             }
 
             return assignedSurfs;
@@ -288,5 +314,31 @@ namespace BH.Engine.Lusas
             return assignedObjects;
         }
 
+        private static void WarningPointAssignment(IFAssignment lusasAssignment)
+        {
+            if(lusasAssignment.getDatabaseObject() is IFPoint)
+            {
+                Compute.RecordWarning(
+                    "This attribute does not support assignment to points, these have not been pulled");
+            }
+        }
+
+        private static void WarningLineAssignment(IFAssignment lusasAssignment)
+        {
+            if (lusasAssignment.getDatabaseObject() is IFLine)
+            {
+                Compute.RecordWarning(
+                    "This attribute does not support assignment to lines, these have not been pulled");
+            }
+        }
+
+        private static void WarningSurfaceAssignment(IFAssignment lusasAssignment)
+        {
+            if (lusasAssignment.getDatabaseObject() is IFSurface)
+            {
+                Compute.RecordWarning(
+                    "This attribute does not support assignment to surfaces, these have not been pulled");
+            }
+        }
     }
 }
