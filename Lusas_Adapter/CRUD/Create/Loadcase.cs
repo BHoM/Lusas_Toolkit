@@ -1,5 +1,6 @@
 ﻿using BH.oM.Structure.Loads;
 using Lusas.LPI;
+using BH.Engine.Reflection;
 
 namespace BH.Adapter.Lusas
 {
@@ -16,7 +17,17 @@ namespace BH.Adapter.Lusas
             }
             else
             {
-                lusasLoadcase = d_LusasData.createLoadcase(lusasAttributeName, "", loadcase.Number);
+                if (loadcase.Number == 0)
+                {
+                    lusasLoadcase = d_LusasData.createLoadcase(lusasAttributeName);
+                    Compute.RecordWarning("0 used for LoadCombination number,"
+                        + "therefore LoadCombination number will not be forced");
+                }
+                else
+                {
+                    lusasLoadcase = d_LusasData.createLoadcase(lusasAttributeName, "",
+                        loadcase.Number);
+                }
             }
             return lusasLoadcase;
         }
