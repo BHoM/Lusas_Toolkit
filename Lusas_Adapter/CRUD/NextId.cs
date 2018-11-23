@@ -59,8 +59,8 @@ namespace BH.Adapter.Lusas
                     {
 
                         IFLine largestLine = d_LusasData.getLineByNumber(d_LusasData.getLargestLineID());
-                        index = System.Convert.ToInt32(
-                               BH.Engine.Lusas.Convert.removePrefix(largestLine.getName(), "L")) + 1;
+                        index = Convert.ToInt32(
+                               Engine.Lusas.Convert.removePrefix(largestLine.getName(), "L")) + 1;
                     }
                 }
                 if (type == typeof(PanelPlanar))
@@ -195,7 +195,6 @@ namespace BH.Adapter.Lusas
                             index = Convert.ToInt32(
                                 Engine.Lusas.Convert.GetAdapterID(largestAttribute, 'l')) + 1;
                         }
-
                     }
                 }
                 if (type == typeof(LoadCombination))
