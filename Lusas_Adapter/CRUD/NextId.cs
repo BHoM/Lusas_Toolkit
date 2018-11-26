@@ -127,7 +127,7 @@ namespace BH.Adapter.Lusas
                         {
                             IFBasicCombination largestLoadCombination = (IFBasicCombination)largestLoadset;
                             index = Convert.ToInt32(
-                                Engine.Lusas.Convert.GetAdapterID(largestLoadCombination, 'l')) + 1;
+                                Engine.Lusas.Convert.GetAdapterID(largestLoadCombination, 'c')) + 1;
                         }
                     }
                 }
