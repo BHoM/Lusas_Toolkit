@@ -61,6 +61,7 @@ namespace BH.Adapter.Lusas
         public LusasWinApp m_LusasApplication;
         public IFDatabase d_LusasData;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
+        public LusasConfig lusasConfig;
 
 
         /***************************************************/
