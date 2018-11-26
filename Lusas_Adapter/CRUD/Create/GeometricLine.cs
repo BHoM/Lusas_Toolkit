@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BH.oM.Structure.Properties;
 using Lusas.LPI;
+using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
 {
