@@ -9,4 +9,9 @@
     {
         Divisions, Size, Automatic
     }
+
+    public enum SectionLibrary
+    {
+        UK_Sections, EU_Sections
+    }
 }

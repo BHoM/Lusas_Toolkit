@@ -43,7 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Lusas Objects\Enum.cs" />
+    <Compile Include="Enum.cs" />
+    <Compile Include="Lusas Objects\LibrarySettings.cs" />
+    <Compile Include="Lusas Objects\LusasConfig.cs" />
     <Compile Include="Lusas Objects\MeshSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
