@@ -147,7 +147,7 @@
     <Compile Include="LusasAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\Comparer.cs" />
-    <Compile Include="CRUD\Read\Properties\DependencyTypes.cs" />
+    <Compile Include="Types\DependencyTypes.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lusas_Engine\Lusas_Engine.csproj">

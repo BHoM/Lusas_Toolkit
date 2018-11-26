@@ -96,6 +96,8 @@
     <Compile Include="Convert\ToBHoM\Properties\SectionProperty.cs" />
     <Compile Include="Convert\ToBHoM\_ToBHoM.cs" />
     <Compile Include="Convert\ToLusas\_ToLusas.cs" />
+    <Compile Include="Create\LibrarySettings.cs" />
+    <Compile Include="Create\LusasConfig.cs" />
     <Compile Include="Create\MeshSettings.cs" />
     <Compile Include="Object_Comparer\Equality Comparer\BarMidPointComparer.cs" />
     <Compile Include="Object_Comparer\Equality Comparer\PointDistanceComparer.cs" />
