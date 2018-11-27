@@ -70,7 +70,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Convert\ToBHoM\Additional_Methods.cs" />
     <Compile Include="Convert\ToBHoM\Loads\AreaTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Bar.cs" />
     <Compile Include="Convert\ToBHoM\Loads\BarTemperatureLoad.cs" />
@@ -78,6 +77,14 @@
     <Compile Include="Convert\ToBHoM\Loads\AreaUniformallyDistributedLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\BarPointLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\BarDistributedLoad.cs" />
+    <Compile Include="Convert\Private Helpers\AttributeAssignments.cs" />
+    <Compile Include="Convert\Private Helpers\GetAdapterID.cs" />
+    <Compile Include="Convert\Private Helpers\GetAssignments.cs" />
+    <Compile Include="Convert\Private Helpers\GetLOF.cs" />
+    <Compile Include="Convert\Private Helpers\GetName.cs" />
+    <Compile Include="Convert\Private Helpers\IsMemberOf.cs" />
+    <Compile Include="Convert\Private Helpers\RemovePrefix.cs" />
+    <Compile Include="Convert\Private Helpers\Warnings.cs" />
     <Compile Include="Convert\ToBHoM\Properties\MeshSettings2D.cs" />
     <Compile Include="Convert\ToBHoM\Properties\MeshSettings1D.cs" />
     <Compile Include="Convert\ToBHoM\Loads\PointDisplacement.cs" />
@@ -104,6 +111,7 @@
     <Compile Include="Object_Comparer\Equality Comparer\EdgeMidPointComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

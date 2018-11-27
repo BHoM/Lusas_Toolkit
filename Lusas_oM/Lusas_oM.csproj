@@ -44,9 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enum.cs" />
-    <Compile Include="Lusas Objects\LibrarySettings.cs" />
-    <Compile Include="Lusas Objects\LusasConfig.cs" />
-    <Compile Include="Lusas Objects\MeshSettings.cs" />
+    <Compile Include="Settings\LibrarySettings.cs" />
+    <Compile Include="Settings\LusasConfig.cs" />
+    <Compile Include="Structural\Properties\MeshSettings2D.cs" />
+    <Compile Include="Structural\Properties\MeshSettings1D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

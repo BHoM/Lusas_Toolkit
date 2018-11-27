@@ -55,7 +55,7 @@ namespace BH.Engine.Lusas
                 bhomBar.SectionProperty = lineSection;
             }
 
-            string adapterID = removePrefix(lusasLine.getName(), "L");
+            string adapterID = RemovePrefix(lusasLine.getName(), "L");
 
             bhomBar.CustomData["Lusas_id"] = adapterID;
 

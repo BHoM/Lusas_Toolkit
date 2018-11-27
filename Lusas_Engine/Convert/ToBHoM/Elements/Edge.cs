@@ -33,7 +33,7 @@ namespace BH.Engine.Lusas
 
             Edge bhomEdge = new Edge { Curve = bhomLine, Tags = tags };
 
-            string adapterID = removePrefix(lusasLine.getName(), "L");
+            string adapterID = RemovePrefix(lusasLine.getName(), "L");
 
             bhomEdge.CustomData["Lusas_id"] = adapterID;
 

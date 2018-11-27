@@ -47,7 +47,7 @@ namespace BH.Adapter.Lusas
                 worldZAxis.Zip(localZAxis, (d1,d2) => d1 * d2).Sum(),
             };
 
-            string customID = Engine.Lusas.Convert.removePrefix(lusasLine.getName(), "L");
+            string customID = Engine.Lusas.Convert.RemovePrefix(lusasLine.getName(), "L");
 
             string lusasName = "L" + customID + "/ Local Axis";
 
