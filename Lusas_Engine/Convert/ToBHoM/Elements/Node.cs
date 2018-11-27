@@ -27,7 +27,7 @@ namespace BH.Engine.Lusas
                 Constraint = nodeConstraint
             };
 
-            string adapterID = removePrefix(lusasPoint.getName(), "P");
+            string adapterID = RemovePrefix(lusasPoint.getName(), "P");
             bhomNode.CustomData["Lusas_id"] = adapterID;
 
             return bhomNode;
