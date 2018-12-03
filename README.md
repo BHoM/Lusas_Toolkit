@@ -7,52 +7,8 @@
 - BHoM Release 2.0
 
 ## What is supported?
-
-Everything listed below can be pushed and pulled from the BHoM to Lusas.
-
-The format is as follows: Lusas Object (BHoM Object)
-
-BHoM object are constainted within the `Structure` namespace unless specified otherwise.
-
-### Geometry
-- `Point` (`Elements.Node`)
-- `Line` (`Elements.Bar`)
-- `Surface` (`Elements.PanelPlanar`)
-
-### Attributes
-#### Supports
-1. Point
-- `Support` (`Properties.Constraint6DOF`)
-2. Line
-- `Support` (`Properties.Constraint4DOF`)
-
-#### Materials
-- `Material` (`Common.Materials.Material`)
-
-#### Properties
-- `Geometric Line` (`Properties.SteelSection`)
-  1. `Angle` (`Properties.SteelSection.AngleSection`)
-  2. `Rectangular Hollow` (`Properties.SteelSection.BoxSection`) 
-  3. `Circular Hollow` (`Properties.SteelSection.CircularSection`)
-  4. `Channel` (`Properties.SteelSection.SteelSectionFromProfile`)
-  5. `I Section Unequal Flange` (`Proprties.SteelSection.FabricatedISection`)
-  6. `I Section` (`Properties.SteelSection.ISection`)
-  7. `T Section` (`Properties.SteelSection.TSection`)
-  8. `Circular Hollow` (`Properties.SteelSection.Tube`)
-- `Geometric Surface`
-  1. `Thickness` (`Properties.ConstantThickness`)
-
-#### Loading
-- `Concentrated Load` (`Loads.PointForce`)
-- `Body Force` (`Loads.GravityLoad`)
-- `Global Distributed Load` (`Loads.BarUniformlyDistributedLoad` - set `LoadAxis.Global`)
-- `Local Distributed Load` (`Loads.BarUniformlyDistributedLoad` - set `LoadAxis.Local`)
-- `Global Distributed Load` (`Loads.AreaUniformlyDistributedLoad` - set `LoadAxis.Global`)
-- `Local Distributed Load` (`Loads.AreaUniformlyDistributedLoad` - set `LoadAxis.Local`)
-- `Temperature Load` (`Loads.BarTemperatureLoad`)
-- `Temperature Load` (`Loads.AreaTemperatureLoad`)
-- `Prescribed Displacement` (`Loads.PointDisplacement`)
-
+See the Wiki:
+https://github.com/BuroHappoldEngineering/Lusas_Toolkit/wiki
 
 ## What is currently being developed?
 
