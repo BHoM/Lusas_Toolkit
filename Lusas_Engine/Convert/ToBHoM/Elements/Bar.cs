@@ -4,6 +4,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Properties;
 using BH.oM.Common.Materials;
 using Lusas.LPI;
+using BH.oM.Adapters.Lusas;
 
 namespace BH.Engine.Lusas
 {
@@ -14,7 +15,8 @@ namespace BH.Engine.Lusas
             Dictionary<string, Constraint4DOF> bhomSupports,
             HashSet<string> lusasGroups,
             Dictionary<string, Material> bhomMaterials,
-            Dictionary<string, ISectionProperty> bhomSections
+            Dictionary<string, ISectionProperty> bhomSections,
+            Dictionary<string, MeshSettings1D> bhomMeshes
             )
 
         {
@@ -53,6 +55,15 @@ namespace BH.Engine.Lusas
                     lineSection.Material = lineMaterial;
                 }
                 bhomBar.SectionProperty = lineSection;
+            }
+
+            MeshSettings1D lineMesh = null;
+            List<string> meshAssignments = AttributeAssignments(lusasLine, "Mesh");
+
+            if (!(meshAssignments.Count()==0))
+            {
+                bhomMeshes.TryGetValue(meshAssignments[0], out lineMesh);
+                bhomBar.CustomData["Mesh"] = lineMesh.Name;
             }
 
             string adapterID = RemovePrefix(lusasLine.getName(), "L");
