@@ -4,6 +4,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 using BH.Engine.Geometry;
 using Lusas.LPI;
+using BH.oM.Adapters.Lusas;
 namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
@@ -45,6 +46,14 @@ namespace BH.Adapter.Lusas
                 lusasSupport.assignTo(lusasLine);
                 IFLocalCoord barLocalAxis = CreateLocalCoordinate(lusasLine);
                 barLocalAxis.assignTo(lusasLine);
+            }
+
+            if (bar.CustomData["Mesh"]!=null)
+            {
+                MeshSettings1D associatedMesh = (MeshSettings1D) bar.CustomData["Mesh"];
+                string meshName = "Me" + associatedMesh.CustomData[AdapterId] + "/" + associatedMesh.Name;
+                IFAttribute lusasLineMesh = d_LusasData.getAttribute("Mesh", meshName);
+                lusasLineMesh.assignTo(lusasLine);
             }
 
             return lusasLine;
