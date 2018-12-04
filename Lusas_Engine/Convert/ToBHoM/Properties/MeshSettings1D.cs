@@ -6,9 +6,9 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static MeshSettings1D ToBHoMMeshSettings1D(this IFMeshLine lusasMeshLine)
+        public static MeshSettings1D ToBHoMMeshSettings1D(this IFAttribute lusasAttrbute)
         {
-            string attributeName = lusasMeshLine.getName();
+            string attributeName = GetName(lusasAttrbute);
             //object[] elnames = lusasMeshLine.getElementNames();
             //ElementType1D elementType1D = ElementType1D.Bar;
             //foreach (object name in elnames)
@@ -18,6 +18,8 @@ namespace BH.Engine.Lusas
             //    else
             //        elementType1D = ElementType1D.Beam;
             //}
+
+            IFMeshLine lusasMeshLine = (IFMeshLine)lusasAttrbute;
 
             double value = 0;
             Split1D splitMethod = Split1D.Automatic;
