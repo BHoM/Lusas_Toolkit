@@ -5,9 +5,9 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static MeshSettings2D ToBHoMMeshSettings2D(this IFMeshSurface lusasMeshSurface)
+        public static MeshSettings2D ToBHoMMeshSettings2D(this IFAttribute lusasAttribute)
         {
-            string attributeName = lusasMeshSurface.getName();
+            string attributeName = GetName(lusasAttribute);
             //object[] elementNames = lusasMeshSurface.getElementNames();
 
             //foreach (object name in elnames)
@@ -25,22 +25,22 @@ namespace BH.Engine.Lusas
             Split2D splitMethod = Split2D.Automatic;
 
 
-            if ((lusasMeshSurface.getValue("size") == 0) &&
-                (lusasMeshSurface.getValue("xDivisions") == 0 &&
-                lusasMeshSurface.getValue("yDivisions") == 0))
+            if ((lusasAttribute.getValue("size") == 0) &&
+                (lusasAttribute.getValue("xDivisions") == 0 &&
+                lusasAttribute.getValue("yDivisions") == 0))
             {
             }
-            else if (lusasMeshSurface.getValue("size") == 0)
+            else if (lusasAttribute.getValue("size") == 0)
             {
                 splitMethod = Split2D.Divisions;
-                xDivisions = lusasMeshSurface.getValue("xDivisions");
-                yDivisions = lusasMeshSurface.getValue("yDivisions");
+                xDivisions = lusasAttribute.getValue("xDivisions");
+                yDivisions = lusasAttribute.getValue("yDivisions");
 
             }
             else
             {
                 splitMethod = Split2D.Size;
-                size = lusasMeshSurface.getValue("size");
+                size = lusasAttribute.getValue("size");
             }
 
             MeshSettings2D bhomMeshSettings2D = new MeshSettings2D
@@ -52,7 +52,7 @@ namespace BH.Engine.Lusas
                 ElementSize = size
             };
 
-            int adapterID = GetAdapterID(lusasMeshSurface, 'e');
+            int adapterID = GetAdapterID(lusasAttribute, 'e');
             bhomMeshSettings2D.CustomData["Lusas_id"] = adapterID;
 
             return bhomMeshSettings2D;
