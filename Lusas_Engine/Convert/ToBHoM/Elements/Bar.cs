@@ -63,7 +63,7 @@ namespace BH.Engine.Lusas
             if (!(meshAssignments.Count()==0))
             {
                 bhomMeshes.TryGetValue(meshAssignments[0], out lineMesh);
-                bhomBar.CustomData["Mesh"] = lineMesh.Name;
+                bhomBar.CustomData["Mesh"] = "Me" + lineMesh.CustomData["Lusas_id"] + "/" + lineMesh.Name;
             }
 
             string adapterID = RemovePrefix(lusasLine.getName(), "L");
