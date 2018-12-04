@@ -3,6 +3,7 @@ using System.Linq;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Properties;
 using BH.oM.Common.Materials;
+using BH.oM.Adapters.Lusas;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -30,6 +31,11 @@ namespace BH.Adapter.Lusas
             Dictionary<string, ISectionProperty> geometrics = geometricList.ToDictionary(
                 x => x.Name.ToString());
 
+            List<MeshSettings1D> meshList = Read1DMeshSettings();
+            Dictionary<string, MeshSettings1D> meshes = meshList.ToDictionary(
+                x => x.Name.ToString());
+
+
             HashSet<string> groupNames = ReadTags();
 
             for (int i = 0; i < lusasLines.Count(); i++)
@@ -42,7 +48,8 @@ namespace BH.Adapter.Lusas
                     bhomSupports,
                     groupNames,
                     materials,
-                    geometrics
+                    geometrics,
+                    meshes
                     );
 
                 bhomBars.Add(bhomBar);
