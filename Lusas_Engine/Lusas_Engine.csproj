@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Convert\Private Helpers\getMeshProperties.cs" />
     <Compile Include="Convert\ToBHoM\Loads\AreaTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Bar.cs" />
     <Compile Include="Convert\ToBHoM\Loads\BarTemperatureLoad.cs" />
