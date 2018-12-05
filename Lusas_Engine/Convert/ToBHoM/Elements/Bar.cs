@@ -5,6 +5,7 @@ using BH.oM.Structure.Properties;
 using BH.oM.Common.Materials;
 using Lusas.LPI;
 using BH.oM.Adapters.Lusas;
+using System;
 
 namespace BH.Engine.Lusas
 {
@@ -64,6 +65,15 @@ namespace BH.Engine.Lusas
             {
                 bhomMeshes.TryGetValue(meshAssignments[0], out lineMesh);
                 bhomBar.CustomData["Mesh"] = lineMesh;
+            }
+
+            Tuple<bool,double, BarRelease, BarFEAType> barMeshProperties = GetMeshProperties(lusasLine);
+
+            if (barMeshProperties.Item1)
+            {
+                bhomBar.OrientationAngle = barMeshProperties.Item2;
+                bhomBar.Release = barMeshProperties.Item3;
+                bhomBar.FEAType = barMeshProperties.Item4;
             }
 
             string adapterID = RemovePrefix(lusasLine.getName(), "L");
