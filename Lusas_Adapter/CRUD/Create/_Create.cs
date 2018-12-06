@@ -169,13 +169,31 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<Bar> bars)
         {
-
+            List<Bar> barList = bars.ToList();
             CreateTags(bars);
 
-            foreach (Bar bar in bars)
+            var groupedBars = bars.GroupBy(m => new {m.Release, m.FEAType, MeshSettings1D = m.CustomData["Mesh"] });
+
+            List<Bar> distinctMeshBars = groupedBars.Select(m => m.First()).ToList();
+            List<IFMeshLine> lusasLineMesh = new List<IFMeshLine>();
+
+            foreach (Bar bar in distinctMeshBars)
             {
-                IFLine lusasLines = CreateLine(bar);
+                lusasLineMesh.Add(CreateMeshSettings1D((MeshSettings1D)bar.CustomData["Mesh"], bar.FEAType, bar.Release));
             }
+
+            int count = 0;
+
+            foreach (var group in groupedBars)
+            {
+                List<Bar> barGroup = group.ToList();
+                foreach (Bar bar in barGroup)
+                {
+                    IFLine lusasLines = CreateLine(bar, lusasLineMesh[count]);
+                }
+                count++;
+            }
+
             return true;
         }
 

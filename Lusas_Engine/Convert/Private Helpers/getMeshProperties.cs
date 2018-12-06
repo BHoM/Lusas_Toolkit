@@ -22,9 +22,9 @@ namespace BH.Engine.Lusas
 
             if (meshAssignments.Length > 0)
             {
-                foreach (object l in meshAssignments)
+                foreach (object assignment in meshAssignments)
                 {
-                    IFAssignment lusasAssignment = (IFAssignment)l;
+                    IFAssignment lusasAssignment = (IFAssignment) assignment;
                     IFAttribute lusasMesh = lusasAssignment.getAttribute();
                     IFMeshLine lusasLineMesh = (IFMeshLine)lusasMesh;
                     betaAngle = lusasAssignment.getBetaAngle();

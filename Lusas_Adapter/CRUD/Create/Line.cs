@@ -9,7 +9,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFLine CreateLine(Bar bar)
+        public IFLine CreateLine(Bar bar, IFMeshLine mesh)
         {
             IFPoint startPoint = d_LusasData.getPointByName(bar.StartNode.CustomData[AdapterId].ToString());
             IFPoint endPoint = d_LusasData.getPointByName(bar.EndNode.CustomData[AdapterId].ToString());
@@ -48,12 +48,13 @@ namespace BH.Adapter.Lusas
                 barLocalAxis.assignTo(lusasLine);
             }
 
+            IFAssignment betaAssignment = m_LusasApplication.newAssignment();
+
             if (bar.CustomData["Mesh"]!=null)
             {
-                MeshSettings1D associatedMesh = (MeshSettings1D) bar.CustomData["Mesh"];
-                string meshName = "Me" + associatedMesh.CustomData[AdapterId] + "/" + associatedMesh.Name;
-                IFAttribute lusasLineMesh = d_LusasData.getAttribute("Mesh", meshName);
-                lusasLineMesh.assignTo(lusasLine);
+                betaAssignment.setBetaAngle(bar.OrientationAngle);
+                mesh.assignTo(lusasLine, betaAssignment);
+                lusasLine.getAssignments();
             }
 
             return lusasLine;
