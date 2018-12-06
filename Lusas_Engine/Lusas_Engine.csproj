@@ -108,6 +108,7 @@
     <Compile Include="Create\LusasConfig.cs" />
     <Compile Include="Create\MeshSettings.cs" />
     <Compile Include="Object_Comparer\Equality Comparer\BarMidPointComparer.cs" />
+    <Compile Include="Object_Comparer\Equality Comparer\MeshComparer.cs" />
     <Compile Include="Object_Comparer\Equality Comparer\PointDistanceComparer.cs" />
     <Compile Include="Object_Comparer\Equality Comparer\EdgeMidPointComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

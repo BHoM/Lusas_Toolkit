@@ -59,11 +59,11 @@ namespace BH.Engine.Lusas
             }
 
             MeshSettings1D lineMesh = null;
-            List<string> meshAssignments = AttributeAssignments(lusasLine, "Mesh");
+            List<string> meshSettings = AttributeAssignments(lusasLine, "Mesh");
 
-            if (!(meshAssignments.Count()==0))
+            if (!(meshSettings.Count()==0))
             {
-                bhomMeshes.TryGetValue(meshAssignments[0], out lineMesh);
+                bhomMeshes.TryGetValue(meshSettings[0], out lineMesh);
                 bhomBar.CustomData["Mesh"] = lineMesh;
             }
 
