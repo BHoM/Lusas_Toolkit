@@ -207,31 +207,7 @@ namespace BH.Adapter.Lusas
                         }
                     }
                 }
-                //if (type == typeof(LoadCombination))
-                //{
-                //    object[] combinationObjects = d_LusasData.getLoadsets("Combinations");
-                //    if (combinationObjects.Count() == 0)
-                //    {
-                //        index = 1;
-                //    }
-                //    else
-                //    {
-                //        List<IFBasicCombination> loadCombinations = new List<IFBasicCombination>();
-                //        for (int i = 0; i < loadCombinations.Count(); i++)
-                //        {
-                //            IFBasicCombination loadCombination = (IFBasicCombination)combinationObjects[i];
-                //            loadCombinations.Add(loadCombination);
-                //        }
 
-                //        int largestLoadCombinationID = loadCombinations.Max(x => x.getID());
-
-                //        IFBasicCombination largestLoadCombination = 
-                //            (IFBasicCombination)d_LusasData.getLoadset("Combinations", largestLoadCombinationID);
-
-                //        index = Convert.ToInt32(
-                //            Engine.Lusas.Convert.GetAdapterID(largestLoadCombination, 'l')) + 1;
-                //    }
-                //}
                 if (type == typeof(MeshSettings1D) ||
                     type == typeof(MeshSettings2D))
                 {
