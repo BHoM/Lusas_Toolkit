@@ -60,7 +60,7 @@ namespace BH.Adapter.Lusas
             IFAssignment meshAssignment = m_LusasApplication.newAssignment();
             meshAssignment.setAllDefaults();
 
-            if (bar.CustomData["Mesh"]!=null)
+            if (bar.CustomData.ContainsKey("Mesh"))
             {
                 if(bar.OrientationAngle!=0 && bar.FEAType == BarFEAType.Axial)
                 {
