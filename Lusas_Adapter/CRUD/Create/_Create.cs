@@ -189,10 +189,18 @@ namespace BH.Adapter.Lusas
                 List<Bar> barGroup = group.ToList();
                 foreach (Bar bar in barGroup)
                 {
-                    IFLine lusasLines = CreateLine(bar, lusasLineMesh[count]);
+                    IFLine lusasLine = CreateLine(bar, lusasLineMesh[count]);
+
+                    if(lusasLine == null)
+                    {
+                        return false;
+                    }
+
                 }
                 count++;
             }
+            d_LusasData.resetMesh();
+            d_LusasData.updateMesh();
 
             return true;
         }

@@ -70,7 +70,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Convert\Private Helpers\getMeshProperties.cs" />
+    <Compile Include="Convert\Private Helpers\CheckPresets.cs" />
+    <Compile Include="Convert\Private Helpers\GetBarRelease.cs" />
+    <Compile Include="Convert\Private Helpers\GetConstraints.cs" />
+    <Compile Include="Convert\Private Helpers\GetFEAType.cs" />
+    <Compile Include="Convert\Private Helpers\GetMeshProperties.cs" />
+    <Compile Include="Convert\Private Helpers\SetConstraint.cs" />
     <Compile Include="Convert\ToBHoM\Loads\AreaTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Bar.cs" />
     <Compile Include="Convert\ToBHoM\Loads\BarTemperatureLoad.cs" />
@@ -113,7 +118,6 @@
     <Compile Include="Object_Comparer\Equality Comparer\EdgeMidPointComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

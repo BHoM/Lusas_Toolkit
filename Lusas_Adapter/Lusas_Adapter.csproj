@@ -114,11 +114,15 @@
     <Compile Include="CRUD\Delete\Delete.cs" />
     <Compile Include="Adapter\NextId.cs" />
     <Compile Include="CRUD\Private Helpers\AssignObjectSet.cs" />
+    <Compile Include="CRUD\Private Helpers\CreateReleaseString.cs" />
     <Compile Include="CRUD\Private Helpers\CreateTags.cs" />
     <Compile Include="CRUD\Private Helpers\GetAssignedObjects.cs" />
     <Compile Include="CRUD\Private Helpers\GetDistinct.cs" />
     <Compile Include="CRUD\Private Helpers\GetLoadAssignments.cs" />
     <Compile Include="CRUD\Private Helpers\NameSearch.cs" />
+    <Compile Include="CRUD\Private Helpers\SetElementType.cs" />
+    <Compile Include="CRUD\Private Helpers\SetEndConditions.cs" />
+    <Compile Include="CRUD\Private Helpers\SetSplitMethod.cs" />
     <Compile Include="CRUD\Read\Properties\1DMeshSettings.cs" />
     <Compile Include="CRUD\Read\Properties\2DMeshSettings.cs" />
     <Compile Include="CRUD\Read\Properties\2DProperties.cs" />

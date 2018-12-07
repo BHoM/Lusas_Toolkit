@@ -9,15 +9,6 @@ namespace BH.Engine.Lusas
         public static MeshSettings1D ToBHoMMeshSettings1D(this IFAttribute lusasAttrbute)
         {
             string attributeName = GetName(lusasAttrbute);
-            //object[] elnames = lusasMeshLine.getElementNames();
-            //ElementType1D elementType1D = ElementType1D.Bar;
-            //foreach (object name in elnames)
-            //{
-            //    if (name.ToString() == "BRS2")
-            //        continue;
-            //    else
-            //        elementType1D = ElementType1D.Beam;
-            //}
 
             IFMeshLine lusasMeshLine = (IFMeshLine)lusasAttrbute;
 
@@ -43,28 +34,6 @@ namespace BH.Engine.Lusas
                 splitMethod = Split1D.Length;
                 value = lusasMeshLine.getValue("size");
             }
-
-            //object[] startReleases = lusasMeshLine.getValue("start");
-            //object[] endReleases = lusasMeshLine.getValue("end");
-
-            //List<int> bhomStartReleases = new List<int>();
-            //List<int> bhomEndReleases = new List<int>();
-
-            //for (int i = 1; i<7; i++)
-            //{
-            //    bool sr = (bool)startReleases[i];
-            //    bool er = (bool)endReleases[i];
-
-            //    if (sr)
-            //        bhomStartReleases.Add(1);
-            //    else
-            //        bhomStartReleases.Add(0);
-
-            //    if (er)
-            //        bhomEndReleases.Add(1);
-            //    else
-            //        bhomEndReleases.Add(0);
-            //}
 
             MeshSettings1D bhomMeshSettings1D = new MeshSettings1D
             {

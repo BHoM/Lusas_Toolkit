@@ -4,13 +4,22 @@ using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 using BH.Engine.Geometry;
 using Lusas.LPI;
-using BH.oM.Adapters.Lusas;
+
 namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
         public IFLine CreateLine(Bar bar, IFMeshLine mesh)
         {
+            if(
+                bar.FEAType == BarFEAType.CompressionOnly ||
+                bar.FEAType == BarFEAType.TensionOnly)
+            {
+                Engine.Reflection.Compute.RecordError(
+                    "Lusas does not support " + bar.FEAType.ToString() + " bars");
+                return null;
+            }
+
             IFPoint startPoint = d_LusasData.getPointByName(bar.StartNode.CustomData[AdapterId].ToString());
             IFPoint endPoint = d_LusasData.getPointByName(bar.EndNode.CustomData[AdapterId].ToString());
             IFLine lusasLine = d_LusasData.createLineByPoints(startPoint, endPoint);
@@ -48,13 +57,19 @@ namespace BH.Adapter.Lusas
                 barLocalAxis.assignTo(lusasLine);
             }
 
-            IFAssignment betaAssignment = m_LusasApplication.newAssignment();
+            IFAssignment meshAssignment = m_LusasApplication.newAssignment();
+            meshAssignment.setAllDefaults();
 
             if (bar.CustomData["Mesh"]!=null)
             {
-                betaAssignment.setBetaAngle(bar.OrientationAngle);
-                mesh.assignTo(lusasLine, betaAssignment);
-                lusasLine.getAssignments();
+                if(bar.OrientationAngle!=0 && bar.FEAType == BarFEAType.Axial)
+                {
+                    Engine.Reflection.Compute.RecordWarning(
+                        "Orientation angle not supported in Lusas for " + bar.FEAType + 
+                        " element types, this information will be lost when pushed to Lusas");
+                }
+                meshAssignment.setBetaAngle(bar.OrientationAngle);
+                mesh.assignTo(lusasLine, meshAssignment);
             }
 
             return lusasLine;
@@ -76,6 +91,15 @@ namespace BH.Adapter.Lusas
 
         public IFLine CreateLine(Bar bar, IFPoint startPoint, IFPoint endPoint)
         {
+            if (
+                bar.FEAType == BarFEAType.CompressionOnly ||
+                bar.FEAType == BarFEAType.TensionOnly)
+            {
+                Engine.Reflection.Compute.RecordError(
+                    "Lusas does not support " + bar.FEAType.ToString() + " bars");
+                return null;
+            }
+
             IFLine lusasLine = null;
 
             int adapterID;
