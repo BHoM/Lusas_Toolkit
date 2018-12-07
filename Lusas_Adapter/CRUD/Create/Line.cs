@@ -11,7 +11,7 @@ namespace BH.Adapter.Lusas
     {
         public IFLine CreateLine(Bar bar, IFMeshLine mesh)
         {
-            if(
+            if (
                 bar.FEAType == BarFEAType.CompressionOnly ||
                 bar.FEAType == BarFEAType.TensionOnly)
             {
@@ -60,12 +60,12 @@ namespace BH.Adapter.Lusas
             IFAssignment meshAssignment = m_LusasApplication.newAssignment();
             meshAssignment.setAllDefaults();
 
-            if (bar.CustomData["Mesh"]!=null)
+            if (bar.CustomData.ContainsKey("Mesh"))
             {
-                if(bar.OrientationAngle!=0 && bar.FEAType == BarFEAType.Axial)
+                if (bar.OrientationAngle != 0 && bar.FEAType == BarFEAType.Axial)
                 {
                     Engine.Reflection.Compute.RecordWarning(
-                        "Orientation angle not supported in Lusas for " + bar.FEAType + 
+                        "Orientation angle not supported in Lusas for " + bar.FEAType +
                         " element types, this information will be lost when pushed to Lusas");
                 }
                 meshAssignment.setBetaAngle(bar.OrientationAngle);
@@ -104,9 +104,9 @@ namespace BH.Adapter.Lusas
 
             int adapterID;
             if (bar.CustomData.ContainsKey(AdapterId))
-               adapterID= System.Convert.ToInt32(bar.CustomData[AdapterId]);
+                adapterID = System.Convert.ToInt32(bar.CustomData[AdapterId]);
             else
-               adapterID= System.Convert.ToInt32(NextId(bar.GetType()));
+                adapterID = System.Convert.ToInt32(NextId(bar.GetType()));
 
             bar.CustomData[AdapterId] = adapterID;
 

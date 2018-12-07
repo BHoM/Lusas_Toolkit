@@ -172,37 +172,57 @@ namespace BH.Adapter.Lusas
             List<Bar> barList = bars.ToList();
             CreateTags(bars);
 
-            var groupedBars = bars.GroupBy(m => new {m.Release, m.FEAType, MeshSettings1D = m.CustomData["Mesh"] });
-
-            List<Bar> distinctMeshBars = groupedBars.Select(m => m.First()).ToList();
-            List<IFMeshLine> lusasLineMesh = new List<IFMeshLine>();
-
-            foreach (Bar bar in distinctMeshBars)
+            if (bars.Any(x => x.CustomData.ContainsKey("Mesh")))
             {
-                lusasLineMesh.Add(CreateMeshSettings1D((MeshSettings1D)bar.CustomData["Mesh"], bar.FEAType, bar.Release));
-            }
+                var groupedBars = bars.GroupBy(m => new { m.Release, m.FEAType, MeshSettings1D = m.CustomData["Mesh"] });
 
-            int count = 0;
 
-            foreach (var group in groupedBars)
-            {
-                List<Bar> barGroup = group.ToList();
-                foreach (Bar bar in barGroup)
+                List<Bar> distinctMeshBars = groupedBars.Select(m => m.First()).ToList();
+                List<IFMeshLine> lusasLineMesh = new List<IFMeshLine>();
+
+                foreach (Bar bar in distinctMeshBars)
                 {
-                    IFLine lusasLine = CreateLine(bar, lusasLineMesh[count]);
+                    if (bar.CustomData["Mesh"] != null)
+                    {
+                        lusasLineMesh.Add(CreateMeshSettings1D((MeshSettings1D)bar.CustomData["Mesh"], bar.FEAType, bar.Release));
+                    }
+                }
 
-                    if(lusasLine == null)
+                int count = 0;
+
+                foreach (var group in groupedBars)
+                {
+                    List<Bar> barGroup = group.ToList();
+                    foreach (Bar bar in barGroup)
+                    {
+                        IFLine lusasLine = CreateLine(bar, lusasLineMesh[count]);
+
+                        if (lusasLine == null)
+                        {
+                            return false;
+                        }
+
+                    }
+                    count++;
+                }
+                d_LusasData.resetMesh();
+                d_LusasData.updateMesh();
+
+                return true;
+            }
+            else
+            {
+                foreach (Bar bar in bars)
+                {
+                    IFLine lusasLine = CreateLine(bar, null);
+
+                    if (lusasLine == null)
                     {
                         return false;
                     }
-
                 }
-                count++;
+                return true;
             }
-            d_LusasData.resetMesh();
-            d_LusasData.updateMesh();
-
-            return true;
         }
 
         /***************************************************/
