@@ -49,7 +49,7 @@ namespace BH.Adapter.Lusas
                 releaseString = releaseString + "MZ";
 
             IFMeshLine lusasLineMesh = null;
-            string lusasName = "Me" + adapterID + "/" + meshSettings1D.Name + "/" + barType.ToString() + "/" + releaseString;
+            string lusasName = "Me" + adapterID + "/" + meshSettings1D.Name + "\\" + barType.ToString() + "|" + releaseString;
             if (d_LusasData.existsAttribute("Mesh", lusasName))
             {
                 lusasLineMesh = (IFMeshLine)d_LusasData.getAttribute("Mesh", lusasName);

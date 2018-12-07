@@ -1,4 +1,5 @@
 ﻿using Lusas.LPI;
+
 namespace BH.Engine.Lusas
 {
     public partial class Convert
@@ -9,8 +10,15 @@ namespace BH.Engine.Lusas
 
             if (lusasAttribute.getName().Contains("/"))
             {
-                attributeName = lusasAttribute.getName().Substring(
-                    lusasAttribute.getName().LastIndexOf("/") + 1);
+                if(lusasAttribute.getName().Contains("\\"))
+                {
+                    attributeName = lusasAttribute.getName().Split('/', '\\')[0];
+                }
+                else
+                {
+                    attributeName = lusasAttribute.getName().Substring(
+                        lusasAttribute.getName().LastIndexOf("/") + 1);
+                }
             }
             else
             {
