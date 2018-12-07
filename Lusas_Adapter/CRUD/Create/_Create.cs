@@ -171,7 +171,7 @@ namespace BH.Adapter.Lusas
         {
             List<Bar> barList = bars.ToList();
             CreateTags(bars);
-
+          
             if (bars.Any(x => x.CustomData.ContainsKey("Mesh")))
             {
                 var groupedBars = bars.GroupBy(m => new { m.Release, m.FEAType, MeshSettings1D = m.CustomData["Mesh"] });
