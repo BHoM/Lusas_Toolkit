@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Lusas.LPI;
-using BH.oM.Structure.Properties;
+using BH.oM.Structure.Properties.Constraint;
 
 namespace BH.Engine.Lusas
 {

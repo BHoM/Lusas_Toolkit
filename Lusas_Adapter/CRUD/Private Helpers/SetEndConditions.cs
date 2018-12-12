@@ -1,4 +1,4 @@
-﻿using BH.oM.Structure.Properties;
+﻿using BH.oM.Structure.Properties.Constraint;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas

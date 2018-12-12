@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using BH.oM.Base;
-using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties;
-using BH.oM.Structure.Loads;
+using BH.oM.Structure.Properties.Constraint;
+using BH.oM.Structure.Properties.Surface;
 using BH.oM.Common.Materials;
 using Lusas.LPI;
-using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
 {
@@ -29,8 +24,8 @@ namespace BH.Adapter.Lusas
             Dictionary<string, Material> materials = materialList.ToDictionary(
                 x => x.Name.ToString());
 
-            IEnumerable<IProperty2D> geometricList = Read2DProperties();
-            Dictionary<string, IProperty2D> geometrics = geometricList.ToDictionary(
+            IEnumerable<ISurfaceProperty> geometricList = Read2DProperties();
+            Dictionary<string, ISurfaceProperty> geometrics = geometricList.ToDictionary(
                 x => x.Name.ToString());
 
             IEnumerable<Constraint4DOF> bhomSupportList = Read4DOFConstraints();

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties;
+using BH.oM.Structure.Properties.Surface;
+using BH.oM.Structure.Properties.Constraint;
 using BH.oM.Geometry;
 using BH.oM.Common.Materials;
 using Lusas.LPI;
@@ -14,7 +14,7 @@ namespace BH.Engine.Lusas
         public static PanelPlanar ToBHoMPanelPlanar(this IFSurface lusasSurface,
             Dictionary<string, Edge> bhomEdges,
             HashSet<string> groupNames,
-            Dictionary<string, IProperty2D> bhom2DProperties,
+            Dictionary<string, ISurfaceProperty> bhom2DProperties,
             Dictionary<string, Material> bhomMaterials,
             Dictionary<string, Constraint4DOF> bhomSupports)
 
@@ -42,7 +42,7 @@ namespace BH.Engine.Lusas
             List<string> materialAssignments = AttributeAssignments(lusasSurface, "Material");
 
             Material panelMaterial = null;
-            IProperty2D bhomProperty2D = null;
+            ISurfaceProperty bhomProperty2D = null;
 
             if (!(geometricAssignments.Count() == 0))
             {
