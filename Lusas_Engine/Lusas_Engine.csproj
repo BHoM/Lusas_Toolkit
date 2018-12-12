@@ -40,9 +40,15 @@
     <Reference Include="BHoM_Engine">
       <HintPath>..\..\BHoM_Engine\BHoM_Engine\obj\Debug\BHoM_Engine.dll</HintPath>
     </Reference>
+    <Reference Include="Common_oM">
+      <HintPath>..\..\BHoM\Build\Common_oM.dll</HintPath>
+    </Reference>
     <Reference Include="Geometry_Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BHoM_Engine\Geometry_Engine\obj\Debug\Geometry_Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="Geometry_oM">
+      <HintPath>..\..\BHoM\Build\Geometry_oM.dll</HintPath>
     </Reference>
     <Reference Include="Lusas.Interop, Version=15.2.1601.22607, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -56,9 +62,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BHoM_Engine\Build\Reflection_Engine.dll</HintPath>
     </Reference>
+    <Reference Include="Reflection_oM">
+      <HintPath>..\..\BHoM\Build\Reflection_oM.dll</HintPath>
+    </Reference>
     <Reference Include="Structure_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Structure_Engine.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Structure_oM">
+      <HintPath>..\..\BHoM\Build\Structure_oM.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
