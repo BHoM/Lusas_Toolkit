@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System;
-using BH.oM.Base;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
-using BH.oM.Structure.Properties;
+using BH.oM.Structure.Properties.Constraint;
+using BH.oM.Structure.Properties.Section;
+using BH.oM.Structure.Properties.Surface;
 using BH.oM.Structure.Loads;
 using BH.oM.Common.Materials;
 using BH.Engine.Geometry;
@@ -104,9 +104,9 @@ namespace BH.Adapter.Lusas
                             break;
                     }
                 }
-                if (typeof(IProperty2D).IsAssignableFrom(objects.First().GetType()))
+                if (typeof(ISurfaceProperty).IsAssignableFrom(objects.First().GetType()))
                 {
-                    success = CreateCollection(objects as IEnumerable<IProperty2D>);
+                    success = CreateCollection(objects as IEnumerable<ISurfaceProperty>);
                 }
                 if (typeof(ISectionProperty).IsAssignableFrom(objects.First().GetType()))
                 {
@@ -344,9 +344,9 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private bool CreateCollection(IEnumerable<IProperty2D> properties2D)
+        private bool CreateCollection(IEnumerable<ISurfaceProperty> properties2D)
         {
-            foreach (IProperty2D property2D in properties2D)
+            foreach (ISurfaceProperty property2D in properties2D)
             {
                 IFAttribute lusasGeometricSurface = CreateGeometricSurface(property2D);
 

@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using BH.oM.Base;
 using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties;
+using BH.oM.Structure.Properties.Constraint;
+using BH.oM.Structure.Properties.Surface;
+using BH.oM.Structure.Properties.Section;
 using BH.oM.Structure.Loads;
 using BH.oM.Common.Materials;
 using BH.oM.Adapters.Lusas;
@@ -35,7 +37,7 @@ namespace BH.Adapter.Lusas
                 return ReadLoadcases(ids as dynamic);
             else if (typeof(ILoad).IsAssignableFrom(type))
                 return ChooseLoad(type, ids as dynamic);
-            else if (typeof(IProperty2D).IsAssignableFrom(type))
+            else if (typeof(ISurfaceProperty).IsAssignableFrom(type))
                 return Read2DProperties(ids as dynamic);
             else if (typeof(ISectionProperty).IsAssignableFrom(type))
                 return ReadSectionProperties(ids as dynamic);

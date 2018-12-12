@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System;
-using BH.oM.Structure.Properties;
+using BH.oM.Structure.Properties.Constraint;
 using BH.Engine.Structure;
 using Lusas.LPI;
 

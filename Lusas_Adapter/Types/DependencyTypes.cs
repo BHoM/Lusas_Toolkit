@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties;
+using BH.oM.Structure.Properties.Constraint;
+using BH.oM.Structure.Properties.Section;
+using BH.oM.Structure.Properties.Surface;
 using BH.oM.Structure.Loads;
 using BH.oM.Common.Materials;
 
@@ -43,13 +45,13 @@ namespace BH.Adapter.Lusas
 
         private static Dictionary<Type, List<Type>> m_DependencyTypes = new Dictionary<Type, List<Type>>
         {
-            {typeof(PanelPlanar), new List<Type> { typeof(IProperty2D), typeof(Edge)} },
+            {typeof(PanelPlanar), new List<Type> { typeof(ISurfaceProperty), typeof(Edge)} },
             {typeof(Bar), new List<Type> { typeof(Node) , typeof(ISectionProperty), typeof(Constraint4DOF) } },
             {typeof(Node), new List<Type> { typeof(Constraint6DOF) } },
             {typeof(ISectionProperty), new List<Type> { typeof(Material) } },
             {typeof(RigidLink), new List<Type> { typeof(LinkConstraint), typeof(Node) } },
-            {typeof(MeshFace), new List<Type> { typeof(IProperty2D), typeof(Node) } },
-            {typeof(IProperty2D), new List<Type> { typeof(Material) } },
+            {typeof(MeshFace), new List<Type> { typeof(ISurfaceProperty), typeof(Node) } },
+            {typeof(ISurfaceProperty), new List<Type> { typeof(Material) } },
             {typeof(LoadCombination), new List<Type> { typeof(Loadcase) } },
             {typeof(ILoad), new List<Type> {typeof(Loadcase) } },
         };

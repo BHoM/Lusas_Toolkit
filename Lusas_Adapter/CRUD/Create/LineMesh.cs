@@ -1,7 +1,7 @@
 ﻿using Lusas.LPI;
 using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties;
+using BH.oM.Structure.Properties.Constraint;
 using BH.Engine.Reflection;
 
 namespace BH.Adapter.Lusas

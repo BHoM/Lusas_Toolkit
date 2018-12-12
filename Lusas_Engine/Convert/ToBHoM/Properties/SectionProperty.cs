@@ -1,5 +1,6 @@
 ﻿using System;
-using BH.oM.Structure.Properties;
+using BH.oM.Structure.Properties.Section;
+using BH.oM.Structure.Properties.Section.ShapeProfiles;
 using Lusas.LPI;
 
 namespace BH.Engine.Lusas

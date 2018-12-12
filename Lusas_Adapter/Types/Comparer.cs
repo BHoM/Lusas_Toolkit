@@ -1,7 +1,9 @@
 ﻿using BH.Engine.Base.Objects;
 using BH.oM.Common.Materials;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties;
+using BH.oM.Structure.Properties.Constraint;
+using BH.oM.Structure.Properties.Surface;
+using BH.oM.Structure.Properties.Section;
 using System;
 using BH.oM.Geometry;
 using BH.oM.Structure.Loads;
@@ -48,7 +50,7 @@ namespace BH.Adapter.Lusas
             { typeof(Point), new Engine.Lusas.Object_Comparer.Equality_Comparer.PointDistanceComparer(3) },
             {typeof(Material), new BHoMObjectNameComparer() },
             {typeof(LinkConstraint), new BHoMObjectNameComparer() },
-            {typeof(IProperty2D), new BHoMObjectNameComparer() },
+            {typeof(ISurfaceProperty), new BHoMObjectNameComparer() },
             {typeof(ISectionProperty), new BHoMObjectNameComparer() },
             {typeof(ILoad), new BHoMObjectNameComparer() },
             {typeof(Loadcase), new BHoMObjectNameComparer()},

@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using BH.oM.Structure.Properties;
+﻿using System.Collections.Generic;
+using BH.oM.Structure.Properties.Constraint;
 using Lusas.LPI;
 
 namespace BH.Engine.Lusas

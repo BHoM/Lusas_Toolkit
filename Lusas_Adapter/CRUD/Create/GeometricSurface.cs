@@ -1,11 +1,11 @@
-﻿using BH.oM.Structure.Properties;
+﻿using BH.oM.Structure.Properties.Surface;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFAttribute CreateGeometricSurface(IProperty2D property2D)
+        public IFAttribute CreateGeometricSurface(ISurfaceProperty property2D)
         {
             IFAttribute lusasAttribute = null;
             string lusasName = "G" + property2D.CustomData[AdapterId] + "/" + property2D.Name;
