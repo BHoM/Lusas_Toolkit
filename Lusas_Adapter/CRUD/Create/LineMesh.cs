@@ -2,19 +2,25 @@
 using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Properties.Constraint;
+using BH.Engine.Structure;
 using BH.Engine.Reflection;
 
 namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFMeshLine CreateMeshSettings1D(MeshSettings1D meshSettings1D, BarFEAType barFEAType = BarFEAType.Flexural, BarRelease barReleases = null)
+        public IFMeshLine CreateMeshSettings1D(MeshSettings1D meshSettings1D, BarFEAType barFEAType = BarFEAType.Flexural, BarRelease barRelease = null)
         {
-            if(barReleases!= null && barFEAType == BarFEAType.Axial)
+            if (barRelease != null && barFEAType == BarFEAType.Axial)
             {
-                Compute.RecordWarning(
+                Engine.Reflection.Compute.RecordWarning(
                     "Axial element used with barReleases, this information will be lost when pushed to Lusas");
             }
+            else if(barRelease == null)
+            {
+                barRelease = Engine.Structure.Create.BarReleaseFixFix();
+            }
+
 
             int adapterID;
             if (meshSettings1D.CustomData.ContainsKey(AdapterId))
@@ -22,7 +28,7 @@ namespace BH.Adapter.Lusas
             else
                 adapterID = System.Convert.ToInt32(NextId(meshSettings1D.GetType()));
 
-            string releaseString = CreateReleaseString(barReleases);
+            string releaseString = CreateReleaseString(barRelease);
 
             IFMeshLine lusasLineMesh = null;
             string lusasName = 
@@ -36,7 +42,7 @@ namespace BH.Adapter.Lusas
             {
                 lusasLineMesh = d_LusasData.createMeshLine(lusasName);
                 SetSplitMethod(lusasLineMesh, meshSettings1D, barFEAType);
-                SetEndConditions(lusasLineMesh, barReleases);
+                SetEndConditions(lusasLineMesh, barRelease);
             }
             return lusasLineMesh;
         }
