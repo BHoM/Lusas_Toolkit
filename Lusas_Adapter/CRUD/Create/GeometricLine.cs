@@ -87,9 +87,10 @@ namespace BH.Adapter.Lusas
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
             Engine.Reflection.Compute.RecordWarning(
-                "Unequal flange thickness not supported in Lusas for FabricatedBoxProfile, top flange thickness used as flange thickness");
+                "Unequal flange thickness not supported in Lusas for " + bhomProfile.GetType().ToString() 
+                + ", top flange thickness used as flange thickness");
             Engine.Reflection.Compute.RecordWarning(
-                "Weld size assumed to be inner radius for FabricatedBoxProfile");
+                "Weld size assumed to be inner radius for " + bhomProfile.GetType().ToString());
 
             List<double> dimensionList = new List<double> {
                 bhomProfile.Width, bhomProfile.Height, bhomProfile.TopFlangeThickness,
@@ -192,7 +193,8 @@ namespace BH.Adapter.Lusas
             int lusasType = 14;
             CreateLibrarySection(lusasGeometricLine, dimensionArray, valueArray, lusasType);
 
-            Engine.Reflection.Compute.RecordWarning("Weld size assumed to be root radius for FabricatedISection");
+            Engine.Reflection.Compute.RecordWarning("Weld size assumed to be root radius for " +
+                bhomProfile.GetType().ToString());
 
             return lusasGeometricLine;
         }
