@@ -2,8 +2,6 @@
 using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Properties.Constraint;
-using BH.Engine.Structure;
-using BH.Engine.Reflection;
 
 namespace BH.Adapter.Lusas
 {
@@ -14,7 +12,7 @@ namespace BH.Adapter.Lusas
             if (barRelease != null && barFEAType == BarFEAType.Axial)
             {
                 Engine.Reflection.Compute.RecordWarning(
-                    "Axial element used with barReleases, this information will be lost when pushed to Lusas");
+                    barFEAType + " used with barReleases, this information will be lost when pushed to Lusas");
             }
             else if(barRelease == null)
             {

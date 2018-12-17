@@ -32,7 +32,7 @@ namespace BH.Adapter.Lusas
             else
             {
                 Engine.Reflection.Compute.RecordWarning(
-                    "BarVAryingDistributedLoad uses parametric distances in the Lusas_Toolkit"
+                    bhomBarDistributedLoad.GetType().ToString() + " uses parametric distances in the Lusas_Toolkit"
                     );
 
                 List<double> valuesAtA = new List<double> {

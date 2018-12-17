@@ -38,7 +38,7 @@ namespace BH.Engine.Lusas
                 type.ToString() == "LMS4")
             {
                 Compute.RecordWarning(
-                    type.ToString() + "not supported, FEAType defaulted to Flexural");
+                    type.ToString() + " not supported, FEAType defaulted to Flexural");
             }
 
             return barFEAType;
