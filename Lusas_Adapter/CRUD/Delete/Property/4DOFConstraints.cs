@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
@@ -19,22 +17,7 @@ namespace BH.Adapter.Lusas
             else
             {
                 object[] lusasSupports = d_LusasData.getAttributes("Support");
-
-                for (int i = 0; i < lusasSupports.Count(); i++)
-                {
-                    IFSupportStructural lusasSupport = (IFSupportStructural)lusasSupports[i];
-                    object[] lusasAssignments = lusasSupport.getAssignments();
-                    for(int j=0; j < lusasAssignments.Count(); j++)
-                    {
-                        IFAssignment lusasAssignment = (IFAssignment)lusasAssignments[j];
-                        IFGeometry lusasGeometry = (IFGeometry)lusasAssignment.getDatabaseObject();
-                        if(lusasGeometry is IFLine)
-                        {
-                            d_LusasData.Delete(lusasSupport);
-                            Engine.Reflection.Compute.RecordWarning(lusasSupport.getName() + " has been deleted because it was assigned to a line");
-                        }
-                    }
-                }
+                DeleteLineAssignments(lusasSupports);
             }
             return success;
         }

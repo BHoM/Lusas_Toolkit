@@ -5,6 +5,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Properties.Section;
 using BH.oM.Structure.Properties.Surface;
 using BH.oM.Structure.Properties.Constraint;
+using BH.oM.Structure.Loads;
 using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
@@ -32,6 +33,8 @@ namespace BH.Adapter.Lusas
             if (type == typeof(Constraint6DOF))
                 success = DeleteMeshSettings1D(ids);
             if (type == typeof(Material))
+                success = DeleteMeshSettings1D(ids);
+            if (type == typeof(AreaTemperatureLoad))
                 success = DeleteMeshSettings1D(ids);
 
             return 0;

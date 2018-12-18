@@ -137,8 +137,11 @@
     <Compile Include="Adapter\NextId.cs" />
     <Compile Include="CRUD\Delete\Elements\Surface.cs" />
     <Compile Include="CRUD\Private Helpers\AssignObjectSet.cs" />
+    <Compile Include="CRUD\Private Helpers\DeleteLineAssignment.cs" />
+    <Compile Include="CRUD\Private Helpers\DeletePointAssignment.cs" />
     <Compile Include="CRUD\Private Helpers\CreateReleaseString.cs" />
     <Compile Include="CRUD\Private Helpers\CreateTags.cs" />
+    <Compile Include="CRUD\Private Helpers\DeleteSurfaceAssignment.cs" />
     <Compile Include="CRUD\Private Helpers\GetAssignedObjects.cs" />
     <Compile Include="CRUD\Private Helpers\GetDistinct.cs" />
     <Compile Include="CRUD\Private Helpers\GetLoadAssignments.cs" />
