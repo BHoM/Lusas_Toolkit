@@ -109,7 +109,7 @@
     <Compile Include="Convert\ToBHoM\Properties\Constraint4DOF.cs" />
     <Compile Include="Convert\ToBHoM\Loads\LoadCombination.cs" />
     <Compile Include="Convert\ToBHoM\Loads\PointForce.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\Propety2D.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\SurfaceProperty.cs" />
     <Compile Include="Convert\ToBHoM\Properties\Constraint6DOF.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Edge.cs" />
     <Compile Include="Convert\ToBHoM\Loads\Loadcase.cs" />

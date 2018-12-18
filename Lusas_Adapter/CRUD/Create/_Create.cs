@@ -337,6 +337,11 @@ namespace BH.Adapter.Lusas
             foreach (Material material in materials)
             {
                 IFAttribute lusasMaterial = CreateMaterial(material);
+
+                if (lusasMaterial == null)
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -366,6 +371,11 @@ namespace BH.Adapter.Lusas
             foreach (Loadcase loadcase in loadcases)
             {
                 IFLoadcase lusasLoadcase = CreateLoadcase(loadcase);
+
+                if (lusasLoadcase == null)
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -380,6 +390,11 @@ namespace BH.Adapter.Lusas
             {
                 IFPoint[] assignedPoints = GetAssignedPoints(pointForce);
                 IFLoadingConcentrated lusasPointForce = CreateConcentratedLoad(pointForce, assignedPoints);
+
+                if (lusasPointForce == null)
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -393,6 +408,11 @@ namespace BH.Adapter.Lusas
             {
                 IFGeometry[] assignedGeometry = GetAssignedObjects(gravityLoad);
                 IFLoadingBody lusasGravityLoad = CreateGravityLoad(gravityLoad, assignedGeometry);
+
+                if (lusasGravityLoad == null)
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -410,11 +430,21 @@ namespace BH.Adapter.Lusas
                 {
                     IFLoadingGlobalDistributed lusasGlobalDistributed =
                         CreateGlobalDistributedLine(barUniformlyDistributedLoad, assignedLines);
+
+                    if (lusasGlobalDistributed == null)
+                    {
+                        return false;
+                    }
                 }
                 else if (barUniformlyDistributedLoad.Axis == LoadAxis.Local)
                 {
                     IFLoadingLocalDistributed lusasLocalDistributed =
                         CreateLocalDistributedLine(barUniformlyDistributedLoad, assignedLines);
+
+                    if (lusasLocalDistributed == null)
+                    {
+                        return false;
+                    }
                 }
             }
 
@@ -432,11 +462,21 @@ namespace BH.Adapter.Lusas
                 {
                     IFLoadingGlobalDistributed lusasGlobalDistributed =
                         CreateGlobalDistributedLoad(areaUniformlyDistributedLoad, assignedSurfaces);
+
+                    if (lusasGlobalDistributed == null)
+                    {
+                        return false;
+                    }
                 }
                 else if (areaUniformlyDistributedLoad.Axis == LoadAxis.Local)
                 {
                     IFLoadingLocalDistributed lusasLocalDistributed =
                         CreateLocalDistributedSurface(areaUniformlyDistributedLoad, assignedSurfaces);
+
+                    if (lusasLocalDistributed == null)
+                    {
+                        return false;
+                    }
                 }
             }
 
@@ -452,6 +492,11 @@ namespace BH.Adapter.Lusas
                 IFLine[] arrayLines = GetAssignedLines(barTemperatureLoad);
                 IFLoadingTemperature lusasBarTemperatureLoad =
                     CreateBarTemperatureLoad(barTemperatureLoad, arrayLines);
+
+                if (lusasBarTemperatureLoad == null)
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -466,6 +511,11 @@ namespace BH.Adapter.Lusas
                 IFSurface[] assignedLines = GetAssignedSurfaces(areaTemperatureLoad);
                 IFLoadingTemperature lusasAreaTemperatureLoad =
                     CreateAreaTemperatureLoad(areaTemperatureLoad, assignedLines);
+
+                if (lusasAreaTemperatureLoad == null)
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -480,6 +530,11 @@ namespace BH.Adapter.Lusas
                 IFPoint[] assignedPoints = GetAssignedPoints(pointDisplacement);
                 IFPrescribedDisplacementLoad lusasPrescribedDisplacement =
                     CreatePrescribedDisplacement(pointDisplacement, assignedPoints);
+
+                if (lusasPrescribedDisplacement == null)
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -495,6 +550,11 @@ namespace BH.Adapter.Lusas
                 IFLine[] assignedLines = GetAssignedLines(barPointLoad);
                 IFLoadingBeamPoint lusasGlobalDistributed =
                     CreateBarPointLoad(barPointLoad, assignedLines);
+
+                if (lusasGlobalDistributed == null)
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -510,6 +570,11 @@ namespace BH.Adapter.Lusas
                 IFLine[] assignedBars = GetAssignedLines(barDistributedLoad);
                 List<IFLoadingBeamDistributed> lusasGlobalDistributed =
                     CreateBarDistributedLoad(barDistributedLoad, assignedBars);
+
+                if (lusasGlobalDistributed == null)
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -522,6 +587,11 @@ namespace BH.Adapter.Lusas
             foreach (Constraint6DOF constraint in constraints)
             {
                 IFAttribute lusasSupport = CreateSupport(constraint);
+
+                if (lusasSupport == null)
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -532,6 +602,11 @@ namespace BH.Adapter.Lusas
             foreach (Constraint4DOF constraint in constraints)
             {
                 IFAttribute lusasSupport = CreateSupport(constraint);
+
+                if (lusasSupport == null)
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -542,6 +617,11 @@ namespace BH.Adapter.Lusas
             foreach (LoadCombination loadcombination in loadcombinations)
             {
                 IFBasicCombination lusasLoadCombination = CreateLoadCombination(loadcombination);
+
+                if (lusasLoadCombination == null)
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -555,6 +635,11 @@ namespace BH.Adapter.Lusas
             foreach (MeshSettings1D meshSettings1D in meshSettings1Ds)
             {
                 IFMeshLine lusasLineMesh = CreateMeshSettings1D(meshSettings1D);
+
+                if (lusasLineMesh == null)
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -568,6 +653,11 @@ namespace BH.Adapter.Lusas
             foreach (MeshSettings2D meshSettings2D in meshSettings2Ds)
             {
                 IFMeshSurface lusasSurfaceMesh = CreateMeshSettings2D(meshSettings2D);
+
+                if (lusasSurfaceMesh == null)
+                {
+                    return false;
+                }
             }
 
             return true;

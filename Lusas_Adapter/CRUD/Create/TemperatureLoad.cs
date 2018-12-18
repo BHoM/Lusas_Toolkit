@@ -7,6 +7,11 @@ namespace BH.Adapter.Lusas
     {
         public IFLoadingTemperature CreateBarTemperatureLoad(BarTemperatureLoad temperatureLoad, IFLine[] lusasLines)
         {
+            if (!CheckIllegalCharacters(temperatureLoad.Name))
+            {
+                return null;
+            }
+
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
                 "Lc" + temperatureLoad.Loadcase.CustomData[AdapterId] + "/" + temperatureLoad.Loadcase.Name);
 
@@ -23,6 +28,10 @@ namespace BH.Adapter.Lusas
         public IFLoadingTemperature CreateAreaTemperatureLoad(AreaTemperatureLoad temperatureLoad, 
             IFSurface[] lusasSurfaces)
         {
+            if (!CheckIllegalCharacters(temperatureLoad.Name))
+            {
+                return null;
+            }
 
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
                 "Lc" + temperatureLoad.Loadcase.CustomData[AdapterId] + "/" + temperatureLoad.Loadcase.Name);
@@ -38,6 +47,11 @@ namespace BH.Adapter.Lusas
         public IFLoadingTemperature CreateTemperatureLoad(string lusasName, 
             double temperatureChange, IFGeometry[] lusasGeometry, IFLoadcase assignedLoadcase)
         {
+            if (!CheckIllegalCharacters(lusasName))
+            {
+                return null;
+            }
+
             IFLoadingTemperature lusasTemperatureLoad = null;
             if (d_LusasData.existsAttribute("Loading", lusasName))
             {

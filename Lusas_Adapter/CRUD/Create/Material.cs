@@ -7,6 +7,11 @@ namespace BH.Adapter.Lusas
     {
         public IFAttribute CreateMaterial(Material material)
         {
+            if (!CheckIllegalCharacters(material.Name))
+            {
+                return null;
+            }
+
             IFAttribute lusasMaterial = null;
             string lusasName = "M" + material.CustomData[AdapterId] + "/" + material.Name;
             if (d_LusasData.existsAttribute("Material", lusasName))

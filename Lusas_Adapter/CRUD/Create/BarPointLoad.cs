@@ -7,6 +7,11 @@ namespace BH.Adapter.Lusas
     {
         public IFLoadingBeamPoint CreateBarPointLoad(BarPointLoad bhomBarPointLoad, IFLine[] lusasLines)
         {
+            if (!CheckIllegalCharacters(bhomBarPointLoad.Name))
+            {
+                return null;
+            }
+
             IFLoadingBeamPoint lusasBarPointLoad = null;
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
                 "Lc" + bhomBarPointLoad.Loadcase.CustomData[AdapterId] + "/" + bhomBarPointLoad.Loadcase.Name);

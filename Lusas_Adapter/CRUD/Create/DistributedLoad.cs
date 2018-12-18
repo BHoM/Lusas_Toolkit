@@ -8,6 +8,11 @@ namespace BH.Adapter.Lusas
     {
         public IFLoadingGlobalDistributed CreateGlobalDistributedLine(BarUniformlyDistributedLoad distributedLoad, IFLine[] lusasLines)
         {
+            if (!CheckIllegalCharacters(distributedLoad.Name))
+            {
+                return null;
+            }
+
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + distributedLoad.Loadcase.CustomData[AdapterId] + "/" + distributedLoad.Loadcase.Name);
             string lusasName = "Dl" + distributedLoad.CustomData[AdapterId] + "/" + distributedLoad.Name;
             NameSearch("Dl", distributedLoad.CustomData[AdapterId].ToString(), distributedLoad.Name, ref lusasName);
@@ -20,6 +25,11 @@ namespace BH.Adapter.Lusas
 
         public IFLoadingGlobalDistributed CreateGlobalDistributedLoad(AreaUniformalyDistributedLoad distributedLoad, IFSurface[] lusasSurfaces)
         {
+            if (!CheckIllegalCharacters(distributedLoad.Name))
+            {
+                return null;
+            }
+
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
                 "Lc" + distributedLoad.Loadcase.CustomData[AdapterId] + "/" + distributedLoad.Loadcase.Name);
 
@@ -33,6 +43,11 @@ namespace BH.Adapter.Lusas
 
         public IFLoadingLocalDistributed CreateLocalDistributedLine(BarUniformlyDistributedLoad distributedLoad, IFLine[] lusasLines)
         {
+            if (!CheckIllegalCharacters(distributedLoad.Name))
+            {
+                return null;
+            }
+
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
                 "Lc" + distributedLoad.Loadcase.CustomData[AdapterId] + "/" + distributedLoad.Loadcase.Name);
 
@@ -46,6 +61,11 @@ namespace BH.Adapter.Lusas
 
         public IFLoadingLocalDistributed CreateLocalDistributedSurface(AreaUniformalyDistributedLoad distributedLoad, IFSurface[] lusasSurfaces)
         {
+            if (!CheckIllegalCharacters(distributedLoad.Name))
+            {
+                return null;
+            }
+
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
                 "Lc" + distributedLoad.Loadcase.CustomData[AdapterId] + "/" + distributedLoad.Loadcase.Name);
 
@@ -60,6 +80,11 @@ namespace BH.Adapter.Lusas
         public IFLoadingGlobalDistributed CreateGlobalDistributed(string lusasName,
             string type, IFLoadcase assignedLoadcase, Vector force, Vector moment, object[] lusasGeometry)
         {
+            if (!CheckIllegalCharacters(lusasName))
+            {
+                return null;
+            }
+
             IFLoadingGlobalDistributed lusasGlobalDistributed = null;
 
             if (d_LusasData.existsAttribute("Loading", lusasName))
@@ -92,6 +117,11 @@ namespace BH.Adapter.Lusas
         public IFLoadingLocalDistributed CreateLocalDistributed(string lusasName,
             string type, IFLoadcase assignedLoadcase, Vector force, object[] lusasGeometry)
         {
+            if (!CheckIllegalCharacters(lusasName))
+            {
+                return null;
+            }
+
             IFLoadingLocalDistributed lusasLocalDistributed = null;
 
             if (d_LusasData.existsAttribute("Loading", lusasName))

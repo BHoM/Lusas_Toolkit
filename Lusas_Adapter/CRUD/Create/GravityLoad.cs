@@ -7,6 +7,11 @@ namespace BH.Adapter.Lusas
     {
         public IFLoadingBody CreateGravityLoad(GravityLoad gravityLoad, IFGeometry[] lusasGeometry)
         {
+            if (!CheckIllegalCharacters(gravityLoad.Name))
+            {
+                return null;
+            }
+
             IFLoadingBody lusasGravityLoad = null;
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
                 "Lc" + gravityLoad.Loadcase.CustomData[AdapterId] + "/" + gravityLoad.Loadcase.Name);

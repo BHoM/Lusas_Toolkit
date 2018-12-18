@@ -10,6 +10,11 @@ namespace BH.Adapter.Lusas
     {
         public IFAttribute CreateSupport(Constraint6DOF constraint)
         {
+            if (!CheckIllegalCharacters(constraint.Name))
+            {
+                return null;
+            }
+
             IFAttribute lusasSupport = null;
             string lusasName = "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name;
 
@@ -52,6 +57,11 @@ namespace BH.Adapter.Lusas
         }
         public IFAttribute CreateSupport(Constraint4DOF constraint)
         {
+            if (!CheckIllegalCharacters(constraint.Name))
+            {
+                return null;
+            }
+
             IFAttribute lusasSupport = null;
             string lusasName = "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name;
 

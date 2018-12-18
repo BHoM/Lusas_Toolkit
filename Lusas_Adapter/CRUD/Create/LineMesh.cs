@@ -9,6 +9,11 @@ namespace BH.Adapter.Lusas
     {
         public IFMeshLine CreateMeshSettings1D(MeshSettings1D meshSettings1D, BarFEAType barFEAType = BarFEAType.Flexural, BarRelease barRelease = null)
         {
+            if (!CheckIllegalCharacters(meshSettings1D.Name))
+            {
+                return null;
+            }
+
             if (barRelease != null && barFEAType == BarFEAType.Axial)
             {
                 Engine.Reflection.Compute.RecordWarning(
