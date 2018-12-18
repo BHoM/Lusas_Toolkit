@@ -103,29 +103,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CRUD\Create\BarPointLoad.cs" />
-    <Compile Include="CRUD\Create\BarDistributedLoad.cs" />
-    <Compile Include="CRUD\Create\SurfaceMesh.cs" />
-    <Compile Include="CRUD\Create\LineMesh.cs" />
-    <Compile Include="CRUD\Create\DistributedLoad.cs" />
-    <Compile Include="CRUD\Create\GravityLoad.cs" />
-    <Compile Include="CRUD\Create\GeometricSurface.cs" />
-    <Compile Include="CRUD\Create\ConcentratedLoad.cs" />
-    <Compile Include="CRUD\Create\Edge.cs" />
-    <Compile Include="CRUD\Create\Loadcase.cs" />
-    <Compile Include="CRUD\Create\LoadCombination.cs" />
-    <Compile Include="CRUD\Create\LocalCoordinate.cs" />
-    <Compile Include="CRUD\Create\GeometricLine.cs" />
-    <Compile Include="CRUD\Create\Material.cs" />
-    <Compile Include="CRUD\Create\PrescribedDisplacement.cs" />
-    <Compile Include="CRUD\Create\Support.cs" />
-    <Compile Include="CRUD\Create\Surface.cs" />
-    <Compile Include="CRUD\Create\Line.cs" />
-    <Compile Include="CRUD\Create\Point.cs" />
-    <Compile Include="CRUD\Create\TemperatureLoad.cs" />
+    <Compile Include="CRUD\Create\Loads\BarPointLoad.cs" />
+    <Compile Include="CRUD\Create\Loads\BarDistributedLoad.cs" />
+    <Compile Include="CRUD\Create\Properties\SurfaceMesh.cs" />
+    <Compile Include="CRUD\Create\Properties\LineMesh.cs" />
+    <Compile Include="CRUD\Create\Loads\DistributedLoad.cs" />
+    <Compile Include="CRUD\Create\Loads\GravityLoad.cs" />
+    <Compile Include="CRUD\Create\Properties\GeometricSurface.cs" />
+    <Compile Include="CRUD\Create\Loads\ConcentratedLoad.cs" />
+    <Compile Include="CRUD\Create\Elements\Edge.cs" />
+    <Compile Include="CRUD\Create\Loads\Loadcase.cs" />
+    <Compile Include="CRUD\Create\Loads\LoadCombination.cs" />
+    <Compile Include="CRUD\Create\Properties\LocalCoordinate.cs" />
+    <Compile Include="CRUD\Create\Properties\GeometricLine.cs" />
+    <Compile Include="CRUD\Create\Properties\Material.cs" />
+    <Compile Include="CRUD\Create\Loads\PrescribedDisplacement.cs" />
+    <Compile Include="CRUD\Create\Properties\Support.cs" />
+    <Compile Include="CRUD\Create\Elements\Surface.cs" />
+    <Compile Include="CRUD\Create\Elements\Line.cs" />
+    <Compile Include="CRUD\Create\Elements\Point.cs" />
+    <Compile Include="CRUD\Create\Loads\TemperatureLoad.cs" />
     <Compile Include="CRUD\Create\_Create.cs" />
-    <Compile Include="CRUD\Delete\Delete.cs" />
+    <Compile Include="CRUD\Delete\Elements\Lines.cs" />
+    <Compile Include="CRUD\Delete\Elements\Points.cs" />
+    <Compile Include="CRUD\Delete\_Delete.cs" />
     <Compile Include="Adapter\NextId.cs" />
+    <Compile Include="CRUD\Delete\Elements\Surface.cs" />
     <Compile Include="CRUD\Private Helpers\AssignObjectSet.cs" />
     <Compile Include="CRUD\Private Helpers\CreateReleaseString.cs" />
     <Compile Include="CRUD\Private Helpers\CreateTags.cs" />
@@ -178,6 +181,10 @@
       <Name>Lusas_Engine</Name>
       <Private>False</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CRUD\Delete\Load\" />
+    <Folder Include="CRUD\Delete\Property\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
