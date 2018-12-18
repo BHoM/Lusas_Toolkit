@@ -126,6 +126,15 @@
     <Compile Include="CRUD\Create\_Create.cs" />
     <Compile Include="CRUD\Delete\Elements\Lines.cs" />
     <Compile Include="CRUD\Delete\Elements\Points.cs" />
+    <Compile Include="CRUD\Delete\Load\AreaTemperatureLoad.cs" />
+    <Compile Include="CRUD\Delete\Load\AreaUniformlyDistributed.cs" />
+    <Compile Include="CRUD\Delete\Load\BarPointLoad.cs" />
+    <Compile Include="CRUD\Delete\Load\BarTemperatureLoad.cs" />
+    <Compile Include="CRUD\Delete\Load\BarUniformlyDistributedLoad.cs" />
+    <Compile Include="CRUD\Delete\Load\Loadcases.cs" />
+    <Compile Include="CRUD\Delete\Load\LoadCombinations.cs" />
+    <Compile Include="CRUD\Delete\Load\PointDisplacements.cs" />
+    <Compile Include="CRUD\Delete\Load\PointForces.cs" />
     <Compile Include="CRUD\Delete\Property\4DOFConstraints.cs" />
     <Compile Include="CRUD\Delete\Property\6DOFConstraints.cs" />
     <Compile Include="CRUD\Delete\Property\Material.cs" />
@@ -192,9 +201,7 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CRUD\Delete\Load\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

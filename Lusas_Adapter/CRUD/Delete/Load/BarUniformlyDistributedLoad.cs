@@ -5,13 +5,13 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public int DeleteAreaUnformlyDistributedLoads(IEnumerable<object> ids)
+        public int DeleteBarUniformlyDistributedLoads(IEnumerable<object> ids)
         {
             int success = 1;
 
             if (ids != null)
             {
-                Engine.Reflection.Compute.RecordError("The deleting of individual AreaUniformlyDistributedLoad objects is not supported in the Lusas_Toolkit");
+                Engine.Reflection.Compute.RecordError("The deleting of individual BarUniformlyDistributed objects is not supported in the Lusas_Toolkit");
 
                 return 0;
             }
@@ -23,7 +23,7 @@ namespace BH.Adapter.Lusas
                 object[] lusasDistributedLoads = lusasGlobalDistributedLoads.Concat(
                     lusasLocalDistributedLoads).ToArray();
 
-                DeleteSurfaceAssignments(lusasDistributedLoads);
+                DeleteLineAssignments(lusasDistributedLoads);
             }
             return success;
         }
