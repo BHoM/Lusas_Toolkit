@@ -46,9 +46,9 @@ namespace BH.Adapter.Lusas
             else if (type == typeof(BHoMObject))
                 return ReadAll(ids as dynamic);
             else if (type == typeof(MeshSettings1D))
-                return Read1DMeshSettings(ids as dynamic);
+                return ReadMeshSettings1D(ids as dynamic);
             else if (type == typeof(MeshSettings2D))
-                return Read2DMeshSettings(ids as dynamic);
+                return ReadMeshSettings2D(ids as dynamic);
             return null;
         }
     }

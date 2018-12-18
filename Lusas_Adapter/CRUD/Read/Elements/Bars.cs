@@ -32,7 +32,7 @@ namespace BH.Adapter.Lusas
             Dictionary<string, ISectionProperty> geometrics = geometricList.ToDictionary(
                 x => x.Name.ToString());
 
-            List<MeshSettings1D> meshList = Read1DMeshSettings();
+            List<MeshSettings1D> meshList = ReadMeshSettings1D();
             Dictionary<string, MeshSettings1D> meshes = meshList.ToDictionary(
                 x => x.Name.ToString());
 
