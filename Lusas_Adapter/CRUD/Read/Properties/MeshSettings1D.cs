@@ -7,7 +7,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        private List<MeshSettings1D> Read1DMeshSettings(List<string> ids = null)
+        private List<MeshSettings1D> ReadMeshSettings1D(List<string> ids = null)
         {
             List<MeshSettings1D> bhomMeshSettings1Ds = new List<MeshSettings1D>();
 
