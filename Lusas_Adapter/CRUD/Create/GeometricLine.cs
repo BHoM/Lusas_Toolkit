@@ -9,6 +9,11 @@ namespace BH.Adapter.Lusas
     {
         public IFAttribute CreateGeometricLine(ISectionProperty sectionProperty)
         {
+            if (!CheckIllegalCharacters(sectionProperty.Name))
+            {
+                return null;
+            }
+
             IFAttribute lusasAttribute = null;
             string lusasName = "G" + sectionProperty.CustomData[AdapterId] + "/" + sectionProperty.Name;
 

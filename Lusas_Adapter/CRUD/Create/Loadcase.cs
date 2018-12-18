@@ -8,6 +8,11 @@ namespace BH.Adapter.Lusas
     {
         public IFLoadcase CreateLoadcase(Loadcase loadcase)
         {
+            if (!CheckIllegalCharacters(loadcase.Name))
+            {
+                return null;
+            }
+
             IFLoadcase lusasLoadcase = null;
             string lusasName = "Lc" + loadcase.CustomData[AdapterId] + "/" + loadcase.Name;
 

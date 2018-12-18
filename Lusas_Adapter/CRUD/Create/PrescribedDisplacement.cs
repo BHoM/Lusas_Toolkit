@@ -9,6 +9,10 @@ namespace BH.Adapter.Lusas
     {
         public IFPrescribedDisplacementLoad CreatePrescribedDisplacement(PointDisplacement pointDisplacement, IFPoint[] lusasPoints)
         {
+            if (!CheckIllegalCharacters(pointDisplacement.Name))
+            {
+                return null;
+            }
 
             IFPrescribedDisplacementLoad lusasPrescribedDisplacement = null;
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(

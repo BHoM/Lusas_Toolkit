@@ -7,6 +7,10 @@ namespace BH.Adapter.Lusas
     {
         public IFLoadingConcentrated CreateConcentratedLoad(PointForce pointForce, IFPoint[] lusasPoints)
         {
+            if (!CheckIllegalCharacters(pointForce.Name))
+            {
+                return null;
+            }
 
             IFLoadingConcentrated lusasPointForce = null;
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(

@@ -10,6 +10,11 @@ namespace BH.Adapter.Lusas
         public List<IFLoadingBeamDistributed> CreateBarDistributedLoad(
             BarVaryingDistributedLoad bhomBarDistributedLoad, IFLine[] lusasLines)
         {
+            if (!CheckIllegalCharacters(bhomBarDistributedLoad.Name))
+            {
+                return null;
+            }
+
             List<IFLoadingBeamDistributed> lusasBarDistributedLoads = new List<IFLoadingBeamDistributed>();
             IFAssignment lusasAssignment = m_LusasApplication.assignment();
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(

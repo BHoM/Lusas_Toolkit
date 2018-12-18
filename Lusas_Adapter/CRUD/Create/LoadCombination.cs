@@ -10,6 +10,11 @@ namespace BH.Adapter.Lusas
     {
         public IFBasicCombination CreateLoadCombination(LoadCombination loadCombination)
         {
+            if (!CheckIllegalCharacters(loadCombination.Name))
+            {
+                return null;
+            }
+
             IFBasicCombination lusasLoadcombination = null;
             string lusasLoadCombinationName = "Lc" + loadCombination.CustomData[AdapterId] +
                 "/" + loadCombination.Name;

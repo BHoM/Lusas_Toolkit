@@ -5,10 +5,15 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFAttribute CreateGeometricSurface(ISurfaceProperty property2D)
+        public IFAttribute CreateGeometricSurface(ISurfaceProperty surfaceProperty)
         {
+            if (!CheckIllegalCharacters(surfaceProperty.Name))
+            {
+                return null;
+            }
+
             IFAttribute lusasAttribute = null;
-            string lusasName = "G" + property2D.CustomData[AdapterId] + "/" + property2D.Name;
+            string lusasName = "G" + surfaceProperty.CustomData[AdapterId] + "/" + surfaceProperty.Name;
 
             if (d_LusasData.existsAttribute("Surface Geometric", lusasName))
             {
@@ -17,7 +22,7 @@ namespace BH.Adapter.Lusas
             else
             {
                 IFGeometricSurface lusasGeometricSurface = CreateSurfraceProfile(
-                    property2D as dynamic, lusasName);
+                    surfaceProperty as dynamic, lusasName);
 
                 lusasAttribute = lusasGeometricSurface;
             }

@@ -7,6 +7,11 @@ namespace BH.Adapter.Lusas
     {
         public IFMeshSurface CreateMeshSettings2D(MeshSettings2D meshSettings2D)
         {
+            if (!CheckIllegalCharacters(meshSettings2D.Name))
+            {
+                return null;
+            }
+
             IFMeshSurface lusasSurfaceMesh = null;
             string lusasName = "Me" + meshSettings2D.CustomData[AdapterId] + "/" + meshSettings2D.Name;
             if (d_LusasData.existsAttribute("Mesh", lusasName))
