@@ -19,8 +19,8 @@ namespace BH.Adapter.Lusas
                     IFPoint lusasPoint = d_LusasData.getPointByName("P" + index.ToString());
                     if (lusasPoint.getHOFs().Count() > 0)
                     {
-                        Engine.Reflection.Compute.RecordWarning("P" + index + @" has higher order features(HOFs)
-                            and cannot be deleted");
+                        //Engine.Reflection.Compute.RecordWarning("P" + index + @" has higher order features(HOFs)
+                            //and cannot be deleted");
                     }
                     else
                     {
