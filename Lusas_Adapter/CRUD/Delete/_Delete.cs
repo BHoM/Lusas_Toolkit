@@ -18,39 +18,39 @@ namespace BH.Adapter.Lusas
 
             if (type == typeof(Node))
                 success = DeletePoints(ids);
-            if (type == typeof(Bar))
+            else if (type == typeof(Bar))
                 success = DeleteLines(ids);
-            if (type == typeof(PanelPlanar))
+            else if (type == typeof(PanelPlanar))
                 success = DeleteSurfaces(ids);
-            if (type == typeof(ISectionProperty))
+            else if (typeof(ISectionProperty).IsAssignableFrom(type))
                 success = DeleteSectionProperties(ids);
-            if (type == typeof(ISurfaceProperty))
+            else if (typeof(ISurfaceProperty).IsAssignableFrom(type))
                 success = DeleteSurfaceProperties(ids);
-            if (type == typeof(MeshSettings1D))
+            else if (type == typeof(MeshSettings1D))
                 success = DeleteMeshSettings1D(ids);
-            if (type == typeof(Constraint4DOF))
+            else if (type == typeof(Constraint4DOF))
                 success = DeleteMeshSettings2D(ids);
-            if (type == typeof(Constraint6DOF))
+            else if (type == typeof(Constraint6DOF))
                 success = DeleteConstraint6DOF(ids);
-            if (type == typeof(Material))
+            else if (type == typeof(Material))
                 success = DeleteMaterials(ids);
-            if (type == typeof(AreaTemperatureLoad))
+            else if (type == typeof(AreaTemperatureLoad))
                 success = DeleteAreaTemperatureLoad(ids);
-            if (type == typeof(AreaUniformalyDistributedLoad))
+            else if (type == typeof(AreaUniformalyDistributedLoad))
                 success = DeleteAreaUnformlyDistributedLoads(ids);
-            if (type == typeof(BarPointLoad))
+            else if (type == typeof(BarPointLoad))
                 success = DeleteBarPointLoad(ids);
-            if (type == typeof(BarTemperatureLoad))
+            else if (type == typeof(BarTemperatureLoad))
                 success = DeleteBarTemperatureLoad(ids);
-            if (type == typeof(BarUniformlyDistributedLoad))
+            else if (type == typeof(BarUniformlyDistributedLoad))
                 success = DeleteBarUniformlyDistributedLoads(ids);
-            if (type == typeof(Loadcase))
+            else if (type == typeof(Loadcase))
                 success = DeleteLoadcases(ids);
-            if (type == typeof(LoadCombination))
+            else if (type == typeof(LoadCombination))
                 success = DeleteLoadCombinations(ids);
-            if (type == typeof(PointDisplacement))
+            else if (type == typeof(PointDisplacement))
                 success = DeletePointDisplacements(ids);
-            if (type == typeof(PointForce))
+            else if (type == typeof(PointForce))
                 success = DeletePointForces(ids);
 
             return 0;

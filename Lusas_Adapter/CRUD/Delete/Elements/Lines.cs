@@ -19,8 +19,8 @@ namespace BH.Adapter.Lusas
                     IFLine lusasLine = d_LusasData.getLineByName("L" + index.ToString());
                     if (lusasLine.getHOFs().Count() > 0)
                     {
-                        Engine.Reflection.Compute.RecordWarning("L" + index + @" has higher order features(HOFs)
-                            and cannot be deleted");
+                        //Engine.Reflection.Compute.RecordWarning("L" + index + @" has higher order features(HOFs)
+                            //and cannot be deleted");
                     }
                     else
                     {

@@ -17,8 +17,9 @@ namespace BH.Adapter.Lusas
                     IFGeometry lusasGeometry = (IFGeometry)lusasAssignment.getDatabaseObject();
                     if (lusasGeometry is IFPoint)
                     {
-                        d_LusasData.Delete(lusasGeometry);
                         Engine.Reflection.Compute.RecordWarning(lusasAttribute.getName() + " has been deleted because it was assigned to a point");
+                        d_LusasData.Delete(lusasAttribute);
+                        break;
                     }
                 }
             }
