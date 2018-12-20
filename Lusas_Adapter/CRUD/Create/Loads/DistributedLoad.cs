@@ -45,7 +45,7 @@ namespace BH.Adapter.Lusas
             return lusasGlobalDistributed;
         }
 
-        public IFLoadingGlobalDistributed CreateGlobalDistributedLoad(AreaUniformalyDistributedLoad distributedLoad, IFSurface[] lusasSurfaces)
+        public IFLoadingGlobalDistributed CreateGlobalDistributedLoadSurface(AreaUniformalyDistributedLoad distributedLoad, IFSurface[] lusasSurfaces)
         {
             if (!CheckIllegalCharacters(distributedLoad.Name))
             {
@@ -102,10 +102,6 @@ namespace BH.Adapter.Lusas
         public IFLoadingGlobalDistributed CreateGlobalDistributed(string lusasName,
             string type, IFLoadcase assignedLoadcase, Vector force, Vector moment, object[] lusasGeometry)
         {
-            if (!CheckIllegalCharacters(lusasName))
-            {
-                return null;
-            }
 
             IFLoadingGlobalDistributed lusasGlobalDistributed = null;
 
@@ -139,10 +135,6 @@ namespace BH.Adapter.Lusas
         public IFLoadingLocalDistributed CreateLocalDistributed(string lusasName,
             string type, IFLoadcase assignedLoadcase, Vector force, object[] lusasGeometry)
         {
-            if (!CheckIllegalCharacters(lusasName))
-            {
-                return null;
-            }
 
             IFLoadingLocalDistributed lusasLocalDistributed = null;
 
