@@ -483,7 +483,7 @@ namespace BH.Adapter.Lusas
                 if (areaUniformlyDistributedLoad.Axis == LoadAxis.Global)
                 {
                     IFLoadingGlobalDistributed lusasGlobalDistributed =
-                        CreateGlobalDistributedLoad(areaUniformlyDistributedLoad, assignedSurfaces);
+                        CreateGlobalDistributedLoadSurface(areaUniformlyDistributedLoad, assignedSurfaces);
 
                     if (lusasGlobalDistributed == null)
                     {

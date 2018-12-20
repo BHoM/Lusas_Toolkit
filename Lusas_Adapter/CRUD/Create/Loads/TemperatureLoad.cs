@@ -69,10 +69,6 @@ namespace BH.Adapter.Lusas
         public IFLoadingTemperature CreateTemperatureLoad(string lusasName, 
             double temperatureChange, IFGeometry[] lusasGeometry, IFLoadcase assignedLoadcase)
         {
-            if (!CheckIllegalCharacters(lusasName))
-            {
-                return null;
-            }
 
             IFLoadingTemperature lusasTemperatureLoad = null;
             if (d_LusasData.existsAttribute("Loading", lusasName))
