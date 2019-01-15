@@ -35,19 +35,8 @@ namespace BH.Engine.Lusas
             Node startNode = GetNode(lusasLine, 0, bhomNodes);
             Node endNode = GetNode(lusasLine, 1, bhomNodes);
 
-            Point startPoint = new Point
-            {
-                X = startNode.Position.X,
-                Y = startNode.Position.Y,
-                Z = startNode.Position.Z
-            };
-
-            Point endPoint = new Point
-            {
-                X = endNode.Position.X,
-                Y = endNode.Position.Y,
-                Z = endNode.Position.Z
-            };
+            Point startPoint = Structure.Query.Position(startNode);
+            Point endPoint = Structure.Query.Position(endNode);
 
             HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasLine, groupNames));
 

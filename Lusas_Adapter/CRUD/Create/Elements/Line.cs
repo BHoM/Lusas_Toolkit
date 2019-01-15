@@ -171,8 +171,22 @@ namespace BH.Adapter.Lusas
 
         public IFLine CreateLine(ICurve iCurve, IFPoint startPoint, IFPoint endPoint)
         {
-            Node startNode = new Node { Position = iCurve.IStartPoint() };
-            Node endNode = new Node { Position = iCurve.IEndPoint() };
+            Node startNode = Engine.Structure.Create.Node(
+                new Point
+                {
+                    X = iCurve.IStartPoint().X,
+                    Y = iCurve.IStartPoint().Y,
+                    Z = iCurve.IStartPoint().Z
+                });
+
+            Node endNode = Engine.Structure.Create.Node(
+                new Point
+                {
+                    X = iCurve.IEndPoint().X,
+                    Y = iCurve.IEndPoint().Y,
+                    Z = iCurve.IEndPoint().Z
+                });
+
             Bar bhomBar = new Bar { StartNode = startNode, EndNode = endNode };
             IFLine lusasLine = CreateLine(bhomBar, startPoint, endPoint);
             return lusasLine;
