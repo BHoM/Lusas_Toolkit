@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Properties.Constraint;
 using Lusas.LPI;
@@ -42,12 +43,19 @@ namespace BH.Engine.Lusas
                 bhom6DOFConstraints.TryGetValue(supportAssignments[0], out nodeConstraint);
             }
 
-            Node bhomNode = new Node
-            {
-                Position = { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() },
-                Tags = tags,
-                Constraint = nodeConstraint
-            };
+            //Node bhomNode = new Node
+            //{
+            //    Position = { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() },
+            //    Tags = tags,
+            //    Constraint = nodeConstraint
+            //};
+
+            Node bhomNode = Structure.Create.Node(
+                new Point { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() },
+                "", 
+                nodeConstraint);
+
+            bhomNode.Tags = tags;
 
             string adapterID = RemovePrefix(lusasPoint.getName(), "P");
             bhomNode.CustomData["Lusas_id"] = adapterID;

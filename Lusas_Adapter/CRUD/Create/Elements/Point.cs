@@ -32,8 +32,9 @@ namespace BH.Adapter.Lusas
         public IFPoint CreatePoint(Node node)
         {
             IFPoint lusasPoint;
+            Point position = Engine.Structure.Query.Position(node);
             IFDatabaseOperations database_point = d_LusasData.createPoint(
-                node.Position.X, node.Position.Y, node.Position.Z);
+                position.X, position.Y, position.Z);
 
             lusasPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
             lusasPoint.setName("P" + node.CustomData[AdapterId].ToString());
@@ -55,7 +56,7 @@ namespace BH.Adapter.Lusas
 
         public IFPoint CreatePoint(Point point)
         {
-            Node newNode = new Node { Position = point };
+            Node newNode = Engine.Structure.Create.Node(new Point { X = point.X, Y = point.Y, Z = point.Z });
 
             int adapterID;
             if (newNode.CustomData.ContainsKey(AdapterId))
