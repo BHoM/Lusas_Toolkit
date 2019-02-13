@@ -33,6 +33,7 @@ using BH.Engine.Geometry;
 using Lusas.LPI;
 using BH.Engine.Lusas.Object_Comparer.Equality_Comparer;
 using BH.oM.Adapters.Lusas;
+using BH.Engine.Reflection;
 
 namespace BH.Adapter.Lusas
 {
@@ -196,8 +197,16 @@ namespace BH.Adapter.Lusas
 
             if (bars.Any(x => x.CustomData.ContainsKey("Mesh")))
             {
-                var groupedBars = bars.GroupBy(m => new { m.Release, m.FEAType, MeshSettings1D = m.CustomData["Mesh"] });
+                var groupedReleases = bars.GroupBy(m => m.Release.Name);
 
+                //foreach (List<Bar> barReleases in groupedReleases)
+                //{
+                //    var groupedConstraints = barReleases.GroupBy(m => new { m.Release.EndRelease, m.Release.StartRelease });
+                //    if (groupedConstraints.Count()!=groupedReleases.Count())
+                //        Engine.Reflection.Compute.RecordWarning("Bar release names not unique, this will result in duplicate meshes");
+                //}
+
+                var groupedBars = bars.GroupBy(m => new { m.FEAType, m.Release.Name, MeshSettings1D = m.CustomData["Mesh"] });
 
                 List<Bar> distinctMeshBars = groupedBars.Select(m => m.First()).ToList();
                 List<IFMeshLine> lusasLineMesh = new List<IFMeshLine>();
