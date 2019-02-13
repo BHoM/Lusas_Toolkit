@@ -32,7 +32,6 @@ namespace BH.Adapter.Lusas
         private List<MeshSettings1D> ReadMeshSettings1D(List<string> ids = null)
         {
             List<MeshSettings1D> bhomMeshSettings1Ds = new List<MeshSettings1D>();
-
             object[] lusasMesh1Ds = d_LusasData.getAttributes("Line Mesh");
 
             for (int i = 0; i < lusasMesh1Ds.Count(); i++)

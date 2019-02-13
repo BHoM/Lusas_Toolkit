@@ -40,7 +40,6 @@ namespace BH.Adapter.Lusas
         private List<IFPoint> ReadLusasPoints(List<string> ids = null)
         {
             object[] lusasPoints = d_LusasData.getObjects("Point");
-
             List<IFPoint> lusasPointList = new List<IFPoint>();
 
             for (int i = 0; i < lusasPoints.Count(); i++)

@@ -35,31 +35,34 @@ namespace BH.Adapter.Lusas
             List<ILoad> bhomGravityLoads = new List<ILoad>();
             object[] lusasBodyForces = d_LusasData.getAttributes("Body Force Load");
 
-            List<Bar> bhomBars = ReadBars();
-            List<PanelPlanar> bhomPlanarPanels = ReadPlanarPanels();
-            Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
-                x => x.CustomData[AdapterId].ToString());
-
-            Dictionary<string, PanelPlanar> panelPlanarDictionary = bhomPlanarPanels.ToDictionary(
-                x => x.CustomData[AdapterId].ToString());
-
-            List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
-
-            for (int i = 0; i < lusasBodyForces.Count(); i++)
+            if (!(lusasBodyForces.Count()==0))
             {
-                IFLoading lusasBodyForce = (IFLoading)lusasBodyForces[i];
+                List<Bar> bhomBars = ReadBars();
+                List<PanelPlanar> bhomPlanarPanels = ReadPlanarPanels();
+                Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
+                    x => x.CustomData[AdapterId].ToString());
 
-                IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                    GetLoadAssignments(lusasBodyForce);
+                Dictionary<string, PanelPlanar> panelPlanarDictionary = bhomPlanarPanels.ToDictionary(
+                    x => x.CustomData[AdapterId].ToString());
 
-                foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
+                List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
+
+                for (int i = 0; i < lusasBodyForces.Count(); i++)
                 {
-                    List<string> analysisName = new List<string> { lusasBodyForce.getAttributeType() };
+                    IFLoading lusasBodyForce = (IFLoading)lusasBodyForces[i];
 
-                    GravityLoad bhomGravityLoad = Engine.Lusas.Convert.ToGravityLoad(
-                        lusasBodyForce, groupedAssignment, barDictionary, panelPlanarDictionary);
-                    bhomGravityLoad.Tags = new HashSet<string>(analysisName);
-                    bhomGravityLoads.Add(bhomGravityLoad);
+                    IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
+                        GetLoadAssignments(lusasBodyForce);
+
+                    foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
+                    {
+                        List<string> analysisName = new List<string> { lusasBodyForce.getAttributeType() };
+
+                        GravityLoad bhomGravityLoad = Engine.Lusas.Convert.ToGravityLoad(
+                            lusasBodyForce, groupedAssignment, barDictionary, panelPlanarDictionary);
+                        bhomGravityLoad.Tags = new HashSet<string>(analysisName);
+                        bhomGravityLoads.Add(bhomGravityLoad);
+                    }
                 }
             }
 

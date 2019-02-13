@@ -32,7 +32,6 @@ namespace BH.Adapter.Lusas
         private List<MeshSettings2D> ReadMeshSettings2D(List<string> ids = null)
         {
             List<MeshSettings2D> bhomMeshSettings2Ds = new List<MeshSettings2D>();
-
             object[] lusasMesh2Ds = d_LusasData.getAttributes("Surface Mesh");
 
             for (int i = 0; i < lusasMesh2Ds.Count(); i++)
