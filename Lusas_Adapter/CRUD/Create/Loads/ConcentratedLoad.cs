@@ -27,7 +27,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFLoadingConcentrated CreateConcentratedLoad(PointForce pointForce, IFPoint[] lusasPoints)
+        public IFLoadingConcentrated CreateConcentratedLoad(PointForce pointForce, object[] lusasPoints)
         {
             if (!CheckIllegalCharacters(pointForce.Name))
             {

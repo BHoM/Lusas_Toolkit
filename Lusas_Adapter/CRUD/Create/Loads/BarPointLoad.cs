@@ -27,7 +27,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFLoadingBeamPoint CreateBarPointLoad(BarPointLoad bhomBarPointLoad, IFLine[] lusasLines)
+        public IFLoadingBeamPoint CreateBarPointLoad(BarPointLoad bhomBarPointLoad, object[] lusasLines)
         {
             if (!CheckIllegalCharacters(bhomBarPointLoad.Name))
             {

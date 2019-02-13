@@ -27,7 +27,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFLoadingTemperature CreateBarTemperatureLoad(BarTemperatureLoad temperatureLoad, IFLine[] lusasLines)
+        public IFLoadingTemperature CreateBarTemperatureLoad(BarTemperatureLoad temperatureLoad, object[] lusasLines)
         {
             if (!CheckIllegalCharacters(temperatureLoad.Name))
             {
@@ -48,7 +48,7 @@ namespace BH.Adapter.Lusas
         }
 
         public IFLoadingTemperature CreateAreaTemperatureLoad(AreaTemperatureLoad temperatureLoad, 
-            IFSurface[] lusasSurfaces)
+            object[] lusasSurfaces)
         {
             if (!CheckIllegalCharacters(temperatureLoad.Name))
             {
@@ -67,7 +67,7 @@ namespace BH.Adapter.Lusas
         }
 
         public IFLoadingTemperature CreateTemperatureLoad(string lusasName, 
-            double temperatureChange, IFGeometry[] lusasGeometry, IFLoadcase assignedLoadcase)
+            double temperatureChange, object[] lusasGeometry, IFLoadcase assignedLoadcase)
         {
 
             IFLoadingTemperature lusasTemperatureLoad = null;

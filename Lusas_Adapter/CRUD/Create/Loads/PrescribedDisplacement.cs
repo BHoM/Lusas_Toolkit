@@ -29,7 +29,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFPrescribedDisplacementLoad CreatePrescribedDisplacement(PointDisplacement pointDisplacement, IFPoint[] lusasPoints)
+        public IFPrescribedDisplacementLoad CreatePrescribedDisplacement(PointDisplacement pointDisplacement, object[] lusasPoints)
         {
             if (!CheckIllegalCharacters(pointDisplacement.Name))
             {

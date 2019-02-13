@@ -419,7 +419,7 @@ namespace BH.Adapter.Lusas
 
             foreach (PointForce pointForce in pointForces)
             {
-                IFPoint[] assignedPoints = GetAssignedPoints(pointForce);
+                object[] assignedPoints = GetAssignedPoints(pointForce);
                 IFLoadingConcentrated lusasPointForce = CreateConcentratedLoad(pointForce, assignedPoints);
 
                 if (lusasPointForce == null)
@@ -455,7 +455,7 @@ namespace BH.Adapter.Lusas
         {
             foreach (BarUniformlyDistributedLoad barUniformlyDistributedLoad in barUniformlyDistributedLoads)
             {
-                IFLine[] assignedLines = GetAssignedLines(barUniformlyDistributedLoad);
+                object[] assignedLines = GetAssignedLines(barUniformlyDistributedLoad);
 
                 if (barUniformlyDistributedLoad.Axis == LoadAxis.Global)
                 {
@@ -488,7 +488,7 @@ namespace BH.Adapter.Lusas
         {
             foreach (AreaUniformalyDistributedLoad areaUniformlyDistributedLoad in areaUniformlyDistributedLoads)
             {
-                IFSurface[] assignedSurfaces = GetAssignedSurfaces(areaUniformlyDistributedLoad);
+                object[] assignedSurfaces = GetAssignedSurfaces(areaUniformlyDistributedLoad);
                 if (areaUniformlyDistributedLoad.Axis == LoadAxis.Global)
                 {
                     IFLoadingGlobalDistributed lusasGlobalDistributed =
@@ -520,7 +520,7 @@ namespace BH.Adapter.Lusas
         {
             foreach (BarTemperatureLoad barTemperatureLoad in barTemperatureLoads)
             {
-                IFLine[] arrayLines = GetAssignedLines(barTemperatureLoad);
+                object[] arrayLines = GetAssignedLines(barTemperatureLoad);
                 IFLoadingTemperature lusasBarTemperatureLoad =
                     CreateBarTemperatureLoad(barTemperatureLoad, arrayLines);
 
@@ -539,7 +539,7 @@ namespace BH.Adapter.Lusas
         {
             foreach (AreaTemperatureLoad areaTemperatureLoad in areaTemperatureLoads)
             {
-                IFSurface[] assignedLines = GetAssignedSurfaces(areaTemperatureLoad);
+                object[] assignedLines = GetAssignedSurfaces(areaTemperatureLoad);
                 IFLoadingTemperature lusasAreaTemperatureLoad =
                     CreateAreaTemperatureLoad(areaTemperatureLoad, assignedLines);
 
@@ -558,7 +558,7 @@ namespace BH.Adapter.Lusas
         {
             foreach (PointDisplacement pointDisplacement in pointDisplacements)
             {
-                IFPoint[] assignedPoints = GetAssignedPoints(pointDisplacement);
+                object[] assignedPoints = GetAssignedPoints(pointDisplacement);
                 IFPrescribedDisplacementLoad lusasPrescribedDisplacement =
                     CreatePrescribedDisplacement(pointDisplacement, assignedPoints);
 
@@ -578,7 +578,7 @@ namespace BH.Adapter.Lusas
 
             foreach (BarPointLoad barPointLoad in barPointLoads)
             {
-                IFLine[] assignedLines = GetAssignedLines(barPointLoad);
+                object[] assignedLines = GetAssignedLines(barPointLoad);
                 IFLoadingBeamPoint lusasGlobalDistributed =
                     CreateBarPointLoad(barPointLoad, assignedLines);
 
@@ -598,7 +598,7 @@ namespace BH.Adapter.Lusas
 
             foreach (BarVaryingDistributedLoad barDistributedLoad in barDistributedLoads)
             {
-                IFLine[] assignedBars = GetAssignedLines(barDistributedLoad);
+                object[] assignedBars = GetAssignedLines(barDistributedLoad);
                 List<IFLoadingBeamDistributed> lusasGlobalDistributed =
                     CreateBarDistributedLoad(barDistributedLoad, assignedBars);
 

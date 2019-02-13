@@ -41,30 +41,33 @@ namespace BH.Adapter.Lusas
             object[] lusasDistributedLoads = lusasGlobalDistributedLoads.Concat(
                 lusasLocalDistributedLoads).ToArray();
 
-            List<PanelPlanar> bhomSurfaces = ReadPlanarPanels();
-            Dictionary<string, PanelPlanar> surfaceDictionary = bhomSurfaces.ToDictionary(
-                x => x.CustomData[AdapterId].ToString());
-
-            List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
-
-            for (int i = 0; i < lusasDistributedLoads.Count(); i++)
+            if(!(lusasDistributedLoads.Count()==0))
             {
-                IFLoading lusasDistributedLoad = (IFLoading)lusasDistributedLoads[i];
+                List<PanelPlanar> bhomSurfaces = ReadPlanarPanels();
+                Dictionary<string, PanelPlanar> surfaceDictionary = bhomSurfaces.ToDictionary(
+                    x => x.CustomData[AdapterId].ToString());
 
-                if (lusasDistributedLoad.getValue("type") == "Area")
+                List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
+
+                for (int i = 0; i < lusasDistributedLoads.Count(); i++)
                 {
-                    IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                        GetLoadAssignments(lusasDistributedLoad);
+                    IFLoading lusasDistributedLoad = (IFLoading)lusasDistributedLoads[i];
 
-                    foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
+                    if (lusasDistributedLoad.getValue("type") == "Area")
                     {
-                        AreaUniformalyDistributedLoad bhomBarUniformlyDistributedLoad =
-                            Engine.Lusas.Convert.ToAreaUniformallyDistributed(
-                                lusasDistributedLoad, groupedAssignment, surfaceDictionary);
+                        IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
+                            GetLoadAssignments(lusasDistributedLoad);
 
-                        List<string> analysisName = new List<string> { lusasDistributedLoad.getAttributeType() };
-                        bhomBarUniformlyDistributedLoad.Tags = new HashSet<string>(analysisName);
-                        bhomPanelUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
+                        foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
+                        {
+                            AreaUniformalyDistributedLoad bhomBarUniformlyDistributedLoad =
+                                Engine.Lusas.Convert.ToAreaUniformallyDistributed(
+                                    lusasDistributedLoad, groupedAssignment, surfaceDictionary);
+
+                            List<string> analysisName = new List<string> { lusasDistributedLoad.getAttributeType() };
+                            bhomBarUniformlyDistributedLoad.Tags = new HashSet<string>(analysisName);
+                            bhomPanelUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
+                        }
                     }
                 }
             }

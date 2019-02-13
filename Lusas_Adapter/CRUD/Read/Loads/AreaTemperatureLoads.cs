@@ -35,46 +35,48 @@ namespace BH.Adapter.Lusas
             List<ILoad> bhomAreaTemperatureLoads = new List<ILoad>();
             object[] lusasTemperatureLoads = d_LusasData.getAttributes("Temperature");
 
-            List<PanelPlanar> bhomPanelPlanar = ReadPlanarPanels();
-            Dictionary<string, PanelPlanar> surfaceDictionary = bhomPanelPlanar.ToDictionary(
-                x => x.CustomData[AdapterId].ToString());
-
-            List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
-
-            for (int i = 0; i < lusasTemperatureLoads.Count(); i++)
+            if(!(bhomAreaTemperatureLoads.Count()==0))
             {
-                IFLoading lusasTemperatureLoad = (IFLoading)lusasTemperatureLoads[i];
+                List<PanelPlanar> bhomPanelPlanar = ReadPlanarPanels();
+                Dictionary<string, PanelPlanar> surfaceDictionary = bhomPanelPlanar.ToDictionary(
+                    x => x.CustomData[AdapterId].ToString());
 
-                IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                    GetLoadAssignments(lusasTemperatureLoad);
+                List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
 
-                foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
+                for (int i = 0; i < lusasTemperatureLoads.Count(); i++)
                 {
-                    List<IFAssignment> surfaceAssignments = new List<IFAssignment>();
+                    IFLoading lusasTemperatureLoad = (IFLoading)lusasTemperatureLoads[i];
 
-                    foreach (IFAssignment assignment in groupedAssignment)
+                    IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
+                        GetLoadAssignments(lusasTemperatureLoad);
+
+                    foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
-                        IFSurface trySurf = assignment.getDatabaseObject() as IFSurface;
+                        List<IFAssignment> surfaceAssignments = new List<IFAssignment>();
 
-                        if (trySurf != null)
+                        foreach (IFAssignment assignment in groupedAssignment)
                         {
-                            surfaceAssignments.Add(assignment);
+                            IFSurface trySurf = assignment.getDatabaseObject() as IFSurface;
+
+                            if (trySurf != null)
+                            {
+                                surfaceAssignments.Add(assignment);
+                            }
+                        }
+
+                        List<string> analysisName = new List<string> { lusasTemperatureLoad.getAttributeType() };
+
+                        if (surfaceAssignments.Count != 0)
+                        {
+                            AreaTemperatureLoad bhomAreaTemperatureLoad =
+                                Engine.Lusas.Convert.ToAreaTempratureLoad(
+                                    lusasTemperatureLoad, groupedAssignment, surfaceDictionary);
+
+                            bhomAreaTemperatureLoad.Tags = new HashSet<string>(analysisName);
+                            bhomAreaTemperatureLoads.Add(bhomAreaTemperatureLoad);
                         }
                     }
-
-                    List<string> analysisName = new List<string> { lusasTemperatureLoad.getAttributeType() };
-
-                    if (surfaceAssignments.Count != 0)
-                    {
-                        AreaTemperatureLoad bhomAreaTemperatureLoad =
-                            Engine.Lusas.Convert.ToAreaTempratureLoad(
-                                lusasTemperatureLoad, groupedAssignment, surfaceDictionary);
-
-                        bhomAreaTemperatureLoad.Tags = new HashSet<string>(analysisName);
-                        bhomAreaTemperatureLoads.Add(bhomAreaTemperatureLoad);
-                    }
                 }
-
             }
 
             return bhomAreaTemperatureLoads;

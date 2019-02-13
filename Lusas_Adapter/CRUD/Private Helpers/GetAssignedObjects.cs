@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using BH.oM.Structure.Elements;
+using System.Linq;
 using Lusas.LPI;
 using BH.oM.Base;
 using BH.oM.Structure.Loads;
@@ -30,50 +31,29 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFPoint[] GetAssignedPoints(Load<Node> bhomLoads)
+        public object[] GetAssignedPoints(Load<Node> bhomLoads)
         {
-            List<IFPoint> assignedGeometry = new List<IFPoint>();
-            foreach (BHoMObject bhomObject in bhomLoads.Objects.Elements)
-            {
-                IFPoint lusasPoint = d_LusasData.getPointByName(
-                    "P" + bhomObject.CustomData[AdapterId].ToString());
+            string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => x.CustomData[AdapterId].ToString()).ToArray();
 
-                assignedGeometry.Add(lusasPoint);
-            }
-
-            IFPoint[] arrayGeometry = assignedGeometry.ToArray();
+            object[] arrayGeometry = d_LusasData.getObjects("Point", lusasIDs);
 
             return arrayGeometry;
         }
 
-        public IFLine[] GetAssignedLines(Load<Bar> bhomLoads)
+        public object[] GetAssignedLines(Load<Bar> bhomLoads)
         {
-            List<IFLine> assignedGeometry = new List<IFLine>();
-            foreach (BHoMObject bhomObject in bhomLoads.Objects.Elements)
-            {
-                IFLine lusasLine = d_LusasData.getLineByName(
-                    "L" + bhomObject.CustomData[AdapterId].ToString());
+            string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => x.CustomData[AdapterId].ToString()).ToArray();
 
-                assignedGeometry.Add(lusasLine);
-            }
-
-            IFLine[] arrayGeometry = assignedGeometry.ToArray();
+            object[] arrayGeometry = d_LusasData.getObjects("Line", lusasIDs);
 
             return arrayGeometry;
         }
 
-        public IFSurface[] GetAssignedSurfaces(Load<IAreaElement> bhomLoads)
+        public object[] GetAssignedSurfaces(Load<IAreaElement> bhomLoads)
         {
-            List<IFSurface> assignedGeometry = new List<IFSurface>();
-            foreach (BHoMObject bhomObject in bhomLoads.Objects.Elements)
-            {
-                IFSurface lusasSurface = d_LusasData.getSurfaceByName(
-                    "S" + bhomObject.CustomData[AdapterId].ToString());
+            string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => x.CustomData[AdapterId].ToString()).ToArray();
 
-                assignedGeometry.Add(lusasSurface);
-            }
-
-            IFSurface[] arrayGeometry = assignedGeometry.ToArray();
+            object[] arrayGeometry = d_LusasData.getObjects("Surface", lusasIDs);
 
             return arrayGeometry;
         }

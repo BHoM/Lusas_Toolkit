@@ -32,16 +32,20 @@ namespace BH.Adapter.Lusas
         private List<Point> ReadPoints(List<string> ids = null)
         {
             object[] lusasPoints = d_LusasData.getObjects("Point");
-
             List<Point> bhomPoints = new List<Point>();
-            HashSet<string> groupNames = ReadTags();
 
-            for (int i = 0; i < lusasPoints.Count(); i++)
+            if(!(lusasPoints.Count()==0))
             {
-                IFPoint lusasPoint = (IFPoint)lusasPoints[i];
-                Point bhomPoint = Engine.Lusas.Convert.ToBHoMPoint(lusasPoint, groupNames);
-                bhomPoints.Add(bhomPoint);
+                HashSet<string> groupNames = ReadTags();
+
+                for (int i = 0; i < lusasPoints.Count(); i++)
+                {
+                    IFPoint lusasPoint = (IFPoint)lusasPoints[i];
+                    Point bhomPoint = Engine.Lusas.Convert.ToBHoMPoint(lusasPoint, groupNames);
+                    bhomPoints.Add(bhomPoint);
+                }
             }
+
             return bhomPoints;
         }
     }

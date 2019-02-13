@@ -30,7 +30,7 @@ namespace BH.Adapter.Lusas
     public partial class LusasAdapter
     {
         public List<IFLoadingBeamDistributed> CreateBarDistributedLoad(
-            BarVaryingDistributedLoad bhomBarDistributedLoad, IFLine[] lusasLines)
+            BarVaryingDistributedLoad bhomBarDistributedLoad, object[] lusasLines)
         {
             if (!CheckIllegalCharacters(bhomBarDistributedLoad.Name))
             {
