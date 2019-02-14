@@ -79,11 +79,10 @@ namespace BH.Adapter.Lusas
                 barLocalAxis.assignTo(lusasLine);
             }
 
-            IFAssignment meshAssignment = m_LusasApplication.newAssignment();
-            meshAssignment.setAllDefaults();
-
             if (bar.CustomData.ContainsKey("Mesh"))
             {
+                IFAssignment meshAssignment = m_LusasApplication.newAssignment();
+                meshAssignment.setAllDefaults();
                 if (bar.OrientationAngle != 0 && bar.FEAType == BarFEAType.Axial)
                 {
                     Engine.Reflection.Compute.RecordWarning(

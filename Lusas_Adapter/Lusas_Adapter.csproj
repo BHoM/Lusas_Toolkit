@@ -156,6 +156,7 @@
     <Compile Include="CRUD\Private Helpers\GetLoadAssignments.cs" />
     <Compile Include="CRUD\Private Helpers\NameSearch.cs" />
     <Compile Include="CRUD\Private Helpers\CheckIllegalCharacters.cs" />
+    <Compile Include="CRUD\Private Helpers\RuntimeReduction.cs" />
     <Compile Include="CRUD\Private Helpers\SetElementType.cs" />
     <Compile Include="CRUD\Private Helpers\SetEndConditions.cs" />
     <Compile Include="CRUD\Private Helpers\SetSplitMethod.cs" />

@@ -33,7 +33,7 @@ namespace BH.Engine.Lusas
         {
             string attributeName = GetName(lusasAttribute);
 
-            IProfile sectionProfile = createProfile(lusasAttribute);
+            IProfile sectionProfile = CreateProfile(lusasAttribute);
 
             double area = lusasAttribute.getValue("A");
             double rgy = lusasAttribute.getValue("ky");
@@ -68,7 +68,7 @@ namespace BH.Engine.Lusas
             return bhomSection;
         }
 
-        public static IProfile createProfile(IFAttribute lusasAttribute)
+        public static IProfile CreateProfile(IFAttribute lusasAttribute)
         {
             int sectionType = lusasAttribute.getValue("Type");
 
