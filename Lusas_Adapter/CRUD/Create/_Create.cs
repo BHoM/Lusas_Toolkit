@@ -46,10 +46,6 @@ namespace BH.Adapter.Lusas
         {
             bool success = true;        //boolean returning if the creation was successfull or not
 
-            //m_LusasApplication.setManualRefresh(true);
-            //m_LusasApplication.suppressMessages(1);
-            //m_LusasApplication.enableTrees(false);
-
             if (objects.Count() > 0)
             {
                 if (objects.First() is Node)
@@ -145,12 +141,6 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            //m_LusasApplication.setManualRefresh(false);
-            //m_LusasApplication.suppressMessages(0);
-            //m_LusasApplication.enableTrees(true);
-            ////success = CreateCollection(objects as dynamic);
-            //m_LusasApplication.updateAllViews();
-
             return success;
         }
 
@@ -162,10 +152,15 @@ namespace BH.Adapter.Lusas
         {
             CreateTags(nodes);
 
+            ReduceRuntime(true);
+
             foreach (Node node in nodes)
             {
                 IFPoint lusasPoint = CreatePoint(node);
             }
+
+            ReduceRuntime(false);
+
             return true;
         }
 
@@ -180,10 +175,14 @@ namespace BH.Adapter.Lusas
 
             List<Point> lusasPoints = distinctPoints.Except(existingPoints).ToList();
 
+            ReduceRuntime(true);
+
             foreach (Point point in lusasPoints)
             {
                 IFPoint lusasPoint = CreatePoint(point);
             }
+
+            ReduceRuntime(false);
 
             return true;
         }
@@ -193,18 +192,12 @@ namespace BH.Adapter.Lusas
         private bool CreateCollection(IEnumerable<Bar> bars)
         {
             List<Bar> barList = bars.ToList();
+
             CreateTags(bars);
 
             if (bars.Any(x => x.CustomData.ContainsKey("Mesh")))
             {
                 var groupedReleases = bars.GroupBy(m => m.Release.Name);
-
-                //foreach (List<Bar> barReleases in groupedReleases)
-                //{
-                //    var groupedConstraints = barReleases.GroupBy(m => new { m.Release.EndRelease, m.Release.StartRelease });
-                //    if (groupedConstraints.Count()!=groupedReleases.Count())
-                //        Engine.Reflection.Compute.RecordWarning("Bar release names not unique, this will result in duplicate meshes");
-                //}
 
                 var groupedBars = bars.GroupBy(m => new { m.FEAType, m.Release.Name, MeshSettings1D = m.CustomData["Mesh"] });
 
@@ -221,9 +214,12 @@ namespace BH.Adapter.Lusas
 
                 int count = 0;
 
+                ReduceRuntime(true);
+
                 foreach (var group in groupedBars)
                 {
                     List<Bar> barGroup = group.ToList();
+
                     foreach (Bar bar in barGroup)
                     {
                         IFLine lusasLine = CreateLine(bar, lusasLineMesh[count]);
@@ -236,6 +232,8 @@ namespace BH.Adapter.Lusas
                     }
                     count++;
                 }
+
+                ReduceRuntime(false);
                 d_LusasData.resetMesh();
                 d_LusasData.updateMesh();
 
@@ -243,6 +241,8 @@ namespace BH.Adapter.Lusas
             }
             else
             {
+                ReduceRuntime(true);
+
                 foreach (Bar bar in bars)
                 {
                     IFLine lusasLine = CreateLine(bar, null);
@@ -252,6 +252,9 @@ namespace BH.Adapter.Lusas
                         return false;
                     }
                 }
+
+                ReduceRuntime(false);
+
                 return true;
             }
         }
@@ -279,6 +282,8 @@ namespace BH.Adapter.Lusas
                 midPoints.Add(edge.Curve.IPointAtParameter(0.5));
             }
 
+            ReduceRuntime(true);
+
             foreach (PanelPlanar panelPlanar in planarPanels)
             {
                 IFLine[] lusasLines = new IFLine[panelPlanar.ExternalEdges.Count];
@@ -294,6 +299,9 @@ namespace BH.Adapter.Lusas
 
                 IFSurface lusasSurface = CreateSurface(panelPlanar, lusasLines);
             }
+
+            ReduceRuntime(false);
+
             return true;
         }
 
@@ -317,10 +325,14 @@ namespace BH.Adapter.Lusas
             List<Point> pointsToPush = distinctPoints.Except(
                 existingPoints, new PointDistanceComparer()).ToList();
 
+            ReduceRuntime(true);
+
             foreach (Point point in pointsToPush)
             {
                 IFPoint lusasPoint = CreatePoint(point);
             }
+
+            ReduceRuntime(false);
 
             List<IFPoint> lusasPoints = ReadLusasPoints();
             List<Point> bhomPoints = new List<Point>();
@@ -332,6 +344,8 @@ namespace BH.Adapter.Lusas
 
             CreateTags(distinctEdges);
 
+            ReduceRuntime(true);
+
             foreach (Edge edge in distinctEdges)
             {
                 IFPoint startPoint = lusasPoints[bhomPoints.FindIndex(
@@ -340,6 +354,8 @@ namespace BH.Adapter.Lusas
                     m => m.Equals(edge.Curve.IEndPoint().ClosestPoint(bhomPoints)))];
                 IFLine lusasLine = CreateEdge(edge, startPoint, endPoint);
             }
+
+            ReduceRuntime(false);
 
             return true;
         }
