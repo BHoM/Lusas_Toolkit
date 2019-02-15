@@ -30,7 +30,7 @@ namespace BH.Adapter.Lusas
             {
                 m_LusasApplication.enableUI(false);
                 m_LusasApplication.enableTrees(false);
-                m_LusasApplication.suppressMessages(0);
+                m_LusasApplication.suppressMessages(1);
                 m_LusasApplication.setManualRefresh(true);
                 d_LusasData.beginCommandBatch("label", "undoable");
             }
