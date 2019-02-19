@@ -22,11 +22,11 @@
 
 using BH.oM.Structure.Properties.Constraint;
 
-namespace BH.Adapter.Lusas
+namespace BH.Engine.Lusas
 {
-    public partial class LusasAdapter
+    public partial class Compute
     {
-        public string CreateReleaseString(BarRelease barReleases)
+        public static string CreateReleaseString(BarRelease barReleases)
         {
             string releaseString = "";
 

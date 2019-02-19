@@ -40,16 +40,16 @@ namespace BH.Engine.Lusas
             double temperatureChange = lusasTemperatureLoad.getValue("T")
                 - lusasTemperatureLoad.getValue("T0");
 
-            IEnumerable<Bar> bhomBars = GetBarAssignments(lusasAssignments, bars);
+            IEnumerable<Bar> bhomBars = Lusas.Query.GetBarAssignments(lusasAssignments, bars);
             BarTemperatureLoad bhomBarTemperatureLoad = Structure.Create.BarTemperatureLoad(
                 bhomLoadcase,
                 temperatureChange,
                 bhomBars,
                 LoadAxis.Local,
                 false,
-                GetName(lusasTemperatureLoad));
+                Lusas.Query.GetName(lusasTemperatureLoad));
 
-            int adapterID = GetAdapterID(lusasTemperatureLoad, 'l');
+            int adapterID = Lusas.Query.GetAdapterID(lusasTemperatureLoad, 'l');
             bhomBarTemperatureLoad.CustomData["Lusas_id"] = adapterID;
             return bhomBarTemperatureLoad;
         }

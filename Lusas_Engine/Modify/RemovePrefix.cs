@@ -20,19 +20,23 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using Lusas.LPI;
-using BH.oM.Structure.Elements;
-
-namespace BH.Adapter.Lusas
+namespace BH.Engine.Lusas
 {
-    public partial class LusasAdapter
+    public partial class Modify
     {
-        public void SetElementType(IFMeshLine lusasLineMesh, BarFEAType barFEAType)
+        public static string RemovePrefix(string name, string forRemoval)
         {
-            if (barFEAType == BarFEAType.Axial)
-                lusasLineMesh.addElementName("BRS2");
-            else if(barFEAType == BarFEAType.Flexural)
-                lusasLineMesh.addElementName("BMX21");
+            string adapterID = "";
+
+            if (name.Contains(forRemoval))
+            {
+                adapterID = name.Replace(forRemoval, "");
+            }
+            else
+            {
+                adapterID = name;
+            }
+            return adapterID;
         }
     }
 }

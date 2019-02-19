@@ -20,27 +20,64 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.Collections.Generic;
 using Lusas.LPI;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Convert
+    public partial class Query
     {
-        public static HashSet<string> IsMemberOf(IFGeometry lusasGeometry, HashSet<string> bhomTags)
+        public static int GetAdapterID(IFAttribute lusasAttribute, char lastCharacter)
         {
+            int adapterID = 0;
 
-            HashSet<string> geometryTag = new HashSet<string>();
+            lusasAttribute.getName();
 
-            foreach (string tag in bhomTags)
+            if (lusasAttribute.getName().Contains("/"))
             {
-                if (lusasGeometry.isMemberOfGroup(tag))
-                {
-                    geometryTag.Add(tag);
-                }
+                adapterID = int.Parse(lusasAttribute.getName().Split(lastCharacter, '/')[1]);
+            }
+            else
+            {
+                adapterID = lusasAttribute.getID();
             }
 
-            return geometryTag;
+            return adapterID;
+        }
+
+        public static int GetAdapterID(IFLoadcase lusasLoadcase, char lastCharacter)
+        {
+            int adapterID = 0;
+
+            lusasLoadcase.getName();
+
+            if (lusasLoadcase.getName().Contains("/"))
+            {
+                adapterID = int.Parse(lusasLoadcase.getName().Split(lastCharacter, '/')[1]);
+            }
+            else
+            {
+                adapterID = lusasLoadcase.getID();
+            }
+
+            return adapterID;
+        }
+
+        public static int GetAdapterID(IFBasicCombination lusasLoadCombination, char lastCharacter)
+        {
+            int adapterID = 0;
+
+            lusasLoadCombination.getName();
+
+            if (lusasLoadCombination.getName().Contains("/"))
+            {
+                adapterID = int.Parse(lusasLoadCombination.getName().Split(lastCharacter, '/')[1]);
+            }
+            else
+            {
+                adapterID = lusasLoadCombination.getID();
+            }
+
+            return adapterID;
         }
     }
 }

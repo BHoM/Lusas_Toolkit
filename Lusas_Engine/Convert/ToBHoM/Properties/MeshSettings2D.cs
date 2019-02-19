@@ -29,7 +29,7 @@ namespace BH.Engine.Lusas
     {
         public static MeshSettings2D ToBHoMMeshSettings2D(this IFAttribute lusasAttribute)
         {
-            string attributeName = GetName(lusasAttribute);
+            string attributeName = Lusas.Query.GetName(lusasAttribute);
             //object[] elementNames = lusasMeshSurface.getElementNames();
 
             //foreach (object name in elnames)
@@ -74,7 +74,7 @@ namespace BH.Engine.Lusas
                 ElementSize = size
             };
 
-            int adapterID = GetAdapterID(lusasAttribute, 'e');
+            int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'e');
             bhomMeshSettings2D.CustomData["Lusas_id"] = adapterID;
 
             return bhomMeshSettings2D;

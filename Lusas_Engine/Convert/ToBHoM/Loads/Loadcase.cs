@@ -29,10 +29,10 @@ namespace BH.Engine.Lusas
     {
         public static Loadcase ToBHoMLoadcase(this IFLoadcase lusasLoadcase)
         {
-            Loadcase BHoMLoadcase = new Loadcase { Name = GetName(lusasLoadcase),
+            Loadcase BHoMLoadcase = new Loadcase { Name = Lusas.Query.GetName(lusasLoadcase),
                 Number = lusasLoadcase.getID()};
 
-            int adapterID = GetAdapterID(lusasLoadcase, 'c');
+            int adapterID = Lusas.Query.GetAdapterID(lusasLoadcase, 'c');
 
             BHoMLoadcase.CustomData["Lusas_id"] = adapterID;
 

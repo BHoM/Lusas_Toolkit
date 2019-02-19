@@ -24,7 +24,7 @@ using Lusas.LPI;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Convert
+    public partial class Query
     {
         public static string GetName(IFAttribute lusasAttribute)
         {

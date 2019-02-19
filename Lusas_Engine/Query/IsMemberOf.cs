@@ -20,23 +20,27 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System.Collections.Generic;
+using Lusas.LPI;
+
 namespace BH.Engine.Lusas
 {
-    public partial class Convert
+    public partial class Query
     {
-        public static string RemovePrefix(string name, string forRemoval)
+        public static HashSet<string> IsMemberOf(IFGeometry lusasGeometry, HashSet<string> bhomTags)
         {
-            string adapterID = "";
 
-            if (name.Contains(forRemoval))
+            HashSet<string> geometryTag = new HashSet<string>();
+
+            foreach (string tag in bhomTags)
             {
-                adapterID = name.Replace(forRemoval, "");
+                if (lusasGeometry.isMemberOfGroup(tag))
+                {
+                    geometryTag.Add(tag);
+                }
             }
-            else
-            {
-                adapterID = name;
-            }
-            return adapterID;
+
+            return geometryTag;
         }
     }
 }

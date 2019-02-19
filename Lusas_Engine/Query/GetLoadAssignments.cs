@@ -22,41 +22,27 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System;
-using BH.oM.Structure.Elements;
-using BH.Engine.Geometry;
-using BH.oM.Geometry;
+using Lusas.LPI;
 
-namespace BH.Adapter.Lusas
+namespace BH.Engine.Lusas
 {
-    public partial class LusasAdapter
+    public partial class Query
     {
-        public static List<Edge> GetDistinctEdges(IEnumerable<Edge> edges)
+        public static IEnumerable<IGrouping<string, IFAssignment>> GetLoadAssignments(IFLoading lusasForce)
         {
-            List<Edge> distinctEdges = edges.GroupBy(m => new
+            object[] assignmentObjects = lusasForce.getAssignments();
+            List<IFAssignment> assignments = new List<IFAssignment>();
+
+            for (int j = 0; j < assignmentObjects.Count(); j++)
             {
-                X = Math.Round(m.Curve.IPointAtParameter(0.5).X, 3),
-                Y = Math.Round(m.Curve.IPointAtParameter(0.5).Y, 3),
-                Z = Math.Round(m.Curve.IPointAtParameter(0.5).Z, 3)
-            })
-        .Select(x => x.First())
-        .ToList();
+                IFAssignment assignment = (IFAssignment)assignmentObjects[j];
+                assignments.Add(assignment);
+            }
 
-            return distinctEdges;
-        }
+            IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
+                assignments.GroupBy(m => m.getAssignmentLoadset().getName());
 
-        public static List<Point> GetDistinctPoints(IEnumerable<Point> points)
-        {
-            List<Point> distinctPoints = points.GroupBy(m => new
-            {
-                X = Math.Round(m.X, 3),
-                Y = Math.Round(m.Y, 3),
-                Z = Math.Round(m.Z, 3)
-            })
-                 .Select(x => x.First())
-                 .ToList();
-
-            return distinctPoints;
+            return groupedByLoadcases;
         }
     }
 }

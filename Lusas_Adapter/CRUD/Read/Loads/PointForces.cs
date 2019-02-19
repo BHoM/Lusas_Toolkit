@@ -49,7 +49,7 @@ namespace BH.Adapter.Lusas
                     IFLoading lusasConcentratedLoad = (IFLoading)lusasConcentratedLoads[i];
 
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                        GetLoadAssignments(lusasConcentratedLoad);
+                        Engine.Lusas.Query.GetLoadAssignments(lusasConcentratedLoad);
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {

@@ -97,19 +97,6 @@ namespace BH.Adapter.Lusas
 
         }
 
-        public double[] ConvertToDouble(object objectAxis)
-        {
-            object[] axis = (object[])objectAxis;
-            List<double> axisList = new List<double>();
-            for (int i = 0; i < axis.Count(); i++)
-            {
-                double castAxis = (double)axis[i];
-                axisList.Add(castAxis);
-            }
-
-            return axisList.ToArray();
-        }
-
         public IFLine CreateLine(Bar bar, IFPoint startPoint, IFPoint endPoint)
         {
             if (

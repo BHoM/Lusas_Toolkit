@@ -20,38 +20,28 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using Lusas.LPI;
-using BH.Engine.Reflection;
+using System.Collections.Generic;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Convert
+    public partial class Query
     {
-        private static void WarningPointAssignment(IFAssignment lusasAssignment)
+        public static bool CheckIllegalCharacters(string objectName)
         {
-            if (lusasAssignment.getDatabaseObject() is IFPoint)
-            {
-                Compute.RecordWarning(
-                    lusasAssignment.GetType().ToString() + " does not support assignment to points, these have not been pulled");
-            }
-        }
+            List<char> illegalCharacters = new List<char>() { '/' ,'|', '\\'};
 
-        private static void WarningLineAssignment(IFAssignment lusasAssignment)
-        {
-            if (lusasAssignment.getDatabaseObject() is IFLine)
+            foreach(char character in illegalCharacters)
             {
-                Compute.RecordWarning(
-                    lusasAssignment.GetType().ToString() + "  does not support assignment to lines, these have not been pulled");
+                if (objectName.Contains(character.ToString()))
+                {
+                    Engine.Reflection.Compute.RecordError(
+                        "Illegal character: " + character.ToString() + " present in object name: "
+                         + objectName);
+                    return false;
+                }
             }
-        }
 
-        private static void WarningSurfaceAssignment(IFAssignment lusasAssignment)
-        {
-            if (lusasAssignment.getDatabaseObject() is IFSurface)
-            {
-                Compute.RecordWarning(
-                    lusasAssignment.GetType().ToString() + " does not support assignment to surfaces, these have not been pulled");
-            }
+            return true;
         }
     }
 }

@@ -48,7 +48,7 @@ namespace BH.Adapter.Lusas
                 {
                     IFLoading lusasInternalBeamDistributedLoad = (IFLoading)lusasInternalBeamDistributedLoads[i];
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                        GetLoadAssignments(lusasInternalBeamDistributedLoad);
+                        Engine.Lusas.Query.GetLoadAssignments(lusasInternalBeamDistributedLoad);
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {

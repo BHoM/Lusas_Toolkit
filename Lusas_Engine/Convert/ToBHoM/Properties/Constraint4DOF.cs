@@ -57,7 +57,7 @@ namespace BH.Engine.Lusas
                 }
             }
 
-            string attributeName = GetName(lusasAttribute);
+            string attributeName = Lusas.Query.GetName(lusasAttribute);
 
             Constraint4DOF bhomConstraint4DOF = Structure.Create.Constraint4DOF(attributeName);
 
@@ -71,7 +71,7 @@ namespace BH.Engine.Lusas
             bhomConstraint4DOF.TranslationalStiffnessX = stiffness[2];
             bhomConstraint4DOF.TranslationalStiffnessX = stiffness[3];
 
-            int adapterID = GetAdapterID(lusasAttribute, 'p');
+            int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'p');
 
             bhomConstraint4DOF.CustomData["Lusas_id"] = adapterID;
 

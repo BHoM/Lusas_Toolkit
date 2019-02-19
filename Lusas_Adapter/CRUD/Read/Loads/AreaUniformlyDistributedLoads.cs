@@ -56,7 +56,7 @@ namespace BH.Adapter.Lusas
                     if (lusasDistributedLoad.getValue("type") == "Area")
                     {
                         IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                            GetLoadAssignments(lusasDistributedLoad);
+                            Engine.Lusas.Query.GetLoadAssignments(lusasDistributedLoad);
 
                         foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                         {

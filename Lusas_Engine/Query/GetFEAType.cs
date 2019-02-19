@@ -21,11 +21,10 @@
  */
 
 using BH.oM.Structure.Elements;
-using BH.Engine.Reflection;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Convert
+    public partial class Query
     {
         public static BarFEAType GetFEAType(object type)
         {
@@ -59,7 +58,7 @@ namespace BH.Engine.Lusas
                 type.ToString() == "LMS3" ||
                 type.ToString() == "LMS4")
             {
-                Compute.RecordWarning(
+                Engine.Reflection.Compute.RecordWarning(
                     type.ToString() + " not supported, FEAType defaulted to Flexural");
             }
 

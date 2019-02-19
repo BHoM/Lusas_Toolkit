@@ -169,7 +169,7 @@ namespace BH.Adapter.Lusas
         private bool CreateCollection(IEnumerable<Point> points)
         {
 
-            List<Point> distinctPoints = GetDistinctPoints(points);
+            List<Point> distinctPoints = Engine.Lusas.Query.GetDistinctPoints(points);
 
             List<Point> existingPoints = ReadPoints();
 
@@ -273,7 +273,7 @@ namespace BH.Adapter.Lusas
                 panelPlanarEdges.AddRange(panelPlanar.ExternalEdges);
             }
 
-            List<Edge> distinctEdges = GetDistinctEdges(panelPlanarEdges);
+            List<Edge> distinctEdges = Engine.Lusas.Query.GetDistinctEdges(panelPlanarEdges);
 
             List<Point> midPoints = new List<Point>();
 
@@ -311,7 +311,7 @@ namespace BH.Adapter.Lusas
         {
             List<Point> allPoints = new List<Point>();
 
-            List<Edge> distinctEdges = GetDistinctEdges(edges);
+            List<Edge> distinctEdges = Engine.Lusas.Query.GetDistinctEdges(edges);
 
             foreach (Edge edge in distinctEdges)
             {
@@ -319,7 +319,7 @@ namespace BH.Adapter.Lusas
                 allPoints.Add(edge.Curve.IEndPoint());
             }
 
-            List<Point> distinctPoints = GetDistinctPoints(allPoints);
+            List<Point> distinctPoints = Engine.Lusas.Query.GetDistinctPoints(allPoints);
 
             List<Point> existingPoints = ReadPoints();
             List<Point> pointsToPush = distinctPoints.Except(

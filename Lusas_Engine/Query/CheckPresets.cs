@@ -21,28 +21,35 @@
  */
 
 using System.Collections.Generic;
-using System.Linq;
-using Lusas.LPI;
+using BH.oM.Structure.Properties.Constraint;
 
-namespace BH.Adapter.Lusas
+namespace BH.Engine.Lusas
 {
-    public partial class LusasAdapter
+    public partial class Query
     {
-        public static IEnumerable<IGrouping<string, IFAssignment>> GetLoadAssignments(IFLoading lusasForce)
+        public static List<DOFType> CheckPresets(object[] releases)
         {
-            object[] assignmentObjects = lusasForce.getAssignments();
-            List<IFAssignment> assignments = new List<IFAssignment>();
+            List<DOFType> releaseType = new List<DOFType>();
 
-            for (int j = 0; j < assignmentObjects.Count(); j++)
+            if ((bool)releases[7])
             {
-                IFAssignment assignment = (IFAssignment)assignmentObjects[j];
-                assignments.Add(assignment);
+                List<DOFType> pinList = new List<DOFType>() { DOFType.Fixed, DOFType.Fixed, DOFType.Fixed,
+                    DOFType.Fixed, DOFType.Free, DOFType.Free };
+                releaseType.AddRange(pinList);
+            }
+            else if ((bool)releases[8])
+            {
+                List<DOFType> fixList = new List<DOFType>() { DOFType.Fixed, DOFType.Fixed, DOFType.Fixed,
+                    DOFType.Fixed, DOFType.Fixed, DOFType.Fixed };
+                releaseType.AddRange(fixList);
+            }
+            else if ((bool)releases[0])
+            {
+                Reflection.Compute.RecordWarning(
+                    "Lusas joints are not supported in the BHoM, verify the constraint output is correct");
             }
 
-            IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                assignments.GroupBy(m => m.getAssignmentLoadset().getName());
-
-            return groupedByLoadcases;
+            return releaseType;
         }
     }
 }

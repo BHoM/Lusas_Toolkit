@@ -49,9 +49,9 @@ namespace BH.Engine.Lusas
 
             Node endNode = GetNode(lusasLine, 1, bhomNodes);
 
-            HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasLine, lusasGroups));
+            HashSet<string> tags = new HashSet<string>(Query.IsMemberOf(lusasLine, lusasGroups));
 
-            List<string> supportAssignments = AttributeAssignments(lusasLine, "Support");
+            List<string> supportAssignments = Lusas.Query.GetAttributeAssignments(lusasLine, "Support");
 
             Constraint4DOF barConstraint = null;
             if (!(supportAssignments.Count() == 0))
@@ -64,8 +64,8 @@ namespace BH.Engine.Lusas
                 Tags = tags,
                 Spring = barConstraint};
 
-            List<string> geometricAssignments = AttributeAssignments(lusasLine, "Geometric");
-            List<string> materialAssignments = AttributeAssignments(lusasLine, "Material");
+            List<string> geometricAssignments = Lusas.Query.GetAttributeAssignments(lusasLine, "Geometric");
+            List<string> materialAssignments = Lusas.Query.GetAttributeAssignments(lusasLine, "Material");
 
             Material lineMaterial = null;
             ISectionProperty lineSection = null;
@@ -82,7 +82,7 @@ namespace BH.Engine.Lusas
             }
 
             MeshSettings1D lineMesh = null;
-            List<string> meshSettings = AttributeAssignments(lusasLine, "Mesh");
+            List<string> meshSettings = Lusas.Query.GetAttributeAssignments(lusasLine, "Mesh");
 
             if (!(meshSettings.Count()==0))
             {
@@ -90,7 +90,7 @@ namespace BH.Engine.Lusas
                 bhomBar.CustomData["Mesh"] = lineMesh;
             }
 
-            Tuple<bool,double, BarRelease, BarFEAType> barMeshProperties = GetMeshProperties(lusasLine);
+            Tuple<bool,double, BarRelease, BarFEAType> barMeshProperties = Lusas.Query.GetMeshProperties(lusasLine);
 
             if (barMeshProperties.Item1)
             {
@@ -99,7 +99,7 @@ namespace BH.Engine.Lusas
                 bhomBar.FEAType = barMeshProperties.Item4;
             }
 
-            string adapterID = RemovePrefix(lusasLine.getName(), "L");
+            string adapterID = Engine.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L");
 
             bhomBar.CustomData["Lusas_id"] = adapterID;
 

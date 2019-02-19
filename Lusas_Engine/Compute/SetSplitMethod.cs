@@ -20,50 +20,33 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Structure.Elements;
 using Lusas.LPI;
-using System;
-using BH.oM.Structure.Properties.Constraint;
+using BH.oM.Structure.Elements;
+using BH.oM.Adapters.Lusas;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Convert
+    public partial class Compute
     {
-        public static Tuple<bool, double, BarRelease, BarFEAType> GetMeshProperties(IFLine lusasLine)
+        public static void SetSplitMethod(IFMeshLine lusasLineMesh, MeshSettings1D meshSettings1D, BarFEAType barFEAType)
         {
-            bool meshAssigned = true;
-            double betaAngle = 0;
-            BarRelease barRelease = null;
-            BarFEAType barType = BarFEAType.Flexural;
-
-            object[] meshAssignments = lusasLine.getAssignments("Mesh");
-
-            if (meshAssignments.Length > 0)
+            if (meshSettings1D.SplitMethod == Split1D.Length)
             {
-                foreach (object assignment in meshAssignments)
-                {
-                    IFAssignment lusasAssignment = (IFAssignment)assignment;
-                    IFAttribute lusasMesh = lusasAssignment.getAttribute();
-                    IFMeshLine lusasLineMesh = (IFMeshLine)lusasMesh;
-                    betaAngle = lusasAssignment.getBetaAngle();
-
-                    barRelease = GetBarRelease(lusasLineMesh);
-
-                    object[] barMeshName = lusasLineMesh.getElementNames();
-
-                    foreach (object type in barMeshName)
-                    {
-                        barType = GetFEAType(type);
-                    }
-                }
+                if (barFEAType == BarFEAType.Axial)
+                    lusasLineMesh.setSize("BRS2", meshSettings1D.SplitParameter);
+                else if (barFEAType == BarFEAType.Flexural)
+                    lusasLineMesh.setSize("BMX21", meshSettings1D.SplitParameter);
             }
-            else
-                meshAssigned = false;
-
-            Tuple<bool, double, BarRelease, BarFEAType> lineMeshProperties =
-                new Tuple<bool, double, BarRelease, BarFEAType>(meshAssigned, betaAngle, barRelease, barType);
-
-            return lineMeshProperties;
+            else if (meshSettings1D.SplitMethod == Split1D.Automatic)
+            {
+                lusasLineMesh.setValue("uiSpacing", "uniform");
+                SetElementType(lusasLineMesh, barFEAType);
+            }
+            else if (meshSettings1D.SplitMethod == Split1D.Divisions)
+            {
+                lusasLineMesh.addSpacing(System.Convert.ToInt32(meshSettings1D.SplitParameter), 1);
+                SetElementType(lusasLineMesh, barFEAType);
+            }
         }
     }
 }

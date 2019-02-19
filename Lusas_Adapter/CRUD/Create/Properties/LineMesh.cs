@@ -31,7 +31,7 @@ namespace BH.Adapter.Lusas
     {
         public IFMeshLine CreateMeshSettings1D(MeshSettings1D meshSettings1D, BarFEAType barFEAType = BarFEAType.Flexural, BarRelease barRelease = null)
         {
-            if (!CheckIllegalCharacters(meshSettings1D.Name))
+            if (!Engine.Lusas.Query.CheckIllegalCharacters(meshSettings1D.Name))
             {
                 return null;
             }
@@ -53,7 +53,7 @@ namespace BH.Adapter.Lusas
             else
                 adapterID = System.Convert.ToInt32(NextId(meshSettings1D.GetType()));
 
-            string releaseString = CreateReleaseString(barRelease);
+            string releaseString = Engine.Lusas.Compute.CreateReleaseString(barRelease);
 
             IFMeshLine lusasLineMesh = null;
             string lusasName = 
@@ -66,8 +66,8 @@ namespace BH.Adapter.Lusas
             else
             {
                 lusasLineMesh = d_LusasData.createMeshLine(lusasName);
-                SetSplitMethod(lusasLineMesh, meshSettings1D, barFEAType);
-                SetEndConditions(lusasLineMesh, barRelease);
+                Engine.Lusas.Compute.SetSplitMethod(lusasLineMesh, meshSettings1D, barFEAType);
+                Engine.Lusas.Compute.SetEndConditions(lusasLineMesh, barRelease);
             }
             return lusasLineMesh;
         }

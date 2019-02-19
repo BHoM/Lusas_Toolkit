@@ -21,25 +21,27 @@
  */
 
 using System.Collections.Generic;
-using BH.oM.Structure.Properties.Constraint;
-
+using System.Linq;
+using Lusas.LPI;
 namespace BH.Engine.Lusas
 {
-    public partial class Convert
+    public partial class Query
     {
-        public static Constraint6DOF SetConstraint(List<DOFType> releaseType)
+        public static List<string> GetAttributeAssignments(IFGeometry lusasGeometry, string attributeType)
         {
-            Constraint6DOF constraint = new Constraint6DOF
-            {
-                TranslationX = releaseType[0],
-                TranslationY = releaseType[1],
-                TranslationZ = releaseType[2],
-                RotationX = releaseType[3],
-                RotationY = releaseType[4],
-                RotationZ = releaseType[5]
-            };
+            object[] lusasAssignments = lusasGeometry.getAssignments(attributeType);
 
-            return constraint;
+            List<string> attributeNames = new List<string>();
+
+            int n = lusasAssignments.Count();
+            for (int i = 0; i < n; i++)
+            {
+                IFAssignment lusasAssignment = lusasGeometry.getAssignments(attributeType)[i];
+                IFAttribute lusasAttribute = lusasAssignment.getAttribute();
+                string attributeName = Lusas.Query.GetName(lusasAttribute);
+                attributeNames.Add(attributeName);
+            }
+            return attributeNames;
         }
     }
 }

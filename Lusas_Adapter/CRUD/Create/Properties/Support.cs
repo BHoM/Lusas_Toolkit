@@ -32,7 +32,7 @@ namespace BH.Adapter.Lusas
     {
         public IFAttribute CreateSupport(Constraint6DOF constraint)
         {
-            if (!CheckIllegalCharacters(constraint.Name))
+            if (!Engine.Lusas.Query.CheckIllegalCharacters(constraint.Name))
             {
                 return null;
             }
@@ -79,7 +79,7 @@ namespace BH.Adapter.Lusas
         }
         public IFAttribute CreateSupport(Constraint4DOF constraint)
         {
-            if (!CheckIllegalCharacters(constraint.Name))
+            if (!Engine.Lusas.Query.CheckIllegalCharacters(constraint.Name))
             {
                 return null;
             }

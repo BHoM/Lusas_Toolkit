@@ -48,12 +48,12 @@ namespace BH.Engine.Lusas
 
             GravityLoad bhomGravityLoad = new GravityLoad();
 
-            IEnumerable<BHoMObject> bhomObjects = GetGeometryAssignments(
+            IEnumerable<BHoMObject> bhomObjects = Lusas.Query.GetGeometryAssignments(
                 lusasAssignments, null, bhomBars, bhomPlanarPanels);
             bhomGravityLoad = Structure.Create.GravityLoad(
-                bhomLoadcase, gravityVector, bhomObjects, GetName(lusasGravityLoad));
+                bhomLoadcase, gravityVector, bhomObjects, Lusas.Query.GetName(lusasGravityLoad));
 
-            int adapterID = GetAdapterID(lusasGravityLoad, 'l');
+            int adapterID = Lusas.Query.GetAdapterID(lusasGravityLoad, 'l');
             bhomGravityLoad.CustomData["Lusas_id"] = adapterID;
 
             return bhomGravityLoad;

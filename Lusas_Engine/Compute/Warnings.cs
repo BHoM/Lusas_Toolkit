@@ -20,40 +20,37 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.Collections.Generic;
-using BH.oM.Structure.Elements;
 using Lusas.LPI;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Convert
+    public partial class Compute
     {
-        public static Node GetNode(IFLine lusasLine, int nodeIndex, Dictionary<string, Node> bhomNodes)
+        public static void WarningPointAssignment(IFAssignment lusasAssignment)
         {
-            Node bhomNode = null;
-            IFPoint lusasPoint = lusasLine.getLOFs()[nodeIndex];
-            string pointName = RemovePrefix(lusasPoint.getName(), "P");
-            bhomNodes.TryGetValue(pointName, out bhomNode);
-
-            return bhomNode;
+            if (lusasAssignment.getDatabaseObject() is IFPoint)
+            {
+                Engine.Reflection.Compute.RecordWarning(
+                    lusasAssignment.GetType().ToString() + " does not support assignment to points, these have not been pulled");
+            }
         }
 
-        public static Bar GetBar(IFSurface lusasSurf, int lineIndex, Dictionary<string, Bar> bhomBars)
+        public static void WarningLineAssignment(IFAssignment lusasAssignment)
         {
-            Bar bhomBar = null;
-            IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
-            string lineName = RemovePrefix(lusasEdge.getName(), "L");
-            bhomBars.TryGetValue(lineName, out bhomBar);
-            return bhomBar;
+            if (lusasAssignment.getDatabaseObject() is IFLine)
+            {
+                Engine.Reflection.Compute.RecordWarning(
+                    lusasAssignment.GetType().ToString() + "  does not support assignment to lines, these have not been pulled");
+            }
         }
 
-        public static Edge GetEdge(IFSurface lusasSurf, int lineIndex, Dictionary<string, Edge> bhomBars)
+        public static void WarningSurfaceAssignment(IFAssignment lusasAssignment)
         {
-            Edge bhomEdge = null;
-            IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
-            string lineName = RemovePrefix(lusasEdge.getName(), "L");
-            bhomBars.TryGetValue(lineName, out bhomEdge);
-            return bhomEdge;
+            if (lusasAssignment.getDatabaseObject() is IFSurface)
+            {
+                Engine.Reflection.Compute.RecordWarning(
+                    lusasAssignment.GetType().ToString() + " does not support assignment to surfaces, these have not been pulled");
+            }
         }
     }
 }

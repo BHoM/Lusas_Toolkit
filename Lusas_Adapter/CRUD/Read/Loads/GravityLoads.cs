@@ -52,7 +52,7 @@ namespace BH.Adapter.Lusas
                     IFLoading lusasBodyForce = (IFLoading)lusasBodyForces[i];
 
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                        GetLoadAssignments(lusasBodyForce);
+                        Engine.Lusas.Query.GetLoadAssignments(lusasBodyForce);
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
