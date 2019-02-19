@@ -86,7 +86,8 @@
     <Compile Include="Compute\SetEndConditions.cs" />
     <Compile Include="Compute\SetSplitMethod.cs" />
     <Compile Include="Compute\CreateReleaseString.cs" />
-    <Compile Include="Convert\ConvertToDouble.cs" />
+    <Compile Include="Convert\Double.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\Profile.cs" />
     <Compile Include="Query\CheckIllegalCharacters.cs" />
     <Compile Include="Query\CheckPresets.cs" />
     <Compile Include="Query\GetBarRelease.cs" />

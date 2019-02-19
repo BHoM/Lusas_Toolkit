@@ -45,9 +45,9 @@ namespace BH.Engine.Lusas
 
         {
 
-            Node startNode = GetNode(lusasLine, 0, bhomNodes);
+            Node startNode = Engine.Lusas.Query.GetNode(lusasLine, 0, bhomNodes);
 
-            Node endNode = GetNode(lusasLine, 1, bhomNodes);
+            Node endNode = Engine.Lusas.Query.GetNode(lusasLine, 1, bhomNodes);
 
             HashSet<string> tags = new HashSet<string>(Query.IsMemberOf(lusasLine, lusasGroups));
 
