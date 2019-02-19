@@ -31,7 +31,7 @@ namespace BH.Engine.Lusas
     {
         public static ISectionProperty ToBHoMSection(this IFAttribute lusasAttribute)
         {
-            string attributeName = GetName(lusasAttribute);
+            string attributeName = Lusas.Query.GetName(lusasAttribute);
 
             IProfile sectionProfile = CreateProfile(lusasAttribute);
 
@@ -61,7 +61,7 @@ namespace BH.Engine.Lusas
 
             bhomSection.Name = attributeName;
 
-            int adapterID = GetAdapterID(lusasAttribute, 'G');
+            int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'G');
 
             bhomSection.CustomData["Lusas_id"] = adapterID;
 

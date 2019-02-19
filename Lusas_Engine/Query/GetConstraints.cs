@@ -25,28 +25,26 @@ using BH.oM.Structure.Properties.Constraint;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Convert
+    public partial class Query
     {
-        public static List<DOFType> CheckPresets(object[] releases)
+        public static List<DOFType> GetConstraints(object[] releases)
         {
+
             List<DOFType> releaseType = new List<DOFType>();
 
-            if ((bool)releases[7])
+            if ((bool)releases[0] || (bool)releases[7] || (bool)releases[8])
             {
-                List<DOFType> pinList = new List<DOFType>() { DOFType.Fixed, DOFType.Fixed, DOFType.Fixed,
-                    DOFType.Fixed, DOFType.Free, DOFType.Free };
-                releaseType.AddRange(pinList);
+                releaseType = Lusas.Query.CheckPresets(releases);
             }
-            else if ((bool)releases[8])
+            else
             {
-                List<DOFType> fixList = new List<DOFType>() { DOFType.Fixed, DOFType.Fixed, DOFType.Fixed,
-                    DOFType.Fixed, DOFType.Fixed, DOFType.Fixed };
-                releaseType.AddRange(fixList);
-            }
-            else if ((bool)releases[0])
-            {
-                Reflection.Compute.RecordWarning(
-                    "Lusas joints are not supported in the BHoM, verify the constraint output is correct");
+                for (int i = 1; i <= 7; i++)
+                {
+                    if ((bool)releases[i])
+                        releaseType.Add(DOFType.Free);
+                    else
+                        releaseType.Add(DOFType.Fixed);
+                }
             }
 
             return releaseType;

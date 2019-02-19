@@ -30,7 +30,7 @@ namespace BH.Adapter.Lusas
     {
         public IFLoadcase CreateLoadcase(Loadcase loadcase)
         {
-            if (!CheckIllegalCharacters(loadcase.Name))
+            if (!Engine.Lusas.Query.CheckIllegalCharacters(loadcase.Name))
             {
                 return null;
             }

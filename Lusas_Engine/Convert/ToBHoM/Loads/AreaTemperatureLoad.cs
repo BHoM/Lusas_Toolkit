@@ -40,16 +40,16 @@ namespace BH.Engine.Lusas
             double temperatureChange = lusasTemperatureLoad.getValue("T")
                 - lusasTemperatureLoad.getValue("T0");
 
-            IEnumerable<IAreaElement> bhomPlanarPanels = GetSurfaceAssignments(lusasAssignments, panelPlanarDictionary);
+            IEnumerable<IAreaElement> bhomPlanarPanels = Lusas.Query.GetSurfaceAssignments(lusasAssignments, panelPlanarDictionary);
             AreaTemperatureLoad bhomAreaTemperatureLoad = Structure.Create.AreaTemperatureLoad(
                 bhomLoadcase,
                 temperatureChange,
                 bhomPlanarPanels,
                 LoadAxis.Local,
                 false,
-                GetName(lusasTemperatureLoad));
+                Lusas.Query.GetName(lusasTemperatureLoad));
 
-            int adapterID = GetAdapterID(lusasTemperatureLoad, 'l');
+            int adapterID = Lusas.Query.GetAdapterID(lusasTemperatureLoad, 'l');
             bhomAreaTemperatureLoad.CustomData["Lusas_id"] = adapterID;
 
             return bhomAreaTemperatureLoad;

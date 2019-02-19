@@ -23,11 +23,11 @@
 using BH.oM.Structure.Properties.Constraint;
 using Lusas.LPI;
 
-namespace BH.Adapter.Lusas
+namespace BH.Engine.Lusas
 {
-    public partial class LusasAdapter
+    public partial class Compute
     {
-        public void SetEndConditions(IFMeshLine lusasLineMesh, BarRelease barReleases)
+        public static void SetEndConditions(IFMeshLine lusasLineMesh, BarRelease barReleases)
         {
             if (barReleases.StartRelease.TranslationX == DOFType.Free)
                 lusasLineMesh.setEndRelease("Start", "u", "free");

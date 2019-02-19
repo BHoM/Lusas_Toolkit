@@ -27,7 +27,7 @@ using BH.oM.Base;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Convert
+    public partial class Query
     {
         public static IEnumerable<Node> GetNodeAssignments(IEnumerable<IFAssignment> lusasAssignments,
     Dictionary<string, Node> bhomNodes)
@@ -40,13 +40,13 @@ namespace BH.Engine.Lusas
                 if (lusasAssignment.getDatabaseObject() is IFPoint)
                 {
                     IFPoint lusasPoint = (IFPoint)lusasAssignment.getDatabaseObject();
-                    bhomNodes.TryGetValue(RemovePrefix(lusasPoint.getName(), "P"), out bhomNode);
+                    bhomNodes.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P"), out bhomNode);
                     assignedNodes.Add(bhomNode);
                 }
                 else
                 {
-                    WarningLineAssignment(lusasAssignment);
-                    WarningSurfaceAssignment(lusasAssignment);
+                    Compute.WarningLineAssignment(lusasAssignment);
+                    Compute.WarningSurfaceAssignment(lusasAssignment);
                 }
             }
 
@@ -64,13 +64,13 @@ namespace BH.Engine.Lusas
                 if (lusasAssignment.getDatabaseObject() is IFLine)
                 {
                     IFLine lusasLine = (IFLine)lusasAssignment.getDatabaseObject();
-                    bhomBars.TryGetValue(RemovePrefix(lusasLine.getName(), "L"), out bhomBar);
+                    bhomBars.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L"), out bhomBar);
                     assignedBars.Add(bhomBar);
                 }
                 else
                 {
-                    WarningPointAssignment(lusasAssignment);
-                    WarningSurfaceAssignment(lusasAssignment);
+                    Lusas.Compute.WarningPointAssignment(lusasAssignment);
+                    Lusas.Compute.WarningSurfaceAssignment(lusasAssignment);
                 }
 
             }
@@ -89,13 +89,13 @@ namespace BH.Engine.Lusas
                 if (lusasAssignment.getDatabaseObject() is IFSurface)
                 {
                     IFSurface lusasSurface = (IFSurface)lusasAssignment.getDatabaseObject();
-                    bhomPlanarPanels.TryGetValue(RemovePrefix(lusasSurface.getName(), "S"), out bhomPanelPlanar);
+                    bhomPlanarPanels.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasSurface.getName(), "S"), out bhomPanelPlanar);
                     assignedSurfs.Add(bhomPanelPlanar);
                 }
                 else
                 {
-                    WarningPointAssignment(lusasAssignment);
-                    WarningLineAssignment(lusasAssignment);
+                    Lusas.Compute.WarningPointAssignment(lusasAssignment);
+                    Lusas.Compute.WarningLineAssignment(lusasAssignment);
                 }
             }
 
@@ -118,17 +118,17 @@ namespace BH.Engine.Lusas
 
                 if (lusasGeometry is IFPoint)
                 {
-                    bhomNodes.TryGetValue(RemovePrefix(lusasGeometry.getName(), "P"), out bhomNode);
+                    bhomNodes.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "P"), out bhomNode);
                     assignedObjects.Add(bhomNode);
                 }
                 else if (lusasGeometry is IFLine)
                 {
-                    bhomBars.TryGetValue(RemovePrefix(lusasGeometry.getName(), "L"), out bhomBar);
+                    bhomBars.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "L"), out bhomBar);
                     assignedObjects.Add(bhomBar);
                 }
                 else if (lusasGeometry is IFSurface)
                 {
-                    bhomPlanarPanels.TryGetValue(RemovePrefix(lusasGeometry.getName(), "S"), out bhomPanelPlanar);
+                    bhomPlanarPanels.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "S"), out bhomPanelPlanar);
                     assignedObjects.Add(bhomPanelPlanar);
                 }
             }

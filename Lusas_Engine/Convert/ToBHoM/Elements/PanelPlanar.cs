@@ -45,7 +45,7 @@ namespace BH.Engine.Lusas
             List<ICurve> dummyCurve = new List<ICurve>();
 
             int n = lusasSurfaceLines.Length;
-            HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasSurface, groupNames));
+            HashSet<string> tags = new HashSet<string>(Query.IsMemberOf(lusasSurface, groupNames));
 
             List<Edge> surfaceEdges = new List<Edge>();
 
@@ -60,8 +60,8 @@ namespace BH.Engine.Lusas
             bhomPanel.Tags = tags;
             bhomPanel.CustomData["Lusas_id"] = lusasSurface.getName();
 
-            List<string> geometricAssignments = AttributeAssignments(lusasSurface, "Geometric");
-            List<string> materialAssignments = AttributeAssignments(lusasSurface, "Material");
+            List<string> geometricAssignments = Lusas.Query.GetAttributeAssignments(lusasSurface, "Geometric");
+            List<string> materialAssignments = Lusas.Query.GetAttributeAssignments(lusasSurface, "Material");
 
             Material panelMaterial = null;
             ISurfaceProperty bhomProperty2D = null;

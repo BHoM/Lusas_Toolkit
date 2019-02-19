@@ -29,7 +29,7 @@ namespace BH.Adapter.Lusas
     {
         public IFMeshSurface CreateMeshSettings2D(MeshSettings2D meshSettings2D)
         {
-            if (!CheckIllegalCharacters(meshSettings2D.Name))
+            if (!Engine.Lusas.Query.CheckIllegalCharacters(meshSettings2D.Name))
             {
                 return null;
             }

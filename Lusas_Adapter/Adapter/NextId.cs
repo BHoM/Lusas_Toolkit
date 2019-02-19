@@ -30,7 +30,9 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
 using BH.oM.Geometry;
 using Lusas.LPI;
+using BH.Engine.Lusas;
 using BH.oM.Adapters.Lusas;
+
 
 namespace BH.Adapter.Lusas
 {
@@ -68,8 +70,8 @@ namespace BH.Adapter.Lusas
                     {
 
                         IFPoint largestPoint = d_LusasData.getPointByNumber(largestPointID);
-                        index = Convert.ToInt32(
-                               Engine.Lusas.Convert.RemovePrefix(largestPoint.getName(), "P")) + 1;
+                        index = System.Convert.ToInt32(
+                               Engine.Lusas.Modify.RemovePrefix(largestPoint.getName(), "P")) + 1;
                     }
                 }
                 if (type == typeof(Bar))
@@ -82,8 +84,8 @@ namespace BH.Adapter.Lusas
                     {
 
                         IFLine largestLine = d_LusasData.getLineByNumber(d_LusasData.getLargestLineID());
-                        index = Convert.ToInt32(
-                               Engine.Lusas.Convert.RemovePrefix(largestLine.getName(), "L")) + 1;
+                        index = System.Convert.ToInt32(
+                               Engine.Lusas.Modify.RemovePrefix(largestLine.getName(), "L")) + 1;
                     }
                 }
                 if (type == typeof(PanelPlanar))
@@ -96,8 +98,8 @@ namespace BH.Adapter.Lusas
                     {
 
                         IFSurface largestSurface = d_LusasData.getSurfaceByNumber(d_LusasData.getLargestSurfaceID());
-                        index = Convert.ToInt32(
-                            Engine.Lusas.Convert.RemovePrefix(largestSurface.getName(), "S")) + 1;
+                        index = System.Convert.ToInt32(
+                            Engine.Lusas.Modify.RemovePrefix(largestSurface.getName(), "S")) + 1;
                     }
                 }
                 if (type == typeof(Edge))
@@ -110,8 +112,8 @@ namespace BH.Adapter.Lusas
                     {
 
                         IFLine largestLine = d_LusasData.getLineByNumber(d_LusasData.getLargestLineID());
-                        index = Convert.ToInt32(
-                            Engine.Lusas.Convert.RemovePrefix(largestLine.getName(), "L")) + 1;
+                        index = System.Convert.ToInt32(
+                            Engine.Lusas.Modify.RemovePrefix(largestLine.getName(), "L")) + 1;
                     }
                 }
                 if (type == typeof(Point))
@@ -125,8 +127,8 @@ namespace BH.Adapter.Lusas
                     {
 
                         IFPoint largestPoint = d_LusasData.getPointByNumber(largestPointID);
-                        index = Convert.ToInt32(
-                            Engine.Lusas.Convert.RemovePrefix(largestPoint.getName(), "P")) + 1;
+                        index = System.Convert.ToInt32(
+                            Engine.Lusas.Modify.RemovePrefix(largestPoint.getName(), "P")) + 1;
                     }
                 }
                 if (type == typeof(Loadcase) ||
@@ -143,14 +145,14 @@ namespace BH.Adapter.Lusas
                         if(largestLoadset is IFLoadcase)
                         {
                             IFLoadcase largestLoadcase = (IFLoadcase)largestLoadset;
-                            index = Convert.ToInt32(
-                                Engine.Lusas.Convert.GetAdapterID(largestLoadcase, 'c')) + 1;
+                            index = System.Convert.ToInt32(
+                                Engine.Lusas.Query.GetAdapterID(largestLoadcase, 'c')) + 1;
                         }
                         else if (largestLoadset is IFBasicCombination)
                         {
                             IFBasicCombination largestLoadCombination = (IFBasicCombination)largestLoadset;
-                            index = Convert.ToInt32(
-                                Engine.Lusas.Convert.GetAdapterID(largestLoadCombination, 'c')) + 1;
+                            index = System.Convert.ToInt32(
+                                Engine.Lusas.Query.GetAdapterID(largestLoadCombination, 'c')) + 1;
                         }
                     }
                 }
@@ -165,8 +167,8 @@ namespace BH.Adapter.Lusas
                     {
 
                         IFAttribute largestAttribute = d_LusasData.getAttribute("Material", largestMaterialID);
-                        index = Convert.ToInt32(
-                            Engine.Lusas.Convert.GetAdapterID(largestAttribute, 'M')) + 1;
+                        index = System.Convert.ToInt32(
+                            Engine.Lusas.Query.GetAdapterID(largestAttribute, 'M')) + 1;
                     }
                 }
                 if (type == typeof(Constraint6DOF) ||
@@ -181,8 +183,8 @@ namespace BH.Adapter.Lusas
                     {
 
                         IFAttribute largestAttribute = d_LusasData.getAttribute("Support", largestestSupportID);
-                        index = Convert.ToInt32(
-                            Engine.Lusas.Convert.GetAdapterID(largestAttribute, 'p')) + 1;
+                        index = System.Convert.ToInt32(
+                            Engine.Lusas.Query.GetAdapterID(largestAttribute, 'p')) + 1;
                     }
                 }
                 if (type == typeof(ConstantThickness) ||
@@ -196,8 +198,8 @@ namespace BH.Adapter.Lusas
                     else
                     {
                         IFAttribute largestAttribute = d_LusasData.getAttribute("Geometric", largestThicknessID);
-                        index = Convert.ToInt32(
-                            Engine.Lusas.Convert.GetAdapterID(largestAttribute, 'G')) + 1;
+                        index = System.Convert.ToInt32(
+                            Engine.Lusas.Query.GetAdapterID(largestAttribute, 'G')) + 1;
                     }
                 }
                 if (type == typeof(PointForce) ||
@@ -220,13 +222,13 @@ namespace BH.Adapter.Lusas
                         IFAttribute largestAttribute = d_LusasData.getAttribute("Loading", largestLoadID);
                         if(largestAttribute is IFPrescribedDisplacementLoad)
                         {
-                            index = Convert.ToInt32(
-                                Engine.Lusas.Convert.GetAdapterID(largestAttribute, 'd')) + 1;
+                            index = System.Convert.ToInt32(
+                                Engine.Lusas.Query.GetAdapterID(largestAttribute, 'd')) + 1;
                         }
                         else
                         {
-                            index = Convert.ToInt32(
-                                Engine.Lusas.Convert.GetAdapterID(largestAttribute, 'l')) + 1;
+                            index = System.Convert.ToInt32(
+                                Engine.Lusas.Query.GetAdapterID(largestAttribute, 'l')) + 1;
                         }
                     }
                 }
@@ -242,8 +244,8 @@ namespace BH.Adapter.Lusas
                     else
                     {
                         IFAttribute largestAttribute = d_LusasData.getAttribute("Mesh", largestThicknessID);
-                        index = Convert.ToInt32(
-                            Engine.Lusas.Convert.GetAdapterID(largestAttribute, 'e')) + 1;
+                        index = System.Convert.ToInt32(
+                            Engine.Lusas.Query.GetAdapterID(largestAttribute, 'e')) + 1;
                     }
                 }
                 m_indexDict[type] = index;

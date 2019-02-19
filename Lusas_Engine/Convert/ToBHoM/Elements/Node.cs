@@ -34,8 +34,8 @@ namespace BH.Engine.Lusas
         public static Node ToBHoMNode(this IFPoint lusasPoint,
             HashSet<string> groupNames, Dictionary<string, Constraint6DOF> bhom6DOFConstraints)
         {
-            HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasPoint, groupNames));
-            List<string> supportAssignments = AttributeAssignments(lusasPoint, "Support");
+            HashSet<string> tags = new HashSet<string>(Query.IsMemberOf(lusasPoint, groupNames));
+            List<string> supportAssignments = Lusas.Query.GetAttributeAssignments(lusasPoint, "Support");
 
             Constraint6DOF nodeConstraint = null;
             if (!(supportAssignments.Count() == 0))
@@ -57,7 +57,7 @@ namespace BH.Engine.Lusas
 
             bhomNode.Tags = tags;
 
-            string adapterID = RemovePrefix(lusasPoint.getName(), "P");
+            string adapterID = Engine.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P");
             bhomNode.CustomData["Lusas_id"] = adapterID;
 
             return bhomNode;

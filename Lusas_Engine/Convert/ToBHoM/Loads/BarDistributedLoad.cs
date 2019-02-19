@@ -37,7 +37,7 @@ namespace BH.Engine.Lusas
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = ToBHoMLoadcase(assignedLoadcase);
 
-            IEnumerable<Bar> bhomBars = GetBarAssignments(lusasAssignments, bhomBarDictionary);
+            IEnumerable<Bar> bhomBars = Lusas.Query.GetBarAssignments(lusasAssignments, bhomBarDictionary);
 
             Vector startForceVector = new Vector
             {
@@ -83,9 +83,9 @@ namespace BH.Engine.Lusas
                 endMomentVector,
                 LoadAxis.Local,
                 false,
-                GetName(lusasBarDistributedLoad));
+                Lusas.Query.GetName(lusasBarDistributedLoad));
 
-            int adapterID = GetAdapterID(lusasBarDistributedLoad, 'l');
+            int adapterID = Lusas.Query.GetAdapterID(lusasBarDistributedLoad, 'l');
             bhomBarPointLoad.CustomData["Lusas_id"] = adapterID;
 
             return bhomBarPointLoad;

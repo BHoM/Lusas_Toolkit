@@ -48,7 +48,7 @@ namespace BH.Adapter.Lusas
                 {
                     IFLoading lusasInternalBeamPointLoad = (IFLoading)lusasInternalBeamPointLoads[i];
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                        GetLoadAssignments(lusasInternalBeamPointLoad);
+                        Engine.Lusas.Query.GetLoadAssignments(lusasInternalBeamPointLoad);
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {

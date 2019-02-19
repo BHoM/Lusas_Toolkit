@@ -20,34 +20,19 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.Collections.Generic;
-using BH.oM.Structure.Properties.Constraint;
+using Lusas.LPI;
+using BH.oM.Structure.Elements;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Convert
+    public partial class Compute
     {
-        public static List<DOFType> GetConstraints(object[] releases)
+        public static void SetElementType(IFMeshLine lusasLineMesh, BarFEAType barFEAType)
         {
-
-            List<DOFType> releaseType = new List<DOFType>();
-
-            if ((bool)releases[0] || (bool)releases[7] || (bool)releases[8])
-            {
-                releaseType = CheckPresets(releases);
-            }
-            else
-            {
-                for (int i = 1; i <= 7; i++)
-                {
-                    if ((bool)releases[i])
-                        releaseType.Add(DOFType.Free);
-                    else
-                        releaseType.Add(DOFType.Fixed);
-                }
-            }
-
-            return releaseType;
+            if (barFEAType == BarFEAType.Axial)
+                lusasLineMesh.addElementName("BRS2");
+            else if(barFEAType == BarFEAType.Flexural)
+                lusasLineMesh.addElementName("BMX21");
         }
     }
 }

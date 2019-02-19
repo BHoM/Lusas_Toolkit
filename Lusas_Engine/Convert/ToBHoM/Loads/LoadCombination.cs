@@ -52,12 +52,12 @@ namespace BH.Engine.Lusas
 
             LoadCombination BHoMLoadCombination = new LoadCombination
             {
-                Name = GetName(lusasLoadCombination),
+                Name = Lusas.Query.GetName(lusasLoadCombination),
                 Number = lusasLoadCombination.getID(),
                 LoadCases = factoredLoadcases
             };
 
-            int adapterID = GetAdapterID(lusasLoadCombination, 'c');
+            int adapterID = Lusas.Query.GetAdapterID(lusasLoadCombination, 'c');
             BHoMLoadCombination.CustomData["Lusas_id"] = adapterID;
 
             return BHoMLoadCombination;

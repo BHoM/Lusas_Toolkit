@@ -32,7 +32,7 @@ namespace BH.Adapter.Lusas
     {
         public IFBasicCombination CreateLoadCombination(LoadCombination loadCombination)
         {
-            if (!CheckIllegalCharacters(loadCombination.Name))
+            if (!Engine.Lusas.Query.CheckIllegalCharacters(loadCombination.Name))
             {
                 return null;
             }

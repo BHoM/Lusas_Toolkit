@@ -48,7 +48,7 @@ namespace BH.Adapter.Lusas
                     IFLoading lusasTemperatureLoad = (IFLoading)lusasTemperatureLoads[i];
 
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                        GetLoadAssignments(lusasTemperatureLoad);
+                        Engine.Lusas.Query.GetLoadAssignments(lusasTemperatureLoad);
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {

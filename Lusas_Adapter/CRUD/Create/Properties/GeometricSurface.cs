@@ -29,7 +29,7 @@ namespace BH.Adapter.Lusas
     {
         public IFAttribute CreateGeometricSurface(ISurfaceProperty surfaceProperty)
         {
-            if (!CheckIllegalCharacters(surfaceProperty.Name))
+            if (!Engine.Lusas.Query.CheckIllegalCharacters(surfaceProperty.Name))
             {
                 return null;
             }

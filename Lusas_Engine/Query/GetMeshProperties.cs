@@ -20,64 +20,50 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Structure.Elements;
 using Lusas.LPI;
+using System;
+using BH.oM.Structure.Properties.Constraint;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Convert
+    public partial class Query
     {
-        public static int GetAdapterID(IFAttribute lusasAttribute, char lastCharacter)
+        public static Tuple<bool, double, BarRelease, BarFEAType> GetMeshProperties(IFLine lusasLine)
         {
-            int adapterID = 0;
+            bool meshAssigned = true;
+            double betaAngle = 0;
+            BarRelease barRelease = null;
+            BarFEAType barType = BarFEAType.Flexural;
 
-            lusasAttribute.getName();
+            object[] meshAssignments = lusasLine.getAssignments("Mesh");
 
-            if (lusasAttribute.getName().Contains("/"))
+            if (meshAssignments.Length > 0)
             {
-                adapterID = int.Parse(lusasAttribute.getName().Split(lastCharacter, '/')[1]);
+                foreach (object assignment in meshAssignments)
+                {
+                    IFAssignment lusasAssignment = (IFAssignment)assignment;
+                    IFAttribute lusasMesh = lusasAssignment.getAttribute();
+                    IFMeshLine lusasLineMesh = (IFMeshLine)lusasMesh;
+                    betaAngle = lusasAssignment.getBetaAngle();
+
+                    barRelease = Lusas.Query.GetBarRelease(lusasLineMesh);
+
+                    object[] barMeshName = lusasLineMesh.getElementNames();
+
+                    foreach (object type in barMeshName)
+                    {
+                        barType = Lusas.Query.GetFEAType(type);
+                    }
+                }
             }
             else
-            {
-                adapterID = lusasAttribute.getID();
-            }
+                meshAssigned = false;
 
-            return adapterID;
-        }
+            Tuple<bool, double, BarRelease, BarFEAType> lineMeshProperties =
+                new Tuple<bool, double, BarRelease, BarFEAType>(meshAssigned, betaAngle, barRelease, barType);
 
-        public static int GetAdapterID(IFLoadcase lusasLoadcase, char lastCharacter)
-        {
-            int adapterID = 0;
-
-            lusasLoadcase.getName();
-
-            if (lusasLoadcase.getName().Contains("/"))
-            {
-                adapterID = int.Parse(lusasLoadcase.getName().Split(lastCharacter, '/')[1]);
-            }
-            else
-            {
-                adapterID = lusasLoadcase.getID();
-            }
-
-            return adapterID;
-        }
-
-        public static int GetAdapterID(IFBasicCombination lusasLoadCombination, char lastCharacter)
-        {
-            int adapterID = 0;
-
-            lusasLoadCombination.getName();
-
-            if (lusasLoadCombination.getName().Contains("/"))
-            {
-                adapterID = int.Parse(lusasLoadCombination.getName().Split(lastCharacter, '/')[1]);
-            }
-            else
-            {
-                adapterID = lusasLoadCombination.getID();
-            }
-
-            return adapterID;
+            return lineMeshProperties;
         }
     }
 }

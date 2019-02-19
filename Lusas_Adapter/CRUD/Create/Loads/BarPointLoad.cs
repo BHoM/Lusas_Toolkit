@@ -29,7 +29,7 @@ namespace BH.Adapter.Lusas
     {
         public IFLoadingBeamPoint CreateBarPointLoad(BarPointLoad bhomBarPointLoad, object[] lusasLines)
         {
-            if (!CheckIllegalCharacters(bhomBarPointLoad.Name))
+            if (!Engine.Lusas.Query.CheckIllegalCharacters(bhomBarPointLoad.Name))
             {
                 return null;
             }

@@ -48,7 +48,7 @@ namespace BH.Adapter.Lusas
                     IFLoading lusasPrescribedDisplacement = (IFLoading)lusasPrescribedDisplacements[i];
 
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                        GetLoadAssignments(lusasPrescribedDisplacement);
+                        Engine.Lusas.Query.GetLoadAssignments(lusasPrescribedDisplacement);
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {

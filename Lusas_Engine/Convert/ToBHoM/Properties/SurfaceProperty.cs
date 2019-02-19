@@ -29,7 +29,7 @@ namespace BH.Engine.Lusas
     {
         public static ISurfaceProperty ToBHoMSurfaceProperty(this IFAttribute lusasAttribute)
         {
-            string attributeName = GetName(lusasAttribute);
+            string attributeName = Lusas.Query.GetName(lusasAttribute);
 
             ISurfaceProperty bhomProperty2D = new ConstantThickness
             {
@@ -37,7 +37,7 @@ namespace BH.Engine.Lusas
                 Thickness = lusasAttribute.getValue("t")
             };
 
-            int adapterID = GetAdapterID(lusasAttribute, 'G');
+            int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'G');
 
             bhomProperty2D.CustomData["Lusas_id"] = adapterID;
 

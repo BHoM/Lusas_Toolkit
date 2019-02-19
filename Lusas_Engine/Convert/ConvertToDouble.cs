@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
  *
@@ -21,31 +21,24 @@
  */
 
 using System.Collections.Generic;
-using Lusas.LPI;
-using BH.oM.Structure.Properties.Constraint;
+using System.Linq;
+
 
 namespace BH.Engine.Lusas
 {
     public partial class Convert
     {
-        public static BarRelease GetBarRelease(IFMeshLine lusasLineMesh)
+        public static double[] ConvertToDouble(object objectAxis)
         {
-            object[] startReleases = lusasLineMesh.getValue("start");
-            object[] endReleases = lusasLineMesh.getValue("end");
-
-            List<DOFType> startReleaseType = GetConstraints(startReleases);
-            List<DOFType> endReleaseType = GetConstraints(endReleases);
-
-            Constraint6DOF startConstraint = SetConstraint(startReleaseType);
-            Constraint6DOF endConstraint = SetConstraint(endReleaseType);
-
-            BarRelease barRelease = new BarRelease
+            object[] axis = (object[])objectAxis;
+            List<double> axisList = new List<double>();
+            for (int i = 0; i < axis.Count(); i++)
             {
-                StartRelease = startConstraint,
-                EndRelease = endConstraint
-            };
+                double castAxis = (double)axis[i];
+                axisList.Add(castAxis);
+            }
 
-            return barRelease;
+            return axisList.ToArray();
         }
     }
 }

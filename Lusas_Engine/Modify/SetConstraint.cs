@@ -21,27 +21,25 @@
  */
 
 using System.Collections.Generic;
+using BH.oM.Structure.Properties.Constraint;
 
-namespace BH.Adapter.Lusas
+namespace BH.Engine.Lusas
 {
-    public partial class LusasAdapter
+    public partial class Modify
     {
-        public bool CheckIllegalCharacters(string objectName)
+        public static Constraint6DOF SetConstraint(List<DOFType> releaseType)
         {
-            List<char> illegalCharacters = new List<char>() { '/' ,'|', '\\'};
-
-            foreach(char character in illegalCharacters)
+            Constraint6DOF constraint = new Constraint6DOF
             {
-                if (objectName.Contains(character.ToString()))
-                {
-                    Engine.Reflection.Compute.RecordError(
-                        "Illegal character: " + character.ToString() + " present in object name: "
-                         + objectName);
-                    return false;
-                }
-            }
+                TranslationX = releaseType[0],
+                TranslationY = releaseType[1],
+                TranslationZ = releaseType[2],
+                RotationX = releaseType[3],
+                RotationY = releaseType[4],
+                RotationZ = releaseType[5]
+            };
 
-            return true;
+            return constraint;
         }
     }
 }

@@ -21,34 +21,31 @@
  */
 
 using System.Collections.Generic;
-using BH.oM.Structure.Elements;
-using BH.oM.Geometry;
 using Lusas.LPI;
+using BH.oM.Structure.Properties.Constraint;
 
 namespace BH.Engine.Lusas
 {
-    public static partial class Convert
+    public partial class Query
     {
-        public static Edge ToBHoMEdge(this IFLine lusasLine,
-            Dictionary<string, Node> bhomNodes, HashSet<string> groupNames)
+        public static BarRelease GetBarRelease(IFMeshLine lusasLineMesh)
         {
-            Node startNode = GetNode(lusasLine, 0, bhomNodes);
-            Node endNode = GetNode(lusasLine, 1, bhomNodes);
+            object[] startReleases = lusasLineMesh.getValue("start");
+            object[] endReleases = lusasLineMesh.getValue("end");
 
-            Point startPoint = Structure.Query.Position(startNode);
-            Point endPoint = Structure.Query.Position(endNode);
+            List<DOFType> startReleaseType = GetConstraints(startReleases);
+            List<DOFType> endReleaseType = GetConstraints(endReleases);
 
-            HashSet<string> tags = new HashSet<string>(Query.IsMemberOf(lusasLine, groupNames));
+            Constraint6DOF startConstraint = Modify.SetConstraint(startReleaseType);
+            Constraint6DOF endConstraint = Modify.SetConstraint(endReleaseType);
 
-            Line bhomLine = new Line { Start = startPoint, End = endPoint };
+            BarRelease barRelease = new BarRelease
+            {
+                StartRelease = startConstraint,
+                EndRelease = endConstraint
+            };
 
-            Edge bhomEdge = new Edge { Curve = bhomLine, Tags = tags };
-
-            string adapterID = Engine.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L");
-
-            bhomEdge.CustomData["Lusas_id"] = adapterID;
-
-            return bhomEdge;
+            return barRelease;
         }
     }
 }
