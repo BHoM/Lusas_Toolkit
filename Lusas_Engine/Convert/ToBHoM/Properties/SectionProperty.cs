@@ -33,7 +33,7 @@ namespace BH.Engine.Lusas
         {
             string attributeName = Lusas.Query.GetName(lusasAttribute);
 
-            IProfile sectionProfile = CreateProfile(lusasAttribute);
+            IProfile sectionProfile = Lusas.Convert.ToProfile(lusasAttribute);
 
             double area = lusasAttribute.getValue("A");
             double rgy = lusasAttribute.getValue("ky");
@@ -66,124 +66,6 @@ namespace BH.Engine.Lusas
             bhomSection.CustomData["Lusas_id"] = adapterID;
 
             return bhomSection;
-        }
-
-        public static IProfile CreateProfile(IFAttribute lusasAttribute)
-        {
-            int sectionType = lusasAttribute.getValue("Type");
-
-            IProfile sectionProfile = null;
-
-            if (sectionType == 1)
-            {
-                sectionProfile = BH.Engine.Structure.Create.RectangleProfile(
-                    lusasAttribute.getValue("D"),
-                    lusasAttribute.getValue("B"),
-                    0
-                );
-            }
-            else if (sectionType == 2)
-            {
-                sectionProfile = BH.Engine.Structure.Create.BoxProfile(
-                    lusasAttribute.getValue("D"),
-                    lusasAttribute.getValue("B"),
-                    lusasAttribute.getValue("t"),
-                    lusasAttribute.getValue("r"),
-                    lusasAttribute.getValue("r")
-                );
-            }
-            else if (sectionType == 3)
-            {
-                sectionProfile = BH.Engine.Structure.Create.CircleProfile(
-                    lusasAttribute.getValue("D")
-                );
-            }
-            else if (sectionType == 4)
-            {
-                sectionProfile = BH.Engine.Structure.Create.TubeProfile(
-                    lusasAttribute.getValue("D"),
-                    lusasAttribute.getValue("t")
-                );
-            }
-            else if (sectionType == 5)
-            {
-                sectionProfile = BH.Engine.Structure.Create.ISectionProfile(
-                    lusasAttribute.getValue("D"),
-                    lusasAttribute.getValue("B"),
-                    lusasAttribute.getValue("tw"),
-                    lusasAttribute.getValue("tf"),
-                    lusasAttribute.getValue("r"),
-                    lusasAttribute.getValue("r")
-                );
-            }
-            else if (sectionType == 7)
-            {
-                sectionProfile = BH.Engine.Structure.Create.AngleProfile(
-                    lusasAttribute.getValue("D"),
-                    lusasAttribute.getValue("B"),
-                    lusasAttribute.getValue("tw"),
-                    lusasAttribute.getValue("tf"),
-                    lusasAttribute.getValue("r1"),
-                    lusasAttribute.getValue("r2")
-                );
-            }
-            else if (sectionType == 8)
-            {
-                sectionProfile = BH.Engine.Structure.Create.TSectionProfile(
-                    lusasAttribute.getValue("D"),
-                    lusasAttribute.getValue("B"),
-                    lusasAttribute.getValue("tw"),
-                    lusasAttribute.getValue("tf"),
-                    lusasAttribute.getValue("r"),
-                    lusasAttribute.getValue("r")
-                );
-            }
-            else if (sectionType == 10)
-            {
-                sectionProfile = BH.Engine.Structure.Create.ChannelProfile(
-                    lusasAttribute.getValue("D"),
-                    lusasAttribute.getValue("B"),
-                    lusasAttribute.getValue("tw"),
-                    lusasAttribute.getValue("tf"),
-                    lusasAttribute.getValue("r"),
-                    lusasAttribute.getValue("r")
-                );
-            }
-            else if (sectionType == 14)
-            {
-                sectionProfile = BH.Engine.Structure.Create.FabricatedISectionProfile(
-                    lusasAttribute.getValue("D"),
-                    lusasAttribute.getValue("Bt"),
-                    lusasAttribute.getValue("Bb"),
-                    lusasAttribute.getValue("tw"),
-                    lusasAttribute.getValue("tft"),
-                    lusasAttribute.getValue("tfb"),
-                    lusasAttribute.getValue("r")
-                );
-            }
-            else if (sectionType == 15)
-            {
-                sectionProfile = BH.Engine.Structure.Create.FabricatedBoxProfile(
-                    lusasAttribute.getValue("D"),
-                    lusasAttribute.getValue("B"),
-                    lusasAttribute.getValue("tw"),
-                    lusasAttribute.getValue("tf"),
-                    lusasAttribute.getValue("tf"),
-                    0
-                );
-            }
-            else if (sectionType == 16)
-            {
-                sectionProfile = BH.Engine.Structure.Create.ZSectionProfile(
-                    lusasAttribute.getValue("D"),
-                    lusasAttribute.getValue("B"),
-                    lusasAttribute.getValue("tw"),
-                    lusasAttribute.getValue("tf"),
-                    lusasAttribute.getValue("r"),
-                    lusasAttribute.getValue("r")
-                );
-            }
-            return sectionProfile;
         }
     }
 }

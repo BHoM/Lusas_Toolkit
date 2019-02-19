@@ -32,8 +32,8 @@ namespace BH.Engine.Lusas
         public static Edge ToBHoMEdge(this IFLine lusasLine,
             Dictionary<string, Node> bhomNodes, HashSet<string> groupNames)
         {
-            Node startNode = GetNode(lusasLine, 0, bhomNodes);
-            Node endNode = GetNode(lusasLine, 1, bhomNodes);
+            Node startNode = Engine.Lusas.Query.GetNode(lusasLine, 0, bhomNodes);
+            Node endNode = Engine.Lusas.Query.GetNode(lusasLine, 1, bhomNodes);
 
             Point startPoint = Structure.Query.Position(startNode);
             Point endPoint = Structure.Query.Position(endNode);

@@ -51,7 +51,7 @@ namespace BH.Engine.Lusas
 
             for (int i = 0; i < n; i++)
             {
-                Edge bhomEdge = GetEdge(lusasSurface, i, bhomEdges);
+                Edge bhomEdge = Engine.Lusas.Query.GetEdge(lusasSurface, i, bhomEdges);
                 surfaceEdges.Add(bhomEdge);
             }
 

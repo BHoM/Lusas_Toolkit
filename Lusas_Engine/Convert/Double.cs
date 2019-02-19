@@ -28,7 +28,7 @@ namespace BH.Engine.Lusas
 {
     public partial class Convert
     {
-        public static double[] ConvertToDouble(object objectAxis)
+        public static double[] ToDouble(object objectAxis)
         {
             object[] axis = (object[])objectAxis;
             List<double> axisList = new List<double>();
