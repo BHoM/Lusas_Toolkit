@@ -33,7 +33,7 @@ namespace BH.Engine.Lusas
         {
             string attributeName = Lusas.Query.GetName(lusasAttribute);
 
-            IProfile sectionProfile = Lusas.Convert.ToProfile(lusasAttribute);
+            IProfile bhomProfile = Lusas.Convert.ToProfile(lusasAttribute);
 
             double area = lusasAttribute.getValue("A");
             double rgy = lusasAttribute.getValue("ky");
@@ -55,8 +55,10 @@ namespace BH.Engine.Lusas
             double asy = lusasAttribute.getValue("Asy");
             double asz = lusasAttribute.getValue("Asz");
 
+            bhomProfile = Engine.Structure.Compute.Integrate(bhomProfile, oM.Geometry.Tolerance.MicroDistance).Item1;
+
             SteelSection bhomSection = new SteelSection(
-                sectionProfile, area, rgy, rgz, j, iy, iz, iw,
+                bhomProfile, area, rgy, rgz, j, iy, iz, iw,
                 wely, welz, wply, wplz, centreZ, centreY, zt, zb, yt, yb, asy, asz);
 
             bhomSection.Name = attributeName;

@@ -142,6 +142,7 @@ namespace BH.Engine.Lusas
                     lusasAttribute.getValue("r")
                 );
             }
+
             return sectionProfile;
         }
     }
