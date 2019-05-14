@@ -30,7 +30,7 @@ using BH.oM.Structure.Constraints;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.Loads;
-using BH.oM.Physical.Materials;
+using BH.oM.Structure.MaterialFragments;
 using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
@@ -43,7 +43,7 @@ namespace BH.Adapter.Lusas
                 return ReadBars(ids as dynamic);
             else if (type == typeof(Node))
                 return ReadNodes(ids as dynamic);
-            else if (type == typeof(Material))
+            else if (type == typeof(IMaterialFragment))
                 return ReadMaterials(ids as dynamic);
             else if (type == typeof(Panel))
                 return ReadPanels(ids as dynamic);

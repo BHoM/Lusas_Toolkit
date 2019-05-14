@@ -28,12 +28,11 @@ using BH.oM.Structure.Constraints;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Loads;
-using BH.oM.Physical.Materials;
+using BH.oM.Structure.MaterialFragments;
 using BH.Engine.Geometry;
 using Lusas.LPI;
 using BH.Engine.Lusas.Object_Comparer.Equality_Comparer;
 using BH.oM.Adapters.Lusas;
-using BH.Engine.Reflection;
 
 namespace BH.Adapter.Lusas
 {
@@ -68,9 +67,9 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<Point>);
                 }
-                if (objects.First() is Material)
+                if (objects.First() is IMaterialFragment)
                 {
-                    success = CreateCollection(objects as IEnumerable<Material>);
+                    success = CreateCollection(objects as IEnumerable<IMaterialFragment>);
                 }
                 if (objects.First() is Constraint6DOF)
                 {
@@ -379,9 +378,9 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private bool CreateCollection(IEnumerable<Material> materials)
+        private bool CreateCollection(IEnumerable<IMaterialFragment> materials)
         {
-            foreach (Material material in materials)
+            foreach (IMaterialFragment material in materials)
             {
                 IFAttribute lusasMaterial = CreateMaterial(material);
 

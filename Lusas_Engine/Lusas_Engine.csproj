@@ -61,9 +61,6 @@
     <Reference Include="Lusas_oM">
       <HintPath>..\Lusas_oM\bin\Debug\Lusas_oM.dll</HintPath>
     </Reference>
-    <Reference Include="Physical_Engine">
-      <HintPath>..\..\BHoM_Engine\Build\Physical_Engine.dll</HintPath>
-    </Reference>
     <Reference Include="Physical_oM">
       <HintPath>..\..\BHoM\Build\Physical_oM.dll</HintPath>
     </Reference>
@@ -110,7 +107,7 @@
     <Compile Include="Convert\ToBHoM\Elements\Bar.cs" />
     <Compile Include="Convert\ToBHoM\Loads\BarTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\BarUniformlyDistributedLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\AreaUniformallyDistributedLoad.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\AreaUniformlyDistributedLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\BarPointLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\BarDistributedLoad.cs" />
     <Compile Include="Query\GetAttributeAssignments.cs" />

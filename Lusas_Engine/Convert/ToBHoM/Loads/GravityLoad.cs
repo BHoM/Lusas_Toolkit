@@ -46,11 +46,9 @@ namespace BH.Engine.Lusas
                 Z = lusasGravityLoad.getValue("accZ")
             };
 
-            GravityLoad bhomGravityLoad = new GravityLoad();
-
             IEnumerable<BHoMObject> bhomObjects = Lusas.Query.GetGeometryAssignments(
                 lusasAssignments, null, bhomBars, bhomPanels);
-            bhomGravityLoad = Structure.Create.GravityLoad(
+            GravityLoad bhomGravityLoad = Structure.Create.GravityLoad(
                 bhomLoadcase, gravityVector, bhomObjects, Lusas.Query.GetName(lusasGravityLoad));
 
             int adapterID = Lusas.Query.GetAdapterID(lusasGravityLoad, 'l');

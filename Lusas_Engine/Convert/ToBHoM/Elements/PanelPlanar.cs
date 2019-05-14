@@ -26,7 +26,6 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Constraints;
 using BH.oM.Geometry;
-using BH.oM.Physical.Materials;
 using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
 
@@ -38,7 +37,7 @@ namespace BH.Engine.Lusas
             Dictionary<string, Edge> bhomEdges,
             HashSet<string> groupNames,
             Dictionary<string, ISurfaceProperty> bhom2DProperties,
-            Dictionary<string, Material> bhomMaterials,
+            Dictionary<string, IMaterialFragment> bhomMaterials,
             Dictionary<string, Constraint4DOF> bhomSupports)
 
         {
@@ -64,7 +63,7 @@ namespace BH.Engine.Lusas
             List<string> geometricAssignments = Lusas.Query.GetAttributeAssignments(lusasSurface, "Geometric");
             List<string> materialAssignments = Lusas.Query.GetAttributeAssignments(lusasSurface, "Material");
 
-            Material panelMaterial = null;
+            IMaterialFragment panelMaterial = null;
             ISurfaceProperty bhomProperty2D = null;
 
             if (!(geometricAssignments.Count() == 0))
@@ -73,7 +72,7 @@ namespace BH.Engine.Lusas
                 if (!(materialAssignments.Count() == 0))
                 {
                     bhomMaterials.TryGetValue(materialAssignments[0], out panelMaterial);
-                    bhomProperty2D.Material = (IStructuralMaterial)panelMaterial;
+                    bhomProperty2D.Material = panelMaterial;
                 }
 
                 bhomPanel.Property = bhomProperty2D;

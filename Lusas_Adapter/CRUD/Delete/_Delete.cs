@@ -22,10 +22,10 @@
 
 using System;
 using System.Collections.Generic;
-using BH.oM.Physical.Materials;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
+using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.Constraints;
 using BH.oM.Structure.Loads;
 using BH.oM.Adapters.Lusas;
@@ -54,7 +54,7 @@ namespace BH.Adapter.Lusas
                 success = DeleteMeshSettings2D(ids);
             else if (type == typeof(Constraint6DOF))
                 success = DeleteConstraint6DOF(ids);
-            else if (type == typeof(Material))
+            else if (type == typeof(IMaterialFragment))
                 success = DeleteMaterials(ids);
             else if (type == typeof(AreaTemperatureLoad))
                 success = DeleteAreaTemperatureLoad(ids);

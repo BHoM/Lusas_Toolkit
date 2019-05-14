@@ -25,7 +25,6 @@ using System.Linq;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 using BH.oM.Structure.SectionProperties;
-using BH.oM.Physical.Materials;
 using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
 using BH.oM.Adapters.Lusas;
@@ -39,7 +38,7 @@ namespace BH.Engine.Lusas
             Dictionary<string, Node> bhomNodes, 
             Dictionary<string, Constraint4DOF> bhomSupports,
             HashSet<string> lusasGroups,
-            Dictionary<string, Material> bhomMaterials,
+            Dictionary<string, IMaterialFragment> bhomMaterials,
             Dictionary<string, ISectionProperty> bhomSections,
             Dictionary<string, MeshSettings1D> bhomMeshes
             )
@@ -67,7 +66,7 @@ namespace BH.Engine.Lusas
             List<string> geometricAssignments = Lusas.Query.GetAttributeAssignments(lusasLine, "Geometric");
             List<string> materialAssignments = Lusas.Query.GetAttributeAssignments(lusasLine, "Material");
 
-            Material lineMaterial = null;
+            IMaterialFragment lineMaterial = null;
             ISectionProperty lineSection = null;
 
             if (!(geometricAssignments.Count() == 0))
@@ -76,7 +75,7 @@ namespace BH.Engine.Lusas
                 if (!(materialAssignments.Count() == 0))
                 {
                     bhomMaterials.TryGetValue(materialAssignments[0], out lineMaterial);
-                    lineSection.Material = (IStructuralMaterial)lineMaterial;
+                    lineSection.Material = lineMaterial;
                 }
                 bhomBar.SectionProperty = lineSection;
             }

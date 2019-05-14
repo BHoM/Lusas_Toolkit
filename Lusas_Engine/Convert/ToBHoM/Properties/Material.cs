@@ -20,28 +20,26 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Physical.Materials;
-using BH.Engine.Physical;
+using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
-using System.Collections.Generic;
 
 namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static Material ToBHoMMaterial(this IFAttribute lusasAttribute)
+        public static IMaterialFragment ToBHoMMaterial(this IFAttribute lusasAttribute)
         {
             string attributeName = Lusas.Query.GetName(lusasAttribute);
 
-            Material bhomMaterial = Engine.Physical.Create.Material(attributeName,
-                lusasAttribute.getValue("rho"),
-                new List<IMaterialProperties>()
-                {
-                     lusasAttribute.getValue("E"),lusasAttribute.getValue("nu"),lusasAttribute.getValue("alpha")
-                });
+            IMaterialFragment bhomMaterial = Engine.Structure.Create.SteelMaterial(
+                attributeName, 
+                lusasAttribute.getValue("E"), 
+                lusasAttribute.getValue("nu"),
+                lusasAttribute.getValue("alpha"), 
+                lusasAttribute.getValue("rho"), 
+                0, 0, 0);
 
-            //How to combine the mass Rayleigh and stiffness Rayleigh in to a single damping constant
-            //https://www.orcina.com/SoftwareProducts/OrcaFlex/Documentation/Help/Content/html/RayleighDamping.htm
+            Engine.Reflection.Compute.RecordWarning("Isotropic materials in Lusas will default to a SteelMaterial. Properties for" + attributeName + "are stored in a SteelMaterial");
 
             int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'M');
             bhomMaterial.CustomData["Lusas_id"] = adapterID;

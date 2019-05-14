@@ -22,22 +22,22 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using BH.oM.Physical.Materials;
+using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        private List<Material> ReadMaterials(List<string> ids = null)
+        private List<IMaterialFragment> ReadMaterials(List<string> ids = null)
         {
             object[] lusasMaterials = d_LusasData.getAttributes("Material");
-            List<Material> bhomMaterials = new List<Material>();
+            List<IMaterialFragment> bhomMaterials = new List<IMaterialFragment>();
 
             for (int i = 0; i < lusasMaterials.Count(); i++)
             {
                 IFAttribute lusasMaterial = (IFAttribute)lusasMaterials[i];
-                Material bhomMaterial = Engine.Lusas.Convert.ToBHoMMaterial(lusasMaterial);
+                IMaterialFragment bhomMaterial = Engine.Lusas.Convert.ToBHoMMaterial(lusasMaterial);
                 bhomMaterials.Add(bhomMaterial);
             }
 
