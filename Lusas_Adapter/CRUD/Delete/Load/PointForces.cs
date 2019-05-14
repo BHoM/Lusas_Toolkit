@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -26,13 +26,13 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public int DeletePointForces(IEnumerable<object> ids)
+        public int DeletePointLoads(IEnumerable<object> ids)
         {
             int success = 1;
 
             if (ids != null)
             {
-                //Engine.Reflection.Compute.RecordError("The deleting of individual PointForce objects is not supported in the Lusas_Toolkit");
+                //Engine.Reflection.Compute.RecordError("The deleting of individual PointLoad objects is not supported in the Lusas_Toolkit");
 
                 return 0;
             }

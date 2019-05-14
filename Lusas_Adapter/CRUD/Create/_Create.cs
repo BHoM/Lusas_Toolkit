@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -24,11 +24,11 @@ using System.Collections.Generic;
 using System.Linq;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
-using BH.oM.Structure.Properties.Constraint;
-using BH.oM.Structure.Properties.Section;
-using BH.oM.Structure.Properties.Surface;
+using BH.oM.Structure.Constraints;
+using BH.oM.Structure.SectionProperties;
+using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Loads;
-using BH.oM.Common.Materials;
+using BH.oM.Physical.Materials;
 using BH.Engine.Geometry;
 using Lusas.LPI;
 using BH.Engine.Lusas.Object_Comparer.Equality_Comparer;
@@ -56,9 +56,9 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<Bar>);
                 }
-                if (objects.First() is PanelPlanar)
+                if (objects.First() is Panel)
                 {
-                    success = CreateCollection(objects as IEnumerable<PanelPlanar>);
+                    success = CreateCollection(objects as IEnumerable<Panel>);
                 }
                 if (objects.First() is Edge)
                 {
@@ -94,8 +94,8 @@ namespace BH.Adapter.Lusas
 
                     switch (loadType)
                     {
-                        case "BH.oM.Structure.Loads.PointForce":
-                            success = CreateCollection(objects as IEnumerable<PointForce>);
+                        case "BH.oM.Structure.Loads.PointLoad":
+                            success = CreateCollection(objects as IEnumerable<PointLoad>);
                             break;
                         case "BH.oM.Structure.Loads.GravityLoad":
                             success = CreateCollection(objects as IEnumerable<GravityLoad>);
@@ -103,8 +103,8 @@ namespace BH.Adapter.Lusas
                         case "BH.oM.Structure.Loads.BarUniformlyDistributedLoad":
                             success = CreateCollection(objects as IEnumerable<BarUniformlyDistributedLoad>);
                             break;
-                        case "BH.oM.Structure.Loads.AreaUniformalyDistributedLoad":
-                            success = CreateCollection(objects as IEnumerable<AreaUniformalyDistributedLoad>);
+                        case "BH.oM.Structure.Loads.AreaUniformlyDistributedLoad":
+                            success = CreateCollection(objects as IEnumerable<AreaUniformlyDistributedLoad>);
                             break;
                         case "BH.oM.Structure.Loads.BarTemperatureLoad":
                             success = CreateCollection(objects as IEnumerable<BarTemperatureLoad>);
@@ -261,19 +261,19 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private bool CreateCollection(IEnumerable<PanelPlanar> planarPanels)
+        private bool CreateCollection(IEnumerable<Panel> Panels)
         {
 
-            CreateTags(planarPanels);
+            CreateTags(Panels);
 
-            List<Edge> panelPlanarEdges = new List<Edge>();
+            List<Edge> PanelEdges = new List<Edge>();
 
-            foreach (PanelPlanar panelPlanar in planarPanels)
+            foreach (Panel Panel in Panels)
             {
-                panelPlanarEdges.AddRange(panelPlanar.ExternalEdges);
+                PanelEdges.AddRange(Panel.ExternalEdges);
             }
 
-            List<Edge> distinctEdges = Engine.Lusas.Query.GetDistinctEdges(panelPlanarEdges);
+            List<Edge> distinctEdges = Engine.Lusas.Query.GetDistinctEdges(PanelEdges);
 
             List<Point> midPoints = new List<Point>();
 
@@ -284,12 +284,12 @@ namespace BH.Adapter.Lusas
 
             ReduceRuntime(true);
 
-            foreach (PanelPlanar panelPlanar in planarPanels)
+            foreach (Panel Panel in Panels)
             {
-                IFLine[] lusasLines = new IFLine[panelPlanar.ExternalEdges.Count];
-                List<Edge> edges = panelPlanar.ExternalEdges;
+                IFLine[] lusasLines = new IFLine[Panel.ExternalEdges.Count];
+                List<Edge> edges = Panel.ExternalEdges;
 
-                for (int i = 0; i < panelPlanar.ExternalEdges.Count; i++)
+                for (int i = 0; i < Panel.ExternalEdges.Count; i++)
                 {
                     Edge edge = distinctEdges[midPoints.FindIndex(
                         m => m.Equals(edges[i].Curve.IPointAtParameter(0.5).ClosestPoint(midPoints)))];
@@ -297,7 +297,7 @@ namespace BH.Adapter.Lusas
                     lusasLines[i] = d_LusasData.getLineByName("L" + edge.CustomData[AdapterId].ToString());
                 }
 
-                IFSurface lusasSurface = CreateSurface(panelPlanar, lusasLines);
+                IFSurface lusasSurface = CreateSurface(Panel, lusasLines);
             }
 
             ReduceRuntime(false);
@@ -430,15 +430,15 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private bool CreateCollection(IEnumerable<PointForce> pointForces)
+        private bool CreateCollection(IEnumerable<PointLoad> PointLoads)
         {
 
-            foreach (PointForce pointForce in pointForces)
+            foreach (PointLoad PointLoad in PointLoads)
             {
-                object[] assignedPoints = GetAssignedPoints(pointForce);
-                IFLoadingConcentrated lusasPointForce = CreateConcentratedLoad(pointForce, assignedPoints);
+                object[] assignedPoints = GetAssignedPoints(PointLoad);
+                IFLoadingConcentrated lusasPointLoad = CreateConcentratedLoad(PointLoad, assignedPoints);
 
-                if (lusasPointForce == null)
+                if (lusasPointLoad == null)
                 {
                     return false;
                 }
@@ -500,9 +500,9 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private bool CreateCollection(IEnumerable<AreaUniformalyDistributedLoad> areaUniformlyDistributedLoads)
+        private bool CreateCollection(IEnumerable<AreaUniformlyDistributedLoad> areaUniformlyDistributedLoads)
         {
-            foreach (AreaUniformalyDistributedLoad areaUniformlyDistributedLoad in areaUniformlyDistributedLoads)
+            foreach (AreaUniformlyDistributedLoad areaUniformlyDistributedLoad in areaUniformlyDistributedLoads)
             {
                 object[] assignedSurfaces = GetAssignedSurfaces(areaUniformlyDistributedLoad);
                 if (areaUniformlyDistributedLoad.Axis == LoadAxis.Global)

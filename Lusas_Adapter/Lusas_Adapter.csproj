@@ -48,6 +48,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Analytical_oM">
+      <HintPath>..\..\BHoM\Build\Analytical_oM.dll</HintPath>
+    </Reference>
     <Reference Include="BHoM">
       <HintPath>..\..\BHoM\Build\BHoM.dll</HintPath>
       <Private>False</Private>
@@ -78,6 +81,12 @@
     <Reference Include="Lusas_oM">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lusas_oM\bin\Debug\Lusas_oM.dll</HintPath>
+    </Reference>
+    <Reference Include="Physical_Engine">
+      <HintPath>..\..\BHoM_Engine\Build\Physical_Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="Physical_oM">
+      <HintPath>..\..\BHoM\Build\Physical_oM.dll</HintPath>
     </Reference>
     <Reference Include="Reflection_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Reflection_Engine.dll</HintPath>

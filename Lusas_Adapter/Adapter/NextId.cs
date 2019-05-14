@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -22,10 +22,10 @@
 
 using System;
 using System.Collections.Generic;
-using BH.oM.Common.Materials;
-using BH.oM.Structure.Properties.Constraint;
-using BH.oM.Structure.Properties.Surface;
-using BH.oM.Structure.Properties.Section;
+using BH.oM.Physical.Materials;
+using BH.oM.Structure.Constraints;
+using BH.oM.Structure.SurfaceProperties;
+using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
 using BH.oM.Geometry;
@@ -88,7 +88,7 @@ namespace BH.Adapter.Lusas
                                Engine.Lusas.Modify.RemovePrefix(largestLine.getName(), "L")) + 1;
                     }
                 }
-                if (type == typeof(PanelPlanar))
+                if (type == typeof(Panel))
                 {
                     if (d_LusasData.getLargestSurfaceID() == 0)
                     {
@@ -202,10 +202,10 @@ namespace BH.Adapter.Lusas
                             Engine.Lusas.Query.GetAdapterID(largestAttribute, 'G')) + 1;
                     }
                 }
-                if (type == typeof(PointForce) ||
+                if (type == typeof(PointLoad) ||
                     type == typeof(GravityLoad) ||
                     type == typeof(BarUniformlyDistributedLoad) ||
-                    type == typeof(AreaUniformalyDistributedLoad) ||
+                    type == typeof(AreaUniformlyDistributedLoad) ||
                     type == typeof(BarTemperatureLoad) ||
                     type == typeof(AreaTemperatureLoad) ||
                     type == typeof(BarPointLoad) ||

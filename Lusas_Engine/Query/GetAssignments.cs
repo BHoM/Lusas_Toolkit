@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -79,18 +79,18 @@ namespace BH.Engine.Lusas
         }
 
         public static IEnumerable<IAreaElement> GetSurfaceAssignments(IEnumerable<IFAssignment> lusasAssignments,
-            Dictionary<string, PanelPlanar> bhomPlanarPanels)
+            Dictionary<string, Panel> bhomPanels)
         {
             List<IAreaElement> assignedSurfs = new List<IAreaElement>();
-            PanelPlanar bhomPanelPlanar = new PanelPlanar();
+            Panel bhomPanel = new Panel();
 
             foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
                 if (lusasAssignment.getDatabaseObject() is IFSurface)
                 {
                     IFSurface lusasSurface = (IFSurface)lusasAssignment.getDatabaseObject();
-                    bhomPlanarPanels.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasSurface.getName(), "S"), out bhomPanelPlanar);
-                    assignedSurfs.Add(bhomPanelPlanar);
+                    bhomPanels.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasSurface.getName(), "S"), out bhomPanel);
+                    assignedSurfs.Add(bhomPanel);
                 }
                 else
                 {
@@ -104,13 +104,13 @@ namespace BH.Engine.Lusas
 
         public static IEnumerable<BHoMObject> GetGeometryAssignments(IEnumerable<IFAssignment> lusasAssignments,
             Dictionary<string, Node> bhomNodes, Dictionary<string, Bar> bhomBars,
-            Dictionary<string, PanelPlanar> bhomPlanarPanels)
+            Dictionary<string, Panel> bhomPanels)
         {
             List<BHoMObject> assignedObjects = new List<BHoMObject>();
 
             Node bhomNode = new Node();
             Bar bhomBar = new Bar();
-            PanelPlanar bhomPanelPlanar = new PanelPlanar();
+            Panel bhomPanel = new Panel();
 
             foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
@@ -128,8 +128,8 @@ namespace BH.Engine.Lusas
                 }
                 else if (lusasGeometry is IFSurface)
                 {
-                    bhomPlanarPanels.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "S"), out bhomPanelPlanar);
-                    assignedObjects.Add(bhomPanelPlanar);
+                    bhomPanels.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "S"), out bhomPanel);
+                    assignedObjects.Add(bhomPanel);
                 }
             }
 

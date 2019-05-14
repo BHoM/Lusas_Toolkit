@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -31,9 +31,9 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        private List<ILoad> ReadPointForces(List<string> ids = null)
+        private List<ILoad> ReadPointLoads(List<string> ids = null)
         {
-            List<ILoad> bhomPointForces = new List<ILoad>();
+            List<ILoad> bhomPointLoads = new List<ILoad>();
             object[] lusasConcentratedLoads = d_LusasData.getAttributes("Concentrated Load");
 
             if(!(lusasConcentratedLoads.Count()==0))
@@ -53,17 +53,17 @@ namespace BH.Adapter.Lusas
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
-                        PointForce bhomPointForce = Engine.Lusas.Convert.ToPointForce(
+                        PointLoad bhomPointLoad = Engine.Lusas.Convert.ToPointLoad(
                             lusasConcentratedLoad, groupedAssignment, nodeDictionary
                             );
                         List<string> analysisName = new List<string> { lusasConcentratedLoad.getAttributeType() };
-                        bhomPointForce.Tags = new HashSet<string>(analysisName);
-                        bhomPointForces.Add(bhomPointForce);
+                        bhomPointLoad.Tags = new HashSet<string>(analysisName);
+                        bhomPointLoads.Add(bhomPointLoad);
                     }
                 }
             }
 
-            return bhomPointForces;
+            return bhomPointLoads;
         }
     }
 }

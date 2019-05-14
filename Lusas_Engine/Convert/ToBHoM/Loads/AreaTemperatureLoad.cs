@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -33,18 +33,18 @@ namespace BH.Engine.Lusas
         public static AreaTemperatureLoad ToAreaTempratureLoad(
             IFLoading lusasTemperatureLoad,
             IEnumerable<IFAssignment> lusasAssignments,
-            Dictionary<string, PanelPlanar> panelPlanarDictionary)
+            Dictionary<string, Panel> PanelDictionary)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = ToBHoMLoadcase(assignedLoadcase);
             double temperatureChange = lusasTemperatureLoad.getValue("T")
                 - lusasTemperatureLoad.getValue("T0");
 
-            IEnumerable<IAreaElement> bhomPlanarPanels = Lusas.Query.GetSurfaceAssignments(lusasAssignments, panelPlanarDictionary);
+            IEnumerable<IAreaElement> bhomPanels = Lusas.Query.GetSurfaceAssignments(lusasAssignments, PanelDictionary);
             AreaTemperatureLoad bhomAreaTemperatureLoad = Structure.Create.AreaTemperatureLoad(
                 bhomLoadcase,
                 temperatureChange,
-                bhomPlanarPanels,
+                bhomPanels,
                 LoadAxis.Local,
                 false,
                 Lusas.Query.GetName(lusasTemperatureLoad));

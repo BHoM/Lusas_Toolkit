@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -33,14 +33,14 @@ namespace BH.Adapter.Lusas
 
             objects.AddRange(ReadNodes());
             objects.AddRange(ReadBars());
-            objects.AddRange(ReadPlanarPanels());
+            objects.AddRange(ReadPanels());
             objects.AddRange(Read2DProperties());
             objects.AddRange(ReadMaterials());
             objects.AddRange(Read4DOFConstraints());
             objects.AddRange(Read6DOFConstraints());
             objects.AddRange(ReadLoadcases());
             objects.AddRange(ReadLoadCombinations());
-            objects.AddRange(ReadPointForces());
+            objects.AddRange(ReadPointLoads());
             objects.AddRange(ReadPointDisplacements());
             objects.AddRange(ReadBarUniformlyDistributedLoads());
             objects.AddRange(ReadBarPointLoads());
