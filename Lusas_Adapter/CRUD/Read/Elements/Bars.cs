@@ -25,7 +25,7 @@ using System.Linq;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 using BH.oM.Structure.SectionProperties;
-using BH.oM.Physical.Materials;
+using BH.oM.Structure.MaterialFragments;
 using BH.oM.Adapters.Lusas;
 using Lusas.LPI;
 
@@ -48,8 +48,8 @@ namespace BH.Adapter.Lusas
                 Dictionary<string, Constraint4DOF> bhomSupports = bhomSupportList.ToDictionary(
                     x => x.Name);
 
-                IEnumerable<Material> materialList = ReadMaterials();
-                Dictionary<string, Material> materials = materialList.ToDictionary(
+                IEnumerable<IMaterialFragment> materialList = ReadMaterials();
+                Dictionary<string, IMaterialFragment> materials = materialList.ToDictionary(
                     x => x.Name.ToString());
 
                 IEnumerable<ISectionProperty> geometricList = ReadSectionProperties();

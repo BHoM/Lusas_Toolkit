@@ -27,7 +27,7 @@ using BH.oM.Structure.Constraints;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Loads;
-using BH.oM.Physical.Materials;
+using BH.oM.Structure.MaterialFragments;
 
 namespace BH.Adapter.Lusas
 {
@@ -70,9 +70,9 @@ namespace BH.Adapter.Lusas
             {typeof(Panel), new List<Type> { typeof(ISurfaceProperty), typeof(Edge)} },
             {typeof(Bar), new List<Type> { typeof(Node) , typeof(ISectionProperty), typeof(Constraint4DOF) } },
             {typeof(Node), new List<Type> { typeof(Constraint6DOF) } },
-            {typeof(ISectionProperty), new List<Type> { typeof(Material) } },
+            {typeof(ISectionProperty), new List<Type> { typeof(IMaterialFragment) } },
             {typeof(RigidLink), new List<Type> { typeof(LinkConstraint), typeof(Node) } },
-            {typeof(ISurfaceProperty), new List<Type> { typeof(Material) } },
+            {typeof(ISurfaceProperty), new List<Type> { typeof(IMaterialFragment) } },
             {typeof(ILoad), new List<Type> {typeof(Loadcase) } },
         };
 

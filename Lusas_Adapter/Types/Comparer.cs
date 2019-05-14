@@ -21,9 +21,9 @@
  */
 
 using BH.Engine.Base.Objects;
-using BH.oM.Physical.Materials;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
+using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.SectionProperties;
 using System;
@@ -70,7 +70,7 @@ namespace BH.Adapter.Lusas
             {typeof(Bar), new Engine.Lusas.Object_Comparer.Equality_Comparer.BarMidPointComparer(3)},
             {typeof(Edge), new Engine.Lusas.Object_Comparer.Equality_Comparer.EdgeMidPointComparer(3) },
             { typeof(Point), new Engine.Lusas.Object_Comparer.Equality_Comparer.PointDistanceComparer(3) },
-            {typeof(Material), new BHoMObjectNameComparer() },
+            {typeof(IMaterialFragment), new BHoMObjectNameComparer() },
             {typeof(LinkConstraint), new BHoMObjectNameComparer() },
             {typeof(ISurfaceProperty), new BHoMObjectNameComparer() },
             {typeof(ISectionProperty), new BHoMObjectNameComparer() },

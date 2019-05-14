@@ -82,9 +82,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lusas_oM\bin\Debug\Lusas_oM.dll</HintPath>
     </Reference>
-    <Reference Include="Physical_Engine">
-      <HintPath>..\..\BHoM_Engine\Build\Physical_Engine.dll</HintPath>
-    </Reference>
     <Reference Include="Physical_oM">
       <HintPath>..\..\BHoM\Build\Physical_oM.dll</HintPath>
     </Reference>

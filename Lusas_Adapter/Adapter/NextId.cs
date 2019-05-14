@@ -22,15 +22,14 @@
 
 using System;
 using System.Collections.Generic;
-using BH.oM.Physical.Materials;
 using BH.oM.Structure.Constraints;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.SectionProperties;
+using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
 using BH.oM.Geometry;
 using Lusas.LPI;
-using BH.Engine.Lusas;
 using BH.oM.Adapters.Lusas;
 
 
@@ -156,7 +155,7 @@ namespace BH.Adapter.Lusas
                         }
                     }
                 }
-                if (type == typeof(Material))
+                if (type == typeof(IMaterialFragment))
                 {
                     int largestMaterialID = d_LusasData.getLargestAttributeID("Material");
                     if (largestMaterialID == 0)

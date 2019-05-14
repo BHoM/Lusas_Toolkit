@@ -20,7 +20,7 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Physical.Materials;
+using BH.oM.Structure.MaterialFragments;
 using BH.Engine.Structure;
 using Lusas.LPI;
 
@@ -28,7 +28,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFAttribute CreateMaterial(Material material)
+        public IFAttribute CreateMaterial(IMaterialFragment material)
         {
             if (!Engine.Lusas.Query.CheckIllegalCharacters(material.Name))
             {
@@ -44,7 +44,7 @@ namespace BH.Adapter.Lusas
             else
             {
                 lusasMaterial = d_LusasData.createIsotropicMaterial(material.Name,
-                material.YoungsModulusIsotropic(), material.PoissonsRatioIsotropic(), material.Density, material.ThermalExpansionCoeffIsotropic());
+                material.IYoungsModulus(), material.IPoissonsRatio(), material.Density, material.IThermalExpansionCoeff());
 
                 lusasMaterial.setName(lusasName);
             }

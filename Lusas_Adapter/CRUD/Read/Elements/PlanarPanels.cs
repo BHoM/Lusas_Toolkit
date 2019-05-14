@@ -25,7 +25,7 @@ using System.Linq;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 using BH.oM.Structure.SurfaceProperties;
-using BH.oM.Physical.Materials;
+using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -44,8 +44,8 @@ namespace BH.Adapter.Lusas
                     x => x.CustomData[AdapterId].ToString());
 
                 HashSet<string> groupNames = ReadTags();
-                IEnumerable<Material> materialList = ReadMaterials();
-                Dictionary<string, Material> materials = materialList.ToDictionary(
+                IEnumerable<IMaterialFragment> materialList = ReadMaterials();
+                Dictionary<string, IMaterialFragment> materials = materialList.ToDictionary(
                     x => x.Name.ToString());
 
                 IEnumerable<ISurfaceProperty> geometricList = Read2DProperties();
