@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -20,8 +20,10 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Common.Materials;
+using BH.oM.Physical.Materials;
+using BH.Engine.Physical;
 using Lusas.LPI;
+using System.Collections.Generic;
 
 namespace BH.Engine.Lusas
 {
@@ -30,14 +32,13 @@ namespace BH.Engine.Lusas
         public static Material ToBHoMMaterial(this IFAttribute lusasAttribute)
         {
             string attributeName = Lusas.Query.GetName(lusasAttribute);
-            Material bhomMaterial = new Material
-            {
-                YoungsModulus = lusasAttribute.getValue("E"),
-                PoissonsRatio = lusasAttribute.getValue("nu"),
-                Density = lusasAttribute.getValue("rho"),
-                CoeffThermalExpansion = lusasAttribute.getValue("alpha"),
-                Name = attributeName
-            };
+
+            Material bhomMaterial = Engine.Physical.Create.Material(attributeName,
+                lusasAttribute.getValue("rho"),
+                new List<IMaterialProperties>()
+                {
+                     lusasAttribute.getValue("E"),lusasAttribute.getValue("nu"),lusasAttribute.getValue("alpha")
+                });
 
             //How to combine the mass Rayleigh and stiffness Rayleigh in to a single damping constant
             //https://www.orcina.com/SoftwareProducts/OrcaFlex/Documentation/Help/Content/html/RayleighDamping.htm

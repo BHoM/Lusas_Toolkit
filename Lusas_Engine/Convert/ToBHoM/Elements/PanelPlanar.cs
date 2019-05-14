@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -23,17 +23,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties.Surface;
-using BH.oM.Structure.Properties.Constraint;
+using BH.oM.Structure.SurfaceProperties;
+using BH.oM.Structure.Constraints;
 using BH.oM.Geometry;
-using BH.oM.Common.Materials;
+using BH.oM.Physical.Materials;
+using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
 
 namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static PanelPlanar ToBHoMPanelPlanar(this IFSurface lusasSurface,
+        public static Panel ToBHoMPanel(this IFSurface lusasSurface,
             Dictionary<string, Edge> bhomEdges,
             HashSet<string> groupNames,
             Dictionary<string, ISurfaceProperty> bhom2DProperties,
@@ -55,7 +56,7 @@ namespace BH.Engine.Lusas
                 surfaceEdges.Add(bhomEdge);
             }
 
-            PanelPlanar bhomPanel = Structure.Create.PanelPlanar(surfaceEdges, dummyCurve);
+            Panel bhomPanel = Structure.Create.Panel(surfaceEdges, dummyCurve);
 
             bhomPanel.Tags = tags;
             bhomPanel.CustomData["Lusas_id"] = lusasSurface.getName();
@@ -72,7 +73,7 @@ namespace BH.Engine.Lusas
                 if (!(materialAssignments.Count() == 0))
                 {
                     bhomMaterials.TryGetValue(materialAssignments[0], out panelMaterial);
-                    bhomProperty2D.Material = panelMaterial;
+                    bhomProperty2D.Material = (IStructuralMaterial)panelMaterial;
                 }
 
                 bhomPanel.Property = bhomProperty2D;

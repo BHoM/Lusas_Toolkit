@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -28,7 +28,7 @@ namespace BH.Adapter.Lusas
     public partial class LusasAdapter
     {
 
-        public IFSurface CreateSurface(PanelPlanar panel, IFLine[] lusasLines)
+        public IFSurface CreateSurface(Panel panel, IFLine[] lusasLines)
         {
             IFSurface lusasSurface;
             if (d_LusasData.existsSurfaceByName("S" + panel.CustomData[AdapterId]))

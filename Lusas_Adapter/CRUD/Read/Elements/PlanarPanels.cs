@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -23,19 +23,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties.Constraint;
-using BH.oM.Structure.Properties.Surface;
-using BH.oM.Common.Materials;
+using BH.oM.Structure.Constraints;
+using BH.oM.Structure.SurfaceProperties;
+using BH.oM.Physical.Materials;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        private List<PanelPlanar> ReadPlanarPanels(List<string> ids = null)
+        private List<Panel> ReadPanels(List<string> ids = null)
         {
             object[] lusasSurfaces = d_LusasData.getObjects("Surface");
-            List<PanelPlanar> bhomSurfaces = new List<PanelPlanar>();
+            List<Panel> bhomSurfaces = new List<Panel>();
 
             if(!(lusasSurfaces.Count()==0))
             {
@@ -59,7 +59,7 @@ namespace BH.Adapter.Lusas
                 for (int i = 0; i < lusasSurfaces.Count(); i++)
                 {
                     IFSurface lusasSurface = (IFSurface)lusasSurfaces[i];
-                    PanelPlanar bhomPanel = Engine.Lusas.Convert.ToBHoMPanelPlanar(lusasSurface,
+                    Panel bhomPanel = Engine.Lusas.Convert.ToBHoMPanel(lusasSurface,
                         bhomEdges,
                         groupNames,
                         geometrics,

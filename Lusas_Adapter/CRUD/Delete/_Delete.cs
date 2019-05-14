@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -22,11 +22,11 @@
 
 using System;
 using System.Collections.Generic;
-using BH.oM.Common.Materials;
+using BH.oM.Physical.Materials;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties.Section;
-using BH.oM.Structure.Properties.Surface;
-using BH.oM.Structure.Properties.Constraint;
+using BH.oM.Structure.SectionProperties;
+using BH.oM.Structure.SurfaceProperties;
+using BH.oM.Structure.Constraints;
 using BH.oM.Structure.Loads;
 using BH.oM.Adapters.Lusas;
 
@@ -42,7 +42,7 @@ namespace BH.Adapter.Lusas
                 success = DeletePoints(ids);
             else if (type == typeof(Bar))
                 success = DeleteLines(ids);
-            else if (type == typeof(PanelPlanar))
+            else if (type == typeof(Panel))
                 success = DeleteSurfaces(ids);
             else if (typeof(ISectionProperty).IsAssignableFrom(type))
                 success = DeleteSectionProperties(ids);
@@ -58,7 +58,7 @@ namespace BH.Adapter.Lusas
                 success = DeleteMaterials(ids);
             else if (type == typeof(AreaTemperatureLoad))
                 success = DeleteAreaTemperatureLoad(ids);
-            else if (type == typeof(AreaUniformalyDistributedLoad))
+            else if (type == typeof(AreaUniformlyDistributedLoad))
                 success = DeleteAreaUnformlyDistributedLoads(ids);
             else if (type == typeof(BarPointLoad))
                 success = DeleteBarPointLoad(ids);
@@ -72,8 +72,8 @@ namespace BH.Adapter.Lusas
                 success = DeleteLoadCombinations(ids);
             else if (type == typeof(PointDisplacement))
                 success = DeletePointDisplacements(ids);
-            else if (type == typeof(PointForce))
-                success = DeletePointForces(ids);
+            else if (type == typeof(PointLoad))
+                success = DeletePointLoads(ids);
 
             return 0;
         }

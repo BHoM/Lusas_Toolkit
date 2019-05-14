@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -31,8 +31,8 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static PointForce ToPointForce(
-            IFLoading lusasPointForce, IEnumerable<IFAssignment> lusasAssignments, 
+        public static PointLoad ToPointLoad(
+            IFLoading lusasPointLoad, IEnumerable<IFAssignment> lusasAssignments, 
             Dictionary<string, Node> bhomNodeDictionary)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
@@ -42,30 +42,30 @@ namespace BH.Engine.Lusas
 
             Vector forceVector = new Vector
             {
-                X = lusasPointForce.getValue("px"),
-                Y = lusasPointForce.getValue("py"),
-                Z = lusasPointForce.getValue("pz")
+                X = lusasPointLoad.getValue("px"),
+                Y = lusasPointLoad.getValue("py"),
+                Z = lusasPointLoad.getValue("pz")
             };
 
             Vector momentVector = new Vector
             {
-                X = lusasPointForce.getValue("mx"),
-                Y = lusasPointForce.getValue("my"),
-                Z = lusasPointForce.getValue("mz")
+                X = lusasPointLoad.getValue("mx"),
+                Y = lusasPointLoad.getValue("my"),
+                Z = lusasPointLoad.getValue("mz")
             };
 
-            PointForce bhomPointForce = Structure.Create.PointForce(
+            PointLoad bhomPointLoad = Structure.Create.PointLoad(
                 bhomLoadcase,
                 bhomNodes,
                 forceVector,
                 momentVector,
                 LoadAxis.Global,
-                Lusas.Query.GetName(lusasPointForce));
+                Lusas.Query.GetName(lusasPointLoad));
 
-            int adapterID = Lusas.Query.GetAdapterID(lusasPointForce, 'l');
-            bhomPointForce.CustomData["Lusas_id"] = adapterID;
+            int adapterID = Lusas.Query.GetAdapterID(lusasPointLoad, 'l');
+            bhomPointLoad.CustomData["Lusas_id"] = adapterID;
 
-            return bhomPointForce;
+            return bhomPointLoad;
         }
     }
 }

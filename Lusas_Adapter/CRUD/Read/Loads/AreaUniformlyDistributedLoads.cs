@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -43,8 +43,8 @@ namespace BH.Adapter.Lusas
 
             if(!(lusasDistributedLoads.Count()==0))
             {
-                List<PanelPlanar> bhomSurfaces = ReadPlanarPanels();
-                Dictionary<string, PanelPlanar> surfaceDictionary = bhomSurfaces.ToDictionary(
+                List<Panel> bhomSurfaces = ReadPanels();
+                Dictionary<string, Panel> surfaceDictionary = bhomSurfaces.ToDictionary(
                     x => x.CustomData[AdapterId].ToString());
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
@@ -60,8 +60,8 @@ namespace BH.Adapter.Lusas
 
                         foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                         {
-                            AreaUniformalyDistributedLoad bhomBarUniformlyDistributedLoad =
-                                Engine.Lusas.Convert.ToAreaUniformallyDistributed(
+                            AreaUniformlyDistributedLoad bhomBarUniformlyDistributedLoad =
+                                Engine.Lusas.Convert.ToAreaUniformlyDistributed(
                                     lusasDistributedLoad, groupedAssignment, surfaceDictionary);
 
                             List<string> analysisName = new List<string> { lusasDistributedLoad.getAttributeType() };

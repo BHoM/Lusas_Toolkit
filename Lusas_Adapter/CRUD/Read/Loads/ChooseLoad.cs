@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -34,8 +34,8 @@ namespace BH.Adapter.Lusas
             string typeName = type.Name;
             switch (typeName)
             {
-                case "PointForce":
-                    readLoads = ReadPointForces(ids as dynamic);
+                case "PointLoad":
+                    readLoads = ReadPointLoads(ids as dynamic);
                     break;
                 case "GravityLoad":
                     readLoads = ReadGravityLoads(ids as dynamic);
@@ -43,7 +43,7 @@ namespace BH.Adapter.Lusas
                 case "BarUniformlyDistributedLoad":
                     readLoads = ReadBarUniformlyDistributedLoads(ids as dynamic);
                     break;
-                case "AreaUniformalyDistributedLoad":
+                case "AreaUniformlyDistributedLoad":
                     readLoads = ReadAreaUniformlyDistributedLoads(ids as dynamic);
                     break;
                 case "BarTemperatureLoad":

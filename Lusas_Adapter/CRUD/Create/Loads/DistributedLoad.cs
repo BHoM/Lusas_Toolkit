@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -45,7 +45,7 @@ namespace BH.Adapter.Lusas
             return lusasGlobalDistributed;
         }
 
-        public IFLoadingGlobalDistributed CreateGlobalDistributedLoadSurface(AreaUniformalyDistributedLoad distributedLoad, object[] lusasSurfaces)
+        public IFLoadingGlobalDistributed CreateGlobalDistributedLoadSurface(AreaUniformlyDistributedLoad distributedLoad, object[] lusasSurfaces)
         {
             if (!Engine.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
             {
@@ -81,7 +81,7 @@ namespace BH.Adapter.Lusas
             return lusasLocalDistributed;
         }
 
-        public IFLoadingLocalDistributed CreateLocalDistributedSurface(AreaUniformalyDistributedLoad distributedLoad, object[] lusasSurfaces)
+        public IFLoadingLocalDistributed CreateLocalDistributedSurface(AreaUniformlyDistributedLoad distributedLoad, object[] lusasSurfaces)
         {
             if (!Engine.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
             {

@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -38,11 +38,11 @@ namespace BH.Adapter.Lusas
             if (!(lusasBodyForces.Count()==0))
             {
                 List<Bar> bhomBars = ReadBars();
-                List<PanelPlanar> bhomPlanarPanels = ReadPlanarPanels();
+                List<Panel> bhomPanels = ReadPanels();
                 Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
                     x => x.CustomData[AdapterId].ToString());
 
-                Dictionary<string, PanelPlanar> panelPlanarDictionary = bhomPlanarPanels.ToDictionary(
+                Dictionary<string, Panel> PanelDictionary = bhomPanels.ToDictionary(
                     x => x.CustomData[AdapterId].ToString());
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
@@ -59,7 +59,7 @@ namespace BH.Adapter.Lusas
                         List<string> analysisName = new List<string> { lusasBodyForce.getAttributeType() };
 
                         GravityLoad bhomGravityLoad = Engine.Lusas.Convert.ToGravityLoad(
-                            lusasBodyForce, groupedAssignment, barDictionary, panelPlanarDictionary);
+                            lusasBodyForce, groupedAssignment, barDictionary, PanelDictionary);
                         bhomGravityLoad.Tags = new HashSet<string>(analysisName);
                         bhomGravityLoads.Add(bhomGravityLoad);
                     }

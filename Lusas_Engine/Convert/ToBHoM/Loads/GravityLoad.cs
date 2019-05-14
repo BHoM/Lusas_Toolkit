@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -35,7 +35,7 @@ namespace BH.Engine.Lusas
         public static GravityLoad ToGravityLoad(IFLoading lusasGravityLoad,
             IEnumerable<IFAssignment> lusasAssignments,
             Dictionary<string, Bar> bhomBars,
-            Dictionary<string, PanelPlanar> bhomPlanarPanels)
+            Dictionary<string, Panel> bhomPanels)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = ToBHoMLoadcase(assignedLoadcase);
@@ -49,7 +49,7 @@ namespace BH.Engine.Lusas
             GravityLoad bhomGravityLoad = new GravityLoad();
 
             IEnumerable<BHoMObject> bhomObjects = Lusas.Query.GetGeometryAssignments(
-                lusasAssignments, null, bhomBars, bhomPlanarPanels);
+                lusasAssignments, null, bhomBars, bhomPanels);
             bhomGravityLoad = Structure.Create.GravityLoad(
                 bhomLoadcase, gravityVector, bhomObjects, Lusas.Query.GetName(lusasGravityLoad));
 

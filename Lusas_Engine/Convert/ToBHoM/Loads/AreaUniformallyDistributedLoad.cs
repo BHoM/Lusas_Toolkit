@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2018, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -31,15 +31,15 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static AreaUniformalyDistributedLoad ToAreaUniformallyDistributed(
+        public static AreaUniformlyDistributedLoad ToAreaUniformlyDistributed(
             IFLoading lusasDistributed, IEnumerable<IFAssignment> lusasAssignments,
-            Dictionary<string, PanelPlanar> panelPlanarDictionary)
+            Dictionary<string, Panel> PanelDictionary)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = ToBHoMLoadcase(assignedLoadcase);
 
-            IEnumerable<IAreaElement> bhomPlanarPanels = Lusas.Query.GetSurfaceAssignments(
-                lusasAssignments, panelPlanarDictionary);
+            IEnumerable<IAreaElement> bhomPanels = Lusas.Query.GetSurfaceAssignments(
+                lusasAssignments, PanelDictionary);
 
             Vector pressureVector = new Vector
             {
@@ -48,24 +48,24 @@ namespace BH.Engine.Lusas
                 Z = lusasDistributed.getValue("WZ")
             };
 
-            AreaUniformalyDistributedLoad bhomSurfaceUniformlyDistributed = null;
+            AreaUniformlyDistributedLoad bhomSurfaceUniformlyDistributed = null;
 
             if (lusasDistributed.getAttributeType() == "Global Distributed Load")
             {
-                bhomSurfaceUniformlyDistributed = Structure.Create.AreaUniformalyDistributedLoad(
+                bhomSurfaceUniformlyDistributed = Structure.Create.AreaUniformlyDistributedLoad(
                 bhomLoadcase,
                 pressureVector,
-                bhomPlanarPanels,
+                bhomPanels,
                 LoadAxis.Global,
                 true,
                 Lusas.Query.GetName(lusasDistributed));
             }
             else if (lusasDistributed.getAttributeType() == "Distributed Load")
             {
-                bhomSurfaceUniformlyDistributed = Structure.Create.AreaUniformalyDistributedLoad(
+                bhomSurfaceUniformlyDistributed = Structure.Create.AreaUniformlyDistributedLoad(
                 bhomLoadcase,
                 pressureVector,
-                bhomPlanarPanels,
+                bhomPanels,
                 LoadAxis.Local,
                 true,
                 Lusas.Query.GetName(lusasDistributed));
