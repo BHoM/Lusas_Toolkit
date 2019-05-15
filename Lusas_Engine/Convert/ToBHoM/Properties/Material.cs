@@ -31,7 +31,7 @@ namespace BH.Engine.Lusas
         {
             string attributeName = Lusas.Query.GetName(lusasAttribute);
 
-            IMaterialFragment bhomMaterial = Engine.Structure.Create.SteelMaterial(
+            IMaterialFragment bhomMaterial = Engine.Structure.Create.Steel(
                 attributeName, 
                 lusasAttribute.getValue("E"), 
                 lusasAttribute.getValue("nu"),
@@ -39,7 +39,7 @@ namespace BH.Engine.Lusas
                 lusasAttribute.getValue("rho"), 
                 0, 0, 0);
 
-            Engine.Reflection.Compute.RecordWarning("Isotropic materials in Lusas will default to a SteelMaterial. Properties for" + attributeName + "are stored in a SteelMaterial");
+            Engine.Reflection.Compute.RecordWarning("Isotropic materials in Lusas will default to a SteelMaterial. Properties for " + attributeName + " are stored in a SteelMaterial");
 
             int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'M');
             bhomMaterial.CustomData["Lusas_id"] = adapterID;
