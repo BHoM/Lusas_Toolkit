@@ -37,17 +37,29 @@ namespace BH.Adapter.Lusas
 
             IFAttribute lusasMaterial = null;
             string lusasName = "M" + material.CustomData[AdapterId] + "/" + material.Name;
-            if (d_LusasData.existsAttribute("Material", lusasName))
+
+            if(material is IIsotropic)
             {
-                lusasMaterial = d_LusasData.getAttribute("Material", lusasName);
+                IIsotropic isotropic = material as IIsotropic;
+
+                if (d_LusasData.existsAttribute("Material", lusasName))
+                {
+                    lusasMaterial = d_LusasData.getAttribute("Material", lusasName);
+                }
+                else
+                {
+                    lusasMaterial = d_LusasData.createIsotropicMaterial(material.Name,
+                    isotropic.YoungsModulus, isotropic.PoissonsRatio, isotropic.Density, isotropic.ThermalExpansionCoeff);
+
+                    lusasMaterial.setName(lusasName);
+                }
             }
             else
             {
-                lusasMaterial = d_LusasData.createIsotropicMaterial(material.Name,
-                material.IYoungsModulus(), material.IPoissonsRatio(), material.Density, material.IThermalExpansionCoeff());
-
-                lusasMaterial.setName(lusasName);
+                Engine.Reflection.Compute.RecordWarning("Lusas_Toolkit currently suports Isotropic materials only. No structural properties for material with name " + material.Name + " have been pushed");
+                return null; ;
             }
+
             return lusasMaterial;
         }
     }
