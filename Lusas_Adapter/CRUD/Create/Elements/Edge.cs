@@ -37,9 +37,9 @@ namespace BH.Adapter.Lusas
                 AssignObjectSet(lusasLine, edge.Tags);
             }
 
-            if (!(edge.Constraint == null))
+            if (!(edge.Support == null))
             {
-                string supportName = "Sp" + edge.Constraint.CustomData[AdapterId] + "/" + edge.Constraint.Name;
+                string supportName = "Sp" + edge.Support.CustomData[AdapterId] + "/" + edge.Support.Name;
                 IFAttribute lusasSupport = d_LusasData.getAttribute("Support", supportName);
                 lusasSupport.assignTo(lusasLine);
             }

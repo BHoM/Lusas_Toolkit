@@ -61,7 +61,7 @@ namespace BH.Engine.Lusas
             Bar bhomBar = new Bar { StartNode = startNode,
                 EndNode = endNode,
                 Tags = tags,
-                Spring = barConstraint};
+                Support = barConstraint};
 
             List<string> geometricAssignments = Lusas.Query.GetAttributeAssignments(lusasLine, "Geometric");
             List<string> materialAssignments = Lusas.Query.GetAttributeAssignments(lusasLine, "Material");
