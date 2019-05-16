@@ -70,9 +70,9 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            if (!(bar.Spring == null))
+            if (!(bar.Support == null))
             {
-                string supportName = "Sp" + bar.Spring.CustomData[AdapterId] + "/" + bar.Spring.Name;
+                string supportName = "Sp" + bar.Support.CustomData[AdapterId] + "/" + bar.Support.Name;
                 IFAttribute lusasSupport = d_LusasData.getAttribute("Support", supportName);
                 lusasSupport.assignTo(lusasLine);
                 IFLocalCoord barLocalAxis = CreateLocalCoordinate(lusasLine);
@@ -145,9 +145,9 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            if (!(bar.Spring == null))
+            if (!(bar.Support == null))
             {
-                string supportName = "Sp" + bar.Spring.CustomData[AdapterId] + "/" + bar.Spring.Name;
+                string supportName = "Sp" + bar.Support.CustomData[AdapterId] + "/" + bar.Support.Name;
                 IFAttribute lusasSupport = d_LusasData.getAttribute("Support", supportName);
                 lusasSupport.assignTo(lusasLine);
             }
