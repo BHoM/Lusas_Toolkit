@@ -80,5 +80,31 @@ namespace BH.Engine.Lusas
 
             return bhomPanel;
         }
+
+        public static FEMesh ConvertPanel(Panel panel)
+        {
+            List<Edge> edges = panel.ExternalEdges;
+            List<Face> faces = new List<Face>();
+            Face face;
+
+            if (edges.Count() == 3)
+                faces.Add(BH.Engine.Geometry.Create.Face(0, 1, 2));
+            else if (edges.Count() == 4)
+                faces.Add(BH.Engine.Geometry.Create.Face(0, 1, 2, 3));
+            else
+                BH.Engine.Reflection.Compute.RecordError("FEMesh must have 3 or 4 edges");
+
+            List<Point> points = new List<Point>();
+
+            for (int i=0; i<edges.Count(); i++)
+            {
+                points.Add(BH.Engine.Geometry.Query.IEndPoint(edges[i].Curve));
+            }
+
+            Mesh mesh = BH.Engine.Geometry.Create.Mesh(points, faces);
+
+            FEMesh femesh = BH.Engine.Structure.Create.FEMesh(mesh);
+            return femesh;
+        }
     }
 }

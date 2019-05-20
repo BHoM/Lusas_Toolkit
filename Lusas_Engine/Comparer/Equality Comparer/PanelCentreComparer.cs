@@ -22,76 +22,62 @@
 
 using System.Collections.Generic;
 using BH.oM.Structure.Elements;
-using BH.Engine.Geometry;
+using BH.oM.Geometry;
 using BH.Engine.Structure;
 
 namespace BH.Engine.Lusas.Object_Comparer.Equality_Comparer
 {
-    public class BarMidPointComparer : IEqualityComparer<Bar>
+    public class PanelCentreComparer : IEqualityComparer<Panel>
     {
         /***************************************************/
         /**** Constructors                              ****/
         /***************************************************/
-
-        public BarMidPointComparer()
+        public PanelCentreComparer()
         {
-            m_pointComparer = new PointDistanceComparer();
+            nodeComparer = new NodeDistanceComparer();
         }
 
         /***************************************************/
-
-        public BarMidPointComparer(int decimals)
+        public PanelCentreComparer(int decimals)
         {
-            m_pointComparer = new PointDistanceComparer(decimals);
+            nodeComparer = new NodeDistanceComparer(decimals);
         }
-
 
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
-
-        public bool Equals(Bar bar1, Bar bar2)
+        public bool Equals(Panel panel1, Panel panel2)
         {
-            //Check whether the compared objects reference the same data.
-            if (ReferenceEquals(bar1, bar2)) return true;
+            if (ReferenceEquals(panel1, panel2)) return true;
 
-            //Check whether any of the compared objects is null.
-            if (ReferenceEquals(bar1, null) || ReferenceEquals(bar2, null))
+            if (ReferenceEquals(panel1, null) || ReferenceEquals(panel2, null))
                 return false;
 
-            //Check if the GUIDs are the same
-            if (bar1.BHoM_Guid == bar2.BHoM_Guid)
+            if (panel1.BHoM_Guid == panel2.BHoM_Guid)
                 return true;
 
-            if (m_pointComparer.Equals(
-                bar1.Geometry().IPointAtParameter(0.5),
-                bar2.Geometry().IPointAtParameter(0.5)))
-            {
-                return m_pointComparer.Equals(
-                    bar1.Geometry().IPointAtParameter(0.5),
-                    bar2.Geometry().IPointAtParameter(0.5));
-            }
+            List<Point> controlPoints1 = BH.Engine.Structure.Query.ControlPoints(panel1, true);
+            List<Point> controlPoints2 = BH.Engine.Structure.Query.ControlPoints(panel2, true);
+            Point centrePoint1 = BH.Engine.Geometry.Query.Average(controlPoints1);
+            Point centrePoint2 = BH.Engine.Geometry.Query.Average(controlPoints2);
+
+            if (nodeComparer.Equals(BH.Engine.Lusas.Convert.PointToNode(centrePoint1), BH.Engine.Lusas.Convert.PointToNode(centrePoint2)))
+                return nodeComparer.Equals(BH.Engine.Lusas.Convert.PointToNode(centrePoint1), BH.Engine.Lusas.Convert.PointToNode(centrePoint2));
 
             return false;
         }
 
         /***************************************************/
-
-        public int GetHashCode(Bar bar)
+        public int GetHashCode(Panel panel)
         {
-            //Check whether the object is null
-            if (ReferenceEquals(bar, null)) return 0;
-
-            return bar.StartNode.GetHashCode() ^ bar.EndNode.GetHashCode();
+            return panel.GetHashCode();
         }
-
 
         /***************************************************/
         /**** Private Fields                            ****/
         /***************************************************/
 
-        private PointDistanceComparer m_pointComparer;
-
+        private NodeDistanceComparer nodeComparer;
 
         /***************************************************/
 

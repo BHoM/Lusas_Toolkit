@@ -88,6 +88,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comparer\Equality Comparer\PanelCentreComparer.cs" />
     <Compile Include="Compute\SetElementType.cs" />
     <Compile Include="Compute\SetEndConditions.cs" />
     <Compile Include="Compute\SetSplitMethod.cs" />
@@ -130,7 +131,7 @@
     <Compile Include="Convert\ToBHoM\Loads\Loadcase.cs" />
     <Compile Include="Convert\ToBHoM\Properties\Material.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Node.cs" />
-    <Compile Include="Convert\ToBHoM\Elements\PanelPlanar.cs" />
+    <Compile Include="Convert\ToBHoM\Elements\Panel.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Point.cs" />
     <Compile Include="Convert\ToBHoM\Loads\GravityLoad.cs" />
     <Compile Include="Convert\ToBHoM\Properties\SectionProperty.cs" />
@@ -139,10 +140,10 @@
     <Compile Include="Create\LibrarySettings.cs" />
     <Compile Include="Create\LusasConfig.cs" />
     <Compile Include="Create\MeshSettings.cs" />
-    <Compile Include="Object_Comparer\Equality Comparer\BarMidPointComparer.cs" />
-    <Compile Include="Object_Comparer\Equality Comparer\MeshComparer.cs" />
-    <Compile Include="Object_Comparer\Equality Comparer\PointDistanceComparer.cs" />
-    <Compile Include="Object_Comparer\Equality Comparer\EdgeMidPointComparer.cs" />
+    <Compile Include="Comparer\Equality Comparer\BarMidPointComparer.cs" />
+    <Compile Include="Comparer\Equality Comparer\MeshComparer.cs" />
+    <Compile Include="Comparer\Equality Comparer\PointDistanceComparer.cs" />
+    <Compile Include="Comparer\Equality Comparer\EdgeMidPointComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -46,7 +46,7 @@ namespace BH.Adapter.Lusas
 
                 IEnumerable<Constraint4DOF> bhomSupportList = Read4DOFConstraints();
                 Dictionary<string, Constraint4DOF> bhomSupports = bhomSupportList.ToDictionary(
-                    x => x.Name);
+                    x => x.CustomData[AdapterId].ToString());
 
                 IEnumerable<IMaterialFragment> materialList = ReadMaterials();
                 Dictionary<string, IMaterialFragment> materials = materialList.ToDictionary(
