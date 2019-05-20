@@ -102,8 +102,15 @@ namespace BH.Engine.Lusas
             }
 
             Mesh mesh = BH.Engine.Geometry.Create.Mesh(points, faces);
-
             FEMesh femesh = BH.Engine.Structure.Create.FEMesh(mesh);
+
+            if (panel.Tags.Count() != 0)
+                femesh.Tags = panel.Tags;
+            if (panel.Property != null)
+                femesh.Property = panel.Property;
+            if (panel.Name.Count() != 0)
+                femesh.Name = panel.Name;
+  
             return femesh;
         }
     }
