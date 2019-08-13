@@ -53,8 +53,8 @@
     <Reference Include="Geometry_oM">
       <HintPath>..\..\BHoM\Build\Geometry_oM.dll</HintPath>
     </Reference>
-    <Reference Include="Lusas.Interop, Version=17.0.1601.28524, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86">
-      <HintPath>..\packages\BHoM.Interop.Lusas170.1.0.0\lib\net45\Lusas.Interop.dll</HintPath>
+    <Reference Include="Lusas.Interop, Version=17.0.1633.29698, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86">
+      <HintPath>..\packages\BHoM.Interop.Lusas170.1.0.1\lib\net45\Lusas.Interop.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Lusas_oM">
