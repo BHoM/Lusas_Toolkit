@@ -100,6 +100,7 @@
     <Compile Include="Query\GetDistinct.cs" />
     <Compile Include="Query\GetFEAType.cs" />
     <Compile Include="Query\GetLoadAssignments.cs" />
+    <Compile Include="Query\GetLoadcaseIDs.cs" />
     <Compile Include="Query\GetMeshProperties.cs" />
     <Compile Include="Modify\SetConstraint.cs" />
     <Compile Include="Convert\ToBHoM\Loads\AreaTemperatureLoad.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Query\GetAssignments.cs" />
     <Compile Include="Query\GetLOF.cs" />
     <Compile Include="Query\GetName.cs" />
+    <Compile Include="Query\GetObjectIDs.cs" />
     <Compile Include="Query\IsMemberOf.cs" />
     <Compile Include="Modify\RemovePrefix.cs" />
     <Compile Include="Compute\Warnings.cs" />

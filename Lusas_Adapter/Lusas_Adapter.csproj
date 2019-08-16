@@ -156,6 +156,8 @@
     <Compile Include="CRUD\Private Helpers\CreateTags.cs" />
     <Compile Include="CRUD\Private Helpers\DeleteSurfaceAssignment.cs" />
     <Compile Include="CRUD\Private Helpers\GetAssignedObjects.cs" />
+    <Compile Include="CRUD\Private Helpers\GetFeatureResults.cs" />
+    <Compile Include="CRUD\Private Helpers\GetResultsSets.cs" />
     <Compile Include="CRUD\Private Helpers\NameSearch.cs" />
     <Compile Include="CRUD\Private Helpers\RuntimeReduction.cs" />
     <Compile Include="CRUD\Read\Properties\MeshSettings1D.cs" />
@@ -186,6 +188,8 @@
     <Compile Include="CRUD\Read\Elements\Points.cs" />
     <Compile Include="CRUD\Read\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Read\Properties\Tags.cs" />
+    <Compile Include="CRUD\Read\Results\BarForce.cs" />
+    <Compile Include="CRUD\Read\Results\NodeReaction.cs" />
     <Compile Include="CRUD\Read\_Read.cs" />
     <Compile Include="CRUD\Update\UpdateObjects.cs" />
     <Compile Include="Adapter\LusasAdapter.cs" />
