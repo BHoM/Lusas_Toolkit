@@ -24,6 +24,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BH.oM.Base;
+using BH.oM.Common;
 using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
@@ -31,6 +32,7 @@ using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.MaterialFragments;
+using BH.oM.Structure.Results;
 using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
@@ -71,6 +73,15 @@ namespace BH.Adapter.Lusas
                 return ReadMeshSettings1D(ids as dynamic);
             else if (type == typeof(MeshSettings2D))
                 return ReadMeshSettings2D(ids as dynamic);
+            return null;
+        }
+
+        protected override IEnumerable<IResult> ReadResults(Type type, IList ids = null, IList cases = null, int divisions = 5)
+        {
+            if (type == typeof(BarForce))
+                return ReadBarForce(ids, cases);
+            if (type == typeof(NodeReaction))
+                return ReadNodeReaction(ids, cases);
             return null;
         }
     }
