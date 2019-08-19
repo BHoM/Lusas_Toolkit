@@ -27,7 +27,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public void AssignObjectSet(IFGeometry newGeometry, HashSet<string> tags)
+        internal void AssignObjectSet(IFGeometry newGeometry, HashSet<string> tags)
         {
             foreach (string tag in tags)
             {
