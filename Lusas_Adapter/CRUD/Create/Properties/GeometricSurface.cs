@@ -27,7 +27,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFAttribute CreateGeometricSurface(ISurfaceProperty surfaceProperty)
+        private IFAttribute CreateGeometricSurface(ISurfaceProperty surfaceProperty)
         {
             if (!Engine.Lusas.Query.CheckIllegalCharacters(surfaceProperty.Name))
             {

@@ -27,8 +27,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-
-        public IFSurface CreateSurface(Panel panel, IFLine[] lusasLines)
+        private IFSurface CreateSurface(Panel panel, IFLine[] lusasLines)
         {
             IFSurface lusasSurface;
             if (d_LusasData.existsSurfaceByName("S" + panel.CustomData[AdapterId]))

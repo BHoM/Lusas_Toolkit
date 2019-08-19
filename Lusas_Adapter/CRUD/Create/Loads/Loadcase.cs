@@ -28,7 +28,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFLoadcase CreateLoadcase(Loadcase loadcase)
+        private IFLoadcase CreateLoadcase(Loadcase loadcase)
         {
             if (!Engine.Lusas.Query.CheckIllegalCharacters(loadcase.Name))
             {

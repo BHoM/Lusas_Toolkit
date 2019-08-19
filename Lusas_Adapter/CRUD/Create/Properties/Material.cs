@@ -28,7 +28,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFAttribute CreateMaterial(IMaterialFragment material)
+        private IFAttribute CreateMaterial(IMaterialFragment material)
         {
             if (!Engine.Lusas.Query.CheckIllegalCharacters(material.Name))
             {
