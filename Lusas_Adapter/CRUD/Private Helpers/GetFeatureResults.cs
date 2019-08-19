@@ -27,7 +27,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        internal Dictionary<string, double> GetFeatureResults(List<string> components, Dictionary<string, IFResultsComponentSet> resultsSets, IFUnitSet unitSet, int midasCivil_Id)
+        internal Dictionary<string, double> GetFeatureResults(List<string> components, Dictionary<string, IFResultsComponentSet> resultsSets, IFUnitSet unitSet, int id, string suffix)
         {
             bool validResults = true;
 
@@ -43,7 +43,16 @@ namespace BH.Adapter.Lusas
                 int nodeID = 0;
                 int nullID = 0; //For Nodal results the pLocnIndex2 will return 2 from getFeatureResults
 
-                double featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getPointByName("P" + midasCivil_Id), 3, unitSet, nodeID, nullID);
+                double featureResult = 0;
+
+                if(suffix == "P")
+                {
+                    featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getPointByName(suffix + id), 3, unitSet, nodeID, nullID);
+                }
+                else if(suffix == "L")
+                {
+                    featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getLineByName(suffix + id), 3, unitSet, nodeID, nullID);
+                }
 
                 if (featureResult == double.MinValue)
                 {
@@ -61,7 +70,7 @@ namespace BH.Adapter.Lusas
 
             if (!validResults)
             {
-                Engine.Reflection.Compute.RecordWarning("Node " + midasCivil_Id + " is not assigned a support and therefore has no valid results for NodeReaction. All values are therefore set to 0");
+                Engine.Reflection.Compute.RecordWarning(suffix + id + " is not does not have any valid results. All values are therefore set to 0");
             }
 
             return featureResults;
