@@ -28,7 +28,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public void CreateTags(IEnumerable<IBHoMObject> bhomObject)
+        internal void CreateTags(IEnumerable<IBHoMObject> bhomObject)
         {
             List<string> objectTags = bhomObject.SelectMany(x => x.Tags).Distinct().ToList();
 

@@ -27,7 +27,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public void DeleteLineAssignments(object[] lusasAttributes)
+        internal void DeleteLineAssignments(object[] lusasAttributes)
         {
             for (int i = 0; i < lusasAttributes.Count(); i++)
             {

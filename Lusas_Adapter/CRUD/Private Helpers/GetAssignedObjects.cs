@@ -31,7 +31,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public object[] GetAssignedPoints(Load<Node> bhomLoads)
+        internal object[] GetAssignedPoints(Load<Node> bhomLoads)
         {
             string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => x.CustomData[AdapterId].ToString()).ToArray();
 
