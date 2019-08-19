@@ -48,9 +48,6 @@ namespace BH.Adapter.Lusas
                 loadcaseIds = Engine.Lusas.Query.GetLoadcaseIDs(cases);
 
             IFView view = m_LusasApplication.getCurrentView();
-
-            m_LusasApplication.getVisibleSet().add("All");
-
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
 
             string entity = "Reaction";
