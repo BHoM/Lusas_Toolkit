@@ -30,7 +30,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFAttribute CreateSupport(Constraint6DOF constraint)
+        private IFAttribute CreateSupport(Constraint6DOF constraint)
         {
             if (!Engine.Lusas.Query.CheckIllegalCharacters(constraint.Name))
             {

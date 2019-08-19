@@ -27,7 +27,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFLine CreateEdge(Edge edge, IFPoint startPoint, IFPoint endPoint)
+        private IFLine CreateEdge(Edge edge, IFPoint startPoint, IFPoint endPoint)
         {
             IFLine lusasLine = d_LusasData.createLineByPoints(startPoint, endPoint);
             lusasLine.setName("L" + edge.CustomData[AdapterId].ToString());

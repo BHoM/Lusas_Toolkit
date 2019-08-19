@@ -27,7 +27,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFMeshSurface CreateMeshSettings2D(MeshSettings2D meshSettings2D)
+        private IFMeshSurface CreateMeshSettings2D(MeshSettings2D meshSettings2D)
         {
             if (!Engine.Lusas.Query.CheckIllegalCharacters(meshSettings2D.Name))
             {

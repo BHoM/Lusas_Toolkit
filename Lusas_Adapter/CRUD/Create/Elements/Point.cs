@@ -28,8 +28,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-
-        public IFPoint CreatePoint(Node node)
+        private IFPoint CreatePoint(Node node)
         {
             IFPoint lusasPoint;
             Point position = Engine.Structure.Query.Position(node);

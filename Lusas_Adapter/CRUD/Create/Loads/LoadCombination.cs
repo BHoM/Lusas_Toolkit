@@ -30,7 +30,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFBasicCombination CreateLoadCombination(LoadCombination loadCombination)
+        private IFBasicCombination CreateLoadCombination(LoadCombination loadCombination)
         {
             if (!Engine.Lusas.Query.CheckIllegalCharacters(loadCombination.Name))
             {

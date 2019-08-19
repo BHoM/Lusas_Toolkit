@@ -31,7 +31,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFLine CreateLine(Bar bar, IFMeshLine mesh)
+        private IFLine CreateLine(Bar bar, IFMeshLine mesh)
         {
             if (
                 bar.FEAType == BarFEAType.CompressionOnly ||
@@ -97,7 +97,7 @@ namespace BH.Adapter.Lusas
 
         }
 
-        public IFLine CreateLine(Bar bar, IFPoint startPoint, IFPoint endPoint)
+        private IFLine CreateLine(Bar bar, IFPoint startPoint, IFPoint endPoint)
         {
             if (
                 bar.FEAType == BarFEAType.CompressionOnly ||
@@ -155,7 +155,7 @@ namespace BH.Adapter.Lusas
             return lusasLine;
         }
 
-        public IFLine CreateLine(ICurve iCurve, IFPoint startPoint, IFPoint endPoint)
+        private IFLine CreateLine(ICurve iCurve, IFPoint startPoint, IFPoint endPoint)
         {
             Node startNode = Engine.Structure.Create.Node(
                 new Point

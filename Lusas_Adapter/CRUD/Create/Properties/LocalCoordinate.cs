@@ -27,7 +27,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFLocalCoord CreateLocalCoordinate(IFLine lusasLine)
+        private IFLocalCoord CreateLocalCoordinate(IFLine lusasLine)
         {
             object lineXAxis = null;
             object lineYAxis = null;
