@@ -29,16 +29,16 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        private List<NodeReaction> ReadNodeReaction(IList ids = null, IList cases = null)
+        private List<BarForce> ReadBarForce(IList ids = null, IList cases = null)
         {
-            List<NodeReaction> bhomNodeReactions = new List<NodeReaction>();
+            List<BarForce> bhombarForces = new List<BarForce>();
 
-            List<int> nodeIds = new List<int>();
+            List<int> barIds = new List<int>();
 
             if (ids == null || ids.Count == 0)
                 Engine.Reflection.Compute.RecordWarning("Please provide ids");
             else
-                nodeIds = Engine.Lusas.Query.GetObjectIDs(ids);
+                barIds = Engine.Lusas.Query.GetObjectIDs(ids);
 
             List<int> loadcaseIds = new List<int>();
 
@@ -50,8 +50,8 @@ namespace BH.Adapter.Lusas
             IFView view = m_LusasApplication.getCurrentView();
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
 
-            string entity = "Reaction";
-            string location = "Nodal";
+            string entity = "Force/Moment - Thick 3D Beam";
+            string location = "Feature extreme";
 
             foreach (int loadcaseId in loadcaseIds)
             {
@@ -63,28 +63,28 @@ namespace BH.Adapter.Lusas
                 }
 
                 IFUnitSet unitSet = d_LusasData.getModelUnits();
-                double forceSIConversion = 1/unitSet.getForceFactor();
+                double forceSIConversion = 1 / unitSet.getForceFactor();
                 double lengthSIConversion = 1 / unitSet.getLengthFactor();
 
-                List<string> components = new List<string>() {"Fx", "Fy", "Fz", "Mx", "My", "Mz" };
+                List<string> components = new List<string>() { "Fx", "Fy", "Fz", "Mx", "My", "Mz" };
                 d_LusasData.startUsingScriptedResults();
 
                 Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
 
-                foreach (int nodeId in nodeIds)
+                foreach (int barId in barIds)
                 {
-                    string pointName = "P" + nodeId;
+                    string lineName = "L" + barId;
 
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, nodeId, "P");
+                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L");
 
                     double Fx = 0; double Fy = 0; double Fz = 0; double Mx = 0; double My = 0; double Mz = 0;
                     featureResults.TryGetValue("Fx", out Fx); featureResults.TryGetValue("Fy", out Fy); featureResults.TryGetValue("Fz", out Fz);
                     featureResults.TryGetValue("Mx", out Mx); featureResults.TryGetValue("My", out My); featureResults.TryGetValue("Mz", out Mz);
 
-                    NodeReaction nodeReaction = new NodeReaction
+                    BarForce barForce = new BarForce
                     {
                         ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
-                        ObjectId = nodeId,
+                        ObjectId = barId,
                         FX = Fx * forceSIConversion,
                         FY = Fy * forceSIConversion,
                         FZ = Fz * forceSIConversion,
@@ -93,7 +93,7 @@ namespace BH.Adapter.Lusas
                         MZ = Mz * forceSIConversion * lengthSIConversion,
                     };
 
-                    bhomNodeReactions.Add(nodeReaction);
+                    bhombarForces.Add(barForce);
 
                 }
 
@@ -101,7 +101,7 @@ namespace BH.Adapter.Lusas
                 d_LusasData.flushScriptedResults();
             }
 
-            return bhomNodeReactions;
+            return bhombarForces;
         }
 
     }
