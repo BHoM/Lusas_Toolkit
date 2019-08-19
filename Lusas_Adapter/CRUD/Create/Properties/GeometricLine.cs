@@ -29,7 +29,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public IFAttribute CreateGeometricLine(ISectionProperty sectionProperty)
+        private IFAttribute CreateGeometricLine(ISectionProperty sectionProperty)
         {
             if (!Engine.Lusas.Query.CheckIllegalCharacters(sectionProperty.Name))
             {
@@ -292,6 +292,15 @@ namespace BH.Adapter.Lusas
         {
             Engine.Reflection.Compute.RecordError(
                 "GeneralisedFabricatedBoxProfile not supported in Lusas_Toolkit"
+                );
+            return null;
+        }
+
+        private IFGeometricLine CreateProfile(GeneralisedTSectionProfile bhomProfile,
+           string lusasName)
+        {
+            Engine.Reflection.Compute.RecordError(
+                "GeneralisedTSectionProfile not supported in Lusas_Toolkit"
                 );
             return null;
         }
