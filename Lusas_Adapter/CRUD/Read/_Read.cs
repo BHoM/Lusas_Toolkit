@@ -80,6 +80,8 @@ namespace BH.Adapter.Lusas
         {
             if (type == typeof(BarForce))
                 return ReadBarForce(ids, cases);
+            if (type == typeof(NodeDisplacement))
+                return ReadNodeDisplacement(ids, cases);
             if (type == typeof(NodeReaction))
                 return ReadNodeReaction(ids, cases);
             return null;

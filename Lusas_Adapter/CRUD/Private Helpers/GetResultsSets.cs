@@ -25,7 +25,7 @@ using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
-    internal partial class LusasAdapter
+    public partial class LusasAdapter
     {
         internal Dictionary<string, IFResultsComponentSet> GetResultsSets(string entity, List<string> components, string location, IFResultsContext resultsContext)
         {
