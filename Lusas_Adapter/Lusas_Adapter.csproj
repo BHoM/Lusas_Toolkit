@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -189,6 +190,7 @@
     <Compile Include="CRUD\Read\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Read\Properties\Tags.cs" />
     <Compile Include="CRUD\Read\Results\BarForce.cs" />
+    <Compile Include="CRUD\Read\Results\NodeDisplacement.cs" />
     <Compile Include="CRUD\Read\Results\NodeReaction.cs" />
     <Compile Include="CRUD\Read\_Read.cs" />
     <Compile Include="CRUD\Update\UpdateObjects.cs" />
