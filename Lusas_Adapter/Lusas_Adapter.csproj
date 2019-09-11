@@ -51,6 +51,7 @@
   <ItemGroup>
     <Reference Include="Analytical_oM">
       <HintPath>..\..\BHoM\Build\Analytical_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="BHoM">
       <HintPath>..\..\BHoM\Build\BHoM.dll</HintPath>
@@ -67,12 +68,15 @@
     <Reference Include="Common_oM">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BHoM\Build\Common_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Geometry_Engine">
       <HintPath>..\..\BHoM_Engine\Geometry_Engine\obj\Debug\Geometry_Engine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Geometry_oM">
       <HintPath>..\..\BHoM\Build\Geometry_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Lusas.Interop, Version=17.0.1633.29698, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86">
       <HintPath>..\packages\BHoM.Interop.Lusas170.1.0.1\lib\net45\Lusas.Interop.dll</HintPath>
@@ -81,15 +85,19 @@
     <Reference Include="Lusas_oM">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lusas_oM\bin\Debug\Lusas_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Physical_oM">
       <HintPath>..\..\BHoM\Build\Physical_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Reflection_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Reflection_Engine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Reflection_oM">
       <HintPath>..\..\BHoM\Build\Reflection_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Structure_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Structure_Engine.dll</HintPath>
@@ -97,6 +105,7 @@
     </Reference>
     <Reference Include="Structure_oM">
       <HintPath>..\..\BHoM\Build\Structure_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
