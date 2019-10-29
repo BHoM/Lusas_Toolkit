@@ -33,7 +33,7 @@ namespace BH.Adapter.Lusas
     {
         internal object[] GetAssignedPoints(Load<Node> bhomLoads)
         {
-            string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => x.CustomData[AdapterId].ToString()).ToArray();
+            string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => "P" + x.CustomData[AdapterId].ToString()).ToArray();
 
             object[] arrayGeometry = d_LusasData.getObjects("Point", lusasIDs);
 
@@ -42,7 +42,7 @@ namespace BH.Adapter.Lusas
 
         public object[] GetAssignedLines(Load<Bar> bhomLoads)
         {
-            string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => x.CustomData[AdapterId].ToString()).ToArray();
+            string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => "L" + x.CustomData[AdapterId].ToString()).ToArray();
 
             object[] arrayGeometry = d_LusasData.getObjects("Line", lusasIDs);
 
@@ -51,7 +51,7 @@ namespace BH.Adapter.Lusas
 
         public object[] GetAssignedSurfaces(Load<IAreaElement> bhomLoads)
         {
-            string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => x.CustomData[AdapterId].ToString()).ToArray();
+            string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => "S" + x.CustomData[AdapterId].ToString()).ToArray();
 
             object[] arrayGeometry = d_LusasData.getObjects("Surface", lusasIDs);
 
