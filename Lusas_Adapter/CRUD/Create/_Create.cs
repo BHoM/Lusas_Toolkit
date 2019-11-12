@@ -260,14 +260,14 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private bool CreateCollection(IEnumerable<Panel> Panels)
+        private bool CreateCollection(IEnumerable<Panel> panels)
         {
 
-            CreateTags(Panels);
+            CreateTags(panels);
 
             List<Edge> PanelEdges = new List<Edge>();
 
-            foreach (Panel Panel in Panels)
+                foreach (Panel Panel in panels)
             {
                 PanelEdges.AddRange(Panel.ExternalEdges);
             }
@@ -283,7 +283,7 @@ namespace BH.Adapter.Lusas
 
             ReduceRuntime(true);
 
-            foreach (Panel Panel in Panels)
+            foreach (Panel Panel in panels)
             {
                 IFLine[] lusasLines = new IFLine[Panel.ExternalEdges.Count];
                 List<Edge> edges = Panel.ExternalEdges;
