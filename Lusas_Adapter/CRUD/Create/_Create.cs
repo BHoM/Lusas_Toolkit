@@ -41,7 +41,7 @@ namespace BH.Adapter.Lusas
         /***************************************************/
         /**** Adapter overload method                   ****/
         /***************************************************/
-        protected override bool Create<T>(IEnumerable<T> objects, bool replaceAll = false)
+        protected override bool Create<T>(IEnumerable<T> objects)
         {
             bool success = true;        //boolean returning if the creation was successfull or not
 
