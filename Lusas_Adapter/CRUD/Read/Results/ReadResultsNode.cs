@@ -61,6 +61,8 @@ namespace BH.Adapter.Lusas
         }
 
         /***************************************************/
+        /**** Private  Methods                          ****/
+        /***************************************************/
 
         private IEnumerable<IResult> ExtractNodeReaction(List<int> ids, List<int> loadcaseIds)
         {

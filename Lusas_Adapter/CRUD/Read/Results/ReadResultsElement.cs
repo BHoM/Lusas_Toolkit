@@ -64,6 +64,8 @@ namespace BH.Adapter.Lusas
         }
 
         /***************************************************/
+        /**** Private  Methods                          ****/
+        /***************************************************/
 
         private IEnumerable<IResult> ExtractBarForce(List<int> ids, List<int> loadcaseIds)
         {
