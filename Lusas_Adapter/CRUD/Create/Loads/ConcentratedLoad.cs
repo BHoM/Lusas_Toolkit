@@ -36,10 +36,10 @@ namespace BH.Adapter.Lusas
 
             IFLoadingConcentrated lusasPointLoad = null;
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
-                "Lc" + PointLoad.Loadcase.CustomData[AdapterId] + "/" + PointLoad.Loadcase.Name);
+                "Lc" + PointLoad.Loadcase.CustomData[AdapterIdName] + "/" + PointLoad.Loadcase.Name);
 
-            string lusasName = "Pl" + PointLoad.CustomData[AdapterId] + "/" + PointLoad.Name;
-            NameSearch("Pl", PointLoad.CustomData[AdapterId].ToString(), PointLoad.Name, ref lusasName);
+            string lusasName = "Pl" + PointLoad.CustomData[AdapterIdName] + "/" + PointLoad.Name;
+            NameSearch("Pl", PointLoad.CustomData[AdapterIdName].ToString(), PointLoad.Name, ref lusasName);
 
             if (d_LusasData.existsAttribute("Loading", lusasName))
             {

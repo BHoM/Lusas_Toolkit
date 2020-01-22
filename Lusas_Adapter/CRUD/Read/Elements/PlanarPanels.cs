@@ -41,7 +41,7 @@ namespace BH.Adapter.Lusas
             {
                 IEnumerable<Edge> bhomEdgesList = ReadEdges();
                 Dictionary<string, Edge> bhomEdges = bhomEdgesList.ToDictionary(
-                    x => x.CustomData[AdapterId].ToString());
+                    x => x.CustomData[AdapterIdName].ToString());
 
                 HashSet<string> groupNames = ReadTags();
                 IEnumerable<IMaterialFragment> materialList = ReadMaterials();

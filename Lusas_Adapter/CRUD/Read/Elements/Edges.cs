@@ -38,7 +38,7 @@ namespace BH.Adapter.Lusas
             {
                 List<Node> bhomNodesList = ReadNodes();
                 Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(
-                    x => x.CustomData[AdapterId].ToString());
+                    x => x.CustomData[AdapterIdName].ToString());
 
                 HashSet<string> groupNames = ReadTags();
 

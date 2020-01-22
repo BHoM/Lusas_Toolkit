@@ -40,10 +40,10 @@ namespace BH.Adapter.Lusas
                 List<Bar> bhomBars = ReadBars();
                 List<Panel> bhomPanels = ReadPanels();
                 Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
-                    x => x.CustomData[AdapterId].ToString());
+                    x => x.CustomData[AdapterIdName].ToString());
 
                 Dictionary<string, Panel> PanelDictionary = bhomPanels.ToDictionary(
-                    x => x.CustomData[AdapterId].ToString());
+                    x => x.CustomData[AdapterIdName].ToString());
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
 

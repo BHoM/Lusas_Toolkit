@@ -39,7 +39,7 @@ namespace BH.Adapter.Lusas
             {
                 List<Panel> bhomPanel = ReadPanels();
                 Dictionary<string, Panel> surfaceDictionary = bhomPanel.ToDictionary(
-                    x => x.CustomData[AdapterId].ToString());
+                    x => x.CustomData[AdapterIdName].ToString());
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
 

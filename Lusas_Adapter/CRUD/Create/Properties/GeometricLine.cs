@@ -37,7 +37,7 @@ namespace BH.Adapter.Lusas
             }
 
             IFAttribute lusasAttribute = null;
-            string lusasName = "G" + sectionProperty.CustomData[AdapterId] + "/" + sectionProperty.Name;
+            string lusasName = "G" + sectionProperty.CustomData[AdapterIdName] + "/" + sectionProperty.Name;
 
             if (d_LusasData.existsAttribute("Line Geometric", lusasName))
             {

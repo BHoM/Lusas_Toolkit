@@ -217,8 +217,6 @@
     <Compile Include="CRUD\Update\UpdateObjects.cs" />
     <Compile Include="Adapter\LusasAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\Comparer.cs" />
-    <Compile Include="Types\DependencyTypes.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lusas_Engine\Lusas_Engine.csproj">

@@ -36,7 +36,7 @@ namespace BH.Adapter.Lusas
             }
 
             IFAttribute lusasMaterial = null;
-            string lusasName = "M" + material.CustomData[AdapterId] + "/" + material.Name;
+            string lusasName = "M" + material.CustomData[AdapterIdName] + "/" + material.Name;
 
             if(material is IIsotropic)
             {

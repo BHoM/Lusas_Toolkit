@@ -35,7 +35,7 @@ namespace BH.Adapter.Lusas
             }
 
             IFAttribute lusasAttribute = null;
-            string lusasName = "G" + surfaceProperty.CustomData[AdapterId] + "/" + surfaceProperty.Name;
+            string lusasName = "G" + surfaceProperty.CustomData[AdapterIdName] + "/" + surfaceProperty.Name;
 
             if (d_LusasData.existsAttribute("Surface Geometric", lusasName))
             {
