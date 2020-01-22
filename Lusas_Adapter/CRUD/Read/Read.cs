@@ -77,7 +77,7 @@ namespace BH.Adapter.Lusas
             return null;
         }
 
-        protected override IEnumerable<IResult> ReadResults(Type type, IList ids = null, IList cases = null, int divisions = 5)
+        protected override IEnumerable<IResult> ReadResults(Type type, IList ids = null, IList cases = null, int divisions = 5, ActionConfig actionConfig = null)
         {
             if (type == typeof(BarForce))
                 return ReadBarForce(ids, cases);
