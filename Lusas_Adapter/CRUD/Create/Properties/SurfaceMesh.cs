@@ -35,7 +35,7 @@ namespace BH.Adapter.Lusas
             }
 
             IFMeshSurface lusasSurfaceMesh = null;
-            string lusasName = "Me" + meshSettings2D.CustomData[AdapterId] + "/" + meshSettings2D.Name;
+            string lusasName = "Me" + meshSettings2D.CustomData[AdapterIdName] + "/" + meshSettings2D.Name;
             if (d_LusasData.existsAttribute("Mesh", lusasName))
             {
                 lusasSurfaceMesh = (IFMeshSurface)d_LusasData.getAttribute("Mesh", lusasName);

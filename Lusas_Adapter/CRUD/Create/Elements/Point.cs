@@ -36,7 +36,7 @@ namespace BH.Adapter.Lusas
                 position.X, position.Y, position.Z);
 
             lusasPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
-            lusasPoint.setName("P" + node.CustomData[AdapterId].ToString());
+            lusasPoint.setName("P" + node.CustomData[AdapterIdName].ToString());
 
             if (!(node.Tags.Count == 0))
             {
@@ -45,7 +45,7 @@ namespace BH.Adapter.Lusas
 
             if (!(node.Support == null))
             {
-                string constraintName = "Sp" + node.Support.CustomData[AdapterId] + "/" + node.Support.Name;
+                string constraintName = "Sp" + node.Support.CustomData[AdapterIdName] + "/" + node.Support.Name;
                 IFAttribute lusasSupport = d_LusasData.getAttribute("Support", constraintName);
                 lusasSupport.assignTo(lusasPoint);
             }
@@ -58,12 +58,12 @@ namespace BH.Adapter.Lusas
             Node newNode = Engine.Structure.Create.Node(new Point { X = point.X, Y = point.Y, Z = point.Z });
 
             int adapterID;
-            if (newNode.CustomData.ContainsKey(AdapterId))
-               adapterID= System.Convert.ToInt32(newNode.CustomData[AdapterId]);
+            if (newNode.CustomData.ContainsKey(AdapterIdName))
+               adapterID= System.Convert.ToInt32(newNode.CustomData[AdapterIdName]);
             else
-               adapterID= System.Convert.ToInt32(NextId(newNode.GetType()));
+               adapterID= System.Convert.ToInt32(NextFreeId(newNode.GetType()));
 
-            newNode.CustomData[AdapterId] = adapterID;
+            newNode.CustomData[AdapterIdName] = adapterID;
 
             IFPoint newPoint = CreatePoint(newNode);
 

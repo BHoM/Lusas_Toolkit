@@ -40,7 +40,7 @@ namespace BH.Adapter.Lusas
             {
                 List<Node> bhomNodes = ReadNodes();
                 Dictionary<string, Node> nodeDictionary = bhomNodes.ToDictionary(
-                    x => x.CustomData[AdapterId].ToString());
+                    x => x.CustomData[AdapterIdName].ToString());
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
 

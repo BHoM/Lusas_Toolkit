@@ -36,12 +36,12 @@ namespace BH.Adapter.Lusas
 
             IFLoadingBeamPoint lusasBarPointLoad = null;
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
-                "Lc" + bhomBarPointLoad.Loadcase.CustomData[AdapterId] + "/" + bhomBarPointLoad.Loadcase.Name);
+                "Lc" + bhomBarPointLoad.Loadcase.CustomData[AdapterIdName] + "/" + bhomBarPointLoad.Loadcase.Name);
 
             string lusasName =
-                "BPl" + bhomBarPointLoad.CustomData[AdapterId] + "/" + bhomBarPointLoad.Name;
+                "BPl" + bhomBarPointLoad.CustomData[AdapterIdName] + "/" + bhomBarPointLoad.Name;
 
-            NameSearch("BPl", bhomBarPointLoad.CustomData[AdapterId].ToString(),
+            NameSearch("BPl", bhomBarPointLoad.CustomData[AdapterIdName].ToString(),
                 bhomBarPointLoad.Name, ref lusasName);
 
             if (d_LusasData.existsAttribute("Loading", lusasName))

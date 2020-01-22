@@ -33,7 +33,7 @@ namespace BH.Adapter.Lusas
     {
         internal object[] GetAssignedPoints(Load<Node> bhomLoads)
         {
-            string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => "P" + x.CustomData[AdapterId].ToString()).ToArray();
+            string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => "P" + x.CustomData[AdapterIdName].ToString()).ToArray();
 
             object[] arrayGeometry = d_LusasData.getObjects("Point", lusasIDs);
 
@@ -42,7 +42,7 @@ namespace BH.Adapter.Lusas
 
         public object[] GetAssignedLines(Load<Bar> bhomLoads)
         {
-            string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => "L" + x.CustomData[AdapterId].ToString()).ToArray();
+            string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => "L" + x.CustomData[AdapterIdName].ToString()).ToArray();
 
             object[] arrayGeometry = d_LusasData.getObjects("Line", lusasIDs);
 
@@ -51,7 +51,7 @@ namespace BH.Adapter.Lusas
 
         public object[] GetAssignedSurfaces(Load<IAreaElement> bhomLoads)
         {
-            string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => "S" + x.CustomData[AdapterId].ToString()).ToArray();
+            string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => "S" + x.CustomData[AdapterIdName].ToString()).ToArray();
 
             object[] arrayGeometry = d_LusasData.getObjects("Surface", lusasIDs);
 
@@ -67,21 +67,21 @@ namespace BH.Adapter.Lusas
                 if (bhomObject is Node)
                 {
                     IFGeometry lusasPoint = d_LusasData.getPointByName(
-                        "P" + bhomObject.CustomData[AdapterId].ToString());
+                        "P" + bhomObject.CustomData[AdapterIdName].ToString());
 
                     assignedGeometry.Add(lusasPoint);
                 }
                 else if (bhomObject is Bar)
                 {
                     IFGeometry lusasBar = d_LusasData.getLineByName(
-                        "L" + bhomObject.CustomData[AdapterId].ToString());
+                        "L" + bhomObject.CustomData[AdapterIdName].ToString());
 
                     assignedGeometry.Add(lusasBar);
                 }
                 else if (bhomObject is Panel)
                 {
                     IFGeometry lusasSurface = d_LusasData.getSurfaceByName(
-                        "S" + bhomObject.CustomData[AdapterId].ToString());
+                        "S" + bhomObject.CustomData[AdapterIdName].ToString());
 
                     assignedGeometry.Add(lusasSurface);
                 }

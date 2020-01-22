@@ -38,7 +38,7 @@ namespace BH.Adapter.Lusas
             }
 
             IFAttribute lusasSupport = null;
-            string lusasName = "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name;
+            string lusasName = "Sp" + constraint.CustomData[AdapterIdName] + "/" + constraint.Name;
 
             if (d_LusasData.existsAttribute("Support", lusasName))
             {
@@ -85,7 +85,7 @@ namespace BH.Adapter.Lusas
             }
 
             IFAttribute lusasSupport = null;
-            string lusasName = "Sp" + constraint.CustomData[AdapterId] + "/" + constraint.Name;
+            string lusasName = "Sp" + constraint.CustomData[AdapterIdName] + "/" + constraint.Name;
 
             if (d_LusasData.existsAttribute("Support", lusasName))
             {

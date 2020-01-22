@@ -36,7 +36,7 @@ namespace BH.Adapter.Lusas
             }
 
             IFLoadcase lusasLoadcase = null;
-            string lusasName = "Lc" + loadcase.CustomData[AdapterId] + "/" + loadcase.Name;
+            string lusasName = "Lc" + loadcase.CustomData[AdapterIdName] + "/" + loadcase.Name;
 
             if (d_LusasData.existsLoadset(lusasName))
             {

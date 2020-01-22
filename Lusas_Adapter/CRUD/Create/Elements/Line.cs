@@ -42,10 +42,10 @@ namespace BH.Adapter.Lusas
                 return null;
             }
 
-            IFPoint startPoint = d_LusasData.getPointByName(bar.StartNode.CustomData[AdapterId].ToString());
-            IFPoint endPoint = d_LusasData.getPointByName(bar.EndNode.CustomData[AdapterId].ToString());
+            IFPoint startPoint = d_LusasData.getPointByName(bar.StartNode.CustomData[AdapterIdName].ToString());
+            IFPoint endPoint = d_LusasData.getPointByName(bar.EndNode.CustomData[AdapterIdName].ToString());
             IFLine lusasLine = d_LusasData.createLineByPoints(startPoint, endPoint);
-            lusasLine.setName("L" + bar.CustomData[AdapterId]);
+            lusasLine.setName("L" + bar.CustomData[AdapterIdName]);
 
             if (!(bar.Tags.Count == 0))
             {
@@ -55,14 +55,14 @@ namespace BH.Adapter.Lusas
             if (!(bar.SectionProperty == null))
             {
                 string geometricLineName =
-                    "G" + bar.SectionProperty.CustomData[AdapterId] + "/" + bar.SectionProperty.Name;
+                    "G" + bar.SectionProperty.CustomData[AdapterIdName] + "/" + bar.SectionProperty.Name;
 
                 IFAttribute lusasGeometricLine = d_LusasData.getAttribute("Line Geometric", geometricLineName);
                 lusasGeometricLine.assignTo(lusasLine);
                 if (!(bar.SectionProperty.Material == null))
                 {
                     string materialName =
-                        "M" + bar.SectionProperty.Material.CustomData[AdapterId] + "/" +
+                        "M" + bar.SectionProperty.Material.CustomData[AdapterIdName] + "/" +
                         bar.SectionProperty.Material.Name;
 
                     IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
@@ -72,7 +72,7 @@ namespace BH.Adapter.Lusas
 
             if (!(bar.Support == null))
             {
-                string supportName = "Sp" + bar.Support.CustomData[AdapterId] + "/" + bar.Support.Name;
+                string supportName = "Sp" + bar.Support.CustomData[AdapterIdName] + "/" + bar.Support.Name;
                 IFAttribute lusasSupport = d_LusasData.getAttribute("Support", supportName);
                 lusasSupport.assignTo(lusasLine);
                 IFLocalCoord barLocalAxis = CreateLocalCoordinate(lusasLine);
@@ -108,24 +108,24 @@ namespace BH.Adapter.Lusas
                 return null;
             }
 
-            IFLine lusasLine = null;
+            IFLine lusasLine;
 
             int adapterID;
-            if (bar.CustomData.ContainsKey(AdapterId))
-                adapterID = System.Convert.ToInt32(bar.CustomData[AdapterId]);
+            if (bar.CustomData.ContainsKey(AdapterIdName))
+                adapterID = System.Convert.ToInt32(bar.CustomData[AdapterIdName]);
             else
-                adapterID = System.Convert.ToInt32(NextId(bar.GetType()));
+                adapterID = System.Convert.ToInt32(NextFreeId(bar.GetType()));
 
-            bar.CustomData[AdapterId] = adapterID;
+            bar.CustomData[AdapterIdName] = adapterID;
 
-            if (d_LusasData.existsLineByName("L" + bar.CustomData[AdapterId]))
+            if (d_LusasData.existsLineByName("L" + bar.CustomData[AdapterIdName]))
             {
-                lusasLine = d_LusasData.getLineByName("L" + bar.CustomData[AdapterId]);
+                lusasLine = d_LusasData.getLineByName("L" + bar.CustomData[AdapterIdName]);
             }
             else
             {
                 lusasLine = d_LusasData.createLineByPoints(startPoint, endPoint);
-                lusasLine.setName("L" + bar.CustomData[AdapterId]);
+                lusasLine.setName("L" + bar.CustomData[AdapterIdName]);
             }
 
             if (!(bar.Tags.Count == 0))
@@ -137,7 +137,7 @@ namespace BH.Adapter.Lusas
             {
                 if (!(bar.SectionProperty.Material == null))
                 {
-                    string materialName = "M" + bar.SectionProperty.Material.CustomData[AdapterId] +
+                    string materialName = "M" + bar.SectionProperty.Material.CustomData[AdapterIdName] +
                         "/" + bar.SectionProperty.Material.Name;
 
                     IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
@@ -147,7 +147,7 @@ namespace BH.Adapter.Lusas
 
             if (!(bar.Support == null))
             {
-                string supportName = "Sp" + bar.Support.CustomData[AdapterId] + "/" + bar.Support.Name;
+                string supportName = "Sp" + bar.Support.CustomData[AdapterIdName] + "/" + bar.Support.Name;
                 IFAttribute lusasSupport = d_LusasData.getAttribute("Support", supportName);
                 lusasSupport.assignTo(lusasLine);
             }

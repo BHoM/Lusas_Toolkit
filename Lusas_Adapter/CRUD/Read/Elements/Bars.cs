@@ -42,7 +42,7 @@ namespace BH.Adapter.Lusas
             {
                 IEnumerable<Node> bhomNodesList = ReadNodes();
                 Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(
-                    x => x.CustomData[AdapterId].ToString());
+                    x => x.CustomData[AdapterIdName].ToString());
 
                 IEnumerable<Constraint4DOF> bhomSupportList = Read4DOFConstraints();
                 Dictionary<string, Constraint4DOF> bhomSupports = bhomSupportList.ToDictionary(
