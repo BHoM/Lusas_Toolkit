@@ -49,6 +49,14 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Adapter_Engine">
+      <HintPath>..\..\BHoM_Adapter\Build\Adapter_Engine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Adapter_oM">
+      <HintPath>..\..\BHoM_Adapter\Build\Adapter_oM.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Analytical_oM">
       <HintPath>..\..\BHoM\Build\Analytical_oM.dll</HintPath>
       <Private>False</Private>
@@ -99,6 +107,10 @@
       <HintPath>..\..\BHoM\Build\Reflection_oM.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Structure_AdapterModules">
+      <HintPath>..\..\BHoM_Adapter\Build\Structure_AdapterModules.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Structure_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Structure_Engine.dll</HintPath>
       <Private>False</Private>
@@ -138,7 +150,7 @@
     <Compile Include="CRUD\Create\Elements\Line.cs" />
     <Compile Include="CRUD\Create\Elements\Point.cs" />
     <Compile Include="CRUD\Create\Loads\TemperatureLoad.cs" />
-    <Compile Include="CRUD\Create\_Create.cs" />
+    <Compile Include="CRUD\Create\Create.cs" />
     <Compile Include="CRUD\Delete\Elements\Lines.cs" />
     <Compile Include="CRUD\Delete\Elements\Points.cs" />
     <Compile Include="CRUD\Delete\Load\AreaTemperatureLoads.cs" />
@@ -157,25 +169,25 @@
     <Compile Include="CRUD\Delete\Property\MeshSettings2D.cs" />
     <Compile Include="CRUD\Delete\Property\SectionProperties.cs" />
     <Compile Include="CRUD\Delete\Property\SurfaceProperties.cs" />
-    <Compile Include="CRUD\Delete\_Delete.cs" />
+    <Compile Include="CRUD\Delete\Delete.cs" />
     <Compile Include="Adapter\NextId.cs" />
     <Compile Include="CRUD\Delete\Elements\Surface.cs" />
-    <Compile Include="CRUD\Private Helpers\AssignObjectSet.cs" />
-    <Compile Include="CRUD\Private Helpers\DeleteLineAssignment.cs" />
-    <Compile Include="CRUD\Private Helpers\DeletePointAssignment.cs" />
-    <Compile Include="CRUD\Private Helpers\CreateTags.cs" />
-    <Compile Include="CRUD\Private Helpers\DeleteSurfaceAssignment.cs" />
-    <Compile Include="CRUD\Private Helpers\GetAssignedObjects.cs" />
-    <Compile Include="CRUD\Private Helpers\GetFeatureResults.cs" />
-    <Compile Include="CRUD\Private Helpers\GetResultsSets.cs" />
-    <Compile Include="CRUD\Private Helpers\NameSearch.cs" />
-    <Compile Include="CRUD\Private Helpers\RuntimeReduction.cs" />
+    <Compile Include="Private Helpers\AssignObjectSet.cs" />
+    <Compile Include="Private Helpers\DeleteLineAssignment.cs" />
+    <Compile Include="Private Helpers\DeletePointAssignment.cs" />
+    <Compile Include="Private Helpers\CreateTags.cs" />
+    <Compile Include="Private Helpers\DeleteSurfaceAssignment.cs" />
+    <Compile Include="Private Helpers\GetAssignedObjects.cs" />
+    <Compile Include="Private Helpers\GetFeatureResults.cs" />
+    <Compile Include="Private Helpers\GetResultsSets.cs" />
+    <Compile Include="Private Helpers\NameSearch.cs" />
+    <Compile Include="Private Helpers\RuntimeReduction.cs" />
     <Compile Include="CRUD\Read\Properties\MeshSettings1D.cs" />
     <Compile Include="CRUD\Read\Properties\MeshSettings2D.cs" />
     <Compile Include="CRUD\Read\Properties\SurfaceProperties.cs" />
     <Compile Include="CRUD\Read\Properties\4DOFConstraints.cs" />
     <Compile Include="CRUD\Read\Properties\6DOFConstraints.cs" />
-    <Compile Include="CRUD\Read\All.cs" />
+    <Compile Include="CRUD\Read\ReadAll.cs" />
     <Compile Include="CRUD\Read\Loads\AreaTemperatureLoads.cs" />
     <Compile Include="CRUD\Read\Loads\AreaUniformlyDistributedLoads.cs" />
     <Compile Include="CRUD\Read\Loads\BarPointLoads.cs" />
@@ -201,7 +213,7 @@
     <Compile Include="CRUD\Read\Results\BarForce.cs" />
     <Compile Include="CRUD\Read\Results\NodeDisplacement.cs" />
     <Compile Include="CRUD\Read\Results\NodeReaction.cs" />
-    <Compile Include="CRUD\Read\_Read.cs" />
+    <Compile Include="CRUD\Read\Read.cs" />
     <Compile Include="CRUD\Update\UpdateObjects.cs" />
     <Compile Include="Adapter\LusasAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -217,6 +229,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AdapterActions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
