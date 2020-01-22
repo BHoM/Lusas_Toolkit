@@ -23,6 +23,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using BH.oM.Adapter;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Base;
 using BH.oM.Common;
 using BH.oM.Geometry;
@@ -33,13 +35,12 @@ using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.Results;
-using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        protected override IEnumerable<IBHoMObject> Read(Type type, IList ids = null)
+        protected override IEnumerable<IBHoMObject> IRead(Type type, IList ids = null, ActionConfig actionConfig = null)
         {
             if (type == typeof(Bar))
                 return ReadBars(ids as dynamic);
