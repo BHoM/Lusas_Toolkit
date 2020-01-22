@@ -20,8 +20,10 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.Collections.Generic;
-using System.Linq;
+using BH.Engine.Geometry;
+using BH.Engine.Lusas.Object_Comparer.Equality_Comparer;
+using BH.oM.Adapter;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 using BH.oM.Structure.Constraints;
@@ -29,10 +31,9 @@ using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.MaterialFragments;
-using BH.Engine.Geometry;
 using Lusas.LPI;
-using BH.Engine.Lusas.Object_Comparer.Equality_Comparer;
-using BH.oM.Adapters.Lusas;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BH.Adapter.Lusas
 {
@@ -41,7 +42,7 @@ namespace BH.Adapter.Lusas
         /***************************************************/
         /**** Adapter overload method                   ****/
         /***************************************************/
-        protected override bool Create<T>(IEnumerable<T> objects)
+        protected override bool ICreate<T>(IEnumerable<T> objects, ActionConfig actionConfig = null)
         {
             bool success = true;        //boolean returning if the creation was successfull or not
 
