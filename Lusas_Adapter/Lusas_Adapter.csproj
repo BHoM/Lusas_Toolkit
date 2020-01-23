@@ -170,7 +170,7 @@
     <Compile Include="CRUD\Delete\Property\SectionProperties.cs" />
     <Compile Include="CRUD\Delete\Property\SurfaceProperties.cs" />
     <Compile Include="CRUD\Delete\Delete.cs" />
-    <Compile Include="Adapter\NextId.cs" />
+    <Compile Include="Type\NextFreeId.cs" />
     <Compile Include="CRUD\Delete\Elements\Surface.cs" />
     <Compile Include="Private Helpers\AssignObjectSet.cs" />
     <Compile Include="Private Helpers\DeleteLineAssignment.cs" />
@@ -215,7 +215,7 @@
     <Compile Include="CRUD\Read\Results\NodeReaction.cs" />
     <Compile Include="CRUD\Read\Read.cs" />
     <Compile Include="CRUD\Update\UpdateObjects.cs" />
-    <Compile Include="Adapter\LusasAdapter.cs" />
+    <Compile Include="LusasAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -228,9 +228,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AdapterActions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
