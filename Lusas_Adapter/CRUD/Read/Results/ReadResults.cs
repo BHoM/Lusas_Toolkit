@@ -119,7 +119,27 @@ namespace BH.Adapter.Lusas
                 {
                     ids.Add(
                         System.Convert.ToInt32(
-                        Engine.Lusas.Modify.RemovePrefix(d_LusasData.getLineByNumber(i).getName(), "P")));
+                        Engine.Lusas.Modify.RemovePrefix(d_LusasData.getLineByNumber(i).getName(), "L")));
+                }
+            }
+
+            return ids;
+        }
+
+        /***************************************************/
+
+        private List<int> GetAllIds(MeshResultRequest request)
+        {
+            List<int> ids = new List<int>();
+            int maxIndex = d_LusasData.getLargestSurfaceID();
+
+            for (int i = 1; i < maxIndex + 1; i++)
+            {
+                if (d_LusasData.existsSurfaceByID(i))
+                {
+                    ids.Add(
+                        System.Convert.ToInt32(
+                        Engine.Lusas.Modify.RemovePrefix(d_LusasData.getSurfaceByNumber(i).getName(), "S")));
                 }
             }
 
