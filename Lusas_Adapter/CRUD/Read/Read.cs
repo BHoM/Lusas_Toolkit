@@ -33,8 +33,6 @@ using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.MaterialFragments;
-using BH.oM.Adapters.Lusas;
-using BH.oM.Structure.Results;
 
 namespace BH.Adapter.Lusas
 {
@@ -82,17 +80,6 @@ namespace BH.Adapter.Lusas
         }
 
         /***************************************************/
-
-        protected override IEnumerable<IResult> ReadResults(Type type, IList ids = null, IList cases = null, int divisions = 5, ActionConfig actionConfig = null)
-        {
-            if (type == typeof(BarForce))
-                return ReadBarForce(ids, cases);
-            if (type == typeof(NodeDisplacement))
-                return ReadNodeDisplacement(ids, cases);
-            if (type == typeof(NodeReaction))
-                return ReadNodeReaction(ids, cases);
-            return null;
-        }
 
     }
 }

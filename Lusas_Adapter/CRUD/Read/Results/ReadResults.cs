@@ -24,6 +24,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BH.oM.Base;
+using BH.oM.Adapter;
 using BH.oM.Common;
 using BH.oM.Data.Requests;
 using BH.oM.Structure.Loads;
@@ -39,7 +40,7 @@ namespace BH.Adapter.Lusas
         /**** Adapter  Methods                          ****/
         /***************************************************/
 
-        protected override IEnumerable<IResult> ReadResults(Type type, IList ids = null, IList cases = null, int divisions = 5)
+        protected override IEnumerable<IResult> ReadResults(Type type, IList ids = null, IList cases = null, int divisions = 5, ActionConfig actionConfig = null)
         {
             IResultRequest request = Engine.Structure.Create.IResultRequest(type, ids?.Cast<object>(), cases?.Cast<object>(), divisions);
 

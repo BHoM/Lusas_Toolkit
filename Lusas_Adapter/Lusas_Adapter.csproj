@@ -217,10 +217,6 @@
     <Compile Include="CRUD\Read\Results\ReadResults.cs" />
     <Compile Include="CRUD\Read\Results\MeshResults.cs" />
     <Compile Include="CRUD\Read\Results\NodeResults.cs" />
-    <Compile Include="CRUD\Read\_Read.cs" />
-    <Compile Include="CRUD\Read\Results\BarForce.cs" />
-    <Compile Include="CRUD\Read\Results\NodeDisplacement.cs" />
-    <Compile Include="CRUD\Read\Results\NodeReaction.cs" />
     <Compile Include="CRUD\Read\Read.cs" />
     <Compile Include="CRUD\Update\UpdateObjects.cs" />
     <Compile Include="LusasAdapter.cs" />
