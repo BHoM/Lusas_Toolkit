@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -20,11 +20,21 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+
+using BH.Engine.Base.Objects;
+using BH.oM.Adapter;
+using BH.oM.Adapters.Lusas;
+using BH.oM.Geometry;
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.Constraints;
+using BH.oM.Structure.SectionProperties;
+using BH.oM.Structure.SurfaceProperties;
+using BH.oM.Structure.Loads;
+using BH.oM.Structure.MaterialFragments;
+using Lusas.LPI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Lusas.LPI;
-using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
 {
@@ -37,9 +47,37 @@ namespace BH.Adapter.Lusas
 
         public LusasAdapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
         {
-            if(active)
+            if (active)
             {
-                AdapterId = "Lusas_id";   //Set the "AdapterId" to "SoftwareName_id". Generally stored as a constant string in the convert class in the SoftwareName_Engine
+                AdapterIdName = "Lusas_id";   //Set the "AdapterId" to "SoftwareName_id". Generally stored as a constant string in the convert class in the SoftwareName_Engine
+
+                BH.Adapter.Modules.Structure.ModuleLoader.LoadModules(this);
+
+                AdapterComparers = new Dictionary<Type, object>
+                {
+                    {typeof(Node), new Engine.Structure.NodeDistanceComparer(3) },
+                    {typeof(Bar), new Engine.Lusas.Object_Comparer.Equality_Comparer.BarMidPointComparer(3)},
+                    {typeof(Edge), new Engine.Lusas.Object_Comparer.Equality_Comparer.EdgeMidPointComparer(3) },
+                    { typeof(Point), new Engine.Lusas.Object_Comparer.Equality_Comparer.PointDistanceComparer(3) },
+                    {typeof(IMaterialFragment), new BHoMObjectNameComparer() },
+                    {typeof(LinkConstraint), new BHoMObjectNameComparer() },
+                    {typeof(ISurfaceProperty), new BHoMObjectNameComparer() },
+                    {typeof(ISectionProperty), new BHoMObjectNameComparer() },
+                    {typeof(ILoad), new BHoMObjectNameComparer() },
+                    {typeof(Loadcase), new BHoMObjectNameComparer()},
+                    {typeof(LoadCombination), new BHoMObjectNameComparer()}
+                };
+
+                DependencyTypes = new Dictionary<Type, List<Type>>
+                {
+                    {typeof(Panel), new List<Type> { typeof(ISurfaceProperty), typeof(Edge)} },
+                    {typeof(Bar), new List<Type> { typeof(Node) , typeof(ISectionProperty), typeof(Constraint4DOF) } },
+                    {typeof(Node), new List<Type> { typeof(Constraint6DOF) } },
+                    {typeof(ISectionProperty), new List<Type> { typeof(IMaterialFragment) } },
+                    {typeof(RigidLink), new List<Type> { typeof(LinkConstraint), typeof(Node) } },
+                    {typeof(ISurfaceProperty), new List<Type> { typeof(IMaterialFragment) } },
+                    {typeof(ILoad), new List<Type> {typeof(Loadcase) } },
+                };
 
                 if (string.IsNullOrWhiteSpace(filePath))
                 {
@@ -85,3 +123,4 @@ namespace BH.Adapter.Lusas
 
     }
 }
+

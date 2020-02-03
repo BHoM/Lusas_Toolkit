@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -41,7 +41,7 @@ namespace BH.Adapter.Lusas
         /**** Adapter overload method                   ****/
         /***************************************************/
 
-        protected override object NextId(Type type, bool refresh = false)
+        protected override object NextFreeId(Type type, bool refresh = false)
         {
             //Method that returns the next free index for a specific object type. 
             //Software dependent which type of index to return. Could be int, string, Guid or whatever the specific software is using
@@ -263,4 +263,5 @@ namespace BH.Adapter.Lusas
         /***************************************************/
     }
 }
+
 

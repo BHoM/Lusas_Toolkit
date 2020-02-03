@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -30,14 +30,14 @@ namespace BH.Adapter.Lusas
         private IFSurface CreateSurface(Panel panel, IFLine[] lusasLines)
         {
             IFSurface lusasSurface;
-            if (d_LusasData.existsSurfaceByName("S" + panel.CustomData[AdapterId]))
+            if (d_LusasData.existsSurfaceByName("S" + panel.CustomData[AdapterIdName]))
             {
-                lusasSurface = d_LusasData.getSurfaceByName("S" + panel.CustomData[AdapterId]);
+                lusasSurface = d_LusasData.getSurfaceByName("S" + panel.CustomData[AdapterIdName]);
             }
             else
             {
                 lusasSurface = d_LusasData.createSurfaceBy(lusasLines);
-                lusasSurface.setName("S" + panel.CustomData[AdapterId]);
+                lusasSurface.setName("S" + panel.CustomData[AdapterIdName]);
             }
 
             if (!(panel.Tags.Count == 0))
@@ -48,7 +48,7 @@ namespace BH.Adapter.Lusas
             if(!(panel.Property == null))
             {
                 string geometricSurfaceName = "G" + 
-                    panel.Property.CustomData[AdapterId] + "/" + panel.Property.Name;
+                    panel.Property.CustomData[AdapterIdName] + "/" + panel.Property.Name;
 
                 IFAttribute lusasGeometricSurface = d_LusasData.getAttribute(
                     "Surface Geometric", geometricSurfaceName);
@@ -56,7 +56,7 @@ namespace BH.Adapter.Lusas
                 lusasGeometricSurface.assignTo(lusasSurface);
                 if (!(panel.Property.Material == null))
                 {
-                    string materialName = "M" + panel.Property.Material.CustomData[AdapterId] + 
+                    string materialName = "M" + panel.Property.Material.CustomData[AdapterIdName] + 
                         "/" + panel.Property.Material.Name;
 
                     IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);

@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -38,7 +38,7 @@ namespace BH.Adapter.Lusas
             }
 
             IFBasicCombination lusasLoadcombination = null;
-            string lusasLoadCombinationName = "Lc" + loadCombination.CustomData[AdapterId] +
+            string lusasLoadCombinationName = "Lc" + loadCombination.CustomData[AdapterIdName] +
                 "/" + loadCombination.Name;
 
             List<double> loadFactors = new List<double>();
@@ -63,7 +63,7 @@ namespace BH.Adapter.Lusas
                 }
                 foreach (Tuple<double, ICase> factoredLoad in loadCombination.LoadCases)
                 {
-                    string lusasName = "Lc" + factoredLoad.Item2.CustomData[AdapterId] + "/"
+                    string lusasName = "Lc" + factoredLoad.Item2.CustomData[AdapterIdName] + "/"
                         + factoredLoad.Item2.Name;
                     double factor = factoredLoad.Item1;
                     IFLoadset lusasLoadcase = d_LusasData.getLoadset(lusasName);

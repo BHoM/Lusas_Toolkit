@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -20,36 +20,31 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.Collections.Generic;
-using BH.oM.Base;
+using System.Linq;
+using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        private List<IBHoMObject> ReadAll(List<string> ids = null)
+        internal void DeleteLineAssignments(object[] lusasAttributes)
         {
-            List<IBHoMObject> objects = new List<IBHoMObject>();
-
-            objects.AddRange(ReadNodes());
-            objects.AddRange(ReadBars());
-            objects.AddRange(ReadPanels());
-            objects.AddRange(Read2DProperties());
-            objects.AddRange(ReadMaterials());
-            objects.AddRange(Read4DOFConstraints());
-            objects.AddRange(Read6DOFConstraints());
-            objects.AddRange(ReadLoadcases());
-            objects.AddRange(ReadLoadCombinations());
-            objects.AddRange(ReadPointLoads());
-            objects.AddRange(ReadPointDisplacements());
-            objects.AddRange(ReadBarUniformlyDistributedLoads());
-            objects.AddRange(ReadBarPointLoads());
-            objects.AddRange(ReadBarVaryingDistributedLoads());
-            objects.AddRange(ReadAreaUniformlyDistributedLoads());
-            objects.AddRange(ReadBarTemperatureLoads());
-            objects.AddRange(ReadAreaTemperatureLoads());
-            objects.AddRange(ReadGravityLoads());
-            return objects;
+            for (int i = 0; i < lusasAttributes.Count(); i++)
+            {
+                IFAttribute lusasAttribute = (IFAttribute)lusasAttributes[i];
+                object[] lusasAssignments = lusasAttribute.getAssignments();
+                for (int j = 0; j < lusasAssignments.Count(); j++)
+                {
+                    IFAssignment lusasAssignment = (IFAssignment)lusasAssignments[j];
+                    IFGeometry lusasGeometry = (IFGeometry)lusasAssignment.getDatabaseObject();
+                    if (lusasGeometry is IFLine)
+                    {
+                        Engine.Reflection.Compute.RecordWarning(lusasAttribute.getName() + " has been deleted because it was assigned to a line");
+                        d_LusasData.Delete(lusasGeometry);
+                        break;
+                    }
+                }
+            }
         }
     }
 }

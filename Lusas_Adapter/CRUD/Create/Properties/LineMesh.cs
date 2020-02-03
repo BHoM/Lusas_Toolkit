@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -48,14 +48,14 @@ namespace BH.Adapter.Lusas
 
 
             int adapterID;
-            if (meshSettings1D.CustomData.ContainsKey(AdapterId))
-                adapterID = System.Convert.ToInt32(meshSettings1D.CustomData[AdapterId]);
+            if (meshSettings1D.CustomData.ContainsKey(AdapterIdName))
+                adapterID = System.Convert.ToInt32(meshSettings1D.CustomData[AdapterIdName]);
             else
-                adapterID = System.Convert.ToInt32(NextId(meshSettings1D.GetType()));
+                adapterID = System.Convert.ToInt32(NextFreeId(meshSettings1D.GetType()));
 
             string releaseString = Engine.Lusas.Compute.CreateReleaseString(barRelease);
 
-            IFMeshLine lusasLineMesh = null;
+            IFMeshLine lusasLineMesh;
             string lusasName = 
                 "Me" + adapterID + "/" + meshSettings1D.Name + "\\" + barFEAType.ToString() + "|" + releaseString;
 

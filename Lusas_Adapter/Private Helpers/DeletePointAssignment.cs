@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -20,23 +20,29 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.Collections.Generic;
 using System.Linq;
-using BH.oM.Base;
+using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        internal void CreateTags(IEnumerable<IBHoMObject> bhomObject)
+        internal void DeletePointAssignments(object[] lusasAttributes)
         {
-            List<string> objectTags = bhomObject.SelectMany(x => x.Tags).Distinct().ToList();
-
-            foreach (string tag in objectTags)
+            for (int i = 0; i < lusasAttributes.Count(); i++)
             {
-                if (!d_LusasData.existsGroupByName(tag))
+                IFAttribute lusasAttribute = (IFAttribute)lusasAttributes[i];
+                object[] lusasAssignments = lusasAttribute.getAssignments();
+                for (int j = 0; j < lusasAssignments.Count(); j++)
                 {
-                    d_LusasData.createGroup(tag);
+                    IFAssignment lusasAssignment = (IFAssignment)lusasAssignments[j];
+                    IFGeometry lusasGeometry = (IFGeometry)lusasAssignment.getDatabaseObject();
+                    if (lusasGeometry is IFPoint)
+                    {
+                        Engine.Reflection.Compute.RecordWarning(lusasAttribute.getName() + " has been deleted because it was assigned to a point");
+                        d_LusasData.Delete(lusasAttribute);
+                        break;
+                    }
                 }
             }
         }

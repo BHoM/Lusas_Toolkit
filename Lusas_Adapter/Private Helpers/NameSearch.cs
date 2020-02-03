@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -20,19 +20,19 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.Collections.Generic;
-using Lusas.LPI;
-
 namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        internal void AssignObjectSet(IFGeometry newGeometry, HashSet<string> tags)
+        internal void NameSearch(string prefix, string customID, string suffix, ref string name)
         {
-            foreach (string tag in tags)
+            for (int i = 1; i < int.Parse(customID); i++)
             {
-                IFObjectSet objectSet = d_LusasData.getGroupByName(tag);
-                objectSet.add(newGeometry);
+                string searchName = prefix + i.ToString() + "/" + suffix;
+                if (d_LusasData.existsAttribute("Loading", searchName))
+                {
+                    name = searchName;
+                }
             }
         }
     }

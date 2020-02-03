@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -38,12 +38,12 @@ namespace BH.Adapter.Lusas
 
             IFPrescribedDisplacementLoad lusasPrescribedDisplacement = null;
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
-                "Lc" + pointDisplacement.Loadcase.CustomData[AdapterId] + "/" + pointDisplacement.Loadcase.Name);
+                "Lc" + pointDisplacement.Loadcase.CustomData[AdapterIdName] + "/" + pointDisplacement.Loadcase.Name);
 
             string lusasName = "Pd" + 
-                pointDisplacement.CustomData[AdapterId] + "/" + pointDisplacement.Name;
+                pointDisplacement.CustomData[AdapterIdName] + "/" + pointDisplacement.Name;
 
-            NameSearch("Pd", pointDisplacement.CustomData[AdapterId].ToString(), 
+            NameSearch("Pd", pointDisplacement.CustomData[AdapterIdName].ToString(), 
                 pointDisplacement.Name, ref lusasName);
 
             if (d_LusasData.existsAttribute("Loading", lusasName))
@@ -90,3 +90,4 @@ namespace BH.Adapter.Lusas
         }
     }
 }
+

@@ -1,6 +1,6 @@
-﻿/*
+/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -27,16 +27,13 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        internal Dictionary<string, IFResultsComponentSet> GetResultsSets(string entity, List<string> components, string location, IFResultsContext resultsContext)
+        internal void AssignObjectSet(IFGeometry newGeometry, HashSet<string> tags)
         {
-            Dictionary<string, IFResultsComponentSet> resultsSet = new Dictionary<string, IFResultsComponentSet>();
-
-            foreach (string component in components)
+            foreach (string tag in tags)
             {
-                resultsSet.Add(component, d_LusasData.getResultsComponentSet(entity, component, location, resultsContext));
+                IFObjectSet objectSet = d_LusasData.getGroupByName(tag);
+                objectSet.add(newGeometry);
             }
-
-            return resultsSet;
         }
     }
 }

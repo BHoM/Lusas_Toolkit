@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -20,32 +20,51 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
-using Lusas.LPI;
+using BH.oM.Base;
 
-namespace BH.Adapter.Lusas
+namespace BH.Engine.Lusas
 {
-    public partial class LusasAdapter
+    public partial class Query
     {
-        internal void DeleteSurfaceAssignments(object[] lusasAttributes)
+        public static List<int> GetObjectIDs(IList ids)
         {
-            for (int i = 0; i < lusasAttributes.Count(); i++)
+            if (ids == null)
             {
-                IFAttribute lusasAttribute = (IFAttribute)lusasAttributes[i];
-                object[] lusasAssignments = lusasAttribute.getAssignments();
-                for (int j = 0; j < lusasAssignments.Count(); j++)
+                return null;
+            }
+            else
+            {
+                if (ids is List<string>)
+                    return (ids as List<string>).Select(x => int.Parse(x)).ToList();
+                else if (ids is List<int>)
+                    return ids as List<int>;
+                else if (ids is List<double>)
+                    return (ids as List<double>).Select(x => (int)Math.Round(x)).ToList();
+                else
                 {
-                    IFAssignment lusasAssignment = (IFAssignment)lusasAssignments[j];
-                    IFGeometry lusasGeometry = (IFGeometry)lusasAssignment.getDatabaseObject();
-                    if (lusasGeometry is IFSurface)
+                    List<int> idsOut = new List<int>();
+                    foreach (object o in ids)
                     {
-                        Engine.Reflection.Compute.RecordWarning(lusasAttribute.getName() + " has been deleted because it was assigned to a surface");
-                        d_LusasData.Delete(lusasAttribute);
-                        break;
+                        int id;
+                        object idObj;
+                        if (int.TryParse(o.ToString(), out id))
+                        {
+                            idsOut.Add(id);
+                        }
+                        else if (o is IBHoMObject && (o as IBHoMObject).CustomData.TryGetValue("Lusas_id", out idObj) && int.TryParse(idObj.ToString(), out id))
+                            idsOut.Add(id);
                     }
-
+                    return idsOut;
                 }
             }
-        }
+        } 
+
     }
 }
+
+
+

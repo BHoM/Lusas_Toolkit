@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -20,18 +20,30 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System.Linq;
+using Lusas.LPI;
+
 namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        internal void NameSearch(string prefix, string customID, string suffix, ref string name)
+        internal void DeleteSurfaceAssignments(object[] lusasAttributes)
         {
-            for (int i = 1; i < int.Parse(customID); i++)
+            for (int i = 0; i < lusasAttributes.Count(); i++)
             {
-                string searchName = prefix + i.ToString() + "/" + suffix;
-                if (d_LusasData.existsAttribute("Loading", searchName))
+                IFAttribute lusasAttribute = (IFAttribute)lusasAttributes[i];
+                object[] lusasAssignments = lusasAttribute.getAssignments();
+                for (int j = 0; j < lusasAssignments.Count(); j++)
                 {
-                    name = searchName;
+                    IFAssignment lusasAssignment = (IFAssignment)lusasAssignments[j];
+                    IFGeometry lusasGeometry = (IFGeometry)lusasAssignment.getDatabaseObject();
+                    if (lusasGeometry is IFSurface)
+                    {
+                        Engine.Reflection.Compute.RecordWarning(lusasAttribute.getName() + " has been deleted because it was assigned to a surface");
+                        d_LusasData.Delete(lusasAttribute);
+                        break;
+                    }
+
                 }
             }
         }

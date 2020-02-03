@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -23,6 +23,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using BH.oM.Adapter;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Base;
 using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
@@ -32,16 +34,17 @@ using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.MaterialFragments;
 using BH.oM.Adapters.Lusas;
+using BH.oM.Structure.Results;
 
 namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+
         /***************************************************/
         /**** Index Adapter Methods                     ****/
         /***************************************************/
-
-        protected override IEnumerable<IBHoMObject> Read(Type type, IList ids = null)
+        protected override IEnumerable<IBHoMObject> IRead(Type type, IList ids = null, ActionConfig actionConfig = null)
         {
             if (type == typeof(Bar))
                 return ReadBars(ids as dynamic);
@@ -79,5 +82,18 @@ namespace BH.Adapter.Lusas
         }
 
         /***************************************************/
+
+        protected override IEnumerable<IResult> ReadResults(Type type, IList ids = null, IList cases = null, int divisions = 5, ActionConfig actionConfig = null)
+        {
+            if (type == typeof(BarForce))
+                return ReadBarForce(ids, cases);
+            if (type == typeof(NodeDisplacement))
+                return ReadNodeDisplacement(ids, cases);
+            if (type == typeof(NodeReaction))
+                return ReadNodeReaction(ids, cases);
+            return null;
+        }
+
     }
 }
+

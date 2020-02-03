@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -20,31 +20,24 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.Linq;
+using System.Collections.Generic;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        internal void DeletePointAssignments(object[] lusasAttributes)
+        internal Dictionary<string, IFResultsComponentSet> GetResultsSets(string entity, List<string> components, string location, IFResultsContext resultsContext)
         {
-            for (int i = 0; i < lusasAttributes.Count(); i++)
+            Dictionary<string, IFResultsComponentSet> resultsSet = new Dictionary<string, IFResultsComponentSet>();
+
+            foreach (string component in components)
             {
-                IFAttribute lusasAttribute = (IFAttribute)lusasAttributes[i];
-                object[] lusasAssignments = lusasAttribute.getAssignments();
-                for (int j = 0; j < lusasAssignments.Count(); j++)
-                {
-                    IFAssignment lusasAssignment = (IFAssignment)lusasAssignments[j];
-                    IFGeometry lusasGeometry = (IFGeometry)lusasAssignment.getDatabaseObject();
-                    if (lusasGeometry is IFPoint)
-                    {
-                        Engine.Reflection.Compute.RecordWarning(lusasAttribute.getName() + " has been deleted because it was assigned to a point");
-                        d_LusasData.Delete(lusasAttribute);
-                        break;
-                    }
-                }
+                resultsSet.Add(component, d_LusasData.getResultsComponentSet(entity, component, location, resultsContext));
             }
+
+            return resultsSet;
         }
     }
 }
+

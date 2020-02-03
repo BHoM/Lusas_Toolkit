@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -41,13 +41,13 @@ namespace BH.Adapter.Lusas
             List<IFLoadingBeamDistributed> lusasBarDistributedLoads = new List<IFLoadingBeamDistributed>();
             IFAssignment lusasAssignment = m_LusasApplication.assignment();
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
-                "Lc" + bhomBarDistributedLoad.Loadcase.CustomData[AdapterId] +
+                "Lc" + bhomBarDistributedLoad.Loadcase.CustomData[AdapterIdName] +
                 "/" + bhomBarDistributedLoad.Loadcase.Name);
 
             string lusasName =
-                "BDl" + bhomBarDistributedLoad.CustomData[AdapterId] + "/" + bhomBarDistributedLoad.Name;
+                "BDl" + bhomBarDistributedLoad.CustomData[AdapterIdName] + "/" + bhomBarDistributedLoad.Name;
 
-            NameSearch("BDl", bhomBarDistributedLoad.CustomData[AdapterId].ToString(),
+            NameSearch("BDl", bhomBarDistributedLoad.CustomData[AdapterIdName].ToString(),
                 bhomBarDistributedLoad.Name, ref lusasName);
 
             if (d_LusasData.existsAttribute("Loading", lusasName))

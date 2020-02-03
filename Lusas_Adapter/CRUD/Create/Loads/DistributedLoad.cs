@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -35,9 +35,9 @@ namespace BH.Adapter.Lusas
                 return null;
             }
 
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + distributedLoad.Loadcase.CustomData[AdapterId] + "/" + distributedLoad.Loadcase.Name);
-            string lusasName = "Dl" + distributedLoad.CustomData[AdapterId] + "/" + distributedLoad.Name;
-            NameSearch("Dl", distributedLoad.CustomData[AdapterId].ToString(), distributedLoad.Name, ref lusasName);
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + distributedLoad.Loadcase.CustomData[AdapterIdName] + "/" + distributedLoad.Loadcase.Name);
+            string lusasName = "Dl" + distributedLoad.CustomData[AdapterIdName] + "/" + distributedLoad.Name;
+            NameSearch("Dl", distributedLoad.CustomData[AdapterIdName].ToString(), distributedLoad.Name, ref lusasName);
 
             IFLoadingGlobalDistributed lusasGlobalDistributed = CreateGlobalDistributed(lusasName,
                 "Length", assignedLoadcase, distributedLoad.Force, distributedLoad.Moment, lusasLines);
@@ -53,9 +53,9 @@ namespace BH.Adapter.Lusas
             }
 
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
-                "Lc" + distributedLoad.Loadcase.CustomData[AdapterId] + "/" + distributedLoad.Loadcase.Name);
+                "Lc" + distributedLoad.Loadcase.CustomData[AdapterIdName] + "/" + distributedLoad.Loadcase.Name);
 
-            string lusasName = "Dl" + distributedLoad.CustomData[AdapterId] + "/" + distributedLoad.Name;
+            string lusasName = "Dl" + distributedLoad.CustomData[AdapterIdName] + "/" + distributedLoad.Name;
 
             IFLoadingGlobalDistributed lusasGlobalDistributed = CreateGlobalDistributed(lusasName,
                 "Area", assignedLoadcase, distributedLoad.Pressure, null, lusasSurfaces);
@@ -71,9 +71,9 @@ namespace BH.Adapter.Lusas
             }
 
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
-                "Lc" + distributedLoad.Loadcase.CustomData[AdapterId] + "/" + distributedLoad.Loadcase.Name);
+                "Lc" + distributedLoad.Loadcase.CustomData[AdapterIdName] + "/" + distributedLoad.Loadcase.Name);
 
-            string lusasName = "Dl" + distributedLoad.CustomData[AdapterId] + "/" + distributedLoad.Name;
+            string lusasName = "Dl" + distributedLoad.CustomData[AdapterIdName] + "/" + distributedLoad.Name;
 
             IFLoadingLocalDistributed lusasLocalDistributed = CreateLocalDistributed(lusasName,
                 "Line", assignedLoadcase, distributedLoad.Force, lusasLines);
@@ -89,9 +89,9 @@ namespace BH.Adapter.Lusas
             }
 
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
-                "Lc" + distributedLoad.Loadcase.CustomData[AdapterId] + "/" + distributedLoad.Loadcase.Name);
+                "Lc" + distributedLoad.Loadcase.CustomData[AdapterIdName] + "/" + distributedLoad.Loadcase.Name);
 
-            string lusasName = "Dl" + distributedLoad.CustomData[AdapterId] + "/" + distributedLoad.Name;
+            string lusasName = "Dl" + distributedLoad.CustomData[AdapterIdName] + "/" + distributedLoad.Name;
 
             IFLoadingLocalDistributed lusasLocalDistributed = CreateLocalDistributed(lusasName,
                 "Area", assignedLoadcase, distributedLoad.Pressure, lusasSurfaces);

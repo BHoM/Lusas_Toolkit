@@ -1,6 +1,6 @@
-﻿/*
+/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -20,29 +20,36 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System.Collections.Generic;
+using BH.oM.Base;
+
 namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        internal void ReduceRuntime(bool active)
+        private List<IBHoMObject> ReadAll(List<string> ids = null)
         {
-            if(active)
-            {
-                m_LusasApplication.enableUI(false);
-                m_LusasApplication.enableTrees(false);
-                m_LusasApplication.suppressMessages(1);
-                m_LusasApplication.setManualRefresh(true);
-                d_LusasData.beginCommandBatch("label", "undoable");
-            }
-            else
-            {
-                d_LusasData.closeCommandBatch();
-                m_LusasApplication.enableTrees(true);
-                m_LusasApplication.enableUI(true);
-                m_LusasApplication.suppressMessages(0);
-                m_LusasApplication.setManualRefresh(false);
-                m_LusasApplication.updateAllViews();
-            }
+            List<IBHoMObject> objects = new List<IBHoMObject>();
+
+            objects.AddRange(ReadNodes());
+            objects.AddRange(ReadBars());
+            objects.AddRange(ReadPanels());
+            objects.AddRange(Read2DProperties());
+            objects.AddRange(ReadMaterials());
+            objects.AddRange(Read4DOFConstraints());
+            objects.AddRange(Read6DOFConstraints());
+            objects.AddRange(ReadLoadcases());
+            objects.AddRange(ReadLoadCombinations());
+            objects.AddRange(ReadPointLoads());
+            objects.AddRange(ReadPointDisplacements());
+            objects.AddRange(ReadBarUniformlyDistributedLoads());
+            objects.AddRange(ReadBarPointLoads());
+            objects.AddRange(ReadBarVaryingDistributedLoads());
+            objects.AddRange(ReadAreaUniformlyDistributedLoads());
+            objects.AddRange(ReadBarTemperatureLoads());
+            objects.AddRange(ReadAreaTemperatureLoads());
+            objects.AddRange(ReadGravityLoads());
+            return objects;
         }
     }
 }

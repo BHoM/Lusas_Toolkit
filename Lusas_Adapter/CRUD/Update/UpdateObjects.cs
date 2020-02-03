@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using BH.oM.Adapter;
 using BH.oM.Base;
 using BH.oM.Structure.Elements;
 using Lusas.LPI;
@@ -39,7 +40,7 @@ namespace BH.Adapter.Lusas
 
 
         //I do not think the update method is applicable because of dependency from Higher Order Features (HOF)
-        protected override bool UpdateObjects<T>(IEnumerable<T> objects)
+        protected override bool IUpdate<T>(IEnumerable<T> objects, ActionConfig actionConfig = null)
         {
             bool success = true;
             int nobjects = objects.Count();
@@ -64,7 +65,7 @@ namespace BH.Adapter.Lusas
 
             foreach (Node node in nodes)
             {
-                int adapterID = System.Convert.ToInt32(node.CustomData[AdapterId]);
+                int adapterID = System.Convert.ToInt32(node.CustomData[AdapterIdName]);
                 IFPoint lusasPoint = d_LusasData.getPointByName("P" + adapterID.ToString());
 
                 if (lusasPoint == null)
@@ -82,3 +83,4 @@ namespace BH.Adapter.Lusas
         /***************************************************/
     }
 }
+

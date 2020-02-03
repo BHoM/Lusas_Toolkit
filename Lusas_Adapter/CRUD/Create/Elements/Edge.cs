@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -30,7 +30,7 @@ namespace BH.Adapter.Lusas
         private IFLine CreateEdge(Edge edge, IFPoint startPoint, IFPoint endPoint)
         {
             IFLine lusasLine = d_LusasData.createLineByPoints(startPoint, endPoint);
-            lusasLine.setName("L" + edge.CustomData[AdapterId].ToString());
+            lusasLine.setName("L" + edge.CustomData[AdapterIdName].ToString());
 
             if (!(edge.Tags.Count == 0))
             {
@@ -39,7 +39,7 @@ namespace BH.Adapter.Lusas
 
             if (!(edge.Support == null))
             {
-                string supportName = "Sp" + edge.Support.CustomData[AdapterId] + "/" + edge.Support.Name;
+                string supportName = "Sp" + edge.Support.CustomData[AdapterIdName] + "/" + edge.Support.Name;
                 IFAttribute lusasSupport = d_LusasData.getAttribute("Support", supportName);
                 lusasSupport.assignTo(lusasLine);
             }
@@ -50,3 +50,4 @@ namespace BH.Adapter.Lusas
 
 
 }
+
