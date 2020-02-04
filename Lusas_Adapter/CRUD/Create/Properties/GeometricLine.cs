@@ -72,6 +72,28 @@ namespace BH.Adapter.Lusas
             return null;
         }
 
+        private IFAttribute CreateSection(TimberSection sectionProperty, string lusasName)
+        {
+            IFAttribute lusasGeometricLine = CreateProfile(
+                sectionProperty.SectionProfile as dynamic, lusasName
+                );
+            return lusasGeometricLine;
+        }
+        private IFAttribute CreateSection(AluminiumSection sectionProperty, string lusasName)
+        {
+            IFAttribute lusasGeometricLine = CreateProfile(
+                sectionProperty.SectionProfile as dynamic, lusasName
+                );
+            return lusasGeometricLine;
+        }
+        private IFAttribute CreateSection(GenericSection sectionProperty, string lusasName)
+        {
+            IFAttribute lusasGeometricLine = CreateProfile(
+                sectionProperty.SectionProfile as dynamic, lusasName
+                );
+            return lusasGeometricLine;
+        }
+
         private IFGeometricLine CreateProfile(RectangleProfile bhomProfile, string lusasName)
         {
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(lusasName);
