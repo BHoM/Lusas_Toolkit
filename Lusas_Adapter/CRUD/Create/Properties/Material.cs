@@ -38,14 +38,16 @@ namespace BH.Adapter.Lusas
             IFAttribute lusasMaterial = null;
             string lusasName = "M" + material.CustomData[AdapterIdName] + "/" + material.Name;
 
-            if(material is IIsotropic)
+            if (material is IIsotropic)
             {
                 IIsotropic isotropic = material as IIsotropic;
 
                 if (d_LusasData.existsAttribute("Material", lusasName))
                 {
+
                     lusasMaterial = d_LusasData.getAttribute("Material", lusasName);
                 }
+
                 else
                 {
                     lusasMaterial = d_LusasData.createIsotropicMaterial(material.Name,
@@ -54,14 +56,29 @@ namespace BH.Adapter.Lusas
                     lusasMaterial.setName(lusasName);
                 }
             }
-            else
+            else if (material is IOrthotropic)
             {
-                Engine.Reflection.Compute.RecordWarning("Lusas_Toolkit currently suports Isotropic materials only. No structural properties for material with name " + material.Name + " have been pushed");
-                return null; ;
-            }
+                IOrthotropic iorthotropic = material as IOrthotropic;
 
+                if (d_LusasData.existsAttribute("Material", lusasName))
+                {
+
+                    lusasMaterial = d_LusasData.getAttribute("Material", lusasName);
+                }
+
+                else
+                {
+                    lusasMaterial = d_LusasData.createOrthotropicAxisymmetricMaterial(material.Name,
+                    iorthotropic.YoungsModulus.X, iorthotropic.YoungsModulus.Y, iorthotropic.YoungsModulus.Z,
+                    iorthotropic.ShearModulus, iorthotropic.PoissonsRatio.X, iorthotropic.PoissonsRatio.Y, iorthotropic.PoissonsRatio.Z,
+                    0, iorthotropic.Density, iorthotropic.ThermalExpansionCoeff);
+
+                    lusasMaterial.setName(lusasName);
+                }
+            }
             return lusasMaterial;
         }
+
     }
 }
 
