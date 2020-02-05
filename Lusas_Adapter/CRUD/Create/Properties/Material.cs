@@ -22,6 +22,8 @@
 
 using BH.oM.Structure.MaterialFragments;
 using BH.Engine.Structure;
+using BH.oM.Geometry;
+using BH.Engine.Geometry;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -68,11 +70,17 @@ namespace BH.Adapter.Lusas
 
                 else
                 {
-                    lusasMaterial = d_LusasData.createOrthotropicAxisymmetricMaterial(material.Name,
-                    iorthotropic.YoungsModulus.X, iorthotropic.YoungsModulus.Y, iorthotropic.YoungsModulus.Z,
-                    iorthotropic.ShearModulus, iorthotropic.PoissonsRatio.X, iorthotropic.PoissonsRatio.Y, iorthotropic.PoissonsRatio.Z,
-                    0, iorthotropic.Density, iorthotropic.ThermalExpansionCoeff);
-
+               
+                    lusasMaterial = d_LusasData.createOrthotropicAxisymmetricMaterial(material.Name, 
+                        iorthotropic.YoungsModulus.X, iorthotropic.YoungsModulus.Y, iorthotropic.YoungsModulus.Z,
+                        iorthotropic.ShearModulus.X, iorthotropic.PoissonsRatio.X, iorthotropic.PoissonsRatio.Y, iorthotropic.PoissonsRatio.Z,
+                        0.0, iorthotropic.Density, 0.0);
+                    lusasMaterial.setValue( "ax", iorthotropic.ThermalExpansionCoeff.X);
+                    lusasMaterial.setValue("ay", iorthotropic.ThermalExpansionCoeff.Y);
+                    lusasMaterial.setValue("az", iorthotropic.ThermalExpansionCoeff.Z);
+                    Vector ThermalExpansionCoeffxy = new Vector () { X = iorthotropic.ThermalExpansionCoeff.X, Y = iorthotropic.ThermalExpansionCoeff.Y, Z= 0 };
+                    double XY = ThermalExpansionCoeffxy.Length();
+                    lusasMaterial.setValue("axy", XY);
                     lusasMaterial.setName(lusasName);
                 }
             }
