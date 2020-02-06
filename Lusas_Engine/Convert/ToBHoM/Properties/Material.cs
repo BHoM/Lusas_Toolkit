@@ -51,14 +51,14 @@ namespace BH.Engine.Lusas
             {
                 bhomMaterial = Engine.Structure.Create.Timber(
                 attributeName,
-                new Vector() { X = lusasAttribute.getValue("Ex"), Y = lusasAttribute.getValue("Ey"), Z = lusasAttribute.getValue("Ez") },
-                new Vector() { X = lusasAttribute.getValue("nuxy"), Y = lusasAttribute.getValue("nuyz"), Z = lusasAttribute.getValue("nuzx") },
-                new Vector() { X = lusasAttribute.getValue("Gxy"), Y = 0.0, Z = 0.0 },
-                new Vector() { X = lusasAttribute.getValue("ax"), Y = lusasAttribute.getValue("ay"), Z = lusasAttribute.getValue("az") },
-                lusasAttribute.getValue("rho"), 0, 0);
+                    new Vector() { X = lusasAttribute.getValue("Ex"), Y = lusasAttribute.getValue("Ey"), Z = lusasAttribute.getValue("Ez") },
+                    new Vector() { X = lusasAttribute.getValue("nuxy"), Y = lusasAttribute.getValue("nuyz"), Z = lusasAttribute.getValue("nuzx") },
+                    new Vector() { X = lusasAttribute.getValue("Gxy"), Y = 0.0, Z = 0.0 },
+                    new Vector() { X = lusasAttribute.getValue("ax"), Y = lusasAttribute.getValue("ay"), Z = lusasAttribute.getValue("az") },
+                    lusasAttribute.getValue("rho"), 0, 0);
 
                 Engine.Reflection.Compute.RecordWarning
-                ("Orthotropic materials in Lusas will default to a TimberMaterial.");
+                    ("Orthotropic materials in Lusas will default to a TimberMaterial.");
             }
 
             int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'M');
