@@ -68,8 +68,8 @@ namespace BH.Adapter.Lusas
                     lusasMaterial.setValue("ay", iorthotropic.ThermalExpansionCoeff.Y);
                     lusasMaterial.setValue("az", iorthotropic.ThermalExpansionCoeff.Z);
 
-                    lusasMaterial.setValue("axy", System.Math.Sqrt(System.Math.Pow(iorthotropic.ThermalExpansionCoeff.X,2)) 
-                        + System.Math.Pow(iorthotropic.ThermalExpansionCoeff.Y,2));
+                    lusasMaterial.setValue("axy", System.Math.Sqrt(System.Math.Pow(iorthotropic.ThermalExpansionCoeff.X,2) 
+                        + System.Math.Pow(iorthotropic.ThermalExpansionCoeff.Y,2)));
 
                     lusasMaterial.setName(lusasName);
                 }
