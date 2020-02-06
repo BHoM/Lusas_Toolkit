@@ -58,7 +58,7 @@ namespace BH.Engine.Lusas
                     lusasAttribute.getValue("rho"), 0, 0);
 
                 Engine.Reflection.Compute.RecordWarning
-                    ("Orthotropic materials in Lusas will default to a TimberMaterial.");
+                    ("Orthotropic materials in Lusas will default to a TimberMaterial");
             }
 
             int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'M');
