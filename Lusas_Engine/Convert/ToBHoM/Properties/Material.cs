@@ -21,9 +21,7 @@
  */
 
 using BH.oM.Structure.MaterialFragments;
-using BH.Engine.Structure;
 using BH.oM.Geometry;
-using BH.Engine.Geometry;
 using Lusas.LPI;
 
 namespace BH.Engine.Lusas
@@ -37,43 +35,38 @@ namespace BH.Engine.Lusas
             IMaterialFragment bhomMaterial = null;
             if (lusasAttribute is IFMaterialIsotropic)
             {
+                bhomMaterial = new GenericIsotropicMaterial()
+                {
+                    Name = attributeName,
+                    YoungsModulus = lusasAttribute.getValue("E"),
+                    PoissonsRatio = lusasAttribute.getValue("nu"),
+                    ThermalExpansionCoeff = lusasAttribute.getValue("alpha"),
+                    Density = lusasAttribute.getValue("rho")
+                };
 
-                IMaterialFragment bhomMaterials = Engine.Structure.Create.Steel(
-                attributeName,
-                lusasAttribute.getValue("E"),
-                lusasAttribute.getValue("nu"),
-                lusasAttribute.getValue("alpha"),
-                lusasAttribute.getValue("rho"),
-                0, 0, 0);
-
-                Engine.Reflection.Compute.RecordWarning("Isotropic materials in Lusas will default to a SteelMaterial. Properties for " + attributeName + " are stored in a SteelMaterial");
-
-                int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'M');
-                bhomMaterials.CustomData["Lusas_id"] = adapterID;
-                bhomMaterial = bhomMaterials;
+                Engine.Reflection.Compute.RecordWarning
+                ("Isotropic materials in Lusas will default to a GenericIsotropicMaterial");
             }
             else if (lusasAttribute is IFMaterialOrthotropic)
-               
-                    {
+            {
+                bhomMaterial = Engine.Structure.Create.Timber(
+                attributeName,
+                new Vector() { X = lusasAttribute.getValue("Ex"), Y = lusasAttribute.getValue("Ey"), Z = lusasAttribute.getValue("Ez") },
+                new Vector() { X = lusasAttribute.getValue("nuxy"), Y = lusasAttribute.getValue("nuyz"), Z = lusasAttribute.getValue("nuzx") },
+                new Vector() { X = lusasAttribute.getValue("Gxy"), Y = 0.0, Z = 0.0 },
+                new Vector() { X = lusasAttribute.getValue("ax"), Y = lusasAttribute.getValue("ay"), Z = lusasAttribute.getValue("az") },
+                lusasAttribute.getValue("rho"), 0, 0);
 
-                Vector YE = new Vector () { X= lusasAttribute.getValue("Ex"), Y= lusasAttribute.getValue("Ey"), Z= lusasAttribute.getValue("Ez") };
-                Vector V = new Vector() { X = lusasAttribute.getValue("nuxy"), Y = lusasAttribute.getValue("nuyz"), Z = lusasAttribute.getValue("nuzx") };
-                Vector Z = new Vector() { X = lusasAttribute.getValue("Gxy"),Y= 0.0, Z= 0.0 };
-                Vector tc = new Vector() { X = lusasAttribute.getValue("ax"), Y = lusasAttribute.getValue("ay"), Z = lusasAttribute.getValue("az") };
-                IMaterialFragment bhomMaterials = Engine.Structure.Create.Timber(
-                attributeName, YE, V, Z, tc, lusasAttribute.getValue("rho"), 0, 0);
-
-
-                Engine.Reflection.Compute.RecordWarning("orthotropic materials in Lusas will default to a timberMaterial. Properties for " + attributeName + " are stored in a TimberMaterial");
-
-                int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'M');
-                bhomMaterials.CustomData["Lusas_id"] = adapterID;
-                bhomMaterial = bhomMaterials;
-
+                Engine.Reflection.Compute.RecordWarning
+                ("Orthotropic materials in Lusas will default to a TimberMaterial.");
             }
-                return bhomMaterial;
-            }
-                       }
-        
+
+            int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'M');
+            bhomMaterial.CustomData["Lusas_id"] = adapterID;
+
+            return bhomMaterial;
+        }
+
     }
+}
 
