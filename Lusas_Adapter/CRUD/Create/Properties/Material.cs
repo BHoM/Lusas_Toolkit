@@ -72,15 +72,16 @@ namespace BH.Adapter.Lusas
                 {
                
                     lusasMaterial = d_LusasData.createOrthotropicAxisymmetricMaterial(material.Name, 
-                    iorthotropic.YoungsModulus.X, iorthotropic.YoungsModulus.Y, iorthotropic.YoungsModulus.Z,
-                    iorthotropic.ShearModulus.X, iorthotropic.PoissonsRatio.X, iorthotropic.PoissonsRatio.Y, iorthotropic.PoissonsRatio.Z,
-                    0.0, iorthotropic.Density, 0.0);
+                        iorthotropic.YoungsModulus.X, iorthotropic.YoungsModulus.Y, iorthotropic.YoungsModulus.Z,
+                        iorthotropic.ShearModulus.X, iorthotropic.PoissonsRatio.X, iorthotropic.PoissonsRatio.Y, iorthotropic.PoissonsRatio.Z,
+                        0.0, iorthotropic.Density, 0.0);
 
                     lusasMaterial.setValue( "ax", iorthotropic.ThermalExpansionCoeff.X);
                     lusasMaterial.setValue("ay", iorthotropic.ThermalExpansionCoeff.Y);
                     lusasMaterial.setValue("az", iorthotropic.ThermalExpansionCoeff.Z);
 
-                    Vector ThermalExpansionCoeffxy = new Vector () { X = iorthotropic.ThermalExpansionCoeff.X, Y = iorthotropic.ThermalExpansionCoeff.Y, Z= 0 };
+                    Vector ThermalExpansionCoeffxy = new Vector ()
+                        { X = iorthotropic.ThermalExpansionCoeff.X, Y = iorthotropic.ThermalExpansionCoeff.Y, Z= 0 };
                     double XY = ThermalExpansionCoeffxy.Length();
                     lusasMaterial.setValue("axy", XY);
 
