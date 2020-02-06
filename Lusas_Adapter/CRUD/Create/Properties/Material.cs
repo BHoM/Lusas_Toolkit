@@ -21,9 +21,6 @@
  */
 
 using BH.oM.Structure.MaterialFragments;
-using BH.Engine.Structure;
-using BH.oM.Geometry;
-using BH.Engine.Geometry;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -71,10 +68,8 @@ namespace BH.Adapter.Lusas
                     lusasMaterial.setValue("ay", iorthotropic.ThermalExpansionCoeff.Y);
                     lusasMaterial.setValue("az", iorthotropic.ThermalExpansionCoeff.Z);
 
-                    Vector ThermalExpansionCoeffxy = new Vector()
-                    { X = iorthotropic.ThermalExpansionCoeff.X, Y = iorthotropic.ThermalExpansionCoeff.Y, Z = 0 };
-                    double XY = ThermalExpansionCoeffxy.Length();
-                    lusasMaterial.setValue("axy", XY);
+                    lusasMaterial.setValue("axy", System.Math.Sqrt(System.Math.Pow(iorthotropic.ThermalExpansionCoeff.X,2)) 
+                        + System.Math.Pow(iorthotropic.ThermalExpansionCoeff.Y,2));
 
                     lusasMaterial.setName(lusasName);
                 }
