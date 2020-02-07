@@ -141,7 +141,7 @@ namespace BH.Adapter.Lusas
                     else
                     {
                         IFLoadset largestLoadset = d_LusasData.getLoadset(largestLoadcaseID);
-                        if(largestLoadset is IFLoadcase)
+                        if (largestLoadset is IFLoadcase)
                         {
                             IFLoadcase largestLoadcase = (IFLoadcase)largestLoadset;
                             index = System.Convert.ToInt32(
@@ -155,7 +155,9 @@ namespace BH.Adapter.Lusas
                         }
                     }
                 }
-                if (type == typeof(IMaterialFragment))
+                if (type == typeof(Timber) || type == typeof(Steel) || type == typeof(Concrete) ||
+                    type == typeof(GenericIsotropicMaterial) || type == typeof(GenericOrthotropicMaterial) ||
+                    type == typeof(Aluminium))
                 {
                     int largestMaterialID = d_LusasData.getLargestAttributeID("Material");
                     if (largestMaterialID == 0)
@@ -164,7 +166,6 @@ namespace BH.Adapter.Lusas
                     }
                     else
                     {
-
                         IFAttribute largestAttribute = d_LusasData.getAttribute("Material", largestMaterialID);
                         index = System.Convert.ToInt32(
                             Engine.Lusas.Query.GetAdapterID(largestAttribute, 'M')) + 1;
@@ -219,7 +220,7 @@ namespace BH.Adapter.Lusas
                     else
                     {
                         IFAttribute largestAttribute = d_LusasData.getAttribute("Loading", largestLoadID);
-                        if(largestAttribute is IFPrescribedDisplacementLoad)
+                        if (largestAttribute is IFPrescribedDisplacementLoad)
                         {
                             index = System.Convert.ToInt32(
                                 Engine.Lusas.Query.GetAdapterID(largestAttribute, 'd')) + 1;
@@ -231,7 +232,6 @@ namespace BH.Adapter.Lusas
                         }
                     }
                 }
-
                 if (type == typeof(MeshSettings1D) ||
                     type == typeof(MeshSettings2D))
                 {
@@ -261,6 +261,7 @@ namespace BH.Adapter.Lusas
 
 
         /***************************************************/
+
     }
 }
 

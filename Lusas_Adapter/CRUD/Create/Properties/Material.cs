@@ -21,7 +21,6 @@
  */
 
 using BH.oM.Structure.MaterialFragments;
-using BH.Engine.Structure;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -37,11 +36,10 @@ namespace BH.Adapter.Lusas
 
             IFAttribute lusasMaterial = null;
             string lusasName = "M" + material.CustomData[AdapterIdName] + "/" + material.Name;
-
-            if(material is IIsotropic)
+            
+            if (material is IIsotropic)
             {
                 IIsotropic isotropic = material as IIsotropic;
-
                 if (d_LusasData.existsAttribute("Material", lusasName))
                 {
                     lusasMaterial = d_LusasData.getAttribute("Material", lusasName);
@@ -50,18 +48,35 @@ namespace BH.Adapter.Lusas
                 {
                     lusasMaterial = d_LusasData.createIsotropicMaterial(material.Name,
                     isotropic.YoungsModulus, isotropic.PoissonsRatio, isotropic.Density, isotropic.ThermalExpansionCoeff);
+                    lusasMaterial.setName(lusasName);
+                }
+            }
+            else if (material is IOrthotropic)
+            {
+                IOrthotropic iorthotropic = material as IOrthotropic;
+                if (d_LusasData.existsAttribute("Material", lusasName))
+                {
+                    lusasMaterial = d_LusasData.getAttribute("Material", lusasName);
+                }
+                else
+                {
+                    lusasMaterial = d_LusasData.createOrthotropicAxisymmetricMaterial(material.Name,
+                        iorthotropic.YoungsModulus.X, iorthotropic.YoungsModulus.Y, iorthotropic.YoungsModulus.Z,
+                        iorthotropic.ShearModulus.X, iorthotropic.PoissonsRatio.X, iorthotropic.PoissonsRatio.Y, iorthotropic.PoissonsRatio.Z,
+                        0.0, iorthotropic.Density, 0.0);
+                    lusasMaterial.setValue("ax", iorthotropic.ThermalExpansionCoeff.X);
+                    lusasMaterial.setValue("ay", iorthotropic.ThermalExpansionCoeff.Y);
+                    lusasMaterial.setValue("az", iorthotropic.ThermalExpansionCoeff.Z);
+
+                    lusasMaterial.setValue("axy", System.Math.Sqrt(System.Math.Pow(iorthotropic.ThermalExpansionCoeff.X,2) 
+                        + System.Math.Pow(iorthotropic.ThermalExpansionCoeff.Y,2)));
 
                     lusasMaterial.setName(lusasName);
                 }
             }
-            else
-            {
-                Engine.Reflection.Compute.RecordWarning("Lusas_Toolkit currently suports Isotropic materials only. No structural properties for material with name " + material.Name + " have been pushed");
-                return null; ;
-            }
-
             return lusasMaterial;
         }
+
     }
 }
 
