@@ -99,20 +99,20 @@ namespace BH.Adapter.Lusas
 
                     Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, nodeId, "P");
 
-                    double Fx = 0; double Fy = 0; double Fz = 0; double Mx = 0; double My = 0; double Mz = 0;
-                    featureResults.TryGetValue("Fx", out Fx); featureResults.TryGetValue("Fy", out Fy); featureResults.TryGetValue("Fz", out Fz);
-                    featureResults.TryGetValue("Mx", out Mx); featureResults.TryGetValue("My", out My); featureResults.TryGetValue("Mz", out Mz);
+                    double fX = 0; double fY = 0; double fZ = 0; double mX = 0; double mY = 0; double mZ = 0;
+                    featureResults.TryGetValue("Fx", out fX); featureResults.TryGetValue("Fy", out fY); featureResults.TryGetValue("Fz", out fZ);
+                    featureResults.TryGetValue("Mx", out mX); featureResults.TryGetValue("My", out mY); featureResults.TryGetValue("Mz", out mZ);
 
                     NodeReaction nodeReaction = new NodeReaction
                     {
                         ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
                         ObjectId = nodeId,
-                        FX = Fx * forceSIConversion,
-                        FY = Fy * forceSIConversion,
-                        FZ = Fz * forceSIConversion,
-                        MX = Mx * forceSIConversion * lengthSIConversion,
-                        MY = My * forceSIConversion * lengthSIConversion,
-                        MZ = Mz * forceSIConversion * lengthSIConversion,
+                        FX = fX * forceSIConversion,
+                        FY = fY * forceSIConversion,
+                        FZ = fZ * forceSIConversion,
+                        MX = mX * forceSIConversion * lengthSIConversion,
+                        MY = mY * forceSIConversion * lengthSIConversion,
+                        MZ = mZ * forceSIConversion * lengthSIConversion,
                     };
 
                     bhomNodeReactions.Add(nodeReaction);
@@ -160,20 +160,20 @@ namespace BH.Adapter.Lusas
 
                     Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, nodeId, "P");
 
-                    double Fx = 0; double Fy = 0; double Fz = 0; double Mx = 0; double My = 0; double Mz = 0;
-                    featureResults.TryGetValue("DX", out Fx); featureResults.TryGetValue("DY", out Fy); featureResults.TryGetValue("DZ", out Fz);
-                    featureResults.TryGetValue("THX", out Mx); featureResults.TryGetValue("THY", out My); featureResults.TryGetValue("THZ", out Mz);
+                    double uX = 0; double uY = 0; double uZ = 0; double rX = 0; double rY = 0; double rZ = 0;
+                    featureResults.TryGetValue("DX", out uX); featureResults.TryGetValue("DY", out uY); featureResults.TryGetValue("DZ", out uZ);
+                    featureResults.TryGetValue("THX", out rX); featureResults.TryGetValue("THY", out rY); featureResults.TryGetValue("THZ", out rZ);
 
                     NodeDisplacement bhomNodeDisplacement = new NodeDisplacement
                     {
                         ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
                         ObjectId = nodeId,
-                        UX = Fx * forceSIConversion,
-                        UY = Fy * forceSIConversion,
-                        UZ = Fz * forceSIConversion,
-                        RX = Mx * forceSIConversion * lengthSIConversion,
-                        RY = My * forceSIConversion * lengthSIConversion,
-                        RZ = Mz * forceSIConversion * lengthSIConversion,
+                        UX = uX * lengthSIConversion,
+                        UY = uY * lengthSIConversion,
+                        UZ = uZ * lengthSIConversion,
+                        RX = rX ,
+                        RY = rY  ,
+                        RZ = rZ ,
                     };
 
                     bhomNodeDisplacements.Add(bhomNodeDisplacement);
