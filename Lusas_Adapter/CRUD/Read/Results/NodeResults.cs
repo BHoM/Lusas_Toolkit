@@ -171,9 +171,9 @@ namespace BH.Adapter.Lusas
                         UX = uX * lengthSIConversion,
                         UY = uY * lengthSIConversion,
                         UZ = uZ * lengthSIConversion,
-                        RX = rX ,
-                        RY = rY  ,
-                        RZ = rZ ,
+                        RX = rX,
+                        RY = rY,
+                        RZ = rZ,
                     };
 
                     bhomNodeDisplacements.Add(bhomNodeDisplacement);
@@ -187,7 +187,7 @@ namespace BH.Adapter.Lusas
             return bhomNodeDisplacements;
         }
 
-            /***************************************************/
+        /***************************************************/
 
-        }
+    }
 }
