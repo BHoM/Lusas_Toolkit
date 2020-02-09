@@ -43,7 +43,6 @@ namespace BH.Adapter.Lusas
             List<int> objectIds = GetObjectIDs(request);
             List<int> loadCases = GetLoadcaseIDs(request);
 
-
             switch (request.ResultType)
             {
                 case BarResultType.BarForce:
@@ -102,20 +101,20 @@ namespace BH.Adapter.Lusas
 
                     Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L");
 
-                    double Fx = 0; double Fy = 0; double Fz = 0; double Mx = 0; double My = 0; double Mz = 0;
-                    featureResults.TryGetValue("Fx", out Fx); featureResults.TryGetValue("Fy", out Fy); featureResults.TryGetValue("Fz", out Fz);
-                    featureResults.TryGetValue("Mx", out Mx); featureResults.TryGetValue("My", out My); featureResults.TryGetValue("Mz", out Mz);
+                    double fX = 0; double fY = 0; double fZ = 0; double mX = 0; double mY = 0; double mZ = 0;
+                    featureResults.TryGetValue("Fx", out fX); featureResults.TryGetValue("Fy", out fY); featureResults.TryGetValue("Fz", out fZ);
+                    featureResults.TryGetValue("Mx", out mX); featureResults.TryGetValue("My", out mY); featureResults.TryGetValue("Mz", out mZ);
 
                     BarForce barForce = new BarForce
                     {
                         ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
                         ObjectId = barId,
-                        FX = Fx * forceSIConversion,
-                        FY = Fy * forceSIConversion,
-                        FZ = Fz * forceSIConversion,
-                        MX = Mx * forceSIConversion * lengthSIConversion,
-                        MY = My * forceSIConversion * lengthSIConversion,
-                        MZ = Mz * forceSIConversion * lengthSIConversion,
+                        FX = fX * forceSIConversion,
+                        FY = fY * forceSIConversion,
+                        FZ = fZ * forceSIConversion,
+                        MX = mX * forceSIConversion * lengthSIConversion,
+                        MY = mY * forceSIConversion * lengthSIConversion,
+                        MZ = mZ * forceSIConversion * lengthSIConversion,
                     };
 
                     bhombarForces.Add(barForce);
@@ -154,7 +153,7 @@ namespace BH.Adapter.Lusas
                 double forceSIConversion = 1 / unitSet.getForceFactor();
                 double lengthSIConversion = 1 / unitSet.getLengthFactor();
 
-                List<string> components = new List<string>() { "Ex", "Ey", "Ez", "Bx", "By", "Bz" };
+                List<string> components = new List<string>() { "Sx(Fx)"};
                 d_LusasData.startUsingScriptedResults();
 
                 Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
@@ -165,15 +164,14 @@ namespace BH.Adapter.Lusas
 
                     Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L");
 
-                    double Fx = 0; double Fy = 0; double Fz = 0; double Mx = 0; double My = 0; double Mz = 0;
-                    featureResults.TryGetValue("Ex", out Fx); featureResults.TryGetValue("Ey", out Fy); featureResults.TryGetValue("Ez", out Fz);
-                    featureResults.TryGetValue("Bx", out Mx); featureResults.TryGetValue("By", out My); featureResults.TryGetValue("Bz", out Mz);
+                    double axial = 0;
+                    featureResults.TryGetValue("Sx(Fx)", out axial);
 
                     BarStress barStress = new BarStress
                     {
                         ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
                         ObjectId = barId,
-                        Axial = Fx * forceSIConversion
+                        Axial = axial * forceSIConversion*lengthSIConversion*lengthSIConversion
                     };
 
                     bhomBarStresses.Add(barStress);
@@ -222,16 +220,17 @@ namespace BH.Adapter.Lusas
                     string lineName = "L" + barId;
 
                     Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L");
+                    List<string> keys = featureResults.Keys.ToList();
 
-                    double Fx = 0; double Fy = 0; double Fz = 0; double Mx = 0; double My = 0; double Mz = 0;
-                    featureResults.TryGetValue("Ex", out Fx); featureResults.TryGetValue("Ey", out Fy); featureResults.TryGetValue("Ez", out Fz);
-                    featureResults.TryGetValue("Bx", out Mx); featureResults.TryGetValue("By", out My); featureResults.TryGetValue("Bz", out Mz);
+                    double eX = 0; double eY = 0; double eZ = 0; double bX = 0; double bY = 0; double bZ = 0;
+                    featureResults.TryGetValue("Ex", out eX); featureResults.TryGetValue("Ey", out eY); featureResults.TryGetValue("Ez", out eZ);
+                    featureResults.TryGetValue("Bx", out bX); featureResults.TryGetValue("By", out bY); featureResults.TryGetValue("Bz", out bZ);
 
                     BarStrain barStrain = new BarStrain
                     {
                         ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
                         ObjectId = barId,
-                        Axial = Fx * forceSIConversion
+                        Axial = eX,
                     };
 
                     bhomBarStrains.Add(barStrain);
