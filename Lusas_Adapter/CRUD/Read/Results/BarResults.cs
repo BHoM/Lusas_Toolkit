@@ -21,6 +21,7 @@
  */
 
 using BH.oM.Common;
+using BH.oM.Adapter;
 using BH.oM.Structure.Requests;
 using BH.oM.Structure.Results;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace BH.Adapter.Lusas
         /**** Public method - Read override             ****/
         /***************************************************/
 
-        public IEnumerable<IResult> ReadResults(BarResultRequest request)
+        public IEnumerable<IResult> ReadResults(BarResultRequest request, ActionConfig actionConfig)
         {
             List<IResult> results;
             List<int> objectIds = GetObjectIDs(request);
