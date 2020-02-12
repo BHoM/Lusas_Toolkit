@@ -59,18 +59,16 @@ namespace BH.Engine.Lusas
 
                 bhomProfile = Engine.Structure.Compute.Integrate(bhomProfile, oM.Geometry.Tolerance.MicroDistance).Item1;
 
-            GenericSection bhomSection = new GenericSection(bhomProfile, area, rgy, rgz, j, iy, iz, iw,
+                GenericSection bhomSection = new GenericSection(bhomProfile, area, rgy, rgz, j, iy, iz, iw,
                     wely, welz, wply, wplz, centreZ, centreY, zt, zb, yt, yb, asy, asz);
 
                 bhomSection.Name = attributeName;
-
 
                 int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'G');
 
                 bhomSection.CustomData["Lusas_id"] = adapterID;
 
                 return bhomSection;
-            
 
         }
     }
