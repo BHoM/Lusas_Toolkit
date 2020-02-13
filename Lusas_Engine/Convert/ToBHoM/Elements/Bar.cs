@@ -34,7 +34,7 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static Bar ToBHoMBar(this IFLine lusasLine, 
+        public static Bar ToBar(this IFLine lusasLine, 
             Dictionary<string, Node> bhomNodes, 
             Dictionary<string, Constraint4DOF> bhomSupports,
             HashSet<string> lusasGroups,
