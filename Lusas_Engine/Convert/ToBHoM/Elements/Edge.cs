@@ -29,7 +29,7 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static Edge ToBHoMEdge(this IFLine lusasLine,
+        public static Edge ToEdge(this IFLine lusasLine,
             Dictionary<string, Node> bhomNodes, HashSet<string> groupNames)
         {
             Node startNode = Engine.Lusas.Query.GetNode(lusasLine, 0, bhomNodes);

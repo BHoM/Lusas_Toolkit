@@ -59,7 +59,7 @@ namespace BH.Adapter.Lusas
                 for (int i = 0; i < lusasSurfaces.Count(); i++)
                 {
                     IFSurface lusasSurface = (IFSurface)lusasSurfaces[i];
-                    Panel bhomPanel = Engine.Lusas.Convert.ToBHoMPanel(lusasSurface,
+                    Panel bhomPanel = Engine.Lusas.Convert.ToPanel(lusasSurface,
                         bhomEdges,
                         groupNames,
                         geometrics,

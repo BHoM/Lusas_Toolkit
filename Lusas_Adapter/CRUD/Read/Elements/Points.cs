@@ -41,7 +41,7 @@ namespace BH.Adapter.Lusas
                 for (int i = 0; i < lusasPoints.Count(); i++)
                 {
                     IFPoint lusasPoint = (IFPoint)lusasPoints[i];
-                    Point bhomPoint = Engine.Lusas.Convert.ToBHoMPoint(lusasPoint, groupNames);
+                    Point bhomPoint = Engine.Lusas.Convert.ToPoint(lusasPoint, groupNames);
                     bhomPoints.Add(bhomPoint);
                 }
             }

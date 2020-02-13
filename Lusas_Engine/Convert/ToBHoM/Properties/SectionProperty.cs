@@ -30,7 +30,7 @@ namespace BH.Engine.Lusas
     public static partial class Convert
     {
       
-        public static ISectionProperty ToBHoMSection(this IFAttribute lusasAttribute)
+        public static ISectionProperty ToSection(this IFAttribute lusasAttribute)
         {
             string attributeName = Lusas.Query.GetName(lusasAttribute);
          

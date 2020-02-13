@@ -33,7 +33,7 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static Panel ToBHoMPanel(this IFSurface lusasSurface,
+        public static Panel ToPanel(this IFSurface lusasSurface,
             Dictionary<string, Edge> bhomEdges,
             HashSet<string> groupNames,
             Dictionary<string, ISurfaceProperty> bhom2DProperties,

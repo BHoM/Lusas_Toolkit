@@ -36,7 +36,7 @@ namespace BH.Engine.Lusas
             Dictionary<string, Bar> bars)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToBHoMLoadcase(assignedLoadcase);
+            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
             double temperatureChange = lusasTemperatureLoad.getValue("T")
                 - lusasTemperatureLoad.getValue("T0");
 
