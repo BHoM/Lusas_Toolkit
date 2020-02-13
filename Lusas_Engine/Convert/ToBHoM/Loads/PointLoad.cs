@@ -36,7 +36,7 @@ namespace BH.Engine.Lusas
             Dictionary<string, Node> bhomNodeDictionary)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToBHoMLoadcase(assignedLoadcase);
+            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
 
             IEnumerable<Node> bhomNodes = Lusas.Query.GetNodeAssignments(lusasAssignments, bhomNodeDictionary);
 
