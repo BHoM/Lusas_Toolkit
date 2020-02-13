@@ -28,7 +28,7 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static IMaterialFragment ToBHoMMaterial(this IFAttribute lusasAttribute)
+        public static IMaterialFragment ToMaterial(this IFAttribute lusasAttribute)
         {
             string attributeName = Lusas.Query.GetName(lusasAttribute);
 

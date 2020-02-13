@@ -45,7 +45,7 @@ namespace BH.Adapter.Lusas
                 for (int i = 0; i < lusasLines.Count(); i++)
                 {
                     IFLine lusasLine = (IFLine)lusasLines[i];
-                    Edge bhomEdge = Engine.Lusas.Convert.ToBHoMEdge(lusasLine, bhomNodes, groupNames);
+                    Edge bhomEdge = Engine.Lusas.Convert.ToEdge(lusasLine, bhomNodes, groupNames);
                     bhomEdges.Add(bhomEdge);
                 }
             }

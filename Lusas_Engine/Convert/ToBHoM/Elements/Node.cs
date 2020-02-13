@@ -31,7 +31,7 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static Node ToBHoMNode(this IFPoint lusasPoint,
+        public static Node ToNode(this IFPoint lusasPoint,
             HashSet<string> groupNames, Dictionary<string, Constraint6DOF> bhom6DOFConstraints)
         {
             HashSet<string> tags = new HashSet<string>(Query.IsMemberOf(lusasPoint, groupNames));

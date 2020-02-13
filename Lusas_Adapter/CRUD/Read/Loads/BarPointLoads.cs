@@ -53,7 +53,7 @@ namespace BH.Adapter.Lusas
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
                         BarPointLoad bhomBarPointLoad =
-                            Engine.Lusas.Convert.ToBHoMBarPointLoad(
+                            Engine.Lusas.Convert.ToBarPointLoad(
                                 lusasInternalBeamPointLoad, groupedAssignment, barDictionary);
 
                         List<string> analysisName = new List<string> { lusasInternalBeamPointLoad.getAttributeType() };

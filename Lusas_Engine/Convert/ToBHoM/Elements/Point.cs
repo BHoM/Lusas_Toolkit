@@ -28,7 +28,7 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static Point ToBHoMPoint(this IFPoint lusasPoint, HashSet<string> groupNames)
+        public static Point ToPoint(this IFPoint lusasPoint, HashSet<string> groupNames)
         {
             HashSet<string> tags = new HashSet<string>(Query.IsMemberOf(lusasPoint, groupNames));
 

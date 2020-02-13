@@ -28,7 +28,7 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static Constraint4DOF ToBHoMConstraint4DOF(this IFSupportStructural lusasAttribute)
+        public static Constraint4DOF ToConstraint4DOF(this IFSupportStructural lusasAttribute)
         {
             List<string> releaseNames = new List<string> { "U", "V", "W", "THX" };
 
