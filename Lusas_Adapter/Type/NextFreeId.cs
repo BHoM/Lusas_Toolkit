@@ -187,8 +187,8 @@ namespace BH.Adapter.Lusas
                             Engine.Lusas.Query.GetAdapterID(largestAttribute, 'p')) + 1;
                     }
                 }
-                if (type == typeof(ConstantThickness) ||
-                    type == typeof(SteelSection))
+                if (type == typeof(ConstantThickness) || type == typeof(SteelSection) || type == typeof(ConcreteSection) 
+                    || type == typeof(TimberSection) || type == typeof(AluminiumSection) || type == typeof(GenericSection))
                 {
                     int largestThicknessID = d_LusasData.getLargestAttributeID("Geometric");
                     if (largestThicknessID == 0)
