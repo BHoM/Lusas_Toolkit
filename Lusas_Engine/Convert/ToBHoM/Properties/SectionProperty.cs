@@ -48,11 +48,11 @@ namespace BH.Engine.Lusas
                 double welz = Math.Min(Math.Abs(lusasAttribute.getValue("Szt")), Math.Abs(lusasAttribute.getValue("Szb")));
                 double wply = lusasAttribute.getValue("Zpy");
                 double wplz = lusasAttribute.getValue("Zpz");
-                double centreZ = lusasAttribute.getValue("zo");
-                double centreY = lusasAttribute.getValue("yo");
+                double centreZ = 0; //Eccentricity is handeled in the Bar not at the section
+                double centreY = 0; //Eccentricity is handeled in the Bar not at the section
                 double zt = lusasAttribute.getValue("zt");
-                double zb = Math.Abs(lusasAttribute.getValue("zb"));
-                double yt = Math.Abs(lusasAttribute.getValue("yb"));
+                double zb = Math.Abs(lusasAttribute.getValue("zb")); 
+                double yt = Math.Abs(lusasAttribute.getValue("yb")); //Lusas Y-Axis is opposite to the BHoM Y-axis
                 double yb = lusasAttribute.getValue("yt");
                 double asy = lusasAttribute.getValue("Asy");
                 double asz = lusasAttribute.getValue("Asz");
