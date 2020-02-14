@@ -41,8 +41,8 @@ namespace BH.Engine.Lusas
                 double rgy = lusasAttribute.getValue("ky");
                 double rgz = lusasAttribute.getValue("kz");
                 double j = lusasAttribute.getValue("J");
-                double iz = lusasAttribute.getValue("Iyy");
-                double iy = lusasAttribute.getValue("Izz");
+                double iy = lusasAttribute.getValue("Iyy");
+                double iz = lusasAttribute.getValue("Izz");
                 double iw = lusasAttribute.getValue("Cw");
                 double wely = Math.Min(Math.Abs(lusasAttribute.getValue("Syt")), Math.Abs(lusasAttribute.getValue("Syb")));
                 double welz = Math.Min(Math.Abs(lusasAttribute.getValue("Szt")), Math.Abs(lusasAttribute.getValue("Szb")));
