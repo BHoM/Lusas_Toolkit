@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BH.oM.Structure.Elements;
+using BH.oM.Structure.MaterialFragments;
 using BH.oM.Geometry;
 using BH.Engine.Geometry;
 using Lusas.LPI;
@@ -66,6 +67,13 @@ namespace BH.Adapter.Lusas
                         bar.SectionProperty.Material.Name;
 
                     IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
+
+                    if(bar.SectionProperty.Material is IOrthotropic)
+                    {
+                        Engine.Reflection.Compute.RecordWarning($"Orthotropic Material {bar.SectionProperty.Material.Name} cannot be assigned to Bar {bar.CustomData[AdapterIdName]}, " +
+                            $"orthotropic can only be applied to 2D and 3D elements in Lusas.");
+                    }
+
                     lusasMaterial.assignTo(lusasLine);
                 }
             }
