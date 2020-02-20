@@ -31,11 +31,11 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static BarPointLoad ToBHoMBarPointLoad(IFLoading lusasBarPointLoad,
+        public static BarPointLoad ToBarPointLoad(IFLoading lusasBarPointLoad,
             IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Bar> bhomBarDictionary)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToBHoMLoadcase(assignedLoadcase);
+            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
 
             IEnumerable<Bar> bhomBars = Lusas.Query.GetBarAssignments(lusasAssignments, bhomBarDictionary);
 

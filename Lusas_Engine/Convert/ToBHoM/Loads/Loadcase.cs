@@ -27,7 +27,7 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static Loadcase ToBHoMLoadcase(this IFLoadcase lusasLoadcase)
+        public static Loadcase ToLoadcase(this IFLoadcase lusasLoadcase)
         {
             Loadcase BHoMLoadcase = new Loadcase { Name = Lusas.Query.GetName(lusasLoadcase),
                 Number = lusasLoadcase.getID()};

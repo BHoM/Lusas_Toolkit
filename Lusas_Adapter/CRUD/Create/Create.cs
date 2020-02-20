@@ -339,7 +339,7 @@ namespace BH.Adapter.Lusas
 
             foreach (IFPoint point in lusasPoints)
             {
-                bhomPoints.Add(Engine.Lusas.Convert.ToBHoMPoint(point));
+                bhomPoints.Add(Engine.Lusas.Convert.ToPoint(point));
             }
 
             CreateTags(distinctEdges);

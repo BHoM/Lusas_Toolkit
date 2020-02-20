@@ -27,7 +27,7 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static ISurfaceProperty ToBHoMSurfaceProperty(this IFAttribute lusasAttribute)
+        public static ISurfaceProperty ToSurfaceProperty(this IFAttribute lusasAttribute)
         {
             string attributeName = Lusas.Query.GetName(lusasAttribute);
 

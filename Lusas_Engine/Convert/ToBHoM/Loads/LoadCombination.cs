@@ -30,7 +30,7 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static LoadCombination ToBHoMLoadCombination(
+        public static LoadCombination ToLoadCombination(
             this IFBasicCombination lusasLoadCombination,
             Dictionary<string, Loadcase> bhomLoadcases)
         {
