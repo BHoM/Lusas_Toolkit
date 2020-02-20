@@ -38,7 +38,7 @@ namespace BH.Engine.Lusas
             Dictionary<string, Panel> bhomPanels)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToBHoMLoadcase(assignedLoadcase);
+            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
             Vector gravityVector = new Vector
             {
                 X = lusasGravityLoad.getValue("accX"),

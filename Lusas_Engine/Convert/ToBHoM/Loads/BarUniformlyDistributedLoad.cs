@@ -35,7 +35,7 @@ namespace BH.Engine.Lusas
             IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Bar> bhomBarDictionary)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToBHoMLoadcase(assignedLoadcase);
+            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
 
             IEnumerable<Bar> bhomBars = Lusas.Query.GetBarAssignments(lusasAssignments, bhomBarDictionary);
 

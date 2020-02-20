@@ -130,8 +130,7 @@ namespace BH.Adapter.Lusas
                             Engine.Lusas.Modify.RemovePrefix(largestPoint.getName(), "P")) + 1;
                     }
                 }
-                if (type == typeof(Loadcase) ||
-                    type == typeof(LoadCombination))
+                if (typeof(ICase).IsAssignableFrom(type))
                 {
                     int largestLoadcaseID = d_LusasData.getNextAvailableLoadcaseID() - 1;
                     if (largestLoadcaseID == 0)
@@ -155,9 +154,7 @@ namespace BH.Adapter.Lusas
                         }
                     }
                 }
-                if (type == typeof(Timber) || type == typeof(Steel) || type == typeof(Concrete) ||
-                    type == typeof(GenericIsotropicMaterial) || type == typeof(GenericOrthotropicMaterial) ||
-                    type == typeof(Aluminium))
+                if (typeof(IMaterialFragment).IsAssignableFrom(type))
                 {
                     int largestMaterialID = d_LusasData.getLargestAttributeID("Material");
                     if (largestMaterialID == 0)
@@ -187,8 +184,7 @@ namespace BH.Adapter.Lusas
                             Engine.Lusas.Query.GetAdapterID(largestAttribute, 'p')) + 1;
                     }
                 }
-                if (type == typeof(ConstantThickness) ||
-                    type == typeof(SteelSection))
+                if (typeof(ISectionProperty).IsAssignableFrom(type) || typeof(ISurfaceProperty).IsAssignableFrom(type))
                 {
                     int largestThicknessID = d_LusasData.getLargestAttributeID("Geometric");
                     if (largestThicknessID == 0)
@@ -202,15 +198,7 @@ namespace BH.Adapter.Lusas
                             Engine.Lusas.Query.GetAdapterID(largestAttribute, 'G')) + 1;
                     }
                 }
-                if (type == typeof(PointLoad) ||
-                    type == typeof(GravityLoad) ||
-                    type == typeof(BarUniformlyDistributedLoad) ||
-                    type == typeof(AreaUniformlyDistributedLoad) ||
-                    type == typeof(BarTemperatureLoad) ||
-                    type == typeof(AreaTemperatureLoad) ||
-                    type == typeof(BarPointLoad) ||
-                    type == typeof(BarVaryingDistributedLoad) ||
-                    type == typeof(PointDisplacement))
+                if (typeof(ILoad).IsAssignableFrom(type))
                 {
                     int largestLoadID = d_LusasData.getLargestAttributeID("Loading");
                     if (largestLoadID == 0)

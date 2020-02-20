@@ -29,45 +29,47 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static ISectionProperty ToBHoMSection(this IFAttribute lusasAttribute)
+      
+        public static ISectionProperty ToSection(this IFAttribute lusasAttribute)
         {
             string attributeName = Lusas.Query.GetName(lusasAttribute);
-
+         
             IProfile bhomProfile = Lusas.Convert.ToProfile(lusasAttribute);
 
-            double area = lusasAttribute.getValue("A");
-            double rgy = lusasAttribute.getValue("ky");
-            double rgz = lusasAttribute.getValue("kz");
-            double j = lusasAttribute.getValue("J");
-            double iz = lusasAttribute.getValue("Iyy");
-            double iy = lusasAttribute.getValue("Izz");
-            double iw = lusasAttribute.getValue("Cw");
-            double wely = Math.Min(Math.Abs(lusasAttribute.getValue("Syt")), Math.Abs(lusasAttribute.getValue("Syb")));
-            double welz = Math.Min(Math.Abs(lusasAttribute.getValue("Szt")), Math.Abs(lusasAttribute.getValue("Szb")));
-            double wply = lusasAttribute.getValue("Zpy");
-            double wplz = lusasAttribute.getValue("Zpz");
-            double centreZ = lusasAttribute.getValue("zo");
-            double centreY = lusasAttribute.getValue("yo");
-            double zt = lusasAttribute.getValue("zt");
-            double zb = Math.Abs(lusasAttribute.getValue("zb"));
-            double yt = Math.Abs(lusasAttribute.getValue("yb"));
-            double yb = lusasAttribute.getValue("yt");
-            double asy = lusasAttribute.getValue("Asy");
-            double asz = lusasAttribute.getValue("Asz");
 
-            bhomProfile = Engine.Structure.Compute.Integrate(bhomProfile, oM.Geometry.Tolerance.MicroDistance).Item1;
+                double area = lusasAttribute.getValue("A");
+                double rgy = lusasAttribute.getValue("ky");
+                double rgz = lusasAttribute.getValue("kz");
+                double j = lusasAttribute.getValue("J");
+                double iy = lusasAttribute.getValue("Iyy");
+                double iz = lusasAttribute.getValue("Izz");
+                double iw = lusasAttribute.getValue("Cw");
+                double wely = Math.Min(Math.Abs(lusasAttribute.getValue("Syt")), Math.Abs(lusasAttribute.getValue("Syb")));
+                double welz = Math.Min(Math.Abs(lusasAttribute.getValue("Szt")), Math.Abs(lusasAttribute.getValue("Szb")));
+                double wply = lusasAttribute.getValue("Zpy");
+                double wplz = lusasAttribute.getValue("Zpz");
+                double centreZ = 0; //Eccentricity is handeled in the Bar not at the section
+                double centreY = 0; //Eccentricity is handeled in the Bar not at the section
+                double zt = lusasAttribute.getValue("zt");
+                double zb = Math.Abs(lusasAttribute.getValue("zb")); 
+                double yt = Math.Abs(lusasAttribute.getValue("yb")); //Lusas Y-Axis is opposite to the BHoM Y-axis
+                double yb = lusasAttribute.getValue("yt");
+                double asy = lusasAttribute.getValue("Asy");
+                double asz = lusasAttribute.getValue("Asz");
 
-            SteelSection bhomSection = new SteelSection(
-                bhomProfile, area, rgy, rgz, j, iy, iz, iw,
-                wely, welz, wply, wplz, centreZ, centreY, zt, zb, yt, yb, asy, asz);
+                bhomProfile = Engine.Structure.Compute.Integrate(bhomProfile, oM.Geometry.Tolerance.MicroDistance).Item1;
 
-            bhomSection.Name = attributeName;
+                GenericSection bhomSection = new GenericSection(bhomProfile, area, rgy, rgz, j, iy, iz, iw,
+                    wely, welz, wply, wplz, centreZ, centreY, zt, zb, yt, yb, asy, asz);
 
-            int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'G');
+                bhomSection.Name = attributeName;
 
-            bhomSection.CustomData["Lusas_id"] = adapterID;
+                int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'G');
 
-            return bhomSection;
+                bhomSection.CustomData["Lusas_id"] = adapterID;
+
+                return bhomSection;
+
         }
     }
 }

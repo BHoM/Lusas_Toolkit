@@ -36,7 +36,7 @@ namespace BH.Engine.Lusas
             Dictionary<string, Panel> PanelDictionary)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToBHoMLoadcase(assignedLoadcase);
+            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
 
             IEnumerable<IAreaElement> bhomPanels = Lusas.Query.GetSurfaceAssignments(
                 lusasAssignments, PanelDictionary);

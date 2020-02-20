@@ -28,7 +28,7 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static IMaterialFragment ToBHoMMaterial(this IFAttribute lusasAttribute)
+        public static IMaterialFragment ToMaterial(this IFAttribute lusasAttribute)
         {
             string attributeName = Lusas.Query.GetName(lusasAttribute);
 
@@ -43,9 +43,6 @@ namespace BH.Engine.Lusas
                     ThermalExpansionCoeff = lusasAttribute.getValue("alpha"),
                     Density = lusasAttribute.getValue("rho")
                 };
-
-                Engine.Reflection.Compute.RecordWarning
-                ("Isotropic materials in Lusas will default to a GenericIsotropicMaterial");
             }
             else if (lusasAttribute is IFMaterialOrthotropic)
             {
@@ -56,9 +53,6 @@ namespace BH.Engine.Lusas
                     new Vector() { X = lusasAttribute.getValue("Gxy"), Y = 0.0, Z = 0.0 },
                     new Vector() { X = lusasAttribute.getValue("ax"), Y = lusasAttribute.getValue("ay"), Z = lusasAttribute.getValue("az") },
                     lusasAttribute.getValue("rho"), 0, 0);
-
-                Engine.Reflection.Compute.RecordWarning
-                    ("Orthotropic materials in Lusas will default to a TimberMaterial");
             }
 
             int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'M');

@@ -27,7 +27,7 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static MeshSettings2D ToBHoMMeshSettings2D(this IFAttribute lusasAttribute)
+        public static MeshSettings2D ToMeshSettings2D(this IFAttribute lusasAttribute)
         {
             string attributeName = Lusas.Query.GetName(lusasAttribute);
             //object[] elementNames = lusasMeshSurface.getElementNames();

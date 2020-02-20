@@ -62,10 +62,11 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateSection(ConcreteSection sectionProperty, string lusasName)
         {
-            Engine.Reflection.Compute.RecordError("ConcreteSection not supported in Lusas_Toolkit");
-            return null;
+            IFAttribute lusasGeometricLine = CreateProfile(
+             sectionProperty.SectionProfile as dynamic, lusasName
+             );
+            return lusasGeometricLine;
         }
-
         private IFAttribute CreateSection(ExplicitSection sectionProperty, string lusasName)
         {
             Engine.Reflection.Compute.RecordError("ExplicitSection not supported in Lusas_Toolkit");
