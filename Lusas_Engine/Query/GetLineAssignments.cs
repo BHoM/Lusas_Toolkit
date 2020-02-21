@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
@@ -21,31 +21,44 @@
  */
 
 using System.Collections.Generic;
+using BH.oM.Structure.Elements;
 using Lusas.LPI;
-using BH.oM.Structure.Constraints;
+using BH.oM.Base;
 
 namespace BH.Engine.Lusas
 {
     public static partial class Query
     {
-        public static BarRelease GetBarRelease(IFMeshLine lusasLineMesh)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static IEnumerable<Bar> GetLineAssignments(IEnumerable<IFAssignment> lusasAssignments,
+            Dictionary<string, Bar> bhomBars)
         {
-            object[] startReleases = lusasLineMesh.getValue("start");
-            object[] endReleases = lusasLineMesh.getValue("end");
+            List<Bar> assignedBars = new List<Bar>();
+            Bar bhomBar = new Bar();
 
-            List<DOFType> startReleaseType = GetConstraints(startReleases);
-            List<DOFType> endReleaseType = GetConstraints(endReleases);
-
-            Constraint6DOF startConstraint = Compute.SetConstraint(startReleaseType);
-            Constraint6DOF endConstraint = Compute.SetConstraint(endReleaseType);
-
-            BarRelease barRelease = new BarRelease
+            foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
-                StartRelease = startConstraint,
-                EndRelease = endConstraint
-            };
+                if (lusasAssignment.getDatabaseObject() is IFLine)
+                {
+                    IFLine lusasLine = (IFLine)lusasAssignment.getDatabaseObject();
+                    bhomBars.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L"), out bhomBar);
+                    assignedBars.Add(bhomBar);
+                }
+                else
+                {
+                    Lusas.Compute.AssignmentWarning(lusasAssignment);
+                    Lusas.Compute.AssignmentWarning(lusasAssignment);
+                }
 
-            return barRelease;
+            }
+
+            return assignedBars;
         }
+
+        /***************************************************/
+
     }
 }

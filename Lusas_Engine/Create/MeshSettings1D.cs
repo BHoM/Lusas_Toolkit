@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
@@ -20,32 +20,30 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.Collections.Generic;
-using Lusas.LPI;
-using BH.oM.Structure.Constraints;
+using BH.oM.Adapters.Lusas;
 
-namespace BH.Engine.Lusas
+
+namespace BH.Engine.Adapters.Lusas
 {
-    public static partial class Query
+    public static partial class Create
     {
-        public static BarRelease GetBarRelease(IFMeshLine lusasLineMesh)
+        /***************************************************/
+        /****           Public Constructors             ****/
+        /***************************************************/
+
+        public static MeshSettings1D MeshSettings1D(Split1D splitMethod,
+            double splitParameter = 4, string name = null)
         {
-            object[] startReleases = lusasLineMesh.getValue("start");
-            object[] endReleases = lusasLineMesh.getValue("end");
-
-            List<DOFType> startReleaseType = GetConstraints(startReleases);
-            List<DOFType> endReleaseType = GetConstraints(endReleases);
-
-            Constraint6DOF startConstraint = Compute.SetConstraint(startReleaseType);
-            Constraint6DOF endConstraint = Compute.SetConstraint(endReleaseType);
-
-            BarRelease barRelease = new BarRelease
+            return new MeshSettings1D
             {
-                StartRelease = startConstraint,
-                EndRelease = endConstraint
+                SplitMethod = splitMethod,
+                SplitParameter = splitParameter,
+                Name = name
             };
-
-            return barRelease;
         }
+
+        /***************************************************/
+
     }
 }
+

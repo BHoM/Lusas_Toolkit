@@ -31,50 +31,45 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static AreaUniformlyDistributedLoad ToAreaUniformlyDistributed(
-            IFLoading lusasDistributed, IEnumerable<IFAssignment> lusasAssignments,
-            Dictionary<string, Panel> PanelDictionary)
+        public static BarPointLoad ToBarPointLoad(IFLoading lusasBarPointLoad,
+            IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Bar> bhomBarDictionary)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
 
-            IEnumerable<IAreaElement> bhomPanels = Lusas.Query.GetSurfaceAssignments(
-                lusasAssignments, PanelDictionary);
+            IEnumerable<Bar> bhomBars = Lusas.Query.GetLineAssignments(lusasAssignments, bhomBarDictionary);
 
-            Vector pressureVector = new Vector
+            Vector forceVector = new Vector
             {
-                X = lusasDistributed.getValue("WX"),
-                Y = lusasDistributed.getValue("WY"),
-                Z = lusasDistributed.getValue("WZ")
+                X = lusasBarPointLoad.getValue("PX"),
+                Y = lusasBarPointLoad.getValue("PY"),
+                Z = lusasBarPointLoad.getValue("PZ")
             };
 
-            AreaUniformlyDistributedLoad bhomSurfaceUniformlyDistributed = null;
-
-            if (lusasDistributed.getAttributeType() == "Global Distributed Load")
+            Vector momentVector = new Vector
             {
-                bhomSurfaceUniformlyDistributed = Structure.Create.AreaUniformlyDistributedLoad(
+                X = lusasBarPointLoad.getValue("MX"),
+                Y = lusasBarPointLoad.getValue("MY"),
+                Z = lusasBarPointLoad.getValue("MZ")
+            };
+
+            double forcePosition = lusasBarPointLoad.getValue("Distance");
+
+            BarPointLoad bhomBarPointLoad = null;
+
+            bhomBarPointLoad = Structure.Create.BarPointLoad(
                 bhomLoadcase,
-                pressureVector,
-                bhomPanels,
+                forcePosition,
+                bhomBars,
+                forceVector,
+                momentVector,
                 LoadAxis.Global,
-                true,
-                Lusas.Query.GetName(lusasDistributed));
-            }
-            else if (lusasDistributed.getAttributeType() == "Distributed Load")
-            {
-                bhomSurfaceUniformlyDistributed = Structure.Create.AreaUniformlyDistributedLoad(
-                bhomLoadcase,
-                pressureVector,
-                bhomPanels,
-                LoadAxis.Local,
-                true,
-                Lusas.Query.GetName(lusasDistributed));
-            }
+                Lusas.Query.GetName(lusasBarPointLoad));
 
-            int adapterID = Lusas.Query.GetAdapterID(lusasDistributed, 'l');
-            bhomSurfaceUniformlyDistributed.CustomData["Lusas_id"] = adapterID;
+            int adapterID = Lusas.Query.GetAdapterID(lusasBarPointLoad, 'l');
+            bhomBarPointLoad.CustomData["Lusas_id"] = adapterID;
 
-            return bhomSurfaceUniformlyDistributed;
+            return bhomBarPointLoad;
         }
     }
 }

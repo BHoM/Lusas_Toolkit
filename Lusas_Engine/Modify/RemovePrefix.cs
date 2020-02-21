@@ -22,7 +22,7 @@
 
 namespace BH.Engine.Lusas
 {
-    public partial class Modify
+    public static partial class Modify
     {
         public static string RemovePrefix(string name, string forRemoval)
         {

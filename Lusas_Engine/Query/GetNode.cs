@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
@@ -21,38 +21,28 @@
  */
 
 using System.Collections.Generic;
-using System.Linq;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Loads;
 using Lusas.LPI;
 
 namespace BH.Engine.Lusas
 {
-    public static partial class Convert
+    public static partial class Query
     {
-        public static BarTemperatureLoad ToBarTemperatureLoad(
-            IFLoading lusasTemperatureLoad,
-            IEnumerable<IFAssignment> lusasAssignments,
-            Dictionary<string, Bar> bars)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static Node GetNode(IFLine lusasLine, int nodeIndex, Dictionary<string, Node> bhomNodes)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
-            double temperatureChange = lusasTemperatureLoad.getValue("T")
-                - lusasTemperatureLoad.getValue("T0");
+            Node bhomNode = null;
+            IFPoint lusasPoint = lusasLine.getLOFs()[nodeIndex];
+            string pointName = Engine.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P");
+            bhomNodes.TryGetValue(pointName, out bhomNode);
 
-            IEnumerable<Bar> bhomBars = Lusas.Query.GetBarAssignments(lusasAssignments, bars);
-            BarTemperatureLoad bhomBarTemperatureLoad = Structure.Create.BarTemperatureLoad(
-                bhomLoadcase,
-                temperatureChange,
-                bhomBars,
-                LoadAxis.Local,
-                false,
-                Lusas.Query.GetName(lusasTemperatureLoad));
-
-            int adapterID = Lusas.Query.GetAdapterID(lusasTemperatureLoad, 'l');
-            bhomBarTemperatureLoad.CustomData["Lusas_id"] = adapterID;
-            return bhomBarTemperatureLoad;
+            return bhomNode;
         }
+
+        /***************************************************/
+
     }
 }
-

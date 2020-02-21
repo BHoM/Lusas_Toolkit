@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
@@ -21,31 +21,35 @@
  */
 
 using System.Collections.Generic;
-using Lusas.LPI;
-using BH.oM.Structure.Constraints;
+using System.Linq;
+using System;
+using BH.oM.Structure.Elements;
+using BH.Engine.Geometry;
+using BH.oM.Geometry;
 
 namespace BH.Engine.Lusas
 {
     public static partial class Query
     {
-        public static BarRelease GetBarRelease(IFMeshLine lusasLineMesh)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static List<Edge> GetDistinctEdges(IEnumerable<Edge> edges)
         {
-            object[] startReleases = lusasLineMesh.getValue("start");
-            object[] endReleases = lusasLineMesh.getValue("end");
-
-            List<DOFType> startReleaseType = GetConstraints(startReleases);
-            List<DOFType> endReleaseType = GetConstraints(endReleases);
-
-            Constraint6DOF startConstraint = Compute.SetConstraint(startReleaseType);
-            Constraint6DOF endConstraint = Compute.SetConstraint(endReleaseType);
-
-            BarRelease barRelease = new BarRelease
+            List<Edge> distinctEdges = edges.GroupBy(m => new
             {
-                StartRelease = startConstraint,
-                EndRelease = endConstraint
-            };
+                X = Math.Round(m.Curve.IPointAtParameter(0.5).X, 3),
+                Y = Math.Round(m.Curve.IPointAtParameter(0.5).Y, 3),
+                Z = Math.Round(m.Curve.IPointAtParameter(0.5).Z, 3)
+            })
+        .Select(x => x.First())
+        .ToList();
 
-            return barRelease;
+            return distinctEdges;
         }
+
+        /***************************************************/
+
     }
 }

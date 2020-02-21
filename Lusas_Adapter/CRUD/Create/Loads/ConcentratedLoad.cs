@@ -27,19 +27,19 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        private IFLoadingConcentrated CreateConcentratedLoad(PointLoad PointLoad, object[] lusasPoints)
+        private IFLoadingConcentrated CreateConcentratedLoad(PointLoad pointLoad, object[] lusasPoints)
         {
-            if (!Engine.Lusas.Query.CheckIllegalCharacters(PointLoad.Name))
+            if (!Engine.Lusas.Query.CheckIllegalCharacters(pointLoad.Name))
             {
                 return null;
             }
 
             IFLoadingConcentrated lusasPointLoad = null;
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
-                "Lc" + PointLoad.Loadcase.CustomData[AdapterIdName] + "/" + PointLoad.Loadcase.Name);
+                "Lc" + pointLoad.Loadcase.CustomData[AdapterIdName] + "/" + pointLoad.Loadcase.Name);
 
-            string lusasName = "Pl" + PointLoad.CustomData[AdapterIdName] + "/" + PointLoad.Name;
-            NameSearch("Pl", PointLoad.CustomData[AdapterIdName].ToString(), PointLoad.Name, ref lusasName);
+            string lusasName = "Pl" + pointLoad.CustomData[AdapterIdName] + "/" + pointLoad.Name;
+            NameSearch("Pl", pointLoad.CustomData[AdapterIdName].ToString(), pointLoad.Name, ref lusasName);
 
             if (d_LusasData.existsAttribute("Loading", lusasName))
             {
@@ -49,8 +49,8 @@ namespace BH.Adapter.Lusas
             {
                 lusasPointLoad = d_LusasData.createLoadingConcentrated(lusasName);
                 lusasPointLoad.setConcentrated(
-                    PointLoad.Force.X, PointLoad.Force.Y, PointLoad.Force.Z,
-                    PointLoad.Moment.X, PointLoad.Moment.Y, PointLoad.Moment.Z);
+                    pointLoad.Force.X, pointLoad.Force.Y, pointLoad.Force.Z,
+                    pointLoad.Moment.X, pointLoad.Moment.Y, pointLoad.Moment.Z);
             }
 
             IFAssignment lusasAssignment = m_LusasApplication.assignment();

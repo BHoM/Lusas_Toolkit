@@ -20,32 +20,32 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.Collections.Generic;
-using Lusas.LPI;
-using BH.oM.Structure.Constraints;
+using BH.oM.Adapters.Lusas;
 
-namespace BH.Engine.Lusas
+
+namespace BH.Engine.Adapters.Lusas
 {
-    public static partial class Query
+    public static partial class Create
     {
-        public static BarRelease GetBarRelease(IFMeshLine lusasLineMesh)
+        /***************************************************/
+        /****           Public Constructors             ****/
+        /***************************************************/
+
+        public static MeshSettings2D MeshSettings2D(Split2D splitMethod,
+            int xDivisions = 0, int yDivisions = 0, double size = 1, string name = null)
         {
-            object[] startReleases = lusasLineMesh.getValue("start");
-            object[] endReleases = lusasLineMesh.getValue("end");
-
-            List<DOFType> startReleaseType = GetConstraints(startReleases);
-            List<DOFType> endReleaseType = GetConstraints(endReleases);
-
-            Constraint6DOF startConstraint = Compute.SetConstraint(startReleaseType);
-            Constraint6DOF endConstraint = Compute.SetConstraint(endReleaseType);
-
-            BarRelease barRelease = new BarRelease
+            return new MeshSettings2D
             {
-                StartRelease = startConstraint,
-                EndRelease = endConstraint
+                SplitMethod = splitMethod,
+                xDivisions = xDivisions,
+                yDivisions = yDivisions,
+                ElementSize = size,
+                Name = name
             };
-
-            return barRelease;
         }
+
+        /***************************************************/
+
     }
 }
+

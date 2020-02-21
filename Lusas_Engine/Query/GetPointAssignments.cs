@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
@@ -20,41 +20,44 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Adapters.Lusas;
+using System.Collections.Generic;
+using BH.oM.Structure.Elements;
+using Lusas.LPI;
+using BH.oM.Base;
 
-
-namespace BH.Engine.Adapters.Lusas
+namespace BH.Engine.Lusas
 {
-    public static partial class Create
+    public static partial class Query
     {
         /***************************************************/
-        /****           Public Constructors             ****/
+        /**** Public Methods                            ****/
         /***************************************************/
 
-        public static MeshSettings1D MeshSettings1D(Split1D SplitMethod,
-            double SplitParameter = 4, string name = null)
+        public static IEnumerable<Node> GetPointAssignments(IEnumerable<IFAssignment> lusasAssignments,
+               Dictionary<string, Node> bhomNodes)
         {
-            return new MeshSettings1D
+            List<Node> assignedNodes = new List<Node>();
+            Node bhomNode = new Node();
+
+            foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
-                SplitMethod = SplitMethod,
-                SplitParameter = SplitParameter,
-                Name = name
-            };
+                if (lusasAssignment.getDatabaseObject() is IFPoint)
+                {
+                    IFPoint lusasPoint = (IFPoint)lusasAssignment.getDatabaseObject();
+                    bhomNodes.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P"), out bhomNode);
+                    assignedNodes.Add(bhomNode);
+                }
+                else
+                {
+                    Compute.AssignmentWarning(lusasAssignment);
+                    Compute.AssignmentWarning(lusasAssignment);
+                }
+            }
+
+            return assignedNodes;
         }
 
+        /***************************************************/
 
-        public static MeshSettings2D MeshSettings2D(Split2D splitMethod,
-            int xDivisions = 0, int yDivisions = 0, double size = 1, string name = null)
-        {
-            return new MeshSettings2D
-            {
-                SplitMethod = splitMethod,
-                xDivisions = xDivisions,
-                yDivisions = yDivisions,
-                ElementSize = size,
-                Name = name
-            };
-        }
     }
 }
-

@@ -44,7 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enum.cs" />
+    <Compile Include="Enum\SectionLibrary.cs" />
+    <Compile Include="Enum\Split1D.cs" />
+    <Compile Include="Enum\Split2D.cs" />
     <Compile Include="Settings\LibrarySettings.cs" />
     <Compile Include="Settings\LusasConfig.cs" />
     <Compile Include="Structural\Properties\MeshSettings2D.cs" />
