@@ -25,7 +25,7 @@ using BH.oM.Structure.Constraints;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Compute
+    public static partial class Compute
     {
         public static Constraint6DOF SetConstraint(List<DOFType> releaseType)
         {

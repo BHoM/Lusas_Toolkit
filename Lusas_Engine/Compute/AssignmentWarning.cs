@@ -24,7 +24,7 @@ using Lusas.LPI;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Compute
+    public static partial class Compute
     {
         /***************************************************/
         /**** Public methods                            ****/

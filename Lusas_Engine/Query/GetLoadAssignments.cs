@@ -26,7 +26,7 @@ using Lusas.LPI;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Query
+    public static partial class Query
     {
         public static IEnumerable<IGrouping<string, IFAssignment>> GetLoadAssignments(IFLoading lusasForce)
         {

@@ -25,7 +25,7 @@ using System.Linq;
 using Lusas.LPI;
 namespace BH.Engine.Lusas
 {
-    public partial class Query
+    public static partial class Query
     {
         public static List<string> GetAttributeAssignments(IFGeometry lusasGeometry, string attributeType)
         {

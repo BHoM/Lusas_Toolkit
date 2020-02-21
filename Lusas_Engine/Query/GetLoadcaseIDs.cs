@@ -28,7 +28,7 @@ using BH.oM.Structure.Loads;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Query
+    public static partial class Query
     {
         public static List<int> GetLoadcaseIDs(IList cases)
         {

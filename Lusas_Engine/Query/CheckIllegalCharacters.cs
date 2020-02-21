@@ -24,7 +24,7 @@ using System.Collections.Generic;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Query
+    public static partial class Query
     {
         public static bool CheckIllegalCharacters(string objectName)
         {
