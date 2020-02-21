@@ -33,14 +33,14 @@ namespace BH.Engine.Lusas
         public static AreaTemperatureLoad ToAreaTempratureLoad(
             IFLoading lusasTemperatureLoad,
             IEnumerable<IFAssignment> lusasAssignments,
-            Dictionary<string, Panel> PanelDictionary)
+            Dictionary<string, Panel> panelDictionary)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
             double temperatureChange = lusasTemperatureLoad.getValue("T")
                 - lusasTemperatureLoad.getValue("T0");
 
-            IEnumerable<IAreaElement> bhomPanels = Lusas.Query.GetSurfaceAssignments(lusasAssignments, PanelDictionary);
+            IEnumerable<IAreaElement> bhomPanels = Lusas.Query.GetSurfaceAssignments(lusasAssignments, panelDictionary);
             AreaTemperatureLoad bhomAreaTemperatureLoad = Structure.Create.AreaTemperatureLoad(
                 bhomLoadcase,
                 temperatureChange,
