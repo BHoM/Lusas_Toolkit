@@ -36,8 +36,8 @@ namespace BH.Engine.Lusas
             List<DOFType> startReleaseType = GetConstraints(startReleases);
             List<DOFType> endReleaseType = GetConstraints(endReleases);
 
-            Constraint6DOF startConstraint = Modify.SetConstraint(startReleaseType);
-            Constraint6DOF endConstraint = Modify.SetConstraint(endReleaseType);
+            Constraint6DOF startConstraint = Compute.SetConstraint(startReleaseType);
+            Constraint6DOF endConstraint = Compute.SetConstraint(endReleaseType);
 
             BarRelease barRelease = new BarRelease
             {
