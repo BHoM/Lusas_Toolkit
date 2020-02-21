@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
@@ -21,51 +21,44 @@
  */
 
 using System.Collections.Generic;
-using System.Linq;
-using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Loads;
 using Lusas.LPI;
+using BH.oM.Base;
 
 namespace BH.Engine.Lusas
 {
-    public static partial class Convert
+    public partial class Query
     {
-        public static PointLoad ToPointLoad(
-            IFLoading lusasPointLoad, IEnumerable<IFAssignment> lusasAssignments, 
-            Dictionary<string, Node> bhomNodeDictionary)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static IEnumerable<Bar> GetLineAssignments(IEnumerable<IFAssignment> lusasAssignments,
+            Dictionary<string, Bar> bhomBars)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
+            List<Bar> assignedBars = new List<Bar>();
+            Bar bhomBar = new Bar();
 
-            IEnumerable<Node> bhomNodes = Lusas.Query.GetPointAssignments(lusasAssignments, bhomNodeDictionary);
-
-            Vector forceVector = new Vector
+            foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
-                X = lusasPointLoad.getValue("px"),
-                Y = lusasPointLoad.getValue("py"),
-                Z = lusasPointLoad.getValue("pz")
-            };
+                if (lusasAssignment.getDatabaseObject() is IFLine)
+                {
+                    IFLine lusasLine = (IFLine)lusasAssignment.getDatabaseObject();
+                    bhomBars.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L"), out bhomBar);
+                    assignedBars.Add(bhomBar);
+                }
+                else
+                {
+                    Lusas.Compute.AssignmentWarning(lusasAssignment);
+                    Lusas.Compute.AssignmentWarning(lusasAssignment);
+                }
 
-            Vector momentVector = new Vector
-            {
-                X = lusasPointLoad.getValue("mx"),
-                Y = lusasPointLoad.getValue("my"),
-                Z = lusasPointLoad.getValue("mz")
-            };
+            }
 
-            PointLoad bhomPointLoad = Structure.Create.PointLoad(
-                bhomLoadcase,
-                bhomNodes,
-                forceVector,
-                momentVector,
-                LoadAxis.Global,
-                Lusas.Query.GetName(lusasPointLoad));
-
-            int adapterID = Lusas.Query.GetAdapterID(lusasPointLoad, 'l');
-            bhomPointLoad.CustomData["Lusas_id"] = adapterID;
-
-            return bhomPointLoad;
+            return assignedBars;
         }
+
+        /***************************************************/
+
     }
 }

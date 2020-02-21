@@ -37,7 +37,7 @@ namespace BH.Engine.Lusas
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
 
-            IEnumerable<Node> bhomNodes = Lusas.Query.GetNodeAssignments(lusasAssignments, bhomNodeDictionary);
+            IEnumerable<Node> bhomNodes = Lusas.Query.GetPointAssignments(lusasAssignments, bhomNodeDictionary);
 
             lusasPrescribedDisplacement.getValueNames();
 

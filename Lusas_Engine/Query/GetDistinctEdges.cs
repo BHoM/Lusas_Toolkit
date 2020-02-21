@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
@@ -22,50 +22,34 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using BH.oM.Geometry;
+using System;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Loads;
-using Lusas.LPI;
+using BH.Engine.Geometry;
+using BH.oM.Geometry;
 
 namespace BH.Engine.Lusas
 {
-    public static partial class Convert
+    public partial class Query
     {
-        public static PointLoad ToPointLoad(
-            IFLoading lusasPointLoad, IEnumerable<IFAssignment> lusasAssignments, 
-            Dictionary<string, Node> bhomNodeDictionary)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static List<Edge> GetDistinctEdges(IEnumerable<Edge> edges)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
-
-            IEnumerable<Node> bhomNodes = Lusas.Query.GetPointAssignments(lusasAssignments, bhomNodeDictionary);
-
-            Vector forceVector = new Vector
+            List<Edge> distinctEdges = edges.GroupBy(m => new
             {
-                X = lusasPointLoad.getValue("px"),
-                Y = lusasPointLoad.getValue("py"),
-                Z = lusasPointLoad.getValue("pz")
-            };
+                X = Math.Round(m.Curve.IPointAtParameter(0.5).X, 3),
+                Y = Math.Round(m.Curve.IPointAtParameter(0.5).Y, 3),
+                Z = Math.Round(m.Curve.IPointAtParameter(0.5).Z, 3)
+            })
+        .Select(x => x.First())
+        .ToList();
 
-            Vector momentVector = new Vector
-            {
-                X = lusasPointLoad.getValue("mx"),
-                Y = lusasPointLoad.getValue("my"),
-                Z = lusasPointLoad.getValue("mz")
-            };
-
-            PointLoad bhomPointLoad = Structure.Create.PointLoad(
-                bhomLoadcase,
-                bhomNodes,
-                forceVector,
-                momentVector,
-                LoadAxis.Global,
-                Lusas.Query.GetName(lusasPointLoad));
-
-            int adapterID = Lusas.Query.GetAdapterID(lusasPointLoad, 'l');
-            bhomPointLoad.CustomData["Lusas_id"] = adapterID;
-
-            return bhomPointLoad;
+            return distinctEdges;
         }
+
+        /***************************************************/
+
     }
 }
