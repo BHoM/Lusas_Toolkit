@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
@@ -20,37 +20,44 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System.Collections.Generic;
+using BH.oM.Structure.Elements;
 using Lusas.LPI;
+using BH.oM.Base;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Compute
+    public partial class Query
     {
-        public static void WarningPointAssignment(IFAssignment lusasAssignment)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static IEnumerable<Node> GetPointAssignments(IEnumerable<IFAssignment> lusasAssignments,
+               Dictionary<string, Node> bhomNodes)
         {
-            if (lusasAssignment.getDatabaseObject() is IFPoint)
+            List<Node> assignedNodes = new List<Node>();
+            Node bhomNode = new Node();
+
+            foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
-                Engine.Reflection.Compute.RecordWarning(
-                    lusasAssignment.GetType().ToString() + " does not support assignment to points, these have not been pulled");
+                if (lusasAssignment.getDatabaseObject() is IFPoint)
+                {
+                    IFPoint lusasPoint = (IFPoint)lusasAssignment.getDatabaseObject();
+                    bhomNodes.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P"), out bhomNode);
+                    assignedNodes.Add(bhomNode);
+                }
+                else
+                {
+                    Compute.AssignmentWarning(lusasAssignment);
+                    Compute.AssignmentWarning(lusasAssignment);
+                }
             }
+
+            return assignedNodes;
         }
 
-        public static void WarningLineAssignment(IFAssignment lusasAssignment)
-        {
-            if (lusasAssignment.getDatabaseObject() is IFLine)
-            {
-                Engine.Reflection.Compute.RecordWarning(
-                    lusasAssignment.GetType().ToString() + "  does not support assignment to lines, these have not been pulled");
-            }
-        }
+        /***************************************************/
 
-        public static void WarningSurfaceAssignment(IFAssignment lusasAssignment)
-        {
-            if (lusasAssignment.getDatabaseObject() is IFSurface)
-            {
-                Engine.Reflection.Compute.RecordWarning(
-                    lusasAssignment.GetType().ToString() + " does not support assignment to surfaces, these have not been pulled");
-            }
-        }
     }
 }

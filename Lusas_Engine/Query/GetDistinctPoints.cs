@@ -21,39 +21,35 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
+using System;
 using BH.oM.Structure.Elements;
-using Lusas.LPI;
+using BH.Engine.Geometry;
+using BH.oM.Geometry;
 
 namespace BH.Engine.Lusas
 {
     public partial class Query
     {
-        public static Node GetNode(IFLine lusasLine, int nodeIndex, Dictionary<string, Node> bhomNodes)
-        {
-            Node bhomNode = null;
-            IFPoint lusasPoint = lusasLine.getLOFs()[nodeIndex];
-            string pointName = Engine.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P");
-            bhomNodes.TryGetValue(pointName, out bhomNode);
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
 
-            return bhomNode;
+        public static List<Point> GetDistinctPoints(IEnumerable<Point> points)
+        {
+            List<Point> distinctPoints = points.GroupBy(m => new
+            {
+                X = Math.Round(m.X, 3),
+                Y = Math.Round(m.Y, 3),
+                Z = Math.Round(m.Z, 3)
+            })
+                 .Select(x => x.First())
+                 .ToList();
+
+            return distinctPoints;
         }
 
-        public static Bar GetBar(IFSurface lusasSurf, int lineIndex, Dictionary<string, Bar> bhomBars)
-        {
-            Bar bhomBar = null;
-            IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
-            string lineName = Engine.Lusas.Modify.RemovePrefix(lusasEdge.getName(), "L");
-            bhomBars.TryGetValue(lineName, out bhomBar);
-            return bhomBar;
-        }
+        /***************************************************/
 
-        public static Edge GetEdge(IFSurface lusasSurf, int lineIndex, Dictionary<string, Edge> bhomBars)
-        {
-            Edge bhomEdge = null;
-            IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
-            string lineName = Engine.Lusas.Modify.RemovePrefix(lusasEdge.getName(), "L");
-            bhomBars.TryGetValue(lineName, out bhomEdge);
-            return bhomEdge;
-        }
     }
 }

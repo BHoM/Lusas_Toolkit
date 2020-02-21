@@ -37,7 +37,7 @@ namespace BH.Engine.Lusas
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
 
-            IEnumerable<Bar> bhomBars = Lusas.Query.GetBarAssignments(lusasAssignments, bhomBarDictionary);
+            IEnumerable<Bar> bhomBars = Lusas.Query.GetLineAssignments(lusasAssignments, bhomBarDictionary);
 
             Vector startForceVector = new Vector
             {

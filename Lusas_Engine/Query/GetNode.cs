@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
@@ -21,42 +21,28 @@
  */
 
 using System.Collections.Generic;
-using System.Linq;
-using System;
 using BH.oM.Structure.Elements;
-using BH.Engine.Geometry;
-using BH.oM.Geometry;
+using Lusas.LPI;
 
 namespace BH.Engine.Lusas
 {
     public partial class Query
     {
-        public static List<Edge> GetDistinctEdges(IEnumerable<Edge> edges)
-        {
-            List<Edge> distinctEdges = edges.GroupBy(m => new
-            {
-                X = Math.Round(m.Curve.IPointAtParameter(0.5).X, 3),
-                Y = Math.Round(m.Curve.IPointAtParameter(0.5).Y, 3),
-                Z = Math.Round(m.Curve.IPointAtParameter(0.5).Z, 3)
-            })
-        .Select(x => x.First())
-        .ToList();
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
 
-            return distinctEdges;
+        public static Node GetNode(IFLine lusasLine, int nodeIndex, Dictionary<string, Node> bhomNodes)
+        {
+            Node bhomNode = null;
+            IFPoint lusasPoint = lusasLine.getLOFs()[nodeIndex];
+            string pointName = Engine.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P");
+            bhomNodes.TryGetValue(pointName, out bhomNode);
+
+            return bhomNode;
         }
 
-        public static List<Point> GetDistinctPoints(IEnumerable<Point> points)
-        {
-            List<Point> distinctPoints = points.GroupBy(m => new
-            {
-                X = Math.Round(m.X, 3),
-                Y = Math.Round(m.Y, 3),
-                Z = Math.Round(m.Z, 3)
-            })
-                 .Select(x => x.First())
-                 .ToList();
+        /***************************************************/
 
-            return distinctPoints;
-        }
     }
 }
