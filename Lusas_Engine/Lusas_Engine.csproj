@@ -157,10 +157,10 @@
     <Compile Include="Create\LibrarySettings.cs" />
     <Compile Include="Create\LusasConfig.cs" />
     <Compile Include="Create\MeshSettings2D.cs" />
-    <Compile Include="Object_Comparer\Equality_Comparer\BarMidPointComparer.cs" />
-    <Compile Include="Object_Comparer\Equality_Comparer\MeshComparer.cs" />
-    <Compile Include="Object_Comparer\Equality_Comparer\PointDistanceComparer.cs" />
-    <Compile Include="Object_Comparer\Equality_Comparer\EdgeMidPointComparer.cs" />
+    <Compile Include="Objects\Equality_Comparer\BarMidPointComparer.cs" />
+    <Compile Include="Objects\Equality_Comparer\MeshComparer.cs" />
+    <Compile Include="Objects\Equality_Comparer\PointDistanceComparer.cs" />
+    <Compile Include="Objects\Equality_Comparer\EdgeMidPointComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
