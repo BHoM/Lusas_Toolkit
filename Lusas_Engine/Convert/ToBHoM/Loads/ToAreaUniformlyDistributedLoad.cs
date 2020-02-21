@@ -33,13 +33,13 @@ namespace BH.Engine.Lusas
     {
         public static AreaUniformlyDistributedLoad ToAreaUniformlyDistributed(
             IFLoading lusasDistributed, IEnumerable<IFAssignment> lusasAssignments,
-            Dictionary<string, Panel> PanelDictionary)
+            Dictionary<string, Panel> panelDictionary)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
 
             IEnumerable<IAreaElement> bhomPanels = Lusas.Query.GetSurfaceAssignments(
-                lusasAssignments, PanelDictionary);
+                lusasAssignments, panelDictionary);
 
             Vector pressureVector = new Vector
             {
