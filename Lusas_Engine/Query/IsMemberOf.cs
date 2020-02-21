@@ -25,7 +25,7 @@ using Lusas.LPI;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Query
+    public static partial class Query
     {
         public static HashSet<string> IsMemberOf(IFGeometry lusasGeometry, HashSet<string> bhomTags)
         {

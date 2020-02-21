@@ -26,7 +26,7 @@ using BH.oM.Adapters.Lusas;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Compute
+    public static partial class Compute
     {
         public static void SetSplitMethod(IFMeshLine lusasLineMesh, MeshSettings1D meshSettings1D, BarFEAType barFEAType)
         {

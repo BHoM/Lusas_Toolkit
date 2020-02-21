@@ -119,7 +119,7 @@
     <Compile Include="Query\GetLoadAssignments.cs" />
     <Compile Include="Query\GetLoadcaseIDs.cs" />
     <Compile Include="Query\GetMeshProperties.cs" />
-    <Compile Include="Modify\SetConstraint.cs" />
+    <Compile Include="Compute\SetConstraint.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToAreaTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToBar.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToBarTemperatureLoad.cs" />

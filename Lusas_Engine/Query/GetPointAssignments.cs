@@ -27,7 +27,7 @@ using BH.oM.Base;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Query
+    public static partial class Query
     {
         /***************************************************/
         /**** Public Methods                            ****/
