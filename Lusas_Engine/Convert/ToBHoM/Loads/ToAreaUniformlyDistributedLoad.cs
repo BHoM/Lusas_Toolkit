@@ -31,40 +31,50 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static PointDisplacement ToPointDisplacement(IFLoading lusasPrescribedDisplacement,
-            IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Node> bhomNodeDictionary)
+        public static AreaUniformlyDistributedLoad ToAreaUniformlyDistributed(
+            IFLoading lusasDistributed, IEnumerable<IFAssignment> lusasAssignments,
+            Dictionary<string, Panel> panelDictionary)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
 
-            IEnumerable<Node> bhomNodes = Lusas.Query.GetNodeAssignments(lusasAssignments, bhomNodeDictionary);
+            IEnumerable<IAreaElement> bhomPanels = Lusas.Query.GetSurfaceAssignments(
+                lusasAssignments, panelDictionary);
 
-            lusasPrescribedDisplacement.getValueNames();
-
-            Vector translationVector = new Vector
+            Vector pressureVector = new Vector
             {
-                X = lusasPrescribedDisplacement.getValue("U"),
-                Y = lusasPrescribedDisplacement.getValue("V"),
-                Z = lusasPrescribedDisplacement.getValue("W")
+                X = lusasDistributed.getValue("WX"),
+                Y = lusasDistributed.getValue("WY"),
+                Z = lusasDistributed.getValue("WZ")
             };
 
-            Vector rotationVector = new Vector
+            AreaUniformlyDistributedLoad bhomSurfaceUniformlyDistributed = null;
+
+            if (lusasDistributed.getAttributeType() == "Global Distributed Load")
             {
-                X = lusasPrescribedDisplacement.getValue("THX"),
-                Y = lusasPrescribedDisplacement.getValue("THY"),
-                Z = lusasPrescribedDisplacement.getValue("THZ")
-            };
+                bhomSurfaceUniformlyDistributed = Structure.Create.AreaUniformlyDistributedLoad(
+                bhomLoadcase,
+                pressureVector,
+                bhomPanels,
+                LoadAxis.Global,
+                true,
+                Lusas.Query.GetName(lusasDistributed));
+            }
+            else if (lusasDistributed.getAttributeType() == "Distributed Load")
+            {
+                bhomSurfaceUniformlyDistributed = Structure.Create.AreaUniformlyDistributedLoad(
+                bhomLoadcase,
+                pressureVector,
+                bhomPanels,
+                LoadAxis.Local,
+                true,
+                Lusas.Query.GetName(lusasDistributed));
+            }
 
-            PointDisplacement bhomPointDisplacement = Structure.Create.PointDisplacement(
-                bhomLoadcase, bhomNodes, translationVector, rotationVector, LoadAxis.Global, 
-                Lusas.Query.GetName(lusasPrescribedDisplacement));
+            int adapterID = Lusas.Query.GetAdapterID(lusasDistributed, 'l');
+            bhomSurfaceUniformlyDistributed.CustomData["Lusas_id"] = adapterID;
 
-            int adapterID = Lusas.Query.GetAdapterID(lusasPrescribedDisplacement, 'd');
-            bhomPointDisplacement.CustomData["Lusas_id"] = adapterID;
-            // Needs to be a bit here that determines whether it is global or local - actually this cannot be done as the 
-            //attribute is applied to a group, and within the group the axis could local or global
-
-            return bhomPointDisplacement;
+            return bhomSurfaceUniformlyDistributed;
         }
     }
 }

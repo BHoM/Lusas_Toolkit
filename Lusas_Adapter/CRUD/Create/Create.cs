@@ -430,10 +430,10 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private bool CreateCollection(IEnumerable<PointLoad> PointLoads)
+        private bool CreateCollection(IEnumerable<PointLoad> pointLoads)
         {
 
-            foreach (PointLoad PointLoad in PointLoads)
+            foreach (PointLoad PointLoad in pointLoads)
             {
                 object[] assignedPoints = GetAssignedPoints(PointLoad);
                 IFLoadingConcentrated lusasPointLoad = CreateConcentratedLoad(PointLoad, assignedPoints);

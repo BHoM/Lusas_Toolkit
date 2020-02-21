@@ -20,37 +20,40 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System.Collections.Generic;
+using System.Linq;
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.Loads;
 using Lusas.LPI;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Compute
+    public static partial class Convert
     {
-        public static void WarningPointAssignment(IFAssignment lusasAssignment)
+        public static AreaTemperatureLoad ToAreaTempratureLoad(
+            IFLoading lusasTemperatureLoad,
+            IEnumerable<IFAssignment> lusasAssignments,
+            Dictionary<string, Panel> panelDictionary)
         {
-            if (lusasAssignment.getDatabaseObject() is IFPoint)
-            {
-                Engine.Reflection.Compute.RecordWarning(
-                    lusasAssignment.GetType().ToString() + " does not support assignment to points, these have not been pulled");
-            }
-        }
+            IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
+            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
+            double temperatureChange = lusasTemperatureLoad.getValue("T")
+                - lusasTemperatureLoad.getValue("T0");
 
-        public static void WarningLineAssignment(IFAssignment lusasAssignment)
-        {
-            if (lusasAssignment.getDatabaseObject() is IFLine)
-            {
-                Engine.Reflection.Compute.RecordWarning(
-                    lusasAssignment.GetType().ToString() + "  does not support assignment to lines, these have not been pulled");
-            }
-        }
+            IEnumerable<IAreaElement> bhomPanels = Lusas.Query.GetSurfaceAssignments(lusasAssignments, panelDictionary);
+            AreaTemperatureLoad bhomAreaTemperatureLoad = Structure.Create.AreaTemperatureLoad(
+                bhomLoadcase,
+                temperatureChange,
+                bhomPanels,
+                LoadAxis.Local,
+                false,
+                Lusas.Query.GetName(lusasTemperatureLoad));
 
-        public static void WarningSurfaceAssignment(IFAssignment lusasAssignment)
-        {
-            if (lusasAssignment.getDatabaseObject() is IFSurface)
-            {
-                Engine.Reflection.Compute.RecordWarning(
-                    lusasAssignment.GetType().ToString() + " does not support assignment to surfaces, these have not been pulled");
-            }
+            int adapterID = Lusas.Query.GetAdapterID(lusasTemperatureLoad, 'l');
+            bhomAreaTemperatureLoad.CustomData["Lusas_id"] = adapterID;
+
+            return bhomAreaTemperatureLoad;
         }
     }
 }
+

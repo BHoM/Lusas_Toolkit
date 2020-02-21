@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
@@ -20,22 +20,44 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System.Collections.Generic;
+using BH.oM.Structure.Elements;
+using Lusas.LPI;
+using BH.oM.Base;
+
 namespace BH.Engine.Lusas
 {
-    public static partial class Convert
+    public static partial class Query
     {
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
 
-        /***************************************************/
-        /**** Additional Methods                        ****/
+        public static IEnumerable<IAreaElement> GetSurfaceAssignments(IEnumerable<IFAssignment> lusasAssignments,
+            Dictionary<string, Panel> bhomPanels)
+        {
+            List<IAreaElement> assignedSurfs = new List<IAreaElement>();
+            Panel bhomPanel = new Panel();
+
+            foreach (IFAssignment lusasAssignment in lusasAssignments)
+            {
+                if (lusasAssignment.getDatabaseObject() is IFSurface)
+                {
+                    IFSurface lusasSurface = (IFSurface)lusasAssignment.getDatabaseObject();
+                    bhomPanels.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasSurface.getName(), "S"), out bhomPanel);
+                    assignedSurfs.Add(bhomPanel);
+                }
+                else
+                {
+                    Lusas.Compute.AssignmentWarning(lusasAssignment);
+                    Lusas.Compute.AssignmentWarning(lusasAssignment);
+                }
+            }
+
+            return assignedSurfs;
+        }
+
         /***************************************************/
 
-
-        //
-
-        /***************************************************/
     }
 }
-

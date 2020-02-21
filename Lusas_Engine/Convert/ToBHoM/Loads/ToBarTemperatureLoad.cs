@@ -21,31 +21,38 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.Loads;
 using Lusas.LPI;
-using BH.oM.Structure.Constraints;
 
 namespace BH.Engine.Lusas
 {
-    public static partial class Query
+    public static partial class Convert
     {
-        public static BarRelease GetBarRelease(IFMeshLine lusasLineMesh)
+        public static BarTemperatureLoad ToBarTemperatureLoad(
+            IFLoading lusasTemperatureLoad,
+            IEnumerable<IFAssignment> lusasAssignments,
+            Dictionary<string, Bar> bars)
         {
-            object[] startReleases = lusasLineMesh.getValue("start");
-            object[] endReleases = lusasLineMesh.getValue("end");
+            IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
+            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
+            double temperatureChange = lusasTemperatureLoad.getValue("T")
+                - lusasTemperatureLoad.getValue("T0");
 
-            List<DOFType> startReleaseType = GetConstraints(startReleases);
-            List<DOFType> endReleaseType = GetConstraints(endReleases);
+            IEnumerable<Bar> bhomBars = Lusas.Query.GetLineAssignments(lusasAssignments, bars);
+            BarTemperatureLoad bhomBarTemperatureLoad = Structure.Create.BarTemperatureLoad(
+                bhomLoadcase,
+                temperatureChange,
+                bhomBars,
+                LoadAxis.Local,
+                false,
+                Lusas.Query.GetName(lusasTemperatureLoad));
 
-            Constraint6DOF startConstraint = Compute.SetConstraint(startReleaseType);
-            Constraint6DOF endConstraint = Compute.SetConstraint(endReleaseType);
-
-            BarRelease barRelease = new BarRelease
-            {
-                StartRelease = startConstraint,
-                EndRelease = endConstraint
-            };
-
-            return barRelease;
+            int adapterID = Lusas.Query.GetAdapterID(lusasTemperatureLoad, 'l');
+            bhomBarTemperatureLoad.CustomData["Lusas_id"] = adapterID;
+            return bhomBarTemperatureLoad;
         }
     }
 }
+

@@ -28,7 +28,7 @@ using BH.oM.Base;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Query
+    public static partial class Query
     {
         public static List<int> GetObjectIDs(IList ids)
         {

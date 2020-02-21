@@ -21,39 +21,51 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
+using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
+using BH.oM.Structure.Loads;
 using Lusas.LPI;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Query
+    public static partial class Convert
     {
-        public static Node GetNode(IFLine lusasLine, int nodeIndex, Dictionary<string, Node> bhomNodes)
+        public static PointLoad ToPointLoad(
+            IFLoading lusasPointLoad, IEnumerable<IFAssignment> lusasAssignments, 
+            Dictionary<string, Node> bhomNodeDictionary)
         {
-            Node bhomNode = null;
-            IFPoint lusasPoint = lusasLine.getLOFs()[nodeIndex];
-            string pointName = Engine.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P");
-            bhomNodes.TryGetValue(pointName, out bhomNode);
+            IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
+            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
 
-            return bhomNode;
-        }
+            IEnumerable<Node> bhomNodes = Lusas.Query.GetPointAssignments(lusasAssignments, bhomNodeDictionary);
 
-        public static Bar GetBar(IFSurface lusasSurf, int lineIndex, Dictionary<string, Bar> bhomBars)
-        {
-            Bar bhomBar = null;
-            IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
-            string lineName = Engine.Lusas.Modify.RemovePrefix(lusasEdge.getName(), "L");
-            bhomBars.TryGetValue(lineName, out bhomBar);
-            return bhomBar;
-        }
+            Vector forceVector = new Vector
+            {
+                X = lusasPointLoad.getValue("px"),
+                Y = lusasPointLoad.getValue("py"),
+                Z = lusasPointLoad.getValue("pz")
+            };
 
-        public static Edge GetEdge(IFSurface lusasSurf, int lineIndex, Dictionary<string, Edge> bhomBars)
-        {
-            Edge bhomEdge = null;
-            IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
-            string lineName = Engine.Lusas.Modify.RemovePrefix(lusasEdge.getName(), "L");
-            bhomBars.TryGetValue(lineName, out bhomEdge);
-            return bhomEdge;
+            Vector momentVector = new Vector
+            {
+                X = lusasPointLoad.getValue("mx"),
+                Y = lusasPointLoad.getValue("my"),
+                Z = lusasPointLoad.getValue("mz")
+            };
+
+            PointLoad bhomPointLoad = Structure.Create.PointLoad(
+                bhomLoadcase,
+                bhomNodes,
+                forceVector,
+                momentVector,
+                LoadAxis.Global,
+                Lusas.Query.GetName(lusasPointLoad));
+
+            int adapterID = Lusas.Query.GetAdapterID(lusasPointLoad, 'l');
+            bhomPointLoad.CustomData["Lusas_id"] = adapterID;
+
+            return bhomPointLoad;
         }
     }
 }

@@ -92,7 +92,6 @@ namespace BH.Engine.Lusas.Object_Comparer.Equality_Comparer
 
         private PointDistanceComparer m_pointComparer;
 
-
         /***************************************************/
 
     }

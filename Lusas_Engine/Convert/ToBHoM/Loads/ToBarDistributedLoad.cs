@@ -31,42 +31,61 @@ namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static BarPointLoad ToBarPointLoad(IFLoading lusasBarPointLoad,
+        public static BarVaryingDistributedLoad ToBarDistributedLoad(IFLoading lusasBarDistributedLoad,
             IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Bar> bhomBarDictionary)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
 
-            IEnumerable<Bar> bhomBars = Lusas.Query.GetBarAssignments(lusasAssignments, bhomBarDictionary);
+            IEnumerable<Bar> bhomBars = Lusas.Query.GetLineAssignments(lusasAssignments, bhomBarDictionary);
 
-            Vector forceVector = new Vector
+            Vector startForceVector = new Vector
             {
-                X = lusasBarPointLoad.getValue("PX"),
-                Y = lusasBarPointLoad.getValue("PY"),
-                Z = lusasBarPointLoad.getValue("PZ")
+                X = lusasBarDistributedLoad.getValue("startpx"),
+                Y = lusasBarDistributedLoad.getValue("startpy"),
+                Z = lusasBarDistributedLoad.getValue("startpz")
             };
 
-            Vector momentVector = new Vector
+            Vector endForceVector = new Vector
             {
-                X = lusasBarPointLoad.getValue("MX"),
-                Y = lusasBarPointLoad.getValue("MY"),
-                Z = lusasBarPointLoad.getValue("MZ")
+                X = lusasBarDistributedLoad.getValue("endpx"),
+                Y = lusasBarDistributedLoad.getValue("endpy"),
+                Z = lusasBarDistributedLoad.getValue("endpz")
             };
 
-            double forcePosition = lusasBarPointLoad.getValue("Distance");
+            Vector startMomentVector = new Vector
+            {
+                X = lusasBarDistributedLoad.getValue("startmx"),
+                Y = lusasBarDistributedLoad.getValue("startmy"),
+                Z = lusasBarDistributedLoad.getValue("startmz")
+            };
 
-            BarPointLoad bhomBarPointLoad = null;
+            Vector endMomentVector = new Vector
+            {
+                X = lusasBarDistributedLoad.getValue("endmx"),
+                Y = lusasBarDistributedLoad.getValue("endmy"),
+                Z = lusasBarDistributedLoad.getValue("endmz")
+            };
 
-            bhomBarPointLoad = Structure.Create.BarPointLoad(
+            double startPosition = lusasBarDistributedLoad.getValue("startDistance");
+            double endPosition = lusasBarDistributedLoad.getValue("endDistance");
+
+            BarVaryingDistributedLoad bhomBarPointLoad = null;
+
+            bhomBarPointLoad = Structure.Create.BarVaryingDistributedLoad(
                 bhomLoadcase,
-                forcePosition,
                 bhomBars,
-                forceVector,
-                momentVector,
-                LoadAxis.Global,
-                Lusas.Query.GetName(lusasBarPointLoad));
+                startPosition,
+                startForceVector,
+                startMomentVector,
+                endPosition,
+                endForceVector,
+                endMomentVector,
+                LoadAxis.Local,
+                false,
+                Lusas.Query.GetName(lusasBarDistributedLoad));
 
-            int adapterID = Lusas.Query.GetAdapterID(lusasBarPointLoad, 'l');
+            int adapterID = Lusas.Query.GetAdapterID(lusasBarDistributedLoad, 'l');
             bhomBarPointLoad.CustomData["Lusas_id"] = adapterID;
 
             return bhomBarPointLoad;

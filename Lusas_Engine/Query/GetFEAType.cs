@@ -24,7 +24,7 @@ using BH.oM.Structure.Elements;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Query
+    public static partial class Query
     {
         public static BarFEAType GetFEAType(object type)
         {

@@ -25,7 +25,7 @@ using BH.oM.Structure.Elements;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Compute
+    public static partial class Compute
     {
         public static void SetElementType(IFMeshLine lusasLineMesh, BarFEAType barFEAType)
         {

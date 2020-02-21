@@ -24,7 +24,7 @@ using BH.oM.Structure.Constraints;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Compute
+    public static partial class Compute
     {
         public static string CreateReleaseString(BarRelease barReleases)
         {

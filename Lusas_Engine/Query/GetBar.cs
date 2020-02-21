@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
@@ -21,31 +21,27 @@
  */
 
 using System.Collections.Generic;
+using BH.oM.Structure.Elements;
 using Lusas.LPI;
-using BH.oM.Structure.Constraints;
 
 namespace BH.Engine.Lusas
 {
     public static partial class Query
     {
-        public static BarRelease GetBarRelease(IFMeshLine lusasLineMesh)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static Bar GetBar(IFSurface lusasSurf, int lineIndex, Dictionary<string, Bar> bhomBars)
         {
-            object[] startReleases = lusasLineMesh.getValue("start");
-            object[] endReleases = lusasLineMesh.getValue("end");
-
-            List<DOFType> startReleaseType = GetConstraints(startReleases);
-            List<DOFType> endReleaseType = GetConstraints(endReleases);
-
-            Constraint6DOF startConstraint = Compute.SetConstraint(startReleaseType);
-            Constraint6DOF endConstraint = Compute.SetConstraint(endReleaseType);
-
-            BarRelease barRelease = new BarRelease
-            {
-                StartRelease = startConstraint,
-                EndRelease = endConstraint
-            };
-
-            return barRelease;
+            Bar bhomBar = null;
+            IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
+            string lineName = Engine.Lusas.Modify.RemovePrefix(lusasEdge.getName(), "L");
+            bhomBars.TryGetValue(lineName, out bhomBar);
+            return bhomBar;
         }
+
+        /***************************************************/
+
     }
 }

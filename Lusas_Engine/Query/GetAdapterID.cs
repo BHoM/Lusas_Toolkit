@@ -24,7 +24,7 @@ using Lusas.LPI;
 
 namespace BH.Engine.Lusas
 {
-    public partial class Query
+    public static partial class Query
     {
         public static int GetAdapterID(IFAttribute lusasAttribute, char lastCharacter)
         {
