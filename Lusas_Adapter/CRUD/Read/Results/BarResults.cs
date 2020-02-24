@@ -53,9 +53,10 @@ namespace BH.Adapter.Lusas
                     break;
                 case BarResultType.BarStress:
                     results = ExtractBarStress(objectIds, loadCases).ToList();
+                    Engine.Reflection.Compute.RecordWarning("Lusas_Toolkit will only return the axial stress");
                     break;
                 default:
-                    Engine.Reflection.Compute.RecordError("Result of type " + request.ResultType + " is not yet supported");
+                    Engine.Reflection.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the Lusas_Toolkit.");
                     results = new List<IResult>();
                     break;
             }
@@ -231,6 +232,8 @@ namespace BH.Adapter.Lusas
                         ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
                         ObjectId = barId,
                         Axial = eX,
+                        ShearY = eY,
+                        ShearZ = eZ,
                     };
 
                     bhomBarStrains.Add(barStrain);
@@ -242,6 +245,66 @@ namespace BH.Adapter.Lusas
             }
 
             return bhomBarStrains;
+        }
+
+        /***************************************************/
+
+        private IEnumerable<IResult> ExtractBarDisplacement(List<int> ids, List<int> loadcaseIds)
+        {
+            List<BarDisplacement> bhomBarDisplacements = new List<BarDisplacement>();
+
+            IFView view = m_LusasApplication.getCurrentView();
+            IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
+
+            string entity = "Displacement";
+            string location = "Feature extreme";
+
+            foreach (int loadcaseId in loadcaseIds)
+            {
+                IFLoadset loadset = d_LusasData.getLoadset(loadcaseId);
+
+                if (!loadset.needsAssociatedValues())
+                {
+                    resultsContext.setActiveLoadset(loadset);
+                }
+
+                IFUnitSet unitSet = d_LusasData.getModelUnits();
+                double lengthSIConversion = 1 / unitSet.getLengthFactor();
+
+                List<string> components = new List<string>() { "DX", "DY", "DZ", "THX", "THY", "THZ" };
+                d_LusasData.startUsingScriptedResults();
+
+                Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
+
+                foreach (int barId in ids)
+                {
+                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L");
+
+                    double uX = 0; double uY = 0; double uZ = 0; double rX = 0; double rY = 0; double rZ = 0;
+                    featureResults.TryGetValue("DX", out uX); featureResults.TryGetValue("DY", out uY); featureResults.TryGetValue("DZ", out uZ);
+                    featureResults.TryGetValue("THX", out rX); featureResults.TryGetValue("THY", out rY); featureResults.TryGetValue("THZ", out rZ);
+
+                    BarDisplacement bhomBarDisplacement = new BarDisplacement
+                    {
+                        ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
+                        ObjectId = barId,
+                        UX = uX * lengthSIConversion,
+                        UY = uY * lengthSIConversion,
+                        UZ = uZ * lengthSIConversion,
+                        RX = rX,
+                        RY = rY,
+                        RZ = rZ,
+                    };
+
+                    bhomBarDisplacements.Add(bhomBarDisplacement);
+
+                }
+
+                d_LusasData.stopUsingScriptedResults();
+                d_LusasData.flushScriptedResults();
+            }
+
+            return bhomBarDisplacements;
         }
 
         /***************************************************/
