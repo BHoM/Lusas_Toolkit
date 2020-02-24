@@ -31,7 +31,6 @@ namespace BH.Adapter.Lusas
         {
             Dictionary<string, double> featureResults = new Dictionary<string, double>();
             IFResultsComponentSet resultsSet = null;
-            bool validResults = true;
 
             foreach (string component in components)
             {
@@ -83,7 +82,6 @@ namespace BH.Adapter.Lusas
                 
                 if (!(resultsSet.isValidValue(featureResult)))
                 {
-                    validResults = false;
                     featureResult = 0;
                     Engine.Reflection.Compute.RecordWarning($"{suffix}{id} {component} is an invalid result and will be set to zero" );
                 }
