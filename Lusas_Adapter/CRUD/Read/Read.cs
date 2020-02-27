@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using BH.oM.Adapter;
 using BH.oM.Adapters.Lusas;
 using BH.oM.Base;
+using BH.oM.Common;
 using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
@@ -33,15 +34,12 @@ using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.MaterialFragments;
+using BH.oM.Structure.Results;
 
 namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-
-        /***************************************************/
-        /**** Index Adapter Methods                     ****/
-        /***************************************************/
         protected override IEnumerable<IBHoMObject> IRead(Type type, IList ids = null, ActionConfig actionConfig = null)
         {
             if (type == typeof(Bar))
@@ -79,8 +77,16 @@ namespace BH.Adapter.Lusas
             return null;
         }
 
-        /***************************************************/
-
+        protected override IEnumerable<IResult> ReadResults(Type type, IList ids = null, IList cases = null, int divisions = 5, ActionConfig actionConfig = null)
+        {
+            if (type == typeof(BarForce))
+                return ReadBarForce(ids, cases);
+            if (type == typeof(NodeDisplacement))
+                return ReadNodeDisplacement(ids, cases);
+            if (type == typeof(NodeReaction))
+                return ReadNodeReaction(ids, cases);
+            return null;
+        }
     }
 }
 
