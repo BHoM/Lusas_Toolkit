@@ -76,17 +76,6 @@ namespace BH.Adapter.Lusas
                 return ReadMeshSettings2D(ids as dynamic);
             return null;
         }
-
-        protected override IEnumerable<IResult> ReadResults(Type type, IList ids = null, IList cases = null, int divisions = 5, ActionConfig actionConfig = null)
-        {
-            if (type == typeof(BarForce))
-                return ReadBarForce(ids, cases);
-            if (type == typeof(NodeDisplacement))
-                return ReadNodeDisplacement(ids, cases);
-            if (type == typeof(NodeReaction))
-                return ReadNodeReaction(ids, cases);
-            return null;
-        }
     }
 }
 
