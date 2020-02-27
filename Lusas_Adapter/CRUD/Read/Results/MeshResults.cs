@@ -24,6 +24,7 @@ using BH.oM.Common;
 using BH.oM.Adapter;
 using BH.oM.Structure.Requests;
 using BH.oM.Structure.Results;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Lusas.LPI;
@@ -78,7 +79,6 @@ namespace BH.Adapter.Lusas
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
 
             string entity = "Displacement";
-            string location = "Feature extreme";
 
             foreach (int loadcaseId in loadcaseIds)
             {
@@ -95,25 +95,30 @@ namespace BH.Adapter.Lusas
                 List<string> components = new List<string>() { "DX", "DY", "DZ", "THX", "THY", "THZ" };
                 d_LusasData.startUsingScriptedResults();
 
-                Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
+                Dictionary<string, IFResultsComponentSet> maxResultsSets = GetResultsSets(entity, components, "Feature maximum", resultsContext);
+                Dictionary<string, IFResultsComponentSet> minResultsSets = GetResultsSets(entity, components, "Feature minimum", resultsContext);
 
                 foreach (int meshId in ids)
                 {
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, meshId, "S");
+                    Dictionary<string, double> maxFeatureResults = GetFeatureResults(components, maxResultsSets, unitSet, meshId, "S");
+                    double maxuX = 0; double maxuY = 0; double maxuZ = 0; double maxrX = 0; double maxrY = 0; double maxrZ = 0;
+                    maxFeatureResults.TryGetValue("DX", out maxuX); maxFeatureResults.TryGetValue("DY", out maxuY); maxFeatureResults.TryGetValue("DZ", out maxuZ);
+                    maxFeatureResults.TryGetValue("THX", out maxrX); maxFeatureResults.TryGetValue("THY", out maxrY); maxFeatureResults.TryGetValue("THZ", out maxrZ);
 
-                    double uX = 0; double uY = 0; double uZ = 0; double rX = 0; double rY = 0; double rZ = 0;
-                    featureResults.TryGetValue("DX", out uX); featureResults.TryGetValue("DY", out uY); featureResults.TryGetValue("DZ", out uZ);
-                    featureResults.TryGetValue("THX", out rX); featureResults.TryGetValue("THY", out rY); featureResults.TryGetValue("THZ", out rZ);
+                    Dictionary<string, double> minFeatureResults = GetFeatureResults(components, minResultsSets, unitSet, meshId, "S");
+                    double minuX = 0; double minuY = 0; double minuZ = 0; double minrX = 0; double minrY = 0; double minrZ = 0;
+                    minFeatureResults.TryGetValue("DX", out minuX); minFeatureResults.TryGetValue("DY", out minuY); minFeatureResults.TryGetValue("DZ", out minuZ);
+                    minFeatureResults.TryGetValue("THX", out minrX); minFeatureResults.TryGetValue("THY", out minrY); minFeatureResults.TryGetValue("THZ", out minrZ);
 
                     MeshDisplacement bhomMeshDisplacement = new MeshDisplacement
                         (
                         meshId, 0, 0, loadcaseId, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
-                        uX * lengthSIConversion,
-                        uY * lengthSIConversion,
-                        uZ * lengthSIConversion,
-                        rX,
-                        rY,
-                        rZ
+                        Math.Max(Math.Abs(maxuX), Math.Abs(minuX)) * lengthSIConversion,
+                        Math.Max(Math.Abs(maxuY), Math.Abs(minuY)) * lengthSIConversion,
+                        Math.Max(Math.Abs(maxuZ), Math.Abs(minuZ)) * lengthSIConversion,
+                        Math.Max(Math.Abs(maxrX), Math.Abs(minrX)),
+                        Math.Max(Math.Abs(maxrY), Math.Abs(minrY)),
+                        Math.Max(Math.Abs(maxrZ), Math.Abs(minrZ))
                         );
 
                     bhomMeshDisplacements.Add(bhomMeshDisplacement);
@@ -137,7 +142,6 @@ namespace BH.Adapter.Lusas
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
 
             string entity = "Force/Moment - Thick Shell";
-            string location = "Feature extreme";
 
             foreach (int loadcaseId in loadcaseIds)
             {
@@ -155,29 +159,33 @@ namespace BH.Adapter.Lusas
                 List<string> components = new List<string>() { "NX", "NY", "NXY", "MX", "MY", "MXY", "SX", "SY" };
                 d_LusasData.startUsingScriptedResults();
 
-                Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
+                Dictionary<string, IFResultsComponentSet> maxResultsSets = GetResultsSets(entity, components, "Feature maximum", resultsContext);
+                Dictionary<string, IFResultsComponentSet> minResultsSets = GetResultsSets(entity, components, "Feature minimum", resultsContext);
 
                 foreach (int meshId in ids)
                 {
-                    string lineName = "S" + meshId;
+                    Dictionary<string, double> maxFeatureResults = GetFeatureResults(components, maxResultsSets, unitSet, meshId, "S");
+                    double maxnX = 0; double maxnY = 0; double maxnXY = 0; double maxmX = 0; double maxmY = 0; double maxmXY = 0; double maxsX = 0; double maxsY = 0;
+                    maxFeatureResults.TryGetValue("NX", out maxnX); maxFeatureResults.TryGetValue("NY", out maxnY); maxFeatureResults.TryGetValue("NXY", out maxnXY);
+                    maxFeatureResults.TryGetValue("MX", out maxmX); maxFeatureResults.TryGetValue("MY", out maxmY); maxFeatureResults.TryGetValue("MXY", out maxmXY);
+                    maxFeatureResults.TryGetValue("SX", out maxsX); maxFeatureResults.TryGetValue("SY", out maxsY);
 
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, meshId, "S");
-
-                    double nX = 0; double nY = 0; double nXY = 0; double mX = 0; double mY = 0; double mXY = 0; double sX = 0; double sY = 0;
-                    featureResults.TryGetValue("NX", out nX); featureResults.TryGetValue("NY", out nY); featureResults.TryGetValue("NXY", out nXY);
-                    featureResults.TryGetValue("MX", out mX); featureResults.TryGetValue("MY", out mY); featureResults.TryGetValue("MXY", out mXY);
-                    featureResults.TryGetValue("SX", out sX); featureResults.TryGetValue("SY", out sY);
+                    Dictionary<string, double> minFeatureResults = GetFeatureResults(components, minResultsSets, unitSet, meshId, "S");
+                    double minnX = 0; double minnY = 0; double minnXY = 0; double minmX = 0; double minmY = 0; double minmXY = 0; double minsX = 0; double minsY = 0;
+                    minFeatureResults.TryGetValue("NX", out minnX); minFeatureResults.TryGetValue("NY", out minnY); minFeatureResults.TryGetValue("NXY", out minnXY);
+                    minFeatureResults.TryGetValue("MX", out minmX); minFeatureResults.TryGetValue("MY", out minmY); minFeatureResults.TryGetValue("MXY", out minmXY);
+                    minFeatureResults.TryGetValue("SX", out minsX); minFeatureResults.TryGetValue("SY", out minsY);
 
                     MeshForce meshForce = new MeshForce(
                         meshId, 0, 0, loadcaseId, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
-                        nX*forceSIConversion, 
-                        nY * forceSIConversion, 
-                        nXY * forceSIConversion, 
-                        mX * forceSIConversion, 
-                        mY * forceSIConversion, 
-                        mXY * forceSIConversion,
-                        sX * forceSIConversion, 
-                        sY * forceSIConversion);
+                        Math.Max(Math.Abs(maxnX), Math.Abs(minnX)) * forceSIConversion,
+                        Math.Max(Math.Abs(maxnY), Math.Abs(minnY)) * forceSIConversion,
+                        Math.Max(Math.Abs(maxnXY), Math.Abs(minnXY)) * forceSIConversion,
+                        Math.Max(Math.Abs(maxmX), Math.Abs(minmX)) * forceSIConversion,
+                        Math.Max(Math.Abs(maxmY), Math.Abs(minmY)) * forceSIConversion,
+                        Math.Max(Math.Abs(maxmXY), Math.Abs(minmXY)) * forceSIConversion,
+                        Math.Max(Math.Abs(maxsX), Math.Abs(minsX)) * forceSIConversion,
+                        Math.Max(Math.Abs(maxsY), Math.Abs(minsY)) * forceSIConversion);
 
                     bhomMeshForces.Add(meshForce);
 
@@ -217,8 +225,6 @@ namespace BH.Adapter.Lusas
                     break;
             }
 
-            string location = "Feature extreme";
-
             foreach (int loadcaseId in loadcaseIds)
             {
                 IFLoadset loadset = d_LusasData.getLoadset(loadcaseId);
@@ -235,29 +241,33 @@ namespace BH.Adapter.Lusas
                 List<string> components = new List<string>() { "SX", "SY", "SZ", "SYZ", "SZX","S1","S3","S2"};
                 d_LusasData.startUsingScriptedResults();
 
-                Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
+                Dictionary<string, IFResultsComponentSet> maxResultsSets = GetResultsSets(entity, components, "Feature maximum", resultsContext);
+                Dictionary<string, IFResultsComponentSet> minResultsSets = GetResultsSets(entity, components, "Feature minimum", resultsContext);
 
                 foreach (int meshId in ids)
                 {
-                    string lineName = "S" + meshId;
+                    Dictionary<string, double> maxFeatureResults = GetFeatureResults(components, maxResultsSets, unitSet, meshId, "S");
+                    double maxsX = 0; double maxsY = 0; double maxsZ = 0; double maxsYZ = 0; double maxsZX = 0; double maxs1 = 0; double maxs3 = 0; double maxs2 = 0;
+                    maxFeatureResults.TryGetValue("SX", out maxsX); maxFeatureResults.TryGetValue("SY", out maxsY); maxFeatureResults.TryGetValue("SZ", out maxsZ);
+                    maxFeatureResults.TryGetValue("SYZ", out maxsYZ); maxFeatureResults.TryGetValue("SZX", out maxsZX);
+                    maxFeatureResults.TryGetValue("S1", out maxs1); maxFeatureResults.TryGetValue("S3", out maxs3); maxFeatureResults.TryGetValue("S2", out maxs2);
 
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, meshId, "S");
-
-                    double sX = 0; double sY = 0; double sZ = 0; double sYZ = 0; double sXZ = 0; double s1 = 0; double s3 = 0; double s2 = 0;
-                    featureResults.TryGetValue("SX", out sX); featureResults.TryGetValue("SY", out sY); featureResults.TryGetValue("SZ", out sZ);
-                    featureResults.TryGetValue("SYZ", out sYZ); featureResults.TryGetValue("SZX", out sXZ);
-                    featureResults.TryGetValue("S1", out s1); featureResults.TryGetValue("S3", out s3); featureResults.TryGetValue("S2", out s2);
+                    Dictionary<string, double> minFeatureResults = GetFeatureResults(components, minResultsSets, unitSet, meshId, "S");
+                    double minsX = 0; double minsY = 0; double minsZ = 0; double minsYZ = 0; double minsZX = 0; double mins1 = 0; double mins3 = 0; double mins2 = 0;
+                    minFeatureResults.TryGetValue("SX", out minsX); minFeatureResults.TryGetValue("SY", out minsY); minFeatureResults.TryGetValue("SZ", out minsZ);
+                    minFeatureResults.TryGetValue("SYZ", out minsYZ); minFeatureResults.TryGetValue("SZX", out minsZX);
+                    minFeatureResults.TryGetValue("S1", out mins1); minFeatureResults.TryGetValue("S3", out mins3); minFeatureResults.TryGetValue("S2", out mins2);
 
                     MeshStress meshStress = new MeshStress(
                         meshId, 0, 0, loadcaseId, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
-                        sX*forceSIConversion/(lengthSIConversion*lengthSIConversion), 
-                        sY * forceSIConversion / (lengthSIConversion * lengthSIConversion), 
-                        sZ * forceSIConversion / (lengthSIConversion * lengthSIConversion), 
-                        sYZ * forceSIConversion / (lengthSIConversion * lengthSIConversion), 
-                        sXZ*forceSIConversion / (lengthSIConversion * lengthSIConversion),
-                        s1 * forceSIConversion / (lengthSIConversion * lengthSIConversion),
-                        s3 * forceSIConversion / (lengthSIConversion * lengthSIConversion),
-                        s2 * forceSIConversion / (lengthSIConversion * lengthSIConversion)
+                        Math.Max(Math.Abs(maxsX), Math.Abs(minsX)) * forceSIConversion/(lengthSIConversion*lengthSIConversion),
+                        Math.Max(Math.Abs(maxsY), Math.Abs(minsY)) * forceSIConversion / (lengthSIConversion * lengthSIConversion),
+                        Math.Max(Math.Abs(maxsZ), Math.Abs(minsZ)) * forceSIConversion / (lengthSIConversion * lengthSIConversion),
+                        Math.Max(Math.Abs(maxsYZ), Math.Abs(minsYZ)) * forceSIConversion / (lengthSIConversion * lengthSIConversion),
+                        Math.Max(Math.Abs(maxsZX), Math.Abs(minsZX)) * forceSIConversion / (lengthSIConversion * lengthSIConversion),
+                        Math.Max(Math.Abs(maxs1), Math.Abs(mins1)) * forceSIConversion / (lengthSIConversion * lengthSIConversion),
+                        Math.Max(Math.Abs(maxs3), Math.Abs(mins3)) * forceSIConversion / (lengthSIConversion * lengthSIConversion),
+                        Math.Max(Math.Abs(maxs2), Math.Abs(mins2)) * forceSIConversion / (lengthSIConversion * lengthSIConversion)
                         );
 
                     bhomMeshStresses.Add(meshStress);
@@ -296,7 +306,6 @@ namespace BH.Adapter.Lusas
                     Engine.Reflection.Compute.RecordWarning("No valid MeshLayerPosition provided, therefore it has defaulted to middle (i.e. 0.5).");
                     break;
             }
-            string location = "Feature extreme";
 
             foreach (int loadcaseId in loadcaseIds)
             {
@@ -314,23 +323,24 @@ namespace BH.Adapter.Lusas
                 List<string> components = new List<string>() { "SE" };
                 d_LusasData.startUsingScriptedResults();
 
-                Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
+                Dictionary<string, IFResultsComponentSet> maxResultsSets = GetResultsSets(entity, components, "Feature maximum", resultsContext);
+                Dictionary<string, IFResultsComponentSet> minResultsSets = GetResultsSets(entity, components, "Feature minimum", resultsContext);
 
                 foreach (int meshId in ids)
                 {
-                    string lineName = "L" + meshId;
+                    Dictionary<string, double> maxFeatureResults = GetFeatureResults(components, maxResultsSets, unitSet, meshId, "S");
+                    double maxsE = 0;
+                    maxFeatureResults.TryGetValue("SE", out maxsE);
 
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, meshId, "S");
-
-                    double sE = 0;
-                    featureResults.TryGetValue("SE", out sE);
+                    Dictionary<string, double> minFeatureResults = GetFeatureResults(components, minResultsSets, unitSet, meshId, "S");
+                    double minsE = 0;
+                    minFeatureResults.TryGetValue("SE", out minsE);
 
                     MeshVonMises meshStress = new MeshVonMises(
                         meshId, 0, 0, loadcaseId, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
-                        sE * forceSIConversion / (lengthSIConversion * lengthSIConversion), 0,0);
+                        Math.Max(Math.Abs(maxsE), Math.Abs(minsE)) * forceSIConversion / (lengthSIConversion * lengthSIConversion), 0,0);
 
                     bhomMeshStresses.Add(meshStress);
-
                 }
 
                 d_LusasData.stopUsingScriptedResults();

@@ -125,7 +125,7 @@ namespace BH.Adapter.Lusas
                         FZ = Math.Max(Math.Abs(maxfZ), Math.Abs(minfZ)) * forceSIConversion,
                         MX = Math.Max(Math.Abs(maxmX), Math.Abs(minmX)) * forceSIConversion * lengthSIConversion,
                         MY = Math.Max(Math.Abs(maxmY), Math.Abs(minmY)) * forceSIConversion * lengthSIConversion,
-                        MZ = Math.Max(Math.Abs(maxmZ), Math.Abs(minmZ)) * forceSIConversion * lengthSIConversion,
+                        MZ = Math.Max(Math.Abs(maxmZ), Math.Abs(minmZ)) * forceSIConversion * lengthSIConversion
                     };
 
                     barForces.Add(barForce);
@@ -247,7 +247,7 @@ namespace BH.Adapter.Lusas
                         ObjectId = barId,
                         Axial = Math.Max(Math.Abs(maxeX), Math.Abs(mineX)),
                         ShearY = Math.Max(Math.Abs(maxeY), Math.Abs(mineY)),
-                        ShearZ = Math.Max(Math.Abs(maxeZ), Math.Abs(mineZ)),
+                        ShearZ = Math.Max(Math.Abs(maxeZ), Math.Abs(mineZ))
                     };
 
                     barStrains.Add(barStrain);
@@ -314,7 +314,7 @@ namespace BH.Adapter.Lusas
                         UZ = Math.Max(Math.Abs(maxuZ), Math.Abs(minuZ)) * lengthSIConversion,
                         RX = Math.Max(Math.Abs(maxrX), Math.Abs(minrX)),
                         RY = Math.Max(Math.Abs(maxrY), Math.Abs(minrY)),
-                        RZ = Math.Max(Math.Abs(maxrZ), Math.Abs(minrZ)),
+                        RZ = Math.Max(Math.Abs(maxrZ), Math.Abs(minrZ))
                     };
 
                     barDisplacements.Add(barDisplacement);
