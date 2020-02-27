@@ -75,7 +75,7 @@ namespace BH.Adapter.Lusas
                     }
                 }
 
-                if (featureResult == double.MinValue || featureResult == double.MaxValue)
+                if (featureResult == double.MinValue || featureResult == double.MaxValue || featureResult == double.NaN)
                 {
                     featureResult = 0;
                 }
