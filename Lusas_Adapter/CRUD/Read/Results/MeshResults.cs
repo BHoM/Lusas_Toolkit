@@ -52,10 +52,10 @@ namespace BH.Adapter.Lusas
                     results = ExtractMeshForce(objectIds, loadCases).ToList();
                     break;
                 case MeshResultType.Stresses:
-                    results = ExtractMeshStress(objectIds, loadCases, request.LayerPosition).ToList();
+                    results = ExtractMeshStress(objectIds, loadCases, request.Layer).ToList();
                     break;
                 case MeshResultType.VonMises:
-                    results = ExtractMeshVonMises(objectIds, loadCases, request.LayerPosition).ToList();
+                    results = ExtractMeshVonMises(objectIds, loadCases, request.Layer).ToList();
                     break;
                 default:
                     Engine.Reflection.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the Lusas_Toolkit.");
