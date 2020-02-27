@@ -67,7 +67,7 @@ namespace BH.Adapter.Lusas
 
         private IEnumerable<IResult> ExtractNodeReaction(List<int> ids, List<int> loadcaseIds)
         {
-            List<NodeReaction> bhomNodeReactions = new List<NodeReaction>();
+            List<NodeReaction> nodeReactions = new List<NodeReaction>();
 
             IFView view = m_LusasApplication.getCurrentView();
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
@@ -115,7 +115,7 @@ namespace BH.Adapter.Lusas
                         MZ = mZ * forceSIConversion * lengthSIConversion,
                     };
 
-                    bhomNodeReactions.Add(nodeReaction);
+                    nodeReactions.Add(nodeReaction);
 
                 }
 
@@ -123,12 +123,12 @@ namespace BH.Adapter.Lusas
                 d_LusasData.flushScriptedResults();
             }
 
-            return bhomNodeReactions;
+            return nodeReactions;
         }
 
         private IEnumerable<IResult> ExtractNodeDisplacement(List<int> ids, List<int> loadcaseIds)
         {
-            List<NodeDisplacement> bhomNodeDisplacements = new List<NodeDisplacement>();
+            List<NodeDisplacement> nodeDisplacements = new List<NodeDisplacement>();
 
             IFView view = m_LusasApplication.getCurrentView();
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
@@ -176,7 +176,7 @@ namespace BH.Adapter.Lusas
                         RZ = rZ,
                     };
 
-                    bhomNodeDisplacements.Add(bhomNodeDisplacement);
+                    nodeDisplacements.Add(bhomNodeDisplacement);
 
                 }
 
@@ -184,7 +184,7 @@ namespace BH.Adapter.Lusas
                 d_LusasData.flushScriptedResults();
             }
 
-            return bhomNodeDisplacements;
+            return nodeDisplacements;
         }
 
         /***************************************************/

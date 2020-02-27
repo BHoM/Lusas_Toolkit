@@ -53,7 +53,9 @@ namespace BH.Adapter.Lusas
                     break;
                 case BarResultType.BarStress:
                     results = ExtractBarStress(objectIds, loadCases).ToList();
-                    Engine.Reflection.Compute.RecordWarning("Lusas_Toolkit will only return the axial stress");
+                    break;
+                case BarResultType.BarDisplacement:
+                    results = ExtractBarDisplacement(objectIds, loadCases).ToList();
                     break;
                 default:
                     Engine.Reflection.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the Lusas_Toolkit.");
@@ -70,7 +72,7 @@ namespace BH.Adapter.Lusas
 
         private IEnumerable<IResult> ExtractBarForce(List<int> ids, List<int> loadcaseIds)
         {
-            List<BarForce> bhombarForces = new List<BarForce>();
+            List<BarForce> barForces = new List<BarForce>();
 
             IFView view = m_LusasApplication.getCurrentView();
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
@@ -118,7 +120,7 @@ namespace BH.Adapter.Lusas
                         MZ = mZ * forceSIConversion * lengthSIConversion,
                     };
 
-                    bhombarForces.Add(barForce);
+                    barForces.Add(barForce);
 
                 }
 
@@ -126,14 +128,14 @@ namespace BH.Adapter.Lusas
                 d_LusasData.flushScriptedResults();
             }
 
-            return bhombarForces;
+            return barForces;
         }
 
         /***************************************************/
 
         private IEnumerable<IResult> ExtractBarStress(List<int> ids, List<int> loadcaseIds)
         {
-            List<BarStress> bhomBarStresses = new List<BarStress>();
+            List<BarStress> barStresses = new List<BarStress>();
 
             IFView view = m_LusasApplication.getCurrentView();
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
@@ -175,7 +177,7 @@ namespace BH.Adapter.Lusas
                         Axial = axial * forceSIConversion*lengthSIConversion*lengthSIConversion
                     };
 
-                    bhomBarStresses.Add(barStress);
+                    barStresses.Add(barStress);
 
                 }
 
@@ -183,14 +185,16 @@ namespace BH.Adapter.Lusas
                 d_LusasData.flushScriptedResults();
             }
 
-            return bhomBarStresses;
+            BH.Engine.Reflection.Compute.RecordWarning("Please note only axial strains will be returned when pulling BarStress results.");
+
+            return barStresses;
         }
 
         /***************************************************/
 
         private IEnumerable<IResult> ExtractBarStrain(List<int> ids, List<int> loadcaseIds)
         {
-            List<BarStrain> bhomBarStrains = new List<BarStrain>();
+            List<BarStrain> barStrains = new List<BarStrain>();
 
             IFView view = m_LusasApplication.getCurrentView();
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
@@ -236,7 +240,9 @@ namespace BH.Adapter.Lusas
                         ShearZ = eZ,
                     };
 
-                    bhomBarStrains.Add(barStrain);
+                    BH.Engine.Reflection.Compute.RecordWarning("Please note only axial and shear strains will be returned when pulling BarStress results.");
+
+                    barStrains.Add(barStrain);
 
                 }
 
@@ -244,14 +250,14 @@ namespace BH.Adapter.Lusas
                 d_LusasData.flushScriptedResults();
             }
 
-            return bhomBarStrains;
+            return barStrains;
         }
 
         /***************************************************/
 
         private IEnumerable<IResult> ExtractBarDisplacement(List<int> ids, List<int> loadcaseIds)
         {
-            List<BarDisplacement> bhomBarDisplacements = new List<BarDisplacement>();
+            List<BarDisplacement> barDisplacements = new List<BarDisplacement>();
 
             IFView view = m_LusasApplication.getCurrentView();
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
@@ -284,7 +290,7 @@ namespace BH.Adapter.Lusas
                     featureResults.TryGetValue("DX", out uX); featureResults.TryGetValue("DY", out uY); featureResults.TryGetValue("DZ", out uZ);
                     featureResults.TryGetValue("THX", out rX); featureResults.TryGetValue("THY", out rY); featureResults.TryGetValue("THZ", out rZ);
 
-                    BarDisplacement bhomBarDisplacement = new BarDisplacement
+                    BarDisplacement barDisplacement = new BarDisplacement
                     {
                         ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
                         ObjectId = barId,
@@ -296,7 +302,7 @@ namespace BH.Adapter.Lusas
                         RZ = rZ,
                     };
 
-                    bhomBarDisplacements.Add(bhomBarDisplacement);
+                    barDisplacements.Add(barDisplacement);
 
                 }
 
@@ -304,7 +310,7 @@ namespace BH.Adapter.Lusas
                 d_LusasData.flushScriptedResults();
             }
 
-            return bhomBarDisplacements;
+            return barDisplacements;
         }
 
         /***************************************************/
