@@ -67,11 +67,11 @@ namespace BH.Adapter.Lusas
                 {
                     try
                     {
-                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getLineByName(suffix + id), 3, unitSet, nodeID, nullID);
+                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getSurfaceByName(suffix + id), 3, unitSet, nodeID, nullID);
                     }
                     catch (System.ArgumentException)
                     {
-                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getLineByName(id.ToString()), 3, unitSet, nodeID, nullID);
+                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getSurfaceByName(id.ToString()), 3, unitSet, nodeID, nullID);
                     }
                 }
 

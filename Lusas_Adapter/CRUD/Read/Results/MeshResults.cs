@@ -52,10 +52,10 @@ namespace BH.Adapter.Lusas
                     results = ExtractMeshForce(objectIds, loadCases).ToList();
                     break;
                 case MeshResultType.Stresses:
-                    results = ExtractMeshStress(objectIds, loadCases).ToList();
+                    results = ExtractMeshStress(objectIds, loadCases, request.LayerPosition).ToList();
                     break;
                 case MeshResultType.VonMises:
-                    results = ExtractMeshVonMises(objectIds, loadCases).ToList();
+                    results = ExtractMeshVonMises(objectIds, loadCases, request.LayerPosition).ToList();
                     break;
                 default:
                     Engine.Reflection.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the Lusas_Toolkit.");
@@ -170,7 +170,14 @@ namespace BH.Adapter.Lusas
 
                     MeshForce meshForce = new MeshForce(
                         meshId, 0, 0, loadcaseId, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
-                        nX, nY, nXY, mX, mY, mXY, sX, sY);
+                        nX*forceSIConversion, 
+                        nY * forceSIConversion, 
+                        nXY * forceSIConversion, 
+                        mX * forceSIConversion, 
+                        mY * forceSIConversion, 
+                        mXY * forceSIConversion,
+                        sX * forceSIConversion, 
+                        sY * forceSIConversion);
 
                     bhomMeshForces.Add(meshForce);
 
@@ -185,14 +192,31 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private IEnumerable<IResult> ExtractMeshStress(List<int> ids, List<int> loadcaseIds)
+        private IEnumerable<IResult> ExtractMeshStress(List<int> ids, List<int> loadcaseIds, double meshLayerPosition)
         {
             List<MeshStress> bhomMeshStresses = new List<MeshStress>();
 
             IFView view = m_LusasApplication.getCurrentView();
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
 
-            string entity = "Stress (middle) - Thick Shell";
+            string entity;
+            switch (meshLayerPosition)
+            {
+                case 0:
+                    entity = "Stress (bottom) - Thick Shell";
+                    break;
+                case 0.5:
+                    entity = "Stress (middle) - Thick Shell";
+                    break;
+                case 1:
+                    entity = "Stress (top) - Thick Shell";
+                    break;
+                default:
+                    entity = "Stress (middle) - Thick Shell";
+                    Engine.Reflection.Compute.RecordWarning("No valid MeshLayerPosition provided, therefore it has defaulted to middle (i.e. 0.5).");
+                    break;
+            }
+
             string location = "Feature extreme";
 
             foreach (int loadcaseId in loadcaseIds)
@@ -247,14 +271,31 @@ namespace BH.Adapter.Lusas
             return bhomMeshStresses;
         }
 
-        private IEnumerable<IResult> ExtractMeshVonMises(List<int> ids, List<int> loadcaseIds)
+        private IEnumerable<IResult> ExtractMeshVonMises(List<int> ids, List<int> loadcaseIds, double meshLayerPosition)
         {
             List<MeshVonMises> bhomMeshStresses = new List<MeshVonMises>();
 
             IFView view = m_LusasApplication.getCurrentView();
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
 
-            string entity = "Stress (middle) - Thick Shell";
+            string entity;
+
+            switch (meshLayerPosition)
+            {
+                case 0:
+                    entity = "Stress (bottom) - Thick Shell";
+                    break;
+                case 0.5:
+                    entity = "Stress (middle) - Thick Shell";
+                    break;
+                case 1:
+                    entity = "Stress (top) - Thick Shell";
+                    break;
+                default:
+                    entity = "Stress (middle) - Thick Shell";
+                    Engine.Reflection.Compute.RecordWarning("No valid MeshLayerPosition provided, therefore it has defaulted to middle (i.e. 0.5).");
+                    break;
+            }
             string location = "Feature extreme";
 
             foreach (int loadcaseId in loadcaseIds)
