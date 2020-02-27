@@ -192,7 +192,7 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private IEnumerable<IResult> ExtractMeshStress(List<int> ids, List<int> loadcaseIds, double meshLayerPosition)
+        private IEnumerable<IResult> ExtractMeshStress(List<int> ids, List<int> loadcaseIds, MeshResultLayer meshResultLayer)
         {
             List<MeshStress> bhomMeshStresses = new List<MeshStress>();
 
@@ -200,15 +200,15 @@ namespace BH.Adapter.Lusas
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
 
             string entity;
-            switch (meshLayerPosition)
+            switch (meshResultLayer)
             {
-                case 0:
+                case MeshResultLayer.Lower:
                     entity = "Stress (bottom) - Thick Shell";
                     break;
-                case 0.5:
+                case MeshResultLayer.Middle:
                     entity = "Stress (middle) - Thick Shell";
                     break;
-                case 1:
+                case MeshResultLayer.Upper:
                     entity = "Stress (top) - Thick Shell";
                     break;
                 default:
@@ -232,7 +232,7 @@ namespace BH.Adapter.Lusas
                 double forceSIConversion = 1 / unitSet.getForceFactor();
                 double lengthSIConversion = 1 / unitSet.getLengthFactor();
 
-                List<string> components = new List<string>() { "SX", "SY", "SZ", "SYZ", "SXZ","S1","S3","S2"};
+                List<string> components = new List<string>() { "SX", "SY", "SZ", "SYZ", "SZX","S1","S3","S2"};
                 d_LusasData.startUsingScriptedResults();
 
                 Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
@@ -245,7 +245,7 @@ namespace BH.Adapter.Lusas
 
                     double sX = 0; double sY = 0; double sZ = 0; double sYZ = 0; double sXZ = 0; double s1 = 0; double s3 = 0; double s2 = 0;
                     featureResults.TryGetValue("SX", out sX); featureResults.TryGetValue("SY", out sY); featureResults.TryGetValue("SZ", out sZ);
-                    featureResults.TryGetValue("SYZ", out sYZ); featureResults.TryGetValue("SXZ", out sXZ);
+                    featureResults.TryGetValue("SYZ", out sYZ); featureResults.TryGetValue("SZX", out sXZ);
                     featureResults.TryGetValue("S1", out s1); featureResults.TryGetValue("S3", out s3); featureResults.TryGetValue("S2", out s2);
 
                     MeshStress meshStress = new MeshStress(
@@ -271,7 +271,7 @@ namespace BH.Adapter.Lusas
             return bhomMeshStresses;
         }
 
-        private IEnumerable<IResult> ExtractMeshVonMises(List<int> ids, List<int> loadcaseIds, double meshLayerPosition)
+        private IEnumerable<IResult> ExtractMeshVonMises(List<int> ids, List<int> loadcaseIds, MeshResultLayer meshResultLayer)
         {
             List<MeshVonMises> bhomMeshStresses = new List<MeshVonMises>();
 
@@ -280,15 +280,15 @@ namespace BH.Adapter.Lusas
 
             string entity;
 
-            switch (meshLayerPosition)
+            switch (meshResultLayer)
             {
-                case 0:
+                case MeshResultLayer.Lower:
                     entity = "Stress (bottom) - Thick Shell";
                     break;
-                case 0.5:
+                case MeshResultLayer.Middle:
                     entity = "Stress (middle) - Thick Shell";
                     break;
-                case 1:
+                case MeshResultLayer.Upper:
                     entity = "Stress (top) - Thick Shell";
                     break;
                 default:
