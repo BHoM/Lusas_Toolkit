@@ -99,7 +99,7 @@ namespace BH.Adapter.Lusas
 
                 foreach (int meshId in ids)
                 {
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, meshId, "L");
+                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, meshId, "S");
 
                     double uX = 0; double uY = 0; double uZ = 0; double rX = 0; double rY = 0; double rZ = 0;
                     featureResults.TryGetValue("DX", out uX); featureResults.TryGetValue("DY", out uY); featureResults.TryGetValue("DZ", out uZ);
