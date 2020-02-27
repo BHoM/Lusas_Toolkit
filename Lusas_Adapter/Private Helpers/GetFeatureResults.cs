@@ -21,6 +21,7 @@
  */
 
 using System.Collections.Generic;
+using System;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -75,11 +76,11 @@ namespace BH.Adapter.Lusas
                     }
                 }
 
-                if (featureResult == double.MinValue || featureResult == double.MaxValue || featureResult == double.NaN)
+                if (double.IsInfinity(featureResult) || double.IsNaN(featureResult) || featureResult == double.MaxValue || featureResult == double.MinValue)
                 {
-                    featureResult = 0;
+                    featureResult = 0; 
                 }
-                
+
                 if (!(resultsSet.isValidValue(featureResult)))
                 {
                     featureResult = 0;

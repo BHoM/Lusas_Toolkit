@@ -24,6 +24,7 @@ using BH.oM.Common;
 using BH.oM.Adapter;
 using BH.oM.Structure.Requests;
 using BH.oM.Structure.Results;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Lusas.LPI;
@@ -62,6 +63,7 @@ namespace BH.Adapter.Lusas
                     results = new List<IResult>();
                     break;
             }
+
             results.Sort();
             return results;
         }
@@ -78,7 +80,6 @@ namespace BH.Adapter.Lusas
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
 
             string entity = "Force/Moment - Thick 3D Beam";
-            string location = "Feature extreme";
 
             foreach (int loadcaseId in loadcaseIds)
             {
@@ -96,28 +97,35 @@ namespace BH.Adapter.Lusas
                 List<string> components = new List<string>() { "Fx", "Fy", "Fz", "Mx", "My", "Mz" };
                 d_LusasData.startUsingScriptedResults();
 
-                Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
+                Dictionary<string, IFResultsComponentSet> maxResultsSets = GetResultsSets(entity, components, "Feature maximum", resultsContext);
+                Dictionary<string, IFResultsComponentSet> minResultsSets = GetResultsSets(entity, components, "Feature minimum", resultsContext);
 
                 foreach (int barId in ids)
                 {
                     string lineName = "L" + barId;
 
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L");
+                    Dictionary<string, double> maxFeatureResults = GetFeatureResults(components, maxResultsSets, unitSet, barId, "L");
 
-                    double fX = 0; double fY = 0; double fZ = 0; double mX = 0; double mY = 0; double mZ = 0;
-                    featureResults.TryGetValue("Fx", out fX); featureResults.TryGetValue("Fy", out fY); featureResults.TryGetValue("Fz", out fZ);
-                    featureResults.TryGetValue("Mx", out mX); featureResults.TryGetValue("My", out mY); featureResults.TryGetValue("Mz", out mZ);
+                    double maxfX = 0; double maxfY = 0; double maxfZ = 0; double maxmX = 0; double maxmY = 0; double maxmZ = 0;
+                    maxFeatureResults.TryGetValue("Fx", out maxfX); maxFeatureResults.TryGetValue("Fy", out maxfY); maxFeatureResults.TryGetValue("Fz", out maxfZ);
+                    maxFeatureResults.TryGetValue("Mx", out maxmX); maxFeatureResults.TryGetValue("My", out maxmY); maxFeatureResults.TryGetValue("Mz", out maxmZ);
+
+                    Dictionary<string, double> minFeatureResults = GetFeatureResults(components, minResultsSets, unitSet, barId, "L");
+
+                    double minfX = 0; double minfY = 0; double minfZ = 0; double minmX = 0; double minmY = 0; double minmZ = 0;
+                    minFeatureResults.TryGetValue("Fx", out minfX); minFeatureResults.TryGetValue("Fy", out minfY); minFeatureResults.TryGetValue("Fz", out minfZ);
+                    minFeatureResults.TryGetValue("Mx", out minmX); minFeatureResults.TryGetValue("My", out minmY); minFeatureResults.TryGetValue("Mz", out minmZ);
 
                     BarForce barForce = new BarForce
                     {
                         ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
                         ObjectId = barId,
-                        FX = fX * forceSIConversion,
-                        FY = fY * forceSIConversion,
-                        FZ = fZ * forceSIConversion,
-                        MX = mX * forceSIConversion * lengthSIConversion,
-                        MY = mY * forceSIConversion * lengthSIConversion,
-                        MZ = mZ * forceSIConversion * lengthSIConversion,
+                        FX = Math.Max(Math.Abs(maxfX), Math.Abs(minfX)) * forceSIConversion,
+                        FY = Math.Max(Math.Abs(maxfY), Math.Abs(minfY)) * forceSIConversion,
+                        FZ = Math.Max(Math.Abs(maxfZ), Math.Abs(minfZ)) * forceSIConversion,
+                        MX = Math.Max(Math.Abs(maxmX), Math.Abs(minmX)) * forceSIConversion * lengthSIConversion,
+                        MY = Math.Max(Math.Abs(maxmY), Math.Abs(minmY)) * forceSIConversion * lengthSIConversion,
+                        MZ = Math.Max(Math.Abs(maxmZ), Math.Abs(minmZ)) * forceSIConversion * lengthSIConversion,
                     };
 
                     barForces.Add(barForce);
@@ -141,7 +149,6 @@ namespace BH.Adapter.Lusas
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
 
             string entity = "Stress - Thick 3D Beam";
-            string location = "Feature extreme";
 
             foreach (int loadcaseId in loadcaseIds)
             {
@@ -156,25 +163,27 @@ namespace BH.Adapter.Lusas
                 double forceSIConversion = 1 / unitSet.getForceFactor();
                 double lengthSIConversion = 1 / unitSet.getLengthFactor();
 
-                List<string> components = new List<string>() { "Sx(Fx)"};
+                List<string> components = new List<string>() { "Sx(Fx)" };
                 d_LusasData.startUsingScriptedResults();
 
-                Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
+                Dictionary<string, IFResultsComponentSet> maxResultsSets = GetResultsSets(entity, components, "Feature maximum", resultsContext);
+                Dictionary<string, IFResultsComponentSet> minResultsSets = GetResultsSets(entity, components, "Feature minimum", resultsContext);
 
                 foreach (int barId in ids)
                 {
-                    string lineName = "L" + barId;
+                    Dictionary<string, double> maxFeatureResults = GetFeatureResults(components, maxResultsSets, unitSet, barId, "L");
+                    double maxaxial = 0;
+                    maxFeatureResults.TryGetValue("Sx(Fx)", out maxaxial);
 
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L");
-
-                    double axial = 0;
-                    featureResults.TryGetValue("Sx(Fx)", out axial);
+                    Dictionary<string, double> minFeatureResults = GetFeatureResults(components, minResultsSets, unitSet, barId, "L");
+                    double minaxial = 0;
+                    minFeatureResults.TryGetValue("Sx(Fx)", out minaxial);
 
                     BarStress barStress = new BarStress
                     {
                         ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
                         ObjectId = barId,
-                        Axial = axial * forceSIConversion*lengthSIConversion*lengthSIConversion
+                        Axial = Math.Max(Math.Abs(maxaxial), Math.Abs(minaxial)) * forceSIConversion * lengthSIConversion * lengthSIConversion
                     };
 
                     barStresses.Add(barStress);
@@ -200,7 +209,6 @@ namespace BH.Adapter.Lusas
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
 
             string entity = "Strain - Thick 3D Beam";
-            string location = "Feature extreme";
 
             foreach (int loadcaseId in loadcaseIds)
             {
@@ -218,29 +226,29 @@ namespace BH.Adapter.Lusas
                 List<string> components = new List<string>() { "Ex", "Ey", "Ez", "Bx", "By", "Bz" };
                 d_LusasData.startUsingScriptedResults();
 
-                Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
+                Dictionary<string, IFResultsComponentSet> maxResultsSets = GetResultsSets(entity, components, "Feature maximum", resultsContext);
+                Dictionary<string, IFResultsComponentSet> minResultsSets = GetResultsSets(entity, components, "Feature minimum", resultsContext);
 
                 foreach (int barId in ids)
                 {
-                    string lineName = "L" + barId;
+                    Dictionary<string, double> maxFeatureResults = GetFeatureResults(components, maxResultsSets, unitSet, barId, "L");
+                    double maxeX = 0; double maxeY = 0; double maxeZ = 0; double maxbX = 0; double maxbY = 0; double maxbZ = 0;
+                    maxFeatureResults.TryGetValue("Ex", out maxeX); maxFeatureResults.TryGetValue("Ey", out maxeY); maxFeatureResults.TryGetValue("Ez", out maxeZ);
+                    maxFeatureResults.TryGetValue("Bx", out maxbX); maxFeatureResults.TryGetValue("By", out maxbY); maxFeatureResults.TryGetValue("Bz", out maxbZ);
 
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L");
-                    List<string> keys = featureResults.Keys.ToList();
-
-                    double eX = 0; double eY = 0; double eZ = 0; double bX = 0; double bY = 0; double bZ = 0;
-                    featureResults.TryGetValue("Ex", out eX); featureResults.TryGetValue("Ey", out eY); featureResults.TryGetValue("Ez", out eZ);
-                    featureResults.TryGetValue("Bx", out bX); featureResults.TryGetValue("By", out bY); featureResults.TryGetValue("Bz", out bZ);
+                    Dictionary<string, double> minFeatureResults = GetFeatureResults(components, minResultsSets, unitSet, barId, "L");
+                    double mineX = 0; double mineY = 0; double mineZ = 0; double minbX = 0; double minbY = 0; double minbZ = 0;
+                    minFeatureResults.TryGetValue("Ex", out mineX); minFeatureResults.TryGetValue("Ey", out mineY); minFeatureResults.TryGetValue("Ez", out mineZ);
+                    minFeatureResults.TryGetValue("Bx", out minbX); minFeatureResults.TryGetValue("By", out minbY); minFeatureResults.TryGetValue("Bz", out minbZ);
 
                     BarStrain barStrain = new BarStrain
                     {
                         ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
                         ObjectId = barId,
-                        Axial = eX,
-                        ShearY = eY,
-                        ShearZ = eZ,
+                        Axial = Math.Max(Math.Abs(maxeX), Math.Abs(mineX)),
+                        ShearY = Math.Max(Math.Abs(maxeY), Math.Abs(mineY)),
+                        ShearZ = Math.Max(Math.Abs(maxeZ), Math.Abs(mineZ)),
                     };
-
-                    BH.Engine.Reflection.Compute.RecordWarning("Please note only axial and shear strains will be returned when pulling BarStress results.");
 
                     barStrains.Add(barStrain);
 
@@ -249,6 +257,8 @@ namespace BH.Adapter.Lusas
                 d_LusasData.stopUsingScriptedResults();
                 d_LusasData.flushScriptedResults();
             }
+
+            BH.Engine.Reflection.Compute.RecordWarning("Please note only axial and shear strains will be returned when pulling BarStress results.");
 
             return barStrains;
         }
@@ -263,7 +273,6 @@ namespace BH.Adapter.Lusas
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
 
             string entity = "Displacement";
-            string location = "Feature extreme";
 
             foreach (int loadcaseId in loadcaseIds)
             {
@@ -280,26 +289,32 @@ namespace BH.Adapter.Lusas
                 List<string> components = new List<string>() { "DX", "DY", "DZ", "THX", "THY", "THZ" };
                 d_LusasData.startUsingScriptedResults();
 
-                Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
+                Dictionary<string, IFResultsComponentSet> maxResultsSets = GetResultsSets(entity, components, "Feature maximum", resultsContext);
+                Dictionary<string, IFResultsComponentSet> minResultsSets = GetResultsSets(entity, components, "Feature minimum", resultsContext);
 
                 foreach (int barId in ids)
                 {
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L");
+                    Dictionary<string, double> maxFeatureResults = GetFeatureResults(components, maxResultsSets, unitSet, barId, "L");
+                    double maxuX = 0; double maxuY = 0; double maxuZ = 0; double maxrX = 0; double maxrY = 0; double maxrZ = 0;
+                    maxFeatureResults.TryGetValue("DX", out maxuX); maxFeatureResults.TryGetValue("DY", out maxuY); maxFeatureResults.TryGetValue("DZ", out maxuZ);
+                    maxFeatureResults.TryGetValue("THX", out maxrX); maxFeatureResults.TryGetValue("THY", out maxrY); maxFeatureResults.TryGetValue("THZ", out maxrZ);
 
-                    double uX = 0; double uY = 0; double uZ = 0; double rX = 0; double rY = 0; double rZ = 0;
-                    featureResults.TryGetValue("DX", out uX); featureResults.TryGetValue("DY", out uY); featureResults.TryGetValue("DZ", out uZ);
-                    featureResults.TryGetValue("THX", out rX); featureResults.TryGetValue("THY", out rY); featureResults.TryGetValue("THZ", out rZ);
+                    Dictionary<string, double> minFeatureResults = GetFeatureResults(components, minResultsSets, unitSet, barId, "L");
+                    double minuX = 0; double minuY = 0; double minuZ = 0; double minrX = 0; double minrY = 0; double minrZ = 0;
+                    minFeatureResults.TryGetValue("DX", out minuX); minFeatureResults.TryGetValue("DY", out minuY); minFeatureResults.TryGetValue("DZ", out minuZ);
+                    minFeatureResults.TryGetValue("THX", out minrX); minFeatureResults.TryGetValue("THY", out minrY); minFeatureResults.TryGetValue("THZ", out minrZ);
+
 
                     BarDisplacement barDisplacement = new BarDisplacement
                     {
                         ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
                         ObjectId = barId,
-                        UX = uX * lengthSIConversion,
-                        UY = uY * lengthSIConversion,
-                        UZ = uZ * lengthSIConversion,
-                        RX = rX,
-                        RY = rY,
-                        RZ = rZ,
+                        UX = Math.Max(Math.Abs(maxuX), Math.Abs(minuX)) * lengthSIConversion,
+                        UY = Math.Max(Math.Abs(maxuY), Math.Abs(minuY)) * lengthSIConversion,
+                        UZ = Math.Max(Math.Abs(maxuZ), Math.Abs(minuZ)) * lengthSIConversion,
+                        RX = Math.Max(Math.Abs(maxrX), Math.Abs(minrX)),
+                        RY = Math.Max(Math.Abs(maxrY), Math.Abs(minrY)),
+                        RZ = Math.Max(Math.Abs(maxrZ), Math.Abs(minrZ)),
                     };
 
                     barDisplacements.Add(barDisplacement);
