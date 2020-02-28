@@ -102,7 +102,7 @@ namespace BH.Adapter.Lusas
                 {
                     string lineName = "L" + barId;
 
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L");
+                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L", 6);
 
                     double fX = 0; double fY = 0; double fZ = 0; double mX = 0; double mY = 0; double mZ = 0;
                     featureResults.TryGetValue("Fx", out fX); featureResults.TryGetValue("Fy", out fY); featureResults.TryGetValue("Fz", out fZ);
@@ -156,7 +156,7 @@ namespace BH.Adapter.Lusas
                 double forceSIConversion = 1 / unitSet.getForceFactor();
                 double lengthSIConversion = 1 / unitSet.getLengthFactor();
 
-                List<string> components = new List<string>() { "Sx(Fx)"};
+                List<string> components = new List<string>() { "Sx(Fx)" };
                 d_LusasData.startUsingScriptedResults();
 
                 Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
@@ -165,7 +165,7 @@ namespace BH.Adapter.Lusas
                 {
                     string lineName = "L" + barId;
 
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L");
+                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L", 6);
 
                     double axial = 0;
                     featureResults.TryGetValue("Sx(Fx)", out axial);
@@ -174,7 +174,7 @@ namespace BH.Adapter.Lusas
                     {
                         ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
                         ObjectId = barId,
-                        Axial = axial * forceSIConversion*lengthSIConversion*lengthSIConversion
+                        Axial = axial * forceSIConversion * lengthSIConversion * lengthSIConversion
                     };
 
                     barStresses.Add(barStress);
@@ -224,7 +224,7 @@ namespace BH.Adapter.Lusas
                 {
                     string lineName = "L" + barId;
 
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L");
+                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L", 6);
                     List<string> keys = featureResults.Keys.ToList();
 
                     double eX = 0; double eY = 0; double eZ = 0; double bX = 0; double bY = 0; double bZ = 0;
@@ -284,7 +284,7 @@ namespace BH.Adapter.Lusas
 
                 foreach (int barId in ids)
                 {
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L");
+                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L", 6);
 
                     double uX = 0; double uY = 0; double uZ = 0; double rX = 0; double rY = 0; double rZ = 0;
                     featureResults.TryGetValue("DX", out uX); featureResults.TryGetValue("DY", out uY); featureResults.TryGetValue("DZ", out uZ);

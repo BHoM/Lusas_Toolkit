@@ -99,7 +99,7 @@ namespace BH.Adapter.Lusas
 
                 foreach (int meshId in ids)
                 {
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, meshId, "S");
+                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, meshId, "S", 6);
 
                     double uX = 0; double uY = 0; double uZ = 0; double rX = 0; double rY = 0; double rZ = 0;
                     featureResults.TryGetValue("DX", out uX); featureResults.TryGetValue("DY", out uY); featureResults.TryGetValue("DZ", out uZ);
@@ -161,7 +161,7 @@ namespace BH.Adapter.Lusas
                 {
                     string lineName = "S" + meshId;
 
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, meshId, "S");
+                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, meshId, "S", 6);
 
                     double nX = 0; double nY = 0; double nXY = 0; double mX = 0; double mY = 0; double mXY = 0; double sX = 0; double sY = 0;
                     featureResults.TryGetValue("NX", out nX); featureResults.TryGetValue("NY", out nY); featureResults.TryGetValue("NXY", out nXY);
@@ -170,13 +170,13 @@ namespace BH.Adapter.Lusas
 
                     MeshForce meshForce = new MeshForce(
                         meshId, 0, 0, loadcaseId, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
-                        nX*forceSIConversion, 
-                        nY * forceSIConversion, 
-                        nXY * forceSIConversion, 
-                        mX * forceSIConversion, 
-                        mY * forceSIConversion, 
+                        nX * forceSIConversion,
+                        nY * forceSIConversion,
+                        nXY * forceSIConversion,
+                        mX * forceSIConversion,
+                        mY * forceSIConversion,
                         mXY * forceSIConversion,
-                        sX * forceSIConversion, 
+                        sX * forceSIConversion,
                         sY * forceSIConversion);
 
                     bhomMeshForces.Add(meshForce);
@@ -232,7 +232,7 @@ namespace BH.Adapter.Lusas
                 double forceSIConversion = 1 / unitSet.getForceFactor();
                 double lengthSIConversion = 1 / unitSet.getLengthFactor();
 
-                List<string> components = new List<string>() { "SX", "SY", "SZ", "SYZ", "SZX","S1","S3","S2"};
+                List<string> components = new List<string>() { "SX", "SY", "SZ", "SYZ", "SZX", "S1", "S3", "S2" };
                 d_LusasData.startUsingScriptedResults();
 
                 Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
@@ -241,7 +241,7 @@ namespace BH.Adapter.Lusas
                 {
                     string lineName = "S" + meshId;
 
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, meshId, "S");
+                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, meshId, "S", 6);
 
                     double sX = 0; double sY = 0; double sZ = 0; double sYZ = 0; double sXZ = 0; double s1 = 0; double s3 = 0; double s2 = 0;
                     featureResults.TryGetValue("SX", out sX); featureResults.TryGetValue("SY", out sY); featureResults.TryGetValue("SZ", out sZ);
@@ -250,11 +250,11 @@ namespace BH.Adapter.Lusas
 
                     MeshStress meshStress = new MeshStress(
                         meshId, 0, 0, loadcaseId, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
-                        sX*forceSIConversion/(lengthSIConversion*lengthSIConversion), 
-                        sY * forceSIConversion / (lengthSIConversion * lengthSIConversion), 
-                        sZ * forceSIConversion / (lengthSIConversion * lengthSIConversion), 
-                        sYZ * forceSIConversion / (lengthSIConversion * lengthSIConversion), 
-                        sXZ*forceSIConversion / (lengthSIConversion * lengthSIConversion),
+                        sX * forceSIConversion / (lengthSIConversion * lengthSIConversion),
+                        sY * forceSIConversion / (lengthSIConversion * lengthSIConversion),
+                        sZ * forceSIConversion / (lengthSIConversion * lengthSIConversion),
+                        sYZ * forceSIConversion / (lengthSIConversion * lengthSIConversion),
+                        sXZ * forceSIConversion / (lengthSIConversion * lengthSIConversion),
                         s1 * forceSIConversion / (lengthSIConversion * lengthSIConversion),
                         s3 * forceSIConversion / (lengthSIConversion * lengthSIConversion),
                         s2 * forceSIConversion / (lengthSIConversion * lengthSIConversion)
@@ -320,14 +320,14 @@ namespace BH.Adapter.Lusas
                 {
                     string lineName = "L" + meshId;
 
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, meshId, "S");
+                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, meshId, "S", 6);
 
                     double sE = 0;
                     featureResults.TryGetValue("SE", out sE);
 
                     MeshVonMises meshStress = new MeshVonMises(
                         meshId, 0, 0, loadcaseId, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
-                        sE * forceSIConversion / (lengthSIConversion * lengthSIConversion), 0,0);
+                        sE * forceSIConversion / (lengthSIConversion * lengthSIConversion), 0, 0);
 
                     bhomMeshStresses.Add(meshStress);
 
