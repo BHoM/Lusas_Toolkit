@@ -198,8 +198,6 @@ namespace BH.Adapter.Lusas
             return caseNums;
         }
 
-
-
         /***************************************************/
 
     }
