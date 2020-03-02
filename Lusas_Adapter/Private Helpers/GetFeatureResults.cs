@@ -21,16 +21,15 @@
  */
 
 using System.Collections.Generic;
+using System;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        internal Dictionary<string, double> GetFeatureResults(List<string> components, Dictionary<string, IFResultsComponentSet> resultsSets, IFUnitSet unitSet, int id, string suffix)
+        internal Dictionary<string, double> GetFeatureResults(List<string> components, Dictionary<string, IFResultsComponentSet> resultsSets, IFUnitSet unitSet, int id, string suffix, int resultType = 6)
         {
-            bool validResults = true;
-
             Dictionary<string, double> featureResults = new Dictionary<string, double>();
             IFResultsComponentSet resultsSet = null;
 
@@ -39,38 +38,57 @@ namespace BH.Adapter.Lusas
                 resultsSets.TryGetValue(component, out resultsSet);
 
                 int componentNumber = resultsSet.getComponentNumber(component);
-
-                int nodeID = 0;
-                int nullID = 0; //For Nodal results the pLocnIndex2 will return 2 from getFeatureResults
-
+                int nodeID = 0; //Returned: The node id for nodal results or the element id (for Gauss, internal and elementNodal results) from which the returned value has been calculated
+                int nullID = 0; //Returned: 0 for nodal results or the index within the element (for Gauss, internal and elementNodal results) at which the returned value has been calculated
                 double featureResult = 0;
 
-                if(suffix == "P")
+                //resultType 3 = maximum, 4 = minimum, 5 = absolute 6 = extreme
+                if (suffix == "P")
                 {
-                    featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getPointByName(suffix + id), 3, unitSet, nodeID, nullID);
+                    try
+                    {
+                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getPointByName(suffix + id), resultType, unitSet, nodeID, nullID);
+                    }
+                    catch (System.ArgumentException)
+                    {
+                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getPointByName(id.ToString()), resultType, unitSet, nodeID, nullID);
+                    }
                 }
                 else if(suffix == "L")
                 {
-                    featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getLineByName(suffix + id), 3, unitSet, nodeID, nullID);
+                    try
+                    {
+                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getLineByName(suffix + id), resultType, unitSet, nodeID, nullID);
+                    }
+                    catch (System.ArgumentException)
+                    {
+                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getLineByName(id.ToString()), resultType, unitSet, nodeID, nullID);
+                    }
+                }
+                else if (suffix == "S")
+                {
+                    try
+                    {
+                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getSurfaceByName(suffix + id), resultType, unitSet, nodeID, nullID);
+                    }
+                    catch (System.ArgumentException)
+                    {
+                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getSurfaceByName(id.ToString()), resultType, unitSet, nodeID, nullID);
+                    }
                 }
 
-                if (featureResult == double.MinValue)
+                if (double.IsInfinity(featureResult) || double.IsNaN(featureResult) || featureResult == double.MaxValue || featureResult == double.MinValue)
                 {
-                    featureResult = 0;
+                    featureResult = 0; 
                 }
 
                 if (!(resultsSet.isValidValue(featureResult)))
                 {
-                    validResults = false;
                     featureResult = 0;
+                    Engine.Reflection.Compute.RecordWarning($"{suffix}{id} {component} is an invalid result and will be set to zero" );
                 }
 
                 featureResults.Add(component, featureResult);
-            }
-
-            if (!validResults)
-            {
-                Engine.Reflection.Compute.RecordWarning(suffix + id + " is not does not have any valid results. All values are therefore set to 0");
             }
 
             return featureResults;

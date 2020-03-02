@@ -78,6 +78,10 @@
       <HintPath>..\..\BHoM\Build\Common_oM.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Data_oM, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BHoM\Build\Data_oM.dll</HintPath>
+    </Reference>
     <Reference Include="Dimensional_oM">
       <HintPath>..\..\BHoM\Build\Dimensional_oM.dll</HintPath>
       <Private>False</Private>
@@ -174,6 +178,10 @@
     <Compile Include="CRUD\Delete\Property\SectionProperties.cs" />
     <Compile Include="CRUD\Delete\Property\SurfaceProperties.cs" />
     <Compile Include="CRUD\Delete\Delete.cs" />
+    <Compile Include="CRUD\Read\Results\BarResults.cs" />
+    <Compile Include="CRUD\Read\Results\MeshResults.cs" />
+    <Compile Include="CRUD\Read\Results\NodeResults.cs" />
+    <Compile Include="CRUD\Read\Results\ReadResults.cs" />
     <Compile Include="Type\NextFreeId.cs" />
     <Compile Include="CRUD\Delete\Elements\Surface.cs" />
     <Compile Include="Private Helpers\AssignObjectSet.cs" />
@@ -214,9 +222,6 @@
     <Compile Include="CRUD\Read\Elements\Points.cs" />
     <Compile Include="CRUD\Read\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Read\Properties\Tags.cs" />
-    <Compile Include="CRUD\Read\Results\BarForce.cs" />
-    <Compile Include="CRUD\Read\Results\NodeDisplacement.cs" />
-    <Compile Include="CRUD\Read\Results\NodeReaction.cs" />
     <Compile Include="CRUD\Read\Read.cs" />
     <Compile Include="CRUD\Update\UpdateObjects.cs" />
     <Compile Include="LusasAdapter.cs" />
