@@ -20,6 +20,7 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System;
 using System.Collections.Generic;
 using Lusas.LPI;
 
@@ -33,7 +34,23 @@ namespace BH.Adapter.Lusas
 
             foreach (string component in components)
             {
-                resultsSet.Add(component, d_LusasData.getResultsComponentSet(entity, component, location, resultsContext));
+                try
+                {
+                    resultsSet.Add(component, d_LusasData.getResultsComponentSet(entity, component, location, resultsContext));
+                }
+                catch(System.Runtime.InteropServices.COMException)
+                {
+                    try
+                    {
+                        d_LusasData.openResults(@"%DBFolder%\%ModelName%~Analysis 1.mys", "Analysis 1", false, 0, false, false);
+                        resultsSet.Add(component, d_LusasData.getResultsComponentSet(entity, component, location, resultsContext));
+                    }
+                    catch(System.Runtime.InteropServices.COMException)
+                    {
+                        Engine.Reflection.Compute.RecordError("No results file exists for this model, the model needs to be solved before pulling results.");
+                    }
+
+                }
             }
 
             return resultsSet;
