@@ -43,13 +43,6 @@ namespace BH.Engine.Lusas
                 bhom6DOFConstraints.TryGetValue(supportAssignments[0], out nodeConstraint);
             }
 
-            //Node bhomNode = new Node
-            //{
-            //    Position = { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() },
-            //    Tags = tags,
-            //    Constraint = nodeConstraint
-            //};
-
             Node bhomNode = Structure.Create.Node(
                 new Point { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() },
                 "", 

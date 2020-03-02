@@ -121,7 +121,6 @@
     <Compile Include="Query\GetGeometryAssignment.cs" />
     <Compile Include="Query\GetLineAssignments.cs" />
     <Compile Include="Query\GetLoadAssignments.cs" />
-    <Compile Include="Query\GetLoadcaseIDs.cs" />
     <Compile Include="Query\GetMeshProperties.cs" />
     <Compile Include="Compute\SetConstraint.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToAreaTemperatureLoad.cs" />
