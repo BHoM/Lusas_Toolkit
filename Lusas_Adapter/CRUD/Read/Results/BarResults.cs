@@ -240,7 +240,7 @@ namespace BH.Adapter.Lusas
                         ShearZ = eZ,
                     };
 
-                    BH.Engine.Reflection.Compute.RecordWarning("Please note only axial and shear strains will be returned when pulling BarStress results.");
+                    BH.Engine.Reflection.Compute.RecordWarning("Please note only axial and shear strains will be returned when pulling BarStrain results.");
 
                     barStrains.Add(barStrain);
 
