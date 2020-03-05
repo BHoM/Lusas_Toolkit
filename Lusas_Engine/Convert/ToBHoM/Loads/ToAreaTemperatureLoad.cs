@@ -50,7 +50,7 @@ namespace BH.Engine.Lusas
                 Lusas.Query.GetName(lusasTemperatureLoad));
 
             int adapterID = Lusas.Query.GetAdapterID(lusasTemperatureLoad, 'l');
-            bhomAreaTemperatureLoad.CustomData["Lusas_id"] = adapterID;
+            bhomAreaTemperatureLoad.CustomData[AdapterIdName] = adapterID;
 
             return bhomAreaTemperatureLoad;
         }

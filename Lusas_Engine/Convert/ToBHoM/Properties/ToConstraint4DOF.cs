@@ -73,7 +73,7 @@ namespace BH.Engine.Lusas
 
             int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'p');
 
-            bhomConstraint4DOF.CustomData["Lusas_id"] = adapterID;
+            bhomConstraint4DOF.CustomData[AdapterIdName] = adapterID;
 
             return bhomConstraint4DOF;
         }

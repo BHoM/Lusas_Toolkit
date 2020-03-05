@@ -107,6 +107,7 @@
     <Compile Include="Compute\SetSplitMethod.cs" />
     <Compile Include="Compute\CreateReleaseString.cs" />
     <Compile Include="Convert\Double.cs" />
+    <Compile Include="Convert\AdapterIdName.cs" />
     <Compile Include="Convert\ToBHoM\Properties\ToProfile.cs" />
     <Compile Include="Create\MeshSettings1D.cs" />
     <Compile Include="Query\CheckIllegalCharacters.cs" />

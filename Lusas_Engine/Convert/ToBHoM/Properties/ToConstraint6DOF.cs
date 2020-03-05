@@ -63,7 +63,7 @@ namespace BH.Engine.Lusas
                attributeName, fixity, stiffness);
 
             int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'p');
-            bhomConstraint6DOF.CustomData["Lusas_id"] = adapterID;
+            bhomConstraint6DOF.CustomData[AdapterIdName] = adapterID;
 
             return bhomConstraint6DOF;
         }

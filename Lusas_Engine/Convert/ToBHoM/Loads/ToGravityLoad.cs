@@ -52,7 +52,7 @@ namespace BH.Engine.Lusas
                 bhomLoadcase, gravityVector, bhomObjects, Lusas.Query.GetName(lusasGravityLoad));
 
             int adapterID = Lusas.Query.GetAdapterID(lusasGravityLoad, 'l');
-            bhomGravityLoad.CustomData["Lusas_id"] = adapterID;
+            bhomGravityLoad.CustomData[AdapterIdName] = adapterID;
 
             return bhomGravityLoad;
         }

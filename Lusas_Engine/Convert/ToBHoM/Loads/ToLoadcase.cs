@@ -34,7 +34,7 @@ namespace BH.Engine.Lusas
 
             int adapterID = Lusas.Query.GetAdapterID(lusasLoadcase, 'c');
 
-            BHoMLoadcase.CustomData["Lusas_id"] = adapterID;
+            BHoMLoadcase.CustomData[AdapterIdName] = adapterID;
 
             return BHoMLoadcase;
         }

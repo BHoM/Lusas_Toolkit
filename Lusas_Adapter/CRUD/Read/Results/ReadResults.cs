@@ -81,7 +81,7 @@ namespace BH.Adapter.Lusas
                         {
                             idsOut.Add(id);
                         }
-                        else if (o is IBHoMObject && (o as IBHoMObject).CustomData.TryGetValue("Lusas_id", out idObj) && int.TryParse(idObj.ToString(), out id))
+                        else if (o is IBHoMObject && (o as IBHoMObject).CustomData.TryGetValue(AdapterIdName, out idObj) && int.TryParse(idObj.ToString(), out id))
                             idsOut.Add(id);
                     }
                     return idsOut;
@@ -176,7 +176,7 @@ namespace BH.Adapter.Lusas
                     {
                         caseNums.Add(System.Convert.ToInt32(lCase.Item2.Number));
                     }
-                    caseNums.Add(System.Convert.ToInt32((lComb as LoadCombination).CustomData["Lusas_id"]));
+                    caseNums.Add(System.Convert.ToInt32((lComb as LoadCombination).CustomData[AdapterIdName]));
                 }
             }
 

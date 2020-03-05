@@ -63,7 +63,7 @@ namespace BH.Engine.Lusas
                 Lusas.Query.GetName(lusasPointLoad));
 
             int adapterID = Lusas.Query.GetAdapterID(lusasPointLoad, 'l');
-            bhomPointLoad.CustomData["Lusas_id"] = adapterID;
+            bhomPointLoad.CustomData[AdapterIdName] = adapterID;
 
             return bhomPointLoad;
         }

@@ -58,7 +58,7 @@ namespace BH.Engine.Lusas
             };
 
             int adapterID = Lusas.Query.GetAdapterID(lusasLoadCombination, 'c');
-            BHoMLoadCombination.CustomData["Lusas_id"] = adapterID;
+            BHoMLoadCombination.CustomData[AdapterIdName] = adapterID;
 
             return BHoMLoadCombination;
         }

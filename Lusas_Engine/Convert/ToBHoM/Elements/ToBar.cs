@@ -100,7 +100,7 @@ namespace BH.Engine.Lusas
 
             string adapterID = Engine.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L");
 
-            bhomBar.CustomData["Lusas_id"] = adapterID;
+            bhomBar.CustomData[AdapterIdName] = adapterID;
 
             return bhomBar;
         }
