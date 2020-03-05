@@ -60,7 +60,7 @@ namespace BH.Engine.Lusas
                 Lusas.Query.GetName(lusasPrescribedDisplacement));
 
             int adapterID = Lusas.Query.GetAdapterID(lusasPrescribedDisplacement, 'd');
-            bhomPointDisplacement.CustomData["Lusas_id"] = adapterID;
+            bhomPointDisplacement.CustomData[AdapterIdName] = adapterID;
             // Needs to be a bit here that determines whether it is global or local - actually this cannot be done as the 
             //attribute is applied to a group, and within the group the axis could local or global
 

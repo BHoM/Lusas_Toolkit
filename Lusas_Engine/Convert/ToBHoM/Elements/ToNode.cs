@@ -51,7 +51,7 @@ namespace BH.Engine.Lusas
             bhomNode.Tags = tags;
 
             string adapterID = Engine.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P");
-            bhomNode.CustomData["Lusas_id"] = adapterID;
+            bhomNode.CustomData[AdapterIdName] = adapterID;
 
             return bhomNode;
         }

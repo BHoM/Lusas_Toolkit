@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
@@ -20,39 +20,10 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.Collections.Generic;
-using System.Linq;
-using BH.oM.Structure.Elements;
-using BH.oM.Structure.Loads;
-using Lusas.LPI;
-
 namespace BH.Engine.Lusas
 {
     public static partial class Convert
     {
-        public static BarTemperatureLoad ToBarTemperatureLoad(
-            IFLoading lusasTemperatureLoad,
-            IEnumerable<IFAssignment> lusasAssignments,
-            Dictionary<string, Bar> bars)
-        {
-            IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
-            double temperatureChange = lusasTemperatureLoad.getValue("T")
-                - lusasTemperatureLoad.getValue("T0");
-
-            IEnumerable<Bar> bhomBars = Lusas.Query.GetLineAssignments(lusasAssignments, bars);
-            BarTemperatureLoad bhomBarTemperatureLoad = Structure.Create.BarTemperatureLoad(
-                bhomLoadcase,
-                temperatureChange,
-                bhomBars,
-                LoadAxis.Local,
-                false,
-                Lusas.Query.GetName(lusasTemperatureLoad));
-
-            int adapterID = Lusas.Query.GetAdapterID(lusasTemperatureLoad, 'l');
-            bhomBarTemperatureLoad.CustomData[AdapterIdName] = adapterID;
-            return bhomBarTemperatureLoad;
-        }
+        public const string AdapterIdName = "Lusas_id";
     }
 }
-

@@ -55,7 +55,7 @@ namespace BH.Engine.Lusas
                         {
                             idsOut.Add(id);
                         }
-                        else if (o is IBHoMObject && (o as IBHoMObject).CustomData.TryGetValue("Lusas_id", out idObj) && int.TryParse(idObj.ToString(), out id))
+                        else if (o is IBHoMObject && (o as IBHoMObject).CustomData.TryGetValue(BH.Engine.Lusas.Convert.AdapterIdName, out idObj) && int.TryParse(idObj.ToString(), out id))
                             idsOut.Add(id);
                     }
                     return idsOut;

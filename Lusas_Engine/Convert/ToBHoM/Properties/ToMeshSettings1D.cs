@@ -65,7 +65,7 @@ namespace BH.Engine.Lusas
             };
 
             int adapterID = Lusas.Query.GetAdapterID(lusasMeshLine, 'e');
-            bhomMeshSettings1D.CustomData["Lusas_id"] = adapterID;
+            bhomMeshSettings1D.CustomData[AdapterIdName] = adapterID;
 
             return bhomMeshSettings1D;
         }

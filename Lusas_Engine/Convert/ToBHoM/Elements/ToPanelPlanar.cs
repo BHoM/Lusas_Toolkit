@@ -58,7 +58,7 @@ namespace BH.Engine.Lusas
             Panel bhomPanel = Structure.Create.Panel(surfaceEdges, dummyCurve);
 
             bhomPanel.Tags = tags;
-            bhomPanel.CustomData["Lusas_id"] = lusasSurface.getName();
+            bhomPanel.CustomData[AdapterIdName] = lusasSurface.getName();
 
             List<string> geometricAssignments = Lusas.Query.GetAttributeAssignments(lusasSurface, "Geometric");
             List<string> materialAssignments = Lusas.Query.GetAttributeAssignments(lusasSurface, "Material");

@@ -56,7 +56,7 @@ namespace BH.Engine.Lusas
             }
 
             int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'M');
-            bhomMaterial.CustomData["Lusas_id"] = adapterID;
+            bhomMaterial.CustomData[AdapterIdName] = adapterID;
 
             return bhomMaterial;
         }

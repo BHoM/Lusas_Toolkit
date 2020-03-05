@@ -39,7 +39,7 @@ namespace BH.Engine.Lusas
 
             int adapterID = Lusas.Query.GetAdapterID(lusasAttribute, 'G');
 
-            bhomProperty2D.CustomData["Lusas_id"] = adapterID;
+            bhomProperty2D.CustomData[AdapterIdName] = adapterID;
 
             return bhomProperty2D;
         }
