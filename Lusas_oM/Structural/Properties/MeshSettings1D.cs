@@ -22,7 +22,7 @@
 
 using BH.oM.Base;
 
-namespace BH.oM.Adapters.Lusas
+namespace BH.oM.External.Lusas
 {
     public class MeshSettings1D : BHoMObject
     {
