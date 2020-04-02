@@ -67,10 +67,6 @@
       <HintPath>..\packages\BHoM.Interop.Lusas170.1.0.1\lib\net45\Lusas.Interop.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Lusas_oM">
-      <HintPath>..\Lusas_oM\bin\Debug\Lusas_oM.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Physical_oM">
       <HintPath>..\..\BHoM\Build\Physical_oM.dll</HintPath>
       <Private>False</Private>
@@ -169,6 +165,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lusas_oM\Lusas_oM.csproj">
+      <Project>{963a4a5c-0455-40a5-ba48-01838dd5bb5b}</Project>
+      <Name>Lusas_oM</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

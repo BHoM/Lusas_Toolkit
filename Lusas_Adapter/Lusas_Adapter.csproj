@@ -98,11 +98,6 @@
       <HintPath>..\packages\BHoM.Interop.Lusas170.1.0.1\lib\net45\Lusas.Interop.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Lusas_oM">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lusas_oM\bin\Debug\Lusas_oM.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Physical_oM">
       <HintPath>..\..\BHoM\Build\Physical_oM.dll</HintPath>
       <Private>False</Private>
@@ -228,16 +223,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lusas_Engine\Lusas_Engine.csproj">
-      <Project>{5e10ac78-dcb1-4cd8-bba5-5d33fdffaf8b}</Project>
-      <Name>Lusas_Engine</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Lusas_Engine\Lusas_Engine.csproj">
+      <Project>{41133f8e-e73a-415e-87f5-8e1d8bfc7ea0}</Project>
+      <Name>Lusas_Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lusas_oM\Lusas_oM.csproj">
+      <Project>{963a4a5c-0455-40a5-ba48-01838dd5bb5b}</Project>
+      <Name>Lusas_oM</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

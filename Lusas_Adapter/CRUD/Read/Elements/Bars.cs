@@ -26,7 +26,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.MaterialFragments;
-using BH.oM.Adapters.Lusas;
+using BH.oM.External.Lusas;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -66,7 +66,7 @@ namespace BH.Adapter.Lusas
                 for (int i = 0; i < lusasLines.Count(); i++)
                 {
                     IFLine lusasLine = (IFLine)lusasLines[i];
-                    Bar bhomBar = Engine.Lusas.Convert.ToBar
+                    Bar bhomBar = Engine.External.Lusas.Convert.ToBar
                         (
                         lusasLine,
                         bhomNodes,

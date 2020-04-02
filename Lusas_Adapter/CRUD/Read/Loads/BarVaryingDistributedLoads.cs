@@ -48,12 +48,12 @@ namespace BH.Adapter.Lusas
                 {
                     IFLoading lusasInternalBeamDistributedLoad = (IFLoading)lusasInternalBeamDistributedLoads[i];
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                        Engine.Lusas.Query.GetLoadAssignments(lusasInternalBeamDistributedLoad);
+                        Engine.External.Lusas.Query.GetLoadAssignments(lusasInternalBeamDistributedLoad);
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
                         BarVaryingDistributedLoad bhomBarDistributedLoad =
-                            Engine.Lusas.Convert.ToBarDistributedLoad(
+                            Engine.External.Lusas.Convert.ToBarDistributedLoad(
                                 lusasInternalBeamDistributedLoad, groupedAssignment, barDictionary);
 
                         List<string> analysisName = new List<string> {

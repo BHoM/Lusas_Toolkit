@@ -22,7 +22,7 @@
 
 using BH.oM.Structure.Constraints;
 
-namespace BH.Engine.Lusas
+namespace BH.Engine.External.Lusas
 {
     public static partial class Compute
     {

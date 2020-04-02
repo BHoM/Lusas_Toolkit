@@ -24,7 +24,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BH.oM.Adapter;
-using BH.oM.Adapters.Lusas;
+using BH.oM.External.Lusas;
 using BH.oM.Base;
 using BH.oM.Common;
 using BH.oM.Geometry;

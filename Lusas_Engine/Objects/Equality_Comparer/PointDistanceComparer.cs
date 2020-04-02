@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using System;
 using BH.oM.Geometry;
 
-namespace BH.Engine.Lusas.Object_Comparer.Equality_Comparer
+namespace BH.Engine.External.Lusas.Object_Comparer.Equality_Comparer
 {
     public class PointDistanceComparer : IEqualityComparer<Point>
     {

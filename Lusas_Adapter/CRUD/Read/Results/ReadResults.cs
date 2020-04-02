@@ -100,7 +100,7 @@ namespace BH.Adapter.Lusas
                 {
                     ids.Add(
                         System.Convert.ToInt32(
-                        Engine.Lusas.Modify.RemovePrefix(d_LusasData.getPointByNumber(i).getName(), "P")));
+                        Engine.External.Lusas.Modify.RemovePrefix(d_LusasData.getPointByNumber(i).getName(), "P")));
                 }
             }
 
@@ -120,7 +120,7 @@ namespace BH.Adapter.Lusas
                 {
                     ids.Add(
                         System.Convert.ToInt32(
-                        Engine.Lusas.Modify.RemovePrefix(d_LusasData.getLineByNumber(i).getName(), "L")));
+                        Engine.External.Lusas.Modify.RemovePrefix(d_LusasData.getLineByNumber(i).getName(), "L")));
                 }
             }
 
@@ -140,7 +140,7 @@ namespace BH.Adapter.Lusas
                 {
                     ids.Add(
                         System.Convert.ToInt32(
-                        Engine.Lusas.Modify.RemovePrefix(d_LusasData.getSurfaceByNumber(i).getName(), "S")));
+                        Engine.External.Lusas.Modify.RemovePrefix(d_LusasData.getSurfaceByNumber(i).getName(), "S")));
                 }
             }
 

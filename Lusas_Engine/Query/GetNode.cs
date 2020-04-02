@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using BH.oM.Structure.Elements;
 using Lusas.LPI;
 
-namespace BH.Engine.Lusas
+namespace BH.Engine.External.Lusas
 {
     public static partial class Query
     {
@@ -36,7 +36,7 @@ namespace BH.Engine.Lusas
         {
             Node bhomNode = null;
             IFPoint lusasPoint = lusasLine.getLOFs()[nodeIndex];
-            string pointName = Engine.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P");
+            string pointName = Engine.External.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P");
             bhomNodes.TryGetValue(pointName, out bhomNode);
 
             return bhomNode;

@@ -29,7 +29,7 @@ namespace BH.Adapter.Lusas
     {
         private IFLoadingConcentrated CreateConcentratedLoad(PointLoad pointLoad, object[] lusasPoints)
         {
-            if (!Engine.Lusas.Query.CheckIllegalCharacters(pointLoad.Name))
+            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(pointLoad.Name))
             {
                 return null;
             }

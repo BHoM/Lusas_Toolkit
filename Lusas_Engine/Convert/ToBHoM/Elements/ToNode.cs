@@ -27,7 +27,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 using Lusas.LPI;
 
-namespace BH.Engine.Lusas
+namespace BH.Engine.External.Lusas
 {
     public static partial class Convert
     {
@@ -50,7 +50,7 @@ namespace BH.Engine.Lusas
 
             bhomNode.Tags = tags;
 
-            string adapterID = Engine.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P");
+            string adapterID = Engine.External.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P");
             bhomNode.CustomData[AdapterIdName] = adapterID;
 
             return bhomNode;

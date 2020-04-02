@@ -25,7 +25,7 @@ using BH.oM.Structure.Elements;
 using Lusas.LPI;
 using BH.oM.Base;
 
-namespace BH.Engine.Lusas
+namespace BH.Engine.External.Lusas
 {
     public static partial class Query
     {
@@ -49,17 +49,17 @@ namespace BH.Engine.Lusas
 
                 if (lusasGeometry is IFPoint)
                 {
-                    bhomNodes.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "P"), out bhomNode);
+                    bhomNodes.TryGetValue(Engine.External.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "P"), out bhomNode);
                     assignedObjects.Add(bhomNode);
                 }
                 else if (lusasGeometry is IFLine)
                 {
-                    bhomBars.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "L"), out bhomBar);
+                    bhomBars.TryGetValue(Engine.External.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "L"), out bhomBar);
                     assignedObjects.Add(bhomBar);
                 }
                 else if (lusasGeometry is IFSurface)
                 {
-                    bhomPanels.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "S"), out bhomPanel);
+                    bhomPanels.TryGetValue(Engine.External.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "S"), out bhomPanel);
                     assignedObjects.Add(bhomPanel);
                 }
             }

@@ -22,7 +22,7 @@
 
 using BH.oM.Structure.Elements;
 
-namespace BH.Engine.Lusas
+namespace BH.Engine.External.Lusas
 {
     public static partial class Query
     {

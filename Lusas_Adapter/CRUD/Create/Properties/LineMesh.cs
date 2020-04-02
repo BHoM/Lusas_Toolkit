@@ -21,7 +21,7 @@
  */
 
 using Lusas.LPI;
-using BH.oM.Adapters.Lusas;
+using BH.oM.External.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 
@@ -31,7 +31,7 @@ namespace BH.Adapter.Lusas
     {
         private IFMeshLine CreateMeshSettings1D(MeshSettings1D meshSettings1D, BarFEAType barFEAType = BarFEAType.Flexural, BarRelease barRelease = null)
         {
-            if (!Engine.Lusas.Query.CheckIllegalCharacters(meshSettings1D.Name))
+            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(meshSettings1D.Name))
             {
                 return null;
             }
@@ -53,7 +53,7 @@ namespace BH.Adapter.Lusas
             else
                 adapterID = System.Convert.ToInt32(NextFreeId(meshSettings1D.GetType()));
 
-            string releaseString = Engine.Lusas.Compute.CreateReleaseString(barRelease);
+            string releaseString = Engine.External.Lusas.Compute.CreateReleaseString(barRelease);
 
             IFMeshLine lusasLineMesh;
             string lusasName = 
@@ -66,8 +66,8 @@ namespace BH.Adapter.Lusas
             else
             {
                 lusasLineMesh = d_LusasData.createMeshLine(lusasName);
-                Engine.Lusas.Compute.SetSplitMethod(lusasLineMesh, meshSettings1D, barFEAType);
-                Engine.Lusas.Compute.SetEndConditions(lusasLineMesh, barRelease);
+                Engine.External.Lusas.Compute.SetSplitMethod(lusasLineMesh, meshSettings1D, barFEAType);
+                Engine.External.Lusas.Compute.SetEndConditions(lusasLineMesh, barRelease);
             }
             return lusasLineMesh;
         }

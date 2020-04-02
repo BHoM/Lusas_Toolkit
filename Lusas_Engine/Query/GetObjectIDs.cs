@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BH.oM.Base;
 
-namespace BH.Engine.Lusas
+namespace BH.Engine.External.Lusas
 {
     public static partial class Query
     {
@@ -55,7 +55,7 @@ namespace BH.Engine.Lusas
                         {
                             idsOut.Add(id);
                         }
-                        else if (o is IBHoMObject && (o as IBHoMObject).CustomData.TryGetValue(BH.Engine.Lusas.Convert.AdapterIdName, out idObj) && int.TryParse(idObj.ToString(), out id))
+                        else if (o is IBHoMObject && (o as IBHoMObject).CustomData.TryGetValue(BH.Engine.External.Lusas.Convert.AdapterIdName, out idObj) && int.TryParse(idObj.ToString(), out id))
                             idsOut.Add(id);
                     }
                     return idsOut;

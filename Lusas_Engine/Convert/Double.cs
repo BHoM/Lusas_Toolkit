@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace BH.Engine.Lusas
+namespace BH.Engine.External.Lusas
 {
     public partial class Convert
     {

@@ -110,7 +110,7 @@ namespace BH.Adapter.Lusas
 
                     BarForce barForce = new BarForce
                     {
-                        ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
+                        ResultCase = Engine.External.Lusas.Query.GetName(loadset.getName()),
                         ObjectId = barId,
                         FX = fX * forceSIConversion,
                         FY = fY * forceSIConversion,
@@ -172,7 +172,7 @@ namespace BH.Adapter.Lusas
 
                     BarStress barStress = new BarStress
                     {
-                        ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
+                        ResultCase = Engine.External.Lusas.Query.GetName(loadset.getName()),
                         ObjectId = barId,
                         Axial = axial * forceSIConversion * lengthSIConversion * lengthSIConversion
                     };
@@ -233,7 +233,7 @@ namespace BH.Adapter.Lusas
 
                     BarStrain barStrain = new BarStrain
                     {
-                        ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
+                        ResultCase = Engine.External.Lusas.Query.GetName(loadset.getName()),
                         ObjectId = barId,
                         Axial = eX,
                         ShearY = eY,
@@ -292,7 +292,7 @@ namespace BH.Adapter.Lusas
 
                     BarDisplacement barDisplacement = new BarDisplacement
                     {
-                        ResultCase = Engine.Lusas.Query.GetName(loadset.getName()),
+                        ResultCase = Engine.External.Lusas.Query.GetName(loadset.getName()),
                         ObjectId = barId,
                         UX = uX * lengthSIConversion,
                         UY = uY * lengthSIConversion,
