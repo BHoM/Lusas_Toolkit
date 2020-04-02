@@ -30,7 +30,7 @@ namespace BH.Adapter.Lusas
     {
         private IFLoadingGlobalDistributed CreateGlobalDistributedLine(BarUniformlyDistributedLoad distributedLoad, object[] lusasLines)
         {
-            if (!Engine.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
+            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
             {
                 return null;
             }
@@ -47,7 +47,7 @@ namespace BH.Adapter.Lusas
 
         public IFLoadingGlobalDistributed CreateGlobalDistributedLoadSurface(AreaUniformlyDistributedLoad distributedLoad, object[] lusasSurfaces)
         {
-            if (!Engine.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
+            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
             {
                 return null;
             }
@@ -65,7 +65,7 @@ namespace BH.Adapter.Lusas
 
         public IFLoadingLocalDistributed CreateLocalDistributedLine(BarUniformlyDistributedLoad distributedLoad, object[] lusasLines)
         {
-            if (!Engine.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
+            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
             {
                 return null;
             }
@@ -83,7 +83,7 @@ namespace BH.Adapter.Lusas
 
         public IFLoadingLocalDistributed CreateLocalDistributedSurface(AreaUniformlyDistributedLoad distributedLoad, object[] lusasSurfaces)
         {
-            if (!Engine.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
+            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
             {
                 return null;
             }

@@ -27,10 +27,10 @@ using BH.oM.Structure.Constraints;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
-using BH.oM.Adapters.Lusas;
+using BH.oM.External.Lusas;
 using System;
 
-namespace BH.Engine.Lusas
+namespace BH.Engine.External.Lusas
 {
     public static partial class Convert
     {
@@ -44,9 +44,9 @@ namespace BH.Engine.Lusas
             )
 
         {
-            Node startNode = Engine.Lusas.Query.GetNode(lusasLine, 0, bhomNodes);
+            Node startNode = Engine.External.Lusas.Query.GetNode(lusasLine, 0, bhomNodes);
 
-            Node endNode = Engine.Lusas.Query.GetNode(lusasLine, 1, bhomNodes);
+            Node endNode = Engine.External.Lusas.Query.GetNode(lusasLine, 1, bhomNodes);
 
             HashSet<string> tags = new HashSet<string>(Query.IsMemberOf(lusasLine, lusasGroups));
 
@@ -98,7 +98,7 @@ namespace BH.Engine.Lusas
                 bhomBar.FEAType = barMeshProperties.Item4;
             }
 
-            string adapterID = Engine.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L");
+            string adapterID = Engine.External.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L");
 
             bhomBar.CustomData[AdapterIdName] = adapterID;
 

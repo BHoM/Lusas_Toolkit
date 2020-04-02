@@ -25,15 +25,15 @@ using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 using Lusas.LPI;
 
-namespace BH.Engine.Lusas
+namespace BH.Engine.External.Lusas
 {
     public static partial class Convert
     {
         public static Edge ToEdge(this IFLine lusasLine,
             Dictionary<string, Node> bhomNodes, HashSet<string> groupNames)
         {
-            Node startNode = Engine.Lusas.Query.GetNode(lusasLine, 0, bhomNodes);
-            Node endNode = Engine.Lusas.Query.GetNode(lusasLine, 1, bhomNodes);
+            Node startNode = Engine.External.Lusas.Query.GetNode(lusasLine, 0, bhomNodes);
+            Node endNode = Engine.External.Lusas.Query.GetNode(lusasLine, 1, bhomNodes);
 
             Point startPoint = Structure.Query.Position(startNode);
             Point endPoint = Structure.Query.Position(endNode);
@@ -44,7 +44,7 @@ namespace BH.Engine.Lusas
 
             Edge bhomEdge = new Edge { Curve = bhomLine, Tags = tags };
 
-            string adapterID = Engine.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L");
+            string adapterID = Engine.External.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L");
 
             bhomEdge.CustomData[AdapterIdName] = adapterID;
 

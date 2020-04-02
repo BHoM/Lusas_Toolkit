@@ -23,7 +23,7 @@
 using BH.oM.Geometry.ShapeProfiles;
 using Lusas.LPI;
 
-namespace BH.Engine.Lusas
+namespace BH.Engine.External.Lusas
 {
     public static partial class Convert
     {

@@ -48,12 +48,12 @@ namespace BH.Adapter.Lusas
                 {
                     IFLoading lusasInternalBeamPointLoad = (IFLoading)lusasInternalBeamPointLoads[i];
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                        Engine.Lusas.Query.GetLoadAssignments(lusasInternalBeamPointLoad);
+                        Engine.External.Lusas.Query.GetLoadAssignments(lusasInternalBeamPointLoad);
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
                         BarPointLoad bhomBarPointLoad =
-                            Engine.Lusas.Convert.ToBarPointLoad(
+                            Engine.External.Lusas.Convert.ToBarPointLoad(
                                 lusasInternalBeamPointLoad, groupedAssignment, barDictionary);
 
                         List<string> analysisName = new List<string> { lusasInternalBeamPointLoad.getAttributeType() };

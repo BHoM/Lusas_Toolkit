@@ -25,7 +25,7 @@ using BH.oM.Structure.Elements;
 using Lusas.LPI;
 using BH.oM.Base;
 
-namespace BH.Engine.Lusas
+namespace BH.Engine.External.Lusas
 {
     public static partial class Query
     {
@@ -44,7 +44,7 @@ namespace BH.Engine.Lusas
                 if (lusasAssignment.getDatabaseObject() is IFPoint)
                 {
                     IFPoint lusasPoint = (IFPoint)lusasAssignment.getDatabaseObject();
-                    bhomNodes.TryGetValue(Engine.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P"), out bhomNode);
+                    bhomNodes.TryGetValue(Engine.External.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P"), out bhomNode);
                     assignedNodes.Add(bhomNode);
                 }
                 else

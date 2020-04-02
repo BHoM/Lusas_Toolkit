@@ -21,7 +21,7 @@
  */
 
 using Lusas.LPI;
-using BH.oM.Adapters.Lusas;
+using BH.oM.External.Lusas;
 
 namespace BH.Adapter.Lusas
 {
@@ -29,7 +29,7 @@ namespace BH.Adapter.Lusas
     {
         private IFMeshSurface CreateMeshSettings2D(MeshSettings2D meshSettings2D)
         {
-            if (!Engine.Lusas.Query.CheckIllegalCharacters(meshSettings2D.Name))
+            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(meshSettings2D.Name))
             {
                 return null;
             }

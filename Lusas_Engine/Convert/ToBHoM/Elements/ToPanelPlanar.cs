@@ -29,7 +29,7 @@ using BH.oM.Geometry;
 using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
 
-namespace BH.Engine.Lusas
+namespace BH.Engine.External.Lusas
 {
     public static partial class Convert
     {
@@ -51,7 +51,7 @@ namespace BH.Engine.Lusas
 
             for (int i = 0; i < n; i++)
             {
-                Edge bhomEdge = Engine.Lusas.Query.GetEdge(lusasSurface, i, bhomEdges);
+                Edge bhomEdge = Engine.External.Lusas.Query.GetEdge(lusasSurface, i, bhomEdges);
                 surfaceEdges.Add(bhomEdge);
             }
 

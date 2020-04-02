@@ -49,11 +49,11 @@ namespace BH.Adapter.Lusas
                     IFLoading lusasConcentratedLoad = (IFLoading)lusasConcentratedLoads[i];
 
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                        Engine.Lusas.Query.GetLoadAssignments(lusasConcentratedLoad);
+                        Engine.External.Lusas.Query.GetLoadAssignments(lusasConcentratedLoad);
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
-                        PointLoad bhomPointLoad = Engine.Lusas.Convert.ToPointLoad(
+                        PointLoad bhomPointLoad = Engine.External.Lusas.Convert.ToPointLoad(
                             lusasConcentratedLoad, groupedAssignment, nodeDictionary
                             );
                         List<string> analysisName = new List<string> { lusasConcentratedLoad.getAttributeType() };

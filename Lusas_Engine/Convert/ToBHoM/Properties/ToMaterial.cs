@@ -24,7 +24,7 @@ using BH.oM.Structure.MaterialFragments;
 using BH.oM.Geometry;
 using Lusas.LPI;
 
-namespace BH.Engine.Lusas
+namespace BH.Engine.External.Lusas
 {
     public static partial class Convert
     {

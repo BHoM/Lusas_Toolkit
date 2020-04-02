@@ -46,7 +46,7 @@ namespace BH.Adapter.Lusas
                 for (int i = 0; i < lusasPoints.Count(); i++)
                 {
                     IFPoint lusasPoint = (IFPoint)lusasPoints[i];
-                    Node bhomNode = Engine.Lusas.Convert.ToNode(lusasPoint, groupNames, constraints6DOF);
+                    Node bhomNode = Engine.External.Lusas.Convert.ToNode(lusasPoint, groupNames, constraints6DOF);
                     bhomNodes.Add(bhomNode);
                 }
             }

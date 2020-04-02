@@ -37,7 +37,7 @@ namespace BH.Adapter.Lusas
             for (int i = 0; i < lusasSupports.Count(); i++)
             {
                 IFSupportStructural lusasSupport = (IFSupportStructural)lusasSupports[i];
-                Constraint4DOF bhomConstraint4DOF = Engine.Lusas.Convert.ToConstraint4DOF(lusasSupport);
+                Constraint4DOF bhomConstraint4DOF = Engine.External.Lusas.Convert.ToConstraint4DOF(lusasSupport);
                 bhomConstraints4DOFs.Add(bhomConstraint4DOF);
             }
 

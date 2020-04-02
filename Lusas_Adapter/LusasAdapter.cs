@@ -23,7 +23,7 @@
 
 using BH.Engine.Base.Objects;
 using BH.oM.Adapter;
-using BH.oM.Adapters.Lusas;
+using BH.oM.External.Lusas;
 using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
@@ -56,9 +56,9 @@ namespace BH.Adapter.Lusas
                 AdapterComparers = new Dictionary<Type, object>
                 {
                     {typeof(Node), new Engine.Structure.NodeDistanceComparer(3) },
-                    {typeof(Bar), new Engine.Lusas.Object_Comparer.Equality_Comparer.BarMidPointComparer(3)},
-                    {typeof(Edge), new Engine.Lusas.Object_Comparer.Equality_Comparer.EdgeMidPointComparer(3) },
-                    { typeof(Point), new Engine.Lusas.Object_Comparer.Equality_Comparer.PointDistanceComparer(3) },
+                    {typeof(Bar), new Engine.External.Lusas.Object_Comparer.Equality_Comparer.BarMidPointComparer(3)},
+                    {typeof(Edge), new Engine.External.Lusas.Object_Comparer.Equality_Comparer.EdgeMidPointComparer(3) },
+                    { typeof(Point), new Engine.External.Lusas.Object_Comparer.Equality_Comparer.PointDistanceComparer(3) },
                     {typeof(IMaterialFragment), new BHoMObjectNameComparer() },
                     {typeof(LinkConstraint), new BHoMObjectNameComparer() },
                     {typeof(ISurfaceProperty), new BHoMObjectNameComparer() },

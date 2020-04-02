@@ -21,9 +21,9 @@
  */
 
 using BH.Engine.Geometry;
-using BH.Engine.Lusas.Object_Comparer.Equality_Comparer;
+using BH.Engine.External.Lusas.Object_Comparer.Equality_Comparer;
 using BH.oM.Adapter;
-using BH.oM.Adapters.Lusas;
+using BH.oM.External.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 using BH.oM.Structure.Constraints;
@@ -169,7 +169,7 @@ namespace BH.Adapter.Lusas
         private bool CreateCollection(IEnumerable<Point> points)
         {
 
-            List<Point> distinctPoints = Engine.Lusas.Query.GetDistinctPoints(points);
+            List<Point> distinctPoints = Engine.External.Lusas.Query.GetDistinctPoints(points);
 
             List<Point> existingPoints = ReadPoints();
 
@@ -273,7 +273,7 @@ namespace BH.Adapter.Lusas
                 PanelEdges.AddRange(Panel.ExternalEdges);
             }
 
-            List<Edge> distinctEdges = Engine.Lusas.Query.GetDistinctEdges(PanelEdges);
+            List<Edge> distinctEdges = Engine.External.Lusas.Query.GetDistinctEdges(PanelEdges);
 
             List<Point> midPoints = new List<Point>();
 
@@ -311,7 +311,7 @@ namespace BH.Adapter.Lusas
         {
             List<Point> allPoints = new List<Point>();
 
-            List<Edge> distinctEdges = Engine.Lusas.Query.GetDistinctEdges(edges);
+            List<Edge> distinctEdges = Engine.External.Lusas.Query.GetDistinctEdges(edges);
 
             foreach (Edge edge in distinctEdges)
             {
@@ -319,7 +319,7 @@ namespace BH.Adapter.Lusas
                 allPoints.Add(edge.Curve.IEndPoint());
             }
 
-            List<Point> distinctPoints = Engine.Lusas.Query.GetDistinctPoints(allPoints);
+            List<Point> distinctPoints = Engine.External.Lusas.Query.GetDistinctPoints(allPoints);
 
             List<Point> existingPoints = ReadPoints();
             List<Point> pointsToPush = distinctPoints.Except(
@@ -339,7 +339,7 @@ namespace BH.Adapter.Lusas
 
             foreach (IFPoint point in lusasPoints)
             {
-                bhomPoints.Add(Engine.Lusas.Convert.ToPoint(point));
+                bhomPoints.Add(Engine.External.Lusas.Convert.ToPoint(point));
             }
 
             CreateTags(distinctEdges);

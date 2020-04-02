@@ -29,7 +29,7 @@ namespace BH.Adapter.Lusas
     {
         private IFAttribute CreateMaterial(IMaterialFragment material)
         {
-            if (!Engine.Lusas.Query.CheckIllegalCharacters(material.Name))
+            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(material.Name))
             {
                 return null;
             }

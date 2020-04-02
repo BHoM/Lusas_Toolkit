@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using BH.oM.Structure.Elements;
 using Lusas.LPI;
 
-namespace BH.Engine.Lusas
+namespace BH.Engine.External.Lusas
 {
     public static partial class Query
     {
@@ -36,7 +36,7 @@ namespace BH.Engine.Lusas
         {
             Edge bhomEdge = null;
             IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
-            string lineName = Engine.Lusas.Modify.RemovePrefix(lusasEdge.getName(), "L");
+            string lineName = Engine.External.Lusas.Modify.RemovePrefix(lusasEdge.getName(), "L");
             bhomBars.TryGetValue(lineName, out bhomEdge);
             return bhomEdge;
         }

@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BH.oM.Structure.Loads;
 using Lusas.LPI;
-using BH.Engine.Lusas;
+using BH.Engine.External.Lusas;
 
 namespace BH.Adapter.Lusas
 {
@@ -33,7 +33,7 @@ namespace BH.Adapter.Lusas
         private List<IFLoadingBeamDistributed> CreateBarDistributedLoad(
             BarVaryingDistributedLoad bhomBarDistributedLoad, object[] lusasLines)
         {
-            if (!Engine.Lusas.Query.CheckIllegalCharacters(bhomBarDistributedLoad.Name))
+            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(bhomBarDistributedLoad.Name))
             {
                 return null;
             }

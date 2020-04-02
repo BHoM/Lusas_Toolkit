@@ -52,13 +52,13 @@ namespace BH.Adapter.Lusas
                     IFLoading lusasBodyForce = (IFLoading)lusasBodyForces[i];
 
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                        Engine.Lusas.Query.GetLoadAssignments(lusasBodyForce);
+                        Engine.External.Lusas.Query.GetLoadAssignments(lusasBodyForce);
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
                         List<string> analysisName = new List<string> { lusasBodyForce.getAttributeType() };
 
-                        GravityLoad bhomGravityLoad = Engine.Lusas.Convert.ToGravityLoad(
+                        GravityLoad bhomGravityLoad = Engine.External.Lusas.Convert.ToGravityLoad(
                             lusasBodyForce, groupedAssignment, barDictionary, PanelDictionary);
                         bhomGravityLoad.Tags = new HashSet<string>(analysisName);
                         bhomGravityLoads.Add(bhomGravityLoad);

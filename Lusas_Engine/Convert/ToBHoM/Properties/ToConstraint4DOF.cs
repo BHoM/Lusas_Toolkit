@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using BH.oM.Structure.Constraints;
 using Lusas.LPI;
 
-namespace BH.Engine.Lusas
+namespace BH.Engine.External.Lusas
 {
     public static partial class Convert
     {

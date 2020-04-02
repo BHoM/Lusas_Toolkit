@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Lusas.LPI;
 
-namespace BH.Engine.Lusas
+namespace BH.Engine.External.Lusas
 {
     public static partial class Query
     {
