@@ -22,7 +22,7 @@
 
 using BH.oM.Adapters.Lusas;
 
-namespace BH.Engine.Adapters.Lusas
+namespace BH.Engine.External.Lusas
 {
     public static partial class Create
     {
