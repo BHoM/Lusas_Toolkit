@@ -30,10 +30,10 @@ namespace BH.oM.Adapters.Lusas
         /****            Public Properties              ****/
         /***************************************************/
 
-        public Split2D SplitMethod { get; set; }
-        public int xDivisions { get; set; }
-        public int yDivisions { get; set; }
-        public double ElementSize { get; set; }
+        public virtual Split2D SplitMethod { get; set; }
+        public virtual int xDivisions { get; set; }
+        public virtual int yDivisions { get; set; }
+        public virtual double ElementSize { get; set; }
 
         /***************************************************/
     }
