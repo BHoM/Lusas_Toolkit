@@ -30,7 +30,7 @@ namespace BH.oM.External.Lusas
         /****            Public Properties              ****/
         /***************************************************/
 
-        public SectionLibrary SectionDatabase { get; set; } = SectionLibrary.UK_Sections;
+        public virtual SectionLibrary SectionDatabase { get; set; } = SectionLibrary.UK_Sections;
 
         /***************************************************/
 

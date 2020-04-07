@@ -30,8 +30,8 @@ namespace BH.oM.External.Lusas
         /****            Public Properties              ****/
         /***************************************************/
 
-        public Split1D SplitMethod { get; set; }
-        public double SplitParameter { get; set; }
+        public virtual Split1D SplitMethod { get; set; }
+        public virtual double SplitParameter { get; set; }
 
         /***************************************************/
     }
