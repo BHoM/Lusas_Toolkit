@@ -30,7 +30,7 @@ namespace BH.oM.Adapters.Lusas
         /****            Public Properties              ****/
         /***************************************************/
 
-        public LibrarySettings LibrarySettings { get; set; } = new LibrarySettings();
+        public virtual LibrarySettings LibrarySettings { get; set; } = new LibrarySettings();
 
         /***************************************************/
     }
