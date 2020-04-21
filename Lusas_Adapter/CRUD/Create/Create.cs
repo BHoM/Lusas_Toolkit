@@ -364,9 +364,12 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<ISectionProperty> sectionProperties)
         {
+            IFUnitSet unitSet = d_LusasData.getModelUnits();
+            double lengthFromSI = unitSet.getLengthFactor();
+            
             foreach (ISectionProperty sectionProperty in sectionProperties)
             {
-                IFAttribute lusasGeometricLine = CreateGeometricLine(sectionProperty);
+                IFAttribute lusasGeometricLine = CreateGeometricLine(sectionProperty, lengthFromSI);
 
                 if (lusasGeometricLine == null)
                 {
