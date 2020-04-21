@@ -384,9 +384,13 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<IMaterialFragment> materials)
         {
+            IFUnitSet unitSet = d_LusasData.getModelUnits();
+            double lengthFromSI = unitSet.getLengthFactor();
+            double forceFromSI = unitSet.getForceFactor();
+
             foreach (IMaterialFragment material in materials)
             {
-                IFAttribute lusasMaterial = CreateMaterial(material);
+                IFAttribute lusasMaterial = CreateMaterial(material, lengthFromSI, forceFromSI);
 
                 if (lusasMaterial == null)
                 {

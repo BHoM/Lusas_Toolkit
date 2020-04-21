@@ -27,7 +27,7 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        private IFAttribute CreateMaterial(IMaterialFragment material)
+        private IFAttribute CreateMaterial(IMaterialFragment material, double lengthFromSI, double forceFromSI)
         {
             if (!Engine.Lusas.Query.CheckIllegalCharacters(material.Name))
             {
@@ -36,7 +36,7 @@ namespace BH.Adapter.Lusas
 
             IFAttribute lusasMaterial = null;
             string lusasName = "M" + material.CustomData[AdapterIdName] + "/" + material.Name;
-            
+
             if (material is IIsotropic)
             {
                 IIsotropic isotropic = material as IIsotropic;
@@ -46,8 +46,12 @@ namespace BH.Adapter.Lusas
                 }
                 else
                 {
-                    lusasMaterial = d_LusasData.createIsotropicMaterial(material.Name,
-                    isotropic.YoungsModulus, isotropic.PoissonsRatio, isotropic.Density, isotropic.ThermalExpansionCoeff);
+                    lusasMaterial = d_LusasData.createIsotropicMaterial(
+                    material.Name,
+                    isotropic.YoungsModulus * forceFromSI / (lengthFromSI * lengthFromSI),
+                    isotropic.PoissonsRatio,
+                    isotropic.Density * forceFromSI / (9.80665 * lengthFromSI * lengthFromSI * lengthFromSI),
+                    isotropic.ThermalExpansionCoeff);
                     lusasMaterial.setName(lusasName);
                 }
             }
@@ -60,16 +64,24 @@ namespace BH.Adapter.Lusas
                 }
                 else
                 {
-                    lusasMaterial = d_LusasData.createOrthotropicAxisymmetricMaterial(material.Name,
-                        iorthotropic.YoungsModulus.X, iorthotropic.YoungsModulus.Y, iorthotropic.YoungsModulus.Z,
-                        iorthotropic.ShearModulus.X, iorthotropic.PoissonsRatio.X, iorthotropic.PoissonsRatio.Y, iorthotropic.PoissonsRatio.Z,
-                        0.0, iorthotropic.Density, 0.0);
+                    lusasMaterial = d_LusasData.createOrthotropicAxisymmetricMaterial(
+                        material.Name,
+                        iorthotropic.YoungsModulus.X * forceFromSI / (lengthFromSI * lengthFromSI),
+                        iorthotropic.YoungsModulus.Y * forceFromSI / (lengthFromSI * lengthFromSI),
+                        iorthotropic.YoungsModulus.Z * forceFromSI / (lengthFromSI * lengthFromSI),
+                        iorthotropic.ShearModulus.X * forceFromSI / (lengthFromSI * lengthFromSI),
+                        iorthotropic.PoissonsRatio.X * forceFromSI / (lengthFromSI * lengthFromSI),
+                        iorthotropic.PoissonsRatio.Y * forceFromSI / (lengthFromSI * lengthFromSI),
+                        iorthotropic.PoissonsRatio.Z * forceFromSI / (lengthFromSI * lengthFromSI),
+                        0.0,
+                        iorthotropic.Density * forceFromSI / (9.80665 * lengthFromSI * lengthFromSI * lengthFromSI),
+                        0.0);
                     lusasMaterial.setValue("ax", iorthotropic.ThermalExpansionCoeff.X);
                     lusasMaterial.setValue("ay", iorthotropic.ThermalExpansionCoeff.Y);
                     lusasMaterial.setValue("az", iorthotropic.ThermalExpansionCoeff.Z);
 
-                    lusasMaterial.setValue("axy", System.Math.Sqrt(System.Math.Pow(iorthotropic.ThermalExpansionCoeff.X,2) 
-                        + System.Math.Pow(iorthotropic.ThermalExpansionCoeff.Y,2)));
+                    lusasMaterial.setValue("axy", System.Math.Sqrt(System.Math.Pow(iorthotropic.ThermalExpansionCoeff.X, 2)
+                        + System.Math.Pow(iorthotropic.ThermalExpansionCoeff.Y, 2)));
 
                     lusasMaterial.setName(lusasName);
                 }

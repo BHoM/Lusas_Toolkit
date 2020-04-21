@@ -263,7 +263,8 @@ namespace BH.Adapter.Lusas
                 bhomProfile.TopFlangeThickness*lengthFromSI,
                 bhomProfile.BotFlangeThickness*lengthFromSI,
                 bhomProfile.WebThickness*lengthFromSI,
-                bhomProfile.WeldSize*lengthFromSI
+                bhomProfile.WeldSize*lengthFromSI 
+            }
                 ;
             double[] dimensionArray = dimensionList.ToArray();
 
