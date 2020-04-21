@@ -405,9 +405,12 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<ISurfaceProperty> properties2D)
         {
+            IFUnitSet unitSet = d_LusasData.getModelUnits();
+            double lengthFromSI = unitSet.getLengthFactor();
+
             foreach (ISurfaceProperty property2D in properties2D)
             {
-                IFAttribute lusasGeometricSurface = CreateGeometricSurface(property2D);
+                IFAttribute lusasGeometricSurface = CreateGeometricSurface(property2D, lengthFromSI);
 
                 if (lusasGeometricSurface == null)
                 {
