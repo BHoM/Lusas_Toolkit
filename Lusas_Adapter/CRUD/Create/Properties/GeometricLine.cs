@@ -100,7 +100,10 @@ namespace BH.Adapter.Lusas
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(lusasName);
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
-            List<double> dimensionList = new List<double> { bhomProfile.Width * lengthFromSI, bhomProfile.Height * lengthFromSI };
+            List<double> dimensionList = new List<double> {
+                bhomProfile.Width * lengthFromSI,
+                bhomProfile.Height * lengthFromSI
+            };
             double[] dimensionArray = dimensionList.ToArray();
 
             List<string> valueList = new List<string> { "B", "D" };
@@ -118,7 +121,10 @@ namespace BH.Adapter.Lusas
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
             List<double> dimensionList = new List<double> {
-                bhomProfile.Width*lengthFromSI, bhomProfile.Height*lengthFromSI, bhomProfile.Thickness*lengthFromSI,bhomProfile.InnerRadius*lengthFromSI
+                bhomProfile.Width*lengthFromSI,
+                bhomProfile.Height*lengthFromSI,
+                bhomProfile.Thickness*lengthFromSI,
+                bhomProfile.InnerRadius*lengthFromSI
             };
             double[] dimensionArray = dimensionList.ToArray();
 
@@ -143,8 +149,11 @@ namespace BH.Adapter.Lusas
                 "Weld size assumed to be inner radius for " + bhomProfile.GetType().ToString());
 
             List<double> dimensionList = new List<double> {
-                bhomProfile.Width*lengthFromSI, bhomProfile.Height*lengthFromSI, bhomProfile.TopFlangeThickness*lengthFromSI,
-            bhomProfile.WebThickness*lengthFromSI, bhomProfile.WeldSize*lengthFromSI
+                bhomProfile.Width*lengthFromSI,
+                bhomProfile.Height*lengthFromSI,
+                bhomProfile.TopFlangeThickness*lengthFromSI,
+                bhomProfile.WebThickness*lengthFromSI,
+                bhomProfile.WeldSize*lengthFromSI
             };
             double[] dimensionArray = dimensionList.ToArray();
 
@@ -162,7 +171,9 @@ namespace BH.Adapter.Lusas
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(lusasName);
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
-            List<double> dimensionList = new List<double> { bhomProfile.Diameter * lengthFromSI };
+            List<double> dimensionList = new List<double> {
+                bhomProfile.Diameter * lengthFromSI
+            };
             double[] dimensionArray = dimensionList.ToArray();
 
             List<string> valueList = new List<string> { "D" };
@@ -179,7 +190,10 @@ namespace BH.Adapter.Lusas
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(lusasName);
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
-            List<double> dimensionList = new List<double> { bhomProfile.Diameter * lengthFromSI, bhomProfile.Thickness * lengthFromSI };
+            List<double> dimensionList = new List<double> {
+                bhomProfile.Diameter * lengthFromSI,
+                bhomProfile.Thickness * lengthFromSI
+            };
             double[] dimensionArray = dimensionList.ToArray();
 
             List<string> valueList = new List<string> { "D", "t" };
@@ -196,8 +210,13 @@ namespace BH.Adapter.Lusas
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(lusasName);
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
-            List<double> dimensionList = new List<double> { bhomProfile.Height*lengthFromSI, bhomProfile.Width*lengthFromSI,
-            bhomProfile.WebThickness*lengthFromSI, bhomProfile.FlangeThickness*lengthFromSI, bhomProfile.RootRadius*lengthFromSI};
+            List<double> dimensionList = new List<double> {
+                bhomProfile.Height*lengthFromSI,
+                bhomProfile.Width*lengthFromSI,
+                bhomProfile.WebThickness*lengthFromSI,
+                bhomProfile.FlangeThickness*lengthFromSI,
+                bhomProfile.RootRadius*lengthFromSI
+            };
             double[] dimensionArray = dimensionList.ToArray();
 
             List<string> valueList = new List<string> { "D", "B", "tw", "tf", "r" };
@@ -214,8 +233,13 @@ namespace BH.Adapter.Lusas
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(lusasName);
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
-            List<double> dimensionList = new List<double> { bhomProfile.Height*lengthFromSI, bhomProfile.Width*lengthFromSI,
-            bhomProfile.FlangeThickness*lengthFromSI, bhomProfile.WebThickness*lengthFromSI, bhomProfile.RootRadius*lengthFromSI};
+            List<double> dimensionList = new List<double> {
+                bhomProfile.Height*lengthFromSI,
+                bhomProfile.Width*lengthFromSI,
+                bhomProfile.FlangeThickness*lengthFromSI,
+                bhomProfile.WebThickness*lengthFromSI,
+                bhomProfile.RootRadius*lengthFromSI
+            };
             double[] dimensionArray = dimensionList.ToArray();
 
             List<string> valueList = new List<string> { "D", "B", "tf", "tw", "r" };
@@ -232,9 +256,15 @@ namespace BH.Adapter.Lusas
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(lusasName);
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
-            List<double> dimensionList = new List<double> { bhomProfile.TopFlangeWidth*lengthFromSI,
-                bhomProfile.BotFlangeWidth*lengthFromSI, bhomProfile.Height*lengthFromSI, bhomProfile.TopFlangeThickness*lengthFromSI, bhomProfile.BotFlangeThickness*lengthFromSI,
-            bhomProfile.WebThickness*lengthFromSI, bhomProfile.WeldSize*lengthFromSI};
+            List<double> dimensionList = new List<double> {
+                bhomProfile.TopFlangeWidth*lengthFromSI,
+                bhomProfile.BotFlangeWidth*lengthFromSI,
+                bhomProfile.Height*lengthFromSI,
+                bhomProfile.TopFlangeThickness*lengthFromSI,
+                bhomProfile.BotFlangeThickness*lengthFromSI,
+                bhomProfile.WebThickness*lengthFromSI,
+                bhomProfile.WeldSize*lengthFromSI
+                ;
             double[] dimensionArray = dimensionList.ToArray();
 
             List<string> valueList = new List<string> { "Bt", "Bb", "D", "tft", "bft", "tw", "r" };
@@ -255,8 +285,12 @@ namespace BH.Adapter.Lusas
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
             List<double> dimensionList = new List<double> {
-                bhomProfile.Height*lengthFromSI, bhomProfile.Width*lengthFromSI, bhomProfile.FlangeThickness*lengthFromSI,
-            bhomProfile.WebThickness*lengthFromSI, bhomProfile.RootRadius*lengthFromSI, bhomProfile.ToeRadius*lengthFromSI
+                bhomProfile.Height*lengthFromSI,
+                bhomProfile.Width*lengthFromSI,
+                bhomProfile.FlangeThickness*lengthFromSI,
+                bhomProfile.WebThickness*lengthFromSI,
+                bhomProfile.RootRadius*lengthFromSI,
+                bhomProfile.ToeRadius*lengthFromSI
             };
             double[] dimensionArray = dimensionList.ToArray();
 
@@ -275,8 +309,13 @@ namespace BH.Adapter.Lusas
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
             Engine.Reflection.Compute.RecordWarning("Toe radius not support for ChannelSection");
-            List<double> dimensionList = new List<double> { bhomProfile.Height*lengthFromSI, bhomProfile.FlangeWidth*lengthFromSI,
-            bhomProfile.FlangeThickness*lengthFromSI, bhomProfile.WebThickness*lengthFromSI, bhomProfile.RootRadius*lengthFromSI};
+            List<double> dimensionList = new List<double> {
+                bhomProfile.Height*lengthFromSI,
+                bhomProfile.FlangeWidth*lengthFromSI,
+                bhomProfile.FlangeThickness*lengthFromSI,
+                bhomProfile.WebThickness*lengthFromSI,
+                bhomProfile.RootRadius*lengthFromSI
+            };
             double[] dimensionArray = dimensionList.ToArray();
 
             List<string> valueList = new List<string> { "D", "B", "tf", "tw", "r" };
@@ -297,8 +336,12 @@ namespace BH.Adapter.Lusas
                 "Lusas only supports constant thickness Z sections, flange thickness used as thickness");
             Engine.Reflection.Compute.RecordWarning("Toe radius not supported for ZSection");
             List<double> dimensionList = new List<double> {
-                bhomProfile.Height*lengthFromSI, bhomProfile.FlangeWidth*lengthFromSI, bhomProfile.FlangeWidth*lengthFromSI,
-            bhomProfile.FlangeThickness*lengthFromSI, bhomProfile.RootRadius*lengthFromSI};
+                bhomProfile.Height*lengthFromSI,
+                bhomProfile.FlangeWidth*lengthFromSI,
+                bhomProfile.FlangeWidth*lengthFromSI,
+                bhomProfile.FlangeThickness*lengthFromSI,
+                bhomProfile.RootRadius*lengthFromSI
+            };
             double[] dimensionArray = dimensionList.ToArray();
 
             List<string> valueList = new List<string> { "D", "E", "F", "t", "r" };
