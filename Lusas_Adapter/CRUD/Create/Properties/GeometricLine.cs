@@ -100,7 +100,7 @@ namespace BH.Adapter.Lusas
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(lusasName);
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
-            List<double> dimensionList = new List<double> { bhomProfile.Width*lengthFromSI, bhomProfile.Height * lengthFromSI };
+            List<double> dimensionList = new List<double> { bhomProfile.Width * lengthFromSI, bhomProfile.Height * lengthFromSI };
             double[] dimensionArray = dimensionList.ToArray();
 
             List<string> valueList = new List<string> { "B", "D" };
@@ -137,7 +137,7 @@ namespace BH.Adapter.Lusas
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
             Engine.Reflection.Compute.RecordWarning(
-                "Unequal flange thickness not supported in Lusas for " + bhomProfile.GetType().ToString() 
+                "Unequal flange thickness not supported in Lusas for " + bhomProfile.GetType().ToString()
                 + ", top flange thickness used as flange thickness");
             Engine.Reflection.Compute.RecordWarning(
                 "Weld size assumed to be inner radius for " + bhomProfile.GetType().ToString());
@@ -237,7 +237,7 @@ namespace BH.Adapter.Lusas
             bhomProfile.WebThickness*lengthFromSI, bhomProfile.WeldSize*lengthFromSI};
             double[] dimensionArray = dimensionList.ToArray();
 
-            List<string> valueList = new List<string> {"Bt", "Bb", "D", "tft", "bft", "tw", "r" };
+            List<string> valueList = new List<string> { "Bt", "Bb", "D", "tft", "bft", "tw", "r" };
             string[] valueArray = valueList.ToArray();
 
             int lusasType = 14;

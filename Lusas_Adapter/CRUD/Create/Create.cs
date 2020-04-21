@@ -268,7 +268,7 @@ namespace BH.Adapter.Lusas
 
             List<Edge> PanelEdges = new List<Edge>();
 
-                foreach (Panel Panel in panels)
+            foreach (Panel Panel in panels)
             {
                 PanelEdges.AddRange(Panel.ExternalEdges);
             }
@@ -366,7 +366,7 @@ namespace BH.Adapter.Lusas
         {
             IFUnitSet unitSet = d_LusasData.getModelUnits();
             double lengthFromSI = unitSet.getLengthFactor();
-            
+
             foreach (ISectionProperty sectionProperty in sectionProperties)
             {
                 IFAttribute lusasGeometricLine = CreateGeometricLine(sectionProperty, lengthFromSI);
