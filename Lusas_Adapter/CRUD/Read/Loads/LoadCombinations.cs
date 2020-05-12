@@ -44,7 +44,7 @@ namespace BH.Adapter.Lusas
                 {
                     IFBasicCombination lusasCombination = (IFBasicCombination)lusasCombinations[i];
                     LoadCombination bhomLoadCombination =
-                        Engine.External.Lusas.Convert.ToLoadCombination(lusasCombination, loadcaseDictionary);
+                        Adapter.External.Lusas.Convert.ToLoadCombination(lusasCombination, loadcaseDictionary);
                     bhomLoadCombintations.Add(bhomLoadCombination);
                 }
             }

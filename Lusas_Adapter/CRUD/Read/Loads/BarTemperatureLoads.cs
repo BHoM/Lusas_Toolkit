@@ -48,7 +48,7 @@ namespace BH.Adapter.Lusas
                     IFLoading lusasTemperatureLoad = (IFLoading)lusasTemperatureLoads[i];
 
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                        Engine.External.Lusas.Query.GetLoadAssignments(lusasTemperatureLoad);
+                        LusasAdapter.GetLoadAssignments(lusasTemperatureLoad);
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
@@ -69,7 +69,7 @@ namespace BH.Adapter.Lusas
                         if (assignments.Count != 0)
                         {
                             BarTemperatureLoad bhomBarTemperatureLoad =
-                                Engine.External.Lusas.Convert.ToBarTemperatureLoad(
+                                Adapter.External.Lusas.Convert.ToBarTemperatureLoad(
                                     lusasTemperatureLoad, groupedAssignment, barDictionary);
 
                             bhomBarTemperatureLoad.Tags = new HashSet<string>(analysisName);

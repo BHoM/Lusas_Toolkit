@@ -46,14 +46,13 @@ namespace BH.Adapter.Lusas
                 barRelease = Engine.Structure.Create.BarReleaseFixFix();
             }
 
-
             int adapterID;
             if (meshSettings1D.CustomData.ContainsKey(AdapterIdName))
                 adapterID = System.Convert.ToInt32(meshSettings1D.CustomData[AdapterIdName]);
             else
                 adapterID = System.Convert.ToInt32(NextFreeId(meshSettings1D.GetType()));
 
-            string releaseString = Engine.External.Lusas.Compute.CreateReleaseString(barRelease);
+            string releaseString = CreateReleaseString(barRelease);
 
             IFMeshLine lusasLineMesh;
             string lusasName = 
@@ -66,10 +65,104 @@ namespace BH.Adapter.Lusas
             else
             {
                 lusasLineMesh = d_LusasData.createMeshLine(lusasName);
-                Engine.External.Lusas.Compute.SetSplitMethod(lusasLineMesh, meshSettings1D, barFEAType);
-                Engine.External.Lusas.Compute.SetEndConditions(lusasLineMesh, barRelease);
+                SetSplitMethod(lusasLineMesh, meshSettings1D, barFEAType);
+                SetEndConditions(lusasLineMesh, barRelease);
             }
             return lusasLineMesh;
         }
+        private static string CreateReleaseString(BarRelease barReleases)
+        {
+            string releaseString = "";
+
+            if (barReleases.StartRelease.TranslationX == DOFType.Free)
+                releaseString = releaseString + "FX";
+            if (barReleases.StartRelease.TranslationY == DOFType.Free)
+                releaseString = releaseString + "FY";
+            if (barReleases.StartRelease.TranslationZ == DOFType.Free)
+                releaseString = releaseString + "FZ";
+            if (barReleases.StartRelease.RotationX == DOFType.Free)
+                releaseString = releaseString + "MX";
+            if (barReleases.StartRelease.RotationY == DOFType.Free)
+                releaseString = releaseString + "MY";
+            if (barReleases.StartRelease.RotationZ == DOFType.Free)
+                releaseString = releaseString + "MZ";
+
+            if (releaseString != null)
+                releaseString = releaseString + ",";
+
+            if (barReleases.EndRelease.TranslationX == DOFType.Free)
+                releaseString = releaseString + "FX";
+            if (barReleases.EndRelease.TranslationY == DOFType.Free)
+                releaseString = releaseString + "FY";
+            if (barReleases.EndRelease.TranslationZ == DOFType.Free)
+                releaseString = releaseString + "FZ";
+            if (barReleases.EndRelease.RotationX == DOFType.Free)
+                releaseString = releaseString + "MX";
+            if (barReleases.EndRelease.RotationY == DOFType.Free)
+                releaseString = releaseString + "MY";
+            if (barReleases.EndRelease.RotationZ == DOFType.Free)
+                releaseString = releaseString + "MZ";
+
+            return releaseString;
+        }
+
+        private static void SetSplitMethod(IFMeshLine lusasLineMesh, MeshSettings1D meshSettings1D, BarFEAType barFEAType)
+        {
+            if (meshSettings1D.SplitMethod == Split1D.Length)
+            {
+                if (barFEAType == BarFEAType.Axial)
+                    lusasLineMesh.setSize("BRS2", meshSettings1D.SplitParameter);
+                else if (barFEAType == BarFEAType.Flexural)
+                    lusasLineMesh.setSize("BMX21", meshSettings1D.SplitParameter);
+            }
+            else if (meshSettings1D.SplitMethod == Split1D.Automatic)
+            {
+                lusasLineMesh.setValue("uiSpacing", "uniform");
+                SetElementType(lusasLineMesh, barFEAType);
+            }
+            else if (meshSettings1D.SplitMethod == Split1D.Divisions)
+            {
+                lusasLineMesh.addSpacing(System.Convert.ToInt32(meshSettings1D.SplitParameter), 1);
+                SetElementType(lusasLineMesh, barFEAType);
+            }
+        }
+
+        private static void SetElementType(IFMeshLine lusasLineMesh, BarFEAType barFEAType)
+        {
+            if (barFEAType == BarFEAType.Axial)
+                lusasLineMesh.addElementName("BRS2");
+            else if (barFEAType == BarFEAType.Flexural)
+                lusasLineMesh.addElementName("BMX21");
+        }
+
+        private static void SetEndConditions(IFMeshLine lusasLineMesh, BarRelease barReleases)
+        {
+            if (barReleases.StartRelease.TranslationX == DOFType.Free)
+                lusasLineMesh.setEndRelease("Start", "u", "free");
+            if (barReleases.StartRelease.TranslationY == DOFType.Free)
+                lusasLineMesh.setEndRelease("Start", "v", "free");
+            if (barReleases.StartRelease.TranslationY == DOFType.Free)
+                lusasLineMesh.setEndRelease("Start", "w", "free");
+            if (barReleases.StartRelease.RotationX == DOFType.Free)
+                lusasLineMesh.setEndRelease("Start", "thx", "free");
+            if (barReleases.StartRelease.RotationY == DOFType.Free)
+                lusasLineMesh.setEndRelease("Start", "thy", "free");
+            if (barReleases.StartRelease.RotationZ == DOFType.Free)
+                lusasLineMesh.setEndRelease("Start", "thz", "free");
+
+            if (barReleases.EndRelease.TranslationX == DOFType.Free)
+                lusasLineMesh.setEndRelease("End", "u", "free");
+            if (barReleases.EndRelease.TranslationY == DOFType.Free)
+                lusasLineMesh.setEndRelease("End", "v", "free");
+            if (barReleases.EndRelease.TranslationY == DOFType.Free)
+                lusasLineMesh.setEndRelease("End", "w", "free");
+            if (barReleases.EndRelease.RotationX == DOFType.Free)
+                lusasLineMesh.setEndRelease("End", "thx", "free");
+            if (barReleases.EndRelease.RotationY == DOFType.Free)
+                lusasLineMesh.setEndRelease("End", "thy", "free");
+            if (barReleases.EndRelease.RotationZ == DOFType.Free)
+                lusasLineMesh.setEndRelease("End", "thz", "free");
+        }
+
     }
 }

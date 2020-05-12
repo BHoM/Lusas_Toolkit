@@ -63,10 +63,6 @@
       <HintPath>..\..\BHoM\Build\Geometry_oM.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Lusas.Interop, Version=17.0.1633.29698, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86">
-      <HintPath>..\packages\BHoM.Interop.Lusas170.1.0.1\lib\net45\Lusas.Interop.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="Physical_oM">
       <HintPath>..\..\BHoM\Build\Physical_oM.dll</HintPath>
       <Private>False</Private>
@@ -98,62 +94,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compute\SetElementType.cs" />
-    <Compile Include="Compute\SetEndConditions.cs" />
-    <Compile Include="Compute\SetSplitMethod.cs" />
-    <Compile Include="Compute\CreateReleaseString.cs" />
-    <Compile Include="Convert\Double.cs" />
-    <Compile Include="Convert\AdapterIdName.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToProfile.cs" />
     <Compile Include="Create\MeshSettings1D.cs" />
+    <Compile Include="Objects\AdapterIdName.cs" />
     <Compile Include="Query\CheckIllegalCharacters.cs" />
-    <Compile Include="Query\CheckPresets.cs" />
-    <Compile Include="Query\GetBar.cs" />
-    <Compile Include="Query\GetBarRelease.cs" />
-    <Compile Include="Query\GetConstraints.cs" />
     <Compile Include="Query\GetDistinctPoints.cs" />
     <Compile Include="Query\GetDistinctEdges.cs" />
-    <Compile Include="Query\GetEdge.cs" />
-    <Compile Include="Query\GetFEAType.cs" />
-    <Compile Include="Query\GetGeometryAssignment.cs" />
-    <Compile Include="Query\GetLineAssignments.cs" />
-    <Compile Include="Query\GetLoadAssignments.cs" />
-    <Compile Include="Query\GetMeshProperties.cs" />
-    <Compile Include="Compute\SetConstraint.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToAreaTemperatureLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Elements\ToBar.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToBarTemperatureLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToBarUniformlyDistributedLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToAreaUniformlyDistributedLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToBarPointLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToBarDistributedLoad.cs" />
-    <Compile Include="Query\GetAttributeAssignments.cs" />
-    <Compile Include="Query\GetAdapterID.cs" />
-    <Compile Include="Query\GetName.cs" />
-    <Compile Include="Query\GetNode.cs" />
-    <Compile Include="Query\GetPointAssignments.cs" />
     <Compile Include="Query\GetObjectIDs.cs" />
-    <Compile Include="Query\GetSurfaceAssignments.cs" />
-    <Compile Include="Query\IsMemberOf.cs" />
     <Compile Include="Modify\RemovePrefix.cs" />
-    <Compile Include="Compute\AssignmentWarning.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToMeshSettings2D.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToMeshSettings1D.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToPointDisplacement.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToConstraint4DOF.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToLoadCombination.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToPointLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToSurfaceProperty.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToConstraint6DOF.cs" />
-    <Compile Include="Convert\ToBHoM\Elements\ToEdge.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToLoadcase.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToMaterial.cs" />
-    <Compile Include="Convert\ToBHoM\Elements\ToNode.cs" />
-    <Compile Include="Convert\ToBHoM\Elements\ToPanelPlanar.cs" />
-    <Compile Include="Convert\ToBHoM\Elements\ToPoint.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToGravityLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToSectionProperty.cs" />
-    <Compile Include="Convert\ToLusas\_ToLusas.cs" />
     <Compile Include="Create\LibrarySettings.cs" />
     <Compile Include="Create\LusasConfig.cs" />
     <Compile Include="Create\MeshSettings2D.cs" />
@@ -171,6 +118,9 @@
       <Project>{963a4a5c-0455-40a5-ba48-01838dd5bb5b}</Project>
       <Name>Lusas_oM</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Compute\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

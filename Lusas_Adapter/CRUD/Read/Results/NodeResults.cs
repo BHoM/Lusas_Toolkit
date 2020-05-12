@@ -107,7 +107,7 @@ namespace BH.Adapter.Lusas
 
                     NodeReaction nodeReaction = new NodeReaction
                     {
-                        ResultCase = Engine.External.Lusas.Query.GetName(loadset.getName()),
+                        ResultCase = GetName(loadset.getName()),
                         ObjectId = nodeId,
                         FX = fX * forceSIConversion,
                         FY = fY * forceSIConversion,
@@ -168,7 +168,7 @@ namespace BH.Adapter.Lusas
 
                     NodeDisplacement bhomNodeDisplacement = new NodeDisplacement
                     {
-                        ResultCase = Engine.External.Lusas.Query.GetName(loadset.getName()),
+                        ResultCase = GetName(loadset.getName()),
                         ObjectId = nodeId,
                         UX = uX * lengthSIConversion,
                         UY = uY * lengthSIConversion,

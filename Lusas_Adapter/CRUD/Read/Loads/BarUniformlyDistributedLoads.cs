@@ -51,7 +51,7 @@ namespace BH.Adapter.Lusas
                 {
                     IFLoading lusasDistributedLoad = (IFLoading)lusasDistributedLoads[i];
 
-                    IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = Engine.External.Lusas.Query.GetLoadAssignments(
+                    IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = LusasAdapter.GetLoadAssignments(
                         lusasDistributedLoad);
 
                     if (lusasDistributedLoad.getValue("type") == "Length")
@@ -59,7 +59,7 @@ namespace BH.Adapter.Lusas
                         foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                         {
                             BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad =
-                                Engine.External.Lusas.Convert.ToBarUniformallyDistributed(
+                                Adapter.External.Lusas.Convert.ToBarUniformallyDistributed(
                                     lusasDistributedLoad, groupedAssignment, barDictionary);
 
                             List<string> analysisName = new List<string> { lusasDistributedLoad.getAttributeType() };

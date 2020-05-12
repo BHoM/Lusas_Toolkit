@@ -36,9 +36,9 @@ namespace BH.Adapter.Lusas
 
             lusasLine.getAxesAtNrmCrds(0, ref origin, ref lineXAxis, ref lineYAxis, ref lineZAxis);
 
-            double[] localXAxis = Engine.External.Lusas.Convert.ToDouble(lineXAxis);
-            double[] localYAxis = Engine.External.Lusas.Convert.ToDouble(lineYAxis);
-            double[] localZAxis = Engine.External.Lusas.Convert.ToDouble(lineZAxis);
+            double[] localXAxis = Adapter.External.Lusas.Convert.ToDouble(lineXAxis);
+            double[] localYAxis = Adapter.External.Lusas.Convert.ToDouble(lineYAxis);
+            double[] localZAxis = Adapter.External.Lusas.Convert.ToDouble(lineZAxis);
 
             IF3dCoords barStart = lusasLine.getStartPositionCoords();
 
