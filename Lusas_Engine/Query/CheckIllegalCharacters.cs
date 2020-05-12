@@ -26,11 +26,15 @@ namespace BH.Engine.External.Lusas
 {
     public static partial class Query
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static bool CheckIllegalCharacters(string objectName)
         {
-            List<char> illegalCharacters = new List<char>() { '/' ,'|', '\\'};
+            List<char> illegalCharacters = new List<char>() { '/', '|', '\\' };
 
-            foreach(char character in illegalCharacters)
+            foreach (char character in illegalCharacters)
             {
                 if (objectName.Contains(character.ToString()))
                 {
@@ -43,5 +47,8 @@ namespace BH.Engine.External.Lusas
 
             return true;
         }
+
+        /***************************************************/
+
     }
 }

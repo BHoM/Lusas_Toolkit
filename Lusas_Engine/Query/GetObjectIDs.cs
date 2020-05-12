@@ -30,6 +30,10 @@ namespace BH.Engine.External.Lusas
 {
     public static partial class Query
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static List<int> GetObjectIDs(IList ids)
         {
             if (ids == null)
@@ -61,7 +65,9 @@ namespace BH.Engine.External.Lusas
                     return idsOut;
                 }
             }
-        } 
+        }
+
+        /***************************************************/
 
     }
 }
