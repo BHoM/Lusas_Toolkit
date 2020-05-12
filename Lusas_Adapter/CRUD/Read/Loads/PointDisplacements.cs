@@ -30,12 +30,16 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<ILoad> ReadPointDisplacements(List<string> ids = null)
         {
             List<ILoad> bhomPointDisplacements = new List<ILoad>();
             object[] lusasPrescribedDisplacements = d_LusasData.getAttributes("Prescribed Load");
 
-            if(!(lusasPrescribedDisplacements.Count()==0))
+            if (!(lusasPrescribedDisplacements.Count() == 0))
             {
                 List<Node> bhomNodes = ReadNodes();
                 Dictionary<string, Node> nodeDictionary = bhomNodes.ToDictionary(
@@ -65,5 +69,8 @@ namespace BH.Adapter.Lusas
 
             return bhomPointDisplacements;
         }
+
+        /***************************************************/
+
     }
 }

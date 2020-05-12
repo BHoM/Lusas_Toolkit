@@ -27,6 +27,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private IFLine CreateEdge(Edge edge, IFPoint startPoint, IFPoint endPoint)
         {
             IFLine lusasLine = d_LusasData.createLineByPoints(startPoint, endPoint);
@@ -46,8 +50,9 @@ namespace BH.Adapter.Lusas
 
             return lusasLine;
         }
+
+        /***************************************************/
+
     }
-
-
 }
 

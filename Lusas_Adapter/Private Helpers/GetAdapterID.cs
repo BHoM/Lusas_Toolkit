@@ -26,7 +26,11 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public static int GetAdapterID(IFAttribute lusasAttribute, char lastCharacter)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        internal static int GetAdapterID(IFAttribute lusasAttribute, char lastCharacter)
         {
             int adapterID = 0;
 
@@ -44,7 +48,9 @@ namespace BH.Adapter.Lusas
             return adapterID;
         }
 
-        public static int GetAdapterID(IFLoadcase lusasLoadcase, char lastCharacter)
+        /***************************************************/
+
+        internal static int GetAdapterID(IFLoadcase lusasLoadcase, char lastCharacter)
         {
             int adapterID = 0;
 
@@ -62,7 +68,9 @@ namespace BH.Adapter.Lusas
             return adapterID;
         }
 
-        public static int GetAdapterID(IFBasicCombination lusasLoadCombination, char lastCharacter)
+        /***************************************************/
+
+        internal static int GetAdapterID(IFBasicCombination lusasLoadCombination, char lastCharacter)
         {
             int adapterID = 0;
 
@@ -79,5 +87,8 @@ namespace BH.Adapter.Lusas
 
             return adapterID;
         }
+
+        /***************************************************/
+
     }
 }

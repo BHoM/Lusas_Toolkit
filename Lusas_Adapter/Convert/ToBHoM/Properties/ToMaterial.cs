@@ -29,6 +29,10 @@ namespace BH.Adapter.External.Lusas
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static IMaterialFragment ToMaterial(this IFAttribute lusasAttribute)
         {
             string attributeName = LusasAdapter.GetName(lusasAttribute);
@@ -61,6 +65,8 @@ namespace BH.Adapter.External.Lusas
 
             return bhomMaterial;
         }
+
+        /***************************************************/
 
     }
 }

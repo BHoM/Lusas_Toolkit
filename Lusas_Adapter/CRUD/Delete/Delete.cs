@@ -35,6 +35,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Adapter overload method                   ****/
+        /***************************************************/
+
         protected override int IDelete(Type type, IEnumerable<object> ids, ActionConfig actionConfig = null)
         {
             int success = 0;
@@ -78,6 +82,9 @@ namespace BH.Adapter.Lusas
 
             return 0;
         }
+
+        /***************************************************/
+
     }
 }
 

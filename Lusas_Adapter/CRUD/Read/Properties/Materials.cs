@@ -29,6 +29,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<IMaterialFragment> ReadMaterials(List<string> ids = null)
         {
             object[] lusasMaterials = d_LusasData.getAttributes("Material");
@@ -43,6 +47,8 @@ namespace BH.Adapter.Lusas
 
             return bhomMaterials;
         }
+
+        /***************************************************/
 
     }
 }

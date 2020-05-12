@@ -32,8 +32,12 @@ namespace BH.Adapter.External.Lusas
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static PointLoad ToPointLoad(
-            IFLoading lusasPointLoad, IEnumerable<IFAssignment> lusasAssignments, 
+            IFLoading lusasPointLoad, IEnumerable<IFAssignment> lusasAssignments,
             Dictionary<string, Node> bhomNodeDictionary)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
@@ -68,5 +72,8 @@ namespace BH.Adapter.External.Lusas
 
             return bhomPointLoad;
         }
+
+        /***************************************************/
+
     }
 }

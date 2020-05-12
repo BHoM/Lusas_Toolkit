@@ -27,7 +27,11 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public static HashSet<string> IsMemberOf(IFGeometry lusasGeometry, HashSet<string> bhomTags)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        internal static HashSet<string> IsMemberOf(IFGeometry lusasGeometry, HashSet<string> bhomTags)
         {
 
             HashSet<string> geometryTag = new HashSet<string>();
@@ -42,5 +46,8 @@ namespace BH.Adapter.Lusas
 
             return geometryTag;
         }
+
+        /***************************************************/
+
     }
 }

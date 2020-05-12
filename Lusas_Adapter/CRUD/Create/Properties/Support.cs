@@ -30,6 +30,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private IFAttribute CreateSupport(Constraint6DOF constraint)
         {
             if (!Engine.External.Lusas.Query.CheckIllegalCharacters(constraint.Name))
@@ -55,7 +59,7 @@ namespace BH.Adapter.Lusas
                     constraint.RotationalStiffnessX,constraint.RotationalStiffnessY,
                     constraint.RotationalStiffnessZ};
 
-                bool [] fixities = constraint.Fixities();
+                bool[] fixities = constraint.Fixities();
 
                 for (int i = 0; i < releaseNames.Count(); i++)
                 {
@@ -77,7 +81,10 @@ namespace BH.Adapter.Lusas
 
             return lusasSupport;
         }
-        public IFAttribute CreateSupport(Constraint4DOF constraint)
+
+        /***************************************************/
+
+        private IFAttribute CreateSupport(Constraint4DOF constraint)
         {
             if (!Engine.External.Lusas.Query.CheckIllegalCharacters(constraint.Name))
             {
@@ -95,7 +102,7 @@ namespace BH.Adapter.Lusas
             {
                 lusasSupport = d_LusasData.createSupportStructural(lusasName);
 
-                List<string> releaseNames = new List<string> { "U", "V", "W", "THX"};
+                List<string> releaseNames = new List<string> { "U", "V", "W", "THX" };
                 List<double> stiffness = new List<double> {
                     constraint.TranslationalStiffnessX,
                     constraint.TranslationalStiffnessY,
@@ -128,6 +135,9 @@ namespace BH.Adapter.Lusas
             }
             return lusasSupport;
         }
+
+        /***************************************************/
+
     }
 }
 

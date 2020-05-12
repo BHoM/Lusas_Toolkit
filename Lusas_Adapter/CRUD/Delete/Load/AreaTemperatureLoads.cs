@@ -26,7 +26,11 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public int DeleteAreaTemperatureLoad(IEnumerable<object> ids)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private int DeleteAreaTemperatureLoad(IEnumerable<object> ids)
         {
             int success = 1;
 
@@ -43,5 +47,8 @@ namespace BH.Adapter.Lusas
             }
             return success;
         }
+
+        /***************************************************/
+
     }
 }

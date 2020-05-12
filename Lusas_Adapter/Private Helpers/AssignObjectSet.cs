@@ -27,7 +27,11 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        internal void AssignObjectSet(IFGeometry newGeometry, HashSet<string> tags)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private void AssignObjectSet(IFGeometry newGeometry, HashSet<string> tags)
         {
             foreach (string tag in tags)
             {
@@ -35,5 +39,8 @@ namespace BH.Adapter.Lusas
                 objectSet.add(newGeometry);
             }
         }
+
+        /***************************************************/
+
     }
 }

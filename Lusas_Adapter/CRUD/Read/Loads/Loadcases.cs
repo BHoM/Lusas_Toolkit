@@ -29,6 +29,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<Loadcase> ReadLoadcases(List<string> ids = null)
         {
             List<Loadcase> bhomLoadcases = new List<Loadcase>();
@@ -45,5 +49,8 @@ namespace BH.Adapter.Lusas
 
             return bhomLoadcases;
         }
+
+        /***************************************************/
+
     }
 }

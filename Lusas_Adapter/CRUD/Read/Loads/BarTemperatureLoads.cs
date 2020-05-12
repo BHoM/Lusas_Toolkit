@@ -30,12 +30,16 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<ILoad> ReadBarTemperatureLoads(List<string> ids = null)
         {
             List<ILoad> bhomBarTemperatureLoads = new List<ILoad>();
             object[] lusasTemperatureLoads = d_LusasData.getAttributes("Temperature");
 
-            if(!(lusasTemperatureLoads.Count()==0))
+            if (!(lusasTemperatureLoads.Count() == 0))
             {
                 List<Bar> bhomBars = ReadBars();
                 Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
@@ -81,6 +85,9 @@ namespace BH.Adapter.Lusas
 
             return bhomBarTemperatureLoads;
         }
+
+        /***************************************************/
+
     }
 }
 

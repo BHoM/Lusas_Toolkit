@@ -31,6 +31,10 @@ namespace BH.Adapter.External.Lusas
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static BarTemperatureLoad ToBarTemperatureLoad(
             IFLoading lusasTemperatureLoad,
             IEnumerable<IFAssignment> lusasAssignments,
@@ -54,6 +58,9 @@ namespace BH.Adapter.External.Lusas
             bhomBarTemperatureLoad.CustomData[AdapterIdName] = adapterID;
             return bhomBarTemperatureLoad;
         }
+
+        /***************************************************/
+
     }
 }
 

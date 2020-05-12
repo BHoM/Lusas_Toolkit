@@ -26,7 +26,11 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public int DeleteSurfaceProperties(IEnumerable<object> ids)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private int DeleteSurfaceProperties(IEnumerable<object> ids)
         {
             int success = 1;
 

@@ -28,7 +28,11 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        internal Dictionary<string, double> GetFeatureResults(List<string> components, Dictionary<string, IFResultsComponentSet> resultsSets, IFUnitSet unitSet, int id, string suffix, int resultType = 6)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private Dictionary<string, double> GetFeatureResults(List<string> components, Dictionary<string, IFResultsComponentSet> resultsSets, IFUnitSet unitSet, int id, string suffix, int resultType = 6)
         {
             Dictionary<string, double> featureResults = new Dictionary<string, double>();
             IFResultsComponentSet resultsSet = null;
@@ -93,6 +97,8 @@ namespace BH.Adapter.Lusas
 
             return featureResults;
         }
+
+        /***************************************************/
 
     }
 }

@@ -29,10 +29,10 @@ namespace BH.Adapter.Lusas
     public partial class LusasAdapter
     {
         /***************************************************/
-        /**** Public Methods                            ****/
+        /**** Private Methods                           ****/
         /***************************************************/
 
-        public static IEnumerable<IGrouping<string, IFAssignment>> GetLoadAssignments(IFLoading lusasForce)
+        private static IEnumerable<IGrouping<string, IFAssignment>> GetLoadAssignments(IFLoading lusasForce)
         {
             object[] assignmentObjects = lusasForce.getAssignments();
             List<IFAssignment> assignments = new List<IFAssignment>();

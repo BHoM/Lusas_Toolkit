@@ -40,6 +40,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Adapter overload method                   ****/
+        /***************************************************/
+
         protected override IEnumerable<IBHoMObject> IRead(Type type, IList ids = null, ActionConfig actionConfig = null)
         {
             if (type == typeof(Bar))
@@ -76,6 +80,9 @@ namespace BH.Adapter.Lusas
                 return ReadMeshSettings2D(ids as dynamic);
             return null;
         }
+
+        /***************************************************/
+
     }
 }
 

@@ -37,10 +37,11 @@ namespace BH.Adapter.External.Lusas
     /***************************************************/
     /**** Public Methods                            ****/
     /***************************************************/
+
     public static partial class Convert
     {
-        public static Bar ToBar(this IFLine lusasLine, 
-            Dictionary<string, Node> bhomNodes, 
+        public static Bar ToBar(this IFLine lusasLine,
+            Dictionary<string, Node> bhomNodes,
             Dictionary<string, Constraint4DOF> bhomSupports,
             HashSet<string> lusasGroups,
             Dictionary<string, IMaterialFragment> bhomMaterials,
@@ -62,10 +63,13 @@ namespace BH.Adapter.External.Lusas
                 bhomSupports.TryGetValue(supportAssignments[0], out barConstraint);
             }
 
-            Bar bhomBar = new Bar { StartNode = startNode,
+            Bar bhomBar = new Bar
+            {
+                StartNode = startNode,
                 EndNode = endNode,
                 Tags = tags,
-                Support = barConstraint};
+                Support = barConstraint
+            };
 
             List<string> geometricAssignments = LusasAdapter.GetAttributeAssignments(lusasLine, "Geometric");
             List<string> materialAssignments = LusasAdapter.GetAttributeAssignments(lusasLine, "Material");
@@ -87,13 +91,13 @@ namespace BH.Adapter.External.Lusas
             MeshSettings1D lineMesh = null;
             List<string> meshSettings = LusasAdapter.GetAttributeAssignments(lusasLine, "Mesh");
 
-            if (!(meshSettings.Count()==0))
+            if (!(meshSettings.Count() == 0))
             {
                 bhomMeshes.TryGetValue(meshSettings[0], out lineMesh);
                 bhomBar.CustomData["Mesh"] = lineMesh;
             }
 
-            Tuple<bool,double, BarRelease, BarFEAType> barMeshProperties = GetMeshProperties(lusasLine);
+            Tuple<bool, double, BarRelease, BarFEAType> barMeshProperties = GetMeshProperties(lusasLine);
 
             if (barMeshProperties.Item1)
             {

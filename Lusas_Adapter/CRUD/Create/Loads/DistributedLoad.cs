@@ -28,6 +28,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private IFLoadingGlobalDistributed CreateGlobalDistributedLine(BarUniformlyDistributedLoad distributedLoad, object[] lusasLines)
         {
             if (!Engine.External.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
@@ -45,7 +49,9 @@ namespace BH.Adapter.Lusas
             return lusasGlobalDistributed;
         }
 
-        public IFLoadingGlobalDistributed CreateGlobalDistributedLoadSurface(AreaUniformlyDistributedLoad distributedLoad, object[] lusasSurfaces)
+        /***************************************************/
+
+        private IFLoadingGlobalDistributed CreateGlobalDistributedLoadSurface(AreaUniformlyDistributedLoad distributedLoad, object[] lusasSurfaces)
         {
             if (!Engine.External.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
             {
@@ -63,7 +69,9 @@ namespace BH.Adapter.Lusas
             return lusasGlobalDistributed;
         }
 
-        public IFLoadingLocalDistributed CreateLocalDistributedLine(BarUniformlyDistributedLoad distributedLoad, object[] lusasLines)
+        /***************************************************/
+
+        private IFLoadingLocalDistributed CreateLocalDistributedLine(BarUniformlyDistributedLoad distributedLoad, object[] lusasLines)
         {
             if (!Engine.External.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
             {
@@ -81,7 +89,9 @@ namespace BH.Adapter.Lusas
             return lusasLocalDistributed;
         }
 
-        public IFLoadingLocalDistributed CreateLocalDistributedSurface(AreaUniformlyDistributedLoad distributedLoad, object[] lusasSurfaces)
+        /***************************************************/
+
+        private IFLoadingLocalDistributed CreateLocalDistributedSurface(AreaUniformlyDistributedLoad distributedLoad, object[] lusasSurfaces)
         {
             if (!Engine.External.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
             {
@@ -99,7 +109,9 @@ namespace BH.Adapter.Lusas
             return lusasLocalDistributed;
         }
 
-        public IFLoadingGlobalDistributed CreateGlobalDistributed(string lusasName,
+        /***************************************************/
+
+        private IFLoadingGlobalDistributed CreateGlobalDistributed(string lusasName,
             string type, IFLoadcase assignedLoadcase, Vector force, Vector moment, object[] lusasGeometry)
         {
 
@@ -132,7 +144,9 @@ namespace BH.Adapter.Lusas
             return lusasGlobalDistributed;
         }
 
-        public IFLoadingLocalDistributed CreateLocalDistributed(string lusasName,
+        /***************************************************/
+
+        private IFLoadingLocalDistributed CreateLocalDistributed(string lusasName,
             string type, IFLoadcase assignedLoadcase, Vector force, object[] lusasGeometry)
         {
 
@@ -155,5 +169,8 @@ namespace BH.Adapter.Lusas
 
             return lusasLocalDistributed;
         }
+
+        /***************************************************/
+
     }
 }

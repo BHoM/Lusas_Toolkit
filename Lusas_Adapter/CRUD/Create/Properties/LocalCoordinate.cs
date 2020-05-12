@@ -27,6 +27,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private IFLocalCoord CreateLocalCoordinate(IFLine lusasLine)
         {
             object lineXAxis = null;
@@ -81,6 +85,9 @@ namespace BH.Adapter.Lusas
 
             return barLocalAxis;
         }
+
+        /***************************************************/
+
     }
 }
 

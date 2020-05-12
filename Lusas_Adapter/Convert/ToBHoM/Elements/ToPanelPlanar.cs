@@ -60,11 +60,11 @@ namespace BH.Adapter.External.Lusas
                 surfaceEdges.Add(bhomEdge);
             }
 
-            Panel bhomPanel =Engine.Structure.Create.Panel(surfaceEdges, dummyCurve);
+            Panel bhomPanel = Engine.Structure.Create.Panel(surfaceEdges, dummyCurve);
 
             bhomPanel.Tags = tags;
             bhomPanel.CustomData[AdapterIdName] = lusasSurface.getName();
-            
+
             List<string> geometricAssignments = LusasAdapter.GetAttributeAssignments(lusasSurface, "Geometric");
             List<string> materialAssignments = LusasAdapter.GetAttributeAssignments(lusasSurface, "Material");
 

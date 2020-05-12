@@ -32,6 +32,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private IFLine CreateLine(Bar bar, IFMeshLine mesh)
         {
             if (
@@ -68,7 +72,7 @@ namespace BH.Adapter.Lusas
 
                     IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
 
-                    if(bar.SectionProperty.Material is IOrthotropic)
+                    if (bar.SectionProperty.Material is IOrthotropic)
                     {
                         Engine.Reflection.Compute.RecordWarning($"Orthotropic Material {bar.SectionProperty.Material.Name} cannot be assigned to Bar {bar.CustomData[AdapterIdName]}, " +
                             $"orthotropic can only be applied to 2D and 3D elements in Lusas.");
@@ -104,6 +108,8 @@ namespace BH.Adapter.Lusas
             return lusasLine;
 
         }
+
+        /***************************************************/
 
         private IFLine CreateLine(Bar bar, IFPoint startPoint, IFPoint endPoint)
         {
@@ -163,6 +169,8 @@ namespace BH.Adapter.Lusas
             return lusasLine;
         }
 
+        /***************************************************/
+
         private IFLine CreateLine(ICurve iCurve, IFPoint startPoint, IFPoint endPoint)
         {
             Node startNode = Engine.Structure.Create.Node(
@@ -185,9 +193,9 @@ namespace BH.Adapter.Lusas
             IFLine lusasLine = CreateLine(bhomBar, startPoint, endPoint);
             return lusasLine;
         }
+
+        /***************************************************/
+
     }
-
-
-
 }
 

@@ -32,6 +32,10 @@ namespace BH.Adapter.External.Lusas
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static AreaUniformlyDistributedLoad ToAreaUniformlyDistributed(
             IFLoading lusasDistributed, IEnumerable<IFAssignment> lusasAssignments,
             Dictionary<string, Panel> panelDictionary)
@@ -77,5 +81,8 @@ namespace BH.Adapter.External.Lusas
 
             return bhomSurfaceUniformlyDistributed;
         }
+
+        /***************************************************/
+
     }
 }

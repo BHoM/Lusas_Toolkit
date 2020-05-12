@@ -29,6 +29,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<MeshSettings1D> ReadMeshSettings1D(List<string> ids = null)
         {
             List<MeshSettings1D> bhomMeshSettings1Ds = new List<MeshSettings1D>();
@@ -45,5 +49,8 @@ namespace BH.Adapter.Lusas
 
             return bhomMeshSettings1Ds;
         }
+
+        /***************************************************/
+
     }
 }

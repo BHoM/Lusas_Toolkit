@@ -29,6 +29,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<Edge> ReadEdges(List<string> ids = null)
         {
             object[] lusasLines = d_LusasData.getObjects("Line");
@@ -52,5 +56,8 @@ namespace BH.Adapter.Lusas
 
             return bhomEdges;
         }
+
+        /***************************************************/
+
     }
 }

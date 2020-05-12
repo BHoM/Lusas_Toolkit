@@ -24,7 +24,11 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        internal void NameSearch(string prefix, string customID, string suffix, ref string name)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private void NameSearch(string prefix, string customID, string suffix, ref string name)
         {
             for (int i = 1; i < int.Parse(customID); i++)
             {
@@ -35,5 +39,8 @@ namespace BH.Adapter.Lusas
                 }
             }
         }
+
+        /***************************************************/
+
     }
 }

@@ -30,6 +30,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<ILoad> ReadBarUniformlyDistributedLoads(List<string> ids = null)
         {
             List<ILoad> bhomBarUniformlyDistributedLoads = new List<ILoad>();
@@ -39,7 +43,7 @@ namespace BH.Adapter.Lusas
             object[] lusasDistributedLoads = lusasGlobalDistributedLoads.Concat(
                 lusasLocalDistributedLoads).ToArray();
 
-            if(!(lusasDistributedLoads.Count()==0))
+            if (!(lusasDistributedLoads.Count() == 0))
             {
                 List<Bar> bhomBars = ReadBars();
                 Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
@@ -72,5 +76,8 @@ namespace BH.Adapter.Lusas
 
             return bhomBarUniformlyDistributedLoads;
         }
+
+        /***************************************************/
+
     }
 }

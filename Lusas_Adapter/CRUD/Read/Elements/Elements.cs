@@ -27,6 +27,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<BHoMObject> ReadElements(List<string> ids = null)
         {
             List<BHoMObject> objects = new List<BHoMObject>();
@@ -37,5 +41,8 @@ namespace BH.Adapter.Lusas
 
             return objects;
         }
+
+        /***************************************************/
+
     }
 }

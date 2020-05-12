@@ -27,10 +27,10 @@ namespace BH.Adapter.Lusas
     public partial class LusasAdapter
     {
         /***************************************************/
-        /**** Public methods                            ****/
+        /**** Private methods                           ****/
         /***************************************************/
 
-        public static void AssignmentWarning(IFAssignment lusasAssignment)
+        private static void AssignmentWarning(IFAssignment lusasAssignment)
         {
             if (lusasAssignment.getDatabaseObject() is IFPoint)
             {

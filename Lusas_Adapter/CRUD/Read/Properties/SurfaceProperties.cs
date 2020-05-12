@@ -29,6 +29,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<ISurfaceProperty> Read2DProperties(List<string> ids = null)
         {
             object[] lusasGeometrics = d_LusasData.getAttributes("Surface Geometric");
@@ -43,5 +47,8 @@ namespace BH.Adapter.Lusas
 
             return bhomProperties2D;
         }
+
+        /***************************************************/
+
     }
 }

@@ -29,6 +29,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<Constraint4DOF> Read4DOFConstraints(List<string> ids = null)
         {
             object[] lusasSupports = d_LusasData.getAttributes("Support");
@@ -43,5 +47,8 @@ namespace BH.Adapter.Lusas
 
             return bhomConstraints4DOFs;
         }
+
+        /***************************************************/
+
     }
 }

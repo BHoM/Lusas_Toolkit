@@ -30,6 +30,10 @@ namespace BH.Adapter.Lusas
     {
         private HashSet<string> ReadTags(List<string> ids = null)
         {
+            /***************************************************/
+            /**** Private Methods                           ****/
+            /***************************************************/
+
             object[] lusasGroups = d_LusasData.getObjects("Groups");
             HashSet<string> bhomTags = new HashSet<string>();
 
@@ -41,5 +45,8 @@ namespace BH.Adapter.Lusas
 
             return bhomTags;
         }
+
+        /***************************************************/
+
     }
 }

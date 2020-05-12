@@ -29,6 +29,10 @@ namespace BH.Adapter.External.Lusas
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static MeshSettings1D ToMeshSettings1D(this IFAttribute lusasAttrbute)
         {
             string attributeName = LusasAdapter.GetName(lusasAttrbute);
@@ -70,6 +74,8 @@ namespace BH.Adapter.External.Lusas
 
             return bhomMeshSettings1D;
         }
+
+        /***************************************************/
 
     }
 }

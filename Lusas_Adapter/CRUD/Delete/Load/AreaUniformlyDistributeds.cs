@@ -27,7 +27,11 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public int DeleteAreaUnformlyDistributedLoads(IEnumerable<object> ids)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private int DeleteAreaUnformlyDistributedLoads(IEnumerable<object> ids)
         {
             int success = 1;
 
@@ -49,5 +53,8 @@ namespace BH.Adapter.Lusas
             }
             return success;
         }
+
+        /***************************************************/
+
     }
 }

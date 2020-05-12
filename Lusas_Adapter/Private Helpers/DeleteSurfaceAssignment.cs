@@ -27,7 +27,11 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        internal void DeleteSurfaceAssignments(object[] lusasAttributes)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private void DeleteSurfaceAssignments(object[] lusasAttributes)
         {
             for (int i = 0; i < lusasAttributes.Count(); i++)
             {
@@ -47,5 +51,8 @@ namespace BH.Adapter.Lusas
                 }
             }
         }
+
+        /***************************************************/
+
     }
 }

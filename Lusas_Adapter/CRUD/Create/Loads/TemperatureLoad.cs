@@ -27,6 +27,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private IFLoadingTemperature CreateBarTemperatureLoad(BarTemperatureLoad temperatureLoad, object[] lusasLines)
         {
             if (!Engine.External.Lusas.Query.CheckIllegalCharacters(temperatureLoad.Name))
@@ -38,7 +42,7 @@ namespace BH.Adapter.Lusas
                 "Lc" + temperatureLoad.Loadcase.CustomData[AdapterIdName] + "/" + temperatureLoad.Loadcase.Name);
 
             string lusasName = "Tl" + temperatureLoad.CustomData[AdapterIdName] + "/" + temperatureLoad.Name;
-            NameSearch("Tl", temperatureLoad.CustomData[AdapterIdName].ToString(), 
+            NameSearch("Tl", temperatureLoad.CustomData[AdapterIdName].ToString(),
                 temperatureLoad.Name, ref lusasName);
 
             IFLoadingTemperature lusasTemperatureLoad = CreateTemperatureLoad(lusasName,
@@ -47,7 +51,9 @@ namespace BH.Adapter.Lusas
             return lusasTemperatureLoad;
         }
 
-        public IFLoadingTemperature CreateAreaTemperatureLoad(AreaTemperatureLoad temperatureLoad, 
+        /***************************************************/
+
+        private IFLoadingTemperature CreateAreaTemperatureLoad(AreaTemperatureLoad temperatureLoad,
             object[] lusasSurfaces)
         {
             if (!Engine.External.Lusas.Query.CheckIllegalCharacters(temperatureLoad.Name))
@@ -66,7 +72,7 @@ namespace BH.Adapter.Lusas
             return lusasTemperatureLoad;
         }
 
-        public IFLoadingTemperature CreateTemperatureLoad(string lusasName, 
+        private IFLoadingTemperature CreateTemperatureLoad(string lusasName,
             double temperatureChange, object[] lusasGeometry, IFLoadcase assignedLoadcase)
         {
 
@@ -89,6 +95,9 @@ namespace BH.Adapter.Lusas
 
             return lusasTemperatureLoad;
         }
+
+        /***************************************************/
+
     }
 }
 

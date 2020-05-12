@@ -28,7 +28,11 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public int DeleteSurfaces(IEnumerable<object> ids)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private int DeleteSurfaces(IEnumerable<object> ids)
         {
             int success = 1;
 
@@ -42,7 +46,7 @@ namespace BH.Adapter.Lusas
                     if (lusasSurface.getHOFs().Count() > 0)
                     {
                         //Engine.Reflection.Compute.RecordWarning("S" + index + @" has higher order features(HOFs)
-                            //and cannot be deleted");
+                        //and cannot be deleted");
                     }
                     else
                     {
@@ -57,6 +61,9 @@ namespace BH.Adapter.Lusas
 
             return success;
         }
+
+        /***************************************************/
+
     }
 }
 

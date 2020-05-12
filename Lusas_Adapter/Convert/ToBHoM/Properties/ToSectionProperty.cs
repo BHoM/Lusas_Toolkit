@@ -30,7 +30,10 @@ namespace BH.Adapter.External.Lusas
 {
     public static partial class Convert
     {
-      
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static ISectionProperty ToSection(this IFAttribute lusasAttribute)
         {
             string attributeName = LusasAdapter.GetName(lusasAttribute);
@@ -70,7 +73,9 @@ namespace BH.Adapter.External.Lusas
                 bhomSection.CustomData[AdapterIdName] = adapterID;
 
                 return bhomSection;
-
         }
+
+        /***************************************************/
+
     }
 }

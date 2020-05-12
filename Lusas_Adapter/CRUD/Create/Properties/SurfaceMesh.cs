@@ -29,6 +29,10 @@ namespace BH.Adapter.Lusas
     {
         private IFMeshSurface CreateMeshSettings2D(MeshSettings2D meshSettings2D)
         {
+            /***************************************************/
+            /**** Private Methods                           ****/
+            /***************************************************/
+
             if (!Engine.External.Lusas.Query.CheckIllegalCharacters(meshSettings2D.Name))
             {
                 return null;
@@ -58,5 +62,8 @@ namespace BH.Adapter.Lusas
             }
             return lusasSurfaceMesh;
         }
+
+        /***************************************************/
+
     }
 }

@@ -28,7 +28,11 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        internal Dictionary<string, IFResultsComponentSet> GetResultsSets(string entity, List<string> components, string location, IFResultsContext resultsContext)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private Dictionary<string, IFResultsComponentSet> GetResultsSets(string entity, List<string> components, string location, IFResultsContext resultsContext)
         {
             Dictionary<string, IFResultsComponentSet> resultsSet = new Dictionary<string, IFResultsComponentSet>();
 
@@ -38,14 +42,14 @@ namespace BH.Adapter.Lusas
                 {
                     resultsSet.Add(component, d_LusasData.getResultsComponentSet(entity, component, location, resultsContext));
                 }
-                catch(System.Runtime.InteropServices.COMException)
+                catch (System.Runtime.InteropServices.COMException)
                 {
                     try
                     {
                         d_LusasData.openResults(@"%DBFolder%\%ModelName%~Analysis 1.mys", "Analysis 1", false, 0, false, false);
                         resultsSet.Add(component, d_LusasData.getResultsComponentSet(entity, component, location, resultsContext));
                     }
-                    catch(System.Runtime.InteropServices.COMException)
+                    catch (System.Runtime.InteropServices.COMException)
                     {
                         Engine.Reflection.Compute.RecordError("No results file exists for this model, the model needs to be solved before pulling results.");
                     }
@@ -55,6 +59,9 @@ namespace BH.Adapter.Lusas
 
             return resultsSet;
         }
+
+        /***************************************************/
+
     }
 }
 

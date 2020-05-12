@@ -27,6 +27,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private IFLoadingConcentrated CreateConcentratedLoad(PointLoad pointLoad, object[] lusasPoints)
         {
             if (!Engine.External.Lusas.Query.CheckIllegalCharacters(pointLoad.Name))
@@ -59,6 +63,9 @@ namespace BH.Adapter.Lusas
 
             return lusasPointLoad;
         }
+
+        /***************************************************/
+
     }
 }
 

@@ -26,9 +26,13 @@ using BH.oM.Base;
 
 namespace BH.Adapter.Lusas
 {
+    /***************************************************/
+    /**** Private Methods                           ****/
+    /***************************************************/
+
     public partial class LusasAdapter
     {
-        internal void CreateTags(IEnumerable<IBHoMObject> bhomObject)
+        private void CreateTags(IEnumerable<IBHoMObject> bhomObject)
         {
             List<string> objectTags = bhomObject.SelectMany(x => x.Tags).Distinct().ToList();
 
@@ -40,5 +44,8 @@ namespace BH.Adapter.Lusas
                 }
             }
         }
+
+        /***************************************************/
+
     }
 }

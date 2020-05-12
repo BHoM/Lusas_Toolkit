@@ -32,6 +32,10 @@ namespace BH.Adapter.External.Lusas
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static Node ToNode(this IFPoint lusasPoint,
             HashSet<string> groupNames, Dictionary<string, Constraint6DOF> bhom6DOFConstraints)
         {
@@ -44,9 +48,9 @@ namespace BH.Adapter.External.Lusas
                 bhom6DOFConstraints.TryGetValue(supportAssignments[0], out nodeConstraint);
             }
 
-            Node bhomNode =Engine.Structure.Create.Node(
+            Node bhomNode = Engine.Structure.Create.Node(
                 new Point { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() },
-                "", 
+                "",
                 nodeConstraint);
 
             bhomNode.Tags = tags;
@@ -56,6 +60,8 @@ namespace BH.Adapter.External.Lusas
 
             return bhomNode;
         }
+
+        /***************************************************/
 
     }
 }

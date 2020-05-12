@@ -32,6 +32,10 @@ namespace BH.Adapter.External.Lusas
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static PointDisplacement ToPointDisplacement(IFLoading lusasPrescribedDisplacement,
             IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Node> bhomNodeDictionary)
         {
@@ -67,5 +71,8 @@ namespace BH.Adapter.External.Lusas
 
             return bhomPointDisplacement;
         }
+
+        /***************************************************/
+
     }
 }

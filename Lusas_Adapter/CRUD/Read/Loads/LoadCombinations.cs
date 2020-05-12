@@ -29,12 +29,16 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<LoadCombination> ReadLoadCombinations(List<string> ids = null)
         {
             List<LoadCombination> bhomLoadCombintations = new List<LoadCombination>();
             object[] lusasCombinations = d_LusasData.getLoadsets("Combinations");
 
-            if(!(lusasCombinations.Count()==0))
+            if (!(lusasCombinations.Count() == 0))
             {
                 List<Loadcase> lusasLoadcases = ReadLoadcases();
                 Dictionary<string, Loadcase> loadcaseDictionary = lusasLoadcases.ToDictionary(
@@ -51,5 +55,8 @@ namespace BH.Adapter.Lusas
 
             return bhomLoadCombintations;
         }
+
+        /***************************************************/
+
     }
 }

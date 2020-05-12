@@ -28,6 +28,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private IFLoadcase CreateLoadcase(Loadcase loadcase)
         {
             if (!Engine.External.Lusas.Query.CheckIllegalCharacters(loadcase.Name))
@@ -58,5 +62,8 @@ namespace BH.Adapter.Lusas
             }
             return lusasLoadcase;
         }
+
+        /***************************************************/
+
     }
 }

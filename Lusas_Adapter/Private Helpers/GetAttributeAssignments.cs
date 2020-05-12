@@ -28,7 +28,11 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public static List<string> GetAttributeAssignments(IFGeometry lusasGeometry, string attributeType)
+        /***************************************************/
+        /**** Internal Methods                          ****/
+        /***************************************************/
+
+        internal static List<string> GetAttributeAssignments(IFGeometry lusasGeometry, string attributeType)
         {
             object[] lusasAssignments = lusasGeometry.getAssignments(attributeType);
 
@@ -44,6 +48,8 @@ namespace BH.Adapter.Lusas
             }
             return attributeNames;
         }
+
+        /***************************************************/
 
     }
 }

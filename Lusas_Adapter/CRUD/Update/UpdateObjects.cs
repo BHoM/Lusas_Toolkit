@@ -55,10 +55,14 @@ namespace BH.Adapter.Lusas
             return success;
         }
 
+        /***************************************************/
+
         protected bool Update(IEnumerable<IBHoMObject> bhomObjects)
         {
             return true;
         }
+
+        /***************************************************/
 
         protected bool Update(IEnumerable<Node> nodes)
         {
@@ -81,6 +85,7 @@ namespace BH.Adapter.Lusas
         }
 
         /***************************************************/
+
     }
 }
 
