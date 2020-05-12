@@ -56,12 +56,12 @@ namespace BH.Adapter.Lusas
                     if (lusasDistributedLoad.getValue("type") == "Area")
                     {
                         IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                            Engine.External.Lusas.Query.GetLoadAssignments(lusasDistributedLoad);
+                            LusasAdapter.GetLoadAssignments(lusasDistributedLoad);
 
                         foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                         {
                             AreaUniformlyDistributedLoad bhomBarUniformlyDistributedLoad =
-                                Engine.External.Lusas.Convert.ToAreaUniformlyDistributed(
+                                Adapter.External.Lusas.Convert.ToAreaUniformlyDistributed(
                                     lusasDistributedLoad, groupedAssignment, surfaceDictionary);
 
                             List<string> analysisName = new List<string> { lusasDistributedLoad.getAttributeType() };

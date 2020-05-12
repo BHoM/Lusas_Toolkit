@@ -48,12 +48,12 @@ namespace BH.Adapter.Lusas
                     IFLoading lusasPrescribedDisplacement = (IFLoading)lusasPrescribedDisplacements[i];
 
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                        Engine.External.Lusas.Query.GetLoadAssignments(lusasPrescribedDisplacement);
+                        LusasAdapter.GetLoadAssignments(lusasPrescribedDisplacement);
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
                         PointDisplacement bhomPointDisplacement =
-                            Engine.External.Lusas.Convert.ToPointDisplacement(
+                            External.Lusas.Convert.ToPointDisplacement(
                                 lusasPrescribedDisplacement, groupedAssignment, nodeDictionary);
 
                         List<string> analysisName = new List<string> { lusasPrescribedDisplacement.getAttributeType() };
