@@ -39,11 +39,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="BHoM_Adapter">
-      <HintPath>..\..\BHoM_Adapter\BHoM_Adapter\obj\Debug\BHoM_Adapter.dll</HintPath>
+      <HintPath>..\..\BHoM_Adapter\Build\BHoM_Adapter.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="BHoM_Engine">
-      <HintPath>..\..\BHoM_Engine\BHoM_Engine\obj\Debug\BHoM_Engine.dll</HintPath>
+      <HintPath>..\..\BHoM_Engine\Build\BHoM_Engine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Common_oM">
@@ -56,7 +56,7 @@
     </Reference>
     <Reference Include="Geometry_Engine">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\BHoM_Engine\Geometry_Engine\obj\Debug\Geometry_Engine.dll</HintPath>
+      <HintPath>..\..\BHoM_Engine\Build\Geometry_Engine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Geometry_oM">
