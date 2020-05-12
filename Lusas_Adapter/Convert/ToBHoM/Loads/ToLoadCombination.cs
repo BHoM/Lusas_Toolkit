@@ -31,6 +31,10 @@ namespace BH.Adapter.External.Lusas
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static LoadCombination ToLoadCombination(
             this IFBasicCombination lusasLoadCombination,
             Dictionary<string, Loadcase> bhomLoadcases)
@@ -63,5 +67,8 @@ namespace BH.Adapter.External.Lusas
 
             return BHoMLoadCombination;
         }
+
+        /***************************************************/
+
     }
 }

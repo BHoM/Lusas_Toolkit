@@ -29,6 +29,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private IFMeshLine CreateMeshSettings1D(MeshSettings1D meshSettings1D, BarFEAType barFEAType = BarFEAType.Flexural, BarRelease barRelease = null)
         {
             if (!Engine.External.Lusas.Query.CheckIllegalCharacters(meshSettings1D.Name))
@@ -41,7 +45,7 @@ namespace BH.Adapter.Lusas
                 Engine.Reflection.Compute.RecordWarning(
                     barFEAType + " used with barReleases, this information will be lost when pushed to Lusas");
             }
-            else if(barRelease == null)
+            else if (barRelease == null)
             {
                 barRelease = Engine.Structure.Create.BarReleaseFixFix();
             }
@@ -55,7 +59,7 @@ namespace BH.Adapter.Lusas
             string releaseString = CreateReleaseString(barRelease);
 
             IFMeshLine lusasLineMesh;
-            string lusasName = 
+            string lusasName =
                 "Me" + adapterID + "/" + meshSettings1D.Name + "\\" + barFEAType.ToString() + "|" + releaseString;
 
             if (d_LusasData.existsAttribute("Mesh", lusasName))
@@ -70,6 +74,9 @@ namespace BH.Adapter.Lusas
             }
             return lusasLineMesh;
         }
+
+        /***************************************************/
+
         private static string CreateReleaseString(BarRelease barReleases)
         {
             string releaseString = "";
@@ -106,6 +113,8 @@ namespace BH.Adapter.Lusas
             return releaseString;
         }
 
+        /***************************************************/
+
         private static void SetSplitMethod(IFMeshLine lusasLineMesh, MeshSettings1D meshSettings1D, BarFEAType barFEAType)
         {
             if (meshSettings1D.SplitMethod == Split1D.Length)
@@ -127,6 +136,8 @@ namespace BH.Adapter.Lusas
             }
         }
 
+        /***************************************************/
+
         private static void SetElementType(IFMeshLine lusasLineMesh, BarFEAType barFEAType)
         {
             if (barFEAType == BarFEAType.Axial)
@@ -134,6 +145,8 @@ namespace BH.Adapter.Lusas
             else if (barFEAType == BarFEAType.Flexural)
                 lusasLineMesh.addElementName("BMX21");
         }
+
+        /***************************************************/
 
         private static void SetEndConditions(IFMeshLine lusasLineMesh, BarRelease barReleases)
         {
@@ -163,6 +176,8 @@ namespace BH.Adapter.Lusas
             if (barReleases.EndRelease.RotationZ == DOFType.Free)
                 lusasLineMesh.setEndRelease("End", "thz", "free");
         }
+
+        /***************************************************/
 
     }
 }

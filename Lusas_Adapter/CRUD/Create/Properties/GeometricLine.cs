@@ -29,6 +29,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private IFAttribute CreateGeometricLine(ISectionProperty sectionProperty)
         {
             if (!Engine.External.Lusas.Query.CheckIllegalCharacters(sectionProperty.Name))
@@ -51,6 +55,7 @@ namespace BH.Adapter.Lusas
             return lusasAttribute;
         }
 
+        /***************************************************/
 
         private IFAttribute CreateSection(SteelSection sectionProperty, string lusasName)
         {
@@ -60,6 +65,8 @@ namespace BH.Adapter.Lusas
             return lusasGeometricLine;
         }
 
+        /***************************************************/
+
         private IFAttribute CreateSection(ConcreteSection sectionProperty, string lusasName)
         {
             IFAttribute lusasGeometricLine = CreateProfile(
@@ -67,11 +74,16 @@ namespace BH.Adapter.Lusas
              );
             return lusasGeometricLine;
         }
+
+        /***************************************************/
+
         private IFAttribute CreateSection(ExplicitSection sectionProperty, string lusasName)
         {
             Engine.Reflection.Compute.RecordError("ExplicitSection not supported in Lusas_Toolkit");
             return null;
         }
+
+        /***************************************************/
 
         private IFAttribute CreateSection(TimberSection sectionProperty, string lusasName)
         {
@@ -80,6 +92,9 @@ namespace BH.Adapter.Lusas
                 );
             return lusasGeometricLine;
         }
+
+        /***************************************************/
+
         private IFAttribute CreateSection(AluminiumSection sectionProperty, string lusasName)
         {
             IFAttribute lusasGeometricLine = CreateProfile(
@@ -87,6 +102,9 @@ namespace BH.Adapter.Lusas
                 );
             return lusasGeometricLine;
         }
+
+        /***************************************************/
+
         private IFAttribute CreateSection(GenericSection sectionProperty, string lusasName)
         {
             IFAttribute lusasGeometricLine = CreateProfile(
@@ -94,6 +112,8 @@ namespace BH.Adapter.Lusas
                 );
             return lusasGeometricLine;
         }
+
+        /***************************************************/
 
         private IFGeometricLine CreateProfile(RectangleProfile bhomProfile, string lusasName)
         {
@@ -111,6 +131,8 @@ namespace BH.Adapter.Lusas
 
             return lusasGeometricLine;
         }
+
+        /***************************************************/
 
         private IFGeometricLine CreateProfile(BoxProfile bhomProfile, string lusasName)
         {
@@ -131,13 +153,15 @@ namespace BH.Adapter.Lusas
             return lusasGeometricLine;
         }
 
+        /***************************************************/
+
         private IFGeometricLine CreateProfile(FabricatedBoxProfile bhomProfile, string lusasName)
         {
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(lusasName);
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
             Engine.Reflection.Compute.RecordWarning(
-                "Unequal flange thickness not supported in Lusas for " + bhomProfile.GetType().ToString() 
+                "Unequal flange thickness not supported in Lusas for " + bhomProfile.GetType().ToString()
                 + ", top flange thickness used as flange thickness");
             Engine.Reflection.Compute.RecordWarning(
                 "Weld size assumed to be inner radius for " + bhomProfile.GetType().ToString());
@@ -157,6 +181,8 @@ namespace BH.Adapter.Lusas
             return lusasGeometricLine;
         }
 
+        /***************************************************/
+
         private IFGeometricLine CreateProfile(CircleProfile bhomProfile, string lusasName)
         {
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(lusasName);
@@ -174,6 +200,8 @@ namespace BH.Adapter.Lusas
             return lusasGeometricLine;
         }
 
+        /***************************************************/
+
         private IFGeometricLine CreateProfile(TubeProfile bhomProfile, string lusasName)
         {
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(lusasName);
@@ -190,6 +218,8 @@ namespace BH.Adapter.Lusas
 
             return lusasGeometricLine;
         }
+
+        /***************************************************/
 
         private IFGeometricLine CreateProfile(ISectionProfile bhomProfile, string lusasName)
         {
@@ -209,6 +239,8 @@ namespace BH.Adapter.Lusas
             return lusasGeometricLine;
         }
 
+        /***************************************************/
+
         private IFGeometricLine CreateProfile(TSectionProfile bhomProfile, string lusasName)
         {
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(lusasName);
@@ -227,6 +259,8 @@ namespace BH.Adapter.Lusas
             return lusasGeometricLine;
         }
 
+        /***************************************************/
+
         private IFGeometricLine CreateProfile(FabricatedISectionProfile bhomProfile, string lusasName)
         {
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(lusasName);
@@ -237,7 +271,7 @@ namespace BH.Adapter.Lusas
             bhomProfile.WebThickness, bhomProfile.WeldSize};
             double[] dimensionArray = dimensionList.ToArray();
 
-            List<string> valueList = new List<string> {"Bt", "Bb", "D", "tft", "bft", "tw", "r" };
+            List<string> valueList = new List<string> { "Bt", "Bb", "D", "tft", "bft", "tw", "r" };
             string[] valueArray = valueList.ToArray();
 
             int lusasType = 14;
@@ -248,6 +282,8 @@ namespace BH.Adapter.Lusas
 
             return lusasGeometricLine;
         }
+
+        /***************************************************/
 
         private IFGeometricLine CreateProfile(AngleProfile bhomProfile, string lusasName)
         {
@@ -269,6 +305,8 @@ namespace BH.Adapter.Lusas
             return lusasGeometricLine;
         }
 
+        /***************************************************/
+
         private IFGeometricLine CreateProfile(ChannelProfile bhomProfile, string lusasName)
         {
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(lusasName);
@@ -287,6 +325,8 @@ namespace BH.Adapter.Lusas
 
             return lusasGeometricLine;
         }
+
+        /***************************************************/
 
         private IFGeometricLine CreateProfile(ZSectionProfile bhomProfile, string lusasName)
         {
@@ -310,6 +350,8 @@ namespace BH.Adapter.Lusas
             return lusasGeometricLine;
         }
 
+        /***************************************************/
+
         private IFGeometricLine CreateProfile(GeneralisedFabricatedBoxProfile bhomProfile,
             string lusasName)
         {
@@ -318,6 +360,8 @@ namespace BH.Adapter.Lusas
                 );
             return null;
         }
+
+        /***************************************************/
 
         private IFGeometricLine CreateProfile(GeneralisedTSectionProfile bhomProfile,
            string lusasName)
@@ -328,6 +372,8 @@ namespace BH.Adapter.Lusas
             return null;
         }
 
+        /***************************************************/
+
         private IFGeometricLine CreateProfile(FreeFormProfile bhomProfile, string lusasName)
         {
             Engine.Reflection.Compute.RecordError(
@@ -336,11 +382,15 @@ namespace BH.Adapter.Lusas
             return null;
         }
 
+        /***************************************************/
+
         private IFGeometricLine CreateProfile(KiteProfile bhomProfile, string lusasName)
         {
             Engine.Reflection.Compute.RecordError("KiteProfile not supported in Lusas_Toolkit");
             return null;
         }
+
+        /***************************************************/
 
 
         private void CreateLibrarySection(IFGeometricLine lusasGeometricLine,
@@ -350,6 +400,9 @@ namespace BH.Adapter.Lusas
             m_LusasApplication.addLibrarySection(true, sectionName, lusasType, dimensionArray, true);
             lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionName, 0, 0);
         }
+
+        /***************************************************/
+
     }
 }
 

@@ -28,6 +28,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private IFPoint CreatePoint(Node node)
         {
             IFPoint lusasPoint;
@@ -53,15 +57,17 @@ namespace BH.Adapter.Lusas
             return lusasPoint;
         }
 
-        public IFPoint CreatePoint(Point point)
+        /***************************************************/
+
+        private IFPoint CreatePoint(Point point)
         {
             Node newNode = Engine.Structure.Create.Node(new Point { X = point.X, Y = point.Y, Z = point.Z });
 
             int adapterID;
             if (newNode.CustomData.ContainsKey(AdapterIdName))
-               adapterID= System.Convert.ToInt32(newNode.CustomData[AdapterIdName]);
+                adapterID = System.Convert.ToInt32(newNode.CustomData[AdapterIdName]);
             else
-               adapterID= System.Convert.ToInt32(NextFreeId(newNode.GetType()));
+                adapterID = System.Convert.ToInt32(NextFreeId(newNode.GetType()));
 
             newNode.CustomData[AdapterIdName] = adapterID;
 
@@ -69,6 +75,8 @@ namespace BH.Adapter.Lusas
 
             return newPoint;
         }
+
+        /***************************************************/
 
     }
 }

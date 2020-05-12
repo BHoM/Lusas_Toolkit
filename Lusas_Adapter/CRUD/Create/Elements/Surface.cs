@@ -27,6 +27,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private IFSurface CreateSurface(Panel panel, IFLine[] lusasLines)
         {
             IFSurface lusasSurface;
@@ -45,9 +49,9 @@ namespace BH.Adapter.Lusas
                 AssignObjectSet(lusasSurface, panel.Tags);
             }
 
-            if(!(panel.Property == null))
+            if (!(panel.Property == null))
             {
-                string geometricSurfaceName = "G" + 
+                string geometricSurfaceName = "G" +
                     panel.Property.CustomData[AdapterIdName] + "/" + panel.Property.Name;
 
                 IFAttribute lusasGeometricSurface = d_LusasData.getAttribute(
@@ -56,7 +60,7 @@ namespace BH.Adapter.Lusas
                 lusasGeometricSurface.assignTo(lusasSurface);
                 if (!(panel.Property.Material == null))
                 {
-                    string materialName = "M" + panel.Property.Material.CustomData[AdapterIdName] + 
+                    string materialName = "M" + panel.Property.Material.CustomData[AdapterIdName] +
                         "/" + panel.Property.Material.Name;
 
                     IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
@@ -66,6 +70,8 @@ namespace BH.Adapter.Lusas
 
             return lusasSurface;
         }
+
+        /***************************************************/
 
     }
 }

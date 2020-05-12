@@ -33,12 +33,16 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<Bar> ReadBars(List<string> ids = null)
         {
             object[] lusasLines = d_LusasData.getObjects("Line");
             List<Bar> bhomBars = new List<Bar>();
 
-            if(!(lusasLines.Count()==0))
+            if (!(lusasLines.Count() == 0))
             {
                 IEnumerable<Node> bhomNodesList = ReadNodes();
                 Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(
@@ -83,5 +87,8 @@ namespace BH.Adapter.Lusas
 
             return bhomBars;
         }
+
+        /***************************************************/
+
     }
 }

@@ -27,6 +27,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private IFLoadingBody CreateGravityLoad(GravityLoad gravityLoad, IFGeometry[] lusasGeometry)
         {
             if (!Engine.External.Lusas.Query.CheckIllegalCharacters(gravityLoad.Name))
@@ -58,6 +62,9 @@ namespace BH.Adapter.Lusas
 
             return lusasGravityLoad;
         }
+
+        /***************************************************/
+
     }
 }
 

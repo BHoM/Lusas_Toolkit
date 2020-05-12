@@ -28,6 +28,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<IFPoint> ReadLusasPoints(List<string> ids = null)
         {
             object[] lusasPoints = d_LusasData.getObjects("Point");
@@ -40,5 +44,8 @@ namespace BH.Adapter.Lusas
             }
             return lusasPointList;
         }
+
+        /***************************************************/
+
     }
 }

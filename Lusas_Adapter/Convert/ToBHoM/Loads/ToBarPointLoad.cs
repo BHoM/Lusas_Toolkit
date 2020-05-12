@@ -32,6 +32,10 @@ namespace BH.Adapter.External.Lusas
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static BarPointLoad ToBarPointLoad(IFLoading lusasBarPointLoad,
             IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Bar> bhomBarDictionary)
         {
@@ -72,5 +76,8 @@ namespace BH.Adapter.External.Lusas
 
             return bhomBarPointLoad;
         }
+
+        /***************************************************/
+
     }
 }

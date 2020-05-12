@@ -31,7 +31,11 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        internal object[] GetAssignedPoints(Load<Node> bhomLoads)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private object[] GetAssignedPoints(Load<Node> bhomLoads)
         {
             string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => "P" + x.CustomData[AdapterIdName].ToString()).ToArray();
 
@@ -40,7 +44,9 @@ namespace BH.Adapter.Lusas
             return arrayGeometry;
         }
 
-        public object[] GetAssignedLines(Load<Bar> bhomLoads)
+        /***************************************************/
+
+        private object[] GetAssignedLines(Load<Bar> bhomLoads)
         {
             string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => "L" + x.CustomData[AdapterIdName].ToString()).ToArray();
 
@@ -49,7 +55,9 @@ namespace BH.Adapter.Lusas
             return arrayGeometry;
         }
 
-        public object[] GetAssignedSurfaces(Load<IAreaElement> bhomLoads)
+        /***************************************************/
+
+        private object[] GetAssignedSurfaces(Load<IAreaElement> bhomLoads)
         {
             string[] lusasIDs = bhomLoads.Objects.Elements.Select(x => "S" + x.CustomData[AdapterIdName].ToString()).ToArray();
 
@@ -58,7 +66,9 @@ namespace BH.Adapter.Lusas
             return arrayGeometry;
         }
 
-        public IFGeometry[] GetAssignedObjects(Load<BHoMObject> bhomLoads)
+        /***************************************************/
+
+        private IFGeometry[] GetAssignedObjects(Load<BHoMObject> bhomLoads)
         {
             List<IFGeometry> assignedGeometry = new List<IFGeometry>();
 
@@ -91,6 +101,9 @@ namespace BH.Adapter.Lusas
 
             return arrayGeometry;
         }
+
+        /***************************************************/
+
     }
 }
 

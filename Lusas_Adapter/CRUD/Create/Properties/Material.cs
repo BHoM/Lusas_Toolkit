@@ -27,6 +27,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private IFAttribute CreateMaterial(IMaterialFragment material)
         {
             if (!Engine.External.Lusas.Query.CheckIllegalCharacters(material.Name))
@@ -36,7 +40,7 @@ namespace BH.Adapter.Lusas
 
             IFAttribute lusasMaterial = null;
             string lusasName = "M" + material.CustomData[AdapterIdName] + "/" + material.Name;
-            
+
             if (material is IIsotropic)
             {
                 IIsotropic isotropic = material as IIsotropic;
@@ -68,14 +72,16 @@ namespace BH.Adapter.Lusas
                     lusasMaterial.setValue("ay", iorthotropic.ThermalExpansionCoeff.Y);
                     lusasMaterial.setValue("az", iorthotropic.ThermalExpansionCoeff.Z);
 
-                    lusasMaterial.setValue("axy", System.Math.Sqrt(System.Math.Pow(iorthotropic.ThermalExpansionCoeff.X,2) 
-                        + System.Math.Pow(iorthotropic.ThermalExpansionCoeff.Y,2)));
+                    lusasMaterial.setValue("axy", System.Math.Sqrt(System.Math.Pow(iorthotropic.ThermalExpansionCoeff.X, 2)
+                        + System.Math.Pow(iorthotropic.ThermalExpansionCoeff.Y, 2)));
 
                     lusasMaterial.setName(lusasName);
                 }
             }
             return lusasMaterial;
         }
+
+        /***************************************************/
 
     }
 }

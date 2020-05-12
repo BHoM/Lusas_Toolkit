@@ -26,7 +26,11 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public int DeletePointDisplacements (IEnumerable<object> ids)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private int DeletePointDisplacements (IEnumerable<object> ids)
         {
             int success = 1;
 
@@ -44,6 +48,9 @@ namespace BH.Adapter.Lusas
             }
             return success;
         }
+
+        /***************************************************/
+
     }
 }
 

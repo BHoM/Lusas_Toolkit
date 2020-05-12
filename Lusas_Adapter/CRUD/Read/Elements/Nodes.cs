@@ -30,12 +30,16 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<Node> ReadNodes(List<string> ids = null)
         {
             object[] lusasPoints = d_LusasData.getObjects("Point");
             List<Node> bhomNodes = new List<Node>();
 
-            if(!(lusasPoints.Count()==0))
+            if (!(lusasPoints.Count() == 0))
             {
                 HashSet<string> groupNames = ReadTags();
 
@@ -53,5 +57,8 @@ namespace BH.Adapter.Lusas
 
             return bhomNodes;
         }
+
+        /***************************************************/
+
     }
 }

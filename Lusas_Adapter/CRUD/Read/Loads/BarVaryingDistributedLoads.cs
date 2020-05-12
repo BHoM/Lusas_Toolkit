@@ -30,6 +30,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<ILoad> ReadBarVaryingDistributedLoads(List<string> ids = null)
         {
             List<ILoad> bhomBarDistributedLoads = new List<ILoad>();
@@ -67,5 +71,8 @@ namespace BH.Adapter.Lusas
 
             return bhomBarDistributedLoads;
         }
+
+        /***************************************************/
+
     }
 }

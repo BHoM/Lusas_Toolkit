@@ -30,12 +30,16 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<ILoad> ReadGravityLoads(List<string> ids = null)
         {
             List<ILoad> bhomGravityLoads = new List<ILoad>();
             object[] lusasBodyForces = d_LusasData.getAttributes("Body Force Load");
 
-            if (!(lusasBodyForces.Count()==0))
+            if (!(lusasBodyForces.Count() == 0))
             {
                 List<Bar> bhomBars = ReadBars();
                 List<Panel> bhomPanels = ReadPanels();
@@ -68,5 +72,8 @@ namespace BH.Adapter.Lusas
 
             return bhomGravityLoads;
         }
+
+        /***************************************************/
+
     }
 }

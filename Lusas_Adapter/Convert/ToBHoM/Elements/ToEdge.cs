@@ -30,10 +30,14 @@ namespace BH.Adapter.External.Lusas
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static Edge ToEdge(this IFLine lusasLine,
             Dictionary<string, Node> bhomNodes, HashSet<string> groupNames)
         {
-            Node startNode = LusasAdapter .GetNode(lusasLine, 0, bhomNodes);
+            Node startNode = LusasAdapter.GetNode(lusasLine, 0, bhomNodes);
             Node endNode = LusasAdapter.GetNode(lusasLine, 1, bhomNodes);
 
             Point startPoint = Engine.Structure.Query.Position(startNode);
@@ -51,6 +55,9 @@ namespace BH.Adapter.External.Lusas
 
             return bhomEdge;
         }
+
+        /***************************************************/
+
     }
 }
 

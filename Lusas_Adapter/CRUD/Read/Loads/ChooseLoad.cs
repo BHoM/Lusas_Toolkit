@@ -28,6 +28,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<ILoad> ChooseLoad(Type type, List<string> ids = null)
         {
             List<ILoad> readLoads = null;
@@ -65,6 +69,9 @@ namespace BH.Adapter.Lusas
 
             return readLoads;
         }
+
+        /***************************************************/
+
     }
 }
 

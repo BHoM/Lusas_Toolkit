@@ -28,6 +28,10 @@ namespace BH.Adapter.External.Lusas
 {
     public partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static double[] ToDouble(object objectAxis)
         {
             object[] axis = (object[])objectAxis;
@@ -40,6 +44,9 @@ namespace BH.Adapter.External.Lusas
 
             return axisList.ToArray();
         }
+
+        /***************************************************/
+
     }
 }
 

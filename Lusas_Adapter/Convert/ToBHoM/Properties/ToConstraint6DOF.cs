@@ -29,6 +29,10 @@ namespace BH.Adapter.External.Lusas
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static Constraint6DOF ToConstraint6DOF(this IFSupportStructural lusasAttribute)
         {
             List<string> releaseNames = new List<string> { "U", "V", "W", "THX", "THY", "THZ" };
@@ -68,6 +72,9 @@ namespace BH.Adapter.External.Lusas
 
             return bhomConstraint6DOF;
         }
+
+        /***************************************************/
+
     }
 }
 

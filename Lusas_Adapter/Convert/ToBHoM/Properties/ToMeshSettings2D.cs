@@ -30,16 +30,11 @@ namespace BH.Adapter.External.Lusas
     {
         public static MeshSettings2D ToMeshSettings2D(this IFAttribute lusasAttribute)
         {
-            string attributeName = LusasAdapter.GetName(lusasAttribute);
-            //object[] elementNames = lusasMeshSurface.getElementNames();
+            /***************************************************/
+            /**** Public Methods                            ****/
+            /***************************************************/
 
-            //foreach (object name in elnames)
-            //{
-            //    if (name.ToString() == "QTS4")
-            //        continue;
-            //    else
-            //        elementType2D = ElementType2D.ThinShell;
-            //}
+            string attributeName = LusasAdapter.GetName(lusasAttribute);
 
             int xDivisions = 0;
             int yDivisions = 0;
@@ -80,6 +75,8 @@ namespace BH.Adapter.External.Lusas
 
             return bhomMeshSettings2D;
         }
+
+        /***************************************************/
 
     }
 }

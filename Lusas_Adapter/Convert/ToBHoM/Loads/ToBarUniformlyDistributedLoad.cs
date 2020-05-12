@@ -32,6 +32,10 @@ namespace BH.Adapter.External.Lusas
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static BarUniformlyDistributedLoad ToBarUniformallyDistributed(IFLoading lusasDistributed,
             IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Bar> bhomBarDictionary)
         {
@@ -79,10 +83,13 @@ namespace BH.Adapter.External.Lusas
                     LusasAdapter.GetName(lusasDistributed));
             }
 
-            int adapterID = LusasAdapter.GetAdapterID  (lusasDistributed, 'l');
+            int adapterID = LusasAdapter.GetAdapterID(lusasDistributed, 'l');
             bhomBarUniformlyDistributed.CustomData[AdapterIdName] = adapterID;
 
             return bhomBarUniformlyDistributed;
         }
+
+        /***************************************************/
+
     }
 }

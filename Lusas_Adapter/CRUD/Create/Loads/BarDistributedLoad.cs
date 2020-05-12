@@ -30,6 +30,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<IFLoadingBeamDistributed> CreateBarDistributedLoad(
             BarVaryingDistributedLoad bhomBarDistributedLoad, object[] lusasLines)
         {
@@ -163,5 +167,8 @@ namespace BH.Adapter.Lusas
             }
             return lusasBarDistributedLoads;
         }
+
+        /***************************************************/
+
     }
 }

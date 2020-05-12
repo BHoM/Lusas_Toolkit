@@ -29,6 +29,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<ISectionProperty> ReadSectionProperties(List<string> ids = null)
         {
             object[] lusasSections = d_LusasData.getAttributes("Line Geometric");
@@ -42,5 +46,8 @@ namespace BH.Adapter.Lusas
             }
             return bhomSections;
         }
+
+        /***************************************************/
+
     }
 }

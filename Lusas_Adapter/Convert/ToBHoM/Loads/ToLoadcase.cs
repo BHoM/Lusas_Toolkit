@@ -28,10 +28,17 @@ namespace BH.Adapter.External.Lusas
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static Loadcase ToLoadcase(this IFLoadcase lusasLoadcase)
         {
-            Loadcase BHoMLoadcase = new Loadcase { Name = LusasAdapter.GetName(lusasLoadcase),
-                Number = lusasLoadcase.getID()};
+            Loadcase BHoMLoadcase = new Loadcase
+            {
+                Name = LusasAdapter.GetName(lusasLoadcase),
+                Number = lusasLoadcase.getID()
+            };
 
             int adapterID = LusasAdapter.GetAdapterID(lusasLoadcase, 'c');
 
@@ -39,6 +46,9 @@ namespace BH.Adapter.External.Lusas
 
             return BHoMLoadcase;
         }
+
+        /***************************************************/
+
     }
 }
 

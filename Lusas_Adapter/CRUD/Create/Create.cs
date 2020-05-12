@@ -268,7 +268,7 @@ namespace BH.Adapter.Lusas
 
             List<Edge> PanelEdges = new List<Edge>();
 
-                foreach (Panel Panel in panels)
+            foreach (Panel Panel in panels)
             {
                 PanelEdges.AddRange(Panel.ExternalEdges);
             }

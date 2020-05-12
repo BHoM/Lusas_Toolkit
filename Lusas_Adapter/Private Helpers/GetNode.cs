@@ -29,10 +29,10 @@ namespace BH.Adapter.Lusas
     public partial class LusasAdapter
     {
         /***************************************************/
-        /**** Public Methods                            ****/
+        /**** Internal Methods                          ****/
         /***************************************************/
 
-        public static Node GetNode(IFLine lusasLine, int nodeIndex, Dictionary<string, Node> bhomNodes)
+        internal static Node GetNode(IFLine lusasLine, int nodeIndex, Dictionary<string, Node> bhomNodes)
         {
             Node bhomNode = null;
             IFPoint lusasPoint = lusasLine.getLOFs()[nodeIndex];

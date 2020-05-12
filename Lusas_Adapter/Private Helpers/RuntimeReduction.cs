@@ -24,7 +24,11 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        internal void ReduceRuntime(bool active)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private void ReduceRuntime(bool active)
         {
             if(active)
             {

@@ -31,6 +31,10 @@ namespace BH.Adapter.External.Lusas
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static AreaTemperatureLoad ToAreaTempratureLoad(
             IFLoading lusasTemperatureLoad,
             IEnumerable<IFAssignment> lusasAssignments,
@@ -55,6 +59,9 @@ namespace BH.Adapter.External.Lusas
 
             return bhomAreaTemperatureLoad;
         }
+
+        /***************************************************/
+
     }
 }
 

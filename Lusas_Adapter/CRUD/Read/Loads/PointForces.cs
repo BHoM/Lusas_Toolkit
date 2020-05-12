@@ -31,12 +31,16 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<ILoad> ReadPointLoads(List<string> ids = null)
         {
             List<ILoad> bhomPointLoads = new List<ILoad>();
             object[] lusasConcentratedLoads = d_LusasData.getAttributes("Concentrated Load");
 
-            if(!(lusasConcentratedLoads.Count()==0))
+            if (!(lusasConcentratedLoads.Count() == 0))
             {
                 List<Node> bhomNodes = ReadNodes();
                 Dictionary<string, Node> nodeDictionary = bhomNodes.ToDictionary(
@@ -65,5 +69,8 @@ namespace BH.Adapter.Lusas
 
             return bhomPointLoads;
         }
+
+        /***************************************************/
+
     }
 }

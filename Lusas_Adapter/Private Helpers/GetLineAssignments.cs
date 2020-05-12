@@ -30,10 +30,10 @@ namespace BH.Adapter.Lusas
     public partial class LusasAdapter
     {
         /***************************************************/
-        /**** Public Methods                            ****/
+        /**** Internal Methods                          ****/
         /***************************************************/
 
-        public static IEnumerable<Bar> GetLineAssignments(IEnumerable<IFAssignment> lusasAssignments,
+        internal static IEnumerable<Bar> GetLineAssignments(IEnumerable<IFAssignment> lusasAssignments,
             Dictionary<string, Bar> bhomBars)
         {
             List<Bar> assignedBars = new List<Bar>();

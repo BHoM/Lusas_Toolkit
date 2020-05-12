@@ -26,13 +26,17 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public static string GetName(IFAttribute lusasAttribute)
+        /***************************************************/
+        /**** Internal Methods                          ****/
+        /***************************************************/
+
+        internal static string GetName(IFAttribute lusasAttribute)
         {
             string attributeName = "";
 
             if (lusasAttribute.getName().Contains("/"))
             {
-                if(lusasAttribute.getName().Contains("\\"))
+                if (lusasAttribute.getName().Contains("\\"))
                 {
                     attributeName = lusasAttribute.getName().Split('/', '\\')[0];
                 }
@@ -50,7 +54,9 @@ namespace BH.Adapter.Lusas
             return attributeName;
         }
 
-        public static string GetName(IFLoadcase lusasLoadcase)
+        /***************************************************/
+
+        internal static string GetName(IFLoadcase lusasLoadcase)
         {
             string loadcaseName = "";
 
@@ -67,7 +73,9 @@ namespace BH.Adapter.Lusas
             return loadcaseName;
         }
 
-        public static string GetName(IFBasicCombination lusasLoadCombination)
+        /***************************************************/
+
+        internal static string GetName(IFBasicCombination lusasLoadCombination)
         {
             string loadcaseName = "";
 
@@ -84,7 +92,9 @@ namespace BH.Adapter.Lusas
             return loadcaseName;
         }
 
-        public static string GetName(string loadName)
+        /***************************************************/
+
+        internal static string GetName(string loadName)
         {
             string bhomLoadName = "";
 
@@ -100,5 +110,8 @@ namespace BH.Adapter.Lusas
 
             return bhomLoadName;
         }
+
+        /***************************************************/
+
     }
 }

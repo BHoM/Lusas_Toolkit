@@ -30,10 +30,10 @@ namespace BH.Adapter.Lusas
     public partial class LusasAdapter
     {
         /***************************************************/
-        /**** Public Methods                            ****/
+        /**** Internal Methods                          ****/
         /***************************************************/
 
-        public static IEnumerable<IAreaElement> GetSurfaceAssignments(IEnumerable<IFAssignment> lusasAssignments,
+        internal static IEnumerable<IAreaElement> GetSurfaceAssignments(IEnumerable<IFAssignment> lusasAssignments,
             Dictionary<string, Panel> bhomPanels)
         {
             List<IAreaElement> assignedSurfs = new List<IAreaElement>();

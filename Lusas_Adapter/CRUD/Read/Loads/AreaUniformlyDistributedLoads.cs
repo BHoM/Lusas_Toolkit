@@ -32,6 +32,10 @@ namespace BH.Adapter.Lusas
     {
         private List<ILoad> ReadAreaUniformlyDistributedLoads(List<string> ids = null)
         {
+            /***************************************************/
+            /**** Private Methods                           ****/
+            /***************************************************/
+
             List<ILoad> bhomPanelUniformlyDistributedLoads = new List<ILoad>();
 
             object[] lusasGlobalDistributedLoads = d_LusasData.getAttributes("Global Distributed Load");
@@ -41,7 +45,7 @@ namespace BH.Adapter.Lusas
             object[] lusasDistributedLoads = lusasGlobalDistributedLoads.Concat(
                 lusasLocalDistributedLoads).ToArray();
 
-            if(!(lusasDistributedLoads.Count()==0))
+            if (!(lusasDistributedLoads.Count() == 0))
             {
                 List<Panel> bhomSurfaces = ReadPanels();
                 Dictionary<string, Panel> surfaceDictionary = bhomSurfaces.ToDictionary(
@@ -74,5 +78,8 @@ namespace BH.Adapter.Lusas
 
             return bhomPanelUniformlyDistributedLoads;
         }
+
+        /***************************************************/
+
     }
 }

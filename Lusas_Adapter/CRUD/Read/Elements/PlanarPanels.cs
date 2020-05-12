@@ -32,12 +32,16 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<Panel> ReadPanels(List<string> ids = null)
         {
             object[] lusasSurfaces = d_LusasData.getObjects("Surface");
             List<Panel> bhomSurfaces = new List<Panel>();
 
-            if(!(lusasSurfaces.Count()==0))
+            if (!(lusasSurfaces.Count() == 0))
             {
                 IEnumerable<Edge> bhomEdgesList = ReadEdges();
                 Dictionary<string, Edge> bhomEdges = bhomEdgesList.ToDictionary(
@@ -72,5 +76,8 @@ namespace BH.Adapter.Lusas
 
             return bhomSurfaces;
         }
+
+        /***************************************************/
+
     }
 }

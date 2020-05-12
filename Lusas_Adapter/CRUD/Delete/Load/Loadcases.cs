@@ -26,7 +26,11 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
-        public int DeleteLoadcases(IEnumerable<object> ids)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private int DeleteLoadcases(IEnumerable<object> ids)
         {
             int success = 1;
 
@@ -42,6 +46,9 @@ namespace BH.Adapter.Lusas
             }
             return success;
         }
+
+        /***************************************************/
+
     }
 }
 

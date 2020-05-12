@@ -30,6 +30,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private IFBasicCombination CreateLoadCombination(LoadCombination loadCombination)
         {
             if (!Engine.External.Lusas.Query.CheckIllegalCharacters(loadCombination.Name))
@@ -50,7 +54,7 @@ namespace BH.Adapter.Lusas
             }
             else
             {
-                if(loadCombination.Number == 0)
+                if (loadCombination.Number == 0)
                 {
                     lusasLoadcombination = d_LusasData.createCombinationBasic(lusasLoadCombinationName);
                     Compute.RecordWarning("0 used for LoadCombination number,"
@@ -73,5 +77,8 @@ namespace BH.Adapter.Lusas
 
             return lusasLoadcombination;
         }
+
+        /***************************************************/
+
     }
 }

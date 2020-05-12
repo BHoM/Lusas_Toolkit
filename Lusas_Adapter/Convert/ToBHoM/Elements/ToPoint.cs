@@ -29,6 +29,10 @@ namespace BH.Adapter.External.Lusas
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static Point ToPoint(this IFPoint lusasPoint, HashSet<string> groupNames)
         {
             HashSet<string> tags = new HashSet<string>(LusasAdapter.IsMemberOf(lusasPoint, groupNames));
@@ -38,12 +42,17 @@ namespace BH.Adapter.External.Lusas
             return bhomPoint;
         }
 
+        /***************************************************/
+
         public static Point ToPoint(this IFPoint lusasPoint)
         {
             Point bhomPoint = new Point { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() };
 
             return bhomPoint;
         }
+
+        /***************************************************/
+
     }
 }
 

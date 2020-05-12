@@ -29,6 +29,10 @@ namespace BH.Adapter.Lusas
 {
     public partial class LusasAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private IFPrescribedDisplacementLoad CreatePrescribedDisplacement(PointDisplacement pointDisplacement, object[] lusasPoints)
         {
             if (!Engine.External.Lusas.Query.CheckIllegalCharacters(pointDisplacement.Name))
@@ -40,10 +44,10 @@ namespace BH.Adapter.Lusas
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
                 "Lc" + pointDisplacement.Loadcase.CustomData[AdapterIdName] + "/" + pointDisplacement.Loadcase.Name);
 
-            string lusasName = "Pd" + 
+            string lusasName = "Pd" +
                 pointDisplacement.CustomData[AdapterIdName] + "/" + pointDisplacement.Name;
 
-            NameSearch("Pd", pointDisplacement.CustomData[AdapterIdName].ToString(), 
+            NameSearch("Pd", pointDisplacement.CustomData[AdapterIdName].ToString(),
                 pointDisplacement.Name, ref lusasName);
 
             if (d_LusasData.existsAttribute("Loading", lusasName))
@@ -67,9 +71,9 @@ namespace BH.Adapter.Lusas
                 lusasPrescribedDisplacement = d_LusasData.createPrescribedDisplacementLoad(
                     lusasName, "Total");
 
-                for(int i=0; i < valueNames.Count(); i++)
+                for (int i = 0; i < valueNames.Count(); i++)
                 {
-                    if(!(displacements[i] == 0))
+                    if (!(displacements[i] == 0))
                     {
                         lusasPrescribedDisplacement.setValue(boolCheck[i], true);
                         lusasPrescribedDisplacement.setValue(valueNames[i], displacements[i]);
@@ -88,6 +92,9 @@ namespace BH.Adapter.Lusas
 
             return lusasPrescribedDisplacement;
         }
+
+        /***************************************************/
+
     }
 }
 
