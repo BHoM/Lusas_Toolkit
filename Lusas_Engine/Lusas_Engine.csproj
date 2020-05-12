@@ -99,7 +99,6 @@
     <Compile Include="Query\CheckIllegalCharacters.cs" />
     <Compile Include="Query\GetDistinctPoints.cs" />
     <Compile Include="Query\GetDistinctEdges.cs" />
-    <Compile Include="Query\GetObjectIDs.cs" />
     <Compile Include="Modify\RemovePrefix.cs" />
     <Compile Include="Create\LibrarySettings.cs" />
     <Compile Include="Create\LusasConfig.cs" />
