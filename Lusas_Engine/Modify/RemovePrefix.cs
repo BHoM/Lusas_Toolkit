@@ -24,6 +24,10 @@ namespace BH.Engine.External.Lusas
 {
     public static partial class Modify
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static string RemovePrefix(string name, string forRemoval)
         {
             string adapterID = "";
@@ -38,5 +42,8 @@ namespace BH.Engine.External.Lusas
             }
             return adapterID;
         }
+
+        /***************************************************/
+
     }
 }
