@@ -25,7 +25,7 @@ using BH.oM.Structure.Elements;
 using BH.Engine.Geometry;
 
 
-namespace BH.Engine.External.Lusas.Object_Comparer.Equality_Comparer
+namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
 {
     public class EdgeMidPointComparer : IEqualityComparer<Edge>
     {

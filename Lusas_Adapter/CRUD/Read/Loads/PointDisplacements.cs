@@ -57,7 +57,7 @@ namespace BH.Adapter.Lusas
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
                         PointDisplacement bhomPointDisplacement =
-                            External.Lusas.Convert.ToPointDisplacement(
+                            Adapters.Lusas.Convert.ToPointDisplacement(
                                 lusasPrescribedDisplacement, groupedAssignment, nodeDictionary);
 
                         List<string> analysisName = new List<string> { lusasPrescribedDisplacement.getAttributeType() };

@@ -33,7 +33,7 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingTemperature CreateBarTemperatureLoad(BarTemperatureLoad temperatureLoad, object[] lusasLines)
         {
-            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(temperatureLoad.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(temperatureLoad.Name))
             {
                 return null;
             }
@@ -56,7 +56,7 @@ namespace BH.Adapter.Lusas
         private IFLoadingTemperature CreateAreaTemperatureLoad(AreaTemperatureLoad temperatureLoad,
             object[] lusasSurfaces)
         {
-            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(temperatureLoad.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(temperatureLoad.Name))
             {
                 return null;
             }

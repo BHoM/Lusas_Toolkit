@@ -73,7 +73,7 @@ namespace BH.Adapter.Lusas
                         if (assignments.Count != 0)
                         {
                             BarTemperatureLoad bhomBarTemperatureLoad =
-                                Adapter.External.Lusas.Convert.ToBarTemperatureLoad(
+                                Adapter.Adapters.Lusas.Convert.ToBarTemperatureLoad(
                                     lusasTemperatureLoad, groupedAssignment, barDictionary);
 
                             bhomBarTemperatureLoad.Tags = new HashSet<string>(analysisName);

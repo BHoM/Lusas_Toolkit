@@ -33,7 +33,7 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingBody CreateGravityLoad(GravityLoad gravityLoad, IFGeometry[] lusasGeometry)
         {
-            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(gravityLoad.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(gravityLoad.Name))
             {
                 return null;
             }

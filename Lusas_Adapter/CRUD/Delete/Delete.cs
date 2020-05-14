@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 using BH.oM.Adapter;
-using BH.oM.External.Lusas;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;

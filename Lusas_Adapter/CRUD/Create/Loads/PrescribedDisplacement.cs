@@ -35,7 +35,7 @@ namespace BH.Adapter.Lusas
 
         private IFPrescribedDisplacementLoad CreatePrescribedDisplacement(PointDisplacement pointDisplacement, object[] lusasPoints)
         {
-            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(pointDisplacement.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(pointDisplacement.Name))
             {
                 return null;
             }

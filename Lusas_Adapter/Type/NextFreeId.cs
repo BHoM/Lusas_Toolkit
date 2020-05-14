@@ -30,7 +30,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
 using BH.oM.Geometry;
 using Lusas.LPI;
-using BH.oM.External.Lusas;
+using BH.oM.Adapters.Lusas;
 
 
 namespace BH.Adapter.Lusas
@@ -70,7 +70,7 @@ namespace BH.Adapter.Lusas
 
                         IFPoint largestPoint = d_LusasData.getPointByNumber(largestPointID);
                         index = System.Convert.ToInt32(
-                               Engine.External.Lusas.Modify.RemovePrefix(largestPoint.getName(), "P")) + 1;
+                               Engine.Adapters.Lusas.Modify.RemovePrefix(largestPoint.getName(), "P")) + 1;
                     }
                 }
                 if (type == typeof(Bar))
@@ -84,7 +84,7 @@ namespace BH.Adapter.Lusas
 
                         IFLine largestLine = d_LusasData.getLineByNumber(d_LusasData.getLargestLineID());
                         index = System.Convert.ToInt32(
-                               Engine.External.Lusas.Modify.RemovePrefix(largestLine.getName(), "L")) + 1;
+                               Engine.Adapters.Lusas.Modify.RemovePrefix(largestLine.getName(), "L")) + 1;
                     }
                 }
                 if (type == typeof(Panel))
@@ -98,7 +98,7 @@ namespace BH.Adapter.Lusas
 
                         IFSurface largestSurface = d_LusasData.getSurfaceByNumber(d_LusasData.getLargestSurfaceID());
                         index = System.Convert.ToInt32(
-                            Engine.External.Lusas.Modify.RemovePrefix(largestSurface.getName(), "S")) + 1;
+                            Engine.Adapters.Lusas.Modify.RemovePrefix(largestSurface.getName(), "S")) + 1;
                     }
                 }
                 if (type == typeof(Edge))
@@ -112,7 +112,7 @@ namespace BH.Adapter.Lusas
 
                         IFLine largestLine = d_LusasData.getLineByNumber(d_LusasData.getLargestLineID());
                         index = System.Convert.ToInt32(
-                            Engine.External.Lusas.Modify.RemovePrefix(largestLine.getName(), "L")) + 1;
+                            Engine.Adapters.Lusas.Modify.RemovePrefix(largestLine.getName(), "L")) + 1;
                     }
                 }
                 if (type == typeof(Point))
@@ -127,7 +127,7 @@ namespace BH.Adapter.Lusas
 
                         IFPoint largestPoint = d_LusasData.getPointByNumber(largestPointID);
                         index = System.Convert.ToInt32(
-                            Engine.External.Lusas.Modify.RemovePrefix(largestPoint.getName(), "P")) + 1;
+                            Engine.Adapters.Lusas.Modify.RemovePrefix(largestPoint.getName(), "P")) + 1;
                     }
                 }
                 if (typeof(ICase).IsAssignableFrom(type))

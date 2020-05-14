@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lusas.LPI;
-using BH.oM.External.Lusas;
+using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
 {
@@ -41,7 +41,7 @@ namespace BH.Adapter.Lusas
             for (int i = 0; i < lusasMesh2Ds.Count(); i++)
             {
                 IFMeshSurface lusasMesh2D = (IFMeshSurface)lusasMesh2Ds[i];
-                MeshSettings2D bhomMeshSettings2D = Adapter.External.Lusas.Convert.ToMeshSettings2D(lusasMesh2D);
+                MeshSettings2D bhomMeshSettings2D = Adapter.Adapters.Lusas.Convert.ToMeshSettings2D(lusasMesh2D);
                 List<string> analysisName = new List<string> { lusasMesh2D.getAttributeType() };
                 bhomMeshSettings2D.Tags = new HashSet<string>(analysisName);
                 bhomMeshSettings2Ds.Add(bhomMeshSettings2D);

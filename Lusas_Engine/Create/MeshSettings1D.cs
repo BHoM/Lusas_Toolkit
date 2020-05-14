@@ -20,10 +20,10 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.External.Lusas;
+using BH.oM.Adapters.Lusas;
 
 
-namespace BH.Engine.External.Lusas
+namespace BH.Engine.Adapters.Lusas
 {
     public static partial class Create
     {

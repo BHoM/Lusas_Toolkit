@@ -29,7 +29,7 @@ using BH.oM.Base;
 using Lusas.LPI;
 using BH.Adapter.Lusas;
 
-namespace BH.Adapter.External.Lusas
+namespace BH.Adapter.Adapters.Lusas
 {
     public static partial class Convert
     {
@@ -82,17 +82,17 @@ namespace BH.Adapter.External.Lusas
 
                 if (lusasGeometry is IFPoint)
                 {
-                    bhomNodes.TryGetValue(Engine.External.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "P"), out bhomNode);
+                    bhomNodes.TryGetValue(Engine.Adapters.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "P"), out bhomNode);
                     assignedObjects.Add(bhomNode);
                 }
                 else if (lusasGeometry is IFLine)
                 {
-                    bhomBars.TryGetValue(Engine.External.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "L"), out bhomBar);
+                    bhomBars.TryGetValue(Engine.Adapters.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "L"), out bhomBar);
                     assignedObjects.Add(bhomBar);
                 }
                 else if (lusasGeometry is IFSurface)
                 {
-                    bhomPanels.TryGetValue(Engine.External.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "S"), out bhomPanel);
+                    bhomPanels.TryGetValue(Engine.Adapters.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "S"), out bhomPanel);
                     assignedObjects.Add(bhomPanel);
                 }
             }

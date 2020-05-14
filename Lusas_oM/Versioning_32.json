@@ -1,27 +1,18 @@
 {
   "Namespace": {
     "ToNew": {
-	  "BH.oM.Adapters.Lusas":  "BH.oM.External.Lusas"
+
     },
     "ToOld": {
-	  "BH.oM.External.Lusas": "BH.oM.Adapters.Lusas"
+
     }
   },
   "Type": {
     "ToNew": {
-		"BH.oM.Adapters.Lusas.Split1D": "BH.oM.External.Lusas.Split1D",
-		"BH.oM.Adapters.Lusas.Split2D": "BH.oM.External.Lusas.Split2D",
-		"BH.oM.Adapters.Lusas.SectionLibrary": "BH.oM.External.Lusas.SectionLibrary",
-		"BH.oM.Adapters.Lusas.LibrarySettings": "BH.oM.External.Lusas.LibrarySettings",
-		"BH.oM.Adapters.Lusas.LusasConfig": "BH.oM.External.Lusas.LusasConfig"
-
+	
     },
     "ToOld": {
-		"BH.oM.External.Lusas.Split1D": "BH.oM.Adapters.Lusas.Split1D",
-		"BH.oM.External.Lusas.Split2D": "BH.oM.Adapters.Lusas.Split2D",
-		"BH.oM.External.Lusas.SectionLibrary": "BH.oM.Adapters.Lusas.SectionLibrary",
-		"BH.oM.External.Lusas.LibrarySettings": "BH.oM.Adapters.Lusas.LibrarySettings",
-		"BH.oM.External.Lusas.LusasConfig": "BH.oM.Adapters.Lusas.LusasConfig"
+
     }
   }
 }

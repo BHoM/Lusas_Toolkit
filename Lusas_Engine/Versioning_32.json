@@ -1,11 +1,10 @@
 {
   "Namespace": {
     "ToNew": {
-      "BH.Engine.Lusas":  "BH.Engine.External.Lusas",
-	  "BH.Engine.Adapters.Lusas":  "BH.Engine.External.Lusas"
+      "BH.Engine.Lusas":  "BH.Engine.Adapters.Lusas",
     },
     "ToOld": {
-	  "BH.Engine.External.Lusas": "BH.Engine.Adapters.Lusas"
+	  "BH.Engine.Adapters.Lusas": "BH.Engine.Lusas"
     }
   },
   "Type": {

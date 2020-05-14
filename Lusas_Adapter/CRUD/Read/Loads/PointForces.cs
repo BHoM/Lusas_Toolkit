@@ -57,7 +57,7 @@ namespace BH.Adapter.Lusas
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
-                        PointLoad bhomPointLoad = Adapter.External.Lusas.Convert.ToPointLoad(
+                        PointLoad bhomPointLoad = Adapter.Adapters.Lusas.Convert.ToPointLoad(
                             lusasConcentratedLoad, groupedAssignment, nodeDictionary
                             );
                         List<string> analysisName = new List<string> { lusasConcentratedLoad.getAttributeType() };

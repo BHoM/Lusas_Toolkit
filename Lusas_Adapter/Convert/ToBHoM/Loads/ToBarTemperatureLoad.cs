@@ -27,7 +27,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
 using Lusas.LPI;
 
-namespace BH.Adapter.External.Lusas
+namespace BH.Adapter.Adapters.Lusas
 {
     public static partial class Convert
     {

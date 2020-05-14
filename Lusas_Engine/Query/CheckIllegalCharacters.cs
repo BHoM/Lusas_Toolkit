@@ -22,7 +22,7 @@
 
 using System.Collections.Generic;
 
-namespace BH.Engine.External.Lusas
+namespace BH.Engine.Adapters.Lusas
 {
     public static partial class Query
     {

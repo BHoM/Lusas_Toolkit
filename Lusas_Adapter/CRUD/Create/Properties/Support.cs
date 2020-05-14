@@ -36,7 +36,7 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateSupport(Constraint6DOF constraint)
         {
-            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(constraint.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(constraint.Name))
             {
                 return null;
             }
@@ -86,7 +86,7 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateSupport(Constraint4DOF constraint)
         {
-            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(constraint.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(constraint.Name))
             {
                 return null;
             }
