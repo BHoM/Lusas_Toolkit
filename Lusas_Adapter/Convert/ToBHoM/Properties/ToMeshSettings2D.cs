@@ -21,10 +21,10 @@
  */
 
 using Lusas.LPI;
-using BH.oM.External.Lusas;
+using BH.oM.Adapters.Lusas;
 using BH.Adapter.Lusas;
 
-namespace BH.Adapter.External.Lusas
+namespace BH.Adapter.Adapters.Lusas
 {
     public static partial class Convert
     {

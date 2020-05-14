@@ -22,7 +22,7 @@
 
 using BH.oM.Base;
 
-namespace BH.oM.External.Lusas
+namespace BH.oM.Adapters.Lusas
 {
     public class LusasConfig : BHoMObject
     {

@@ -28,11 +28,11 @@ using BH.oM.Structure.Constraints;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
-using BH.oM.External.Lusas;
+using BH.oM.Adapters.Lusas;
 using System;
 using BH.Adapter.Lusas;
 
-namespace BH.Adapter.External.Lusas
+namespace BH.Adapter.Adapters.Lusas
 {
     /***************************************************/
     /**** Public Methods                            ****/
@@ -106,7 +106,7 @@ namespace BH.Adapter.External.Lusas
                 bhomBar.FEAType = barMeshProperties.Item4;
             }
 
-            string adapterID = Engine.External.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L");
+            string adapterID = Engine.Adapters.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L");
 
             bhomBar.CustomData[AdapterIdName] = adapterID;
 

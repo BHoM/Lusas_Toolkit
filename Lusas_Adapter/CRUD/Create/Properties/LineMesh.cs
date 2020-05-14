@@ -21,7 +21,7 @@
  */
 
 using Lusas.LPI;
-using BH.oM.External.Lusas;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 
@@ -35,7 +35,7 @@ namespace BH.Adapter.Lusas
 
         private IFMeshLine CreateMeshSettings1D(MeshSettings1D meshSettings1D, BarFEAType barFEAType = BarFEAType.Flexural, BarRelease barRelease = null)
         {
-            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(meshSettings1D.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(meshSettings1D.Name))
             {
                 return null;
             }

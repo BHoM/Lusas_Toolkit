@@ -41,7 +41,7 @@ namespace BH.Adapter.Lusas
             for (int i = 0; i < lusasGeometrics.Count(); i++)
             {
                 IFAttribute lusasGeometric = (IFAttribute)lusasGeometrics[i];
-                ISurfaceProperty bhomProperty2D = Adapter.External.Lusas.Convert.ToSurfaceProperty(lusasGeometric);
+                ISurfaceProperty bhomProperty2D = Adapter.Adapters.Lusas.Convert.ToSurfaceProperty(lusasGeometric);
                 bhomProperties2D.Add(bhomProperty2D);
             }
 

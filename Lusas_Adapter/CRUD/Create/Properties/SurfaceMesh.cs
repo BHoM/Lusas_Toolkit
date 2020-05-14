@@ -21,7 +21,7 @@
  */
 
 using Lusas.LPI;
-using BH.oM.External.Lusas;
+using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
 {
@@ -33,7 +33,7 @@ namespace BH.Adapter.Lusas
             /**** Private Methods                           ****/
             /***************************************************/
 
-            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(meshSettings2D.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(meshSettings2D.Name))
             {
                 return null;
             }

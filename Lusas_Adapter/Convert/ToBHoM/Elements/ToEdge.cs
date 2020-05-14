@@ -26,7 +26,7 @@ using BH.oM.Geometry;
 using Lusas.LPI;
 using BH.Adapter.Lusas;
 
-namespace BH.Adapter.External.Lusas
+namespace BH.Adapter.Adapters.Lusas
 {
     public static partial class Convert
     {
@@ -49,7 +49,7 @@ namespace BH.Adapter.External.Lusas
 
             Edge bhomEdge = new Edge { Curve = bhomLine, Tags = tags };
 
-            string adapterID = Engine.External.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L");
+            string adapterID = Engine.Adapters.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L");
 
             bhomEdge.CustomData[AdapterIdName] = adapterID;
 

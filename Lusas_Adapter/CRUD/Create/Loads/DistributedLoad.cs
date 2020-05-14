@@ -34,7 +34,7 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingGlobalDistributed CreateGlobalDistributedLine(BarUniformlyDistributedLoad distributedLoad, object[] lusasLines)
         {
-            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
             {
                 return null;
             }
@@ -53,7 +53,7 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingGlobalDistributed CreateGlobalDistributedLoadSurface(AreaUniformlyDistributedLoad distributedLoad, object[] lusasSurfaces)
         {
-            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
             {
                 return null;
             }
@@ -73,7 +73,7 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingLocalDistributed CreateLocalDistributedLine(BarUniformlyDistributedLoad distributedLoad, object[] lusasLines)
         {
-            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
             {
                 return null;
             }
@@ -93,7 +93,7 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingLocalDistributed CreateLocalDistributedSurface(AreaUniformlyDistributedLoad distributedLoad, object[] lusasSurfaces)
         {
-            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
             {
                 return null;
             }

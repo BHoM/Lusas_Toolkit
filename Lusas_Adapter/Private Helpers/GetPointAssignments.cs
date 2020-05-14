@@ -44,7 +44,7 @@ namespace BH.Adapter.Lusas
                 if (lusasAssignment.getDatabaseObject() is IFPoint)
                 {
                     IFPoint lusasPoint = (IFPoint)lusasAssignment.getDatabaseObject();
-                    bhomNodes.TryGetValue(Engine.External.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P"), out bhomNode);
+                    bhomNodes.TryGetValue(Engine.Adapters.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P"), out bhomNode);
                     assignedNodes.Add(bhomNode);
                 }
                 else

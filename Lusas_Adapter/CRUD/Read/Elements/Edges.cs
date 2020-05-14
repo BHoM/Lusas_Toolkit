@@ -49,7 +49,7 @@ namespace BH.Adapter.Lusas
                 for (int i = 0; i < lusasLines.Count(); i++)
                 {
                     IFLine lusasLine = (IFLine)lusasLines[i];
-                    Edge bhomEdge = Adapter.External.Lusas.Convert.ToEdge(lusasLine, bhomNodes, groupNames);
+                    Edge bhomEdge = Adapter.Adapters.Lusas.Convert.ToEdge(lusasLine, bhomNodes, groupNames);
                     bhomEdges.Add(bhomEdge);
                 }
             }

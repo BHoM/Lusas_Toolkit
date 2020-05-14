@@ -30,7 +30,7 @@ using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
 using BH.Adapter.Lusas;
 
-namespace BH.Adapter.External.Lusas
+namespace BH.Adapter.Adapters.Lusas
 {
     public static partial class Convert
     {
@@ -94,7 +94,7 @@ namespace BH.Adapter.External.Lusas
         {
             Edge bhomEdge = null;
             IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
-            string lineName = Engine.External.Lusas.Modify.RemovePrefix(lusasEdge.getName(), "L");
+            string lineName = Engine.Adapters.Lusas.Modify.RemovePrefix(lusasEdge.getName(), "L");
             bhomBars.TryGetValue(lineName, out bhomEdge);
             return bhomEdge;
         }

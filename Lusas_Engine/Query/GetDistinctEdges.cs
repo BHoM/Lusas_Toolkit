@@ -27,7 +27,7 @@ using BH.oM.Structure.Elements;
 using BH.Engine.Geometry;
 using BH.oM.Geometry;
 
-namespace BH.Engine.External.Lusas
+namespace BH.Engine.Adapters.Lusas
 {
     public static partial class Query
     {

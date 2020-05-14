@@ -62,7 +62,7 @@ namespace BH.Adapter.Lusas
                     {
                         List<string> analysisName = new List<string> { lusasBodyForce.getAttributeType() };
 
-                        GravityLoad bhomGravityLoad = External.Lusas.Convert.ToGravityLoad(
+                        GravityLoad bhomGravityLoad = Adapters.Lusas.Convert.ToGravityLoad(
                             lusasBodyForce, groupedAssignment, barDictionary, PanelDictionary);
                         bhomGravityLoad.Tags = new HashSet<string>(analysisName);
                         bhomGravityLoads.Add(bhomGravityLoad);

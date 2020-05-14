@@ -34,7 +34,7 @@ namespace BH.Adapter.Lusas
 
         private IFLoadcase CreateLoadcase(Loadcase loadcase)
         {
-            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(loadcase.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(loadcase.Name))
             {
                 return null;
             }

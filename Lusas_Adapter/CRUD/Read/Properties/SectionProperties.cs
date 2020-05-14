@@ -41,7 +41,7 @@ namespace BH.Adapter.Lusas
             for (int i = 0; i < lusasSections.Count(); i++)
             {
                 IFAttribute lusasSection = (IFAttribute)lusasSections[i];
-                ISectionProperty bhomSection = Adapter.External.Lusas.Convert.ToSection(lusasSection);
+                ISectionProperty bhomSection = Adapter.Adapters.Lusas.Convert.ToSection(lusasSection);
                 bhomSections.Add(bhomSection);
             }
             return bhomSections;

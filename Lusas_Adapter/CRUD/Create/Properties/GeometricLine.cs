@@ -35,7 +35,7 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateGeometricLine(ISectionProperty sectionProperty)
         {
-            if (!Engine.External.Lusas.Query.CheckIllegalCharacters(sectionProperty.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(sectionProperty.Name))
             {
                 return null;
             }
