@@ -64,7 +64,6 @@ namespace BH.Adapter.Lusas
                 Dictionary<string, MeshSettings1D> meshes = meshList.ToDictionary(
                     x => x.Name.ToString());
 
-
                 HashSet<string> groupNames = ReadTags();
 
                 for (int i = 0; i < lusasLines.Count(); i++)

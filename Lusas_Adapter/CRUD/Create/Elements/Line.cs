@@ -25,6 +25,7 @@ using System.Linq;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.MaterialFragments;
 using BH.oM.Geometry;
+using BH.oM.Adapters.Lusas;
 using BH.Engine.Geometry;
 using Lusas.LPI;
 
@@ -36,7 +37,7 @@ namespace BH.Adapter.Lusas
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private IFLine CreateLine(Bar bar, IFMeshLine mesh)
+        private IFLine CreateLine(Bar bar)
         {
             if (
                 bar.FEAType == BarFEAType.CompressionOnly ||
@@ -101,7 +102,13 @@ namespace BH.Adapter.Lusas
                         "Orientation angle not supported in Lusas for " + bar.FEAType +
                         " element types, this information will be lost when pushed to Lusas");
                 }
+
                 meshAssignment.setBetaAngle(bar.OrientationAngle);
+
+                MeshSettings1D meshSettings1D = (MeshSettings1D)bar.CustomData["Mesh"];
+                string meshAdapterID = meshSettings1D.CustomData[AdapterIdName].ToString();
+                IFMeshAttr mesh = d_LusasData.getMesh(
+                    "Me" + meshAdapterID + "/" + meshSettings1D.Name + "\\" + bar.FEAType.ToString() + "|" + CreateReleaseString(bar.Release));
                 mesh.assignTo(lusasLine, meshAssignment);
             }
 

@@ -52,9 +52,14 @@ namespace BH.Adapter.Lusas
 
             int adapterID;
             if (meshSettings1D.CustomData.ContainsKey(AdapterIdName))
+            {
                 adapterID = System.Convert.ToInt32(meshSettings1D.CustomData[AdapterIdName]);
+            }
             else
+            {
                 adapterID = System.Convert.ToInt32(NextFreeId(meshSettings1D.GetType()));
+                meshSettings1D.CustomData[AdapterIdName] = adapterID;
+            }
 
             string releaseString = CreateReleaseString(barRelease);
 
