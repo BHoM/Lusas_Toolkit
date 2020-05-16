@@ -20,6 +20,7 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using Lusas.LPI;
 
@@ -66,6 +67,18 @@ namespace BH.Adapter.Lusas
                     IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
                     lusasMaterial.assignTo(lusasSurface);
                 }
+            }
+
+            if (panel.CustomData.ContainsKey("Mesh"))
+            {
+                IFAssignment meshAssignment = m_LusasApplication.newAssignment();
+                meshAssignment.setAllDefaults();
+
+                MeshSettings2D meshSettings2D = (MeshSettings2D)panel.CustomData["Mesh"];
+                string meshAdapterID = meshSettings2D.CustomData[AdapterIdName].ToString();
+                IFMeshAttr mesh = d_LusasData.getMesh(
+                    "Me" + meshAdapterID + "/" + meshSettings2D.Name);
+                mesh.assignTo(lusasSurface, meshAssignment);
             }
 
             return lusasSurface;

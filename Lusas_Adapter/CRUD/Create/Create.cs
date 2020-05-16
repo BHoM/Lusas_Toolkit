@@ -211,7 +211,7 @@ namespace BH.Adapter.Lusas
                         .Distinct<MeshSettings1D>(comparer)
                         .ToList();
 
-                    foreach(MeshSettings1D mesh in distinctMeshes)
+                    foreach (MeshSettings1D mesh in distinctMeshes)
                     {
                         CreateMeshSettings1D(mesh, barGroup.First().FEAType, barGroup.First().Release);
                     }
@@ -259,6 +259,25 @@ namespace BH.Adapter.Lusas
         {
 
             CreateTags(panels);
+
+            if (panels.Any(x => x.CustomData.ContainsKey("Mesh")))
+            {
+                BHoMObjectNameComparer comparer = new BHoMObjectNameComparer();
+                List<MeshSettings2D> distinctMeshes = panels.Select(x => (MeshSettings2D)x.CustomData["Mesh"])
+                    .Distinct<MeshSettings2D>(comparer)
+                    .ToList();
+
+                foreach (MeshSettings2D mesh in distinctMeshes)
+                {
+                    CreateMeshSettings2D(mesh);
+                }
+
+                foreach (Panel panel in panels)
+                {
+                    panel.CustomData["Mesh"] = distinctMeshes.First(x => comparer.Equals(x, ((MeshSettings2D)panel.CustomData["Mesh"])));
+                }
+
+            }
 
             List<Edge> PanelEdges = new List<Edge>();
 
