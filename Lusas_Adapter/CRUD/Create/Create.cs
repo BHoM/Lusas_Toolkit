@@ -34,6 +34,8 @@ using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using BH.Engine.Base.Objects;
 
 namespace BH.Adapter.Lusas
 {
@@ -201,42 +203,34 @@ namespace BH.Adapter.Lusas
 
             if (bars.Any(x => x.CustomData.ContainsKey("Mesh")))
             {
-                var groupedReleases = bars.GroupBy(m => m.Release.Name);
+                var barGroups = bars.GroupBy(m => new { m.FEAType, m.Release.Name });
 
-                var groupedBars = bars.GroupBy(m => new { m.FEAType, m.Release.Name, MeshSettings1D = m.CustomData["Mesh"] });
-
-                List<Bar> distinctMeshBars = groupedBars.Select(m => m.First()).ToList();
-                List<IFMeshLine> lusasLineMesh = new List<IFMeshLine>();
-
-                foreach (Bar bar in distinctMeshBars)
-                {
-                    if (bar.CustomData["Mesh"] != null)
-                    {
-                        lusasLineMesh.Add(CreateMeshSettings1D((MeshSettings1D)bar.CustomData["Mesh"], bar.FEAType, bar.Release));
-                    }
-                }
-
-                int count = 0;
+                BHoMObjectNameComparer comparer = new BHoMObjectNameComparer();
 
                 ReduceRuntime(true);
 
-                foreach (var group in groupedBars)
+                foreach (var barGroup in barGroups)
                 {
-                    List<Bar> barGroup = group.ToList();
+                    List<MeshSettings1D> distinctMeshes = barGroup.Select(x => (MeshSettings1D)x.CustomData["Mesh"])
+                        .Distinct<MeshSettings1D>(comparer)
+                        .ToList();
+
+                    foreach(MeshSettings1D mesh in distinctMeshes)
+                    {
+                        CreateMeshSettings1D(mesh, barGroup.First().FEAType, barGroup.First().Release);
+                    }
 
                     foreach (Bar bar in barGroup)
                     {
-                        IFLine lusasLine = CreateLine(bar, lusasLineMesh[count]);
+                        bar.CustomData["Mesh"] = distinctMeshes.First(x => comparer.Equals(x, ((MeshSettings1D)bar.CustomData["Mesh"])));
+                        IFLine lusasLine = CreateLine(bar);
 
                         if (lusasLine == null)
                         {
                             return false;
                         }
-
                     }
-                    count++;
                 }
-
                 ReduceRuntime(false);
                 d_LusasData.resetMesh();
                 d_LusasData.updateMesh();
@@ -249,7 +243,7 @@ namespace BH.Adapter.Lusas
 
                 foreach (Bar bar in bars)
                 {
-                    IFLine lusasLine = CreateLine(bar, null);
+                    IFLine lusasLine = CreateLine(bar);
 
                     if (lusasLine == null)
                     {
