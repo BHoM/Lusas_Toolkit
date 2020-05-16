@@ -42,6 +42,17 @@ namespace BH.Adapter.Lusas
                 return null;
             }
 
+            int adapterID;
+            if (meshSettings2D.CustomData.ContainsKey(AdapterIdName))
+            {
+                adapterID = System.Convert.ToInt32(meshSettings2D.CustomData[AdapterIdName]);
+            }
+            else
+            {
+                adapterID = System.Convert.ToInt32(NextFreeId(meshSettings2D.GetType()));
+                meshSettings2D.CustomData[AdapterIdName] = adapterID;
+            }
+
             IFMeshSurface lusasSurfaceMesh = null;
             string lusasName = "Me" + meshSettings2D.CustomData[AdapterIdName] + "/" + meshSettings2D.Name;
             if (d_LusasData.existsAttribute("Mesh", lusasName))
