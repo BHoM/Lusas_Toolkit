@@ -37,13 +37,13 @@ namespace BH.Adapter.Adapters.Lusas
         public static Edge ToEdge(this IFLine lusasLine,
             Dictionary<string, Node> bhomNodes, HashSet<string> groupNames)
         {
-            Node startNode = LusasAdapter.GetNode(lusasLine, 0, bhomNodes);
-            Node endNode = LusasAdapter.GetNode(lusasLine, 1, bhomNodes);
+            Node startNode = GetNode(lusasLine, 0, bhomNodes);
+            Node endNode = GetNode(lusasLine, 1, bhomNodes);
 
             Point startPoint = Engine.Structure.Query.Position(startNode);
             Point endPoint = Engine.Structure.Query.Position(endNode);
 
-            HashSet<string> tags = new HashSet<string>(LusasAdapter.IsMemberOf(lusasLine, groupNames));
+            HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasLine, groupNames));
 
             Line bhomLine = new Line { Start = startPoint, End = endPoint };
 

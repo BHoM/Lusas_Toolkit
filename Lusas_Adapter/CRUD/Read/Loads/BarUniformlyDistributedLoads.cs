@@ -55,7 +55,7 @@ namespace BH.Adapter.Lusas
                 {
                     IFLoading lusasDistributedLoad = (IFLoading)lusasDistributedLoads[i];
 
-                    IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = LusasAdapter.GetLoadAssignments(
+                    IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(
                         lusasDistributedLoad);
 
                     if (lusasDistributedLoad.getValue("type") == "Length")

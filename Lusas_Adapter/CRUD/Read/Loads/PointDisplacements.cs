@@ -52,7 +52,7 @@ namespace BH.Adapter.Lusas
                     IFLoading lusasPrescribedDisplacement = (IFLoading)lusasPrescribedDisplacements[i];
 
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                        LusasAdapter.GetLoadAssignments(lusasPrescribedDisplacement);
+                        GetLoadAssignments(lusasPrescribedDisplacement);
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {

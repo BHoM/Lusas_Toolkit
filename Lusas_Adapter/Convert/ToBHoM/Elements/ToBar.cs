@@ -34,12 +34,12 @@ using BH.Adapter.Lusas;
 
 namespace BH.Adapter.Adapters.Lusas
 {
-    /***************************************************/
-    /**** Public Methods                            ****/
-    /***************************************************/
-
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static Bar ToBar(this IFLine lusasLine,
             Dictionary<string, Node> bhomNodes,
             Dictionary<string, Constraint4DOF> bhomSupports,
@@ -50,12 +50,12 @@ namespace BH.Adapter.Adapters.Lusas
             )
 
         {
-            Node startNode = LusasAdapter.GetNode(lusasLine, 0, bhomNodes);
-            Node endNode = LusasAdapter.GetNode(lusasLine, 1, bhomNodes);
+            Node startNode = GetNode(lusasLine, 0, bhomNodes);
+            Node endNode = GetNode(lusasLine, 1, bhomNodes);
 
-            HashSet<string> tags = new HashSet<string>(LusasAdapter.IsMemberOf(lusasLine, lusasGroups));
+            HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasLine, lusasGroups));
 
-            List<string> supportAssignments = LusasAdapter.GetAttributeAssignments(lusasLine, "Support");
+            List<string> supportAssignments = GetAttributeAssignments(lusasLine, "Support");
 
             Constraint4DOF barConstraint = null;
             if (!(supportAssignments.Count() == 0))
@@ -71,8 +71,8 @@ namespace BH.Adapter.Adapters.Lusas
                 Support = barConstraint
             };
 
-            List<string> geometricAssignments = LusasAdapter.GetAttributeAssignments(lusasLine, "Geometric");
-            List<string> materialAssignments = LusasAdapter.GetAttributeAssignments(lusasLine, "Material");
+            List<string> geometricAssignments = GetAttributeAssignments(lusasLine, "Geometric");
+            List<string> materialAssignments = GetAttributeAssignments(lusasLine, "Material");
 
             IMaterialFragment lineMaterial = null;
             ISectionProperty lineSection = null;
@@ -89,7 +89,7 @@ namespace BH.Adapter.Adapters.Lusas
             }
 
             MeshSettings1D lineMesh = null;
-            List<string> meshSettings = LusasAdapter.GetAttributeAssignments(lusasLine, "Mesh");
+            List<string> meshSettings = GetAttributeAssignments(lusasLine, "Mesh");
 
             if (!(meshSettings.Count() == 0))
             {

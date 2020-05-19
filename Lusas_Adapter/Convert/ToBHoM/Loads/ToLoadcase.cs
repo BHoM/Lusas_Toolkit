@@ -36,11 +36,11 @@ namespace BH.Adapter.Adapters.Lusas
         {
             Loadcase BHoMLoadcase = new Loadcase
             {
-                Name = LusasAdapter.GetName(lusasLoadcase),
+                Name = GetName(lusasLoadcase),
                 Number = lusasLoadcase.getID()
             };
 
-            int adapterID = LusasAdapter.GetAdapterID(lusasLoadcase, 'c');
+            int adapterID = GetAdapterID(lusasLoadcase, 'c');
 
             BHoMLoadcase.CustomData[AdapterIdName] = adapterID;
 

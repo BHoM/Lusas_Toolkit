@@ -52,7 +52,7 @@ namespace BH.Adapter.Lusas
                 {
                     IFLoading lusasInternalBeamPointLoad = (IFLoading)lusasInternalBeamPointLoads[i];
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                        LusasAdapter.GetLoadAssignments(lusasInternalBeamPointLoad);
+                       GetLoadAssignments(lusasInternalBeamPointLoad);
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {

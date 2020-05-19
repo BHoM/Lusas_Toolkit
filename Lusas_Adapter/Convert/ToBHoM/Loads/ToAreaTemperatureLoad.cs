@@ -45,16 +45,16 @@ namespace BH.Adapter.Adapters.Lusas
             double temperatureChange = lusasTemperatureLoad.getValue("T")
                 - lusasTemperatureLoad.getValue("T0");
 
-            IEnumerable<IAreaElement> bhomPanels = LusasAdapter.GetSurfaceAssignments(lusasAssignments, panelDictionary);
+            IEnumerable<IAreaElement> bhomPanels = GetSurfaceAssignments(lusasAssignments, panelDictionary);
             AreaTemperatureLoad bhomAreaTemperatureLoad = BH.Engine.Structure.Create.AreaTemperatureLoad(
                 bhomLoadcase,
                 temperatureChange,
                 bhomPanels,
                 LoadAxis.Local,
                 false,
-                LusasAdapter.GetName(lusasTemperatureLoad));
+                GetName(lusasTemperatureLoad));
 
-            int adapterID = LusasAdapter.GetAdapterID(lusasTemperatureLoad, 'l');
+            int adapterID = GetAdapterID(lusasTemperatureLoad, 'l');
             bhomAreaTemperatureLoad.CustomData[AdapterIdName] = adapterID;
 
             return bhomAreaTemperatureLoad;

@@ -22,93 +22,70 @@
 
 using Lusas.LPI;
 
-namespace BH.Adapter.Lusas
+namespace BH.Adapter.Adapters.Lusas
 {
-    public partial class LusasAdapter
+    public static partial class Convert
     {
         /***************************************************/
         /**** Internal Methods                          ****/
         /***************************************************/
 
-        internal static string GetName(IFAttribute lusasAttribute)
+        internal static int GetAdapterID(IFAttribute lusasAttribute, char lastCharacter)
         {
-            string attributeName = "";
+            int adapterID = 0;
+
+            lusasAttribute.getName();
 
             if (lusasAttribute.getName().Contains("/"))
             {
-                if (lusasAttribute.getName().Contains("\\"))
-                {
-                    attributeName = lusasAttribute.getName().Split('/', '\\')[0];
-                }
-                else
-                {
-                    attributeName = lusasAttribute.getName().Substring(
-                        lusasAttribute.getName().LastIndexOf("/") + 1);
-                }
+                adapterID = int.Parse(lusasAttribute.getName().Split(lastCharacter, '/')[1]);
             }
             else
             {
-                attributeName = lusasAttribute.getName();
+                adapterID = lusasAttribute.getID();
             }
 
-            return attributeName;
+            return adapterID;
         }
 
         /***************************************************/
 
-        internal static string GetName(IFLoadcase lusasLoadcase)
+        internal static int GetAdapterID(IFLoadcase lusasLoadcase, char lastCharacter)
         {
-            string loadcaseName = "";
+            int adapterID = 0;
+
+            lusasLoadcase.getName();
 
             if (lusasLoadcase.getName().Contains("/"))
             {
-                loadcaseName = lusasLoadcase.getName().Substring(
-                    lusasLoadcase.getName().LastIndexOf("/") + 1);
+                adapterID = int.Parse(lusasLoadcase.getName().Split(lastCharacter, '/')[1]);
             }
             else
             {
-                loadcaseName = lusasLoadcase.getName();
+                adapterID = lusasLoadcase.getID();
             }
 
-            return loadcaseName;
+            return adapterID;
         }
 
         /***************************************************/
 
-        internal static string GetName(IFBasicCombination lusasLoadCombination)
+        internal static int GetAdapterID(IFBasicCombination lusasLoadCombination, char lastCharacter)
         {
-            string loadcaseName = "";
+            int adapterID = 0;
+
+            lusasLoadCombination.getName();
 
             if (lusasLoadCombination.getName().Contains("/"))
             {
-                loadcaseName = lusasLoadCombination.getName().Substring(
-                    lusasLoadCombination.getName().LastIndexOf("/") + 1);
+                adapterID = int.Parse(lusasLoadCombination.getName().Split(lastCharacter, '/')[1]);
             }
             else
             {
-                loadcaseName = lusasLoadCombination.getName();
+                adapterID = lusasLoadCombination.getID();
             }
 
-            return loadcaseName;
-        }
-
-        /***************************************************/
-
-        internal static string GetName(string loadName)
-        {
-            string bhomLoadName = "";
-
-            if (loadName.Contains("/"))
-            {
-                bhomLoadName = loadName.Substring(
-                    loadName.LastIndexOf("/") + 1);
-            }
-            else
-            {
-                bhomLoadName = loadName;
-            }
-
-            return bhomLoadName;
+            return adapterID;
         }
 
         /***************************************************/
