@@ -99,7 +99,14 @@ namespace BH.Adapter.Lusas
 #endif
                     m_LusasApplication.enableUI(true);
                     m_LusasApplication.setVisible(true);
-                    d_LusasData = m_LusasApplication.openDatabase(filePath);
+                    try
+                    {
+                        d_LusasData = m_LusasApplication.openDatabase(filePath);
+                    }
+                    catch(System.Runtime.InteropServices.COMException)
+                    {
+                        throw new Exception("An exception has been flagged by Lusas, it is likely the file is from a higher version of Lusas than the adapter being used.");
+                    }
                 }
             }
         }
