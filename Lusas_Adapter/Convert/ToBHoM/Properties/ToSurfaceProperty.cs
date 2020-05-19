@@ -34,7 +34,7 @@ namespace BH.Adapter.Adapters.Lusas
 
         public static ISurfaceProperty ToSurfaceProperty(this IFAttribute lusasAttribute)
         {
-            string attributeName = LusasAdapter.GetName(lusasAttribute);
+            string attributeName = GetName(lusasAttribute);
             
             ISurfaceProperty bhomProperty2D = new ConstantThickness
             {
@@ -42,7 +42,7 @@ namespace BH.Adapter.Adapters.Lusas
                 Thickness = lusasAttribute.getValue("t")
             };
 
-            int adapterID = LusasAdapter.GetAdapterID(lusasAttribute, 'G');
+            int adapterID = GetAdapterID(lusasAttribute, 'G');
 
             bhomProperty2D.CustomData[AdapterIdName] = adapterID;
 

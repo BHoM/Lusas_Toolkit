@@ -43,7 +43,7 @@ namespace BH.Adapter.Adapters.Lusas
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
 
-            IEnumerable<IAreaElement> bhomPanels = LusasAdapter.GetSurfaceAssignments(
+            IEnumerable<IAreaElement> bhomPanels = GetSurfaceAssignments(
                 lusasAssignments, panelDictionary);
 
             Vector pressureVector = new Vector
@@ -63,7 +63,7 @@ namespace BH.Adapter.Adapters.Lusas
                 bhomPanels,
                 LoadAxis.Global,
                 true,
-                LusasAdapter.GetName(lusasDistributed));
+                GetName(lusasDistributed));
             }
             else if (lusasDistributed.getAttributeType() == "Distributed Load")
             {
@@ -73,10 +73,10 @@ namespace BH.Adapter.Adapters.Lusas
                 bhomPanels,
                 LoadAxis.Local,
                 true,
-                LusasAdapter.GetName(lusasDistributed));
+                GetName(lusasDistributed));
             }
 
-            int adapterID = LusasAdapter.GetAdapterID(lusasDistributed, 'l');
+            int adapterID = GetAdapterID(lusasDistributed, 'l');
             bhomSurfaceUniformlyDistributed.CustomData[AdapterIdName] = adapterID;
 
             return bhomSurfaceUniformlyDistributed;

@@ -35,7 +35,7 @@ namespace BH.Adapter.Adapters.Lusas
 
         public static MeshSettings1D ToMeshSettings1D(this IFAttribute lusasAttrbute)
         {
-            string attributeName = LusasAdapter.GetName(lusasAttrbute);
+            string attributeName = GetName(lusasAttrbute);
 
             IFMeshLine lusasMeshLine = (IFMeshLine)lusasAttrbute;
 
@@ -69,7 +69,7 @@ namespace BH.Adapter.Adapters.Lusas
                 SplitParameter = value
             };
 
-            int adapterID = LusasAdapter.GetAdapterID(lusasMeshLine, 'e');
+            int adapterID = GetAdapterID(lusasMeshLine, 'e');
             bhomMeshSettings1D.CustomData[AdapterIdName] = adapterID;
 
             return bhomMeshSettings1D;

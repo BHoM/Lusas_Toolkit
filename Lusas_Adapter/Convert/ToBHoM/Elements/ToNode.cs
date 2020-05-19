@@ -39,8 +39,8 @@ namespace BH.Adapter.Adapters.Lusas
         public static Node ToNode(this IFPoint lusasPoint,
             HashSet<string> groupNames, Dictionary<string, Constraint6DOF> bhom6DOFConstraints)
         {
-            HashSet<string> tags = new HashSet<string>(LusasAdapter.IsMemberOf(lusasPoint, groupNames));
-            List<string> supportAssignments = LusasAdapter.GetAttributeAssignments(lusasPoint, "Support");
+            HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasPoint, groupNames));
+            List<string> supportAssignments = GetAttributeAssignments(lusasPoint, "Support");
 
             Constraint6DOF nodeConstraint = null;
             if (!(supportAssignments.Count() == 0))

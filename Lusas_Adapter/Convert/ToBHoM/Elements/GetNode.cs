@@ -23,37 +23,23 @@
 using System.Collections.Generic;
 using BH.oM.Structure.Elements;
 using Lusas.LPI;
-using BH.oM.Base;
 
-namespace BH.Adapter.Lusas
+namespace BH.Adapter.Adapters.Lusas
 {
-    public partial class LusasAdapter
+    public static partial class Convert
     {
         /***************************************************/
-        /**** Internal Methods                          ****/
+        /**** Private Methods                           ****/
         /***************************************************/
 
-        internal static IEnumerable<Node> GetPointAssignments(IEnumerable<IFAssignment> lusasAssignments,
-               Dictionary<string, Node> bhomNodes)
+        private static Node GetNode(IFLine lusasLine, int nodeIndex, Dictionary<string, Node> bhomNodes)
         {
-            List<Node> assignedNodes = new List<Node>();
-            Node bhomNode = new Node();
+            Node bhomNode = null;
+            IFPoint lusasPoint = lusasLine.getLOFs()[nodeIndex];
+            string pointName = Engine.Adapters.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P");
+            bhomNodes.TryGetValue(pointName, out bhomNode);
 
-            foreach (IFAssignment lusasAssignment in lusasAssignments)
-            {
-                if (lusasAssignment.getDatabaseObject() is IFPoint)
-                {
-                    IFPoint lusasPoint = (IFPoint)lusasAssignment.getDatabaseObject();
-                    bhomNodes.TryGetValue(Engine.Adapters.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P"), out bhomNode);
-                    assignedNodes.Add(bhomNode);
-                }
-                else
-                {
-                    AssignmentWarning(lusasAssignment);
-                }
-            }
-
-            return assignedNodes;
+            return bhomNode;
         }
 
         /***************************************************/

@@ -35,7 +35,7 @@ namespace BH.Adapter.Adapters.Lusas
 
         public static IMaterialFragment ToMaterial(this IFAttribute lusasAttribute)
         {
-            string attributeName = LusasAdapter.GetName(lusasAttribute);
+            string attributeName = GetName(lusasAttribute);
 
             IMaterialFragment bhomMaterial = null;
             if (lusasAttribute is IFMaterialIsotropic)
@@ -60,7 +60,7 @@ namespace BH.Adapter.Adapters.Lusas
                     lusasAttribute.getValue("rho"), 0, 0);
             }
 
-            int adapterID = LusasAdapter.GetAdapterID(lusasAttribute, 'M');
+            int adapterID = GetAdapterID(lusasAttribute, 'M');
             bhomMaterial.CustomData[AdapterIdName] = adapterID;
 
             return bhomMaterial;

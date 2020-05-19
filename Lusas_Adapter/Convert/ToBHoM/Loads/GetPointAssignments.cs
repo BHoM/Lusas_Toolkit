@@ -25,36 +25,35 @@ using BH.oM.Structure.Elements;
 using Lusas.LPI;
 using BH.oM.Base;
 
-namespace BH.Adapter.Lusas
+namespace BH.Adapter.Adapters.Lusas
 {
-    public partial class LusasAdapter
+    public static partial class Convert
     {
         /***************************************************/
-        /**** Internal Methods                          ****/
+        /**** Private Methods                           ****/
         /***************************************************/
 
-        internal static IEnumerable<Bar> GetLineAssignments(IEnumerable<IFAssignment> lusasAssignments,
-            Dictionary<string, Bar> bhomBars)
+        private static IEnumerable<Node> GetPointAssignments(IEnumerable<IFAssignment> lusasAssignments,
+               Dictionary<string, Node> bhomNodes)
         {
-            List<Bar> assignedBars = new List<Bar>();
-            Bar bhomBar = new Bar();
+            List<Node> assignedNodes = new List<Node>();
+            Node bhomNode = new Node();
 
             foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
-                if (lusasAssignment.getDatabaseObject() is IFLine)
+                if (lusasAssignment.getDatabaseObject() is IFPoint)
                 {
-                    IFLine lusasLine = (IFLine)lusasAssignment.getDatabaseObject();
-                    bhomBars.TryGetValue(Engine.Adapters.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L"), out bhomBar);
-                    assignedBars.Add(bhomBar);
+                    IFPoint lusasPoint = (IFPoint)lusasAssignment.getDatabaseObject();
+                    bhomNodes.TryGetValue(Engine.Adapters.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P"), out bhomNode);
+                    assignedNodes.Add(bhomNode);
                 }
                 else
                 {
                     AssignmentWarning(lusasAssignment);
                 }
-
             }
 
-            return assignedBars;
+            return assignedNodes;
         }
 
         /***************************************************/

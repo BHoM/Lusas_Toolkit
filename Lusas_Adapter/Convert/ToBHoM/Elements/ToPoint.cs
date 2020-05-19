@@ -35,7 +35,7 @@ namespace BH.Adapter.Adapters.Lusas
 
         public static Point ToPoint(this IFPoint lusasPoint, HashSet<string> groupNames)
         {
-            HashSet<string> tags = new HashSet<string>(LusasAdapter.IsMemberOf(lusasPoint, groupNames));
+            HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasPoint, groupNames));
 
             Point bhomPoint = new Point { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() };
 

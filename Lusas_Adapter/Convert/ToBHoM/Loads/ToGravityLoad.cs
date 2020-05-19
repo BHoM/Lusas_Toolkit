@@ -54,9 +54,9 @@ namespace BH.Adapter.Adapters.Lusas
             IEnumerable<BHoMObject> bhomObjects = GetGeometryAssignments(
                 lusasAssignments, null, bhomBars, bhomPanels);
             GravityLoad bhomGravityLoad = Engine.Structure.Create.GravityLoad(
-                bhomLoadcase, gravityVector, bhomObjects, LusasAdapter.GetName(lusasGravityLoad));
+                bhomLoadcase, gravityVector, bhomObjects, GetName(lusasGravityLoad));
 
-            int adapterID = LusasAdapter.GetAdapterID(lusasGravityLoad, 'l');
+            int adapterID = GetAdapterID(lusasGravityLoad, 'l');
             bhomGravityLoad.CustomData[AdapterIdName] = adapterID;
 
             return bhomGravityLoad;

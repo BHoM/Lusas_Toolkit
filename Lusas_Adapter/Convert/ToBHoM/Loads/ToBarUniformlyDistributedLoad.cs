@@ -42,7 +42,7 @@ namespace BH.Adapter.Adapters.Lusas
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
 
-            IEnumerable<Bar> bhomBars = LusasAdapter.GetLineAssignments(lusasAssignments, bhomBarDictionary);
+            IEnumerable<Bar> bhomBars = GetLineAssignments(lusasAssignments, bhomBarDictionary);
 
             Vector forceVector = new Vector
             {
@@ -69,7 +69,7 @@ namespace BH.Adapter.Adapters.Lusas
                     momentVector,
                     LoadAxis.Global,
                     true,
-                    LusasAdapter.GetName(lusasDistributed));
+                    GetName(lusasDistributed));
             }
             else if (lusasDistributed.getAttributeType() == "Distributed Load")
             {
@@ -80,10 +80,10 @@ namespace BH.Adapter.Adapters.Lusas
                     null,
                     LoadAxis.Local,
                     true,
-                    LusasAdapter.GetName(lusasDistributed));
+                    GetName(lusasDistributed));
             }
 
-            int adapterID = LusasAdapter.GetAdapterID(lusasDistributed, 'l');
+            int adapterID = GetAdapterID(lusasDistributed, 'l');
             bhomBarUniformlyDistributed.CustomData[AdapterIdName] = adapterID;
 
             return bhomBarUniformlyDistributed;

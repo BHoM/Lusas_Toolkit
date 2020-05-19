@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
@@ -21,30 +21,40 @@
  */
 
 using System.Collections.Generic;
+using BH.oM.Structure.Elements;
 using Lusas.LPI;
+using BH.oM.Base;
 
-namespace BH.Adapter.Lusas
+namespace BH.Adapter.Adapters.Lusas
 {
-    public partial class LusasAdapter
+    public static partial class Convert
     {
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
 
-        internal static HashSet<string> IsMemberOf(IFGeometry lusasGeometry, HashSet<string> bhomTags)
+        private static IEnumerable<Bar> GetLineAssignments(IEnumerable<IFAssignment> lusasAssignments,
+            Dictionary<string, Bar> bhomBars)
         {
+            List<Bar> assignedBars = new List<Bar>();
+            Bar bhomBar = new Bar();
 
-            HashSet<string> geometryTag = new HashSet<string>();
-
-            foreach (string tag in bhomTags)
+            foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
-                if (lusasGeometry.isMemberOfGroup(tag))
+                if (lusasAssignment.getDatabaseObject() is IFLine)
                 {
-                    geometryTag.Add(tag);
+                    IFLine lusasLine = (IFLine)lusasAssignment.getDatabaseObject();
+                    bhomBars.TryGetValue(Engine.Adapters.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L"), out bhomBar);
+                    assignedBars.Add(bhomBar);
                 }
+                else
+                {
+                    AssignmentWarning(lusasAssignment);
+                }
+
             }
 
-            return geometryTag;
+            return assignedBars;
         }
 
         /***************************************************/

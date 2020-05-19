@@ -42,7 +42,7 @@ namespace BH.Adapter.Adapters.Lusas
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
 
-            IEnumerable<Node> bhomNodes = LusasAdapter.GetPointAssignments(lusasAssignments, bhomNodeDictionary);
+            IEnumerable<Node> bhomNodes = GetPointAssignments(lusasAssignments, bhomNodeDictionary);
 
             lusasPrescribedDisplacement.getValueNames();
 
@@ -62,9 +62,9 @@ namespace BH.Adapter.Adapters.Lusas
 
             PointDisplacement bhomPointDisplacement = BH.Engine.Structure.Create.PointDisplacement(
                 bhomLoadcase, bhomNodes, translationVector, rotationVector, LoadAxis.Global, 
-                LusasAdapter.GetName(lusasPrescribedDisplacement));
+                GetName(lusasPrescribedDisplacement));
 
-            int adapterID = LusasAdapter.GetAdapterID(lusasPrescribedDisplacement, 'd');
+            int adapterID = GetAdapterID(lusasPrescribedDisplacement, 'd');
             bhomPointDisplacement.CustomData[AdapterIdName] = adapterID;
             // Needs to be a bit here that determines whether it is global or local - actually this cannot be done as the 
             //attribute is applied to a group, and within the group the axis could local or global
