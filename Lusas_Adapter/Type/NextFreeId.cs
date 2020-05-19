@@ -35,7 +35,11 @@ using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
 {
-    public partial class LusasAdapter
+#if Debug18 || Release18
+    public partial class LusasV18Adapter
+#else
+    public partial class LusasV17Adapter
+#endif
     {
         /***************************************************/
         /**** Adapter overload method                   ****/

@@ -38,14 +38,20 @@ using System.Diagnostics;
 
 namespace BH.Adapter.Lusas
 {
-    public partial class LusasAdapter : BHoMAdapter
+#if Debug18 || Release18
+    public partial class LusasV18Adapter : BHoMAdapter
+#else
+    public partial class LusasV17Adapter : BHoMAdapter
+#endif
     {
-
         /***************************************************/
         /**** Constructors                              ****/
         /***************************************************/
-
-        public LusasAdapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
+#if Debug18 || Release18
+        public LusasV18Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
+#else
+        public LusasV17Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
+#endif
         {
             if (active)
             {

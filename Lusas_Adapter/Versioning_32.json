@@ -1,0 +1,17 @@
+{
+  "Namespace": {
+    "ToNew": {
+    },
+    "ToOld": {
+    }
+  },
+  "Type": {
+    "ToNew": {
+	"BH.Adapter.Lusas.LusasAdapter": "BH.Adapter.Lusas.LusasV17Adapter"
+      
+    },
+    "ToOld": {
+      "BH.Adapter.Lusas.LusasV17Adapter": "BH.Adapter.Lusas.LusasAdapter"
+    }
+  }
+}
