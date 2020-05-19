@@ -25,12 +25,16 @@ using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
-    public partial class LusasAdapter
-    /***************************************************/
-    /**** Private Methods                           ****/
-    /***************************************************/
-
+#if Debug18 || Release18
+    public partial class LusasV18Adapter
+#else
+    public partial class LusasV17Adapter
+#endif
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private void DeletePointAssignments(object[] lusasAttributes)
         {
             for (int i = 0; i < lusasAttributes.Count(); i++)

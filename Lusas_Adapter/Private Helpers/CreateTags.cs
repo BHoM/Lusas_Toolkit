@@ -30,7 +30,11 @@ namespace BH.Adapter.Lusas
     /**** Private Methods                           ****/
     /***************************************************/
 
-    public partial class LusasAdapter
+#if Debug18 || Release18
+    public partial class LusasV18Adapter
+#else
+    public partial class LusasV17Adapter
+#endif
     {
         private void CreateTags(IEnumerable<IBHoMObject> bhomObject)
         {
