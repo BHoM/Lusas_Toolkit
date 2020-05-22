@@ -25,7 +25,11 @@ using BH.oM.Base;
 
 namespace BH.Adapter.Lusas
 {
-    public partial class LusasAdapter
+#if Debug18 || Release18
+    public partial class LusasV18Adapter
+#else
+    public partial class LusasV17Adapter
+#endif
     {
         private List<IBHoMObject> ReadAll(List<string> ids = null)
         {

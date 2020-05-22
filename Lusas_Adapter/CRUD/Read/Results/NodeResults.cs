@@ -30,7 +30,11 @@ using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
-    public partial class LusasAdapter
+#if Debug18 || Release18
+    public partial class LusasV18Adapter
+#else
+    public partial class LusasV17Adapter
+#endif
     {
 
         /***************************************************/
@@ -107,7 +111,7 @@ namespace BH.Adapter.Lusas
 
                     NodeReaction nodeReaction = new NodeReaction
                     {
-                        ResultCase = GetName(loadset.getName()),
+                        ResultCase = Adapters.Lusas.Convert.GetName(loadset.getName()),
                         ObjectId = nodeId,
                         FX = fX * forceSIConversion,
                         FY = fY * forceSIConversion,
@@ -168,7 +172,7 @@ namespace BH.Adapter.Lusas
 
                     NodeDisplacement bhomNodeDisplacement = new NodeDisplacement
                     {
-                        ResultCase = GetName(loadset.getName()),
+                        ResultCase = Adapters.Lusas.Convert.GetName(loadset.getName()),
                         ObjectId = nodeId,
                         UX = uX * lengthSIConversion,
                         UY = uY * lengthSIConversion,

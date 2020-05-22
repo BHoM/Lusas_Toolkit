@@ -1,4 +1,4 @@
-﻿/*
+/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
@@ -21,28 +21,36 @@
  */
 
 using System.Collections.Generic;
-using BH.oM.Structure.Elements;
+using System.Linq;
 using Lusas.LPI;
 
-namespace BH.Adapter.Lusas
+namespace BH.Adapter.Adapters.Lusas
 {
-    public partial class LusasAdapter
+    public static partial class Convert
     {
         /***************************************************/
-        /**** Internal Methods                          ****/
+        /**** Private Methods                           ****/
         /***************************************************/
 
-        internal static Node GetNode(IFLine lusasLine, int nodeIndex, Dictionary<string, Node> bhomNodes)
+        private static List<string> GetAttributeAssignments(IFGeometry lusasGeometry, string attributeType)
         {
-            Node bhomNode = null;
-            IFPoint lusasPoint = lusasLine.getLOFs()[nodeIndex];
-            string pointName = Engine.Adapters.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P");
-            bhomNodes.TryGetValue(pointName, out bhomNode);
+            object[] lusasAssignments = lusasGeometry.getAssignments(attributeType);
 
-            return bhomNode;
+            List<string> attributeNames = new List<string>();
+
+            int n = lusasAssignments.Count();
+            for (int i = 0; i < n; i++)
+            {
+                IFAssignment lusasAssignment = lusasGeometry.getAssignments(attributeType)[i];
+                IFAttribute lusasAttribute = lusasAssignment.getAttribute();
+                string attributeName = GetName(lusasAttribute);
+                attributeNames.Add(attributeName);
+            }
+            return attributeNames;
         }
 
         /***************************************************/
 
     }
 }
+

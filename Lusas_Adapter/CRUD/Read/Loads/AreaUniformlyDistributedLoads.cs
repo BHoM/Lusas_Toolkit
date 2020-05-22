@@ -28,7 +28,11 @@ using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
-    public partial class LusasAdapter
+#if Debug18 || Release18
+    public partial class LusasV18Adapter
+#else
+    public partial class LusasV17Adapter
+#endif
     {
         private List<ILoad> ReadAreaUniformlyDistributedLoads(List<string> ids = null)
         {
@@ -60,7 +64,7 @@ namespace BH.Adapter.Lusas
                     if (lusasDistributedLoad.getValue("type") == "Area")
                     {
                         IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                            LusasAdapter.GetLoadAssignments(lusasDistributedLoad);
+                            GetLoadAssignments(lusasDistributedLoad);
 
                         foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                         {

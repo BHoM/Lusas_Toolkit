@@ -38,14 +38,20 @@ using System.Diagnostics;
 
 namespace BH.Adapter.Lusas
 {
-    public partial class LusasAdapter : BHoMAdapter
+#if Debug18 || Release18
+    public partial class LusasV18Adapter : BHoMAdapter
+#else
+    public partial class LusasV17Adapter : BHoMAdapter
+#endif
     {
-
         /***************************************************/
         /**** Constructors                              ****/
         /***************************************************/
-
-        public LusasAdapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
+#if Debug18 || Release18
+        public LusasV18Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
+#else
+        public LusasV17Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
+#endif
         {
             if (active)
             {
@@ -81,18 +87,26 @@ namespace BH.Adapter.Lusas
 
                 if (string.IsNullOrWhiteSpace(filePath))
                 {
-                    throw new ArgumentException("No file path given");
-                }
-                else if (IsApplicationRunning())
-                {
-                    throw new Exception("Lusas process already running");
+                    throw new ArgumentException("Please specify a valid .mdl file.");
                 }
                 else
                 {
                     m_LusasApplication = new LusasWinApp();
+#if Debug17 || Release17
+                    System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.17.0");
+#elif Debug18 || Release18
+                    System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.18.0");
+#endif
                     m_LusasApplication.enableUI(true);
                     m_LusasApplication.setVisible(true);
-                    d_LusasData = m_LusasApplication.openDatabase(filePath);
+                    try
+                    {
+                        d_LusasData = m_LusasApplication.openDatabase(filePath);
+                    }
+                    catch(System.Runtime.InteropServices.COMException)
+                    {
+                        throw new Exception("An exception has been flagged by Lusas, it is likely the file is from a higher version of Lusas than the adapter being used.");
+                    }
                 }
             }
         }

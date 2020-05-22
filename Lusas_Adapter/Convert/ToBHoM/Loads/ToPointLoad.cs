@@ -43,7 +43,7 @@ namespace BH.Adapter.Adapters.Lusas
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
             Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
 
-            IEnumerable<Node> bhomNodes = LusasAdapter.GetPointAssignments(lusasAssignments, bhomNodeDictionary);
+            IEnumerable<Node> bhomNodes = GetPointAssignments(lusasAssignments, bhomNodeDictionary);
 
             Vector forceVector = new Vector
             {
@@ -65,9 +65,9 @@ namespace BH.Adapter.Adapters.Lusas
                 forceVector,
                 momentVector,
                 LoadAxis.Global,
-                LusasAdapter.GetName(lusasPointLoad));
+                GetName(lusasPointLoad));
 
-            int adapterID = LusasAdapter.GetAdapterID(lusasPointLoad, 'l');
+            int adapterID = GetAdapterID(lusasPointLoad, 'l');
             bhomPointLoad.CustomData[AdapterIdName] = adapterID;
 
             return bhomPointLoad;

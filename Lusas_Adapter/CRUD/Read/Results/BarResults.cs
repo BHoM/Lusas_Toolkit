@@ -30,7 +30,11 @@ using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
-    public partial class LusasAdapter
+#if Debug18 || Release18
+    public partial class LusasV18Adapter
+#else
+    public partial class LusasV17Adapter
+#endif
     {
 
         /***************************************************/
@@ -110,7 +114,7 @@ namespace BH.Adapter.Lusas
 
                     BarForce barForce = new BarForce
                     {
-                        ResultCase = GetName(loadset.getName()),
+                        ResultCase = Adapters.Lusas.Convert.GetName(loadset.getName()),
                         ObjectId = barId,
                         FX = fX * forceSIConversion,
                         FY = fY * forceSIConversion,
@@ -172,7 +176,7 @@ namespace BH.Adapter.Lusas
 
                     BarStress barStress = new BarStress
                     {
-                        ResultCase = GetName(loadset.getName()),
+                        ResultCase = Adapters.Lusas.Convert.GetName(loadset.getName()),
                         ObjectId = barId,
                         Axial = axial * forceSIConversion * lengthSIConversion * lengthSIConversion
                     };
@@ -233,7 +237,7 @@ namespace BH.Adapter.Lusas
 
                     BarStrain barStrain = new BarStrain
                     {
-                        ResultCase = GetName(loadset.getName()),
+                        ResultCase = Adapters.Lusas.Convert.GetName(loadset.getName()),
                         ObjectId = barId,
                         Axial = eX,
                         ShearY = eY,
@@ -292,7 +296,7 @@ namespace BH.Adapter.Lusas
 
                     BarDisplacement barDisplacement = new BarDisplacement
                     {
-                        ResultCase = GetName(loadset.getName()),
+                        ResultCase = Adapters.Lusas.Convert.GetName(loadset.getName()),
                         ObjectId = barId,
                         UX = uX * lengthSIConversion,
                         UY = uY * lengthSIConversion,

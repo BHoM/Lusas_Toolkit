@@ -28,7 +28,11 @@ using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
-    public partial class LusasAdapter
+#if Debug18 || Release18
+    public partial class LusasV18Adapter
+#else
+    public partial class LusasV17Adapter
+#endif
     {
         private List<ILoad> ReadAreaTemperatureLoads(List<string> ids = null)
         {
@@ -52,7 +56,7 @@ namespace BH.Adapter.Lusas
                     IFLoading lusasTemperatureLoad = (IFLoading)lusasTemperatureLoads[i];
 
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                        LusasAdapter.GetLoadAssignments(lusasTemperatureLoad);
+                        GetLoadAssignments(lusasTemperatureLoad);
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {

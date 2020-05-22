@@ -34,7 +34,7 @@ namespace BH.Adapter.Adapters.Lusas
             /**** Public Methods                            ****/
             /***************************************************/
 
-            string attributeName = LusasAdapter.GetName(lusasAttribute);
+            string attributeName = GetName(lusasAttribute);
 
             int xDivisions = 0;
             int yDivisions = 0;
@@ -70,7 +70,7 @@ namespace BH.Adapter.Adapters.Lusas
                 ElementSize = size
             };
 
-            int adapterID = LusasAdapter.GetAdapterID(lusasAttribute, 'e');
+            int adapterID = GetAdapterID(lusasAttribute, 'e');
             bhomMeshSettings2D.CustomData[AdapterIdName] = adapterID;
 
             return bhomMeshSettings2D;

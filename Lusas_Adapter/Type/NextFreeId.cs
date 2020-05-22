@@ -35,7 +35,11 @@ using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
 {
-    public partial class LusasAdapter
+#if Debug18 || Release18
+    public partial class LusasV18Adapter
+#else
+    public partial class LusasV17Adapter
+#endif
     {
         /***************************************************/
         /**** Adapter overload method                   ****/
@@ -144,13 +148,13 @@ namespace BH.Adapter.Lusas
                         {
                             IFLoadcase largestLoadcase = (IFLoadcase)largestLoadset;
                             index = System.Convert.ToInt32(
-                                LusasAdapter.GetAdapterID(largestLoadcase, 'c')) + 1;
+                                Adapters.Lusas.Convert.GetAdapterID(largestLoadcase, 'c')) + 1;
                         }
                         else if (largestLoadset is IFBasicCombination)
                         {
                             IFBasicCombination largestLoadCombination = (IFBasicCombination)largestLoadset;
                             index = System.Convert.ToInt32(
-                                LusasAdapter.GetAdapterID(largestLoadCombination, 'c')) + 1;
+                                Adapters.Lusas.Convert.GetAdapterID(largestLoadCombination, 'c')) + 1;
                         }
                     }
                 }
@@ -165,7 +169,7 @@ namespace BH.Adapter.Lusas
                     {
                         IFAttribute largestAttribute = d_LusasData.getAttribute("Material", largestMaterialID);
                         index = System.Convert.ToInt32(
-                            LusasAdapter.GetAdapterID(largestAttribute, 'M')) + 1;
+                            Adapters.Lusas.Convert.GetAdapterID(largestAttribute, 'M')) + 1;
                     }
                 }
                 if (type == typeof(Constraint6DOF) ||
@@ -181,7 +185,7 @@ namespace BH.Adapter.Lusas
 
                         IFAttribute largestAttribute = d_LusasData.getAttribute("Support", largestestSupportID);
                         index = System.Convert.ToInt32(
-                            LusasAdapter.GetAdapterID(largestAttribute, 'p')) + 1;
+                            Adapters.Lusas.Convert.GetAdapterID(largestAttribute, 'p')) + 1;
                     }
                 }
                 if (typeof(ISectionProperty).IsAssignableFrom(type) || typeof(ISurfaceProperty).IsAssignableFrom(type))
@@ -195,7 +199,7 @@ namespace BH.Adapter.Lusas
                     {
                         IFAttribute largestAttribute = d_LusasData.getAttribute("Geometric", largestThicknessID);
                         index = System.Convert.ToInt32(
-                            LusasAdapter.GetAdapterID(largestAttribute, 'G')) + 1;
+                            Adapters.Lusas.Convert.GetAdapterID(largestAttribute, 'G')) + 1;
                     }
                 }
                 if (typeof(ILoad).IsAssignableFrom(type))
@@ -211,12 +215,12 @@ namespace BH.Adapter.Lusas
                         if (largestAttribute is IFPrescribedDisplacementLoad)
                         {
                             index = System.Convert.ToInt32(
-                                LusasAdapter.GetAdapterID(largestAttribute, 'd')) + 1;
+                                Adapters.Lusas.Convert.GetAdapterID(largestAttribute, 'd')) + 1;
                         }
                         else
                         {
                             index = System.Convert.ToInt32(
-                                LusasAdapter.GetAdapterID(largestAttribute, 'l')) + 1;
+                                Adapters.Lusas.Convert.GetAdapterID(largestAttribute, 'l')) + 1;
                         }
                     }
                 }
@@ -232,7 +236,7 @@ namespace BH.Adapter.Lusas
                     {
                         IFAttribute largestAttribute = d_LusasData.getAttribute("Mesh", largestThicknessID);
                         index = System.Convert.ToInt32(
-                            LusasAdapter.GetAdapterID(largestAttribute, 'e')) + 1;
+                            Adapters.Lusas.Convert.GetAdapterID(largestAttribute, 'e')) + 1;
                     }
                 }
                 m_indexDict[type] = index;

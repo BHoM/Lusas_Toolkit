@@ -33,7 +33,11 @@ using System.Linq;
 
 namespace BH.Adapter.Lusas
 {
-    public partial class LusasAdapter
+#if Debug18 || Release18
+    public partial class LusasV18Adapter : BHoMAdapter
+#else
+    public partial class LusasV17Adapter : BHoMAdapter
+#endif
     {
 
         /***************************************************/

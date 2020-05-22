@@ -20,72 +20,31 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System.Collections.Generic;
 using Lusas.LPI;
 
-namespace BH.Adapter.Lusas
+namespace BH.Adapter.Adapters.Lusas
 {
-    public partial class LusasAdapter
+    public static partial class Convert
     {
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
 
-        internal static int GetAdapterID(IFAttribute lusasAttribute, char lastCharacter)
+        private static HashSet<string> IsMemberOf(IFGeometry lusasGeometry, HashSet<string> bhomTags)
         {
-            int adapterID = 0;
 
-            lusasAttribute.getName();
+            HashSet<string> geometryTag = new HashSet<string>();
 
-            if (lusasAttribute.getName().Contains("/"))
+            foreach (string tag in bhomTags)
             {
-                adapterID = int.Parse(lusasAttribute.getName().Split(lastCharacter, '/')[1]);
-            }
-            else
-            {
-                adapterID = lusasAttribute.getID();
+                if (lusasGeometry.isMemberOfGroup(tag))
+                {
+                    geometryTag.Add(tag);
+                }
             }
 
-            return adapterID;
-        }
-
-        /***************************************************/
-
-        internal static int GetAdapterID(IFLoadcase lusasLoadcase, char lastCharacter)
-        {
-            int adapterID = 0;
-
-            lusasLoadcase.getName();
-
-            if (lusasLoadcase.getName().Contains("/"))
-            {
-                adapterID = int.Parse(lusasLoadcase.getName().Split(lastCharacter, '/')[1]);
-            }
-            else
-            {
-                adapterID = lusasLoadcase.getID();
-            }
-
-            return adapterID;
-        }
-
-        /***************************************************/
-
-        internal static int GetAdapterID(IFBasicCombination lusasLoadCombination, char lastCharacter)
-        {
-            int adapterID = 0;
-
-            lusasLoadCombination.getName();
-
-            if (lusasLoadCombination.getName().Contains("/"))
-            {
-                adapterID = int.Parse(lusasLoadCombination.getName().Split(lastCharacter, '/')[1]);
-            }
-            else
-            {
-                adapterID = lusasLoadCombination.getID();
-            }
-
-            return adapterID;
+            return geometryTag;
         }
 
         /***************************************************/

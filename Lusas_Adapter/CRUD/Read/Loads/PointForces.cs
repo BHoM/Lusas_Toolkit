@@ -29,7 +29,11 @@ using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
-    public partial class LusasAdapter
+#if Debug18 || Release18
+    public partial class LusasV18Adapter
+#else
+    public partial class LusasV17Adapter
+#endif
     {
         /***************************************************/
         /**** Private Methods                           ****/
@@ -53,7 +57,7 @@ namespace BH.Adapter.Lusas
                     IFLoading lusasConcentratedLoad = (IFLoading)lusasConcentratedLoads[i];
 
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                        LusasAdapter.GetLoadAssignments(lusasConcentratedLoad);
+                        GetLoadAssignments(lusasConcentratedLoad);
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {

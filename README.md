@@ -8,6 +8,7 @@ https://www.lusas.com/
 
 ### Known Versions of Software Supported
 Lusas Modeller v17
+Lusas Modeller v18
 
 ### Documentation
 For more information about functionality see the [Lusas_Toolkit Wiki](https://github.com/BHoM/Lusas_Toolkit/wiki)

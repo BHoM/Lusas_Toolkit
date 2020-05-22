@@ -57,12 +57,12 @@ namespace BH.Adapter.Adapters.Lusas
 
             LoadCombination BHoMLoadCombination = new LoadCombination
             {
-                Name = LusasAdapter.GetName(lusasLoadCombination),
+                Name = GetName(lusasLoadCombination),
                 Number = lusasLoadCombination.getID(),
                 LoadCases = factoredLoadcases
             };
 
-            int adapterID = LusasAdapter.GetAdapterID(lusasLoadCombination, 'c');
+            int adapterID = GetAdapterID(lusasLoadCombination, 'c');
             BHoMLoadCombination.CustomData[AdapterIdName] = adapterID;
 
             return BHoMLoadCombination;
