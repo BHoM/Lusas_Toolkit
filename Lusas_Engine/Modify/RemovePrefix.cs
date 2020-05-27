@@ -28,7 +28,7 @@ namespace BH.Engine.Adapters.Lusas
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string RemovePrefix(string name, string forRemoval)
+        public static string RemovePrefix(this string name, string forRemoval)
         {
             string adapterID = "";
 
