@@ -28,6 +28,7 @@ using BH.oM.Structure.Loads;
 using BH.oM.Base;
 using Lusas.LPI;
 using BH.Adapter.Lusas;
+using BH.Engine.Adapters.Lusas;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -82,17 +83,17 @@ namespace BH.Adapter.Adapters.Lusas
 
                 if (lusasGeometry is IFPoint)
                 {
-                    bhomNodes.TryGetValue(Engine.Adapters.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "P"), out bhomNode);
+                    bhomNodes.TryGetValue(lusasGeometry.getName().RemovePrefix("P"), out bhomNode);
                     assignedObjects.Add(bhomNode);
                 }
                 else if (lusasGeometry is IFLine)
                 {
-                    bhomBars.TryGetValue(Engine.Adapters.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "L"), out bhomBar);
+                    bhomBars.TryGetValue(lusasGeometry.getName().RemovePrefix("L"), out bhomBar);
                     assignedObjects.Add(bhomBar);
                 }
                 else if (lusasGeometry is IFSurface)
                 {
-                    bhomPanels.TryGetValue(Engine.Adapters.Lusas.Modify.RemovePrefix(lusasGeometry.getName(), "S"), out bhomPanel);
+                    bhomPanels.TryGetValue(lusasGeometry.getName().RemovePrefix("S"), out bhomPanel);
                     assignedObjects.Add(bhomPanel);
                 }
             }

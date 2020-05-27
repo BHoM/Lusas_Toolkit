@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using BH.oM.Structure.Elements;
 using Lusas.LPI;
 using BH.oM.Base;
+using BH.Engine.Adapters.Lusas;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -44,7 +45,7 @@ namespace BH.Adapter.Adapters.Lusas
                 if (lusasAssignment.getDatabaseObject() is IFLine)
                 {
                     IFLine lusasLine = (IFLine)lusasAssignment.getDatabaseObject();
-                    bhomBars.TryGetValue(Engine.Adapters.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L"), out bhomBar);
+                    bhomBars.TryGetValue(lusasLine.getName().RemovePrefix("L"), out bhomBar);
                     assignedBars.Add(bhomBar);
                 }
                 else

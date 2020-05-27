@@ -31,6 +31,7 @@ using Lusas.LPI;
 using BH.oM.Adapters.Lusas;
 using System;
 using BH.Adapter.Lusas;
+using BH.Engine.Adapters.Lusas;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -106,7 +107,7 @@ namespace BH.Adapter.Adapters.Lusas
                 bhomBar.FEAType = barMeshProperties.Item4;
             }
 
-            string adapterID = Engine.Adapters.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L");
+            string adapterID = lusasLine.getName().RemovePrefix("L");
 
             bhomBar.CustomData[AdapterIdName] = adapterID;
 

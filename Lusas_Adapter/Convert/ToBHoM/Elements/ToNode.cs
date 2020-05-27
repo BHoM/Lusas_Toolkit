@@ -27,6 +27,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 using Lusas.LPI;
 using BH.Adapter.Lusas;
+using BH.Engine.Adapters.Lusas;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -55,7 +56,7 @@ namespace BH.Adapter.Adapters.Lusas
 
             bhomNode.Tags = tags;
 
-            string adapterID = Engine.Adapters.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P");
+            string adapterID = lusasPoint.getName().RemovePrefix("P");
             bhomNode.CustomData[AdapterIdName] = adapterID;
 
             return bhomNode;
