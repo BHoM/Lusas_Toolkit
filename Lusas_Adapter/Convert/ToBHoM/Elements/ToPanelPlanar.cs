@@ -29,6 +29,7 @@ using BH.oM.Geometry;
 using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
 using BH.Adapter.Lusas;
+using BH.Engine.Adapters.Lusas;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -63,7 +64,7 @@ namespace BH.Adapter.Adapters.Lusas
             Panel bhomPanel = Engine.Structure.Create.Panel(surfaceEdges, dummyCurve);
 
             bhomPanel.Tags = tags;
-            bhomPanel.CustomData[AdapterIdName] = lusasSurface.getName();
+            bhomPanel.CustomData[AdapterIdName] = lusasSurface.getName().RemovePrefix("S");
 
             List<string> geometricAssignments = GetAttributeAssignments(lusasSurface, "Geometric");
             List<string> materialAssignments = GetAttributeAssignments(lusasSurface, "Material");
@@ -94,7 +95,7 @@ namespace BH.Adapter.Adapters.Lusas
         {
             Edge bhomEdge = null;
             IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
-            string lineName = Engine.Adapters.Lusas.Modify.RemovePrefix(lusasEdge.getName(), "L");
+            string lineName = lusasEdge.getName().RemovePrefix("L");
             bhomBars.TryGetValue(lineName, out bhomEdge);
             return bhomEdge;
         }
