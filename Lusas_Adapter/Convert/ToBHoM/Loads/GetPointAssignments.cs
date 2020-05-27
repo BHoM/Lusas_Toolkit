@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using BH.oM.Structure.Elements;
 using Lusas.LPI;
 using BH.oM.Base;
+using BH.Engine.Adapters.Lusas;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -44,7 +45,7 @@ namespace BH.Adapter.Adapters.Lusas
                 if (lusasAssignment.getDatabaseObject() is IFPoint)
                 {
                     IFPoint lusasPoint = (IFPoint)lusasAssignment.getDatabaseObject();
-                    bhomNodes.TryGetValue(Engine.Adapters.Lusas.Modify.RemovePrefix(lusasPoint.getName(), "P"), out bhomNode);
+                    bhomNodes.TryGetValue(lusasPoint.getName().RemovePrefix("P"), out bhomNode);
                     assignedNodes.Add(bhomNode);
                 }
                 else

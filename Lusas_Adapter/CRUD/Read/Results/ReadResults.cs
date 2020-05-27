@@ -30,6 +30,7 @@ using BH.oM.Data.Requests;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Requests;
 using System.Linq;
+using BH.Engine.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
 {
@@ -104,7 +105,7 @@ namespace BH.Adapter.Lusas
                 {
                     ids.Add(
                         System.Convert.ToInt32(
-                        Engine.Adapters.Lusas.Modify.RemovePrefix(d_LusasData.getPointByNumber(i).getName(), "P")));
+                        d_LusasData.getPointByNumber(i).getName().RemovePrefix("P")));
                 }
             }
 
@@ -124,7 +125,7 @@ namespace BH.Adapter.Lusas
                 {
                     ids.Add(
                         System.Convert.ToInt32(
-                        Engine.Adapters.Lusas.Modify.RemovePrefix(d_LusasData.getLineByNumber(i).getName(), "L")));
+                        d_LusasData.getLineByNumber(i).getName().RemovePrefix("L")));
                 }
             }
 
@@ -144,7 +145,7 @@ namespace BH.Adapter.Lusas
                 {
                     ids.Add(
                         System.Convert.ToInt32(
-                        Engine.Adapters.Lusas.Modify.RemovePrefix(d_LusasData.getSurfaceByNumber(i).getName(), "S")));
+                        d_LusasData.getSurfaceByNumber(i).getName().RemovePrefix("S")));
                 }
             }
 

@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using BH.oM.Structure.Elements;
 using Lusas.LPI;
 using BH.oM.Base;
+using BH.Engine.Adapters.Lusas;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -44,7 +45,7 @@ namespace BH.Adapter.Adapters.Lusas
                 if (lusasAssignment.getDatabaseObject() is IFSurface)
                 {
                     IFSurface lusasSurface = (IFSurface)lusasAssignment.getDatabaseObject();
-                    bhomPanels.TryGetValue(Engine.Adapters.Lusas.Modify.RemovePrefix(lusasSurface.getName(), "S"), out bhomPanel);
+                    bhomPanels.TryGetValue(lusasSurface.getName().RemovePrefix("S"), out bhomPanel);
                     assignedSurfs.Add(bhomPanel);
                 }
                 else

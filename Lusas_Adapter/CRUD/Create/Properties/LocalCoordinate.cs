@@ -21,6 +21,7 @@
  */
 
 using System.Linq;
+using BH.Engine.Adapters.Lusas;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -77,7 +78,7 @@ namespace BH.Adapter.Lusas
                 worldZAxis.Zip(localZAxis, (d1,d2) => d1 * d2).Sum(),
             };
 
-            string customID = Engine.Adapters.Lusas.Modify.RemovePrefix(lusasLine.getName(), "L");
+            string customID = lusasLine.getName().RemovePrefix("L");
 
             string lusasName = "L" + customID + "/ Local Axis";
 
