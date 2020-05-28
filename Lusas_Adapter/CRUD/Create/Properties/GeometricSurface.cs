@@ -20,6 +20,7 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Structure;
 using BH.oM.Structure.SurfaceProperties;
 using Lusas.LPI;
 
@@ -37,13 +38,13 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateGeometricSurface(ISurfaceProperty surfaceProperty)
         {
-            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(surfaceProperty.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(surfaceProperty.DescriptionOrName()))
             {
                 return null;
             }
 
             IFAttribute lusasAttribute = null;
-            string lusasName = "G" + surfaceProperty.CustomData[AdapterIdName] + "/" + surfaceProperty.Name;
+            string lusasName = "G" + surfaceProperty.CustomData[AdapterIdName] + "/" + surfaceProperty.DescriptionOrName();
 
             if (d_LusasData.existsAttribute("Surface Geometric", lusasName))
             {

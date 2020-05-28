@@ -40,13 +40,13 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateSupport(Constraint6DOF constraint)
         {
-            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(constraint.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(constraint.DescriptionOrName()))
             {
                 return null;
             }
 
             IFAttribute lusasSupport = null;
-            string lusasName = "Sp" + constraint.CustomData[AdapterIdName] + "/" + constraint.Name;
+            string lusasName = "Sp" + constraint.CustomData[AdapterIdName] + "/" + constraint.DescriptionOrName();
 
             if (d_LusasData.existsAttribute("Support", lusasName))
             {
@@ -90,13 +90,13 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateSupport(Constraint4DOF constraint)
         {
-            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(constraint.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(constraint.DescriptionOrName()))
             {
                 return null;
             }
 
             IFAttribute lusasSupport = null;
-            string lusasName = "Sp" + constraint.CustomData[AdapterIdName] + "/" + constraint.Name;
+            string lusasName = "Sp" + constraint.CustomData[AdapterIdName] + "/" + constraint.DescriptionOrName();
 
             if (d_LusasData.existsAttribute("Support", lusasName))
             {

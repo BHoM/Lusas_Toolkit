@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Geometry.ShapeProfiles;
 using Lusas.LPI;
+using BH.Engine.Structure;
 
 namespace BH.Adapter.Lusas
 {
@@ -39,13 +40,13 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateGeometricLine(ISectionProperty sectionProperty)
         {
-            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(sectionProperty.Name))
+            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(sectionProperty.DescriptionOrName()))
             {
                 return null;
             }
 
             IFAttribute lusasAttribute = null;
-            string lusasName = "G" + sectionProperty.CustomData[AdapterIdName] + "/" + sectionProperty.Name;
+            string lusasName = "G" + sectionProperty.CustomData[AdapterIdName] + "/" + sectionProperty.DescriptionOrName();
 
             if (d_LusasData.existsAttribute("Line Geometric", lusasName))
             {
