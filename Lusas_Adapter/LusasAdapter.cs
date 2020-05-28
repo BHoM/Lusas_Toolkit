@@ -24,6 +24,7 @@
 using BH.Engine.Base.Objects;
 using BH.oM.Adapter;
 using BH.oM.Adapters.Lusas;
+using BH.Engine.Structure;
 using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
@@ -65,10 +66,11 @@ namespace BH.Adapter.Lusas
                     {typeof(Bar), new Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer.BarMidPointComparer(3)},
                     {typeof(Edge), new Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer.EdgeMidPointComparer(3) },
                     { typeof(Point), new Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer.PointDistanceComparer(3) },
-                    {typeof(IMaterialFragment), new BHoMObjectNameComparer() },
-                    {typeof(LinkConstraint), new BHoMObjectNameComparer() },
-                    {typeof(ISurfaceProperty), new BHoMObjectNameComparer() },
-                    {typeof(ISectionProperty), new BHoMObjectNameComparer() },
+                    {typeof(IMaterialFragment), new NameOrDescriptionComparer() },
+                    {typeof(LinkConstraint), new NameOrDescriptionComparer() },
+                    {typeof(ISurfaceProperty), new NameOrDescriptionComparer() },
+                    {typeof(ISectionProperty), new NameOrDescriptionComparer() },
+                    {typeof(Constraint6DOF), new NameOrDescriptionComparer() },
                     {typeof(ILoad), new BHoMObjectNameComparer() },
                     {typeof(Loadcase), new BHoMObjectNameComparer()},
                     {typeof(LoadCombination), new BHoMObjectNameComparer()}
@@ -103,7 +105,7 @@ namespace BH.Adapter.Lusas
                     {
                         d_LusasData = m_LusasApplication.openDatabase(filePath);
                     }
-                    catch(System.Runtime.InteropServices.COMException)
+                    catch (System.Runtime.InteropServices.COMException)
                     {
                         throw new Exception("An exception has been flagged by Lusas, it is likely the file is from a higher version of Lusas than the adapter being used.");
                     }
