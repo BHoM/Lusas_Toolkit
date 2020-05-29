@@ -22,6 +22,7 @@
 
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
+using BH.Engine.Structure;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -53,7 +54,7 @@ namespace BH.Adapter.Lusas
 
             if (!(node.Support == null))
             {
-                string constraintName = "Sp" + node.Support.CustomData[AdapterIdName] + "/" + node.Support.Name;
+                string constraintName = "Sp" + node.Support.CustomData[AdapterIdName] + "/" + node.Support.DescriptionOrName();
                 IFAttribute lusasSupport = d_LusasData.getAttribute("Support", constraintName);
                 lusasSupport.assignTo(lusasPoint);
             }

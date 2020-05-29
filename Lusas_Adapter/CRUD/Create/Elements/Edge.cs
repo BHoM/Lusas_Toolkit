@@ -20,6 +20,7 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Structure;
 using BH.oM.Structure.Elements;
 using Lusas.LPI;
 
@@ -47,7 +48,7 @@ namespace BH.Adapter.Lusas
 
             if (!(edge.Support == null))
             {
-                string supportName = "Sp" + edge.Support.CustomData[AdapterIdName] + "/" + edge.Support.Name;
+                string supportName = "Sp" + edge.Support.CustomData[AdapterIdName] + "/" + edge.Support.DescriptionOrName();
                 IFAttribute lusasSupport = d_LusasData.getAttribute("Support", supportName);
                 lusasSupport.assignTo(lusasLine);
             }
