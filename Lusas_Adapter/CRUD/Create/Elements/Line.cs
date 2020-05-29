@@ -28,6 +28,7 @@ using BH.oM.Geometry;
 using BH.oM.Adapters.Lusas;
 using BH.Engine.Geometry;
 using Lusas.LPI;
+using BH.Engine.Structure;
 
 namespace BH.Adapter.Lusas
 {
@@ -65,7 +66,7 @@ namespace BH.Adapter.Lusas
             if (!(bar.SectionProperty == null))
             {
                 string geometricLineName =
-                    "G" + bar.SectionProperty.CustomData[AdapterIdName] + "/" + bar.SectionProperty.Name;
+                    "G" + bar.SectionProperty.CustomData[AdapterIdName] + "/" + bar.SectionProperty.DescriptionOrName();
 
                 IFAttribute lusasGeometricLine = d_LusasData.getAttribute("Line Geometric", geometricLineName);
                 lusasGeometricLine.assignTo(lusasLine);
@@ -73,13 +74,13 @@ namespace BH.Adapter.Lusas
                 {
                     string materialName =
                         "M" + bar.SectionProperty.Material.CustomData[AdapterIdName] + "/" +
-                        bar.SectionProperty.Material.Name;
+                        bar.SectionProperty.Material.DescriptionOrName();
 
                     IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
 
                     if (bar.SectionProperty.Material is IOrthotropic)
                     {
-                        Engine.Reflection.Compute.RecordWarning($"Orthotropic Material {bar.SectionProperty.Material.Name} cannot be assigned to Bar {bar.CustomData[AdapterIdName]}, " +
+                        Engine.Reflection.Compute.RecordWarning($"Orthotropic Material {bar.SectionProperty.Material.DescriptionOrName()} cannot be assigned to Bar {bar.CustomData[AdapterIdName]}, " +
                             $"orthotropic can only be applied to 2D and 3D elements in Lusas.");
                     }
 
@@ -89,7 +90,7 @@ namespace BH.Adapter.Lusas
 
             if (!(bar.Support == null))
             {
-                string supportName = "Sp" + bar.Support.CustomData[AdapterIdName] + "/" + bar.Support.Name;
+                string supportName = "Sp" + bar.Support.CustomData[AdapterIdName] + "/" + bar.Support.DescriptionOrName();
                 IFAttribute lusasSupport = d_LusasData.getAttribute("Support", supportName);
                 lusasSupport.assignTo(lusasLine);
                 IFLocalCoord barLocalAxis = CreateLocalCoordinate(lusasLine);

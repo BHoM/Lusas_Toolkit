@@ -21,6 +21,7 @@
  */
 
 using BH.oM.Adapters.Lusas;
+using BH.Engine.Structure;
 using BH.oM.Structure.Elements;
 using Lusas.LPI;
 
@@ -57,7 +58,7 @@ namespace BH.Adapter.Lusas
             if (!(panel.Property == null))
             {
                 string geometricSurfaceName = "G" +
-                    panel.Property.CustomData[AdapterIdName] + "/" + panel.Property.Name;
+                    panel.Property.CustomData[AdapterIdName] + "/" + panel.Property.DescriptionOrName();
 
                 IFAttribute lusasGeometricSurface = d_LusasData.getAttribute(
                     "Surface Geometric", geometricSurfaceName);
@@ -66,7 +67,7 @@ namespace BH.Adapter.Lusas
                 if (!(panel.Property.Material == null))
                 {
                     string materialName = "M" + panel.Property.Material.CustomData[AdapterIdName] +
-                        "/" + panel.Property.Material.Name;
+                        "/" + panel.Property.Material.DescriptionOrName();
 
                     IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
                     lusasMaterial.assignTo(lusasSurface);
