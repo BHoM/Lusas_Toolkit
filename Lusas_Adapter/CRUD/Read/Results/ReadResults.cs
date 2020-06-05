@@ -25,7 +25,7 @@ using System.Collections;
 using System.Collections.Generic;
 using BH.oM.Base;
 using BH.oM.Adapter;
-using BH.oM.Common;
+using BH.oM.Analytical.Results;
 using BH.oM.Data.Requests;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Requests;

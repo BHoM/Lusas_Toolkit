@@ -26,7 +26,6 @@ using System.Collections.Generic;
 using BH.oM.Adapter;
 using BH.oM.Adapters.Lusas;
 using BH.oM.Base;
-using BH.oM.Common;
 using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
