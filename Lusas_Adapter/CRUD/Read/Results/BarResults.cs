@@ -112,18 +112,26 @@ namespace BH.Adapter.Lusas
                     featureResults.TryGetValue("Fx", out fX); featureResults.TryGetValue("Fy", out fY); featureResults.TryGetValue("Fz", out fZ);
                     featureResults.TryGetValue("Mx", out mX); featureResults.TryGetValue("My", out mY); featureResults.TryGetValue("Mz", out mZ);
 
-                    BarForce barForce = new BarForce
-                    {
-                        ResultCase = Adapters.Lusas.Convert.GetName(loadset.getName()),
-                        ObjectId = barId,
-                        FX = fX * forceSIConversion,
-                        FY = fY * forceSIConversion,
-                        FZ = fZ * forceSIConversion,
-                        MX = mX * forceSIConversion * lengthSIConversion,
-                        MY = mY * forceSIConversion * lengthSIConversion,
-                        MZ = mZ * forceSIConversion * lengthSIConversion,
-                    };
+                    //TODO: resolve below identifiers extractable through the API
+                    int mode = -1;
+                    double timeStep = 0;
+                    double position = 0;
+                    int divisions = 0;
 
+                    BarForce barForce = new BarForce(
+                        barId,
+                        Adapters.Lusas.Convert.GetName(loadset.getName()),
+                        mode,
+                        timeStep,
+                        position,
+                        divisions,
+                        fX * forceSIConversion,
+                        fY * forceSIConversion,
+                        fZ * forceSIConversion,
+                        mX * forceSIConversion,
+                        mY * forceSIConversion,
+                        mZ * forceSIConversion
+                        );
                     barForces.Add(barForce);
 
                 }
@@ -174,12 +182,28 @@ namespace BH.Adapter.Lusas
                     double axial = 0;
                     featureResults.TryGetValue("Sx(Fx)", out axial);
 
-                    BarStress barStress = new BarStress
-                    {
-                        ResultCase = Adapters.Lusas.Convert.GetName(loadset.getName()),
-                        ObjectId = barId,
-                        Axial = axial * forceSIConversion * lengthSIConversion * lengthSIConversion
-                    };
+                    //TODO: resolve below identifiers extractable through the API
+                    int mode = -1;
+                    double timeStep = 0;
+                    double position = 0;
+                    int divisions = 0;
+
+                    BarStress barStress = new BarStress(
+                        barId,
+                        Adapters.Lusas.Convert.GetName(loadset.getName()),
+                        mode,
+                        timeStep,
+                        position,
+                        divisions,
+                        axial * forceSIConversion * lengthSIConversion * lengthSIConversion,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0);
 
                     barStresses.Add(barStress);
 
@@ -235,14 +259,28 @@ namespace BH.Adapter.Lusas
                     featureResults.TryGetValue("Ex", out eX); featureResults.TryGetValue("Ey", out eY); featureResults.TryGetValue("Ez", out eZ);
                     featureResults.TryGetValue("Bx", out bX); featureResults.TryGetValue("By", out bY); featureResults.TryGetValue("Bz", out bZ);
 
-                    BarStrain barStrain = new BarStrain
-                    {
-                        ResultCase = Adapters.Lusas.Convert.GetName(loadset.getName()),
-                        ObjectId = barId,
-                        Axial = eX,
-                        ShearY = eY,
-                        ShearZ = eZ,
-                    };
+                    //TODO: resolve below identifiers extractable through the API
+                    int mode = -1;
+                    double timeStep = 0;
+                    double position = 0;
+                    int divisions = 0;
+
+                    BarStrain barStrain = new BarStrain(
+                        barId,
+                        Adapters.Lusas.Convert.GetName(loadset.getName()),
+                        mode,
+                        timeStep,
+                        position,
+                        divisions,
+                        eX,
+                        eY,
+                        eZ,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0);
 
                     BH.Engine.Reflection.Compute.RecordWarning("Please note only axial and shear strains will be returned when pulling BarStrain results.");
 
@@ -294,17 +332,26 @@ namespace BH.Adapter.Lusas
                     featureResults.TryGetValue("DX", out uX); featureResults.TryGetValue("DY", out uY); featureResults.TryGetValue("DZ", out uZ);
                     featureResults.TryGetValue("THX", out rX); featureResults.TryGetValue("THY", out rY); featureResults.TryGetValue("THZ", out rZ);
 
-                    BarDisplacement barDisplacement = new BarDisplacement
-                    {
-                        ResultCase = Adapters.Lusas.Convert.GetName(loadset.getName()),
-                        ObjectId = barId,
-                        UX = uX * lengthSIConversion,
-                        UY = uY * lengthSIConversion,
-                        UZ = uZ * lengthSIConversion,
-                        RX = rX,
-                        RY = rY,
-                        RZ = rZ,
-                    };
+                    //TODO: resolve below identifiers extractable through the API
+                    int mode = -1;
+                    double timeStep = 0;
+                    double position = 0;
+                    int divisions = 0;
+
+                    BarDisplacement barDisplacement = new BarDisplacement(
+                        barId,
+                        Adapters.Lusas.Convert.GetName(loadset.getName()),
+                        mode,
+                        timeStep,
+                        position,
+                        divisions,
+                        uX * lengthSIConversion,
+                        uY * lengthSIConversion,
+                        uZ * lengthSIConversion,
+                        rX,
+                        rY,
+                        rZ
+                        );
 
                     barDisplacements.Add(barDisplacement);
 
