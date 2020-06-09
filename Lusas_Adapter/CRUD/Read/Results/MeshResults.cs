@@ -108,10 +108,10 @@ namespace BH.Adapter.Lusas
                     double uX = 0; double uY = 0; double uZ = 0; double rX = 0; double rY = 0; double rZ = 0;
                     featureResults.TryGetValue("DX", out uX); featureResults.TryGetValue("DY", out uY); featureResults.TryGetValue("DZ", out uZ);
                     featureResults.TryGetValue("THX", out rX); featureResults.TryGetValue("THY", out rY); featureResults.TryGetValue("THZ", out rZ);
-
+                    int mode = -1;
                     MeshDisplacement bhomMeshDisplacement = new MeshDisplacement
                         (
-                        meshId, 0, 0, loadcaseId, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
+                        meshId, 0, 0, loadcaseId, mode, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
                         uX * lengthSIConversion,
                         uY * lengthSIConversion,
                         uZ * lengthSIConversion,
@@ -171,9 +171,9 @@ namespace BH.Adapter.Lusas
                     featureResults.TryGetValue("NX", out nX); featureResults.TryGetValue("NY", out nY); featureResults.TryGetValue("NXY", out nXY);
                     featureResults.TryGetValue("MX", out mX); featureResults.TryGetValue("MY", out mY); featureResults.TryGetValue("MXY", out mXY);
                     featureResults.TryGetValue("SX", out sX); featureResults.TryGetValue("SY", out sY);
-
+                    int mode = -1;
                     MeshForce meshForce = new MeshForce(
-                        meshId, 0, 0, loadcaseId, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
+                        meshId, 0, 0, loadcaseId, mode, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
                         nX * forceSIConversion,
                         nY * forceSIConversion,
                         nXY * forceSIConversion,
@@ -251,9 +251,9 @@ namespace BH.Adapter.Lusas
                     featureResults.TryGetValue("SX", out sX); featureResults.TryGetValue("SY", out sY); featureResults.TryGetValue("SZ", out sZ);
                     featureResults.TryGetValue("SYZ", out sYZ); featureResults.TryGetValue("SZX", out sXZ);
                     featureResults.TryGetValue("S1", out s1); featureResults.TryGetValue("S3", out s3); featureResults.TryGetValue("S2", out s2);
-
+                    int mode = -1;
                     MeshStress meshStress = new MeshStress(
-                        meshId, 0, 0, loadcaseId, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
+                        meshId, 0, 0, loadcaseId, mode, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
                         sX * forceSIConversion / (lengthSIConversion * lengthSIConversion),
                         sY * forceSIConversion / (lengthSIConversion * lengthSIConversion),
                         sZ * forceSIConversion / (lengthSIConversion * lengthSIConversion),
@@ -328,9 +328,9 @@ namespace BH.Adapter.Lusas
 
                     double sE = 0;
                     featureResults.TryGetValue("SE", out sE);
-
+                    int mode = -1;
                     MeshVonMises meshStress = new MeshVonMises(
-                        meshId, 0, 0, loadcaseId, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
+                        meshId, 0, 0, loadcaseId, mode, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
                         sE * forceSIConversion / (lengthSIConversion * lengthSIConversion), 0, 0);
 
                     bhomMeshStresses.Add(meshStress);

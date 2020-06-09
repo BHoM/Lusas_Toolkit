@@ -109,17 +109,23 @@ namespace BH.Adapter.Lusas
 
                     List<double> results = new List<double>();
 
-                    NodeReaction nodeReaction = new NodeReaction
-                    {
-                        ResultCase = Adapters.Lusas.Convert.GetName(loadset.getName()),
-                        ObjectId = nodeId,
-                        FX = fX * forceSIConversion,
-                        FY = fY * forceSIConversion,
-                        FZ = fZ * forceSIConversion,
-                        MX = mX * forceSIConversion * lengthSIConversion,
-                        MY = mY * forceSIConversion * lengthSIConversion,
-                        MZ = mZ * forceSIConversion * lengthSIConversion,
-                    };
+                    //TODO: resolve below identifiers extractable through the API
+                    int mode = -1;
+                    double timeStep = 0;
+
+                    NodeReaction nodeReaction = new NodeReaction(
+                        nodeId,
+                        Adapters.Lusas.Convert.GetName(loadset.getName()),
+                        mode,
+                        timeStep,
+                        oM.Geometry.Basis.XY,
+                        fX * forceSIConversion,
+                        fY * forceSIConversion,
+                        fZ * forceSIConversion,
+                        mX * forceSIConversion * lengthSIConversion,
+                        mY * forceSIConversion * lengthSIConversion,
+                        mZ * forceSIConversion * lengthSIConversion
+                        );
 
                     nodeReactions.Add(nodeReaction);
 
@@ -170,17 +176,23 @@ namespace BH.Adapter.Lusas
                     featureResults.TryGetValue("DX", out uX); featureResults.TryGetValue("DY", out uY); featureResults.TryGetValue("DZ", out uZ);
                     featureResults.TryGetValue("THX", out rX); featureResults.TryGetValue("THY", out rY); featureResults.TryGetValue("THZ", out rZ);
 
-                    NodeDisplacement bhomNodeDisplacement = new NodeDisplacement
-                    {
-                        ResultCase = Adapters.Lusas.Convert.GetName(loadset.getName()),
-                        ObjectId = nodeId,
-                        UX = uX * lengthSIConversion,
-                        UY = uY * lengthSIConversion,
-                        UZ = uZ * lengthSIConversion,
-                        RX = rX,
-                        RY = rY,
-                        RZ = rZ,
-                    };
+                    //TODO: resolve below identifiers extractable through the API
+                    int mode = -1;
+                    double timeStep = 0;
+
+                    NodeDisplacement bhomNodeDisplacement = new NodeDisplacement(
+                        nodeId,
+                        Adapters.Lusas.Convert.GetName(loadset.getName()),
+                        mode,
+                        timeStep,
+                        oM.Geometry.Basis.XY,
+                        uX * lengthSIConversion,
+                        uY * lengthSIConversion,
+                        uZ * lengthSIConversion,
+                        rX,
+                        rY,
+                        rZ
+                        );
 
                     nodeDisplacements.Add(bhomNodeDisplacement);
 
