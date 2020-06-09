@@ -128,9 +128,9 @@ namespace BH.Adapter.Lusas
                         fX * forceSIConversion,
                         fY * forceSIConversion,
                         fZ * forceSIConversion,
-                        mX * forceSIConversion,
-                        mY * forceSIConversion,
-                        mZ * forceSIConversion
+                        mX * forceSIConversion * lengthSIConversion,
+                        mY * forceSIConversion * lengthSIConversion,
+                        mZ * forceSIConversion * lengthSIConversion
                         );
                     barForces.Add(barForce);
 
