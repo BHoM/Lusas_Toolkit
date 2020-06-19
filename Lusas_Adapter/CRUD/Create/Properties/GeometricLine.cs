@@ -232,10 +232,10 @@ namespace BH.Adapter.Lusas
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
             List<double> dimensionList = new List<double> { bhomProfile.Height, bhomProfile.Width,
-            bhomProfile.WebThickness, bhomProfile.FlangeThickness, bhomProfile.RootRadius};
+            bhomProfile.FlangeThickness, bhomProfile.WebThickness, bhomProfile.RootRadius};
             double[] dimensionArray = dimensionList.ToArray();
 
-            List<string> valueList = new List<string> { "D", "B", "tw", "tf", "r" };
+            List<string> valueList = new List<string> { "D", "B", "tf", "tw", "r" };
             string[] valueArray = valueList.ToArray();
 
             int lusasType = 5;
