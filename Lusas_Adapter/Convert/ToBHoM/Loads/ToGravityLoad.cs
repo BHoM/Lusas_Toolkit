@@ -40,6 +40,7 @@ namespace BH.Adapter.Adapters.Lusas
 
         public static GravityLoad ToGravityLoad(IFLoading lusasGravityLoad,
             IEnumerable<IFAssignment> lusasAssignments,
+            Dictionary<string, Node> bhomNodes,
             Dictionary<string, Bar> bhomBars,
             Dictionary<string, Panel> bhomPanels)
         {
@@ -53,7 +54,7 @@ namespace BH.Adapter.Adapters.Lusas
             };
 
             IEnumerable<BHoMObject> bhomObjects = GetGeometryAssignments(
-                lusasAssignments, null, bhomBars, bhomPanels);
+                lusasAssignments, bhomNodes, bhomBars, bhomPanels);
             GravityLoad bhomGravityLoad = Engine.Structure.Create.GravityLoad(
                 bhomLoadcase, gravityVector, bhomObjects, GetName(lusasGravityLoad));
 
