@@ -58,7 +58,7 @@ namespace BH.Adapter.Lusas
             }
             else
             {
-                lusasBarPointLoad = d_LusasData.createLoadingBeamPoint(bhomBarPointLoad.Name);
+                lusasBarPointLoad = d_LusasData.createLoadingBeamPoint(lusasName);
                 if (bhomBarPointLoad.Axis.ToString() == "Global")
                     lusasBarPointLoad.setBeamPoint("parametric", "global", "beam");
                 else

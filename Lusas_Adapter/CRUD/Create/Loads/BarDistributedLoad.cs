@@ -96,7 +96,7 @@ namespace BH.Adapter.Lusas
                     if ((valueAtA != 0) || (valueAtB != 0))
                     {
                         IFLoadingBeamDistributed lusasBarDistributedLoad =
-                            d_LusasData.createLoadingBeamDistributed(bhomBarDistributedLoad.Name + key);
+                            d_LusasData.createLoadingBeamDistributed(lusasName + key);
 
                         if (bhomBarDistributedLoad.Axis.ToString() == "Global")
                             lusasBarDistributedLoad.setBeamDistributed("parametric", "global", "beam");
