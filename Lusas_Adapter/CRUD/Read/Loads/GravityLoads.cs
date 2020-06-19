@@ -45,11 +45,13 @@ namespace BH.Adapter.Lusas
 
             if (!(lusasBodyForces.Count() == 0))
             {
+                List<Node> bhomNodes = ReadNodes();
                 List<Bar> bhomBars = ReadBars();
                 List<Panel> bhomPanels = ReadPanels();
+                Dictionary<string, Node> nodeDictionary = bhomNodes.ToDictionary(
+                    x => x.CustomData[AdapterIdName].ToString());
                 Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
                     x => x.CustomData[AdapterIdName].ToString());
-
                 Dictionary<string, Panel> PanelDictionary = bhomPanels.ToDictionary(
                     x => x.CustomData[AdapterIdName].ToString());
 
@@ -67,7 +69,7 @@ namespace BH.Adapter.Lusas
                         List<string> analysisName = new List<string> { lusasBodyForce.getAttributeType() };
 
                         GravityLoad bhomGravityLoad = Adapters.Lusas.Convert.ToGravityLoad(
-                            lusasBodyForce, groupedAssignment, barDictionary, PanelDictionary);
+                            lusasBodyForce, groupedAssignment, nodeDictionary, barDictionary, PanelDictionary);
                         bhomGravityLoad.Tags = new HashSet<string>(analysisName);
                         bhomGravityLoads.Add(bhomGravityLoad);
                     }
