@@ -43,7 +43,7 @@ namespace BH.Adapter.Lusas
             List<ILoad> bhomAreaTemperatureLoads = new List<ILoad>();
             object[] lusasTemperatureLoads = d_LusasData.getAttributes("Temperature");
 
-            if (!(bhomAreaTemperatureLoads.Count() == 0))
+            if (!(lusasTemperatureLoads.Count() == 0))
             {
                 List<Panel> bhomPanel = ReadPanels();
                 Dictionary<string, Panel> surfaceDictionary = bhomPanel.ToDictionary(
