@@ -42,26 +42,16 @@ namespace BH.Adapter.Lusas
                 return null;
             }
 
-            int adapterID;
-            if (meshSettings2D.CustomData.ContainsKey(AdapterIdName))
-            {
-                adapterID = System.Convert.ToInt32(meshSettings2D.CustomData[AdapterIdName]);
-            }
-            else
-            {
-                adapterID = System.Convert.ToInt32(NextFreeId(meshSettings2D.GetType()));
-                meshSettings2D.CustomData[AdapterIdName] = adapterID;
-            }
-
             IFMeshSurface lusasSurfaceMesh = null;
-            string lusasName = "Me" + meshSettings2D.CustomData[AdapterIdName] + "/" + meshSettings2D.Name;
-            if (d_LusasData.existsAttribute("Mesh", lusasName))
+
+            if (d_LusasData.existsAttribute("Mesh", meshSettings2D.Name))
             {
-                lusasSurfaceMesh = (IFMeshSurface)d_LusasData.getAttribute("Mesh", lusasName);
+                lusasSurfaceMesh = (IFMeshSurface)d_LusasData.getAttribute("Mesh", meshSettings2D.Name);
+                meshSettings2D.CustomData[AdapterIdName] = lusasSurfaceMesh.getID().ToString();
             }
             else
             {
-                lusasSurfaceMesh = d_LusasData.createMeshSurface(lusasName);
+                lusasSurfaceMesh = d_LusasData.createMeshSurface(meshSettings2D.Name);
                 if (meshSettings2D.SplitMethod == Split2D.Automatic)
                 {
                     lusasSurfaceMesh.addElementName("QTS4");
@@ -74,6 +64,7 @@ namespace BH.Adapter.Lusas
                 {
                     lusasSurfaceMesh.setRegularSize("QTS4", meshSettings2D.ElementSize);
                 }
+                meshSettings2D.CustomData[AdapterIdName] = d_LusasData.getLargestAttributeID("Mesh");
             }
             return lusasSurfaceMesh;
         }

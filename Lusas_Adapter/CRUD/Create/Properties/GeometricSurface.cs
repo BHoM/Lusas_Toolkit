@@ -49,13 +49,13 @@ namespace BH.Adapter.Lusas
             if (d_LusasData.existsAttribute("Surface Geometric", lusasName))
             {
                 lusasAttribute = d_LusasData.getAttribute("Surface Geometric", lusasName);
+                surfaceProperty.CustomData[AdapterIdName] = lusasAttribute.getID().ToString();
             }
             else
             {
-                IFGeometricSurface lusasGeometricSurface = CreateSurfraceProfile(
-                    surfaceProperty as dynamic, lusasName);
-
+                IFGeometricSurface lusasGeometricSurface = CreateSurfraceProfile(surfaceProperty as dynamic, lusasName);
                 lusasAttribute = lusasGeometricSurface;
+                surfaceProperty.CustomData[AdapterIdName] = d_LusasData.getLargestAttributeID("Geometric");
             }
             return lusasAttribute;
         }

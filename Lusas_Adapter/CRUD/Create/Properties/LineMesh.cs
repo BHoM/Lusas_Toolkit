@@ -54,32 +54,22 @@ namespace BH.Adapter.Lusas
                 barRelease = Engine.Structure.Create.BarReleaseFixFix();
             }
 
-            int adapterID;
-            if (meshSettings1D.CustomData.ContainsKey(AdapterIdName))
-            {
-                adapterID = System.Convert.ToInt32(meshSettings1D.CustomData[AdapterIdName]);
-            }
-            else
-            {
-                adapterID = System.Convert.ToInt32(NextFreeId(meshSettings1D.GetType()));
-                meshSettings1D.CustomData[AdapterIdName] = adapterID;
-            }
-
             string releaseString = CreateReleaseString(barRelease);
 
             IFMeshLine lusasLineMesh;
-            string lusasName =
-                "Me" + adapterID + "/" + meshSettings1D.Name + "\\" + barFEAType.ToString() + "|" + releaseString;
+            string lusasName = meshSettings1D.Name + "\\" + barFEAType.ToString() + "|" + releaseString;
 
             if (d_LusasData.existsAttribute("Mesh", lusasName))
             {
                 lusasLineMesh = (IFMeshLine)d_LusasData.getAttribute("Mesh", lusasName);
+                meshSettings1D.CustomData[AdapterIdName] = lusasLineMesh.getID().ToString();
             }
             else
             {
                 lusasLineMesh = d_LusasData.createMeshLine(lusasName);
                 SetSplitMethod(lusasLineMesh, meshSettings1D, barFEAType);
                 SetEndConditions(lusasLineMesh, barRelease);
+                meshSettings1D.CustomData[AdapterIdName] = d_LusasData.getLargestAttributeID("Mesh");
             }
             return lusasLineMesh;
         }
