@@ -46,15 +46,15 @@ namespace BH.Adapter.Lusas
             }
 
             IFAttribute lusasSupport = null;
-            string lusasName = "Sp" + constraint.CustomData[AdapterIdName] + "/" + constraint.DescriptionOrName();
 
-            if (d_LusasData.existsAttribute("Support", lusasName))
+            if (d_LusasData.existsAttribute("Support", constraint.DescriptionOrName()))
             {
-                lusasSupport = d_LusasData.getAttribute("Support", lusasName);
+                lusasSupport = d_LusasData.getAttribute("Support", constraint.DescriptionOrName());
+                constraint.CustomData[AdapterIdName] = lusasSupport.getID();
             }
             else
             {
-                lusasSupport = d_LusasData.createSupportStructural(lusasName);
+                lusasSupport = d_LusasData.createSupportStructural(constraint.DescriptionOrName());
 
                 List<string> releaseNames = new List<string> { "U", "V", "W", "THX", "THY", "THZ" };
                 List<double> stiffness = new List<double> {
@@ -81,6 +81,7 @@ namespace BH.Adapter.Lusas
                         lusasSupport.setValue(releaseNames[i] + "stiff", stiffness[i]);
                     }
                 }
+                constraint.CustomData[AdapterIdName] = d_LusasData.getLargestAttributeID("Support");
             }
 
             return lusasSupport;
@@ -101,6 +102,7 @@ namespace BH.Adapter.Lusas
             if (d_LusasData.existsAttribute("Support", lusasName))
             {
                 lusasSupport = d_LusasData.getAttribute("Support", lusasName);
+                constraint.CustomData[AdapterIdName] = lusasSupport.getID();
             }
             else
             {
@@ -136,6 +138,7 @@ namespace BH.Adapter.Lusas
                         lusasSupport.setValue(releaseNames[i] + "stiff", stiffness[i]);
                     }
                 }
+                constraint.CustomData[AdapterIdName] = d_LusasData.getLargestAttributeID("Support");
             }
             return lusasSupport;
         }

@@ -22,6 +22,7 @@
 
 using System.Linq;
 using BH.Engine.Adapters.Lusas;
+using BH.Engine.Structure;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -45,9 +46,9 @@ namespace BH.Adapter.Lusas
 
             lusasLine.getAxesAtNrmCrds(0, ref origin, ref lineXAxis, ref lineYAxis, ref lineZAxis);
 
-            double[] localXAxis = Adapter.Adapters.Lusas.Convert.ToDouble(lineXAxis);
-            double[] localYAxis = Adapter.Adapters.Lusas.Convert.ToDouble(lineYAxis);
-            double[] localZAxis = Adapter.Adapters.Lusas.Convert.ToDouble(lineZAxis);
+            double[] localXAxis = Adapters.Lusas.Convert.ToDouble(lineXAxis);
+            double[] localYAxis = Adapters.Lusas.Convert.ToDouble(lineYAxis);
+            double[] localZAxis = Adapters.Lusas.Convert.ToDouble(lineZAxis);
 
             IF3dCoords barStart = lusasLine.getStartPositionCoords();
 
@@ -78,11 +79,7 @@ namespace BH.Adapter.Lusas
                 worldZAxis.Zip(localZAxis, (d1,d2) => d1 * d2).Sum(),
             };
 
-            string customID = lusasLine.getName().RemovePrefix("L");
-
-            string lusasName = "L" + customID + "/ Local Axis";
-
-
+            string lusasName = "L" + lusasLine.getID().ToString() + "/ Local Axis";
 
             IFLocalCoord barLocalAxis = d_LusasData.createLocalCartesianAttr(
             lusasName, barorigin,

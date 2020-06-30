@@ -45,32 +45,33 @@ namespace BH.Adapter.Lusas
             }
 
             IFAttribute lusasMaterial = null;
-            string lusasName = "M" + material.CustomData[AdapterIdName] + "/" + material.DescriptionOrName();
-
+        
             if (material is IIsotropic)
             {
                 IIsotropic isotropic = material as IIsotropic;
-                if (d_LusasData.existsAttribute("Material", lusasName))
+                if (d_LusasData.existsAttribute("Material", material.DescriptionOrName()))
                 {
-                    lusasMaterial = d_LusasData.getAttribute("Material", lusasName);
+                    lusasMaterial = d_LusasData.getAttribute("Material", material.DescriptionOrName());
+                    material.CustomData[AdapterIdName] = lusasMaterial.getID().ToString();
                 }
                 else
                 {
-                    lusasMaterial = d_LusasData.createIsotropicMaterial(material.Name,
+                    lusasMaterial = d_LusasData.createIsotropicMaterial(material.DescriptionOrName(),
                     isotropic.YoungsModulus, isotropic.PoissonsRatio, isotropic.Density, isotropic.ThermalExpansionCoeff);
-                    lusasMaterial.setName(lusasName);
+                    material.CustomData[AdapterIdName] = d_LusasData.getLargestAttributeID("Material");
                 }
             }
             else if (material is IOrthotropic)
             {
                 IOrthotropic iorthotropic = material as IOrthotropic;
-                if (d_LusasData.existsAttribute("Material", lusasName))
+                if (d_LusasData.existsAttribute("Material", material.DescriptionOrName()))
                 {
-                    lusasMaterial = d_LusasData.getAttribute("Material", lusasName);
+                    lusasMaterial = d_LusasData.getAttribute("Material", material.DescriptionOrName());
+                    material.CustomData[AdapterIdName] = lusasMaterial.getID().ToString();
                 }
                 else
                 {
-                    lusasMaterial = d_LusasData.createOrthotropicAxisymmetricMaterial(material.Name,
+                    lusasMaterial = d_LusasData.createOrthotropicAxisymmetricMaterial(material.DescriptionOrName(),
                         iorthotropic.YoungsModulus.X, iorthotropic.YoungsModulus.Y, iorthotropic.YoungsModulus.Z,
                         iorthotropic.ShearModulus.X, iorthotropic.PoissonsRatio.X, iorthotropic.PoissonsRatio.Y, iorthotropic.PoissonsRatio.Z,
                         0.0, iorthotropic.Density, 0.0);
@@ -80,10 +81,10 @@ namespace BH.Adapter.Lusas
 
                     lusasMaterial.setValue("axy", System.Math.Sqrt(System.Math.Pow(iorthotropic.ThermalExpansionCoeff.X, 2)
                         + System.Math.Pow(iorthotropic.ThermalExpansionCoeff.Y, 2)));
-
-                    lusasMaterial.setName(lusasName);
+                    material.CustomData[AdapterIdName] = d_LusasData.getLargestAttributeID("Material");
                 }
             }
+
             return lusasMaterial;
         }
 

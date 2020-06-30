@@ -46,17 +46,19 @@ namespace BH.Adapter.Lusas
             }
 
             IFAttribute lusasAttribute = null;
-            string lusasName = "G" + sectionProperty.CustomData[AdapterIdName] + "/" + sectionProperty.DescriptionOrName();
 
-            if (d_LusasData.existsAttribute("Line Geometric", lusasName))
+            if (d_LusasData.existsAttribute("Line Geometric", sectionProperty.DescriptionOrName()))
             {
-                lusasAttribute = d_LusasData.getAttribute("Line Geometric", lusasName);
+                lusasAttribute = d_LusasData.getAttribute("Line Geometric", sectionProperty.DescriptionOrName());
+                sectionProperty.CustomData[AdapterIdName] = lusasAttribute.getID().ToString();
             }
             else
             {
-                IFGeometricLine lusasGeometricLine = CreateSection(sectionProperty as dynamic, lusasName);
+                IFGeometricLine lusasGeometricLine = CreateSection(sectionProperty as dynamic, sectionProperty.DescriptionOrName());
                 lusasAttribute = lusasGeometricLine;
+                sectionProperty.CustomData[AdapterIdName] = d_LusasData.getLargestAttributeID("Geometric");
             }
+
             return lusasAttribute;
         }
 
