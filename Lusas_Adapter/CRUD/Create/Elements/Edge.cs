@@ -49,7 +49,7 @@ namespace BH.Adapter.Lusas
 
             if (!(edge.Support == null))
             {
-                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", edge.Support.CustomData[AdapterIdName]);
+                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", System.Convert.ToInt32(edge.Support.CustomData[AdapterIdName]));
                 lusasSupport.assignTo(lusasLine);
             }
 

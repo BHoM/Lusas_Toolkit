@@ -54,7 +54,7 @@ namespace BH.Adapter.Lusas
 
             if (!(node.Support == null))
             {
-                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", node.Support.CustomData[AdapterIdName]);
+                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", System.Convert.ToInt32(node.Support.CustomData[AdapterIdName]));
                 lusasSupport.assignTo(lusasPoint);
             }
 

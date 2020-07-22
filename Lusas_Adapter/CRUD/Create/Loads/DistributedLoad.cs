@@ -97,8 +97,7 @@ namespace BH.Adapter.Lusas
 
             if (d_LusasData.existsAttribute("Loading", lusasName))
             {
-                lusasGlobalDistributed = (IFLoadingGlobalDistributed)d_LusasData.getAttribute("Loading",
-                    lusasName);
+                lusasGlobalDistributed = (IFLoadingGlobalDistributed)d_LusasData.getAttribute("Loading", lusasName);
             }
             else
             {
@@ -132,8 +131,7 @@ namespace BH.Adapter.Lusas
 
             if (d_LusasData.existsAttribute("Loading", lusasName))
             {
-                lusasLocalDistributed = (IFLoadingLocalDistributed)d_LusasData.getAttribute("Loading",
-                    lusasName);
+                lusasLocalDistributed = (IFLoadingLocalDistributed)d_LusasData.getAttribute("Loading", lusasName);
             }
             else
             {

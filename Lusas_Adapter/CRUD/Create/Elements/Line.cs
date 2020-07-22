@@ -66,12 +66,12 @@ namespace BH.Adapter.Lusas
 
             if (!(bar.SectionProperty == null))
             {
-                IFAttribute lusasGeometricLine = d_LusasData.getAttribute("Line Geometric", bar.SectionProperty.CustomData[AdapterIdName]);
+                IFAttribute lusasGeometricLine = d_LusasData.getAttribute("Line Geometric", System.Convert.ToInt32(bar.SectionProperty.CustomData[AdapterIdName]));
                 lusasGeometricLine.assignTo(lusasLine);
 
                 if (!(bar.SectionProperty.Material == null))
                 {
-                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", bar.SectionProperty.Material.CustomData[AdapterIdName]);
+                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", System.Convert.ToInt32(bar.SectionProperty.Material.CustomData[AdapterIdName]));
 
                     if (bar.SectionProperty.Material is IOrthotropic)
                     {
@@ -85,7 +85,7 @@ namespace BH.Adapter.Lusas
 
             if (!(bar.Support == null))
             {
-                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", bar.Support.CustomData[AdapterIdName]);
+                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", System.Convert.ToInt32(bar.Support.CustomData[AdapterIdName]));
                 lusasSupport.assignTo(lusasLine);
                 IFLocalCoord barLocalAxis = CreateLocalCoordinate(lusasLine);
                 barLocalAxis.assignTo(lusasLine);
