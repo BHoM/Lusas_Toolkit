@@ -39,11 +39,6 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateMaterial(IMaterialFragment material)
         {
-            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(material.Name))
-            {
-                return null;
-            }
-
             IFAttribute lusasMaterial = null;
         
             if (material is IIsotropic)
@@ -52,13 +47,11 @@ namespace BH.Adapter.Lusas
                 if (d_LusasData.existsAttribute("Material", material.DescriptionOrName()))
                 {
                     lusasMaterial = d_LusasData.getAttribute("Material", material.DescriptionOrName());
-                    material.CustomData[AdapterIdName] = lusasMaterial.getID().ToString();
                 }
                 else
                 {
                     lusasMaterial = d_LusasData.createIsotropicMaterial(material.DescriptionOrName(),
                     isotropic.YoungsModulus, isotropic.PoissonsRatio, isotropic.Density, isotropic.ThermalExpansionCoeff);
-                    material.CustomData[AdapterIdName] = d_LusasData.getLargestAttributeID("Material");
                 }
             }
             else if (material is IOrthotropic)
@@ -67,7 +60,6 @@ namespace BH.Adapter.Lusas
                 if (d_LusasData.existsAttribute("Material", material.DescriptionOrName()))
                 {
                     lusasMaterial = d_LusasData.getAttribute("Material", material.DescriptionOrName());
-                    material.CustomData[AdapterIdName] = lusasMaterial.getID().ToString();
                 }
                 else
                 {
@@ -81,9 +73,10 @@ namespace BH.Adapter.Lusas
 
                     lusasMaterial.setValue("axy", System.Math.Sqrt(System.Math.Pow(iorthotropic.ThermalExpansionCoeff.X, 2)
                         + System.Math.Pow(iorthotropic.ThermalExpansionCoeff.Y, 2)));
-                    material.CustomData[AdapterIdName] = d_LusasData.getLargestAttributeID("Material");
                 }
             }
+
+            material.CustomData[AdapterIdName] = lusasMaterial.getID().ToString();
 
             return lusasMaterial;
         }
