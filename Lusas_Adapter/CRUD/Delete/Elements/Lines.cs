@@ -46,7 +46,7 @@ namespace BH.Adapter.Lusas
 
                 foreach (int index in indicies)
                 {
-                    IFLine lusasLine = d_LusasData.getLineByName("L" + index.ToString());
+                    IFLine lusasLine = d_LusasData.getLineByNumber(index);
                     if (lusasLine.getHOFs().Count() > 0)
                     {
                         //Engine.Reflection.Compute.RecordWarning("L" + index + @" has higher order features(HOFs)
