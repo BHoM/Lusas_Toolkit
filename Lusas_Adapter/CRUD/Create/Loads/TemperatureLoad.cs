@@ -37,7 +37,7 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingTemperature CreateBarTemperatureLoad(BarTemperatureLoad temperatureLoad, object[] lusasLines)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)temperatureLoad.Loadcase.CustomData[AdapterIdName]);
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(temperatureLoad.Loadcase.CustomData[AdapterIdName]));
 
             IFLoadingTemperature lusasTemperatureLoad = CreateTemperatureLoad(
                 temperatureLoad.Name, temperatureLoad.TemperatureChange, lusasLines, assignedLoadcase);
@@ -52,7 +52,7 @@ namespace BH.Adapter.Lusas
         private IFLoadingTemperature CreateAreaTemperatureLoad(AreaTemperatureLoad temperatureLoad,
             object[] lusasSurfaces)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)temperatureLoad.Loadcase.CustomData[AdapterIdName]);
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(temperatureLoad.Loadcase.CustomData[AdapterIdName]));
 
             IFLoadingTemperature lusasTemperatureLoad = CreateTemperatureLoad(temperatureLoad.Name,
                 temperatureLoad.TemperatureChange, lusasSurfaces, assignedLoadcase);

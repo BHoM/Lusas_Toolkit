@@ -38,7 +38,7 @@ namespace BH.Adapter.Lusas
         private IFLoadingBody CreateGravityLoad(GravityLoad gravityLoad, IFGeometry[] lusasGeometry)
         {
             IFLoadingBody lusasGravityLoad;
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)gravityLoad.Loadcase.CustomData[AdapterIdName]);
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(gravityLoad.Loadcase.CustomData[AdapterIdName]));
 
             if (d_LusasData.existsAttribute("Loading", gravityLoad.Name))
             {

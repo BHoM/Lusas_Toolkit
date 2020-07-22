@@ -41,7 +41,7 @@ namespace BH.Adapter.Lusas
 
         private object[] GetAssignedPoints(Load<Node> loads)
         {
-            string[] lusasIDs = loads.Objects.Elements.Select(x => x.CustomData[AdapterIdName].ToString()).ToArray();
+            int[] lusasIDs = loads.Objects.Elements.Select(x => System.Convert.ToInt32(x.CustomData[AdapterIdName])).ToArray();
 
             object[] arrayGeometry = d_LusasData.getObjects("Point", lusasIDs);
 
@@ -52,7 +52,7 @@ namespace BH.Adapter.Lusas
 
         private object[] GetAssignedLines(Load<Bar> loads)
         {
-            string[] lusasIDs = loads.Objects.Elements.Select(x => x.CustomData[AdapterIdName].ToString()).ToArray();
+            int[] lusasIDs = loads.Objects.Elements.Select(x => System.Convert.ToInt32(x.CustomData[AdapterIdName])).ToArray();
 
             object[] arrayGeometry = d_LusasData.getObjects("Line", lusasIDs);
 
@@ -63,7 +63,7 @@ namespace BH.Adapter.Lusas
 
         private object[] GetAssignedSurfaces(Load<IAreaElement> loads)
         {
-            string[] lusasIDs = loads.Objects.Elements.Select(x => x.CustomData[AdapterIdName].ToString()).ToArray();
+            int[] lusasIDs = loads.Objects.Elements.Select(x => System.Convert.ToInt32(x.CustomData[AdapterIdName])).ToArray();
 
             object[] arrayGeometry = d_LusasData.getObjects("Surface", lusasIDs);
 
@@ -81,21 +81,21 @@ namespace BH.Adapter.Lusas
                 if (element is Node)
                 {
                     IFGeometry lusasPoint = d_LusasData.getPointByNumber(
-                        (int)element.CustomData[AdapterIdName]);
+                        System.Convert.ToInt32(element.CustomData[AdapterIdName]));
 
                     assignedGeometry.Add(lusasPoint);
                 }
                 else if (element is Bar)
                 {
                     IFGeometry lusasBar = d_LusasData.getLineByNumber(
-                        (int)element.CustomData[AdapterIdName]);
+                        System.Convert.ToInt32(element.CustomData[AdapterIdName]));
 
                     assignedGeometry.Add(lusasBar);
                 }
                 else if (element is Panel)
                 {
                     IFGeometry lusasSurface = d_LusasData.getSurfaceByNumber(
-                        (int)element.CustomData[AdapterIdName]);
+                        System.Convert.ToInt32(element.CustomData[AdapterIdName]));
 
                     assignedGeometry.Add(lusasSurface);
                 }

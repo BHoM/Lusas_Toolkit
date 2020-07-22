@@ -38,11 +38,11 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingGlobalDistributed CreateGlobalDistributedLine(BarUniformlyDistributedLoad distributedLoad, object[] lusasLines)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)distributedLoad.Loadcase.CustomData[AdapterIdName]);
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(distributedLoad.Loadcase.CustomData[AdapterIdName]));
             IFLoadingGlobalDistributed lusasGlobalDistributed = CreateGlobalDistributed(distributedLoad.Name,
                 "Length", assignedLoadcase, distributedLoad.Force, distributedLoad.Moment, lusasLines);
 
-            distributedLoad.CustomData[AdapterIdName] = lusasGlobalDistributed.getID();
+            distributedLoad.CustomData[AdapterIdName] = lusasGlobalDistributed.getID().ToString();
 
             return lusasGlobalDistributed;
         }
@@ -51,11 +51,11 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingGlobalDistributed CreateGlobalDistributedLoadSurface(AreaUniformlyDistributedLoad distributedLoad, object[] lusasSurfaces)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)distributedLoad.Loadcase.CustomData[AdapterIdName]);
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(distributedLoad.Loadcase.CustomData[AdapterIdName]));
             IFLoadingGlobalDistributed lusasGlobalDistributed = CreateGlobalDistributed(distributedLoad.Name,
                 "Area", assignedLoadcase, distributedLoad.Pressure, null, lusasSurfaces);
 
-            distributedLoad.CustomData[AdapterIdName] = lusasGlobalDistributed.getID();
+            distributedLoad.CustomData[AdapterIdName] = lusasGlobalDistributed.getID().ToString();
 
             return lusasGlobalDistributed;
         }
@@ -64,11 +64,11 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingLocalDistributed CreateLocalDistributedLine(BarUniformlyDistributedLoad distributedLoad, object[] lusasLines)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)distributedLoad.Loadcase.CustomData[AdapterIdName]);
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(distributedLoad.Loadcase.CustomData[AdapterIdName]));
             IFLoadingLocalDistributed lusasLocalDistributed = CreateLocalDistributed(distributedLoad.Name,
                 "Line", assignedLoadcase, distributedLoad.Force, lusasLines);
 
-            distributedLoad.CustomData[AdapterIdName] = lusasLocalDistributed.getID();
+            distributedLoad.CustomData[AdapterIdName] = lusasLocalDistributed.getID().ToString();
 
             return lusasLocalDistributed;
         }
@@ -77,12 +77,12 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingLocalDistributed CreateLocalDistributedSurface(AreaUniformlyDistributedLoad distributedLoad, object[] lusasSurfaces)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)distributedLoad.Loadcase.CustomData[AdapterIdName]);
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(distributedLoad.Loadcase.CustomData[AdapterIdName]));
 
             IFLoadingLocalDistributed lusasLocalDistributed = CreateLocalDistributed(distributedLoad.Name,
                 "Area", assignedLoadcase, distributedLoad.Pressure, lusasSurfaces);
 
-            distributedLoad.CustomData[AdapterIdName] = lusasLocalDistributed.getID();
+            distributedLoad.CustomData[AdapterIdName] = lusasLocalDistributed.getID().ToString();
 
             return lusasLocalDistributed;
         }
