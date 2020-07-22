@@ -31,12 +31,12 @@ namespace BH.Adapter.Adapters.Lusas
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private static HashSet<string> IsMemberOf(IFGeometry lusasGeometry, HashSet<string> bhomTags)
+        private static HashSet<string> IsMemberOf(IFGeometry lusasGeometry, HashSet<string> tags)
         {
 
             HashSet<string> geometryTag = new HashSet<string>();
 
-            foreach (string tag in bhomTags)
+            foreach (string tag in tags)
             {
                 if (lusasGeometry.isMemberOfGroup(tag))
                 {

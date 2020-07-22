@@ -41,13 +41,13 @@ namespace BH.Adapter.Lusas
 
         private List<ILoad> ReadPointLoads(List<string> ids = null)
         {
-            List<ILoad> bhomPointLoads = new List<ILoad>();
+            List<ILoad> pointLoads = new List<ILoad>();
             object[] lusasConcentratedLoads = d_LusasData.getAttributes("Concentrated Load");
 
             if (!(lusasConcentratedLoads.Count() == 0))
             {
-                List<Node> bhomNodes = ReadNodes();
-                Dictionary<string, Node> nodeDictionary = bhomNodes.ToDictionary(
+                List<Node> nodesList = ReadNodes();
+                Dictionary<string, Node> nodes = nodesList.ToDictionary(
                     x => x.CustomData[AdapterIdName].ToString());
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
@@ -61,17 +61,17 @@ namespace BH.Adapter.Lusas
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
-                        PointLoad bhomPointLoad = Adapters.Lusas.Convert.ToPointLoad(
-                            lusasConcentratedLoad, groupedAssignment, nodeDictionary
+                        PointLoad pointLoad = Adapters.Lusas.Convert.ToPointLoad(
+                            lusasConcentratedLoad, groupedAssignment, nodes
                             );
                         List<string> analysisName = new List<string> { lusasConcentratedLoad.getAttributeType() };
-                        bhomPointLoad.Tags = new HashSet<string>(analysisName);
-                        bhomPointLoads.Add(bhomPointLoad);
+                        pointLoad.Tags = new HashSet<string>(analysisName);
+                        pointLoads.Add(pointLoad);
                     }
                 }
             }
 
-            return bhomPointLoads;
+            return pointLoads;
         }
 
         /***************************************************/

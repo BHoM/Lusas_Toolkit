@@ -35,18 +35,18 @@ namespace BH.Adapter.Adapters.Lusas
         /***************************************************/
 
         private static IEnumerable<Bar> GetLineAssignments(IEnumerable<IFAssignment> lusasAssignments,
-            Dictionary<string, Bar> bhomBars)
+            Dictionary<string, Bar> bars)
         {
             List<Bar> assignedBars = new List<Bar>();
-            Bar bhomBar = new Bar();
+            Bar bar;
 
             foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
                 if (lusasAssignment.getDatabaseObject() is IFLine)
                 {
                     IFLine lusasLine = (IFLine)lusasAssignment.getDatabaseObject();
-                    bhomBars.TryGetValue(lusasLine.getID().ToString(), out bhomBar);
-                    assignedBars.Add(bhomBar);
+                    bars.TryGetValue(lusasLine.getID().ToString(), out bar);
+                    assignedBars.Add(bar);
                 }
                 else
                 {

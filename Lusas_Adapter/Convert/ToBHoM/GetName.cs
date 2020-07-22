@@ -94,21 +94,21 @@ namespace BH.Adapter.Adapters.Lusas
 
         /***************************************************/
 
-        internal static string GetName(string loadName)
+        internal static string GetName(string lusasLoadName)
         {
-            string bhomLoadName = "";
+            string loadName = "";
 
-            if (loadName.Contains("/"))
+            if (lusasLoadName.Contains("/"))
             {
-                bhomLoadName = loadName.Substring(
-                    loadName.LastIndexOf("/") + 1);
+                loadName = lusasLoadName.Substring(
+                    lusasLoadName.LastIndexOf("/") + 1);
             }
             else
             {
-                bhomLoadName = loadName;
+                loadName = lusasLoadName;
             }
 
-            return bhomLoadName;
+            return loadName;
         }
 
         /***************************************************/

@@ -40,7 +40,7 @@ namespace BH.Adapter.Lusas
         private IFAttribute CreateMaterial(IMaterialFragment material)
         {
             IFAttribute lusasMaterial = null;
-        
+
             if (material is IIsotropic)
             {
                 IIsotropic isotropic = material as IIsotropic;

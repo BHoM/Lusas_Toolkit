@@ -275,7 +275,7 @@
     <Compile Include="Convert\ToBHoM\Elements\ToBar.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToEdge.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToNode.cs" />
-    <Compile Include="Convert\ToBHoM\Elements\ToPanelPlanar.cs" />
+    <Compile Include="Convert\ToBHoM\Elements\ToPanel.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToPoint.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToAreaTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToAreaUniformlyDistributedLoad.cs" />
@@ -385,7 +385,7 @@
     <Compile Include="CRUD\Read\Elements\LusasPoints.cs" />
     <Compile Include="CRUD\Read\Properties\Materials.cs" />
     <Compile Include="CRUD\Read\Elements\Nodes.cs" />
-    <Compile Include="CRUD\Read\Elements\PlanarPanels.cs" />
+    <Compile Include="CRUD\Read\Elements\Panels.cs" />
     <Compile Include="CRUD\Read\Loads\PointDisplacements.cs" />
     <Compile Include="CRUD\Read\Loads\PointForces.cs" />
     <Compile Include="CRUD\Read\Elements\Points.cs" />

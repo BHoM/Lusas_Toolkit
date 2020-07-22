@@ -40,14 +40,14 @@ namespace BH.Adapter.Lusas
 
         private List<ILoad> ReadBarVaryingDistributedLoads(List<string> ids = null)
         {
-            List<ILoad> bhomBarDistributedLoads = new List<ILoad>();
+            List<ILoad> barDistributedLoads = new List<ILoad>();
 
             object[] lusasInternalBeamDistributedLoads = d_LusasData.getAttributes("Beam Distributed Load");
 
             if (lusasInternalBeamDistributedLoads.Count() != 0)
             {
-                List<Bar> bhomBars = ReadBars();
-                Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
+                List<Bar> barsList = ReadBars();
+                Dictionary<string, Bar> bars = barsList.ToDictionary(
                     x => x.CustomData[AdapterIdName].ToString());
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
@@ -60,20 +60,20 @@ namespace BH.Adapter.Lusas
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
-                        BarVaryingDistributedLoad bhomBarDistributedLoad =
+                        BarVaryingDistributedLoad barDistributedLoad =
                             Adapters.Lusas.Convert.ToBarDistributedLoad(
-                                lusasInternalBeamDistributedLoad, groupedAssignment, barDictionary);
+                                lusasInternalBeamDistributedLoad, groupedAssignment, bars);
 
                         List<string> analysisName = new List<string> {
                             lusasInternalBeamDistributedLoad.getAttributeType() };
 
-                        bhomBarDistributedLoad.Tags = new HashSet<string>(analysisName);
-                        bhomBarDistributedLoads.Add(bhomBarDistributedLoad);
+                        barDistributedLoad.Tags = new HashSet<string>(analysisName);
+                        barDistributedLoads.Add(barDistributedLoad);
                     }
                 }
             }
 
-            return bhomBarDistributedLoads;
+            return barDistributedLoads;
         }
 
         /***************************************************/

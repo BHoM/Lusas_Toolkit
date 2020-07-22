@@ -41,22 +41,22 @@ namespace BH.Adapter.Adapters.Lusas
             Dictionary<string, Bar> bars)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
+            Loadcase loadcase = ToLoadcase(assignedLoadcase);
             double temperatureChange = lusasTemperatureLoad.getValue("T")
                 - lusasTemperatureLoad.getValue("T0");
 
-            IEnumerable<Bar> bhomBars = GetLineAssignments(lusasAssignments, bars);
-            BarTemperatureLoad bhomBarTemperatureLoad = Engine.Structure.Create.BarTemperatureLoad(
-                bhomLoadcase,
+            IEnumerable<Bar> assignedBars = GetLineAssignments(lusasAssignments, bars);
+            BarTemperatureLoad barTemperatureLoad = Engine.Structure.Create.BarTemperatureLoad(
+                loadcase,
                 temperatureChange,
-                bhomBars,
+                assignedBars,
                 LoadAxis.Local,
                 false,
                 GetName(lusasTemperatureLoad));
 
-            bhomBarTemperatureLoad.CustomData[AdapterIdName] = lusasTemperatureLoad.getID();
+            barTemperatureLoad.CustomData[AdapterIdName] = lusasTemperatureLoad.getID();
 
-            return bhomBarTemperatureLoad;
+            return barTemperatureLoad;
         }
 
         /***************************************************/

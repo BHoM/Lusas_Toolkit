@@ -40,7 +40,7 @@ namespace BH.Adapter.Lusas
 
         private List<ILoad> ReadBarUniformlyDistributedLoads(List<string> ids = null)
         {
-            List<ILoad> bhomBarUniformlyDistributedLoads = new List<ILoad>();
+            List<ILoad> barUniformlyDistributedLoads = new List<ILoad>();
             object[] lusasGlobalDistributedLoads = d_LusasData.getAttributes("Global Distributed Load");
             object[] lusasLocalDistributedLoads = d_LusasData.getAttributes("Distributed Load");
 
@@ -49,8 +49,8 @@ namespace BH.Adapter.Lusas
 
             if (!(lusasDistributedLoads.Count() == 0))
             {
-                List<Bar> bhomBars = ReadBars();
-                Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
+                List<Bar> barsList = ReadBars();
+                Dictionary<string, Bar> bars = barsList.ToDictionary(
                     x => x.CustomData[AdapterIdName].ToString());
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
@@ -66,19 +66,19 @@ namespace BH.Adapter.Lusas
                     {
                         foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                         {
-                            BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad =
+                            BarUniformlyDistributedLoad barUniformlyDistributedLoad =
                                 Adapters.Lusas.Convert.ToBarUniformlyDistributed(
-                                    lusasDistributedLoad, groupedAssignment, barDictionary);
+                                    lusasDistributedLoad, groupedAssignment, bars);
 
                             List<string> analysisName = new List<string> { lusasDistributedLoad.getAttributeType() };
-                            bhomBarUniformlyDistributedLoad.Tags = new HashSet<string>(analysisName);
-                            bhomBarUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
+                            barUniformlyDistributedLoad.Tags = new HashSet<string>(analysisName);
+                            barUniformlyDistributedLoads.Add(barUniformlyDistributedLoad);
                         }
                     }
                 }
             }
 
-            return bhomBarUniformlyDistributedLoads;
+            return barUniformlyDistributedLoads;
         }
 
         /***************************************************/

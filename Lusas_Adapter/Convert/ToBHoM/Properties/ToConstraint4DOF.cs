@@ -64,21 +64,21 @@ namespace BH.Adapter.Adapters.Lusas
 
             string attributeName = GetName(lusasAttribute);
 
-            Constraint4DOF bhomConstraint4DOF = Engine.Structure.Create.Constraint4DOF(attributeName);
+            Constraint4DOF constraint4DOF = Engine.Structure.Create.Constraint4DOF(attributeName);
 
-            bhomConstraint4DOF.TranslationX = fixity[0];
-            bhomConstraint4DOF.TranslationY = fixity[1];
-            bhomConstraint4DOF.TranslationZ = fixity[2];
-            bhomConstraint4DOF.RotationX = fixity[3];
+            constraint4DOF.TranslationX = fixity[0];
+            constraint4DOF.TranslationY = fixity[1];
+            constraint4DOF.TranslationZ = fixity[2];
+            constraint4DOF.RotationX = fixity[3];
 
-            bhomConstraint4DOF.RotationalStiffnessX = stiffness[0];
-            bhomConstraint4DOF.TranslationalStiffnessX = stiffness[1];
-            bhomConstraint4DOF.TranslationalStiffnessX = stiffness[2];
-            bhomConstraint4DOF.TranslationalStiffnessX = stiffness[3];
+            constraint4DOF.RotationalStiffnessX = stiffness[0];
+            constraint4DOF.TranslationalStiffnessX = stiffness[1];
+            constraint4DOF.TranslationalStiffnessX = stiffness[2];
+            constraint4DOF.TranslationalStiffnessX = stiffness[3];
 
-            bhomConstraint4DOF.CustomData[AdapterIdName] = lusasAttribute.getID();
+            constraint4DOF.CustomData[AdapterIdName] = lusasAttribute.getID();
 
-            return bhomConstraint4DOF;
+            return constraint4DOF;
         }
 
         /***************************************************/

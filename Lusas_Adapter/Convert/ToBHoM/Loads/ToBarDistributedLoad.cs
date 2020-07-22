@@ -37,12 +37,12 @@ namespace BH.Adapter.Adapters.Lusas
         /***************************************************/
 
         public static BarVaryingDistributedLoad ToBarDistributedLoad(IFLoading lusasBarDistributedLoad,
-            IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Bar> bhomBarDictionary)
+            IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Bar> bars)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
+            Loadcase loadcase = ToLoadcase(assignedLoadcase);
 
-            IEnumerable<Bar> bhomBars = GetLineAssignments(lusasAssignments, bhomBarDictionary);
+            IEnumerable<Bar> assignedBars = GetLineAssignments(lusasAssignments, bars);
 
             Vector startForceVector = new Vector
             {
@@ -78,8 +78,8 @@ namespace BH.Adapter.Adapters.Lusas
             BarVaryingDistributedLoad barPointLoad;
 
             barPointLoad = Engine.Structure.Create.BarVaryingDistributedLoad(
-                bhomLoadcase,
-                bhomBars,
+                loadcase,
+                assignedBars,
                 startPosition,
                 startForceVector,
                 startMomentVector,

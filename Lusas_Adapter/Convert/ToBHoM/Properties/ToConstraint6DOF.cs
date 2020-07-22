@@ -64,12 +64,12 @@ namespace BH.Adapter.Adapters.Lusas
 
             string attributeName = GetName(lusasAttribute);
 
-            Constraint6DOF bhomConstraint6DOF = BH.Engine.Structure.Create.Constraint6DOF(
+            Constraint6DOF constraint6DOF = BH.Engine.Structure.Create.Constraint6DOF(
                attributeName, fixity, stiffness);
 
-            bhomConstraint6DOF.CustomData[AdapterIdName] = lusasAttribute.getID();
+            constraint6DOF.CustomData[AdapterIdName] = lusasAttribute.getID();
 
-            return bhomConstraint6DOF;
+            return constraint6DOF;
         }
 
         /***************************************************/

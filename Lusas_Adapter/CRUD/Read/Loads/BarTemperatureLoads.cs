@@ -40,13 +40,13 @@ namespace BH.Adapter.Lusas
 
         private List<ILoad> ReadBarTemperatureLoads(List<string> ids = null)
         {
-            List<ILoad> bhomBarTemperatureLoads = new List<ILoad>();
+            List<ILoad> barTemperatureLoads = new List<ILoad>();
             object[] lusasTemperatureLoads = d_LusasData.getAttributes("Temperature");
 
             if (!(lusasTemperatureLoads.Count() == 0))
             {
-                List<Bar> bhomBars = ReadBars();
-                Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
+                List<Bar> barsList = ReadBars();
+                Dictionary<string, Bar> bars = barsList.ToDictionary(
                     x => x.CustomData[AdapterIdName].ToString());
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
@@ -76,18 +76,18 @@ namespace BH.Adapter.Lusas
 
                         if (assignments.Count != 0)
                         {
-                            BarTemperatureLoad bhomBarTemperatureLoad =
+                            BarTemperatureLoad barTemperatureLoad =
                                 Adapter.Adapters.Lusas.Convert.ToBarTemperatureLoad(
-                                    lusasTemperatureLoad, groupedAssignment, barDictionary);
+                                    lusasTemperatureLoad, groupedAssignment, bars);
 
-                            bhomBarTemperatureLoad.Tags = new HashSet<string>(analysisName);
-                            bhomBarTemperatureLoads.Add(bhomBarTemperatureLoad);
+                            barTemperatureLoad.Tags = new HashSet<string>(analysisName);
+                            barTemperatureLoads.Add(barTemperatureLoad);
                         }
                     }
                 }
             }
 
-            return bhomBarTemperatureLoads;
+            return barTemperatureLoads;
         }
 
         /***************************************************/

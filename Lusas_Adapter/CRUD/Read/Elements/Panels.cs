@@ -43,12 +43,12 @@ namespace BH.Adapter.Lusas
         private List<Panel> ReadPanels(List<string> ids = null)
         {
             object[] lusasSurfaces = d_LusasData.getObjects("Surface");
-            List<Panel> bhomSurfaces = new List<Panel>();
+            List<Panel> panels = new List<Panel>();
 
             if (!(lusasSurfaces.Count() == 0))
             {
-                IEnumerable<Edge> bhomEdgesList = ReadEdges();
-                Dictionary<string, Edge> bhomEdges = bhomEdgesList.ToDictionary(
+                IEnumerable<Edge> edgesList = ReadEdges();
+                Dictionary<string, Edge> edges = edgesList.ToDictionary(
                     x => x.CustomData[AdapterIdName].ToString());
 
                 HashSet<string> groupNames = ReadTags();
@@ -56,29 +56,29 @@ namespace BH.Adapter.Lusas
                 Dictionary<string, IMaterialFragment> materials = materialList.ToDictionary(
                     x => x.Name.ToString());
 
-                IEnumerable<ISurfaceProperty> geometricList = Read2DProperties();
-                Dictionary<string, ISurfaceProperty> geometrics = geometricList.ToDictionary(
+                IEnumerable<ISurfaceProperty> sectionPropertiesList = Read2DProperties();
+                Dictionary<string, ISurfaceProperty> sectionProperties = sectionPropertiesList.ToDictionary(
                     x => x.Name.ToString());
 
-                IEnumerable<Constraint4DOF> bhomSupportList = Read4DOFConstraints();
-                Dictionary<string, Constraint4DOF> bhomSupports = bhomSupportList.ToDictionary(
+                IEnumerable<Constraint4DOF> supportsList = Read4DOFConstraints();
+                Dictionary<string, Constraint4DOF> supports = supportsList.ToDictionary(
                     x => x.Name);
 
                 for (int i = 0; i < lusasSurfaces.Count(); i++)
                 {
                     IFSurface lusasSurface = (IFSurface)lusasSurfaces[i];
-                    Panel bhomPanel = Adapters.Lusas.Convert.ToPanel(lusasSurface,
-                        bhomEdges,
+                    Panel panel = Adapters.Lusas.Convert.ToPanel(lusasSurface,
+                        edges,
                         groupNames,
-                        geometrics,
+                        sectionProperties,
                         materials,
-                        bhomSupports);
+                        supports);
 
-                    bhomSurfaces.Add(bhomPanel);
+                    panels.Add(panel);
                 }
             }
 
-            return bhomSurfaces;
+            return panels;
         }
 
         /***************************************************/

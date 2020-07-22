@@ -39,19 +39,19 @@ namespace BH.Adapter.Lusas
 
         private List<MeshSettings1D> ReadMeshSettings1D(List<string> ids = null)
         {
-            List<MeshSettings1D> bhomMeshSettings1Ds = new List<MeshSettings1D>();
+            List<MeshSettings1D> meshSettings1Ds = new List<MeshSettings1D>();
             object[] lusasMesh1Ds = d_LusasData.getAttributes("Line Mesh");
 
             for (int i = 0; i < lusasMesh1Ds.Count(); i++)
             {
                 IFMeshLine lusasMesh1D = (IFMeshLine)lusasMesh1Ds[i];
-                MeshSettings1D bhomMeshSettings1D = Adapters.Lusas.Convert.ToMeshSettings1D(lusasMesh1D);
+                MeshSettings1D meshSettings1D = Adapters.Lusas.Convert.ToMeshSettings1D(lusasMesh1D);
                 List<string> analysisName = new List<string> { lusasMesh1D.getAttributeType() };
-                bhomMeshSettings1D.Tags = new HashSet<string>(analysisName);
-                bhomMeshSettings1Ds.Add(bhomMeshSettings1D);
+                meshSettings1D.Tags = new HashSet<string>(analysisName);
+                meshSettings1Ds.Add(meshSettings1D);
             }
 
-            return bhomMeshSettings1Ds;
+            return meshSettings1Ds;
         }
 
         /***************************************************/

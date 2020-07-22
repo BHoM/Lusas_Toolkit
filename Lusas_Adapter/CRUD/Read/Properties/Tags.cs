@@ -39,15 +39,15 @@ namespace BH.Adapter.Lusas
             /***************************************************/
 
             object[] lusasGroups = d_LusasData.getObjects("Groups");
-            HashSet<string> bhomTags = new HashSet<string>();
+            HashSet<string> tags = new HashSet<string>();
 
             for (int i = 0; i < lusasGroups.Count(); i++)
             {
                 IFGroup lusasGroup = (IFGroup)lusasGroups[i];
-                bhomTags.Add(lusasGroup.getName());
+                tags.Add(lusasGroup.getName());
             }
 
-            return bhomTags;
+            return tags;
         }
 
         /***************************************************/

@@ -39,7 +39,7 @@ namespace BH.Adapter.Lusas
 
         private List<LoadCombination> ReadLoadCombinations(List<string> ids = null)
         {
-            List<LoadCombination> bhomLoadCombintations = new List<LoadCombination>();
+            List<LoadCombination> loadCombinations = new List<LoadCombination>();
             object[] lusasCombinations = d_LusasData.getLoadsets("Combinations");
 
             if (!(lusasCombinations.Count() == 0))
@@ -51,13 +51,13 @@ namespace BH.Adapter.Lusas
                 for (int i = 0; i < lusasCombinations.Count(); i++)
                 {
                     IFBasicCombination lusasCombination = (IFBasicCombination)lusasCombinations[i];
-                    LoadCombination bhomLoadCombination =
+                    LoadCombination loadCombination =
                         Adapters.Lusas.Convert.ToLoadCombination(lusasCombination, loadcaseDictionary);
-                    bhomLoadCombintations.Add(bhomLoadCombination);
+                    loadCombinations.Add(loadCombination);
                 }
             }
 
-            return bhomLoadCombintations;
+            return loadCombinations;
         }
 
         /***************************************************/

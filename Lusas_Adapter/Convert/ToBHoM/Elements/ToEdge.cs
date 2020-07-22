@@ -36,24 +36,22 @@ namespace BH.Adapter.Adapters.Lusas
         /***************************************************/
 
         public static Edge ToEdge(this IFLine lusasLine,
-            Dictionary<string, Node> bhomNodes, HashSet<string> groupNames)
+            Dictionary<string, Node> nodes, HashSet<string> groupNames)
         {
-            Node startNode = GetNode(lusasLine, 0, bhomNodes);
-            Node endNode = GetNode(lusasLine, 1, bhomNodes);
+            Node startNode = GetNode(lusasLine, 0, nodes);
+            Node endNode = GetNode(lusasLine, 1, nodes);
 
             Point startPoint = Engine.Structure.Query.Position(startNode);
             Point endPoint = Engine.Structure.Query.Position(endNode);
 
             HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasLine, groupNames));
 
-            Line bhomLine = new Line { Start = startPoint, End = endPoint };
-            Edge bhomEdge = new Edge { Curve = bhomLine, Tags = tags };
+            Line line = new Line { Start = startPoint, End = endPoint };
+            Edge edge = new Edge { Curve = line, Tags = tags };
 
-            string adapterID = lusasLine.getID().ToString();
+            edge.CustomData[AdapterIdName] = lusasLine.getID().ToString();
 
-            bhomEdge.CustomData[AdapterIdName] = adapterID;
-
-            return bhomEdge;
+            return edge;
         }
 
         /***************************************************/

@@ -35,18 +35,18 @@ namespace BH.Adapter.Adapters.Lusas
         /***************************************************/
 
         private static IEnumerable<Node> GetPointAssignments(IEnumerable<IFAssignment> lusasAssignments,
-               Dictionary<string, Node> bhomNodes)
+               Dictionary<string, Node> nodes)
         {
             List<Node> assignedNodes = new List<Node>();
-            Node bhomNode = new Node();
+            Node node;
 
             foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
                 if (lusasAssignment.getDatabaseObject() is IFPoint)
                 {
                     IFPoint lusasPoint = (IFPoint)lusasAssignment.getDatabaseObject();
-                    bhomNodes.TryGetValue(lusasPoint.getID().ToString(), out bhomNode);
-                    assignedNodes.Add(bhomNode);
+                    nodes.TryGetValue(lusasPoint.getID().ToString(), out node);
+                    assignedNodes.Add(node);
                 }
                 else
                 {

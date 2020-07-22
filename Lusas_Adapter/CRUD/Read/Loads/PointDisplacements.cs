@@ -40,13 +40,13 @@ namespace BH.Adapter.Lusas
 
         private List<ILoad> ReadPointDisplacements(List<string> ids = null)
         {
-            List<ILoad> bhomPointDisplacements = new List<ILoad>();
+            List<ILoad> pointDisplacements = new List<ILoad>();
             object[] lusasPrescribedDisplacements = d_LusasData.getAttributes("Prescribed Load");
 
             if (!(lusasPrescribedDisplacements.Count() == 0))
             {
-                List<Node> bhomNodes = ReadNodes();
-                Dictionary<string, Node> nodeDictionary = bhomNodes.ToDictionary(
+                List<Node> nodesList = ReadNodes();
+                Dictionary<string, Node> nodes = nodesList.ToDictionary(
                     x => x.CustomData[AdapterIdName].ToString());
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
@@ -60,18 +60,18 @@ namespace BH.Adapter.Lusas
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
-                        PointDisplacement bhomPointDisplacement =
+                        PointDisplacement pointDisplacement =
                             Adapters.Lusas.Convert.ToPointDisplacement(
-                                lusasPrescribedDisplacement, groupedAssignment, nodeDictionary);
+                                lusasPrescribedDisplacement, groupedAssignment, nodes);
 
                         List<string> analysisName = new List<string> { lusasPrescribedDisplacement.getAttributeType() };
-                        bhomPointDisplacement.Tags = new HashSet<string>(analysisName);
-                        bhomPointDisplacements.Add(bhomPointDisplacement);
+                        pointDisplacement.Tags = new HashSet<string>(analysisName);
+                        pointDisplacements.Add(pointDisplacement);
                     }
                 }
             }
 
-            return bhomPointDisplacements;
+            return pointDisplacements;
         }
 
         /***************************************************/

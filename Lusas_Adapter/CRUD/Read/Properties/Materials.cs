@@ -40,16 +40,16 @@ namespace BH.Adapter.Lusas
         private List<IMaterialFragment> ReadMaterials(List<string> ids = null)
         {
             object[] lusasMaterials = d_LusasData.getAttributes("Material");
-            List<IMaterialFragment> bhomMaterials = new List<IMaterialFragment>();
+            List<IMaterialFragment> materials = new List<IMaterialFragment>();
 
             for (int i = 0; i < lusasMaterials.Count(); i++)
             {
                 IFAttribute lusasMaterial = (IFAttribute)lusasMaterials[i];
-                IMaterialFragment bhomMaterial = Adapters.Lusas.Convert.ToMaterial(lusasMaterial);
-                bhomMaterials.Add(bhomMaterial);
+                IMaterialFragment material = Adapters.Lusas.Convert.ToMaterial(lusasMaterial);
+                materials.Add(material);
             }
 
-            return bhomMaterials;
+            return materials;
         }
 
         /***************************************************/

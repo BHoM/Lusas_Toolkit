@@ -61,7 +61,7 @@ namespace BH.Adapter.Adapters.Lusas
                 size = lusasAttribute.getValue("size");
             }
 
-            MeshSettings2D bhomMeshSettings2D = new MeshSettings2D
+            MeshSettings2D meshSettings2D = new MeshSettings2D
             {
                 Name = attributeName,
                 SplitMethod = splitMethod,
@@ -71,9 +71,9 @@ namespace BH.Adapter.Adapters.Lusas
             };
 
             int adapterID = GetAdapterID(lusasAttribute, 'e');
-            bhomMeshSettings2D.CustomData[AdapterIdName] = adapterID;
+            meshSettings2D.CustomData[AdapterIdName] = adapterID;
 
-            return bhomMeshSettings2D;
+            return meshSettings2D;
         }
 
         /***************************************************/

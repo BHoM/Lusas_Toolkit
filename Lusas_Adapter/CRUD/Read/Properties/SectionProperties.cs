@@ -40,15 +40,15 @@ namespace BH.Adapter.Lusas
         private List<ISectionProperty> ReadSectionProperties(List<string> ids = null)
         {
             object[] lusasSections = d_LusasData.getAttributes("Line Geometric");
-            List<ISectionProperty> bhomSections = new List<ISectionProperty>();
+            List<ISectionProperty> sectionProperties = new List<ISectionProperty>();
 
             for (int i = 0; i < lusasSections.Count(); i++)
             {
                 IFAttribute lusasSection = (IFAttribute)lusasSections[i];
-                ISectionProperty bhomSection = Adapters.Lusas.Convert.ToSection(lusasSection);
-                bhomSections.Add(bhomSection);
+                ISectionProperty sectionProperty = Adapters.Lusas.Convert.ToSection(lusasSection);
+                sectionProperties.Add(sectionProperty);
             }
-            return bhomSections;
+            return sectionProperties;
         }
 
         /***************************************************/

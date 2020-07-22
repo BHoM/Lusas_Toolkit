@@ -58,7 +58,7 @@ namespace BH.Adapter.Lusas
                 }
                 else
                 {
-                    lusasLoadcombination = d_LusasData.createCombinationBasic(loadCombination.Name, "",loadCombination.Number);
+                    lusasLoadcombination = d_LusasData.createCombinationBasic(loadCombination.Name, "", loadCombination.Number);
                 }
                 foreach (Tuple<double, ICase> factoredLoad in loadCombination.LoadCases)
                 {

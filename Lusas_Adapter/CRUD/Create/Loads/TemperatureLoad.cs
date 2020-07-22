@@ -40,7 +40,7 @@ namespace BH.Adapter.Lusas
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)temperatureLoad.Loadcase.CustomData[AdapterIdName]);
 
             IFLoadingTemperature lusasTemperatureLoad = CreateTemperatureLoad(
-                temperatureLoad.Name,temperatureLoad.TemperatureChange, lusasLines, assignedLoadcase);
+                temperatureLoad.Name, temperatureLoad.TemperatureChange, lusasLines, assignedLoadcase);
 
             temperatureLoad.CustomData[AdapterIdName] = lusasTemperatureLoad.getID().ToString();
 

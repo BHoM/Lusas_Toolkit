@@ -42,17 +42,17 @@ namespace BH.Adapter.Adapters.Lusas
         /***************************************************/
 
         public static Bar ToBar(this IFLine lusasLine,
-            Dictionary<string, Node> bhomNodes,
-            Dictionary<string, Constraint4DOF> bhomSupports,
+            Dictionary<string, Node> nodes,
+            Dictionary<string, Constraint4DOF> supports,
             HashSet<string> lusasGroups,
-            Dictionary<string, IMaterialFragment> bhomMaterials,
-            Dictionary<string, ISectionProperty> bhomSections,
-            Dictionary<string, MeshSettings1D> bhomMeshes
+            Dictionary<string, IMaterialFragment> materials,
+            Dictionary<string, ISectionProperty> sections,
+            Dictionary<string, MeshSettings1D> meshes
             )
 
         {
-            Node startNode = GetNode(lusasLine, 0, bhomNodes);
-            Node endNode = GetNode(lusasLine, 1, bhomNodes);
+            Node startNode = GetNode(lusasLine, 0, nodes);
+            Node endNode = GetNode(lusasLine, 1, nodes);
 
             HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasLine, lusasGroups));
 
@@ -61,10 +61,10 @@ namespace BH.Adapter.Adapters.Lusas
             Constraint4DOF barConstraint = null;
             if (!(supportAssignments.Count() == 0))
             {
-                bhomSupports.TryGetValue(supportAssignments[0], out barConstraint);
+                supports.TryGetValue(supportAssignments[0], out barConstraint);
             }
 
-            Bar bhomBar = new Bar
+            Bar bar = new Bar
             {
                 StartNode = startNode,
                 EndNode = endNode,
@@ -80,13 +80,13 @@ namespace BH.Adapter.Adapters.Lusas
 
             if (!(geometricAssignments.Count() == 0))
             {
-                bhomSections.TryGetValue(geometricAssignments[0], out lineSection);
+                sections.TryGetValue(geometricAssignments[0], out lineSection);
                 if (!(materialAssignments.Count() == 0))
                 {
-                    bhomMaterials.TryGetValue(materialAssignments[0], out lineMaterial);
+                    materials.TryGetValue(materialAssignments[0], out lineMaterial);
                     lineSection.Material = lineMaterial;
                 }
-                bhomBar.SectionProperty = lineSection;
+                bar.SectionProperty = lineSection;
             }
 
             MeshSettings1D lineMesh;
@@ -94,24 +94,24 @@ namespace BH.Adapter.Adapters.Lusas
 
             if (!(meshSettings.Count() == 0))
             {
-                bhomMeshes.TryGetValue(meshSettings[0], out lineMesh);
-                bhomBar.CustomData["Mesh"] = lineMesh;
+                meshes.TryGetValue(meshSettings[0], out lineMesh);
+                bar.CustomData["Mesh"] = lineMesh;
             }
 
             Tuple<bool, double, BarRelease, BarFEAType> barMeshProperties = GetMeshProperties(lusasLine);
 
             if (barMeshProperties.Item1)
             {
-                bhomBar.OrientationAngle = barMeshProperties.Item2;
-                bhomBar.Release = barMeshProperties.Item3;
-                bhomBar.FEAType = barMeshProperties.Item4;
+                bar.OrientationAngle = barMeshProperties.Item2;
+                bar.Release = barMeshProperties.Item3;
+                bar.FEAType = barMeshProperties.Item4;
             }
 
             string adapterID = lusasLine.getID().ToString();
 
-            bhomBar.CustomData[AdapterIdName] = adapterID;
+            bar.CustomData[AdapterIdName] = adapterID;
 
-            return bhomBar;
+            return bar;
         }
 
         /***************************************************/
@@ -279,7 +279,7 @@ namespace BH.Adapter.Adapters.Lusas
                 type.ToString() == "LMS3" ||
                 type.ToString() == "LMS4")
             {
-                Engine.Reflection.Compute.RecordWarning(
+                Compute.RecordWarning(
                     type.ToString() + " not supported, FEAType defaulted to Flexural");
             }
 
