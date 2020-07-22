@@ -64,13 +64,13 @@ namespace BH.Adapter.Adapters.Lusas
             Panel bhomPanel = Engine.Structure.Create.Panel(surfaceEdges, dummyCurve);
 
             bhomPanel.Tags = tags;
-            bhomPanel.CustomData[AdapterIdName] = lusasSurface.getName().RemovePrefix("S");
+            bhomPanel.CustomData[AdapterIdName] = lusasSurface.getID();
 
             List<string> geometricAssignments = GetAttributeAssignments(lusasSurface, "Geometric");
             List<string> materialAssignments = GetAttributeAssignments(lusasSurface, "Material");
 
-            IMaterialFragment panelMaterial = null;
-            ISurfaceProperty bhomProperty2D = null;
+            IMaterialFragment panelMaterial;
+            ISurfaceProperty bhomProperty2D;
 
             if (!(geometricAssignments.Count() == 0))
             {
@@ -93,10 +93,9 @@ namespace BH.Adapter.Adapters.Lusas
 
         private static Edge GetEdge(IFSurface lusasSurf, int lineIndex, Dictionary<string, Edge> bhomBars)
         {
-            Edge bhomEdge = null;
+            Edge bhomEdge;
             IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
-            string lineName = lusasEdge.getName().RemovePrefix("L");
-            bhomBars.TryGetValue(lineName, out bhomEdge);
+            bhomBars.TryGetValue(lusasEdge.getID().ToString(), out bhomEdge);
             return bhomEdge;
         }
 

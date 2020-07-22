@@ -84,17 +84,17 @@ namespace BH.Adapter.Adapters.Lusas
 
                 if (lusasGeometry is IFPoint)
                 {
-                    bhomNodes.TryGetValue(lusasGeometry.getName().RemovePrefix("P"), out bhomNode);
+                    bhomNodes.TryGetValue(lusasGeometry.getID().ToString(), out bhomNode);
                     assignedObjects.Add(bhomNode);
                 }
                 else if (lusasGeometry is IFLine)
                 {
-                    bhomBars.TryGetValue(lusasGeometry.getName().RemovePrefix("L"), out bhomBar);
+                    bhomBars.TryGetValue(lusasGeometry.getID().ToString(), out bhomBar);
                     assignedObjects.Add(bhomBar);
                 }
                 else if (lusasGeometry is IFSurface)
                 {
-                    bhomPanels.TryGetValue(lusasGeometry.getName().RemovePrefix("S"), out bhomPanel);
+                    bhomPanels.TryGetValue(lusasGeometry.getID().ToString(), out bhomPanel);
                     assignedObjects.Add(bhomPanel);
                 }
             }

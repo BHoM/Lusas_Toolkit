@@ -37,8 +37,7 @@ namespace BH.Adapter.Adapters.Lusas
         {
             Node bhomNode = null;
             IFPoint lusasPoint = lusasLine.getLOFs()[nodeIndex];
-            string pointName = lusasPoint.getName().RemovePrefix("P");
-            bhomNodes.TryGetValue(pointName, out bhomNode);
+            bhomNodes.TryGetValue(lusasPoint.getID().ToString(), out bhomNode);
 
             return bhomNode;
         }

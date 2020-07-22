@@ -30,7 +30,7 @@ namespace BH.Engine.Adapters.Lusas
 
         public static string RemovePrefix(this string name, string forRemoval)
         {
-            string adapterID = "";
+            string adapterID;
 
             if (name.Contains(forRemoval))
             {

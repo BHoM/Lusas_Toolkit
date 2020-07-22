@@ -47,10 +47,9 @@ namespace BH.Adapter.Adapters.Lusas
             HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasLine, groupNames));
 
             Line bhomLine = new Line { Start = startPoint, End = endPoint };
-
             Edge bhomEdge = new Edge { Curve = bhomLine, Tags = tags };
 
-            string adapterID = lusasLine.getName().RemovePrefix("L");
+            string adapterID = lusasLine.getID().ToString();
 
             bhomEdge.CustomData[AdapterIdName] = adapterID;
 

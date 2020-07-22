@@ -45,7 +45,7 @@ namespace BH.Adapter.Adapters.Lusas
                 if (lusasAssignment.getDatabaseObject() is IFSurface)
                 {
                     IFSurface lusasSurface = (IFSurface)lusasAssignment.getDatabaseObject();
-                    bhomPanels.TryGetValue(lusasSurface.getName().RemovePrefix("S"), out bhomPanel);
+                    bhomPanels.TryGetValue(lusasSurface.getID().ToString(), out bhomPanel);
                     assignedSurfs.Add(bhomPanel);
                 }
                 else

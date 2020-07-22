@@ -75,8 +75,8 @@ namespace BH.Adapter.Adapters.Lusas
             List<string> geometricAssignments = GetAttributeAssignments(lusasLine, "Geometric");
             List<string> materialAssignments = GetAttributeAssignments(lusasLine, "Material");
 
-            IMaterialFragment lineMaterial = null;
-            ISectionProperty lineSection = null;
+            IMaterialFragment lineMaterial;
+            ISectionProperty lineSection;
 
             if (!(geometricAssignments.Count() == 0))
             {
@@ -89,7 +89,7 @@ namespace BH.Adapter.Adapters.Lusas
                 bhomBar.SectionProperty = lineSection;
             }
 
-            MeshSettings1D lineMesh = null;
+            MeshSettings1D lineMesh;
             List<string> meshSettings = GetAttributeAssignments(lusasLine, "Mesh");
 
             if (!(meshSettings.Count() == 0))
@@ -107,7 +107,7 @@ namespace BH.Adapter.Adapters.Lusas
                 bhomBar.FEAType = barMeshProperties.Item4;
             }
 
-            string adapterID = lusasLine.getName().RemovePrefix("L");
+            string adapterID = lusasLine.getID().ToString();
 
             bhomBar.CustomData[AdapterIdName] = adapterID;
 

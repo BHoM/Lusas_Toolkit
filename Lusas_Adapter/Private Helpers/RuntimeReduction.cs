@@ -34,23 +34,23 @@ namespace BH.Adapter.Lusas
 
         private void ReduceRuntime(bool active)
         {
-            if(active)
-            {
-                m_LusasApplication.enableUI(false);
-                m_LusasApplication.enableTrees(false);
-                m_LusasApplication.suppressMessages(1);
-                m_LusasApplication.setManualRefresh(true);
-                d_LusasData.beginCommandBatch("label", "undoable");
-            }
-            else
-            {
-                d_LusasData.closeCommandBatch();
-                m_LusasApplication.enableTrees(true);
-                m_LusasApplication.enableUI(true);
-                m_LusasApplication.suppressMessages(0);
-                m_LusasApplication.setManualRefresh(false);
-                m_LusasApplication.updateAllViews();
-            }
+            //    if(active)
+            //    {
+            //        m_LusasApplication.enableUI(false);
+            //        m_LusasApplication.enableTrees(false);
+            //        m_LusasApplication.suppressMessages(1);
+            //        m_LusasApplication.setManualRefresh(true);
+            //        d_LusasData.beginCommandBatch("label", "undoable");
+            //    }
+            //    else
+            //    {
+            //        d_LusasData.closeCommandBatch();
+            //        m_LusasApplication.enableTrees(true);
+            //        m_LusasApplication.enableUI(true);
+            //        m_LusasApplication.suppressMessages(0);
+            //        m_LusasApplication.setManualRefresh(false);
+            //        m_LusasApplication.updateAllViews();
+            //    }
         }
     }
 }
