@@ -73,16 +73,11 @@ namespace BH.Adapter.Lusas
 
             foreach (Node node in nodes)
             {
-                int adapterID = System.Convert.ToInt32(node.CustomData[AdapterIdName]);
-                IFPoint lusasPoint = d_LusasData.getPointByName("P" + adapterID.ToString());
+                IFPoint lusasPoint = d_LusasData.getPointByNumber(System.Convert.ToInt32(node.CustomData[AdapterIdName]));
 
                 if (lusasPoint == null)
                 {
                     return false;
-                }
-
-                if (!string.IsNullOrWhiteSpace(adapterID.ToString()))
-                {
                 }
             }
             return true;

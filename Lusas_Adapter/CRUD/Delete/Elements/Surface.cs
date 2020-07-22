@@ -49,7 +49,7 @@ namespace BH.Adapter.Lusas
                     IFSurface lusasSurface = d_LusasData.getSurfaceByNumber(index);
                     if (lusasSurface.getHOFs().Count() > 0)
                     {
-                        //Engine.Reflection.Compute.RecordWarning("S" + index + @" has higher order features(HOFs)
+                        //Engine.Reflection.Compute.RecordWarning(index + @" has higher order features(HOFs)
                         //and cannot be deleted");
                     }
                     else
