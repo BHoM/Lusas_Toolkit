@@ -40,14 +40,14 @@ namespace BH.Adapter.Lusas
 
         private List<ILoad> ReadBarPointLoads(List<string> ids = null)
         {
-            List<ILoad> bhomBarPointLoads = new List<ILoad>();
+            List<ILoad> barPointLoads = new List<ILoad>();
 
             object[] lusasInternalBeamPointLoads = d_LusasData.getAttributes("Beam Point Load");
 
             if (lusasInternalBeamPointLoads.Count() != 0)
             {
-                List<Bar> bhomBars = ReadBars();
-                Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
+                List<Bar> barsList = ReadBars();
+                Dictionary<string, Bar> bars = barsList.ToDictionary(
                     x => x.CustomData[AdapterIdName].ToString());
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
@@ -60,18 +60,18 @@ namespace BH.Adapter.Lusas
 
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
-                        BarPointLoad bhomBarPointLoad =
+                        BarPointLoad barPointLoad =
                             Adapters.Lusas.Convert.ToBarPointLoad(
-                                lusasInternalBeamPointLoad, groupedAssignment, barDictionary);
+                                lusasInternalBeamPointLoad, groupedAssignment, bars);
 
                         List<string> analysisName = new List<string> { lusasInternalBeamPointLoad.getAttributeType() };
-                        bhomBarPointLoad.Tags = new HashSet<string>(analysisName);
-                        bhomBarPointLoads.Add(bhomBarPointLoad);
+                        barPointLoad.Tags = new HashSet<string>(analysisName);
+                        barPointLoads.Add(barPointLoad);
                     }
                 }
             }
 
-            return bhomBarPointLoads;
+            return barPointLoads;
         }
 
         /***************************************************/

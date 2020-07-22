@@ -71,9 +71,9 @@ namespace BH.Adapter.Lusas
                 if ((valueAtA != 0) || (valueAtB != 0))
                 {
                     IFLoadingBeamDistributed lusasBarDistributedLoad;
-                    if (d_LusasData.existsAttribute("Loading", barDistributedLoad.Name+keys[i]))
+                    if (d_LusasData.existsAttribute("Loading", barDistributedLoad.Name + keys[i]))
                     {
-                        lusasBarDistributedLoad = (IFLoadingBeamDistributed)d_LusasData.getAttribute("Loading", barDistributedLoad.Name+keys[i]);
+                        lusasBarDistributedLoad = (IFLoadingBeamDistributed)d_LusasData.getAttribute("Loading", barDistributedLoad.Name + keys[i]);
                         lusasBarDistributedLoads.Add(lusasBarDistributedLoad);
                     }
                     else

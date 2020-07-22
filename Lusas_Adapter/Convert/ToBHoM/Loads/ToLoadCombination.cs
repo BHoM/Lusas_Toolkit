@@ -37,34 +37,33 @@ namespace BH.Adapter.Adapters.Lusas
 
         public static LoadCombination ToLoadCombination(
             this IFBasicCombination lusasLoadCombination,
-            Dictionary<string, Loadcase> bhomLoadcases)
+            Dictionary<string, Loadcase> loadcases)
         {
             object[] loadcaseIDs = lusasLoadCombination.getLoadcaseIDs();
             object[] loadcaseFactors = lusasLoadCombination.getFactors();
 
             List<Tuple<double, ICase>> factoredLoadcases = new List<Tuple<double, ICase>>();
-            Loadcase bhomLoadcase = null;
+            Loadcase loadcase = null;
 
             for (int i = 0; i < loadcaseIDs.Count(); i++)
             {
                 int loadcaseID = (int)loadcaseIDs[i];
                 double loadcaseFactor = (double)loadcaseFactors[i];
-                bhomLoadcases.TryGetValue(loadcaseID.ToString(), out bhomLoadcase);
-                ICase bhomICase = bhomLoadcase;
-                Tuple<double, ICase> factoredLoadcase = new Tuple<double, ICase>(loadcaseFactor, bhomICase);
+                loadcases.TryGetValue(loadcaseID.ToString(), out loadcase);
+                Tuple<double, ICase> factoredLoadcase = new Tuple<double, ICase>(loadcaseFactor, loadcase);
                 factoredLoadcases.Add(factoredLoadcase);
             }
 
-            LoadCombination BHoMLoadCombination = new LoadCombination
+            LoadCombination loadCombination = new LoadCombination
             {
                 Name = GetName(lusasLoadCombination),
                 Number = lusasLoadCombination.getID(),
                 LoadCases = factoredLoadcases
             };
 
-            BHoMLoadCombination.CustomData[AdapterIdName] = lusasLoadCombination.getID();
+            loadCombination.CustomData[AdapterIdName] = lusasLoadCombination.getID().ToString();
 
-            return BHoMLoadCombination;
+            return loadCombination;
         }
 
         /***************************************************/

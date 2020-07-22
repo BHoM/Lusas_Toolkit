@@ -38,12 +38,12 @@ namespace BH.Adapter.Adapters.Lusas
 
         public static PointLoad ToPointLoad(
             IFLoading lusasPointLoad, IEnumerable<IFAssignment> lusasAssignments,
-            Dictionary<string, Node> bhomNodeDictionary)
+            Dictionary<string, Node> nodes)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
+            Loadcase loadcase = ToLoadcase(assignedLoadcase);
 
-            IEnumerable<Node> bhomNodes = GetPointAssignments(lusasAssignments, bhomNodeDictionary);
+            IEnumerable<Node> assignedNodes = GetPointAssignments(lusasAssignments, nodes);
 
             Vector forceVector = new Vector
             {
@@ -59,17 +59,17 @@ namespace BH.Adapter.Adapters.Lusas
                 Z = lusasPointLoad.getValue("mz")
             };
 
-            PointLoad bhomPointLoad = Engine.Structure.Create.PointLoad(
-                bhomLoadcase,
-                bhomNodes,
+            PointLoad pointLoad = Engine.Structure.Create.PointLoad(
+                loadcase,
+                assignedNodes,
                 forceVector,
                 momentVector,
                 LoadAxis.Global,
                 GetName(lusasPointLoad));
 
-            bhomPointLoad.CustomData[AdapterIdName] = lusasPointLoad.getID();
+            pointLoad.CustomData[AdapterIdName] = lusasPointLoad.getID();
 
-            return bhomPointLoad;
+            return pointLoad;
         }
 
         /***************************************************/

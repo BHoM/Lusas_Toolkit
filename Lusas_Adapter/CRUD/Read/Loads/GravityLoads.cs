@@ -40,19 +40,19 @@ namespace BH.Adapter.Lusas
 
         private List<ILoad> ReadGravityLoads(List<string> ids = null)
         {
-            List<ILoad> bhomGravityLoads = new List<ILoad>();
+            List<ILoad> gravityLoads = new List<ILoad>();
             object[] lusasBodyForces = d_LusasData.getAttributes("Body Force Load");
 
             if (!(lusasBodyForces.Count() == 0))
             {
-                List<Node> bhomNodes = ReadNodes();
-                List<Bar> bhomBars = ReadBars();
-                List<Panel> bhomPanels = ReadPanels();
-                Dictionary<string, Node> nodeDictionary = bhomNodes.ToDictionary(
+                List<Node> nodesList = ReadNodes();
+                List<Bar> barsList = ReadBars();
+                List<Panel> panelsList = ReadPanels();
+                Dictionary<string, Node> nodes = nodesList.ToDictionary(
                     x => x.CustomData[AdapterIdName].ToString());
-                Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
+                Dictionary<string, Bar> bars = barsList.ToDictionary(
                     x => x.CustomData[AdapterIdName].ToString());
-                Dictionary<string, Panel> PanelDictionary = bhomPanels.ToDictionary(
+                Dictionary<string, Panel> panels = panelsList.ToDictionary(
                     x => x.CustomData[AdapterIdName].ToString());
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
@@ -68,15 +68,15 @@ namespace BH.Adapter.Lusas
                     {
                         List<string> analysisName = new List<string> { lusasBodyForce.getAttributeType() };
 
-                        GravityLoad bhomGravityLoad = Adapters.Lusas.Convert.ToGravityLoad(
-                            lusasBodyForce, groupedAssignment, nodeDictionary, barDictionary, PanelDictionary);
-                        bhomGravityLoad.Tags = new HashSet<string>(analysisName);
-                        bhomGravityLoads.Add(bhomGravityLoad);
+                        GravityLoad gravityLoad = Adapters.Lusas.Convert.ToGravityLoad(
+                            lusasBodyForce, groupedAssignment, nodes, bars, panels);
+                        gravityLoad.Tags = new HashSet<string>(analysisName);
+                        gravityLoads.Add(gravityLoad);
                     }
                 }
             }
 
-            return bhomGravityLoads;
+            return gravityLoads;
         }
 
         /***************************************************/

@@ -40,16 +40,16 @@ namespace BH.Adapter.Lusas
         private List<Constraint6DOF> Read6DOFConstraints(List<string> ids = null)
         {
             object[] lusasSupports = d_LusasData.getAttributes("Support");
-            List<Constraint6DOF> bhomConstraints6DOF = new List<Constraint6DOF>();
+            List<Constraint6DOF> constraints6DOF = new List<Constraint6DOF>();
 
             for (int i = 0; i < lusasSupports.Count(); i++)
             {
                 IFSupportStructural lusasSupport = (IFSupportStructural)lusasSupports[i];
-                Constraint6DOF bhomConstraint6DOF = Adapters.Lusas.Convert.ToConstraint6DOF(lusasSupport);
-                bhomConstraints6DOF.Add(bhomConstraint6DOF);
+                Constraint6DOF constraint6DOF = Adapters.Lusas.Convert.ToConstraint6DOF(lusasSupport);
+                constraints6DOF.Add(constraint6DOF);
             }
 
-            return bhomConstraints6DOF;
+            return constraints6DOF;
         }
 
         /***************************************************/

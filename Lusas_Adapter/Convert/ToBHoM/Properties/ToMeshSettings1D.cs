@@ -62,7 +62,7 @@ namespace BH.Adapter.Adapters.Lusas
                 value = lusasMeshLine.getValue("size");
             }
 
-            MeshSettings1D bhomMeshSettings1D = new MeshSettings1D
+            MeshSettings1D meshSettings1D = new MeshSettings1D
             {
                 Name = attributeName,
                 SplitMethod = splitMethod,
@@ -70,9 +70,9 @@ namespace BH.Adapter.Adapters.Lusas
             };
 
             int adapterID = GetAdapterID(lusasMeshLine, 'e');
-            bhomMeshSettings1D.CustomData[AdapterIdName] = adapterID;
+            meshSettings1D.CustomData[AdapterIdName] = adapterID;
 
-            return bhomMeshSettings1D;
+            return meshSettings1D;
         }
 
         /***************************************************/

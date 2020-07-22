@@ -41,7 +41,7 @@ namespace BH.Adapter.Lusas
         private List<Node> ReadNodes(List<string> ids = null)
         {
             object[] lusasPoints = d_LusasData.getObjects("Point");
-            List<Node> bhomNodes = new List<Node>();
+            List<Node> nodes = new List<Node>();
 
             if (!(lusasPoints.Count() == 0))
             {
@@ -54,12 +54,12 @@ namespace BH.Adapter.Lusas
                 for (int i = 0; i < lusasPoints.Count(); i++)
                 {
                     IFPoint lusasPoint = (IFPoint)lusasPoints[i];
-                    Node bhomNode = Adapters.Lusas.Convert.ToNode(lusasPoint, groupNames, constraints6DOF);
-                    bhomNodes.Add(bhomNode);
+                    Node node = Adapters.Lusas.Convert.ToNode(lusasPoint, groupNames, constraints6DOF);
+                    nodes.Add(node);
                 }
             }
 
-            return bhomNodes;
+            return nodes;
         }
 
         /***************************************************/

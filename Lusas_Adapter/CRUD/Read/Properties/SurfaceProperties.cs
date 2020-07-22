@@ -40,16 +40,16 @@ namespace BH.Adapter.Lusas
         private List<ISurfaceProperty> Read2DProperties(List<string> ids = null)
         {
             object[] lusasGeometrics = d_LusasData.getAttributes("Surface Geometric");
-            List<ISurfaceProperty> bhomProperties2D = new List<ISurfaceProperty>();
+            List<ISurfaceProperty> surfaceProperties = new List<ISurfaceProperty>();
 
             for (int i = 0; i < lusasGeometrics.Count(); i++)
             {
                 IFAttribute lusasGeometric = (IFAttribute)lusasGeometrics[i];
-                ISurfaceProperty bhomProperty2D = Adapters.Lusas.Convert.ToSurfaceProperty(lusasGeometric);
-                bhomProperties2D.Add(bhomProperty2D);
+                ISurfaceProperty surfaceProperty = Adapters.Lusas.Convert.ToSurfaceProperty(lusasGeometric);
+                surfaceProperties.Add(surfaceProperty);
             }
 
-            return bhomProperties2D;
+            return surfaceProperties;
         }
 
         /***************************************************/

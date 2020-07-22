@@ -37,10 +37,10 @@ namespace BH.Adapter.Adapters.Lusas
         {
             string attributeName = GetName(lusasAttribute);
 
-            IMaterialFragment bhomMaterial = null;
+            IMaterialFragment material = null;
             if (lusasAttribute is IFMaterialIsotropic)
             {
-                bhomMaterial = new GenericIsotropicMaterial()
+                material = new GenericIsotropicMaterial()
                 {
                     Name = attributeName,
                     YoungsModulus = lusasAttribute.getValue("E"),
@@ -51,7 +51,7 @@ namespace BH.Adapter.Adapters.Lusas
             }
             else if (lusasAttribute is IFMaterialOrthotropic)
             {
-                bhomMaterial = Engine.Structure.Create.Timber(
+                material = Engine.Structure.Create.Timber(
                 attributeName,
                     new Vector() { X = lusasAttribute.getValue("Ex"), Y = lusasAttribute.getValue("Ey"), Z = lusasAttribute.getValue("Ez") },
                     new Vector() { X = lusasAttribute.getValue("nuxy"), Y = lusasAttribute.getValue("nuyz"), Z = lusasAttribute.getValue("nuzx") },
@@ -60,10 +60,9 @@ namespace BH.Adapter.Adapters.Lusas
                     lusasAttribute.getValue("rho"), 0, 0);
             }
 
-            int adapterID = GetAdapterID(lusasAttribute, 'M');
-            bhomMaterial.CustomData[AdapterIdName] = adapterID;
+            material.CustomData[AdapterIdName] = lusasAttribute.getID();
 
-            return bhomMaterial;
+            return material;
         }
 
         /***************************************************/

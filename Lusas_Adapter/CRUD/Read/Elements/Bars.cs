@@ -44,28 +44,28 @@ namespace BH.Adapter.Lusas
         private List<Bar> ReadBars(List<string> ids = null)
         {
             object[] lusasLines = d_LusasData.getObjects("Line");
-            List<Bar> bhomBars = new List<Bar>();
+            List<Bar> bars = new List<Bar>();
 
             if (!(lusasLines.Count() == 0))
             {
-                IEnumerable<Node> bhomNodesList = ReadNodes();
-                Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(
+                IEnumerable<Node> nodesList = ReadNodes();
+                Dictionary<string, Node> nodes = nodesList.ToDictionary(
                     x => x.CustomData[AdapterIdName].ToString());
 
-                IEnumerable<Constraint4DOF> bhomSupportList = Read4DOFConstraints();
-                Dictionary<string, Constraint4DOF> bhomSupports = bhomSupportList.ToDictionary(
+                IEnumerable<Constraint4DOF> supportsList = Read4DOFConstraints();
+                Dictionary<string, Constraint4DOF> supports = supportsList.ToDictionary(
                     x => x.Name);
 
                 IEnumerable<IMaterialFragment> materialList = ReadMaterials();
                 Dictionary<string, IMaterialFragment> materials = materialList.ToDictionary(
                     x => x.Name.ToString());
 
-                IEnumerable<ISectionProperty> geometricList = ReadSectionProperties();
-                Dictionary<string, ISectionProperty> geometrics = geometricList.ToDictionary(
+                IEnumerable<ISectionProperty> sectionPropertiesList = ReadSectionProperties();
+                Dictionary<string, ISectionProperty> sectionProperties = sectionPropertiesList.ToDictionary(
                     x => x.Name.ToString());
 
-                List<MeshSettings1D> meshList = ReadMeshSettings1D();
-                Dictionary<string, MeshSettings1D> meshes = meshList.ToDictionary(
+                List<MeshSettings1D> meshesList = ReadMeshSettings1D();
+                Dictionary<string, MeshSettings1D> meshes = meshesList.ToDictionary(
                     x => x.Name.ToString());
 
                 HashSet<string> groupNames = ReadTags();
@@ -73,22 +73,22 @@ namespace BH.Adapter.Lusas
                 for (int i = 0; i < lusasLines.Count(); i++)
                 {
                     IFLine lusasLine = (IFLine)lusasLines[i];
-                    Bar bhomBar = Adapters.Lusas.Convert.ToBar
+                    Bar bar = Adapters.Lusas.Convert.ToBar
                         (
                         lusasLine,
-                        bhomNodes,
-                        bhomSupports,
+                        nodes,
+                        supports,
                         groupNames,
                         materials,
-                        geometrics,
+                        sectionProperties,
                         meshes
                         );
 
-                    bhomBars.Add(bhomBar);
+                    bars.Add(bar);
                 }
             }
 
-            return bhomBars;
+            return bars;
         }
 
         /***************************************************/

@@ -40,7 +40,7 @@ namespace BH.Adapter.Lusas
             /**** Private Methods                           ****/
             /***************************************************/
 
-            List<ILoad> bhomPanelUniformlyDistributedLoads = new List<ILoad>();
+            List<ILoad> areaUniformlyDistributedLoads = new List<ILoad>();
 
             object[] lusasGlobalDistributedLoads = d_LusasData.getAttributes("Global Distributed Load");
             object[] lusasLocalDistributedLoads = d_LusasData.getAttributes("Distributed Load");
@@ -51,8 +51,8 @@ namespace BH.Adapter.Lusas
 
             if (!(lusasDistributedLoads.Count() == 0))
             {
-                List<Panel> bhomSurfaces = ReadPanels();
-                Dictionary<string, Panel> surfaceDictionary = bhomSurfaces.ToDictionary(
+                List<Panel> panelsList = ReadPanels();
+                Dictionary<string, Panel> panels = panelsList.ToDictionary(
                     x => x.CustomData[AdapterIdName].ToString());
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
@@ -68,19 +68,19 @@ namespace BH.Adapter.Lusas
 
                         foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                         {
-                            AreaUniformlyDistributedLoad bhomBarUniformlyDistributedLoad =
+                            AreaUniformlyDistributedLoad areaUniformlyDistributedLoad =
                                 Adapters.Lusas.Convert.ToAreaUniformlyDistributed(
-                                    lusasDistributedLoad, groupedAssignment, surfaceDictionary);
+                                    lusasDistributedLoad, groupedAssignment, panels);
 
                             List<string> analysisName = new List<string> { lusasDistributedLoad.getAttributeType() };
-                            bhomBarUniformlyDistributedLoad.Tags = new HashSet<string>(analysisName);
-                            bhomPanelUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
+                            areaUniformlyDistributedLoad.Tags = new HashSet<string>(analysisName);
+                            areaUniformlyDistributedLoads.Add(areaUniformlyDistributedLoad);
                         }
                     }
                 }
             }
 
-            return bhomPanelUniformlyDistributedLoads;
+            return areaUniformlyDistributedLoads;
         }
 
         /***************************************************/

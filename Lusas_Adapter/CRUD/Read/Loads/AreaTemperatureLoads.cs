@@ -40,13 +40,13 @@ namespace BH.Adapter.Lusas
             /**** Private Methods                           ****/
             /***************************************************/
 
-            List<ILoad> bhomAreaTemperatureLoads = new List<ILoad>();
+            List<ILoad> areaTemperatureLoads = new List<ILoad>();
             object[] lusasTemperatureLoads = d_LusasData.getAttributes("Temperature");
 
             if (!(lusasTemperatureLoads.Count() == 0))
             {
-                List<Panel> bhomPanel = ReadPanels();
-                Dictionary<string, Panel> surfaceDictionary = bhomPanel.ToDictionary(
+                List<Panel> panelsList = ReadPanels();
+                Dictionary<string, Panel> panels = panelsList.ToDictionary(
                     x => x.CustomData[AdapterIdName].ToString());
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
@@ -76,18 +76,18 @@ namespace BH.Adapter.Lusas
 
                         if (surfaceAssignments.Count != 0)
                         {
-                            AreaTemperatureLoad bhomAreaTemperatureLoad =
+                            AreaTemperatureLoad areaTemperatureLoad =
                                 Adapters.Lusas.Convert.ToAreaTempratureLoad(
-                                    lusasTemperatureLoad, groupedAssignment, surfaceDictionary);
+                                    lusasTemperatureLoad, groupedAssignment, panels);
 
-                            bhomAreaTemperatureLoad.Tags = new HashSet<string>(analysisName);
-                            bhomAreaTemperatureLoads.Add(bhomAreaTemperatureLoad);
+                            areaTemperatureLoad.Tags = new HashSet<string>(analysisName);
+                            areaTemperatureLoads.Add(areaTemperatureLoad);
                         }
                     }
                 }
             }
 
-            return bhomAreaTemperatureLoads;
+            return areaTemperatureLoads;
         }
 
         /***************************************************/

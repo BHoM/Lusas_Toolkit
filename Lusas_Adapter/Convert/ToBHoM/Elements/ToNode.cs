@@ -38,7 +38,7 @@ namespace BH.Adapter.Adapters.Lusas
         /***************************************************/
 
         public static Node ToNode(this IFPoint lusasPoint,
-            HashSet<string> groupNames, Dictionary<string, Constraint6DOF> bhom6DOFConstraints)
+            HashSet<string> groupNames, Dictionary<string, Constraint6DOF> Constraint6DOFs)
         {
             HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasPoint, groupNames));
             List<string> supportAssignments = GetAttributeAssignments(lusasPoint, "Support");
@@ -46,19 +46,19 @@ namespace BH.Adapter.Adapters.Lusas
             Constraint6DOF nodeConstraint = null;
             if (!(supportAssignments.Count() == 0))
             {
-                bhom6DOFConstraints.TryGetValue(supportAssignments[0], out nodeConstraint);
+                Constraint6DOFs.TryGetValue(supportAssignments[0], out nodeConstraint);
             }
 
-            Node bhomNode = Engine.Structure.Create.Node(
+            Node node = Engine.Structure.Create.Node(
                 new Point { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() },
                 "",
                 nodeConstraint);
 
-            bhomNode.Tags = tags;
+            node.Tags = tags;
 
-            bhomNode.CustomData[AdapterIdName] = lusasPoint.getID();
+            node.CustomData[AdapterIdName] = lusasPoint.getID();
 
-            return bhomNode;
+            return node;
         }
 
         /***************************************************/

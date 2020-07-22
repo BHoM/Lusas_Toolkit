@@ -40,12 +40,12 @@ namespace BH.Adapter.Adapters.Lusas
 
         public static GravityLoad ToGravityLoad(IFLoading lusasGravityLoad,
             IEnumerable<IFAssignment> lusasAssignments,
-            Dictionary<string, Node> bhomNodes,
-            Dictionary<string, Bar> bhomBars,
-            Dictionary<string, Panel> bhomPanels)
+            Dictionary<string, Node> nodes,
+            Dictionary<string, Bar> bars,
+            Dictionary<string, Panel> panels)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
+            Loadcase loadcase = ToLoadcase(assignedLoadcase);
             Vector gravityVector = new Vector
             {
                 X = lusasGravityLoad.getValue("accX"),
@@ -53,14 +53,14 @@ namespace BH.Adapter.Adapters.Lusas
                 Z = lusasGravityLoad.getValue("accZ")
             };
 
-            IEnumerable<BHoMObject> bhomObjects = GetGeometryAssignments(
-                lusasAssignments, bhomNodes, bhomBars, bhomPanels);
-            GravityLoad bhomGravityLoad = Engine.Structure.Create.GravityLoad(
-                bhomLoadcase, gravityVector, bhomObjects, GetName(lusasGravityLoad));
+            IEnumerable<BHoMObject> assignedObjects = GetGeometryAssignments(
+                lusasAssignments, nodes, bars, panels);
+            GravityLoad gravityLoad = Engine.Structure.Create.GravityLoad(
+                loadcase, gravityVector, assignedObjects, GetName(lusasGravityLoad));
 
-            bhomGravityLoad.CustomData[AdapterIdName] = lusasGravityLoad.getID();
+            gravityLoad.CustomData[AdapterIdName] = lusasGravityLoad.getID();
 
-            return bhomGravityLoad;
+            return gravityLoad;
         }
 
         /***************************************************/
@@ -68,14 +68,14 @@ namespace BH.Adapter.Adapters.Lusas
         /***************************************************/
 
         public static IEnumerable<BHoMObject> GetGeometryAssignments(IEnumerable<IFAssignment> lusasAssignments,
-            Dictionary<string, Node> bhomNodes, Dictionary<string, Bar> bhomBars,
-            Dictionary<string, Panel> bhomPanels)
+            Dictionary<string, Node> nodes, Dictionary<string, Bar> bars,
+            Dictionary<string, Panel> panels)
         {
             List<BHoMObject> assignedObjects = new List<BHoMObject>();
 
-            Node bhomNode = new Node();
-            Bar bhomBar = new Bar();
-            Panel bhomPanel = new Panel();
+            Node node;
+            Bar bar;
+            Panel panel;
 
             foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
@@ -83,18 +83,18 @@ namespace BH.Adapter.Adapters.Lusas
 
                 if (lusasGeometry is IFPoint)
                 {
-                    bhomNodes.TryGetValue(lusasGeometry.getID().ToString(), out bhomNode);
-                    assignedObjects.Add(bhomNode);
+                    nodes.TryGetValue(lusasGeometry.getID().ToString(), out node);
+                    assignedObjects.Add(node);
                 }
                 else if (lusasGeometry is IFLine)
                 {
-                    bhomBars.TryGetValue(lusasGeometry.getID().ToString(), out bhomBar);
-                    assignedObjects.Add(bhomBar);
+                    bars.TryGetValue(lusasGeometry.getID().ToString(), out bar);
+                    assignedObjects.Add(bar);
                 }
                 else if (lusasGeometry is IFSurface)
                 {
-                    bhomPanels.TryGetValue(lusasGeometry.getID().ToString(), out bhomPanel);
-                    assignedObjects.Add(bhomPanel);
+                    panels.TryGetValue(lusasGeometry.getID().ToString(), out panel);
+                    assignedObjects.Add(panel);
                 }
             }
 

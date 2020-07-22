@@ -35,18 +35,18 @@ namespace BH.Adapter.Adapters.Lusas
         /***************************************************/
 
         private static IEnumerable<IAreaElement> GetSurfaceAssignments(IEnumerable<IFAssignment> lusasAssignments,
-            Dictionary<string, Panel> bhomPanels)
+            Dictionary<string, Panel> panels)
         {
             List<IAreaElement> assignedSurfs = new List<IAreaElement>();
-            Panel bhomPanel = new Panel();
+            Panel panel;
 
             foreach (IFAssignment lusasAssignment in lusasAssignments)
             {
                 if (lusasAssignment.getDatabaseObject() is IFSurface)
                 {
                     IFSurface lusasSurface = (IFSurface)lusasAssignment.getDatabaseObject();
-                    bhomPanels.TryGetValue(lusasSurface.getID().ToString(), out bhomPanel);
-                    assignedSurfs.Add(bhomPanel);
+                    panels.TryGetValue(lusasSurface.getID().ToString(), out panel);
+                    assignedSurfs.Add(panel);
                 }
                 else
                 {

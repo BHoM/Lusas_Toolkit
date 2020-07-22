@@ -37,12 +37,12 @@ namespace BH.Adapter.Adapters.Lusas
         /***************************************************/
 
         public static BarPointLoad ToBarPointLoad(IFLoading lusasBarPointLoad,
-            IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Bar> bhomBarDictionary)
+            IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Bar> bars)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
+            Loadcase loadcase = ToLoadcase(assignedLoadcase);
 
-            IEnumerable<Bar> bhomBars = GetLineAssignments(lusasAssignments, bhomBarDictionary);
+            IEnumerable<Bar> assignedBars = GetLineAssignments(lusasAssignments, bars);
 
             Vector forceVector = new Vector
             {
@@ -60,20 +60,20 @@ namespace BH.Adapter.Adapters.Lusas
 
             double forcePosition = lusasBarPointLoad.getValue("Distance");
 
-            BarPointLoad bhomBarPointLoad = null;
+            BarPointLoad barPointLoad;
 
-            bhomBarPointLoad = Engine.Structure.Create.BarPointLoad(
-                bhomLoadcase,
+            barPointLoad = Engine.Structure.Create.BarPointLoad(
+                loadcase,
                 forcePosition,
-                bhomBars,
+                assignedBars,
                 forceVector,
                 momentVector,
                 LoadAxis.Global,
                 GetName(lusasBarPointLoad));
 
-            bhomBarPointLoad.CustomData[AdapterIdName] = lusasBarPointLoad.getID();
+            barPointLoad.CustomData[AdapterIdName] = lusasBarPointLoad.getID();
 
-            return bhomBarPointLoad;
+            return barPointLoad;
         }
 
         /***************************************************/

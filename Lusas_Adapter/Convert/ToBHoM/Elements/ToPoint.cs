@@ -37,18 +37,18 @@ namespace BH.Adapter.Adapters.Lusas
         {
             HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasPoint, groupNames));
 
-            Point bhomPoint = new Point { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() };
+            Point point = new Point { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() };
 
-            return bhomPoint;
+            return point;
         }
 
         /***************************************************/
 
         public static Point ToPoint(this IFPoint lusasPoint)
         {
-            Point bhomPoint = new Point { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() };
+            Point point = new Point { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() };
 
-            return bhomPoint;
+            return point;
         }
 
         /***************************************************/

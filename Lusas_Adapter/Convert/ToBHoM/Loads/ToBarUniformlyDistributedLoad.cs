@@ -37,12 +37,12 @@ namespace BH.Adapter.Adapters.Lusas
         /***************************************************/
 
         public static BarUniformlyDistributedLoad ToBarUniformlyDistributed(IFLoading lusasDistributed,
-            IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Bar> bhomBarDictionary)
+            IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Bar> bars)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
+            Loadcase loadcase = ToLoadcase(assignedLoadcase);
 
-            IEnumerable<Bar> bhomBars = GetLineAssignments(lusasAssignments, bhomBarDictionary);
+            IEnumerable<Bar> assignedBars = GetLineAssignments(lusasAssignments, bars);
 
             Vector forceVector = new Vector
             {
@@ -51,7 +51,7 @@ namespace BH.Adapter.Adapters.Lusas
                 Z = lusasDistributed.getValue("WZ")
             };
 
-            BarUniformlyDistributedLoad bhomBarUniformlyDistributed = null;
+            BarUniformlyDistributedLoad barUniformlyDistributed = null;
 
             if (lusasDistributed.getAttributeType() == "Global Distributed Load")
             {
@@ -62,9 +62,9 @@ namespace BH.Adapter.Adapters.Lusas
                     Z = lusasDistributed.getValue("MZ")
                 };
 
-                bhomBarUniformlyDistributed = Engine.Structure.Create.BarUniformlyDistributedLoad(
-                    bhomLoadcase,
-                    bhomBars,
+                barUniformlyDistributed = Engine.Structure.Create.BarUniformlyDistributedLoad(
+                    loadcase,
+                    assignedBars,
                     forceVector,
                     momentVector,
                     LoadAxis.Global,
@@ -73,9 +73,9 @@ namespace BH.Adapter.Adapters.Lusas
             }
             else if (lusasDistributed.getAttributeType() == "Distributed Load")
             {
-                bhomBarUniformlyDistributed = Engine.Structure.Create.BarUniformlyDistributedLoad(
-                    bhomLoadcase,
-                    bhomBars,
+                barUniformlyDistributed = Engine.Structure.Create.BarUniformlyDistributedLoad(
+                    loadcase,
+                    assignedBars,
                     forceVector,
                     null,
                     LoadAxis.Local,
@@ -83,9 +83,9 @@ namespace BH.Adapter.Adapters.Lusas
                     GetName(lusasDistributed));
             }
 
-            bhomBarUniformlyDistributed.CustomData[AdapterIdName] = lusasDistributed.getID();
+            barUniformlyDistributed.CustomData[AdapterIdName] = lusasDistributed.getID();
 
-            return bhomBarUniformlyDistributed;
+            return barUniformlyDistributed;
         }
 
         /***************************************************/

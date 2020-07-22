@@ -38,7 +38,7 @@ namespace BH.Adapter.Adapters.Lusas
         {
             string attributeName = GetName(lusasAttribute);
 
-            IProfile bhomProfile = ToProfile(lusasAttribute);
+            IProfile profile = ToProfile(lusasAttribute);
 
 
             double area = lusasAttribute.getValue("A");
@@ -61,16 +61,16 @@ namespace BH.Adapter.Adapters.Lusas
             double asy = lusasAttribute.getValue("Asy");
             double asz = lusasAttribute.getValue("Asz");
 
-            bhomProfile = Engine.Structure.Compute.Integrate(bhomProfile, oM.Geometry.Tolerance.MicroDistance).Item1;
+            profile = Engine.Structure.Compute.Integrate(profile, oM.Geometry.Tolerance.MicroDistance).Item1;
 
-            GenericSection bhomSection = new GenericSection(bhomProfile, area, rgy, rgz, j, iy, iz, iw,
+            GenericSection section = new GenericSection(profile, area, rgy, rgz, j, iy, iz, iw,
                 wely, welz, wply, wplz, centreZ, centreY, zt, zb, yt, yb, asy, asz);
 
-            bhomSection.Name = attributeName;
+            section.Name = attributeName;
 
-            bhomSection.CustomData[AdapterIdName] = lusasAttribute.getID();
+            section.CustomData[AdapterIdName] = lusasAttribute.getID().ToString();
 
-            return bhomSection;
+            return section;
         }
 
         /***************************************************/

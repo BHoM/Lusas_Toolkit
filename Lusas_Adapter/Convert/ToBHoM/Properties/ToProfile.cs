@@ -35,13 +35,13 @@ namespace BH.Adapter.Adapters.Lusas
         {
             int sectionType = lusasAttribute.getValue("Type");
 
-            IProfile sectionProfile = null;
+            IProfile profile = null;
 
             switch (sectionType)
             {
                 case 1:
                     {
-                        sectionProfile = BH.Engine.Geometry.Create.RectangleProfile(
+                        profile = BH.Engine.Geometry.Create.RectangleProfile(
                             lusasAttribute.getValue("D"),
                             lusasAttribute.getValue("B"),
                             0
@@ -50,7 +50,7 @@ namespace BH.Adapter.Adapters.Lusas
                     }
                 case 2:
                     {
-                        sectionProfile = BH.Engine.Geometry.Create.BoxProfile(
+                        profile = BH.Engine.Geometry.Create.BoxProfile(
                             lusasAttribute.getValue("D"),
                             lusasAttribute.getValue("B"),
                             lusasAttribute.getValue("t"),
@@ -61,14 +61,14 @@ namespace BH.Adapter.Adapters.Lusas
                     }
                 case 3:
                     {
-                        sectionProfile = BH.Engine.Geometry.Create.CircleProfile(
+                        profile = BH.Engine.Geometry.Create.CircleProfile(
                             lusasAttribute.getValue("D")
                         );
                         break;
                     }
                 case 4:
                     {
-                        sectionProfile = BH.Engine.Geometry.Create.TubeProfile(
+                        profile = BH.Engine.Geometry.Create.TubeProfile(
                             lusasAttribute.getValue("D"),
                             lusasAttribute.getValue("t")
                         );
@@ -76,7 +76,7 @@ namespace BH.Adapter.Adapters.Lusas
                     }
                 case 5:
                     {
-                        sectionProfile = BH.Engine.Geometry.Create.ISectionProfile(
+                        profile = BH.Engine.Geometry.Create.ISectionProfile(
                             lusasAttribute.getValue("D"),
                             lusasAttribute.getValue("B"),
                             lusasAttribute.getValue("tw"),
@@ -88,7 +88,7 @@ namespace BH.Adapter.Adapters.Lusas
                     }
                 case 7:
                     {
-                        sectionProfile = BH.Engine.Geometry.Create.AngleProfile(
+                        profile = BH.Engine.Geometry.Create.AngleProfile(
                             lusasAttribute.getValue("D"),
                             lusasAttribute.getValue("B"),
                             lusasAttribute.getValue("tw"),
@@ -100,7 +100,7 @@ namespace BH.Adapter.Adapters.Lusas
                     }
                 case 8:
                     {
-                        sectionProfile = BH.Engine.Geometry.Create.TSectionProfile(
+                        profile = BH.Engine.Geometry.Create.TSectionProfile(
                             lusasAttribute.getValue("D"),
                             lusasAttribute.getValue("B"),
                             lusasAttribute.getValue("tw"),
@@ -112,7 +112,7 @@ namespace BH.Adapter.Adapters.Lusas
                     }
                 case 10:
                     {
-                        sectionProfile = BH.Engine.Geometry.Create.ChannelProfile(
+                        profile = BH.Engine.Geometry.Create.ChannelProfile(
                             lusasAttribute.getValue("D"),
                             lusasAttribute.getValue("B"),
                             lusasAttribute.getValue("tw"),
@@ -124,7 +124,7 @@ namespace BH.Adapter.Adapters.Lusas
                     }
                 case 14:
                     {
-                        sectionProfile = BH.Engine.Geometry.Create.FabricatedISectionProfile(
+                        profile = BH.Engine.Geometry.Create.FabricatedISectionProfile(
                             lusasAttribute.getValue("D"),
                             lusasAttribute.getValue("Bt"),
                             lusasAttribute.getValue("Bb"),
@@ -137,7 +137,7 @@ namespace BH.Adapter.Adapters.Lusas
                     }
                 case 15:
                     {
-                        sectionProfile = BH.Engine.Geometry.Create.FabricatedBoxProfile(
+                        profile = BH.Engine.Geometry.Create.FabricatedBoxProfile(
                             lusasAttribute.getValue("D"),
                             lusasAttribute.getValue("B"),
                             lusasAttribute.getValue("tw"),
@@ -149,7 +149,7 @@ namespace BH.Adapter.Adapters.Lusas
                     }
                 case 16:
                     {
-                        sectionProfile = BH.Engine.Geometry.Create.ZSectionProfile(
+                        profile = BH.Engine.Geometry.Create.ZSectionProfile(
                             lusasAttribute.getValue("D"),
                             lusasAttribute.getValue("B"),
                             lusasAttribute.getValue("tw"),
@@ -161,7 +161,7 @@ namespace BH.Adapter.Adapters.Lusas
                     }
             }
 
-            return sectionProfile;
+            return profile;
         }
 
         /***************************************************/

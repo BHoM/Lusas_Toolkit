@@ -40,11 +40,11 @@ namespace BH.Adapter.Adapters.Lusas
         /***************************************************/
 
         public static Panel ToPanel(this IFSurface lusasSurface,
-            Dictionary<string, Edge> bhomEdges,
+            Dictionary<string, Edge> edges,
             HashSet<string> groupNames,
-            Dictionary<string, ISurfaceProperty> bhom2DProperties,
-            Dictionary<string, IMaterialFragment> bhomMaterials,
-            Dictionary<string, Constraint4DOF> bhomSupports)
+            Dictionary<string, ISurfaceProperty> surfaceProperties,
+            Dictionary<string, IMaterialFragment> materials,
+            Dictionary<string, Constraint4DOF> supports)
 
         {
             object[] lusasSurfaceLines = lusasSurface.getLOFs();
@@ -57,46 +57,46 @@ namespace BH.Adapter.Adapters.Lusas
 
             for (int i = 0; i < n; i++)
             {
-                Edge bhomEdge = GetEdge(lusasSurface, i, bhomEdges);
-                surfaceEdges.Add(bhomEdge);
+                Edge edge = GetEdge(lusasSurface, i, edges);
+                surfaceEdges.Add(edge);
             }
 
-            Panel bhomPanel = Engine.Structure.Create.Panel(surfaceEdges, dummyCurve);
+            Panel panel = Engine.Structure.Create.Panel(surfaceEdges, dummyCurve);
 
-            bhomPanel.Tags = tags;
-            bhomPanel.CustomData[AdapterIdName] = lusasSurface.getID();
+            panel.Tags = tags;
+            panel.CustomData[AdapterIdName] = lusasSurface.getID();
 
             List<string> geometricAssignments = GetAttributeAssignments(lusasSurface, "Geometric");
             List<string> materialAssignments = GetAttributeAssignments(lusasSurface, "Material");
 
             IMaterialFragment panelMaterial;
-            ISurfaceProperty bhomProperty2D;
+            ISurfaceProperty surfaceProperty;
 
             if (!(geometricAssignments.Count() == 0))
             {
-                bhom2DProperties.TryGetValue(geometricAssignments[0], out bhomProperty2D);
+                surfaceProperties.TryGetValue(geometricAssignments[0], out surfaceProperty);
                 if (!(materialAssignments.Count() == 0))
                 {
-                    bhomMaterials.TryGetValue(materialAssignments[0], out panelMaterial);
-                    bhomProperty2D.Material = panelMaterial;
+                    materials.TryGetValue(materialAssignments[0], out panelMaterial);
+                    surfaceProperty.Material = panelMaterial;
                 }
 
-                bhomPanel.Property = bhomProperty2D;
+                panel.Property = surfaceProperty;
             }
 
-            return bhomPanel;
+            return panel;
         }
 
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private static Edge GetEdge(IFSurface lusasSurf, int lineIndex, Dictionary<string, Edge> bhomBars)
+        private static Edge GetEdge(IFSurface lusasSurf, int lineIndex, Dictionary<string, Edge> bars)
         {
-            Edge bhomEdge;
+            Edge edge;
             IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
-            bhomBars.TryGetValue(lusasEdge.getID().ToString(), out bhomEdge);
-            return bhomEdge;
+            bars.TryGetValue(lusasEdge.getID().ToString(), out edge);
+            return edge;
         }
 
         /***************************************************/

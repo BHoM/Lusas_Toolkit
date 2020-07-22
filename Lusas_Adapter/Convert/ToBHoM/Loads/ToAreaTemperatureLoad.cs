@@ -38,25 +38,25 @@ namespace BH.Adapter.Adapters.Lusas
         public static AreaTemperatureLoad ToAreaTempratureLoad(
             IFLoading lusasTemperatureLoad,
             IEnumerable<IFAssignment> lusasAssignments,
-            Dictionary<string, Panel> panelDictionary)
+            Dictionary<string, Panel> panels)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
+            Loadcase loadcase = ToLoadcase(assignedLoadcase);
             double temperatureChange = lusasTemperatureLoad.getValue("T")
                 - lusasTemperatureLoad.getValue("T0");
 
-            IEnumerable<IAreaElement> bhomPanels = GetSurfaceAssignments(lusasAssignments, panelDictionary);
-            AreaTemperatureLoad bhomAreaTemperatureLoad = BH.Engine.Structure.Create.AreaTemperatureLoad(
-                bhomLoadcase,
+            IEnumerable<IAreaElement> assignedPanels = GetSurfaceAssignments(lusasAssignments, panels);
+            AreaTemperatureLoad areaTemperatureLoad = BH.Engine.Structure.Create.AreaTemperatureLoad(
+                loadcase,
                 temperatureChange,
-                bhomPanels,
+                assignedPanels,
                 LoadAxis.Local,
                 false,
                 GetName(lusasTemperatureLoad));
 
-            bhomAreaTemperatureLoad.CustomData[AdapterIdName] = lusasTemperatureLoad.getID();
+            areaTemperatureLoad.CustomData[AdapterIdName] = lusasTemperatureLoad.getID();
 
-            return bhomAreaTemperatureLoad;
+            return areaTemperatureLoad;
         }
 
         /***************************************************/

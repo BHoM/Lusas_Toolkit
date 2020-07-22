@@ -43,7 +43,7 @@ namespace BH.Adapter.Lusas
             IFDatabaseOperations databasePoint = d_LusasData.createPoint(
                 position.X, position.Y, position.Z);
             IFPoint lusasPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
-            
+
             node.CustomData[AdapterIdName] = lusasPoint.getID().ToString();
 
 

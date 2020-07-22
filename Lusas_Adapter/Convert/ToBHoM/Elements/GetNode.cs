@@ -33,13 +33,13 @@ namespace BH.Adapter.Adapters.Lusas
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private static Node GetNode(IFLine lusasLine, int nodeIndex, Dictionary<string, Node> bhomNodes)
+        private static Node GetNode(IFLine lusasLine, int nodeIndex, Dictionary<string, Node> nodes)
         {
-            Node bhomNode = null;
+            Node node;
             IFPoint lusasPoint = lusasLine.getLOFs()[nodeIndex];
-            bhomNodes.TryGetValue(lusasPoint.getID().ToString(), out bhomNode);
+            nodes.TryGetValue(lusasPoint.getID().ToString(), out node);
 
-            return bhomNode;
+            return node;
         }
 
         /***************************************************/

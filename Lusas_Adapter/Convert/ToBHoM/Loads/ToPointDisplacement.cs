@@ -37,12 +37,12 @@ namespace BH.Adapter.Adapters.Lusas
         /***************************************************/
 
         public static PointDisplacement ToPointDisplacement(IFLoading lusasPrescribedDisplacement,
-            IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Node> bhomNodeDictionary)
+            IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Node> nodes)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase bhomLoadcase = ToLoadcase(assignedLoadcase);
+            Loadcase loadcase = ToLoadcase(assignedLoadcase);
 
-            IEnumerable<Node> bhomNodes = GetPointAssignments(lusasAssignments, bhomNodeDictionary);
+            IEnumerable<Node> assignedNodes = GetPointAssignments(lusasAssignments, nodes);
 
             lusasPrescribedDisplacement.getValueNames();
 
@@ -60,15 +60,15 @@ namespace BH.Adapter.Adapters.Lusas
                 Z = lusasPrescribedDisplacement.getValue("THZ")
             };
 
-            PointDisplacement bhomPointDisplacement = BH.Engine.Structure.Create.PointDisplacement(
-                bhomLoadcase, bhomNodes, translationVector, rotationVector, LoadAxis.Global, 
+            PointDisplacement pointDisplacement = BH.Engine.Structure.Create.PointDisplacement(
+                loadcase, assignedNodes, translationVector, rotationVector, LoadAxis.Global,
                 GetName(lusasPrescribedDisplacement));
 
-            bhomPointDisplacement.CustomData[AdapterIdName] = lusasPrescribedDisplacement.getID(); ;
+            pointDisplacement.CustomData[AdapterIdName] = lusasPrescribedDisplacement.getID(); ;
             // Needs to be a bit here that determines whether it is global or local - actually this cannot be done as the 
             //attribute is applied to a group, and within the group the axis could local or global
 
-            return bhomPointDisplacement;
+            return pointDisplacement;
         }
 
         /***************************************************/

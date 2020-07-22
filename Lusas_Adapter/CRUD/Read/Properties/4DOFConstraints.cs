@@ -40,16 +40,16 @@ namespace BH.Adapter.Lusas
         private List<Constraint4DOF> Read4DOFConstraints(List<string> ids = null)
         {
             object[] lusasSupports = d_LusasData.getAttributes("Support");
-            List<Constraint4DOF> bhomConstraints4DOFs = new List<Constraint4DOF>();
+            List<Constraint4DOF> constraints4DOFs = new List<Constraint4DOF>();
 
             for (int i = 0; i < lusasSupports.Count(); i++)
             {
                 IFSupportStructural lusasSupport = (IFSupportStructural)lusasSupports[i];
-                Constraint4DOF bhomConstraint4DOF = Adapters.Lusas.Convert.ToConstraint4DOF(lusasSupport);
-                bhomConstraints4DOFs.Add(bhomConstraint4DOF);
+                Constraint4DOF constraint4DOF = Adapters.Lusas.Convert.ToConstraint4DOF(lusasSupport);
+                constraints4DOFs.Add(constraint4DOF);
             }
 
-            return bhomConstraints4DOFs;
+            return constraints4DOFs;
         }
 
         /***************************************************/

@@ -40,12 +40,12 @@ namespace BH.Adapter.Lusas
         private List<Edge> ReadEdges(List<string> ids = null)
         {
             object[] lusasLines = d_LusasData.getObjects("Line");
-            List<Edge> bhomEdges = new List<Edge>();
+            List<Edge> edges = new List<Edge>();
 
             if (lusasLines.Count() != 0)
             {
-                List<Node> bhomNodesList = ReadNodes();
-                Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(
+                List<Node> nodesList = ReadNodes();
+                Dictionary<string, Node> nodes = nodesList.ToDictionary(
                     x => x.CustomData[AdapterIdName].ToString());
 
                 HashSet<string> groupNames = ReadTags();
@@ -53,12 +53,12 @@ namespace BH.Adapter.Lusas
                 for (int i = 0; i < lusasLines.Count(); i++)
                 {
                     IFLine lusasLine = (IFLine)lusasLines[i];
-                    Edge bhomEdge = Adapters.Lusas.Convert.ToEdge(lusasLine, bhomNodes, groupNames);
-                    bhomEdges.Add(bhomEdge);
+                    Edge edge = Adapters.Lusas.Convert.ToEdge(lusasLine, nodes, groupNames);
+                    edges.Add(edge);
                 }
             }
 
-            return bhomEdges;
+            return edges;
         }
 
         /***************************************************/
