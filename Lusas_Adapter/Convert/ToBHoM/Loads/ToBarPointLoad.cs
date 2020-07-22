@@ -71,8 +71,7 @@ namespace BH.Adapter.Adapters.Lusas
                 LoadAxis.Global,
                 GetName(lusasBarPointLoad));
 
-            int adapterID = GetAdapterID(lusasBarPointLoad, 'l');
-            bhomBarPointLoad.CustomData[AdapterIdName] = adapterID;
+            bhomBarPointLoad.CustomData[AdapterIdName] = lusasBarPointLoad.getID();
 
             return bhomBarPointLoad;
         }

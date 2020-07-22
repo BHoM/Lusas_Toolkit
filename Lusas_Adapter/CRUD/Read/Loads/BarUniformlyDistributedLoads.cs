@@ -67,7 +67,7 @@ namespace BH.Adapter.Lusas
                         foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                         {
                             BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad =
-                                Adapter.Adapters.Lusas.Convert.ToBarUniformallyDistributed(
+                                Adapters.Lusas.Convert.ToBarUniformlyDistributed(
                                     lusasDistributedLoad, groupedAssignment, barDictionary);
 
                             List<string> analysisName = new List<string> { lusasDistributedLoad.getAttributeType() };

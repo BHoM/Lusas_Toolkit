@@ -69,7 +69,7 @@ namespace BH.Adapter.Lusas
                         foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                         {
                             AreaUniformlyDistributedLoad bhomBarUniformlyDistributedLoad =
-                                Adapter.Adapters.Lusas.Convert.ToAreaUniformlyDistributed(
+                                Adapters.Lusas.Convert.ToAreaUniformlyDistributed(
                                     lusasDistributedLoad, groupedAssignment, surfaceDictionary);
 
                             List<string> analysisName = new List<string> { lusasDistributedLoad.getAttributeType() };

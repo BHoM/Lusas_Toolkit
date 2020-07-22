@@ -62,8 +62,7 @@ namespace BH.Adapter.Adapters.Lusas
                 LoadCases = factoredLoadcases
             };
 
-            int adapterID = GetAdapterID(lusasLoadCombination, 'c');
-            BHoMLoadCombination.CustomData[AdapterIdName] = adapterID;
+            BHoMLoadCombination.CustomData[AdapterIdName] = lusasLoadCombination.getID();
 
             return BHoMLoadCombination;
         }

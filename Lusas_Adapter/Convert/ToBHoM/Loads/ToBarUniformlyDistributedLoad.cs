@@ -36,7 +36,7 @@ namespace BH.Adapter.Adapters.Lusas
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static BarUniformlyDistributedLoad ToBarUniformallyDistributed(IFLoading lusasDistributed,
+        public static BarUniformlyDistributedLoad ToBarUniformlyDistributed(IFLoading lusasDistributed,
             IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Bar> bhomBarDictionary)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
@@ -83,8 +83,7 @@ namespace BH.Adapter.Adapters.Lusas
                     GetName(lusasDistributed));
             }
 
-            int adapterID = GetAdapterID(lusasDistributed, 'l');
-            bhomBarUniformlyDistributed.CustomData[AdapterIdName] = adapterID;
+            bhomBarUniformlyDistributed.CustomData[AdapterIdName] = lusasDistributed.getID();
 
             return bhomBarUniformlyDistributed;
         }

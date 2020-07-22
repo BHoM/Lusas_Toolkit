@@ -54,8 +54,8 @@ namespace BH.Adapter.Adapters.Lusas
                 false,
                 GetName(lusasTemperatureLoad));
 
-            int adapterID = GetAdapterID(lusasTemperatureLoad, 'l');
-            bhomBarTemperatureLoad.CustomData[AdapterIdName] = adapterID;
+            bhomBarTemperatureLoad.CustomData[AdapterIdName] = lusasTemperatureLoad.getID();
+
             return bhomBarTemperatureLoad;
         }
 
