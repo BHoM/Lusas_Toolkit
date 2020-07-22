@@ -105,7 +105,7 @@ namespace BH.Adapter.Lusas
                 {
                     ids.Add(
                         System.Convert.ToInt32(
-                        d_LusasData.getPointByNumber(i).getName().RemovePrefix("P")));
+                        d_LusasData.getPointByNumber(i).getID().ToString()));
                 }
             }
 
@@ -125,7 +125,7 @@ namespace BH.Adapter.Lusas
                 {
                     ids.Add(
                         System.Convert.ToInt32(
-                        d_LusasData.getLineByNumber(i).getName().RemovePrefix("L")));
+                        d_LusasData.getLineByNumber(i).getID().ToString()));
                 }
             }
 
@@ -145,7 +145,7 @@ namespace BH.Adapter.Lusas
                 {
                     ids.Add(
                         System.Convert.ToInt32(
-                        d_LusasData.getSurfaceByNumber(i).getName().RemovePrefix("S")));
+                        d_LusasData.getSurfaceByNumber(i).getID().ToString()));
                 }
             }
 

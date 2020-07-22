@@ -73,7 +73,7 @@ namespace BH.Adapter.Lusas
                 for (int i = 0; i < lusasLines.Count(); i++)
                 {
                     IFLine lusasLine = (IFLine)lusasLines[i];
-                    Bar bhomBar = Adapter.Adapters.Lusas.Convert.ToBar
+                    Bar bhomBar = Adapters.Lusas.Convert.ToBar
                         (
                         lusasLine,
                         bhomNodes,

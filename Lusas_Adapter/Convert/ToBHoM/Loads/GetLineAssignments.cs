@@ -45,7 +45,7 @@ namespace BH.Adapter.Adapters.Lusas
                 if (lusasAssignment.getDatabaseObject() is IFLine)
                 {
                     IFLine lusasLine = (IFLine)lusasAssignment.getDatabaseObject();
-                    bhomBars.TryGetValue(lusasLine.getName().RemovePrefix("L"), out bhomBar);
+                    bhomBars.TryGetValue(lusasLine.getID().ToString(), out bhomBar);
                     assignedBars.Add(bhomBar);
                 }
                 else

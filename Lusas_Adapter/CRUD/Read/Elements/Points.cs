@@ -49,7 +49,7 @@ namespace BH.Adapter.Lusas
                 for (int i = 0; i < lusasPoints.Count(); i++)
                 {
                     IFPoint lusasPoint = (IFPoint)lusasPoints[i];
-                    Point bhomPoint = Adapter.Adapters.Lusas.Convert.ToPoint(lusasPoint, groupNames);
+                    Point bhomPoint = Adapters.Lusas.Convert.ToPoint(lusasPoint, groupNames);
                     bhomPoints.Add(bhomPoint);
                 }
             }
