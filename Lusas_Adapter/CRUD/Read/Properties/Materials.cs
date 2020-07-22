@@ -45,7 +45,7 @@ namespace BH.Adapter.Lusas
             for (int i = 0; i < lusasMaterials.Count(); i++)
             {
                 IFAttribute lusasMaterial = (IFAttribute)lusasMaterials[i];
-                IMaterialFragment bhomMaterial = Adapter.Adapters.Lusas.Convert.ToMaterial(lusasMaterial);
+                IMaterialFragment bhomMaterial = Adapters.Lusas.Convert.ToMaterial(lusasMaterial);
                 bhomMaterials.Add(bhomMaterial);
             }
 
