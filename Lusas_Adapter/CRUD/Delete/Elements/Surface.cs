@@ -46,7 +46,7 @@ namespace BH.Adapter.Lusas
 
                 foreach (int index in indicies)
                 {
-                    IFSurface lusasSurface = d_LusasData.getSurfaceByName("S" + index.ToString());
+                    IFSurface lusasSurface = d_LusasData.getSurfaceByNumber(index);
                     if (lusasSurface.getHOFs().Count() > 0)
                     {
                         //Engine.Reflection.Compute.RecordWarning("S" + index + @" has higher order features(HOFs)

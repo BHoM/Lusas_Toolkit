@@ -46,7 +46,7 @@ namespace BH.Adapter.Lusas
 
                 foreach (int index in indicies)
                 {
-                    IFPoint lusasPoint = d_LusasData.getPointByName("P" + index.ToString());
+                    IFPoint lusasPoint = d_LusasData.getPointByNumber(index);
                     if (lusasPoint.getHOFs().Count() > 0)
                     {
                         //Engine.Reflection.Compute.RecordWarning("P" + index + @" has higher order features(HOFs)
