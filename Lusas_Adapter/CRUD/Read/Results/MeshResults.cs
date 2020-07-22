@@ -76,7 +76,7 @@ namespace BH.Adapter.Lusas
 
         private IEnumerable<IResult> ExtractMeshDisplacement(List<int> ids, List<int> loadcaseIds)
         {
-            List<MeshDisplacement> bhomMeshDisplacements = new List<MeshDisplacement>();
+            List<MeshDisplacement> meshDisplacements = new List<MeshDisplacement>();
 
             IFView view = m_LusasApplication.getCurrentView();
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
@@ -109,7 +109,7 @@ namespace BH.Adapter.Lusas
                     featureResults.TryGetValue("DX", out uX); featureResults.TryGetValue("DY", out uY); featureResults.TryGetValue("DZ", out uZ);
                     featureResults.TryGetValue("THX", out rX); featureResults.TryGetValue("THY", out rY); featureResults.TryGetValue("THZ", out rZ);
                     int mode = -1;
-                    MeshDisplacement bhomMeshDisplacement = new MeshDisplacement
+                    MeshDisplacement meshDisplacement = new MeshDisplacement
                         (
                         meshId, 0, 0, loadcaseId, mode, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
                         uX * lengthSIConversion,
@@ -120,7 +120,7 @@ namespace BH.Adapter.Lusas
                         rZ
                         );
 
-                    bhomMeshDisplacements.Add(bhomMeshDisplacement);
+                    meshDisplacements.Add(meshDisplacement);
 
                 }
 
@@ -128,14 +128,14 @@ namespace BH.Adapter.Lusas
                 d_LusasData.flushScriptedResults();
             }
 
-            return bhomMeshDisplacements;
+            return meshDisplacements;
         }
 
         /***************************************************/
 
         private IEnumerable<IResult> ExtractMeshForce(List<int> ids, List<int> loadcaseIds)
         {
-            List<MeshForce> bhomMeshForces = new List<MeshForce>();
+            List<MeshForce> meshForces = new List<MeshForce>();
 
             IFView view = m_LusasApplication.getCurrentView();
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
@@ -163,8 +163,6 @@ namespace BH.Adapter.Lusas
 
                 foreach (int meshId in ids)
                 {
-                    string lineName = "S" + meshId;
-
                     Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, meshId, "S", 6);
 
                     double nX = 0; double nY = 0; double nXY = 0; double mX = 0; double mY = 0; double mXY = 0; double sX = 0; double sY = 0;
@@ -183,7 +181,7 @@ namespace BH.Adapter.Lusas
                         sX * forceSIConversion,
                         sY * forceSIConversion);
 
-                    bhomMeshForces.Add(meshForce);
+                    meshForces.Add(meshForce);
 
                 }
 
@@ -191,14 +189,14 @@ namespace BH.Adapter.Lusas
                 d_LusasData.flushScriptedResults();
             }
 
-            return bhomMeshForces;
+            return meshForces;
         }
 
         /***************************************************/
 
         private IEnumerable<IResult> ExtractMeshStress(List<int> ids, List<int> loadcaseIds, MeshResultLayer meshResultLayer)
         {
-            List<MeshStress> bhomMeshStresses = new List<MeshStress>();
+            List<MeshStress> meshStresses = new List<MeshStress>();
 
             IFView view = m_LusasApplication.getCurrentView();
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
@@ -243,8 +241,6 @@ namespace BH.Adapter.Lusas
 
                 foreach (int meshId in ids)
                 {
-                    string lineName = "S" + meshId;
-
                     Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, meshId, "S", 6);
 
                     double sX = 0; double sY = 0; double sZ = 0; double sYZ = 0; double sXZ = 0; double s1 = 0; double s3 = 0; double s2 = 0;
@@ -264,7 +260,7 @@ namespace BH.Adapter.Lusas
                         s2 * forceSIConversion / (lengthSIConversion * lengthSIConversion)
                         );
 
-                    bhomMeshStresses.Add(meshStress);
+                    meshStresses.Add(meshStress);
 
                 }
 
@@ -272,12 +268,12 @@ namespace BH.Adapter.Lusas
                 d_LusasData.flushScriptedResults();
             }
 
-            return bhomMeshStresses;
+            return meshStresses;
         }
 
         private IEnumerable<IResult> ExtractMeshVonMises(List<int> ids, List<int> loadcaseIds, MeshResultLayer meshResultLayer)
         {
-            List<MeshVonMises> bhomMeshStresses = new List<MeshVonMises>();
+            List<MeshVonMises> meshStresses = new List<MeshVonMises>();
 
             IFView view = m_LusasApplication.getCurrentView();
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
@@ -322,8 +318,6 @@ namespace BH.Adapter.Lusas
 
                 foreach (int meshId in ids)
                 {
-                    string lineName = "L" + meshId;
-
                     Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, meshId, "S", 6);
 
                     double sE = 0;
@@ -333,7 +327,7 @@ namespace BH.Adapter.Lusas
                         meshId, 0, 0, loadcaseId, mode, 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.ByPanel, null,
                         sE * forceSIConversion / (lengthSIConversion * lengthSIConversion), 0, 0);
 
-                    bhomMeshStresses.Add(meshStress);
+                    meshStresses.Add(meshStress);
 
                 }
 
@@ -341,7 +335,7 @@ namespace BH.Adapter.Lusas
                 d_LusasData.flushScriptedResults();
             }
 
-            return bhomMeshStresses;
+            return meshStresses;
         }
 
         /***************************************************/

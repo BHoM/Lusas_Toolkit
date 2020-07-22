@@ -55,45 +55,45 @@ namespace BH.Adapter.Lusas
                 {
                     try
                     {
-                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getPointByName(suffix + id), resultType, unitSet, nodeID, nullID);
+                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getPointByNumber(id), resultType, unitSet, nodeID, nullID);
                     }
                     catch (System.ArgumentException)
                     {
-                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getPointByName(id.ToString()), resultType, unitSet, nodeID, nullID);
+                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getPointByNumber(id), resultType, unitSet, nodeID, nullID);
                     }
                 }
-                else if(suffix == "L")
+                else if (suffix == "L")
                 {
                     try
                     {
-                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getLineByName(suffix + id), resultType, unitSet, nodeID, nullID);
+                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getLineByNumber(id), resultType, unitSet, nodeID, nullID);
                     }
                     catch (System.ArgumentException)
                     {
-                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getLineByName(id.ToString()), resultType, unitSet, nodeID, nullID);
+                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getLineByNumber(id), resultType, unitSet, nodeID, nullID);
                     }
                 }
                 else if (suffix == "S")
                 {
                     try
                     {
-                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getSurfaceByName(suffix + id), resultType, unitSet, nodeID, nullID);
+                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getSurfaceByNumber(id), resultType, unitSet, nodeID, nullID);
                     }
                     catch (System.ArgumentException)
                     {
-                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getSurfaceByName(id.ToString()), resultType, unitSet, nodeID, nullID);
+                        featureResult = resultsSet.getFeatureResults(resultsSet.getComponentNumber(component), d_LusasData.getSurfaceByNumber(id), resultType, unitSet, nodeID, nullID);
                     }
                 }
 
                 if (double.IsInfinity(featureResult) || double.IsNaN(featureResult) || featureResult == double.MaxValue || featureResult == double.MinValue)
                 {
-                    featureResult = 0; 
+                    featureResult = 0;
                 }
 
                 if (!(resultsSet.isValidValue(featureResult)))
                 {
                     featureResult = 0;
-                    Engine.Reflection.Compute.RecordWarning($"{suffix}{id} {component} is an invalid result and will be set to zero" );
+                    Engine.Reflection.Compute.RecordWarning($"{suffix}{id} {component} is an invalid result and will be set to zero");
                 }
 
                 featureResults.Add(component, featureResult);

@@ -104,8 +104,6 @@ namespace BH.Adapter.Lusas
 
                 foreach (int barId in ids)
                 {
-                    string lineName = "L" + barId;
-
                     Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L", 6);
 
                     double fX = 0; double fY = 0; double fZ = 0; double mX = 0; double mY = 0; double mZ = 0;
@@ -175,8 +173,6 @@ namespace BH.Adapter.Lusas
 
                 foreach (int barId in ids)
                 {
-                    string lineName = "L" + barId;
-
                     Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L", 6);
 
                     double axial = 0;
@@ -250,8 +246,6 @@ namespace BH.Adapter.Lusas
 
                 foreach (int barId in ids)
                 {
-                    string lineName = "L" + barId;
-
                     Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L", 6);
                     List<string> keys = featureResults.Keys.ToList();
 

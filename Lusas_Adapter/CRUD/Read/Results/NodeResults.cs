@@ -99,8 +99,6 @@ namespace BH.Adapter.Lusas
 
                 foreach (int nodeId in ids)
                 {
-                    string pointName = "P" + nodeId;
-
                     Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, nodeId, "P", 6);
 
                     double fX = 0; double fY = 0; double fZ = 0; double mX = 0; double mY = 0; double mZ = 0;
@@ -168,8 +166,6 @@ namespace BH.Adapter.Lusas
 
                 foreach (int nodeId in ids)
                 {
-                    string pointName = "P" + nodeId;
-
                     Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, nodeId, "P", 6);
 
                     double uX = 0; double uY = 0; double uZ = 0; double rX = 0; double rY = 0; double rZ = 0;
@@ -180,7 +176,7 @@ namespace BH.Adapter.Lusas
                     int mode = -1;
                     double timeStep = 0;
 
-                    NodeDisplacement bhomNodeDisplacement = new NodeDisplacement(
+                    NodeDisplacement nodeDisplacement = new NodeDisplacement(
                         nodeId,
                         Adapters.Lusas.Convert.GetName(loadset.getName()),
                         mode,
@@ -194,7 +190,7 @@ namespace BH.Adapter.Lusas
                         rZ
                         );
 
-                    nodeDisplacements.Add(bhomNodeDisplacement);
+                    nodeDisplacements.Add(nodeDisplacement);
 
                 }
 
