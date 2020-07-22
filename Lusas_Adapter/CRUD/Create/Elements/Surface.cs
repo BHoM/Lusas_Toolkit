@@ -40,15 +40,16 @@ namespace BH.Adapter.Lusas
         private IFSurface CreateSurface(Panel panel, IFLine[] lusasLines)
         {
             IFSurface lusasSurface;
-            if (d_LusasData.existsSurfaceByName("S" + panel.CustomData[AdapterIdName]))
+            if (d_LusasData.existsSurfaceByID((int)panel.CustomData[AdapterIdName]))
             {
-                lusasSurface = d_LusasData.getSurfaceByName("S" + panel.CustomData[AdapterIdName]);
+                lusasSurface = d_LusasData.getSurfaceByNumber(panel.CustomData[AdapterIdName].ToString());
             }
             else
             {
                 lusasSurface = d_LusasData.createSurfaceBy(lusasLines);
-                lusasSurface.setName("S" + panel.CustomData[AdapterIdName]);
             }
+
+            panel.CustomData[AdapterIdName] = lusasSurface.getID();
 
             if (!(panel.Tags.Count == 0))
             {
@@ -57,19 +58,12 @@ namespace BH.Adapter.Lusas
 
             if (!(panel.Property == null))
             {
-                string geometricSurfaceName = "G" +
-                    panel.Property.CustomData[AdapterIdName] + "/" + panel.Property.DescriptionOrName();
-
-                IFAttribute lusasGeometricSurface = d_LusasData.getAttribute(
-                    "Surface Geometric", geometricSurfaceName);
+                IFAttribute lusasGeometricSurface = d_LusasData.getAttribute("Surface Geometric", panel.Property.CustomData[AdapterIdName].ToString());
 
                 lusasGeometricSurface.assignTo(lusasSurface);
                 if (!(panel.Property.Material == null))
                 {
-                    string materialName = "M" + panel.Property.Material.CustomData[AdapterIdName] +
-                        "/" + panel.Property.Material.DescriptionOrName();
-
-                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", materialName);
+                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", panel.Property.Material.CustomData[AdapterIdName].ToString());
                     lusasMaterial.assignTo(lusasSurface);
                 }
             }

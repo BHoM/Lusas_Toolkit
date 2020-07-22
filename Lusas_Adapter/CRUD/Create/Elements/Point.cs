@@ -39,13 +39,13 @@ namespace BH.Adapter.Lusas
 
         private IFPoint CreatePoint(Node node)
         {
-            IFPoint lusasPoint;
-            Point position = Engine.Structure.Query.Position(node);
-            IFDatabaseOperations database_point = d_LusasData.createPoint(
+            Point position = Query.Position(node);
+            IFDatabaseOperations databasePoint = d_LusasData.createPoint(
                 position.X, position.Y, position.Z);
+            IFPoint lusasPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
+            
+            node.CustomData[AdapterIdName] = lusasPoint.getID().ToString();
 
-            lusasPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
-            lusasPoint.setName("P" + node.CustomData[AdapterIdName].ToString());
 
             if (!(node.Tags.Count == 0))
             {
@@ -54,8 +54,7 @@ namespace BH.Adapter.Lusas
 
             if (!(node.Support == null))
             {
-                string constraintName = "Sp" + node.Support.CustomData[AdapterIdName] + "/" + node.Support.DescriptionOrName();
-                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", constraintName);
+                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", node.Support.CustomData[AdapterIdName]);
                 lusasSupport.assignTo(lusasPoint);
             }
 
@@ -66,15 +65,7 @@ namespace BH.Adapter.Lusas
 
         private IFPoint CreatePoint(Point point)
         {
-            Node newNode = Engine.Structure.Create.Node(new Point { X = point.X, Y = point.Y, Z = point.Z });
-
-            int adapterID;
-            if (newNode.CustomData.ContainsKey(AdapterIdName))
-                adapterID = System.Convert.ToInt32(newNode.CustomData[AdapterIdName]);
-            else
-                adapterID = System.Convert.ToInt32(NextFreeId(newNode.GetType()));
-
-            newNode.CustomData[AdapterIdName] = adapterID;
+            Node newNode = Create.Node(new Point { X = point.X, Y = point.Y, Z = point.Z });
 
             IFPoint newPoint = CreatePoint(newNode);
 
