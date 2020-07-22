@@ -45,7 +45,7 @@ namespace BH.Adapter.Lusas
             for (int i = 0; i < lusasSupports.Count(); i++)
             {
                 IFSupportStructural lusasSupport = (IFSupportStructural)lusasSupports[i];
-                Constraint6DOF bhomConstraint6DOF = Adapter.Adapters.Lusas.Convert.ToConstraint6DOF(lusasSupport);
+                Constraint6DOF bhomConstraint6DOF = Adapters.Lusas.Convert.ToConstraint6DOF(lusasSupport);
                 bhomConstraints6DOF.Add(bhomConstraint6DOF);
             }
 

@@ -42,9 +42,7 @@ namespace BH.Adapter.Adapters.Lusas
                 Thickness = lusasAttribute.getValue("t")
             };
 
-            int adapterID = GetAdapterID(lusasAttribute, 'G');
-
-            bhomProperty2D.CustomData[AdapterIdName] = adapterID;
+            bhomProperty2D.CustomData[AdapterIdName] = lusasAttribute.getID().ToString();
 
             return bhomProperty2D;
         }
