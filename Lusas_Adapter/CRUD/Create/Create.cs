@@ -311,7 +311,7 @@ namespace BH.Adapter.Lusas
                     Edge edge = distinctEdges[midPoints.FindIndex(
                         m => m.Equals(edges[i].Curve.IPointAtParameter(0.5).ClosestPoint(midPoints)))];
 
-                    lusasLines[i] = d_LusasData.getLineByName("L" + edge.CustomData[AdapterIdName].ToString());
+                    lusasLines[i] = d_LusasData.getLineByNumber(System.Convert.ToInt32(edge.CustomData[AdapterIdName]));
                 }
 
                 IFSurface lusasSurface = CreateSurface(panel, lusasLines);
