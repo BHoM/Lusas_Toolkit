@@ -38,25 +38,20 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateGeometricSurface(ISurfaceProperty surfaceProperty)
         {
-            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(surfaceProperty.DescriptionOrName()))
-            {
-                return null;
-            }
+            IFAttribute lusasAttribute;
 
-            IFAttribute lusasAttribute = null;
-            string lusasName = "G" + surfaceProperty.CustomData[AdapterIdName] + "/" + surfaceProperty.DescriptionOrName();
-
-            if (d_LusasData.existsAttribute("Surface Geometric", lusasName))
+            if (d_LusasData.existsAttribute("Surface Geometric", surfaceProperty.DescriptionOrName()))
             {
-                lusasAttribute = d_LusasData.getAttribute("Surface Geometric", lusasName);
-                surfaceProperty.CustomData[AdapterIdName] = lusasAttribute.getID().ToString();
+                lusasAttribute = d_LusasData.getAttribute("Surface Geometric", surfaceProperty.DescriptionOrName());
             }
             else
             {
-                IFGeometricSurface lusasGeometricSurface = CreateSurfraceProfile(surfaceProperty as dynamic, lusasName);
+                IFGeometricSurface lusasGeometricSurface = CreateSurfraceProfile(surfaceProperty as dynamic, surfaceProperty.DescriptionOrName());
                 lusasAttribute = lusasGeometricSurface;
-                surfaceProperty.CustomData[AdapterIdName] = d_LusasData.getLargestAttributeID("Geometric");
             }
+
+            surfaceProperty.CustomData[AdapterIdName] = lusasAttribute.getID().ToString();
+
             return lusasAttribute;
         }
 

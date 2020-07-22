@@ -40,24 +40,19 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateGeometricLine(ISectionProperty sectionProperty)
         {
-            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(sectionProperty.DescriptionOrName()))
-            {
-                return null;
-            }
-
-            IFAttribute lusasAttribute = null;
+            IFAttribute lusasAttribute;
 
             if (d_LusasData.existsAttribute("Line Geometric", sectionProperty.DescriptionOrName()))
             {
                 lusasAttribute = d_LusasData.getAttribute("Line Geometric", sectionProperty.DescriptionOrName());
-                sectionProperty.CustomData[AdapterIdName] = lusasAttribute.getID().ToString();
             }
             else
             {
                 IFGeometricLine lusasGeometricLine = CreateSection(sectionProperty as dynamic, sectionProperty.DescriptionOrName());
                 lusasAttribute = lusasGeometricLine;
-                sectionProperty.CustomData[AdapterIdName] = d_LusasData.getLargestAttributeID("Geometric");
             }
+
+            sectionProperty.CustomData[AdapterIdName] = lusasAttribute.getID().ToString();
 
             return lusasAttribute;
         }

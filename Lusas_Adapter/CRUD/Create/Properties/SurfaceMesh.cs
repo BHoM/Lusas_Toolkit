@@ -47,7 +47,6 @@ namespace BH.Adapter.Lusas
             if (d_LusasData.existsAttribute("Mesh", meshSettings2D.Name))
             {
                 lusasSurfaceMesh = (IFMeshSurface)d_LusasData.getAttribute("Mesh", meshSettings2D.Name);
-                meshSettings2D.CustomData[AdapterIdName] = lusasSurfaceMesh.getID().ToString();
             }
             else
             {
@@ -64,8 +63,10 @@ namespace BH.Adapter.Lusas
                 {
                     lusasSurfaceMesh.setRegularSize("QTS4", meshSettings2D.ElementSize);
                 }
-                meshSettings2D.CustomData[AdapterIdName] = d_LusasData.getLargestAttributeID("Mesh");
             }
+
+            meshSettings2D.CustomData[AdapterIdName] = lusasSurfaceMesh.getID().ToString();
+
             return lusasSurfaceMesh;
         }
 
