@@ -39,25 +39,12 @@ namespace BH.Adapter.Lusas
 
         private IFPrescribedDisplacementLoad CreatePrescribedDisplacement(PointDisplacement pointDisplacement, object[] lusasPoints)
         {
-            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(pointDisplacement.Name))
+            IFPrescribedDisplacementLoad lusasPrescribedDisplacement;
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)pointDisplacement.Loadcase.CustomData[AdapterIdName]);
+
+            if (d_LusasData.existsAttribute("Loading", pointDisplacement.Name))
             {
-                return null;
-            }
-
-            IFPrescribedDisplacementLoad lusasPrescribedDisplacement = null;
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
-                "Lc" + pointDisplacement.Loadcase.CustomData[AdapterIdName] + "/" + pointDisplacement.Loadcase.Name);
-
-            string lusasName = "Pd" +
-                pointDisplacement.CustomData[AdapterIdName] + "/" + pointDisplacement.Name;
-
-            NameSearch("Pd", pointDisplacement.CustomData[AdapterIdName].ToString(),
-                pointDisplacement.Name, ref lusasName);
-
-            if (d_LusasData.existsAttribute("Loading", lusasName))
-            {
-                lusasPrescribedDisplacement = (IFPrescribedDisplacementLoad)d_LusasData.getAttribute(
-                    "Loading", lusasName);
+                lusasPrescribedDisplacement = (IFPrescribedDisplacementLoad)d_LusasData.getAttribute("Loading", pointDisplacement.Name);
             }
             else
             {
@@ -73,7 +60,7 @@ namespace BH.Adapter.Lusas
                 };
 
                 lusasPrescribedDisplacement = d_LusasData.createPrescribedDisplacementLoad(
-                    lusasName, "Total");
+                    pointDisplacement.Name, "Total");
 
                 for (int i = 0; i < valueNames.Count(); i++)
                 {
@@ -93,6 +80,8 @@ namespace BH.Adapter.Lusas
             IFAssignment lusasAssignment = m_LusasApplication.assignment();
             lusasAssignment.setLoadset(assignedLoadcase);
             lusasPrescribedDisplacement.assignTo(lusasPoints, lusasAssignment);
+
+            pointDisplacement.CustomData[AdapterIdName] = lusasPrescribedDisplacement.getID().ToString();
 
             return lusasPrescribedDisplacement;
         }

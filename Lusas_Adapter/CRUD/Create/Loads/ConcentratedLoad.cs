@@ -37,25 +37,16 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingConcentrated CreateConcentratedLoad(PointLoad pointLoad, object[] lusasPoints)
         {
-            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(pointLoad.Name))
+            IFLoadingConcentrated lusasPointLoad;
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)pointLoad.Loadcase.CustomData[AdapterIdName]);
+
+            if (d_LusasData.existsAttribute("Loading", pointLoad.Name))
             {
-                return null;
-            }
-
-            IFLoadingConcentrated lusasPointLoad = null;
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
-                "Lc" + pointLoad.Loadcase.CustomData[AdapterIdName] + "/" + pointLoad.Loadcase.Name);
-
-            string lusasName = "Pl" + pointLoad.CustomData[AdapterIdName] + "/" + pointLoad.Name;
-            NameSearch("Pl", pointLoad.CustomData[AdapterIdName].ToString(), pointLoad.Name, ref lusasName);
-
-            if (d_LusasData.existsAttribute("Loading", lusasName))
-            {
-                lusasPointLoad = (IFLoadingConcentrated)d_LusasData.getAttribute("Loading", lusasName);
+                lusasPointLoad = (IFLoadingConcentrated)d_LusasData.getAttribute("Loading", pointLoad.Name);
             }
             else
             {
-                lusasPointLoad = d_LusasData.createLoadingConcentrated(lusasName);
+                lusasPointLoad = d_LusasData.createLoadingConcentrated(pointLoad.Name);
                 lusasPointLoad.setConcentrated(
                     pointLoad.Force.X, pointLoad.Force.Y, pointLoad.Force.Z,
                     pointLoad.Moment.X, pointLoad.Moment.Y, pointLoad.Moment.Z);
@@ -64,6 +55,8 @@ namespace BH.Adapter.Lusas
             IFAssignment lusasAssignment = m_LusasApplication.assignment();
             lusasAssignment.setLoadset(assignedLoadcase);
             lusasPointLoad.assignTo(lusasPoints, lusasAssignment);
+
+            pointLoad.CustomData[AdapterIdName] = lusasPointLoad.getID();
 
             return lusasPointLoad;
         }
