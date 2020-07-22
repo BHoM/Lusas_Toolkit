@@ -38,7 +38,7 @@ namespace BH.Adapter.Lusas
         private IFLoadingConcentrated CreateConcentratedLoad(PointLoad pointLoad, object[] lusasPoints)
         {
             IFLoadingConcentrated lusasPointLoad;
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)pointLoad.Loadcase.CustomData[AdapterIdName]);
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(pointLoad.Loadcase.CustomData[AdapterIdName]));
 
             if (d_LusasData.existsAttribute("Loading", pointLoad.Name))
             {

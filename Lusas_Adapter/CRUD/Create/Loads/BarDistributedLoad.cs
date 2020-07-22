@@ -43,7 +43,7 @@ namespace BH.Adapter.Lusas
         {
             List<IFLoadingBeamDistributed> lusasBarDistributedLoads = new List<IFLoadingBeamDistributed>();
             IFAssignment lusasAssignment = m_LusasApplication.assignment();
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)barDistributedLoad.Loadcase.CustomData[AdapterIdName]);
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(barDistributedLoad.Loadcase.CustomData[AdapterIdName]));
 
             Engine.Reflection.Compute.RecordWarning(
                 barDistributedLoad.GetType().ToString() + " uses parametric distances in the Lusas_Toolkit"

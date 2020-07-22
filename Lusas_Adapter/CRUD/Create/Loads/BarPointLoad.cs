@@ -38,7 +38,7 @@ namespace BH.Adapter.Lusas
         private IFLoadingBeamPoint CreateBarPointLoad(BarPointLoad barPointLoad, object[] lusasLines)
         {
             IFLoadingBeamPoint lusasBarPointLoad;
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)barPointLoad.Loadcase.CustomData[AdapterIdName]);
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(barPointLoad.Loadcase.CustomData[AdapterIdName]));
 
             if (d_LusasData.existsAttribute("Loading", barPointLoad.Name))
             {

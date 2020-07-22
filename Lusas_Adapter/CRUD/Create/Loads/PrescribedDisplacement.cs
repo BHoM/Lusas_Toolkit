@@ -40,7 +40,7 @@ namespace BH.Adapter.Lusas
         private IFPrescribedDisplacementLoad CreatePrescribedDisplacement(PointDisplacement pointDisplacement, object[] lusasPoints)
         {
             IFPrescribedDisplacementLoad lusasPrescribedDisplacement;
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)pointDisplacement.Loadcase.CustomData[AdapterIdName]);
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(pointDisplacement.Loadcase.CustomData[AdapterIdName]));
 
             if (d_LusasData.existsAttribute("Loading", pointDisplacement.Name))
             {

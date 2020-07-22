@@ -63,7 +63,7 @@ namespace BH.Adapter.Lusas
                 foreach (Tuple<double, ICase> factoredLoad in loadCombination.LoadCases)
                 {
                     double factor = factoredLoad.Item1;
-                    IFLoadset lusasLoadcase = d_LusasData.getLoadset((int)factoredLoad.Item2.CustomData[AdapterIdName]);
+                    IFLoadset lusasLoadcase = d_LusasData.getLoadset(System.Convert.ToInt32(factoredLoad.Item2.CustomData[AdapterIdName]));
                     lusasLoadcombination.addEntry(factor, lusasLoadcase);
                 }
             }
