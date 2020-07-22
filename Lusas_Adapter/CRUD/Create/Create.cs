@@ -301,12 +301,12 @@ namespace BH.Adapter.Lusas
 
             ReduceRuntime(true);
 
-            foreach (Panel Panel in panels)
+            foreach (Panel panel in panels)
             {
-                IFLine[] lusasLines = new IFLine[Panel.ExternalEdges.Count];
-                List<Edge> edges = Panel.ExternalEdges;
+                IFLine[] lusasLines = new IFLine[panel.ExternalEdges.Count];
+                List<Edge> edges = panel.ExternalEdges;
 
-                for (int i = 0; i < Panel.ExternalEdges.Count; i++)
+                for (int i = 0; i < panel.ExternalEdges.Count; i++)
                 {
                     Edge edge = distinctEdges[midPoints.FindIndex(
                         m => m.Equals(edges[i].Curve.IPointAtParameter(0.5).ClosestPoint(midPoints)))];
@@ -314,7 +314,7 @@ namespace BH.Adapter.Lusas
                     lusasLines[i] = d_LusasData.getLineByName("L" + edge.CustomData[AdapterIdName].ToString());
                 }
 
-                IFSurface lusasSurface = CreateSurface(Panel, lusasLines);
+                IFSurface lusasSurface = CreateSurface(panel, lusasLines);
             }
 
             ReduceRuntime(false);
