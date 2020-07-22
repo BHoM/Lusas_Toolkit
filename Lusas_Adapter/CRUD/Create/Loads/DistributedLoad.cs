@@ -38,17 +38,11 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingGlobalDistributed CreateGlobalDistributedLine(BarUniformlyDistributedLoad distributedLoad, object[] lusasLines)
         {
-            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
-            {
-                return null;
-            }
-
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset("Lc" + distributedLoad.Loadcase.CustomData[AdapterIdName] + "/" + distributedLoad.Loadcase.Name);
-            string lusasName = "Dl" + distributedLoad.CustomData[AdapterIdName] + "/" + distributedLoad.Name;
-            NameSearch("Dl", distributedLoad.CustomData[AdapterIdName].ToString(), distributedLoad.Name, ref lusasName);
-
-            IFLoadingGlobalDistributed lusasGlobalDistributed = CreateGlobalDistributed(lusasName,
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)distributedLoad.Loadcase.CustomData[AdapterIdName]);
+            IFLoadingGlobalDistributed lusasGlobalDistributed = CreateGlobalDistributed(distributedLoad.Name,
                 "Length", assignedLoadcase, distributedLoad.Force, distributedLoad.Moment, lusasLines);
+
+            distributedLoad.CustomData[AdapterIdName] = lusasGlobalDistributed.getID();
 
             return lusasGlobalDistributed;
         }
@@ -57,18 +51,11 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingGlobalDistributed CreateGlobalDistributedLoadSurface(AreaUniformlyDistributedLoad distributedLoad, object[] lusasSurfaces)
         {
-            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
-            {
-                return null;
-            }
-
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
-                "Lc" + distributedLoad.Loadcase.CustomData[AdapterIdName] + "/" + distributedLoad.Loadcase.Name);
-
-            string lusasName = "Dl" + distributedLoad.CustomData[AdapterIdName] + "/" + distributedLoad.Name;
-
-            IFLoadingGlobalDistributed lusasGlobalDistributed = CreateGlobalDistributed(lusasName,
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)distributedLoad.Loadcase.CustomData[AdapterIdName]);
+            IFLoadingGlobalDistributed lusasGlobalDistributed = CreateGlobalDistributed(distributedLoad.Name,
                 "Area", assignedLoadcase, distributedLoad.Pressure, null, lusasSurfaces);
+
+            distributedLoad.CustomData[AdapterIdName] = lusasGlobalDistributed.getID();
 
             return lusasGlobalDistributed;
         }
@@ -77,18 +64,11 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingLocalDistributed CreateLocalDistributedLine(BarUniformlyDistributedLoad distributedLoad, object[] lusasLines)
         {
-            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
-            {
-                return null;
-            }
-
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
-                "Lc" + distributedLoad.Loadcase.CustomData[AdapterIdName] + "/" + distributedLoad.Loadcase.Name);
-
-            string lusasName = "Dl" + distributedLoad.CustomData[AdapterIdName] + "/" + distributedLoad.Name;
-
-            IFLoadingLocalDistributed lusasLocalDistributed = CreateLocalDistributed(lusasName,
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)distributedLoad.Loadcase.CustomData[AdapterIdName]);
+            IFLoadingLocalDistributed lusasLocalDistributed = CreateLocalDistributed(distributedLoad.Name,
                 "Line", assignedLoadcase, distributedLoad.Force, lusasLines);
+
+            distributedLoad.CustomData[AdapterIdName] = lusasLocalDistributed.getID();
 
             return lusasLocalDistributed;
         }
@@ -97,18 +77,12 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingLocalDistributed CreateLocalDistributedSurface(AreaUniformlyDistributedLoad distributedLoad, object[] lusasSurfaces)
         {
-            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(distributedLoad.Name))
-            {
-                return null;
-            }
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)distributedLoad.Loadcase.CustomData[AdapterIdName]);
 
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
-                "Lc" + distributedLoad.Loadcase.CustomData[AdapterIdName] + "/" + distributedLoad.Loadcase.Name);
-
-            string lusasName = "Dl" + distributedLoad.CustomData[AdapterIdName] + "/" + distributedLoad.Name;
-
-            IFLoadingLocalDistributed lusasLocalDistributed = CreateLocalDistributed(lusasName,
+            IFLoadingLocalDistributed lusasLocalDistributed = CreateLocalDistributed(distributedLoad.Name,
                 "Area", assignedLoadcase, distributedLoad.Pressure, lusasSurfaces);
+
+            distributedLoad.CustomData[AdapterIdName] = lusasLocalDistributed.getID();
 
             return lusasLocalDistributed;
         }
@@ -119,7 +93,7 @@ namespace BH.Adapter.Lusas
             string type, IFLoadcase assignedLoadcase, Vector force, Vector moment, object[] lusasGeometry)
         {
 
-            IFLoadingGlobalDistributed lusasGlobalDistributed = null;
+            IFLoadingGlobalDistributed lusasGlobalDistributed;
 
             if (d_LusasData.existsAttribute("Loading", lusasName))
             {
@@ -154,7 +128,7 @@ namespace BH.Adapter.Lusas
             string type, IFLoadcase assignedLoadcase, Vector force, object[] lusasGeometry)
         {
 
-            IFLoadingLocalDistributed lusasLocalDistributed = null;
+            IFLoadingLocalDistributed lusasLocalDistributed;
 
             if (d_LusasData.existsAttribute("Loading", lusasName))
             {

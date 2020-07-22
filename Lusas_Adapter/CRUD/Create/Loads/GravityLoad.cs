@@ -37,32 +37,24 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingBody CreateGravityLoad(GravityLoad gravityLoad, IFGeometry[] lusasGeometry)
         {
-            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(gravityLoad.Name))
+            IFLoadingBody lusasGravityLoad ;
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)gravityLoad.Loadcase.CustomData[AdapterIdName]);
+
+            if (d_LusasData.existsAttribute("Loading", gravityLoad.Name))
             {
-                return null;
-            }
-
-            IFLoadingBody lusasGravityLoad = null;
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
-                "Lc" + gravityLoad.Loadcase.CustomData[AdapterIdName] + "/" + gravityLoad.Loadcase.Name);
-
-            string lusasName = "Gl" + gravityLoad.CustomData[AdapterIdName] + "/" + gravityLoad.Name;
-            NameSearch("Gl", gravityLoad.CustomData[AdapterIdName].ToString(), gravityLoad.Name, ref lusasName);
-
-            if (d_LusasData.existsAttribute("Loading", lusasName))
-            {
-                lusasGravityLoad = (IFLoadingBody)d_LusasData.getAttributes("Loading", lusasName);
+                lusasGravityLoad = (IFLoadingBody)d_LusasData.getAttributes("Loading", gravityLoad.Name);
             }
             else
             {
-                lusasGravityLoad = d_LusasData.createLoadingBody(lusasName);
-                lusasGravityLoad.setBody(
-                    gravityLoad.GravityDirection.X, gravityLoad.GravityDirection.Y, gravityLoad.GravityDirection.Z);
+                lusasGravityLoad = d_LusasData.createLoadingBody(gravityLoad.Name);
+                lusasGravityLoad.setBody(gravityLoad.GravityDirection.X, gravityLoad.GravityDirection.Y, gravityLoad.GravityDirection.Z);
             }
 
             IFAssignment lusasAssignment = m_LusasApplication.assignment();
             lusasAssignment.setLoadset(assignedLoadcase);
             lusasGravityLoad.assignTo(lusasGeometry, lusasAssignment);
+
+            gravityLoad.CustomData[AdapterIdName] = lusasGravityLoad.getID();
 
             return lusasGravityLoad;
         }

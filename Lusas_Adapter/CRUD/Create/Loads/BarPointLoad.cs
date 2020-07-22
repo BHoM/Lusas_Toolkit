@@ -35,43 +35,33 @@ namespace BH.Adapter.Lusas
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private IFLoadingBeamPoint CreateBarPointLoad(BarPointLoad bhomBarPointLoad, object[] lusasLines)
+        private IFLoadingBeamPoint CreateBarPointLoad(BarPointLoad barPointLoad, object[] lusasLines)
         {
-            if (!Engine.Adapters.Lusas.Query.CheckIllegalCharacters(bhomBarPointLoad.Name))
+            IFLoadingBeamPoint lusasBarPointLoad;
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset((int)barPointLoad.Loadcase.CustomData[AdapterIdName]);
+
+            if (d_LusasData.existsAttribute("Loading", barPointLoad.Name))
             {
-                return null;
-            }
-
-            IFLoadingBeamPoint lusasBarPointLoad = null;
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(
-                "Lc" + bhomBarPointLoad.Loadcase.CustomData[AdapterIdName] + "/" + bhomBarPointLoad.Loadcase.Name);
-
-            string lusasName =
-                "BPl" + bhomBarPointLoad.CustomData[AdapterIdName] + "/" + bhomBarPointLoad.Name;
-
-            NameSearch("BPl", bhomBarPointLoad.CustomData[AdapterIdName].ToString(),
-                bhomBarPointLoad.Name, ref lusasName);
-
-            if (d_LusasData.existsAttribute("Loading", lusasName))
-            {
-                lusasBarPointLoad = (IFLoadingBeamPoint)d_LusasData.getAttribute("Loading", lusasName);
+                lusasBarPointLoad = (IFLoadingBeamPoint)d_LusasData.getAttribute("Loading", barPointLoad.Name);
             }
             else
             {
-                lusasBarPointLoad = d_LusasData.createLoadingBeamPoint(lusasName);
-                if (bhomBarPointLoad.Axis.ToString() == "Global")
+                lusasBarPointLoad = d_LusasData.createLoadingBeamPoint(barPointLoad.Name);
+                if (barPointLoad.Axis.ToString() == "Global")
                     lusasBarPointLoad.setBeamPoint("parametric", "global", "beam");
                 else
                     lusasBarPointLoad.setBeamPoint("parametric", "local", "beam");
                 lusasBarPointLoad.addRow(
-                    bhomBarPointLoad.DistanceFromA,
-                    bhomBarPointLoad.Force.X, bhomBarPointLoad.Force.Y, bhomBarPointLoad.Force.Z,
-                    bhomBarPointLoad.Moment.X, bhomBarPointLoad.Moment.Y, bhomBarPointLoad.Moment.Z);
+                    barPointLoad.DistanceFromA,
+                    barPointLoad.Force.X, barPointLoad.Force.Y, barPointLoad.Force.Z,
+                    barPointLoad.Moment.X, barPointLoad.Moment.Y, barPointLoad.Moment.Z);
             }
 
             IFAssignment lusasAssignment = m_LusasApplication.assignment();
             lusasAssignment.setLoadset(assignedLoadcase);
             lusasBarPointLoad.assignTo(lusasLines, lusasAssignment);
+
+            barPointLoad.CustomData[AdapterIdName] = lusasBarPointLoad.getID();
 
             return lusasBarPointLoad;
         }
