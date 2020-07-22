@@ -58,12 +58,12 @@ namespace BH.Adapter.Lusas
 
             if (!(panel.Property == null))
             {
-                IFAttribute lusasGeometricSurface = d_LusasData.getAttribute("Surface Geometric", panel.Property.CustomData[AdapterIdName].ToString());
+                IFAttribute lusasGeometricSurface = d_LusasData.getAttribute("Surface Geometric", System.Convert.ToInt32(panel.Property.CustomData[AdapterIdName]));
 
                 lusasGeometricSurface.assignTo(lusasSurface);
                 if (!(panel.Property.Material == null))
                 {
-                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", panel.Property.Material.CustomData[AdapterIdName].ToString());
+                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", System.Convert.ToInt32(panel.Property.Material.CustomData[AdapterIdName]));
                     lusasMaterial.assignTo(lusasSurface);
                 }
             }
