@@ -39,7 +39,8 @@ namespace BH.Adapter.Lusas
         private IFLine CreateEdge(Edge edge, IFPoint startPoint, IFPoint endPoint)
         {
             IFLine lusasLine = d_LusasData.createLineByPoints(startPoint, endPoint);
-            lusasLine.setName("L" + edge.CustomData[AdapterIdName].ToString());
+
+            edge.CustomData[AdapterIdName] = lusasLine.getID().ToString();
 
             if (!(edge.Tags.Count == 0))
             {
@@ -48,8 +49,7 @@ namespace BH.Adapter.Lusas
 
             if (!(edge.Support == null))
             {
-                string supportName = "Sp" + edge.Support.CustomData[AdapterIdName] + "/" + edge.Support.DescriptionOrName();
-                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", supportName);
+                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", edge.Support.CustomData[AdapterIdName]);
                 lusasSupport.assignTo(lusasLine);
             }
 
