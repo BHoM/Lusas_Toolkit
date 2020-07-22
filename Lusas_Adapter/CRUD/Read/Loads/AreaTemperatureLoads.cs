@@ -77,7 +77,7 @@ namespace BH.Adapter.Lusas
                         if (surfaceAssignments.Count != 0)
                         {
                             AreaTemperatureLoad bhomAreaTemperatureLoad =
-                                Adapter.Adapters.Lusas.Convert.ToAreaTempratureLoad(
+                                Adapters.Lusas.Convert.ToAreaTempratureLoad(
                                     lusasTemperatureLoad, groupedAssignment, surfaceDictionary);
 
                             bhomAreaTemperatureLoad.Tags = new HashSet<string>(analysisName);

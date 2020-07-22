@@ -61,7 +61,7 @@ namespace BH.Adapter.Lusas
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
                         BarVaryingDistributedLoad bhomBarDistributedLoad =
-                            Adapter.Adapters.Lusas.Convert.ToBarDistributedLoad(
+                            Adapters.Lusas.Convert.ToBarDistributedLoad(
                                 lusasInternalBeamDistributedLoad, groupedAssignment, barDictionary);
 
                         List<string> analysisName = new List<string> {

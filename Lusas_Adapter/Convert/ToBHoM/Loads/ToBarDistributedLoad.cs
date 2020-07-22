@@ -75,9 +75,9 @@ namespace BH.Adapter.Adapters.Lusas
             double startPosition = lusasBarDistributedLoad.getValue("startDistance");
             double endPosition = lusasBarDistributedLoad.getValue("endDistance");
 
-            BarVaryingDistributedLoad bhomBarPointLoad = null;
+            BarVaryingDistributedLoad barPointLoad;
 
-            bhomBarPointLoad = Engine.Structure.Create.BarVaryingDistributedLoad(
+            barPointLoad = Engine.Structure.Create.BarVaryingDistributedLoad(
                 bhomLoadcase,
                 bhomBars,
                 startPosition,
@@ -90,10 +90,9 @@ namespace BH.Adapter.Adapters.Lusas
                 false,
                 GetName(lusasBarDistributedLoad));
 
-            int adapterID = GetAdapterID(lusasBarDistributedLoad, 'l');
-            bhomBarPointLoad.CustomData[AdapterIdName] = adapterID;
+            barPointLoad.CustomData[AdapterIdName] = lusasBarDistributedLoad.getID();
 
-            return bhomBarPointLoad;
+            return barPointLoad;
         }
 
         /***************************************************/

@@ -64,8 +64,7 @@ namespace BH.Adapter.Adapters.Lusas
                 bhomLoadcase, bhomNodes, translationVector, rotationVector, LoadAxis.Global, 
                 GetName(lusasPrescribedDisplacement));
 
-            int adapterID = GetAdapterID(lusasPrescribedDisplacement, 'd');
-            bhomPointDisplacement.CustomData[AdapterIdName] = adapterID;
+            bhomPointDisplacement.CustomData[AdapterIdName] = lusasPrescribedDisplacement.getID(); ;
             // Needs to be a bit here that determines whether it is global or local - actually this cannot be done as the 
             //attribute is applied to a group, and within the group the axis could local or global
 

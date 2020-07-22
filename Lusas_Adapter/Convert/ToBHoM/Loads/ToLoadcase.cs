@@ -34,17 +34,15 @@ namespace BH.Adapter.Adapters.Lusas
 
         public static Loadcase ToLoadcase(this IFLoadcase lusasLoadcase)
         {
-            Loadcase BHoMLoadcase = new Loadcase
+            Loadcase loadcase = new Loadcase
             {
                 Name = GetName(lusasLoadcase),
                 Number = lusasLoadcase.getID()
             };
 
-            int adapterID = GetAdapterID(lusasLoadcase, 'c');
+            loadcase.CustomData[AdapterIdName] = lusasLoadcase.getID().ToString();
 
-            BHoMLoadcase.CustomData[AdapterIdName] = adapterID;
-
-            return BHoMLoadcase;
+            return loadcase;
         }
 
         /***************************************************/

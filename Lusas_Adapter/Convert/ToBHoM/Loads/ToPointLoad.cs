@@ -59,7 +59,7 @@ namespace BH.Adapter.Adapters.Lusas
                 Z = lusasPointLoad.getValue("mz")
             };
 
-            PointLoad bhomPointLoad = BH.Engine.Structure.Create.PointLoad(
+            PointLoad bhomPointLoad = Engine.Structure.Create.PointLoad(
                 bhomLoadcase,
                 bhomNodes,
                 forceVector,
@@ -67,8 +67,7 @@ namespace BH.Adapter.Adapters.Lusas
                 LoadAxis.Global,
                 GetName(lusasPointLoad));
 
-            int adapterID = GetAdapterID(lusasPointLoad, 'l');
-            bhomPointLoad.CustomData[AdapterIdName] = adapterID;
+            bhomPointLoad.CustomData[AdapterIdName] = lusasPointLoad.getID();
 
             return bhomPointLoad;
         }

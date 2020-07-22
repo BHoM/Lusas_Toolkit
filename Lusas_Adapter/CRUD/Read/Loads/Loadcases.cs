@@ -45,7 +45,7 @@ namespace BH.Adapter.Lusas
             for (int i = 0; i < allLoadcases.Count(); i++)
             {
                 IFLoadcase lusasLoadcase = (IFLoadcase)allLoadcases[i];
-                Loadcase bhomLoadcase = Adapter.Adapters.Lusas.Convert.ToLoadcase(lusasLoadcase);
+                Loadcase bhomLoadcase = Adapters.Lusas.Convert.ToLoadcase(lusasLoadcase);
                 List<string> analysisName = new List<string> { lusasLoadcase.getAnalysis().getName() };
                 bhomLoadcase.Tags = new HashSet<string>(analysisName);
                 bhomLoadcases.Add(bhomLoadcase);
