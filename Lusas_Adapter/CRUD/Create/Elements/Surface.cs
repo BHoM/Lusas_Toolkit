@@ -76,7 +76,7 @@ namespace BH.Adapter.Lusas
                 MeshSettings2D meshSettings2D = (MeshSettings2D)panel.CustomData["Mesh"];
                 string meshAdapterID = meshSettings2D.CustomData[AdapterIdName].ToString();
                 IFMeshAttr mesh = d_LusasData.getMesh(
-                    "Me" + meshAdapterID + "/" + meshSettings2D.Name);
+                   meshSettings2D.Name);
                 mesh.assignTo(lusasSurface, meshAssignment);
             }
 

@@ -107,7 +107,7 @@ namespace BH.Adapter.Lusas
                 MeshSettings1D meshSettings1D = (MeshSettings1D)bar.CustomData["Mesh"];
                 string meshAdapterID = meshSettings1D.CustomData[AdapterIdName].ToString();
                 IFMeshAttr mesh = d_LusasData.getMesh(
-                    "Me" + meshAdapterID + "/" + meshSettings1D.Name + "\\" + bar.FEAType.ToString() + "|" + CreateReleaseString(bar.Release));
+                    meshSettings1D.Name + "\\" + bar.FEAType.ToString() + "|" + CreateReleaseString(bar.Release));
                 mesh.assignTo(lusasLine, meshAssignment);
             }
 
