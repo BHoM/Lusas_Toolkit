@@ -46,6 +46,7 @@ namespace BH.Adapter.Adapters.Lusas
                 string attributeName = GetName(lusasAttribute);
                 attributeNames.Add(attributeName);
             }
+
             return attributeNames;
         }
 
