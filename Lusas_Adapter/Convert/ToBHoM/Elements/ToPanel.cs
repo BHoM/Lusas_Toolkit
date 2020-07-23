@@ -28,8 +28,7 @@ using BH.oM.Structure.Constraints;
 using BH.oM.Geometry;
 using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
-using BH.Adapter.Lusas;
-using BH.Engine.Adapters.Lusas;
+using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -44,7 +43,8 @@ namespace BH.Adapter.Adapters.Lusas
             HashSet<string> groupNames,
             Dictionary<string, ISurfaceProperty> surfaceProperties,
             Dictionary<string, IMaterialFragment> materials,
-            Dictionary<string, Constraint4DOF> supports)
+            Dictionary<string, Constraint4DOF> supports,
+            Dictionary<string, MeshSettings2D> meshes)
 
         {
             object[] lusasSurfaceLines = lusasSurface.getLOFs();
@@ -82,6 +82,15 @@ namespace BH.Adapter.Adapters.Lusas
                 }
 
                 panel.Property = surfaceProperty;
+            }
+
+            MeshSettings2D surfaceMesh;
+            List<string> meshSettings = GetAttributeAssignments(lusasSurface, "Mesh");
+
+            if (!(meshSettings.Count() == 0))
+            {
+                meshes.TryGetValue(meshSettings[0], out surfaceMesh);
+                panel.CustomData["Mesh"] = surfaceMesh;
             }
 
             return panel;

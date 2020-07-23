@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 using BH.oM.Structure.SurfaceProperties;
@@ -64,6 +65,10 @@ namespace BH.Adapter.Lusas
                 Dictionary<string, Constraint4DOF> supports = supportsList.ToDictionary(
                     x => x.Name);
 
+                List<MeshSettings2D> meshesList = ReadMeshSettings2D();
+                Dictionary<string, MeshSettings2D> meshes = meshesList.ToDictionary(
+                    x => x.Name.ToString());
+
                 for (int i = 0; i < lusasSurfaces.Count(); i++)
                 {
                     IFSurface lusasSurface = (IFSurface)lusasSurfaces[i];
@@ -72,7 +77,8 @@ namespace BH.Adapter.Lusas
                         groupNames,
                         sectionProperties,
                         materials,
-                        supports);
+                        supports,
+                        meshes);
 
                     panels.Add(panel);
                 }
