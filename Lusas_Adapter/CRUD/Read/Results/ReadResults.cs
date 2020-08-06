@@ -36,6 +36,8 @@ namespace BH.Adapter.Lusas
 {
 #if Debug18 || Release18
     public partial class LusasV18Adapter : BHoMAdapter
+#elif Debug19 || Release19
+    public partial class LusasV19Adapter
 #else
     public partial class LusasV17Adapter : BHoMAdapter
 #endif
