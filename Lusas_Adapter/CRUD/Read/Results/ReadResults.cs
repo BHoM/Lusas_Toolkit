@@ -40,21 +40,6 @@ namespace BH.Adapter.Lusas
     public partial class LusasV17Adapter : BHoMAdapter
 #endif
     {
-
-        /***************************************************/
-        /**** Adapter  Methods                          ****/
-        /***************************************************/
-
-        protected override IEnumerable<IResult> ReadResults(Type type, IList ids = null, IList cases = null, int divisions = 5, ActionConfig actionConfig = null)
-        {
-            IResultRequest request = Engine.Structure.Create.IResultRequest(type, ids?.Cast<object>(), cases?.Cast<object>(), divisions);
-
-            if (request != null)
-                return this.ReadResults(request as dynamic, actionConfig);
-            else
-                return new List<IResult>();
-        }
-
         /***************************************************/
         /**** Private  Methods - Index checking         ****/
         /***************************************************/
