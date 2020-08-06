@@ -25,6 +25,7 @@ using System.Collections;
 using System.Collections.Generic;
 using BH.oM.Adapter;
 using BH.oM.Adapters.Lusas;
+using BH.oM.Analytical.Results;
 using BH.oM.Base;
 using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
@@ -81,7 +82,12 @@ namespace BH.Adapter.Lusas
                 return ReadMeshSettings1D(ids as dynamic);
             else if (type == typeof(MeshSettings2D))
                 return ReadMeshSettings2D(ids as dynamic);
+            else if (typeof(IResult).IsAssignableFrom(type))
+                Modules.Structure.ErrorMessages.ReadResultsError(type);
+
             return null;
+
+
         }
 
         /***************************************************/
