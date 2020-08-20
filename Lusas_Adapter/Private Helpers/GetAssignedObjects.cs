@@ -41,7 +41,7 @@ namespace BH.Adapter.Lusas
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private object[] GetAssignedPoints(Load<Node> loads)
+        private object[] GetAssignedPoints(IElementLoad<Node> loads)
         {
             int[] lusasIDs = loads.Objects.Elements.Select(x => System.Convert.ToInt32(x.CustomData[AdapterIdName])).ToArray();
 
@@ -52,7 +52,7 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private object[] GetAssignedLines(Load<Bar> loads)
+        private object[] GetAssignedLines(IElementLoad<Bar> loads)
         {
             int[] lusasIDs = loads.Objects.Elements.Select(x => System.Convert.ToInt32(x.CustomData[AdapterIdName])).ToArray();
 
@@ -63,7 +63,7 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private object[] GetAssignedSurfaces(Load<IAreaElement> loads)
+        private object[] GetAssignedSurfaces(IElementLoad<IAreaElement> loads)
         {
             int[] lusasIDs = loads.Objects.Elements.Select(x => System.Convert.ToInt32(x.CustomData[AdapterIdName])).ToArray();
 
@@ -74,7 +74,7 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private IFGeometry[] GetAssignedObjects(Load<BHoMObject> loads)
+        private IFGeometry[] GetAssignedObjects(IElementLoad<BHoMObject> loads)
         {
             List<IFGeometry> assignedGeometry = new List<IFGeometry>();
 
