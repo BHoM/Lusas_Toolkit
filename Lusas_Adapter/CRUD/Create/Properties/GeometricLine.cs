@@ -25,6 +25,7 @@ using BH.oM.Structure.SectionProperties;
 using BH.oM.Geometry.ShapeProfiles;
 using Lusas.LPI;
 using BH.Engine.Structure;
+using System.Windows.Forms;
 
 namespace BH.Adapter.Lusas
 {
@@ -396,6 +397,37 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
+        private IFGeometricLine CreateProfile(TaperedProfile profile, string lusasName)
+        {
+            IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(lusasName);
+            lusasGeometricLine.setValue("elementType", "3D Thick Beam");
+            lusasGeometricLine.setMultipleVarying(true);
+            lusasGeometricLine.setNumberOfSections(profile.Profiles.Count);
+            lusasGeometricLine.setValue("interpMethod", "Enhanced");
+            lusasGeometricLine.setSpecifyInterp(true);
+            lusasGeometricLine.setEqualSpacing(false);
+            lusasGeometricLine.setSymmetry(false);
+            lusasGeometricLine.setDistanceType("Parametric");
+
+            List<decimal> keys = new List<decimal>(profile.Profiles.Keys);
+            IProfile iProfile;
+            for (int i = 0; i < keys.Count; i++)
+            {
+                profile.Profiles.TryGetValue(keys[i], out iProfile);
+                string profileName = lusasName + keys[i];
+                CreateProfile(iProfile as dynamic, profileName);
+                lusasGeometricLine.setFromLibrary("User Sections", "Local", profileName, 0, 0, i);
+                lusasGeometricLine.setInterpolation("Function", (double)keys[i], i, profile.InterpolationOrder);
+            }
+
+            lusasGeometricLine.setVerticalAlignment("TopToTop");
+            lusasGeometricLine.setHorizontalAlignment("CentreToCentre");
+            lusasGeometricLine.setAlignmentSection(1);
+
+            return lusasGeometricLine;
+        }
+
+        /***************************************************/
 
         private void CreateLibrarySection(IFGeometricLine lusasGeometricLine,
             double[] dimensionArray, string[] valueArray, int lusasType)
