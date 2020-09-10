@@ -123,7 +123,7 @@ namespace BH.Adapter.Lusas
                 if (barFEAType == BarFEAType.Axial)
                     lusasLineMesh.setSize("BRS2", meshSettings1D.SplitParameter);
                 else if (barFEAType == BarFEAType.Flexural)
-                    lusasLineMesh.setSize("BMX21", meshSettings1D.SplitParameter);
+                    lusasLineMesh.setSize("BMI21", meshSettings1D.SplitParameter);
             }
             else if (meshSettings1D.SplitMethod == Split1D.Automatic)
             {
