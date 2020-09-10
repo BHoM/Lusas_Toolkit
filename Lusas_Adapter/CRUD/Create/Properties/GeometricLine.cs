@@ -352,9 +352,9 @@ namespace BH.Adapter.Lusas
 
             }
 
-            lusasGeometricLine.setVerticalAlignment("TopToTop");
+            lusasGeometricLine.setVerticalAlignment("CenterToCenter");
             lusasGeometricLine.setHorizontalAlignment("CenterToCenter");
-            lusasGeometricLine.setAlignmentSection(0);
+            lusasGeometricLine.setAlignmentSection(1);
         }
 
         /***************************************************/
