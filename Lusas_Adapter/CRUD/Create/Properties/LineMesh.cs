@@ -144,7 +144,7 @@ namespace BH.Adapter.Lusas
             if (barFEAType == BarFEAType.Axial)
                 lusasLineMesh.addElementName("BRS2");
             else if (barFEAType == BarFEAType.Flexural)
-                lusasLineMesh.addElementName("BMX21");
+                lusasLineMesh.addElementName("BMI21");
         }
 
         /***************************************************/
