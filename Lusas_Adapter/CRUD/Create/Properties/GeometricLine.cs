@@ -230,11 +230,11 @@ namespace BH.Adapter.Lusas
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(lusasName);
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
-            List<double> dimensionList = new List<double> { profile.Height, profile.Width,
+            List<double> dimensionList = new List<double> { profile.Width, profile.Height,
             profile.FlangeThickness, profile.WebThickness, profile.RootRadius};
             double[] dimensionArray = dimensionList.ToArray();
 
-            List<string> valueList = new List<string> { "D", "B", "tf", "tw", "r" };
+            List<string> valueList = new List<string> { "B", "D", "tf", "tw", "r" };
             string[] valueArray = valueList.ToArray();
 
             int lusasType = 5;
@@ -250,11 +250,11 @@ namespace BH.Adapter.Lusas
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(lusasName);
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
-            List<double> dimensionList = new List<double> { profile.Height, profile.Width,
+            List<double> dimensionList = new List<double> { profile.Width, profile.Height,
             profile.FlangeThickness, profile.WebThickness, profile.RootRadius};
             double[] dimensionArray = dimensionList.ToArray();
 
-            List<string> valueList = new List<string> { "D", "B", "tf", "tw", "r" };
+            List<string> valueList = new List<string> { "B", "D", "tf", "tw", "r" };
             string[] valueArray = valueList.ToArray();
 
             int lusasType = 8;
@@ -295,12 +295,12 @@ namespace BH.Adapter.Lusas
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
             List<double> dimensionList = new List<double> {
-                profile.Height, profile.Width, profile.FlangeThickness,
-            profile.WebThickness, profile.RootRadius, profile.ToeRadius
+                profile.Height, profile.Width, profile.WebThickness,
+            profile.FlangeThickness, profile.RootRadius, profile.ToeRadius
             };
             double[] dimensionArray = dimensionList.ToArray();
 
-            List<string> valueList = new List<string> { "D", "B", "tf", "tw", "r1", "r2" };
+            List<string> valueList = new List<string> { "D", "B", "tw", "tf", "r1", "r2" };
             string[] valueArray = valueList.ToArray();
 
             int lusasType = 7;
@@ -317,11 +317,11 @@ namespace BH.Adapter.Lusas
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
 
             Engine.Reflection.Compute.RecordWarning("Toe radius not support for ChannelSection");
-            List<double> dimensionList = new List<double> { profile.Height, profile.FlangeWidth,
+            List<double> dimensionList = new List<double> { profile.FlangeWidth, profile.Height,
             profile.FlangeThickness, profile.WebThickness, profile.RootRadius};
             double[] dimensionArray = dimensionList.ToArray();
 
-            List<string> valueList = new List<string> { "D", "B", "tf", "tw", "r" };
+            List<string> valueList = new List<string> { "B", "D", "tf", "tw", "r" };
             string[] valueArray = valueList.ToArray();
 
             int lusasType = 10;
