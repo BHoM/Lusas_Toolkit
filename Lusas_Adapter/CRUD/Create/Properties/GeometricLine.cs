@@ -356,7 +356,7 @@ namespace BH.Adapter.Lusas
                 }
                 else
                 {
-                    lusasGeometricLine.setInterpolation("Function", (double)keys[i], i, profile.InterpolationOrder);
+                    lusasGeometricLine.setInterpolation("Function", (double)keys[i], i, profile.InterpolationOrder[i]);
                 }
 
             }
