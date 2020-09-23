@@ -44,8 +44,6 @@ namespace BH.Adapter.Adapters.Lusas
 
             IEnumerable<Node> assignedNodes = GetPointAssignments(lusasAssignments, nodes);
 
-            lusasPrescribedDisplacement.getValueNames();
-
             Vector translationVector = new Vector
             {
                 X = lusasPrescribedDisplacement.getValue("U"),
