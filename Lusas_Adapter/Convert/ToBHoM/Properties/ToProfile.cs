@@ -31,7 +31,7 @@ namespace BH.Adapter.Adapters.Lusas
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static IProfile ToProfile(IFAttribute lusasAttribute)
+        public static IProfile ToProfile(IFAttribute lusasAttribute, int i)
         {
             int sectionType = lusasAttribute.getValue("Type");
 
@@ -42,8 +42,8 @@ namespace BH.Adapter.Adapters.Lusas
                 case 1:
                     {
                         profile = BH.Engine.Geometry.Create.RectangleProfile(
-                            lusasAttribute.getValue("D"),
-                            lusasAttribute.getValue("B"),
+                            lusasAttribute.getValue("D",i),
+                            lusasAttribute.getValue("B",i),
                             0
                         );
                         break;
@@ -51,98 +51,98 @@ namespace BH.Adapter.Adapters.Lusas
                 case 2:
                     {
                         profile = BH.Engine.Geometry.Create.BoxProfile(
-                            lusasAttribute.getValue("D"),
-                            lusasAttribute.getValue("B"),
-                            lusasAttribute.getValue("t"),
-                            lusasAttribute.getValue("r"),
-                            lusasAttribute.getValue("r")
+                            lusasAttribute.getValue("D",i),
+                            lusasAttribute.getValue("B",i),
+                            lusasAttribute.getValue("t",i),
+                            lusasAttribute.getValue("r",i),
+                            lusasAttribute.getValue("r",i)
                         );
                         break;
                     }
                 case 3:
                     {
                         profile = BH.Engine.Geometry.Create.CircleProfile(
-                            lusasAttribute.getValue("D")
+                            lusasAttribute.getValue("D",i)
                         );
                         break;
                     }
                 case 4:
                     {
                         profile = BH.Engine.Geometry.Create.TubeProfile(
-                            lusasAttribute.getValue("D"),
-                            lusasAttribute.getValue("t")
+                            lusasAttribute.getValue("D",i),
+                            lusasAttribute.getValue("t",i)
                         );
                         break;
                     }
                 case 5:
                     {
                         profile = BH.Engine.Geometry.Create.ISectionProfile(
-                            lusasAttribute.getValue("D"),
-                            lusasAttribute.getValue("B"),
-                            lusasAttribute.getValue("tw"),
-                            lusasAttribute.getValue("tf"),
-                            lusasAttribute.getValue("r"),
-                            lusasAttribute.getValue("r")
+                            lusasAttribute.getValue("D",i),
+                            lusasAttribute.getValue("B",i),
+                            lusasAttribute.getValue("tw",i),
+                            lusasAttribute.getValue("tf",i),
+                            lusasAttribute.getValue("r",i),
+                            lusasAttribute.getValue("r",i)
                         );
                         break;
                     }
                 case 7:
                     {
                         profile = BH.Engine.Geometry.Create.AngleProfile(
-                            lusasAttribute.getValue("D"),
-                            lusasAttribute.getValue("B"),
-                            lusasAttribute.getValue("tw"),
-                            lusasAttribute.getValue("tf"),
-                            lusasAttribute.getValue("r1"),
-                            lusasAttribute.getValue("r2")
+                            lusasAttribute.getValue("D",i),
+                            lusasAttribute.getValue("B",i),
+                            lusasAttribute.getValue("tw",i),
+                            lusasAttribute.getValue("tf",i),
+                            lusasAttribute.getValue("r1",i),
+                            lusasAttribute.getValue("r2",i)
                         );
                         break;
                     }
                 case 8:
                     {
                         profile = BH.Engine.Geometry.Create.TSectionProfile(
-                            lusasAttribute.getValue("D"),
-                            lusasAttribute.getValue("B"),
-                            lusasAttribute.getValue("tw"),
-                            lusasAttribute.getValue("tf"),
-                            lusasAttribute.getValue("r"),
-                            lusasAttribute.getValue("r")
+                            lusasAttribute.getValue("D",i),
+                            lusasAttribute.getValue("B",i),
+                            lusasAttribute.getValue("tw",i),
+                            lusasAttribute.getValue("tf",i),
+                            lusasAttribute.getValue("r", i),
+                            lusasAttribute.getValue("r", i)
                         );
                         break;
                     }
                 case 10:
                     {
                         profile = BH.Engine.Geometry.Create.ChannelProfile(
-                            lusasAttribute.getValue("D"),
-                            lusasAttribute.getValue("B"),
-                            lusasAttribute.getValue("tw"),
-                            lusasAttribute.getValue("tf"),
-                            lusasAttribute.getValue("r"),
-                            lusasAttribute.getValue("r")
+                            lusasAttribute.getValue("D", i),
+                            lusasAttribute.getValue("B", i),
+                            lusasAttribute.getValue("tw", i),
+                            lusasAttribute.getValue("tf", i),
+                            lusasAttribute.getValue("r", i),
+                            lusasAttribute.getValue("r", i)
                         );
                         break;
                     }
                 case 14:
                     {
                         profile = BH.Engine.Geometry.Create.FabricatedISectionProfile(
-                            lusasAttribute.getValue("D"),
-                            lusasAttribute.getValue("Bt"),
-                            lusasAttribute.getValue("Bb"),
-                            lusasAttribute.getValue("tw"),
-                            lusasAttribute.getValue("tft"),
-                            lusasAttribute.getValue("tfb"),
-                            lusasAttribute.getValue("r")
+                            lusasAttribute.getValue("D", i),
+                            lusasAttribute.getValue("Bt", i),
+                            lusasAttribute.getValue("Bb", i),
+                            lusasAttribute.getValue("tw", i),
+                            lusasAttribute.getValue("tft", i),
+                            lusasAttribute.getValue("tfb", i),
+                            lusasAttribute.getValue("r", i)
                         );
                         break;
                     }
                 case 15:
                     {
                         profile = BH.Engine.Geometry.Create.FabricatedBoxProfile(
-                            lusasAttribute.getValue("D"),
-                            lusasAttribute.getValue("B"),
-                            lusasAttribute.getValue("tw"),
-                            lusasAttribute.getValue("tf"),
-                            lusasAttribute.getValue("tf"),
+                            lusasAttribute.getValue("D", i),
+                            lusasAttribute.getValue("B", i),
+                            lusasAttribute.getValue("tw", i),
+                            lusasAttribute.getValue("tf", i),
+                            lusasAttribute.getValue("tf", i),
                             0
                         );
                         break;
@@ -150,12 +150,12 @@ namespace BH.Adapter.Adapters.Lusas
                 case 16:
                     {
                         profile = BH.Engine.Geometry.Create.ZSectionProfile(
-                            lusasAttribute.getValue("D"),
-                            lusasAttribute.getValue("B"),
-                            lusasAttribute.getValue("tw"),
-                            lusasAttribute.getValue("tf"),
-                            lusasAttribute.getValue("r"),
-                            lusasAttribute.getValue("r")
+                            lusasAttribute.getValue("D", i),
+                            lusasAttribute.getValue("B", i),
+                            lusasAttribute.getValue("tw", i),
+                            lusasAttribute.getValue("tf", i),
+                            lusasAttribute.getValue("r", i),
+                            lusasAttribute.getValue("r", i)
                         );
                         break;
                     }

@@ -41,14 +41,22 @@ namespace BH.Adapter.Lusas
 
         private List<ISectionProperty> ReadSectionProperties(List<string> ids = null)
         {
-            object[] lusasSections = d_LusasData.getAttributes("Line Geometric");
+            object[] lusasSections = d_LusasData.getAttributes("Geometric");
             List<ISectionProperty> sectionProperties = new List<ISectionProperty>();
 
             for (int i = 0; i < lusasSections.Count(); i++)
             {
-                IFAttribute lusasSection = (IFAttribute)lusasSections[i];
-                ISectionProperty sectionProperty = Adapters.Lusas.Convert.ToSection(lusasSection);
-                sectionProperties.Add(sectionProperty);
+                IFGeometric lusasSection = (IFGeometric)lusasSections[i];
+
+                switch(lusasSection.getAttributeType())
+                {
+                    case "Surface Geometric":
+                        break;
+                    default:
+                        ISectionProperty sectionProperty = Adapters.Lusas.Convert.ToSection(lusasSection);
+                        sectionProperties.Add(sectionProperty);
+                        break;
+                }
             }
             return sectionProperties;
         }
