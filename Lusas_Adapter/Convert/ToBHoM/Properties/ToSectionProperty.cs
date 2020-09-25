@@ -47,7 +47,7 @@ namespace BH.Adapter.Adapters.Lusas
             IProfile profile;
             GenericSection section = null;
             List<int> interpolationOrders = new List<int>();
-            List<decimal> positions = new List<decimal>();
+            List<double> positions = new List<double>();
             List<IProfile> profiles = new List<IProfile>();
 
             for (int i = 0; i < rows; i++)
@@ -79,7 +79,7 @@ namespace BH.Adapter.Adapters.Lusas
                 {
                     interpolationOrders.Add(1);
                     double position = lusasAttribute.getValue("distanceAlongBeam", i);
-                    positions.Add((decimal)position);
+                    positions.Add(position);
                     profiles.Add(profile);
                 }
                 else
