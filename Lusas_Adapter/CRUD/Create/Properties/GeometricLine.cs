@@ -342,7 +342,7 @@ namespace BH.Adapter.Lusas
             lusasGeometricLine.setSymmetry(false);
             lusasGeometricLine.setDistanceType("Parametric");
 
-            List<decimal> keys = new List<decimal>(profile.Profiles.Keys);
+            List<double> keys = new List<double>(profile.Profiles.Keys);
             IProfile iProfile;
             for (int i = 0; i < keys.Count; i++)
             {
