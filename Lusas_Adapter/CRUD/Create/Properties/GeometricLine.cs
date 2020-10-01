@@ -66,7 +66,8 @@ namespace BH.Adapter.Lusas
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
             CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic);
-            lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+            if(!(sectionProperty.SectionProfile is TaperedProfile))
+                lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
             return lusasGeometricLine;
         }
 
@@ -77,7 +78,8 @@ namespace BH.Adapter.Lusas
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
             CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic);
-            lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+            if (!(sectionProperty.SectionProfile is TaperedProfile))
+                lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
             return lusasGeometricLine;
         }
 
@@ -96,7 +98,8 @@ namespace BH.Adapter.Lusas
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
             CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic);
-            lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+            if (!(sectionProperty.SectionProfile is TaperedProfile))
+                lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
             return lusasGeometricLine;
         }
 
@@ -107,7 +110,8 @@ namespace BH.Adapter.Lusas
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
             CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic);
-            lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+            if (!(sectionProperty.SectionProfile is TaperedProfile))
+                lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
             return lusasGeometricLine;
         }
 
@@ -118,7 +122,8 @@ namespace BH.Adapter.Lusas
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
             CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic);
-            lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+            if (!(sectionProperty.SectionProfile is TaperedProfile))
+                lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
             return lusasGeometricLine;
         }
 
@@ -347,7 +352,12 @@ namespace BH.Adapter.Lusas
             for (int i = 0; i < keys.Count; i++)
             {
                 profile.Profiles.TryGetValue(keys[i], out iProfile);
-                string profileName = name + keys[i];
+                string profileName;
+                if(i == 0)
+                    profileName = $"{name}-0";
+                else
+                    profileName = $"{name}-{keys[i]:G3}";
+
                 CreateProfile(profileName, iProfile as dynamic);
                 lusasGeometricLine.setFromLibrary("User Sections", "Local", profileName, 0, 0, i);
                 if (i == 0)
