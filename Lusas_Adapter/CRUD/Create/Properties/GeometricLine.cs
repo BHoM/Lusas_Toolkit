@@ -25,6 +25,7 @@ using BH.oM.Structure.SectionProperties;
 using BH.oM.Geometry.ShapeProfiles;
 using Lusas.LPI;
 using BH.Engine.Structure;
+using BH.Engine.Geometry;
 
 namespace BH.Adapter.Lusas
 {
@@ -338,6 +339,8 @@ namespace BH.Adapter.Lusas
 
         private void CreateProfile(string name, TaperedProfile profile)
         {
+            profile.MapPositionDomain();
+            
             IFGeometricLine lusasGeometricLine = (IFGeometricLine)d_LusasData.getAttribute("Line Geometric", name);
             lusasGeometricLine.setMultipleVarying(true);
             lusasGeometricLine.setNumberOfSections(profile.Profiles.Count);
