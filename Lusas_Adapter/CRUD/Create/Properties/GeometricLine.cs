@@ -24,8 +24,8 @@ using System.Collections.Generic;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Geometry.ShapeProfiles;
 using Lusas.LPI;
+using BH.Engine.Spatial;
 using BH.Engine.Structure;
-using BH.Engine.Geometry;
 
 namespace BH.Adapter.Lusas
 {
