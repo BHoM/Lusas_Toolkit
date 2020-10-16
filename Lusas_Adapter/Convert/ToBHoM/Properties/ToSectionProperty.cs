@@ -22,7 +22,7 @@
 
 using System;
 using BH.oM.Structure.SectionProperties;
-using BH.oM.Geometry.ShapeProfiles;
+using BH.oM.Spatial.ShapeProfiles;
 using Lusas.LPI;
 using BH.Adapter.Lusas;
 using System.Collections.Generic;
@@ -91,7 +91,7 @@ namespace BH.Adapter.Adapters.Lusas
             
             if (lusasAttribute.getAttributeType() == "Multiple Varying Geometric")
             {
-                TaperedProfile taperedProfile = Engine.Geometry.Create.TaperedProfile(positions, profiles, interpolationOrders);
+                TaperedProfile taperedProfile = Engine.Spatial.Create.TaperedProfile(positions, profiles, interpolationOrders);
                 section = Engine.Structure.Create.GenericSectionFromProfile(taperedProfile);
             }
 

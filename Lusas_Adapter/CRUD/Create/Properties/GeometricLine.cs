@@ -22,7 +22,7 @@
 
 using System.Collections.Generic;
 using BH.oM.Structure.SectionProperties;
-using BH.oM.Geometry.ShapeProfiles;
+using BH.oM.Spatial.ShapeProfiles;
 using Lusas.LPI;
 using BH.Engine.Spatial;
 using BH.Engine.Structure;
