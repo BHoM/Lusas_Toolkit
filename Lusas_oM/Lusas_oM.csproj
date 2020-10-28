@@ -109,11 +109,13 @@
     <Compile Include="Fragments\LusasId.cs" />
     <Compile Include="Settings\LibrarySettings.cs" />
     <Compile Include="Settings\LusasConfig.cs" />
-    <Compile Include="Structural\Properties\MeshSettings2D.cs" />
-    <Compile Include="Structural\Properties\MeshSettings1D.cs" />
+    <Compile Include="Fragments\MeshSettings2D.cs" />
+    <Compile Include="Fragments\MeshSettings1D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Structural\Properties\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

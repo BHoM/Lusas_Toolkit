@@ -22,9 +22,9 @@
 
 using BH.oM.Base;
 
-namespace BH.oM.Adapters.Lusas
+namespace BH.oM.Adapters.Lusas.Fragments
 {
-    public class MeshSettings1D : BHoMObject
+    public class MeshSettings1D : BHoMObject, IFragment
     {
         /***************************************************/
         /****            Public Properties              ****/
