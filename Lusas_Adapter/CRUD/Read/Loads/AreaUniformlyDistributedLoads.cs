@@ -65,7 +65,7 @@ namespace BH.Adapter.Lusas
                 {
                     IFLoading lusasDistributedLoad = (IFLoading)lusasDistributedLoads[i];
 
-                    if (lusasDistributedLoad.getValue("type") == "Area")
+                    if (lusasDistributedLoad.getValue("type") == "Area" || lusasDistributedLoad.getValue("type") == "all")
                     {
                         IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
                             GetLoadAssignments(lusasDistributedLoad);
