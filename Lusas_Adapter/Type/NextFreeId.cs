@@ -31,6 +31,7 @@ using BH.oM.Structure.Loads;
 using BH.oM.Geometry;
 using Lusas.LPI;
 using BH.oM.Adapters.Lusas;
+using BH.oM.Adapters.Lusas.Fragments;
 using BH.Engine.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas

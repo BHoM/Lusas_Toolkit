@@ -25,6 +25,7 @@ using System.Collections;
 using System.Collections.Generic;
 using BH.oM.Adapter;
 using BH.oM.Adapters.Lusas;
+using BH.oM.Adapters.Lusas.Fragments;
 using BH.oM.Analytical.Results;
 using BH.oM.Base;
 using BH.oM.Geometry;
