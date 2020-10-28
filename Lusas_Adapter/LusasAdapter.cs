@@ -60,7 +60,7 @@ namespace BH.Adapter.Lusas
         {
             if (active)
             {
-                AdapterIdName = "Lusas_id";   //Set the "AdapterId" to "SoftwareName_id". Generally stored as a constant string in the convert class in the SoftwareName_Engine
+                AdapterIdFragmentType = typeof(LusasId);
 
                 BH.Adapter.Modules.Structure.ModuleLoader.LoadModules(this);
 

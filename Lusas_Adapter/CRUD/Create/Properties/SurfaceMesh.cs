@@ -21,6 +21,7 @@
  */
 
 using Lusas.LPI;
+using BH.Engine.Adapter;
 using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
@@ -67,7 +68,8 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            meshSettings2D.CustomData[AdapterIdName] = lusasSurfaceMesh.getID().ToString();
+            int adapterIdName = lusasSurfaceMesh.getID();
+            meshSettings2D.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasSurfaceMesh;
         }

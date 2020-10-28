@@ -20,10 +20,26 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-namespace BH.Adapter.Adapters.Lusas
+
+using BH.oM.Base;
+using System.ComponentModel;
+using BH.oM.Diffing;
+using System.Collections.Generic;
+
+namespace BH.oM.Adapters.Lusas
 {
-    public static partial class Convert
+    public interface ILusasId : IAdapterId
+    { }
+
+    public class LusasId : ILusasId
     {
-        public const string AdapterIdName = "Lusas_id";
+        /***************************************************/
+        /**** Public Properties                         ****/
+        /***************************************************/
+
+        [Description("Id or multi-ids of the element as assigned in Lusas.")]
+        public virtual object Id { get; set; }
+
+        /***************************************************/
     }
 }

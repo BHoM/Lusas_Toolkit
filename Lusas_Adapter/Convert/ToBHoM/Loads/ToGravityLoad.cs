@@ -22,13 +22,13 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
 using BH.oM.Base;
 using Lusas.LPI;
-using BH.Adapter.Lusas;
-using BH.Engine.Adapters.Lusas;
+using BH.Engine.Adapter;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -58,7 +58,8 @@ namespace BH.Adapter.Adapters.Lusas
             GravityLoad gravityLoad = Engine.Structure.Create.GravityLoad(
                 loadcase, gravityVector, assignedObjects, GetName(lusasGravityLoad));
 
-            gravityLoad.CustomData[AdapterIdName] = lusasGravityLoad.getID();
+            int adapterNameId = lusasGravityLoad.getID();
+            gravityLoad.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return gravityLoad;
         }

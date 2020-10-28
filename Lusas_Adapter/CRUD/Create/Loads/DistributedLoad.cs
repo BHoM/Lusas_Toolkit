@@ -20,7 +20,9 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.Lusas;
 using BH.oM.Geometry;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 using Lusas.LPI;
 
@@ -40,11 +42,12 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingGlobalDistributed CreateGlobalDistributedLine(BarUniformlyDistributedLoad distributedLoad, object[] lusasLines)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(distributedLoad.Loadcase.CustomData[AdapterIdName]));
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(distributedLoad.Loadcase.AdapterId<int>(typeof(LusasId)));
             IFLoadingGlobalDistributed lusasGlobalDistributed = CreateGlobalDistributed(distributedLoad.Name,
                 "Length", assignedLoadcase, distributedLoad.Force, distributedLoad.Moment, lusasLines);
 
-            distributedLoad.CustomData[AdapterIdName] = lusasGlobalDistributed.getID().ToString();
+            int adapterIdName = lusasGlobalDistributed.getID();
+            distributedLoad.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasGlobalDistributed;
         }
@@ -53,11 +56,12 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingGlobalDistributed CreateGlobalDistributedLoadSurface(AreaUniformlyDistributedLoad distributedLoad, object[] lusasSurfaces)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(distributedLoad.Loadcase.CustomData[AdapterIdName]));
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(distributedLoad.Loadcase.AdapterId<int>(typeof(LusasId)));
             IFLoadingGlobalDistributed lusasGlobalDistributed = CreateGlobalDistributed(distributedLoad.Name,
                 "Area", assignedLoadcase, distributedLoad.Pressure, null, lusasSurfaces);
 
-            distributedLoad.CustomData[AdapterIdName] = lusasGlobalDistributed.getID().ToString();
+            int adapterIdName = lusasGlobalDistributed.getID();
+            distributedLoad.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasGlobalDistributed;
         }
@@ -66,11 +70,12 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingLocalDistributed CreateLocalDistributedLine(BarUniformlyDistributedLoad distributedLoad, object[] lusasLines)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(distributedLoad.Loadcase.CustomData[AdapterIdName]));
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(distributedLoad.Loadcase.AdapterId<int>(typeof(LusasId)));
             IFLoadingLocalDistributed lusasLocalDistributed = CreateLocalDistributed(distributedLoad.Name,
                 "Line", assignedLoadcase, distributedLoad.Force, lusasLines);
 
-            distributedLoad.CustomData[AdapterIdName] = lusasLocalDistributed.getID().ToString();
+            int adapterIdName = lusasLocalDistributed.getID();
+            distributedLoad.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasLocalDistributed;
         }
@@ -79,12 +84,13 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingLocalDistributed CreateLocalDistributedSurface(AreaUniformlyDistributedLoad distributedLoad, object[] lusasSurfaces)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(distributedLoad.Loadcase.CustomData[AdapterIdName]));
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(distributedLoad.Loadcase.AdapterId<int>(typeof(LusasId)));
 
             IFLoadingLocalDistributed lusasLocalDistributed = CreateLocalDistributed(distributedLoad.Name,
                 "Area", assignedLoadcase, distributedLoad.Pressure, lusasSurfaces);
 
-            distributedLoad.CustomData[AdapterIdName] = lusasLocalDistributed.getID().ToString();
+            int adapterIdName = lusasLocalDistributed.getID();
+            distributedLoad.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasLocalDistributed;
         }

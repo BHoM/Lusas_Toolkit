@@ -22,7 +22,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using BH.Adapter.Lusas;
+using BH.Engine.Adapter;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
 using Lusas.LPI;
@@ -54,7 +55,8 @@ namespace BH.Adapter.Adapters.Lusas
                 false,
                 GetName(lusasTemperatureLoad));
 
-            barTemperatureLoad.CustomData[AdapterIdName] = lusasTemperatureLoad.getID();
+            int adapterNameId = lusasTemperatureLoad.getID();
+            barTemperatureLoad.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return barTemperatureLoad;
         }

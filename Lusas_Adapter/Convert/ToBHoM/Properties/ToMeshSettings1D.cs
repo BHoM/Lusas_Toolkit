@@ -23,7 +23,7 @@
 using System.Linq;
 using Lusas.LPI;
 using BH.oM.Adapters.Lusas;
-using BH.Adapter.Lusas;
+using BH.Engine.Adapter;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -69,8 +69,8 @@ namespace BH.Adapter.Adapters.Lusas
                 SplitParameter = value
             };
 
-            int adapterID = GetAdapterID(lusasMeshLine, 'e');
-            meshSettings1D.CustomData[AdapterIdName] = adapterID;
+            int adapterNameId = GetAdapterID(lusasMeshLine, 'e');
+            meshSettings1D.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return meshSettings1D;
         }

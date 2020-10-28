@@ -22,7 +22,9 @@
 
 using System.Collections.Generic;
 using System;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Loads;
+using BH.Engine.Adapter;
 using Lusas.LPI;
 using BH.Engine.Reflection;
 
@@ -65,7 +67,7 @@ namespace BH.Adapter.Lusas
                 foreach (Tuple<double, ICase> factoredLoad in loadCombination.LoadCases)
                 {
                     double factor = factoredLoad.Item1;
-                    IFLoadset lusasLoadcase = d_LusasData.getLoadset(System.Convert.ToInt32(factoredLoad.Item2.CustomData[AdapterIdName]));
+                    IFLoadset lusasLoadcase = d_LusasData.getLoadset(factoredLoad.Item2.AdapterId<int>(typeof(LusasId)));
                     lusasLoadcombination.addEntry(factor, lusasLoadcase);
                 }
             }

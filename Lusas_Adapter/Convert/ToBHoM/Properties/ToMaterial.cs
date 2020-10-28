@@ -20,10 +20,11 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.MaterialFragments;
 using BH.oM.Geometry;
 using Lusas.LPI;
-using BH.Adapter.Lusas;
+using BH.Engine.Adapter;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -60,7 +61,9 @@ namespace BH.Adapter.Adapters.Lusas
                     lusasAttribute.getValue("rho"), 0, 0);
             }
 
-            material.CustomData[AdapterIdName] = lusasAttribute.getID();
+            int adapterNameId = lusasAttribute.getID();
+            material.SetAdapterId(typeof(LusasId), adapterNameId);
+
 
             return material;
         }

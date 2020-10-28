@@ -22,7 +22,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
+using BH.Engine.Adapter;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -48,7 +50,7 @@ namespace BH.Adapter.Lusas
             {
                 List<Node> nodesList = ReadNodes();
                 Dictionary<string, Node> nodes = nodesList.ToDictionary(
-                    x => x.CustomData[AdapterIdName].ToString());
+                    x => x.AdapterId<string>(typeof(LusasId)));
 
                 HashSet<string> groupNames = ReadTags();
 

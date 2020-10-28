@@ -21,11 +21,13 @@
  */
 
 using System.Collections.Generic;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Spatial.ShapeProfiles;
 using Lusas.LPI;
 using BH.Engine.Spatial;
 using BH.Engine.Structure;
+using BH.Engine.Adapter;
 
 namespace BH.Adapter.Lusas
 {
@@ -55,7 +57,8 @@ namespace BH.Adapter.Lusas
                 lusasAttribute = lusasGeometricLine;
             }
 
-            sectionProperty.CustomData[AdapterIdName] = lusasAttribute.getID().ToString();
+            int adapterIdName = lusasAttribute.getID();
+            sectionProperty.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasAttribute;
         }
@@ -67,7 +70,7 @@ namespace BH.Adapter.Lusas
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
             CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic);
-            if(!(sectionProperty.SectionProfile is TaperedProfile))
+            if (!(sectionProperty.SectionProfile is TaperedProfile))
                 lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
             return lusasGeometricLine;
         }
@@ -340,7 +343,7 @@ namespace BH.Adapter.Lusas
         private void CreateProfile(string name, TaperedProfile profile)
         {
             profile.MapPositionDomain();
-            
+
             IFGeometricLine lusasGeometricLine = (IFGeometricLine)d_LusasData.getAttribute("Line Geometric", name);
             lusasGeometricLine.setMultipleVarying(true);
             lusasGeometricLine.setNumberOfSections(profile.Profiles.Count);
@@ -356,7 +359,7 @@ namespace BH.Adapter.Lusas
             {
                 profile.Profiles.TryGetValue(keys[i], out iProfile);
                 string profileName;
-                if(i == 0)
+                if (i == 0)
                     profileName = $"{name}-0";
                 else
                     profileName = $"{name}-{keys[i]:G3}";

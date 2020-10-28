@@ -22,7 +22,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using BH.Adapter.Lusas;
+using BH.Engine.Adapter;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
@@ -83,7 +84,9 @@ namespace BH.Adapter.Adapters.Lusas
                     GetName(lusasDistributed));
             }
 
-            barUniformlyDistributed.CustomData[AdapterIdName] = lusasDistributed.getID();
+
+            int adapterNameId = lusasDistributed.getID();
+            barUniformlyDistributed.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return barUniformlyDistributed;
         }

@@ -20,7 +20,9 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Loads;
+using BH.Engine.Adapter;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -40,7 +42,7 @@ namespace BH.Adapter.Lusas
         private IFLoadingConcentrated CreateConcentratedLoad(PointLoad pointLoad, object[] lusasPoints)
         {
             IFLoadingConcentrated lusasPointLoad;
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(pointLoad.Loadcase.CustomData[AdapterIdName]));
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(pointLoad.Loadcase.AdapterId<int>(typeof(LusasId)));
 
             if (d_LusasData.existsAttribute("Loading", pointLoad.Name))
             {
@@ -58,7 +60,8 @@ namespace BH.Adapter.Lusas
             lusasAssignment.setLoadset(assignedLoadcase);
             lusasPointLoad.assignTo(lusasPoints, lusasAssignment);
 
-            pointLoad.CustomData[AdapterIdName] = lusasPointLoad.getID();
+            int adapterIdName = lusasPointLoad.getID();
+            pointLoad.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasPointLoad;
         }
@@ -67,4 +70,3 @@ namespace BH.Adapter.Lusas
 
     }
 }
-

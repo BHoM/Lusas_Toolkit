@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Adapter;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Loads;
 using Lusas.LPI;
 
@@ -39,12 +41,13 @@ namespace BH.Adapter.Lusas
 
         private IFLoadingTemperature CreateBarTemperatureLoad(BarTemperatureLoad temperatureLoad, object[] lusasLines)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(temperatureLoad.Loadcase.CustomData[AdapterIdName]));
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(temperatureLoad.Loadcase.AdapterId<int>(typeof(LusasId)));
 
             IFLoadingTemperature lusasTemperatureLoad = CreateTemperatureLoad(
                 temperatureLoad.Name, temperatureLoad.TemperatureChange, lusasLines, assignedLoadcase);
 
-            temperatureLoad.CustomData[AdapterIdName] = lusasTemperatureLoad.getID().ToString();
+            int adapterIdName = lusasTemperatureLoad.getID();
+            temperatureLoad.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasTemperatureLoad;
         }
@@ -54,12 +57,13 @@ namespace BH.Adapter.Lusas
         private IFLoadingTemperature CreateAreaTemperatureLoad(AreaTemperatureLoad temperatureLoad,
             object[] lusasSurfaces)
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(temperatureLoad.Loadcase.CustomData[AdapterIdName]));
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(temperatureLoad.Loadcase.AdapterId<int>(typeof(LusasId)));
 
             IFLoadingTemperature lusasTemperatureLoad = CreateTemperatureLoad(temperatureLoad.Name,
                 temperatureLoad.TemperatureChange, lusasSurfaces, assignedLoadcase);
 
-            temperatureLoad.CustomData[AdapterIdName] = lusasTemperatureLoad.getID();
+            int adapterIdName = lusasTemperatureLoad.getID();
+            temperatureLoad.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasTemperatureLoad;
         }

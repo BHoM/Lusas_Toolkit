@@ -22,8 +22,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Constraints;
 using BH.Engine.Structure;
+using BH.Engine.Adapter;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -84,7 +86,8 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            constraint.CustomData[AdapterIdName] = lusasSupport.getID().ToString();
+            int adapterIdName = lusasSupport.getID();
+            constraint.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasSupport;
         }
@@ -140,7 +143,8 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            constraint.CustomData[AdapterIdName] = lusasSupport.getID();
+            int adapterIdName = lusasSupport.getID();
+            constraint.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasSupport;
         }

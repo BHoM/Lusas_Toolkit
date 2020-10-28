@@ -22,12 +22,12 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 using Lusas.LPI;
-using BH.Adapter.Lusas;
-using BH.Engine.Adapters.Lusas;
+using BH.Engine.Adapter;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -56,7 +56,8 @@ namespace BH.Adapter.Adapters.Lusas
 
             node.Tags = tags;
 
-            node.CustomData[AdapterIdName] = lusasPoint.getID();
+            string adapterID = lusasPoint.getID().ToString();
+            node.SetAdapterId(typeof(LusasId), adapterID);
 
             return node;
         }

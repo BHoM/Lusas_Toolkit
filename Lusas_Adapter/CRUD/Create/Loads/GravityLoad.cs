@@ -20,7 +20,9 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Loads;
+using BH.Engine.Adapter;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -40,7 +42,7 @@ namespace BH.Adapter.Lusas
         private IFLoadingBody CreateGravityLoad(GravityLoad gravityLoad, IFGeometry[] lusasGeometry)
         {
             IFLoadingBody lusasGravityLoad;
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(gravityLoad.Loadcase.CustomData[AdapterIdName]));
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(gravityLoad.Loadcase.AdapterId<int>(typeof(LusasId)));
 
             if (d_LusasData.existsAttribute("Loading", gravityLoad.Name))
             {
@@ -56,7 +58,8 @@ namespace BH.Adapter.Lusas
             lusasAssignment.setLoadset(assignedLoadcase);
             lusasGravityLoad.assignTo(lusasGeometry, lusasAssignment);
 
-            gravityLoad.CustomData[AdapterIdName] = lusasGravityLoad.getID();
+            int adapterIdName = lusasGravityLoad.getID();
+            gravityLoad.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasGravityLoad;
         }

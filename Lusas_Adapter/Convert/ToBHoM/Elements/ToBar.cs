@@ -30,8 +30,7 @@ using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
 using BH.oM.Adapters.Lusas;
 using System;
-using BH.Adapter.Lusas;
-using BH.Engine.Adapters.Lusas;
+using BH.Engine.Adapter;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -108,8 +107,7 @@ namespace BH.Adapter.Adapters.Lusas
             }
 
             string adapterID = lusasLine.getID().ToString();
-
-            bar.CustomData[AdapterIdName] = adapterID;
+            bar.SetAdapterId(typeof(LusasId), adapterID);
 
             return bar;
         }
@@ -279,7 +277,7 @@ namespace BH.Adapter.Adapters.Lusas
                 type.ToString() == "LMS3" ||
                 type.ToString() == "LMS4")
             {
-                Compute.RecordWarning(
+                Engine.Reflection.Compute.RecordWarning(
                     type.ToString() + " not supported, FEAType defaulted to Flexural");
             }
 

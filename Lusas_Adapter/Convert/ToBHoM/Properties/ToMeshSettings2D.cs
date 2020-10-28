@@ -22,7 +22,7 @@
 
 using Lusas.LPI;
 using BH.oM.Adapters.Lusas;
-using BH.Adapter.Lusas;
+using BH.Engine.Adapter;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -70,8 +70,8 @@ namespace BH.Adapter.Adapters.Lusas
                 ElementSize = size
             };
 
-            int adapterID = GetAdapterID(lusasAttribute, 'e');
-            meshSettings2D.CustomData[AdapterIdName] = adapterID;
+            int adapterNameId = GetAdapterID(lusasAttribute, 'e');
+            meshSettings2D.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return meshSettings2D;
         }

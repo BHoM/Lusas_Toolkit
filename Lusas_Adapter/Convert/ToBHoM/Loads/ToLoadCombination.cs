@@ -23,7 +23,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BH.Adapter.Lusas;
+using BH.Engine.Adapter;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Loads;
 using Lusas.LPI;
 
@@ -61,7 +62,8 @@ namespace BH.Adapter.Adapters.Lusas
                 LoadCases = factoredLoadcases
             };
 
-            loadCombination.CustomData[AdapterIdName] = lusasLoadCombination.getID().ToString();
+            int adapterNameId = lusasLoadCombination.getID();
+            loadCombination.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return loadCombination;
         }

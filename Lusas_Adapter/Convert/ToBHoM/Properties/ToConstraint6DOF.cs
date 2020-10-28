@@ -21,7 +21,8 @@
  */
 
 using System.Collections.Generic;
-using BH.Adapter.Lusas;
+using BH.Engine.Adapter;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Constraints;
 using Lusas.LPI;
 
@@ -67,7 +68,8 @@ namespace BH.Adapter.Adapters.Lusas
             Constraint6DOF constraint6DOF = BH.Engine.Structure.Create.Constraint6DOF(
                attributeName, fixity, stiffness);
 
-            constraint6DOF.CustomData[AdapterIdName] = lusasAttribute.getID();
+            int adapterNameId = lusasAttribute.getID();
+            constraint6DOF.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return constraint6DOF;
         }

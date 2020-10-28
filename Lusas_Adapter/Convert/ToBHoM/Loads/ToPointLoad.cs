@@ -22,7 +22,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using BH.Adapter.Lusas;
+using BH.Engine.Adapter;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
@@ -67,7 +68,8 @@ namespace BH.Adapter.Adapters.Lusas
                 LoadAxis.Global,
                 GetName(lusasPointLoad));
 
-            pointLoad.CustomData[AdapterIdName] = lusasPointLoad.getID();
+            int adapterNameId = lusasPointLoad.getID();
+            pointLoad.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return pointLoad;
         }

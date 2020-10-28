@@ -22,6 +22,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using BH.Engine.Adapter;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
 using Lusas.LPI;
@@ -49,7 +51,7 @@ namespace BH.Adapter.Lusas
             {
                 List<Panel> panelsList = ReadPanels();
                 Dictionary<string, Panel> panels = panelsList.ToDictionary(
-                    x => x.CustomData[AdapterIdName].ToString());
+                    x => x.AdapterId<string>(typeof(LusasId)));
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
 
