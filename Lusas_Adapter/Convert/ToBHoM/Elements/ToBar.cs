@@ -32,6 +32,7 @@ using BH.oM.Adapters.Lusas;
 using BH.oM.Adapters.Lusas.Fragments;
 using System;
 using BH.Engine.Adapter;
+using BH.Engine.Base;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -95,7 +96,7 @@ namespace BH.Adapter.Adapters.Lusas
             if (!(meshSettings.Count() == 0))
             {
                 meshes.TryGetValue(meshSettings[0], out lineMesh);
-                bar.CustomData["Mesh"] = lineMesh;
+                bar.AddFragment(lineMesh);
             }
 
             Tuple<bool, double, BarRelease, BarFEAType> barMeshProperties = GetMeshProperties(lusasLine);

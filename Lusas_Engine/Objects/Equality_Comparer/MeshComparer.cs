@@ -24,6 +24,8 @@ using System.Collections.Generic;
 using BH.oM.Structure.Elements;
 using BH.Engine.Geometry;
 using BH.Engine.Structure;
+using BH.Engine.Base;
+using BH.oM.Adapters.Lusas.Fragments;
 
 namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
 {
@@ -46,7 +48,7 @@ namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
             if (bar1.BHoM_Guid == bar2.BHoM_Guid)
                 return true;
 
-            if (bar1.FEAType.Equals(bar2.FEAType) && bar1.OrientationAngle.Equals(bar2.OrientationAngle) && bar1.Release.Equals(bar2.Release) && bar1.CustomData["Mesh"].Equals(bar2.CustomData["Mesh"]))
+            if (bar1.FEAType.Equals(bar2.FEAType) && bar1.OrientationAngle.Equals(bar2.OrientationAngle) && bar1.Release.Equals(bar2.Release) && bar1.FindFragment<MeshSettings1D>().Equals(bar2.FindFragment<MeshSettings2D>()))
             {
                 return true;
             }
