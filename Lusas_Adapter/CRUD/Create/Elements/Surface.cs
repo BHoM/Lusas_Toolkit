@@ -24,6 +24,8 @@ using BH.oM.Adapters.Lusas;
 using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
 using Lusas.LPI;
+using BH.oM.Adapters.Lusas.Fragments;
+using BH.Engine.Base;
 
 namespace BH.Adapter.Lusas
 {
@@ -71,12 +73,12 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            if (panel.CustomData.ContainsKey("Mesh"))
+            if (panel.Fragments.Contains(typeof(MeshSettings2D)))
             {
                 IFAssignment meshAssignment = m_LusasApplication.newAssignment();
                 meshAssignment.setAllDefaults();
 
-                MeshSettings2D meshSettings2D = (MeshSettings2D)panel.CustomData["Mesh"];
+                MeshSettings2D meshSettings2D = panel.FindFragment<MeshSettings2D>();
                 IFMeshAttr mesh = d_LusasData.getMesh(meshSettings2D.Name);
                 mesh.assignTo(lusasSurface, meshAssignment);
             }

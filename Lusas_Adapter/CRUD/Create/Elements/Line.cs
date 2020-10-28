@@ -29,6 +29,8 @@ using BH.Engine.Adapter;
 using BH.Engine.Geometry;
 using Lusas.LPI;
 using BH.Engine.Structure;
+using BH.oM.Adapters.Lusas.Fragments;
+using BH.Engine.Base;
 
 namespace BH.Adapter.Lusas
 {
@@ -94,7 +96,7 @@ namespace BH.Adapter.Lusas
                 barLocalAxis.assignTo(lusasLine);
             }
 
-            if (bar.CustomData.ContainsKey("Mesh"))
+            if (bar.Fragments.Contains(typeof(MeshSettings1D)))
             {
                 IFAssignment meshAssignment = m_LusasApplication.newAssignment();
                 meshAssignment.setAllDefaults();
@@ -107,7 +109,7 @@ namespace BH.Adapter.Lusas
 
                 meshAssignment.setBetaAngle(bar.OrientationAngle);
 
-                MeshSettings1D meshSettings1D = (MeshSettings1D)bar.CustomData["Mesh"];
+                MeshSettings1D meshSettings1D = bar.FindFragment<MeshSettings1D>();
                 IFMeshAttr mesh = d_LusasData.getMesh(
                     meshSettings1D.Name + "\\" + bar.FEAType.ToString() + "|" + CreateReleaseString(bar.Release));
                 mesh.assignTo(lusasLine, meshAssignment);

@@ -38,6 +38,8 @@ using System.Linq;
 using BH.Engine.Base.Objects;
 using System;
 using System.Reflection;
+using BH.Engine.Base;
+using BH.oM.Adapters.Lusas.Fragments;
 
 namespace BH.Adapter.Lusas
 {
@@ -205,7 +207,7 @@ namespace BH.Adapter.Lusas
 
             CreateTags(bars);
 
-            if (bars.Any(x => x.CustomData.ContainsKey("Mesh")))
+            if (bars.Any(x => x.Fragments.Contains(typeof(MeshSettings1D))))
             {
                 var barGroups = bars.GroupBy(m => new { m.FEAType, m.Release.Name });
 
@@ -215,7 +217,7 @@ namespace BH.Adapter.Lusas
 
                 foreach (var barGroup in barGroups)
                 {
-                    List<MeshSettings1D> distinctMeshes = barGroup.Select(x => (MeshSettings1D)x.CustomData["Mesh"])
+                    List<MeshSettings1D> distinctMeshes = barGroup.Select(x => x.FindFragment<MeshSettings1D>())
                         .Distinct<MeshSettings1D>(comparer)
                         .ToList();
 
@@ -226,7 +228,7 @@ namespace BH.Adapter.Lusas
 
                     foreach (Bar bar in barGroup)
                     {
-                        bar.CustomData["Mesh"] = distinctMeshes.First(x => comparer.Equals(x, ((MeshSettings1D)bar.CustomData["Mesh"])));
+                        bar.Fragments.Add(distinctMeshes.First(x => comparer.Equals(x, bar.FindFragment<MeshSettings1D>())));
                         IFLine lusasLine = CreateLine(bar);
 
                         if (lusasLine == null)
@@ -268,10 +270,10 @@ namespace BH.Adapter.Lusas
 
             CreateTags(panels);
 
-            if (panels.Any(x => x.CustomData.ContainsKey("Mesh")))
+            if (panels.Any(x => x.Fragments.Contains(typeof(MeshSettings2D))))
             {
                 BHoMObjectNameComparer comparer = new BHoMObjectNameComparer();
-                List<MeshSettings2D> distinctMeshes = panels.Select(x => (MeshSettings2D)x.CustomData["Mesh"])
+                List<MeshSettings2D> distinctMeshes = panels.Select(x => x.FindFragment<MeshSettings2D>())
                     .Distinct<MeshSettings2D>(comparer)
                     .ToList();
 
@@ -282,7 +284,7 @@ namespace BH.Adapter.Lusas
 
                 foreach (Panel panel in panels)
                 {
-                    panel.CustomData["Mesh"] = distinctMeshes.First(x => comparer.Equals(x, ((MeshSettings2D)panel.CustomData["Mesh"])));
+                    panel.AddFragment(distinctMeshes.First(x => comparer.Equals(x, (panel.FindFragment<MeshSettings2D>()))));
                 }
 
             }

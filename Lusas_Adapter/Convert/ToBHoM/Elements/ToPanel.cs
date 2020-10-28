@@ -31,6 +31,7 @@ using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
 using BH.oM.Adapters.Lusas;
 using BH.Engine.Adapter;
+using BH.Engine.Base;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -94,7 +95,7 @@ namespace BH.Adapter.Adapters.Lusas
             if (!(meshSettings.Count() == 0))
             {
                 meshes.TryGetValue(meshSettings[0], out surfaceMesh);
-                panel.CustomData["Mesh"] = surfaceMesh;
+                panel.AddFragment(surfaceMesh);
             }
 
             return panel;
