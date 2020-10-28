@@ -28,10 +28,7 @@ using System.Collections.Generic;
 
 namespace BH.oM.Adapters.Lusas
 {
-    public interface ILusasId : IAdapterId
-    { }
-
-    public class LusasId : ILusasId
+    public class LusasId
     {
         /***************************************************/
         /**** Public Properties                         ****/
