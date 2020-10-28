@@ -27,6 +27,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.MaterialFragments;
+using BH.Engine.Adapter;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -52,7 +53,7 @@ namespace BH.Adapter.Lusas
             {
                 IEnumerable<Edge> edgesList = ReadEdges();
                 Dictionary<string, Edge> edges = edgesList.ToDictionary(
-                    x => x.CustomData[AdapterIdName].ToString());
+                    x => x.AdapterId<string>(typeof(LusasId)));
 
                 HashSet<string> groupNames = ReadTags();
                 IEnumerable<IMaterialFragment> materialList = ReadMaterials();

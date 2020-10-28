@@ -29,6 +29,7 @@ using BH.oM.Geometry;
 using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
 using BH.oM.Adapters.Lusas;
+using BH.Engine.Adapter;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -64,7 +65,9 @@ namespace BH.Adapter.Adapters.Lusas
             Panel panel = Engine.Structure.Create.Panel(surfaceEdges, dummyCurve);
 
             panel.Tags = tags;
-            panel.CustomData[AdapterIdName] = lusasSurface.getID();
+
+            int adapterID = lusasSurface.getID();
+            panel.SetAdapterId(typeof(LusasId), adapterID);
 
             List<string> geometricAssignments = GetAttributeAssignments(lusasSurface, "Geometric");
             List<string> materialAssignments = GetAttributeAssignments(lusasSurface, "Material");

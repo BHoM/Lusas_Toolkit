@@ -21,7 +21,7 @@
  */
 
 using BH.oM.Adapters.Lusas;
-using BH.Engine.Structure;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
 using Lusas.LPI;
 
@@ -42,16 +42,17 @@ namespace BH.Adapter.Lusas
         private IFSurface CreateSurface(Panel panel, IFLine[] lusasLines)
         {
             IFSurface lusasSurface;
-            if (d_LusasData.existsSurfaceByID((int)panel.CustomData[AdapterIdName]))
+            if (d_LusasData.existsSurfaceByID(panel.AdapterId<int>(typeof(LusasId))))
             {
-                lusasSurface = d_LusasData.getSurfaceByNumber(panel.CustomData[AdapterIdName].ToString());
+                lusasSurface = d_LusasData.getSurfaceByNumber(panel.AdapterId<int>(typeof(LusasId)));
             }
             else
             {
                 lusasSurface = d_LusasData.createSurfaceBy(lusasLines);
             }
 
-            panel.CustomData[AdapterIdName] = lusasSurface.getID();
+            int adapterIdName = lusasSurface.getID();
+            panel.SetAdapterId(typeof(LusasId), adapterIdName);
 
             if (!(panel.Tags.Count == 0))
             {
@@ -60,12 +61,12 @@ namespace BH.Adapter.Lusas
 
             if (!(panel.Property == null))
             {
-                IFAttribute lusasGeometricSurface = d_LusasData.getAttribute("Surface Geometric", System.Convert.ToInt32(panel.Property.CustomData[AdapterIdName]));
+                IFAttribute lusasGeometricSurface = d_LusasData.getAttribute("Surface Geometric", panel.Property.AdapterId<int>(typeof(LusasId)));
 
                 lusasGeometricSurface.assignTo(lusasSurface);
                 if (!(panel.Property.Material == null))
                 {
-                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", System.Convert.ToInt32(panel.Property.Material.CustomData[AdapterIdName]));
+                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", panel.Property.Material.AdapterId<int>(typeof(LusasId)));
                     lusasMaterial.assignTo(lusasSurface);
                 }
             }
@@ -76,9 +77,7 @@ namespace BH.Adapter.Lusas
                 meshAssignment.setAllDefaults();
 
                 MeshSettings2D meshSettings2D = (MeshSettings2D)panel.CustomData["Mesh"];
-                string meshAdapterID = meshSettings2D.CustomData[AdapterIdName].ToString();
-                IFMeshAttr mesh = d_LusasData.getMesh(
-                   meshSettings2D.Name);
+                IFMeshAttr mesh = d_LusasData.getMesh(meshSettings2D.Name);
                 mesh.assignTo(lusasSurface, meshAssignment);
             }
 

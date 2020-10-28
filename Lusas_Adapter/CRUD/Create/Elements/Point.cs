@@ -20,9 +20,11 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 using BH.Engine.Structure;
+using BH.Engine.Adapter;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -41,12 +43,14 @@ namespace BH.Adapter.Lusas
 
         private IFPoint CreatePoint(Node node)
         {
-            Point position = Query.Position(node);
+            Point position = Engine.Structure.Query.Position(node);
             IFDatabaseOperations databasePoint = d_LusasData.createPoint(
                 position.X, position.Y, position.Z);
             IFPoint lusasPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
 
-            node.CustomData[AdapterIdName] = lusasPoint.getID().ToString();
+
+            int adapterIdName = lusasPoint.getID();
+            node.SetAdapterId(typeof(LusasId), adapterIdName);
 
 
             if (!(node.Tags.Count == 0))
@@ -56,7 +60,7 @@ namespace BH.Adapter.Lusas
 
             if (!(node.Support == null))
             {
-                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", System.Convert.ToInt32(node.Support.CustomData[AdapterIdName]));
+                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", System.Convert.ToInt32(node.Support.AdapterId<int>(typeof(LusasId))));
                 lusasSupport.assignTo(lusasPoint);
             }
 

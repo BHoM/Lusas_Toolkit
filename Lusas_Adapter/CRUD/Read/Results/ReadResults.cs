@@ -24,13 +24,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BH.oM.Base;
-using BH.oM.Adapter;
+using BH.Engine.Adapter;
 using BH.oM.Analytical.Results;
 using BH.oM.Data.Requests;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Requests;
 using System.Linq;
 using BH.Engine.Adapters.Lusas;
+using BH.oM.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
 {
@@ -68,13 +69,13 @@ namespace BH.Adapter.Lusas
                     foreach (object o in ids)
                     {
                         int id;
-                        object idObj;
                         if (int.TryParse(o.ToString(), out id))
                         {
                             idsOut.Add(id);
                         }
-                        else if (o is IBHoMObject && (o as IBHoMObject).CustomData.TryGetValue(AdapterIdName, out idObj) && int.TryParse(idObj.ToString(), out id))
-                            idsOut.Add(id);
+                        else if (o is IBHoMObject && (o as IBHoMObject).HasAdapterIdFragment(typeof(LusasId)))
+                            int.TryParse((o as IBHoMObject).AdapterId<string>(typeof(LusasId)), out id);
+                        idsOut.Add(id);
                     }
                     return idsOut;
                 }
@@ -86,7 +87,7 @@ namespace BH.Adapter.Lusas
             List<int> ids = new List<int>();
             int maxIndex = d_LusasData.getLargestNodeID();
 
-            for(int i = 1; i < maxIndex +1; i++)
+            for (int i = 1; i < maxIndex + 1; i++)
             {
                 if (d_LusasData.existsPointByID(i))
                 {
@@ -168,7 +169,7 @@ namespace BH.Adapter.Lusas
                     {
                         caseNums.Add(System.Convert.ToInt32(lCase.Item2.Number));
                     }
-                    caseNums.Add(System.Convert.ToInt32((lComb as LoadCombination).CustomData[AdapterIdName]));
+                    caseNums.Add((lComb as LoadCombination).AdapterId<int>(typeof(LusasId)));
                 }
             }
 

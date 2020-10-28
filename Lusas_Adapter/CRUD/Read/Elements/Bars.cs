@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 using BH.oM.Structure.SectionProperties;
@@ -52,7 +53,7 @@ namespace BH.Adapter.Lusas
             {
                 IEnumerable<Node> nodesList = ReadNodes();
                 Dictionary<string, Node> nodes = nodesList.ToDictionary(
-                    x => x.CustomData[AdapterIdName].ToString());
+                    x => x.AdapterId<string>(typeof(LusasId)));
 
                 IEnumerable<Constraint4DOF> supportsList = Read4DOFConstraints();
                 Dictionary<string, Constraint4DOF> supports = supportsList.ToDictionary(

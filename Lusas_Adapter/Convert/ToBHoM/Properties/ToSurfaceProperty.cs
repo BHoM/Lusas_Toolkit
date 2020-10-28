@@ -20,7 +20,9 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Adapter.Lusas;
+using BH.Adapter.Adapters.Lusas;
+using BH.Engine.Adapter;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.SurfaceProperties;
 using Lusas.LPI;
 
@@ -42,7 +44,8 @@ namespace BH.Adapter.Adapters.Lusas
                 Thickness = lusasAttribute.getValue("t")
             };
 
-            surfaceProperty.CustomData[AdapterIdName] = lusasAttribute.getID().ToString();
+            int adapterNameId = lusasAttribute.getID();
+            surfaceProperty.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return surfaceProperty;
         }

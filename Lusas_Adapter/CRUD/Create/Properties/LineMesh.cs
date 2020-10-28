@@ -24,6 +24,7 @@ using Lusas.LPI;
 using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
+using BH.Engine.Adapter;
 
 namespace BH.Adapter.Lusas
 {
@@ -64,14 +65,16 @@ namespace BH.Adapter.Lusas
             if (d_LusasData.existsAttribute("Mesh", lusasName))
             {
                 lusasLineMesh = (IFMeshLine)d_LusasData.getAttribute("Mesh", lusasName);
-                meshSettings1D.CustomData[AdapterIdName] = lusasLineMesh.getID().ToString();
+                int adapterNameId = lusasLineMesh.getID();
+                meshSettings1D.SetAdapterId(typeof(LusasId), adapterNameId);
             }
             else
             {
                 lusasLineMesh = d_LusasData.createMeshLine(lusasName);
                 SetSplitMethod(lusasLineMesh, meshSettings1D, barFEAType);
                 SetEndConditions(lusasLineMesh, barRelease);
-                meshSettings1D.CustomData[AdapterIdName] = d_LusasData.getLargestAttributeID("Mesh");
+                int adapterNameId = d_LusasData.getLargestAttributeID("Mesh");
+                meshSettings1D.SetAdapterId(typeof(LusasId), adapterNameId);
             }
             return lusasLineMesh;
         }

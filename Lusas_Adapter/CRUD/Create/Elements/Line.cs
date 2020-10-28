@@ -22,10 +22,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.MaterialFragments;
-using BH.oM.Geometry;
-using BH.oM.Adapters.Lusas;
+using BH.Engine.Adapter;
 using BH.Engine.Geometry;
 using Lusas.LPI;
 using BH.Engine.Structure;
@@ -55,11 +55,12 @@ namespace BH.Adapter.Lusas
                 return null;
             }
 
-            IFPoint startPoint = d_LusasData.getPointByNumber(bar.StartNode.CustomData[AdapterIdName].ToString());
-            IFPoint endPoint = d_LusasData.getPointByNumber(bar.EndNode.CustomData[AdapterIdName].ToString());
+            IFPoint startPoint = d_LusasData.getPointByNumber(bar.StartNode.AdapterId<int>(typeof(LusasId)));
+            IFPoint endPoint = d_LusasData.getPointByNumber(bar.EndNode.AdapterId<int>(typeof(LusasId)));
             IFLine lusasLine = d_LusasData.createLineByPoints(startPoint, endPoint);
 
-            bar.CustomData[AdapterIdName] = lusasLine.getID().ToString();
+            int adapterIdName = lusasLine.getID();
+            bar.SetAdapterId(typeof(LusasId), adapterIdName);
 
             if (!(bar.Tags.Count == 0))
             {
@@ -68,16 +69,16 @@ namespace BH.Adapter.Lusas
 
             if (!(bar.SectionProperty == null))
             {
-                IFAttribute lusasGeometricLine = d_LusasData.getAttribute("Line Geometric", System.Convert.ToInt32(bar.SectionProperty.CustomData[AdapterIdName]));
+                IFAttribute lusasGeometricLine = d_LusasData.getAttribute("Line Geometric", bar.SectionProperty.AdapterId<int>(typeof(LusasId)));
                 lusasGeometricLine.assignTo(lusasLine);
 
                 if (!(bar.SectionProperty.Material == null))
                 {
-                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", System.Convert.ToInt32(bar.SectionProperty.Material.CustomData[AdapterIdName]));
+                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", bar.SectionProperty.Material.AdapterId<int>(typeof(LusasId)));
 
                     if (bar.SectionProperty.Material is IOrthotropic)
                     {
-                        Engine.Reflection.Compute.RecordWarning($"Orthotropic Material {bar.SectionProperty.Material.DescriptionOrName()} cannot be assigned to Bar {bar.CustomData[AdapterIdName]}, " +
+                        Engine.Reflection.Compute.RecordWarning($"Orthotropic Material {bar.SectionProperty.Material.DescriptionOrName()} cannot be assigned to Bar {bar.AdapterId<int>(typeof(LusasId))}, " +
                             $"orthotropic can only be applied to 2D and 3D elements in Lusas.");
                     }
 
@@ -87,7 +88,7 @@ namespace BH.Adapter.Lusas
 
             if (!(bar.Support == null))
             {
-                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", System.Convert.ToInt32(bar.Support.CustomData[AdapterIdName]));
+                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", System.Convert.ToInt32(bar.Support.AdapterId<int>(typeof(LusasId))));
                 lusasSupport.assignTo(lusasLine);
                 IFLocalCoord barLocalAxis = CreateLocalCoordinate(lusasLine);
                 barLocalAxis.assignTo(lusasLine);
@@ -107,7 +108,6 @@ namespace BH.Adapter.Lusas
                 meshAssignment.setBetaAngle(bar.OrientationAngle);
 
                 MeshSettings1D meshSettings1D = (MeshSettings1D)bar.CustomData["Mesh"];
-                string meshAdapterID = meshSettings1D.CustomData[AdapterIdName].ToString();
                 IFMeshAttr mesh = d_LusasData.getMesh(
                     meshSettings1D.Name + "\\" + bar.FEAType.ToString() + "|" + CreateReleaseString(bar.Release));
                 mesh.assignTo(lusasLine, meshAssignment);

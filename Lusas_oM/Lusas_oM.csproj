@@ -90,6 +90,9 @@
       <HintPath>C:\ProgramData\BHoM\Assemblies\BHoM.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Diffing_oM">
+      <HintPath>..\..\..\..\..\..\ProgramData\BHoM\Assemblies\Diffing_oM.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -103,6 +106,7 @@
     <Compile Include="Enum\SectionLibrary.cs" />
     <Compile Include="Enum\Split1D.cs" />
     <Compile Include="Enum\Split2D.cs" />
+    <Compile Include="Fragments\LusasId.cs" />
     <Compile Include="Settings\LibrarySettings.cs" />
     <Compile Include="Settings\LusasConfig.cs" />
     <Compile Include="Structural\Properties\MeshSettings2D.cs" />

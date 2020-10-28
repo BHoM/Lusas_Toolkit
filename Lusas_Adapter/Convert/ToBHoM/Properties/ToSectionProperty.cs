@@ -24,7 +24,8 @@ using System;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Spatial.ShapeProfiles;
 using Lusas.LPI;
-using BH.Adapter.Lusas;
+using BH.oM.Adapters.Lusas;
+using BH.Engine.Adapter;
 using System.Collections.Generic;
 using System.Linq;
 using System.Dynamic;
@@ -53,7 +54,7 @@ namespace BH.Adapter.Adapters.Lusas
             for (int i = 0; i < rows; i++)
             {
                 profile = ToProfile(lusasAttribute, i);
-                double area = lusasAttribute.getValue("A",i);
+                double area = lusasAttribute.getValue("A", i);
                 double rgy = lusasAttribute.getValue("ky", i);
                 double rgz = lusasAttribute.getValue("kz", i);
                 double j = lusasAttribute.getValue("J", i);
@@ -75,7 +76,7 @@ namespace BH.Adapter.Adapters.Lusas
 
                 profile = Engine.Structure.Compute.Integrate(profile, oM.Geometry.Tolerance.MicroDistance).Item1;
 
-                if(attributeType == "Multiple Varying Geometric")
+                if (attributeType == "Multiple Varying Geometric")
                 {
                     interpolationOrders.Add(1);
                     double position = lusasAttribute.getValue("distanceAlongBeam", i);
@@ -88,7 +89,7 @@ namespace BH.Adapter.Adapters.Lusas
                 }
 
             }
-            
+
             if (lusasAttribute.getAttributeType() == "Multiple Varying Geometric")
             {
                 TaperedProfile taperedProfile = Engine.Spatial.Create.TaperedProfile(positions, profiles, interpolationOrders);
@@ -96,7 +97,9 @@ namespace BH.Adapter.Adapters.Lusas
             }
 
             section.Name = attributeName;
-            section.CustomData[AdapterIdName] = lusasAttribute.getID().ToString();
+
+            int adapterNameId = lusasAttribute.getID();
+            section.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return section;
         }

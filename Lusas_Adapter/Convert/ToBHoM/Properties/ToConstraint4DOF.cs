@@ -21,7 +21,8 @@
  */
 
 using System.Collections.Generic;
-using BH.Adapter.Lusas;
+using BH.oM.Adapters.Lusas;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Constraints;
 using Lusas.LPI;
 
@@ -76,7 +77,8 @@ namespace BH.Adapter.Adapters.Lusas
             constraint4DOF.TranslationalStiffnessX = stiffness[2];
             constraint4DOF.TranslationalStiffnessX = stiffness[3];
 
-            constraint4DOF.CustomData[AdapterIdName] = lusasAttribute.getID();
+            int adapterNameId = lusasAttribute.getID();
+            constraint4DOF.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return constraint4DOF;
         }

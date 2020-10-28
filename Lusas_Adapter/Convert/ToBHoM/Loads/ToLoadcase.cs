@@ -20,7 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Adapter.Lusas;
+using BH.Engine.Adapter;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Loads;
 using Lusas.LPI;
 
@@ -40,7 +41,8 @@ namespace BH.Adapter.Adapters.Lusas
                 Number = lusasLoadcase.getID()
             };
 
-            loadcase.CustomData[AdapterIdName] = lusasLoadcase.getID().ToString();
+            int adapterNameId = lusasLoadcase.getID();
+            loadcase.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return loadcase;
         }

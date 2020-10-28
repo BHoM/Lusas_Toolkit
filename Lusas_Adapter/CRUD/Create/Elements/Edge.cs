@@ -20,9 +20,11 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Engine.Structure;
+using BH.Engine.Adapter;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using Lusas.LPI;
+using System;
 
 namespace BH.Adapter.Lusas
 {
@@ -42,7 +44,8 @@ namespace BH.Adapter.Lusas
         {
             IFLine lusasLine = d_LusasData.createLineByPoints(startPoint, endPoint);
 
-            edge.CustomData[AdapterIdName] = lusasLine.getID().ToString();
+            int adapterIdName = lusasLine.getID();
+            edge.SetAdapterId(typeof(LusasId), adapterIdName);
 
             if (!(edge.Tags.Count == 0))
             {
@@ -51,7 +54,7 @@ namespace BH.Adapter.Lusas
 
             if (!(edge.Support == null))
             {
-                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", System.Convert.ToInt32(edge.Support.CustomData[AdapterIdName]));
+                IFAttribute lusasSupport = d_LusasData.getAttribute("Support", edge.Support.AdapterId<int>(typeof(LusasId)));
                 lusasSupport.assignTo(lusasLine);
             }
 

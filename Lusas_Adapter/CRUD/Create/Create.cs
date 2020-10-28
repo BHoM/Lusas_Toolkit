@@ -31,11 +31,13 @@ using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.MaterialFragments;
+using BH.Engine.Adapter;
 using Lusas.LPI;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using BH.Engine.Base.Objects;
+using System;
+using System.Reflection;
 
 namespace BH.Adapter.Lusas
 {
@@ -313,7 +315,7 @@ namespace BH.Adapter.Lusas
                     Edge edge = distinctEdges[midPoints.FindIndex(
                         m => m.Equals(edges[i].Curve.IPointAtParameter(0.5).ClosestPoint(midPoints)))];
 
-                    lusasLines[i] = d_LusasData.getLineByNumber(System.Convert.ToInt32(edge.CustomData[AdapterIdName]));
+                    lusasLines[i] = d_LusasData.getLineByNumber(edge.AdapterId<int>(typeof(LusasId)));
                 }
 
                 IFSurface lusasSurface = CreateSurface(panel, lusasLines);

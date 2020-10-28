@@ -22,6 +22,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using BH.Engine.Adapter;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Adapter;
 using BH.oM.Base;
 using BH.oM.Structure.Elements;
@@ -75,7 +77,7 @@ namespace BH.Adapter.Lusas
 
             foreach (Node node in nodes)
             {
-                IFPoint lusasPoint = d_LusasData.getPointByNumber(System.Convert.ToInt32(node.CustomData[AdapterIdName]));
+                IFPoint lusasPoint = d_LusasData.getPointByNumber(node.AdapterId<int>(typeof(LusasId)));
 
                 if (lusasPoint == null)
                 {

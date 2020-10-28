@@ -21,11 +21,12 @@
  */
 
 using System.Collections.Generic;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 using Lusas.LPI;
-using BH.Adapter.Lusas;
-using BH.Engine.Adapters.Lusas;
+using BH.Engine.Adapter;
+
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -49,7 +50,8 @@ namespace BH.Adapter.Adapters.Lusas
             Line line = new Line { Start = startPoint, End = endPoint };
             Edge edge = new Edge { Curve = line, Tags = tags };
 
-            edge.CustomData[AdapterIdName] = lusasLine.getID().ToString();
+            string adapterID = lusasLine.getID().ToString();
+            edge.SetAdapterId(typeof(LusasId), adapterID);
 
             return edge;
         }

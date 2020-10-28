@@ -20,8 +20,9 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Engine.Reflection;
+using BH.Engine.Adapter;
 using BH.Engine.Structure;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
 
@@ -78,7 +79,8 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            material.CustomData[AdapterIdName] = lusasMaterial.getID().ToString();
+            int adapterIdName = lusasMaterial.getID();
+            material.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasMaterial;
         }
@@ -87,5 +89,3 @@ namespace BH.Adapter.Lusas
 
     }
 }
-
-

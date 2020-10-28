@@ -22,7 +22,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using BH.Adapter.Lusas;
+using BH.Engine.Adapter;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Geometry;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
@@ -57,7 +58,7 @@ namespace BH.Adapter.Adapters.Lusas
 
             if (lusasDistributed.getAttributeType() == "Global Distributed Load")
             {
-                areaUniformlyDistributedLoad =Engine.Structure.Create.AreaUniformlyDistributedLoad(
+                areaUniformlyDistributedLoad = Engine.Structure.Create.AreaUniformlyDistributedLoad(
                 loadcase,
                 pressureVector,
                 assignedPanels,
@@ -67,7 +68,7 @@ namespace BH.Adapter.Adapters.Lusas
             }
             else if (lusasDistributed.getAttributeType() == "Distributed Load")
             {
-                areaUniformlyDistributedLoad =Engine.Structure.Create.AreaUniformlyDistributedLoad(
+                areaUniformlyDistributedLoad = Engine.Structure.Create.AreaUniformlyDistributedLoad(
                 loadcase,
                 pressureVector,
                 assignedPanels,
@@ -76,7 +77,8 @@ namespace BH.Adapter.Adapters.Lusas
                 GetName(lusasDistributed));
             }
 
-            areaUniformlyDistributedLoad.CustomData[AdapterIdName] = lusasDistributed.getID();
+            int adapterNameId = lusasDistributed.getID();
+            areaUniformlyDistributedLoad.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return areaUniformlyDistributedLoad;
         }

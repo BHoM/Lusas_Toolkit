@@ -22,9 +22,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Loads;
 using Lusas.LPI;
-using BH.Engine.Adapters.Lusas;
+using BH.Engine.Adapter;
 
 namespace BH.Adapter.Lusas
 {
@@ -45,7 +46,7 @@ namespace BH.Adapter.Lusas
         {
             List<IFLoadingBeamDistributed> lusasBarDistributedLoads = new List<IFLoadingBeamDistributed>();
             IFAssignment lusasAssignment = m_LusasApplication.assignment();
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(barDistributedLoad.Loadcase.CustomData[AdapterIdName]));
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(barDistributedLoad.Loadcase.AdapterId<int>(typeof(LusasId)));
 
             Engine.Reflection.Compute.RecordWarning(
                 barDistributedLoad.GetType().ToString() + " uses parametric distances in the Lusas_Toolkit"
@@ -154,7 +155,7 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            barDistributedLoad.CustomData[AdapterIdName] = ids;
+            barDistributedLoad.SetAdapterId(typeof(LusasId), ids);
 
             return lusasBarDistributedLoads;
         }

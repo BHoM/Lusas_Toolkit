@@ -22,6 +22,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using BH.oM.Adapters.Lusas;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 using Lusas.LPI;
 
@@ -42,7 +44,7 @@ namespace BH.Adapter.Lusas
         private IFPrescribedDisplacementLoad CreatePrescribedDisplacement(PointDisplacement pointDisplacement, object[] lusasPoints)
         {
             IFPrescribedDisplacementLoad lusasPrescribedDisplacement;
-            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(System.Convert.ToInt32(pointDisplacement.Loadcase.CustomData[AdapterIdName]));
+            IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(pointDisplacement.Loadcase.AdapterId<int>(typeof(LusasId)));
 
             if (d_LusasData.existsAttribute("Loading", pointDisplacement.Name))
             {
@@ -83,7 +85,8 @@ namespace BH.Adapter.Lusas
             lusasAssignment.setLoadset(assignedLoadcase);
             lusasPrescribedDisplacement.assignTo(lusasPoints, lusasAssignment);
 
-            pointDisplacement.CustomData[AdapterIdName] = lusasPrescribedDisplacement.getID().ToString();
+            int adapterIdName = lusasPrescribedDisplacement.getID();
+            pointDisplacement.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasPrescribedDisplacement;
         }

@@ -21,7 +21,9 @@
  */
 
 using BH.Engine.Structure;
+using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.SurfaceProperties;
+using BH.Engine.Adapter;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -52,7 +54,8 @@ namespace BH.Adapter.Lusas
                 lusasAttribute = lusasGeometricSurface;
             }
 
-            surfaceProperty.CustomData[AdapterIdName] = lusasAttribute.getID().ToString();
+            int adapterIdName = lusasAttribute.getID();
+            surfaceProperty.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasAttribute;
         }
