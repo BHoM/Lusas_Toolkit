@@ -28,7 +28,7 @@ using System.Collections.Generic;
 
 namespace BH.oM.Adapters.Lusas
 {
-    public class LusasId
+    public class LusasId : IAdapterId
     {
         /***************************************************/
         /**** Public Properties                         ****/
