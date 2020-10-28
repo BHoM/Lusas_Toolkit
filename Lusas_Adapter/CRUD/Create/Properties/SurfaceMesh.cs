@@ -23,6 +23,7 @@
 using Lusas.LPI;
 using BH.Engine.Adapter;
 using BH.oM.Adapters.Lusas;
+using BH.oM.Adapters.Lusas.Fragments;
 
 namespace BH.Adapter.Lusas
 {

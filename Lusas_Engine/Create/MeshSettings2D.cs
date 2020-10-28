@@ -21,6 +21,7 @@
  */
 
 using BH.oM.Adapters.Lusas;
+using BH.oM.Adapters.Lusas.Fragments;
 
 
 namespace BH.Engine.Adapters.Lusas

@@ -29,6 +29,7 @@ using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
 using BH.oM.Adapters.Lusas;
+using BH.oM.Adapters.Lusas.Fragments;
 using System;
 using BH.Engine.Adapter;
 

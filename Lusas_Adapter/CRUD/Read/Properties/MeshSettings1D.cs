@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Lusas.LPI;
 using BH.oM.Adapters.Lusas;
+using BH.oM.Adapters.Lusas.Fragments;
 
 namespace BH.Adapter.Lusas
 {
