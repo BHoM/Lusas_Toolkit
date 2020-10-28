@@ -95,7 +95,7 @@ namespace BH.Adapter.Adapters.Lusas
             if (!(meshSettings.Count() == 0))
             {
                 meshes.TryGetValue(meshSettings[0], out surfaceMesh);
-                panel.AddFragment(surfaceMesh);
+                panel.Fragments.Add(surfaceMesh);
             }
 
             return panel;

@@ -228,7 +228,7 @@ namespace BH.Adapter.Lusas
 
                     foreach (Bar bar in barGroup)
                     {
-                        bar.Fragments.Add(distinctMeshes.First(x => comparer.Equals(x, bar.FindFragment<MeshSettings1D>())));
+                        bar.AddFragment(distinctMeshes.First(x => comparer.Equals(x, bar.FindFragment<MeshSettings1D>())),true);
                         IFLine lusasLine = CreateLine(bar);
 
                         if (lusasLine == null)
@@ -284,7 +284,7 @@ namespace BH.Adapter.Lusas
 
                 foreach (Panel panel in panels)
                 {
-                    panel.AddFragment(distinctMeshes.First(x => comparer.Equals(x, (panel.FindFragment<MeshSettings2D>()))));
+                    panel.AddFragment(distinctMeshes.First(x => comparer.Equals(x, (panel.FindFragment<MeshSettings2D>()))), true);
                 }
 
             }

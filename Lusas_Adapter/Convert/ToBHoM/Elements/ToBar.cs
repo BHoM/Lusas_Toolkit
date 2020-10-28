@@ -96,7 +96,7 @@ namespace BH.Adapter.Adapters.Lusas
             if (!(meshSettings.Count() == 0))
             {
                 meshes.TryGetValue(meshSettings[0], out lineMesh);
-                bar.AddFragment(lineMesh);
+                bar.Fragments.Add(lineMesh);
             }
 
             Tuple<bool, double, BarRelease, BarFEAType> barMeshProperties = GetMeshProperties(lusasLine);
