@@ -66,7 +66,7 @@ namespace BH.Adapter.Lusas
                     IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases = GetLoadAssignments(
                         lusasDistributedLoad);
 
-                    if (lusasDistributedLoad.getValue("type") == "Length")
+                    if (lusasDistributedLoad.getValue("type") == "Length" || lusasDistributedLoad.getValue("type") == "line")
                     {
                         foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                         {
