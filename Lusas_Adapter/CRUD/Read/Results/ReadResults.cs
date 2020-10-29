@@ -74,8 +74,10 @@ namespace BH.Adapter.Lusas
                             idsOut.Add(id);
                         }
                         else if (o is IBHoMObject && (o as IBHoMObject).HasAdapterIdFragment(typeof(LusasId)))
+                        {
                             int.TryParse((o as IBHoMObject).AdapterId<string>(typeof(LusasId)), out id);
-                        idsOut.Add(id);
+                            idsOut.Add(id);
+                        }
                     }
                     return idsOut;
                 }
