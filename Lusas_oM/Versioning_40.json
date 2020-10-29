@@ -1,0 +1,20 @@
+{
+  "Namespace": {
+    "ToNew": {
+      "BH.oM.Adapters.Lusas.MeshSettings1D":  "BH.oM.Adapters.Lusas.Fragments.MeshSettings1D",
+	  "BH.oM.Adapters.Lusas.MeshSettings2D":  "BH.oM.Adapters.Lusas.Fragments.MeshSettings2D"
+    },
+    "ToOld": {
+      "BH.oM.Adapters.Lusas.Fragments.MeshSettings1D":  "BH.oM.Adapters.Lusas.MeshSettings1D",
+	  "BH.oM.Adapters.Lusas.Fragments.MeshSettings2D":  "BH.oM.Adapters.Lusas.MeshSettings2D"
+    }
+  },
+  "Type": {
+    "ToNew": {
+	
+    },
+    "ToOld": {
+
+    }
+  }
+}
