@@ -354,6 +354,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdapterActions\Execute.cs" />
     <Compile Include="Convert\Double.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToBar.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToEdge.cs" />
