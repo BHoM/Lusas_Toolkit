@@ -64,7 +64,7 @@ namespace BH.Adapter.Lusas
             d_LusasData.setModelUnits("N,m,kg,s,C");
             d_LusasData.setTimescaleUnits("Seconds");
             d_LusasData.setVerticalDir("Z");
-            //m_LusasApplication.fileOpen("%PerMachineAppDataPlatform%\\config\\AfterNewModel");
+            m_LusasApplication.fileOpen("%PerMachineAppDataPlatform%\\config\\AfterNewModel");
             d_LusasData.setAnalysisCategory("3D");
 
             return true;
@@ -109,11 +109,7 @@ namespace BH.Adapter.Lusas
 
         public bool RunCommand(Analyse command)
         {
-            IFTabulateDataObj tabulateDataObj = m_LusasApplication.getSolverExportData();
-            tabulateDataObj.setSolveAllLoadcases(true);
-            m_LusasApplication.solve(d_LusasData.getDBFilename());
-
-            return true;
+            return Analyse();
         }
 
         /***************************************************/
@@ -131,7 +127,7 @@ namespace BH.Adapter.Lusas
         public bool RunCommand(ClearResults command)
         {
             d_LusasData.closeAllResults();
-            
+
             return true;
         }
 
@@ -149,23 +145,25 @@ namespace BH.Adapter.Lusas
 
         private bool Analyse(IEnumerable<object> cases = null)
         {
-            //Check if the model has been saved
-            if (d_LusasData.getDBFilename() == "Untitled")
-            {
-                Engine.Reflection.Compute.RecordWarning("Lusas requires the model to be saved before being analysed. Please save the model and try running again.");
-                return false;
-            }
+            d_LusasData.closeAllResults();
+            d_LusasData.updateMesh();
+            d_LusasData.save();
 
-            IFTabulateDataObj tabulateDataObj = m_LusasApplication.getSolverExportData();
+            IFLusasRunOptionsObj solverOptions = m_LusasApplication.solverOptions();
+            IFTabulateDataObj solverExport = m_LusasApplication.solverExport();
+
+            solverOptions.setAllDefaults();
+            solverExport.setFilename("%DBFolder%\\%ModelName%~Analysis 1.dat");
+            solverExport.setAnalysis("Analysis 1");
 
             if (cases == null || cases.Count() == 0)
             {
-                tabulateDataObj.setSolveAllLoadcases(true);
+                solverExport.setSolveAllLoadcases(true);
             }
             else
             {
                 //Unselect all cases
-                tabulateDataObj.setSolveAllLoadcases(false);
+                solverExport.setSolveAllLoadcases(false);
 
                 //Select provided cases
                 foreach (object item in cases)
@@ -192,7 +190,30 @@ namespace BH.Adapter.Lusas
 
             }
 
-            return true;
+            int exportError = d_LusasData.exportSolver(solverExport, solverOptions);
+
+            //Did any calls to exportSolver and solve produce errors?
+            bool exportErrors = false;
+            bool solveErrors = false;
+
+            //Any non-zero value for solveError or ExportError indicates an error
+            int solveError;
+
+
+            if (exportError != 0)
+                exportErrors = true;
+            else
+            {
+                solveError = m_LusasApplication.solve("%DBFolder%\\%ModelName%~Analysis 1.dat", solverOptions);
+                if (solveError != 0)
+                    solveErrors = true;
+                m_LusasApplication.fileOpen("%PerMachineAppDataPlatform%\\config\\AfterSolve");
+                m_LusasApplication.scanout("%DBFolder%\\%ModelName%~Analysis 1.out");
+            }
+            m_LusasApplication.processSolveErrors(exportErrors, solveErrors);
+            m_LusasApplication.solve(d_LusasData.getDBFilename());
+
+            return !(exportErrors & solveErrors);
         }
 
         /***************************************************/
