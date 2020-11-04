@@ -60,11 +60,12 @@ namespace BH.Adapter.Lusas
         public bool RunCommand(NewModel command)
         {
             m_LusasApplication.newDatabase("Structural");
-            d_LusasData.setAnalysisCategory("3D");
+            d_LusasData = m_LusasApplication.getDatabase();
             d_LusasData.setModelUnits("N,m,kg,s,C");
             d_LusasData.setTimescaleUnits("Seconds");
             d_LusasData.setVerticalDir("Z");
-            m_LusasApplication.fileOpen("%PerMachineAppDataPlatform%\\config\\AfterNewModel");
+            //m_LusasApplication.fileOpen("%PerMachineAppDataPlatform%\\config\\AfterNewModel");
+            d_LusasData.setAnalysisCategory("3D");
 
             return true;
         }
@@ -93,7 +94,7 @@ namespace BH.Adapter.Lusas
         {
             if (System.IO.File.Exists(command.FileName))
             {
-                m_LusasApplication.fileOpen(command.FileName);
+                m_LusasApplication.openDatabase(command.FileName);
 
                 return true;
             }
@@ -110,9 +111,9 @@ namespace BH.Adapter.Lusas
         {
             IFTabulateDataObj tabulateDataObj = m_LusasApplication.getSolverExportData();
             tabulateDataObj.setSolveAllLoadcases(true);
-            bool success = m_LusasApplication.solve(d_LusasData.getDBFilename()) == 0;
-            
-            return success;
+            m_LusasApplication.solve(d_LusasData.getDBFilename());
+
+            return true;
         }
 
         /***************************************************/
