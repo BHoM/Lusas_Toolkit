@@ -95,6 +95,7 @@ namespace BH.Adapter.Lusas
             if (System.IO.File.Exists(command.FileName))
             {
                 m_LusasApplication.openDatabase(command.FileName);
+                d_LusasData = m_LusasApplication.getDatabase();
 
                 return true;
             }
@@ -210,8 +211,9 @@ namespace BH.Adapter.Lusas
                 m_LusasApplication.fileOpen("%PerMachineAppDataPlatform%\\config\\AfterSolve");
                 m_LusasApplication.scanout("%DBFolder%\\%ModelName%~Analysis 1.out");
             }
+            
             m_LusasApplication.processSolveErrors(exportErrors, solveErrors);
-            m_LusasApplication.solve(d_LusasData.getDBFilename());
+            d_LusasData.openResults("%DBFolder%\\%ModelName%~Analysis 1.mys", "Analysis 1", false, 0, false, false);
 
             return !(exportErrors & solveErrors);
         }
