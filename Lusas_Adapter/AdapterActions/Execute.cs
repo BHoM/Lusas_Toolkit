@@ -163,8 +163,10 @@ namespace BH.Adapter.Lusas
             }
             else
             {
-                //Unselect all cases
+                //Disable setSolveAllLoadcases, this overrides the setDoSolve on individual loadcases
                 solverExport.setSolveAllLoadcases(false);
+
+                List<string> names = new List<string>();
 
                 //Select provided cases
                 foreach (object item in cases)
@@ -181,14 +183,19 @@ namespace BH.Adapter.Lusas
                         Engine.Reflection.Compute.RecordWarning("Can not set up cases for running of type " + item.GetType().Name + ". Item " + item.ToString() + " will be ignored. Please provide case names or BHoM cases to be run");
                         continue;
                     }
-
-                    IFLoadcase loadcase = (IFLoadcase)d_LusasData.getLoadset(name);
-                    if (loadcase == null)
-                        Engine.Reflection.Compute.RecordWarning("Failed to set case " + name + "for running. Please check that the case exists in the model");
-                    else
-                        loadcase.setDoSolve(true);
+                    names.Add(name);
                 }
 
+                object[] loadcases = d_LusasData.getLoadsets("loadcase", "all");
+
+                for (int i = 0; i < loadcases.Count(); i++)
+                {
+                    IFLoadcase loadcase = (IFLoadcase)loadcases[i];
+                    if (names.Contains(loadcase.getName()))
+                        loadcase.setDoSolve(true);
+                    else
+                        loadcase.setDoSolve(false);
+                }
             }
 
             int exportError = d_LusasData.exportSolver(solverExport, solverOptions);
@@ -199,7 +206,6 @@ namespace BH.Adapter.Lusas
 
             //Any non-zero value for solveError or ExportError indicates an error
             int solveError;
-
 
             if (exportError != 0)
                 exportErrors = true;
