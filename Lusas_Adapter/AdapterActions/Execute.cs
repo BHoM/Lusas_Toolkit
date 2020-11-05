@@ -148,6 +148,12 @@ namespace BH.Adapter.Lusas
         {
             d_LusasData.closeAllResults();
             d_LusasData.updateMesh();
+            string filename = d_LusasData.getDBFilename();
+            if (filename == "")
+            {
+                Engine.Reflection.Compute.RecordError("Model has not been saved with a filename, please SaveAs with a filename");
+                return false;
+            }
             d_LusasData.save();
 
             IFLusasRunOptionsObj solverOptions = m_LusasApplication.solverOptions();
