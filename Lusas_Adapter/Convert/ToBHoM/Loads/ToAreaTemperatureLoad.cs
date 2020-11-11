@@ -36,7 +36,7 @@ namespace BH.Adapter.Adapters.Lusas
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static AreaTemperatureLoad ToAreaTempratureLoad(
+        public static AreaUniformTemperatureLoad ToAreaTempratureLoad(
             IFLoading lusasTemperatureLoad,
             IEnumerable<IFAssignment> lusasAssignments,
             Dictionary<string, Panel> panels)
@@ -47,7 +47,7 @@ namespace BH.Adapter.Adapters.Lusas
                 - lusasTemperatureLoad.getValue("T0");
 
             IEnumerable<IAreaElement> assignedPanels = GetSurfaceAssignments(lusasAssignments, panels);
-            AreaTemperatureLoad areaTemperatureLoad = BH.Engine.Structure.Create.AreaTemperatureLoad(
+            AreaUniformTemperatureLoad AreaUniformTemperatureLoad = BH.Engine.Structure.Create.AreaUniformTemperatureLoad(
                 loadcase,
                 temperatureChange,
                 assignedPanels,
@@ -56,9 +56,9 @@ namespace BH.Adapter.Adapters.Lusas
                 GetName(lusasTemperatureLoad));
 
             int adapterNameId = lusasTemperatureLoad.getID();
-            areaTemperatureLoad.SetAdapterId(typeof(LusasId), adapterNameId);
+            AreaUniformTemperatureLoad.SetAdapterId(typeof(LusasId), adapterNameId);
 
-            return areaTemperatureLoad;
+            return AreaUniformTemperatureLoad;
         }
 
         /***************************************************/

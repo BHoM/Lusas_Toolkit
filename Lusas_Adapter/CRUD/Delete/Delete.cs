@@ -68,14 +68,14 @@ namespace BH.Adapter.Lusas
                 success = DeleteConstraint6DOF(ids);
             else if (type == typeof(IMaterialFragment))
                 success = DeleteMaterials(ids);
-            else if (type == typeof(AreaTemperatureLoad))
-                success = DeleteAreaTemperatureLoad(ids);
+            else if (type == typeof(AreaUniformTemperatureLoad))
+                success = DeleteAreaUniformTemperatureLoad(ids);
             else if (type == typeof(AreaUniformlyDistributedLoad))
                 success = DeleteAreaUnformlyDistributedLoads(ids);
             else if (type == typeof(BarPointLoad))
                 success = DeleteBarPointLoad(ids);
-            else if (type == typeof(BarTemperatureLoad))
-                success = DeleteBarTemperatureLoad(ids);
+            else if (type == typeof(BarUniformTemperatureLoad))
+                success = DeleteBarUniformTemperatureLoad(ids);
             else if (type == typeof(BarUniformlyDistributedLoad))
                 success = DeleteBarUniformlyDistributedLoads(ids);
             else if (type == typeof(Loadcase))

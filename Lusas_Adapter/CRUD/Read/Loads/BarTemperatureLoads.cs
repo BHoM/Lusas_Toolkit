@@ -42,9 +42,9 @@ namespace BH.Adapter.Lusas
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private List<ILoad> ReadBarTemperatureLoads(List<string> ids = null)
+        private List<ILoad> ReadBarUniformTemperatureLoads(List<string> ids = null)
         {
-            List<ILoad> barTemperatureLoads = new List<ILoad>();
+            List<ILoad> BarUniformTemperatureLoads = new List<ILoad>();
             object[] lusasTemperatureLoads = d_LusasData.getAttributes("Temperature");
 
             if (!(lusasTemperatureLoads.Count() == 0))
@@ -80,18 +80,18 @@ namespace BH.Adapter.Lusas
 
                         if (assignments.Count != 0)
                         {
-                            BarTemperatureLoad barTemperatureLoad =
-                                Adapter.Adapters.Lusas.Convert.ToBarTemperatureLoad(
+                            BarUniformTemperatureLoad BarUniformTemperatureLoad =
+                                Adapter.Adapters.Lusas.Convert.ToBarUniformTemperatureLoad(
                                     lusasTemperatureLoad, groupedAssignment, bars);
 
-                            barTemperatureLoad.Tags = new HashSet<string>(analysisName);
-                            barTemperatureLoads.Add(barTemperatureLoad);
+                            BarUniformTemperatureLoad.Tags = new HashSet<string>(analysisName);
+                            BarUniformTemperatureLoads.Add(BarUniformTemperatureLoad);
                         }
                     }
                 }
             }
 
-            return barTemperatureLoads;
+            return BarUniformTemperatureLoads;
         }
 
         /***************************************************/

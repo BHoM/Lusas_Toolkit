@@ -36,13 +36,13 @@ namespace BH.Adapter.Lusas
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private int DeleteBarTemperatureLoad(IEnumerable<object> ids)
+        private int DeleteBarUniformTemperatureLoad(IEnumerable<object> ids)
         {
             int success = 1;
 
             if (ids != null)
             {
-                //Engine.Reflection.Compute.RecordError("The deleting of individual BarTemperatureLoad objects is not supported in the Lusas_Toolkit");
+                //Engine.Reflection.Compute.RecordError("The deleting of individual BarUniformTemperatureLoad objects is not supported in the Lusas_Toolkit");
 
                 return 0;
             }

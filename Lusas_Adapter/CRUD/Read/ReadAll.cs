@@ -52,8 +52,8 @@ namespace BH.Adapter.Lusas
             objects.AddRange(ReadBarPointLoads());
             objects.AddRange(ReadBarVaryingDistributedLoads());
             objects.AddRange(ReadAreaUniformlyDistributedLoads());
-            objects.AddRange(ReadBarTemperatureLoads());
-            objects.AddRange(ReadAreaTemperatureLoads());
+            objects.AddRange(ReadBarUniformTemperatureLoads());
+            objects.AddRange(ReadAreaUniformTemperatureLoads());
             objects.AddRange(ReadGravityLoads());
             return objects;
         }
