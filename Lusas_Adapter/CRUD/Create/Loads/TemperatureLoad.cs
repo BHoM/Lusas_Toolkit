@@ -39,7 +39,7 @@ namespace BH.Adapter.Lusas
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private IFLoadingTemperature CreateBarTemperatureLoad(BarTemperatureLoad temperatureLoad, object[] lusasLines)
+        private IFLoadingTemperature CreateBarUniformTemperatureLoad(BarUniformTemperatureLoad temperatureLoad, object[] lusasLines)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(temperatureLoad.Loadcase.AdapterId<int>(typeof(LusasId)));
 
@@ -54,7 +54,7 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private IFLoadingTemperature CreateAreaTemperatureLoad(AreaTemperatureLoad temperatureLoad,
+        private IFLoadingTemperature CreateAreaUniformTemperatureLoad(AreaUniformTemperatureLoad temperatureLoad,
             object[] lusasSurfaces)
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(temperatureLoad.Loadcase.AdapterId<int>(typeof(LusasId)));

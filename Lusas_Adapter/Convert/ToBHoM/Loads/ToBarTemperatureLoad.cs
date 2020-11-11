@@ -36,7 +36,7 @@ namespace BH.Adapter.Adapters.Lusas
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static BarTemperatureLoad ToBarTemperatureLoad(
+        public static BarUniformTemperatureLoad ToBarUniformTemperatureLoad(
             IFLoading lusasTemperatureLoad,
             IEnumerable<IFAssignment> lusasAssignments,
             Dictionary<string, Bar> bars)
@@ -47,7 +47,7 @@ namespace BH.Adapter.Adapters.Lusas
                 - lusasTemperatureLoad.getValue("T0");
 
             IEnumerable<Bar> assignedBars = GetLineAssignments(lusasAssignments, bars);
-            BarTemperatureLoad barTemperatureLoad = Engine.Structure.Create.BarTemperatureLoad(
+            BarUniformTemperatureLoad BarUniformTemperatureLoad = Engine.Structure.Create.BarUniformTemperatureLoad(
                 loadcase,
                 temperatureChange,
                 assignedBars,
@@ -56,9 +56,9 @@ namespace BH.Adapter.Adapters.Lusas
                 GetName(lusasTemperatureLoad));
 
             int adapterNameId = lusasTemperatureLoad.getID();
-            barTemperatureLoad.SetAdapterId(typeof(LusasId), adapterNameId);
+            BarUniformTemperatureLoad.SetAdapterId(typeof(LusasId), adapterNameId);
 
-            return barTemperatureLoad;
+            return BarUniformTemperatureLoad;
         }
 
         /***************************************************/

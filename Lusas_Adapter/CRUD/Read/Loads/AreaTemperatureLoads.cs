@@ -38,13 +38,13 @@ namespace BH.Adapter.Lusas
     public partial class LusasV17Adapter
 #endif
     {
-        private List<ILoad> ReadAreaTemperatureLoads(List<string> ids = null)
+        private List<ILoad> ReadAreaUniformTemperatureLoads(List<string> ids = null)
         {
             /***************************************************/
             /**** Private Methods                           ****/
             /***************************************************/
 
-            List<ILoad> areaTemperatureLoads = new List<ILoad>();
+            List<ILoad> AreaUniformTemperatureLoads = new List<ILoad>();
             object[] lusasTemperatureLoads = d_LusasData.getAttributes("Temperature");
 
             if (!(lusasTemperatureLoads.Count() == 0))
@@ -80,18 +80,18 @@ namespace BH.Adapter.Lusas
 
                         if (surfaceAssignments.Count != 0)
                         {
-                            AreaTemperatureLoad areaTemperatureLoad =
+                            AreaUniformTemperatureLoad AreaUniformTemperatureLoad =
                                 Adapters.Lusas.Convert.ToAreaTempratureLoad(
                                     lusasTemperatureLoad, groupedAssignment, panels);
 
-                            areaTemperatureLoad.Tags = new HashSet<string>(analysisName);
-                            areaTemperatureLoads.Add(areaTemperatureLoad);
+                            AreaUniformTemperatureLoad.Tags = new HashSet<string>(analysisName);
+                            AreaUniformTemperatureLoads.Add(AreaUniformTemperatureLoad);
                         }
                     }
                 }
             }
 
-            return areaTemperatureLoads;
+            return AreaUniformTemperatureLoads;
         }
 
         /***************************************************/
