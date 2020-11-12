@@ -44,7 +44,7 @@ namespace BH.Adapter.Lusas
             /**** Private Methods                           ****/
             /***************************************************/
 
-            List<ILoad> AreaUniformTemperatureLoads = new List<ILoad>();
+            List<ILoad> areaUniformTemperatureLoads = new List<ILoad>();
             object[] lusasTemperatureLoads = d_LusasData.getAttributes("Temperature");
 
             if (!(lusasTemperatureLoads.Count() == 0))
@@ -80,18 +80,18 @@ namespace BH.Adapter.Lusas
 
                         if (surfaceAssignments.Count != 0)
                         {
-                            AreaUniformTemperatureLoad AreaUniformTemperatureLoad =
+                            AreaUniformTemperatureLoad areaUniformTemperatureLoad =
                                 Adapters.Lusas.Convert.ToAreaTempratureLoad(
                                     lusasTemperatureLoad, groupedAssignment, panels);
 
-                            AreaUniformTemperatureLoad.Tags = new HashSet<string>(analysisName);
-                            AreaUniformTemperatureLoads.Add(AreaUniformTemperatureLoad);
+                            areaUniformTemperatureLoad.Tags = new HashSet<string>(analysisName);
+                            areaUniformTemperatureLoads.Add(areaUniformTemperatureLoad);
                         }
                     }
                 }
             }
 
-            return AreaUniformTemperatureLoads;
+            return areaUniformTemperatureLoads;
         }
 
         /***************************************************/
