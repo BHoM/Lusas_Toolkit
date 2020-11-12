@@ -555,13 +555,13 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private bool CreateCollection(IEnumerable<BarUniformTemperatureLoad> BarUniformTemperatureLoads)
+        private bool CreateCollection(IEnumerable<BarUniformTemperatureLoad> barUniformTemperatureLoads)
         {
-            foreach (BarUniformTemperatureLoad BarUniformTemperatureLoad in BarUniformTemperatureLoads)
+            foreach (BarUniformTemperatureLoad barUniformTemperatureLoad in barUniformTemperatureLoads)
             {
-                object[] arrayLines = GetAssignedLines(BarUniformTemperatureLoad);
+                object[] arrayLines = GetAssignedLines(barUniformTemperatureLoad);
                 IFLoadingTemperature lusasBarUniformTemperatureLoad =
-                    CreateBarUniformTemperatureLoad(BarUniformTemperatureLoad, arrayLines);
+                    CreateBarUniformTemperatureLoad(barUniformTemperatureLoad, arrayLines);
 
                 if (lusasBarUniformTemperatureLoad == null)
                 {
@@ -574,13 +574,13 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private bool CreateCollection(IEnumerable<AreaUniformTemperatureLoad> AreaUniformTemperatureLoads)
+        private bool CreateCollection(IEnumerable<AreaUniformTemperatureLoad> areaUniformTemperatureLoads)
         {
-            foreach (AreaUniformTemperatureLoad AreaUniformTemperatureLoad in AreaUniformTemperatureLoads)
+            foreach (AreaUniformTemperatureLoad areaUniformTemperatureLoad in areaUniformTemperatureLoads)
             {
-                object[] assignedLines = GetAssignedSurfaces(AreaUniformTemperatureLoad);
+                object[] assignedLines = GetAssignedSurfaces(areaUniformTemperatureLoad);
                 IFLoadingTemperature lusasAreaUniformTemperatureLoad =
-                    CreateAreaUniformTemperatureLoad(AreaUniformTemperatureLoad, assignedLines);
+                    CreateAreaUniformTemperatureLoad(areaUniformTemperatureLoad, assignedLines);
 
                 if (lusasAreaUniformTemperatureLoad == null)
                 {
