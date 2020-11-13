@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using BH.oM.Structure.Elements;
 using BH.Engine.Geometry;
-using BH.Engine.Structure;
+using BH.Engine.Analytical;
 
 namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
 {
