@@ -76,6 +76,11 @@ namespace BH.Adapter.Adapters.Lusas
             double startPosition = lusasBarDistributedLoad.getValue("startDistance");
             double endPosition = lusasBarDistributedLoad.getValue("endDistance");
 
+            //TODO: Evaluate these properties
+            bool relativePositions = true;
+            LoadAxis axis = LoadAxis.Local;
+            bool projected = false;
+
             BarVaryingDistributedLoad barPointLoad;
 
             barPointLoad = Engine.Structure.Create.BarVaryingDistributedLoad(
@@ -87,8 +92,9 @@ namespace BH.Adapter.Adapters.Lusas
                 endPosition,
                 endForceVector,
                 endMomentVector,
-                LoadAxis.Local,
-                false,
+                relativePositions,
+                axis,
+                projected,
                 GetName(lusasBarDistributedLoad));
 
             int adapterNameId = lusasBarDistributedLoad.getID();
