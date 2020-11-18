@@ -76,10 +76,11 @@ namespace BH.Adapter.Adapters.Lusas
             double startPosition = lusasBarDistributedLoad.getValue("startDistance");
             double endPosition = lusasBarDistributedLoad.getValue("endDistance");
 
-            //TODO: Evaluate these properties
-            bool relativePositions = true;
-            LoadAxis axis = LoadAxis.Local;
+            bool relativePositions = lusasBarDistributedLoad.getValue("Type") == "Parametric" ? true : false;
+            LoadAxis axis = LoadAxis.Global;
             bool projected = false;
+
+            BH.Engine.Reflection.Compute.RecordWarning("All BarVaryingDistributedLoads pulled from Lusas are assumed to be in global coordinates and to not be projected.");
 
             BarVaryingDistributedLoad barPointLoad;
 
