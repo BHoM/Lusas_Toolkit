@@ -67,7 +67,11 @@ namespace BH.Adapter.Lusas
             List<int> ids = new List<int>();
 
             string positioning = barDistributedLoad.RelativePositions ? "parametric" : "actual";
-            string axis = barDistributedLoad.Axis == LoadAxis.Global ? "global" : "local";
+            string axis;
+            if(barDistributedLoad.Projected)
+                        axis = "projected";
+             else
+                         axis = barDistributedLoad.Axis == LoadAxis.Global ? "global" : "local";
 
             for (int i = 0; i < valuesAtA.Count(); i++)
             {
@@ -127,6 +131,8 @@ namespace BH.Adapter.Lusas
 
                                 lusasBarDistributedLoads.Add(lusasBarDistributedLoad);
                                 lusasAssignment.setLoadset(assignedLoadcase);
+                                if(barDistributedLoad.Projected || barDistributedLoad.Axis == LoadAxis.Global)
+                                        Engine.Reflection.Compute.RecordWarning("Lusas does not support internal distributed                                                                                 moments in the global axis or as projected loads.");
                                 lusasBarDistributedLoad.assignTo(lusasLines, lusasAssignment);
                                 break;
 
