@@ -82,9 +82,9 @@ namespace BH.Adapter.Adapters.Lusas
 
             BH.Engine.Reflection.Compute.RecordWarning("All BarVaryingDistributedLoads pulled from Lusas are assumed to be in global coordinates and to not be projected.");
 
-            BarVaryingDistributedLoad barPointLoad;
+            BarVaryingDistributedLoad barVarDistributedLoad;
 
-            barPointLoad = Engine.Structure.Create.BarVaryingDistributedLoad(
+            barVarDistributedLoad = Engine.Structure.Create.BarVaryingDistributedLoad(
                 loadcase,
                 assignedBars,
                 startPosition,
@@ -98,10 +98,13 @@ namespace BH.Adapter.Adapters.Lusas
                 projected,
                 GetName(lusasBarDistributedLoad));
 
-            int adapterNameId = lusasBarDistributedLoad.getID();
-            barPointLoad.SetAdapterId(typeof(LusasId), adapterNameId);
+            if (barVarDistributedLoad == null)
+                return null;
 
-            return barPointLoad;
+            int adapterNameId = lusasBarDistributedLoad.getID();
+            barVarDistributedLoad.SetAdapterId(typeof(LusasId), adapterNameId);
+
+            return barVarDistributedLoad;
         }
 
         /***************************************************/

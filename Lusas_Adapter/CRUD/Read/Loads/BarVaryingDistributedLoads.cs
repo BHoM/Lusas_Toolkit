@@ -68,11 +68,14 @@ namespace BH.Adapter.Lusas
                             Adapters.Lusas.Convert.ToBarDistributedLoad(
                                 lusasInternalBeamDistributedLoad, groupedAssignment, bars);
 
-                        List<string> analysisName = new List<string> {
+                        if (barDistributedLoad != null)
+                        {
+                            List<string> analysisName = new List<string> {
                             lusasInternalBeamDistributedLoad.getAttributeType() };
 
-                        barDistributedLoad.Tags = new HashSet<string>(analysisName);
-                        barDistributedLoads.Add(barDistributedLoad);
+                            barDistributedLoad.Tags = new HashSet<string>(analysisName);
+                            barDistributedLoads.Add(barDistributedLoad);
+                        }
                     }
                 }
             }
