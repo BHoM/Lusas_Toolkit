@@ -641,10 +641,6 @@ namespace BH.Adapter.Lusas
                 List<IFLoadingBeamDistributed> lusasGlobalDistributed =
                     CreateBarDistributedLoad(barDistributedLoad, assignedBars);
 
-                if (lusasGlobalDistributed == null)
-                {
-                    return false;
-                }
             }
 
             return true;
