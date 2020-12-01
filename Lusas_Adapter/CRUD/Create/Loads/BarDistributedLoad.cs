@@ -68,10 +68,17 @@ namespace BH.Adapter.Lusas
 
             string positioning = barDistributedLoad.RelativePositions ? "parametric" : "actual";
             string axis;
-            if(barDistributedLoad.Projected)
-                        axis = "projected";
-             else
-                         axis = barDistributedLoad.Axis == LoadAxis.Global ? "global" : "local";
+            if (barDistributedLoad.Projected)
+            {
+                axis = "projected";
+                if (barDistributedLoad.RelativePositions)
+                {
+                    Engine.Reflection.Compute.RecordError("Projected loads with parametric distances are not supported in Lusas.");
+                    return null;
+                }
+            }
+            else
+                axis = barDistributedLoad.Axis == LoadAxis.Global ? "global" : "local";
 
             for (int i = 0; i < valuesAtA.Count(); i++)
             {
