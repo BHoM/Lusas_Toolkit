@@ -58,7 +58,7 @@ namespace BH.Adapter.Adapters.Lusas
                     new Vector() { X = lusasAttribute.getValue("nuxy"), Y = lusasAttribute.getValue("nuyz"), Z = lusasAttribute.getValue("nuzx") },
                     new Vector() { X = lusasAttribute.getValue("Gxy"), Y = 0.0, Z = 0.0 },
                     new Vector() { X = lusasAttribute.getValue("ax"), Y = lusasAttribute.getValue("ay"), Z = lusasAttribute.getValue("az") },
-                    lusasAttribute.getValue("rho"), 0, 0);
+                    lusasAttribute.getValue("rho"), 0);
             }
 
             int adapterNameId = lusasAttribute.getID();
