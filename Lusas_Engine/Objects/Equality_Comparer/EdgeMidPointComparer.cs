@@ -78,7 +78,10 @@ namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
             //Check whether the object is null
             if (ReferenceEquals(edge, null)) return 0;
 
-            return edge.Curve.IPointAtParameter(0.5).GetHashCode();
+            if(edge.Curve != null) 
+                return edge.Curve.IPointAtParameter(0.5).GetHashCode();
+
+            return 0;
         }
 
 

@@ -57,10 +57,15 @@ namespace BH.Adapter.Lusas
                 lusasAttribute = lusasGeometricLine;
             }
 
-            int adapterIdName = lusasAttribute.getID();
-            sectionProperty.SetAdapterId(typeof(LusasId), adapterIdName);
+            if (lusasAttribute != null)
+            {
+                int adapterIdName = lusasAttribute.getID();
+                sectionProperty.SetAdapterId(typeof(LusasId), adapterIdName);
 
-            return lusasAttribute;
+                return lusasAttribute;
+            }
+
+            return null;
         }
 
         /***************************************************/

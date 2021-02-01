@@ -43,6 +43,9 @@ namespace BH.Adapter.Lusas
 
         private IFPoint CreatePoint(Node node)
         {
+            if (!CheckPropertyError(node, x => x.Position, true))
+                return null;
+
             Point position = Engine.Structure.Query.Position(node);
             IFDatabaseOperations databasePoint = d_LusasData.createPoint(
                 position.X, position.Y, position.Z);
@@ -71,11 +74,15 @@ namespace BH.Adapter.Lusas
 
         private IFPoint CreatePoint(Point point)
         {
-            Node newNode = Create.Node(new Point { X = point.X, Y = point.Y, Z = point.Z });
+            if(point!=null)
+            {
+                Node newNode = Create.Node(new Point { X = point.X, Y = point.Y, Z = point.Z });
 
-            IFPoint newPoint = CreatePoint(newNode);
+                IFPoint newPoint = CreatePoint(newNode);
 
-            return newPoint;
+                return newPoint;
+            }
+            return null;
         }
 
         /***************************************************/

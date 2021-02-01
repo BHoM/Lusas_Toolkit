@@ -61,12 +61,12 @@ namespace BH.Adapter.Lusas
                 AssignObjectSet(lusasSurface, panel.Tags);
             }
 
-            if (!(panel.Property == null))
+            if (CheckPropertyWarning(panel, p => p.Property))
             {
                 IFAttribute lusasGeometricSurface = d_LusasData.getAttribute("Surface Geometric", panel.Property.AdapterId<int>(typeof(LusasId)));
 
                 lusasGeometricSurface.assignTo(lusasSurface);
-                if (!(panel.Property.Material == null))
+                if (CheckPropertyWarning(panel, p => p.Property.Material))
                 {
                     IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", panel.Property.Material.AdapterId<int>(typeof(LusasId)));
                     lusasMaterial.assignTo(lusasSurface);
