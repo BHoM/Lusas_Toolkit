@@ -381,6 +381,7 @@
     <Compile Include="Convert\ToBHoM\Properties\ToSectionProperty.cs" />
     <Compile Include="Convert\ToBHoM\Properties\ToSurfaceProperty.cs" />
     <Compile Include="Convert\ToLusas\_ToLusas.cs" />
+    <Compile Include="CRUD\Create\Error.cs" />
     <Compile Include="CRUD\Create\Loads\BarPointLoad.cs" />
     <Compile Include="CRUD\Create\Loads\BarDistributedLoad.cs" />
     <Compile Include="CRUD\Create\Properties\SurfaceMesh.cs" />

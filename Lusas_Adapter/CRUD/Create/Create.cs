@@ -162,17 +162,19 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<Node> nodes)
         {
-            CreateTags(nodes);
-
-            ReduceRuntime(true);
-
-            foreach (Node node in nodes)
+            if (nodes != null)
             {
-                IFPoint lusasPoint = CreatePoint(node);
+                CreateTags(nodes);
+
+                ReduceRuntime(true);
+
+                foreach (Node node in nodes)
+                {
+                    IFPoint lusasPoint = CreatePoint(node);
+                }
+
+                ReduceRuntime(false);
             }
-
-            ReduceRuntime(false);
-
             return true;
         }
 
@@ -180,22 +182,23 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<Point> points)
         {
-
-            List<Point> distinctPoints = Engine.Adapters.Lusas.Query.GetDistinctPoints(points);
-
-            List<Point> existingPoints = ReadPoints();
-
-            List<Point> lusasPoints = distinctPoints.Except(existingPoints).ToList();
-
-            ReduceRuntime(true);
-
-            foreach (Point point in lusasPoints)
+            if (points != null)
             {
-                IFPoint lusasPoint = CreatePoint(point);
+                List<Point> distinctPoints = Engine.Adapters.Lusas.Query.GetDistinctPoints(points);
+
+                List<Point> existingPoints = ReadPoints();
+
+                List<Point> lusasPoints = distinctPoints.Except(existingPoints).ToList();
+
+                ReduceRuntime(true);
+
+                foreach (Point point in lusasPoints)
+                {
+                    IFPoint lusasPoint = CreatePoint(point);
+                }
+
+                ReduceRuntime(false);
             }
-
-            ReduceRuntime(false);
-
             return true;
         }
 
@@ -203,32 +206,52 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<Bar> bars)
         {
-            List<Bar> barList = bars.ToList();
-
-            CreateTags(bars);
-
-            if (bars.Any(x => x.Fragments.Contains(typeof(MeshSettings1D))))
+            if (bars != null)
             {
-                var barGroups = bars.GroupBy(m => new { m.FEAType, m.Release.Name });
+                List<Bar> barList = bars.ToList();
 
-                BHoMObjectNameComparer comparer = new BHoMObjectNameComparer();
+                CreateTags(bars);
 
-                ReduceRuntime(true);
-
-                foreach (var barGroup in barGroups)
+                if (bars.Any(x => x.Fragments.Contains(typeof(MeshSettings1D))))
                 {
-                    List<MeshSettings1D> distinctMeshes = barGroup.Select(x => x.FindFragment<MeshSettings1D>())
-                        .Distinct<MeshSettings1D>(comparer)
-                        .ToList();
+                    var barGroups = bars.GroupBy(m => new { m.FEAType, m.Release.Name });
 
-                    foreach (MeshSettings1D mesh in distinctMeshes)
+                    BHoMObjectNameComparer comparer = new BHoMObjectNameComparer();
+
+                    ReduceRuntime(true);
+
+                    foreach (var barGroup in barGroups)
                     {
-                        CreateMeshSettings1D(mesh, barGroup.First().FEAType, barGroup.First().Release);
+                        List<MeshSettings1D> distinctMeshes = barGroup.Select(x => x.FindFragment<MeshSettings1D>())
+                            .Distinct<MeshSettings1D>(comparer)
+                            .ToList();
+
+                        foreach (MeshSettings1D mesh in distinctMeshes)
+                        {
+                            CreateMeshSettings1D(mesh, barGroup.First().FEAType, barGroup.First().Release);
+                        }
+
+                        foreach (Bar bar in barGroup)
+                        {
+                            bar.AddFragment(distinctMeshes.First(x => comparer.Equals(x, bar.FindFragment<MeshSettings1D>())), true);
+                            IFLine lusasLine = CreateLine(bar);
+
+                            if (lusasLine == null)
+                            {
+                                return false;
+                            }
+                        }
                     }
+                    ReduceRuntime(false);
+                    d_LusasData.resetMesh();
+                    d_LusasData.updateMesh();
+                }
+                else
+                {
+                    ReduceRuntime(true);
 
-                    foreach (Bar bar in barGroup)
+                    foreach (Bar bar in bars)
                     {
-                        bar.AddFragment(distinctMeshes.First(x => comparer.Equals(x, bar.FindFragment<MeshSettings1D>())),true);
                         IFLine lusasLine = CreateLine(bar);
 
                         if (lusasLine == null)
@@ -236,95 +259,88 @@ namespace BH.Adapter.Lusas
                             return false;
                         }
                     }
+
+                    ReduceRuntime(false);
+
+
                 }
-                ReduceRuntime(false);
-                d_LusasData.resetMesh();
-                d_LusasData.updateMesh();
-
-                return true;
             }
-            else
-            {
-                ReduceRuntime(true);
-
-                foreach (Bar bar in bars)
-                {
-                    IFLine lusasLine = CreateLine(bar);
-
-                    if (lusasLine == null)
-                    {
-                        return false;
-                    }
-                }
-
-                ReduceRuntime(false);
-
-                return true;
-            }
+            return true;
         }
 
         /***************************************************/
 
         private bool CreateCollection(IEnumerable<Panel> panels)
         {
-
-            CreateTags(panels);
-
-            if (panels.Any(x => x.Fragments.Contains(typeof(MeshSettings2D))))
+            if (panels != null)
             {
-                BHoMObjectNameComparer comparer = new BHoMObjectNameComparer();
-                List<MeshSettings2D> distinctMeshes = panels.Select(x => x.FindFragment<MeshSettings2D>())
-                    .Distinct<MeshSettings2D>(comparer)
-                    .ToList();
+                CreateTags(panels);
 
-                foreach (MeshSettings2D mesh in distinctMeshes)
+                if (panels.Any(x => x.Fragments.Contains(typeof(MeshSettings2D))))
                 {
-                    CreateMeshSettings2D(mesh);
+                    BHoMObjectNameComparer comparer = new BHoMObjectNameComparer();
+                    List<MeshSettings2D> distinctMeshes = panels.Select(x => x.FindFragment<MeshSettings2D>())
+                        .Distinct<MeshSettings2D>(comparer)
+                        .ToList();
+
+                    foreach (MeshSettings2D mesh in distinctMeshes)
+                    {
+                        CreateMeshSettings2D(mesh);
+                    }
+
+                    foreach (Panel panel in panels)
+                    {
+                        if(panel.Openings!=null)
+                        {
+                            Engine.Reflection.Compute.RecordError("Lusas_Toolkit does not support Panels with Openings.");
+                            return true;
+
+                        }
+                        panel.AddFragment(distinctMeshes.First(x => comparer.Equals(x, (panel.FindFragment<MeshSettings2D>()))), true);
+                    }
+
                 }
+
+                List<Edge> panelEdges = new List<Edge>();
+
+                foreach (Panel Panel in panels)
+                {
+                    if (CheckPropertyWarning(Panel, p => p.ExternalEdges))
+                    {
+                        panelEdges.AddRange(Panel.ExternalEdges);
+
+                    }
+                }
+
+                List<Edge> distinctEdges = Engine.Adapters.Lusas.Query.GetDistinctEdges(panelEdges);
+
+                List<Point> midPoints = new List<Point>();
+
+                foreach (Edge edge in distinctEdges)
+                {
+                    midPoints.Add(edge.Curve.IPointAtParameter(0.5));
+                }
+
+                ReduceRuntime(true);
 
                 foreach (Panel panel in panels)
                 {
-                    panel.AddFragment(distinctMeshes.First(x => comparer.Equals(x, (panel.FindFragment<MeshSettings2D>()))), true);
+                    IFLine[] lusasLines = new IFLine[panel.ExternalEdges.Count];
+                    List<Edge> edges = panel.ExternalEdges;
+
+                    for (int i = 0; i < panel.ExternalEdges.Count; i++)
+                    {
+                        Edge edge = distinctEdges[midPoints.FindIndex(
+                            m => m.Equals(edges[i].Curve.IPointAtParameter(0.5).ClosestPoint(midPoints)))];
+
+                        lusasLines[i] = d_LusasData.getLineByNumber(edge.AdapterId<int>(typeof(LusasId)));
+                    }
+
+                    IFSurface lusasSurface = CreateSurface(panel, lusasLines);
                 }
 
+                ReduceRuntime(false);
             }
-
-            List<Edge> PanelEdges = new List<Edge>();
-
-            foreach (Panel Panel in panels)
-            {
-                PanelEdges.AddRange(Panel.ExternalEdges);
-            }
-
-            List<Edge> distinctEdges = Engine.Adapters.Lusas.Query.GetDistinctEdges(PanelEdges);
-
-            List<Point> midPoints = new List<Point>();
-
-            foreach (Edge edge in distinctEdges)
-            {
-                midPoints.Add(edge.Curve.IPointAtParameter(0.5));
-            }
-
-            ReduceRuntime(true);
-
-            foreach (Panel panel in panels)
-            {
-                IFLine[] lusasLines = new IFLine[panel.ExternalEdges.Count];
-                List<Edge> edges = panel.ExternalEdges;
-
-                for (int i = 0; i < panel.ExternalEdges.Count; i++)
-                {
-                    Edge edge = distinctEdges[midPoints.FindIndex(
-                        m => m.Equals(edges[i].Curve.IPointAtParameter(0.5).ClosestPoint(midPoints)))];
-
-                    lusasLines[i] = d_LusasData.getLineByNumber(edge.AdapterId<int>(typeof(LusasId)));
-                }
-
-                IFSurface lusasSurface = CreateSurface(panel, lusasLines);
-            }
-
-            ReduceRuntime(false);
-
             return true;
         }
 
@@ -332,54 +348,56 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<Edge> edges)
         {
-            List<Point> allPoints = new List<Point>();
-
-            List<Edge> distinctEdges = Engine.Adapters.Lusas.Query.GetDistinctEdges(edges);
-
-            foreach (Edge edge in distinctEdges)
+            if (edges != null)
             {
-                allPoints.Add(edge.Curve.IStartPoint());
-                allPoints.Add(edge.Curve.IEndPoint());
+                List<Point> allPoints = new List<Point>();
+
+                List<Edge> distinctEdges = Engine.Adapters.Lusas.Query.GetDistinctEdges(edges);
+
+                foreach (Edge edge in distinctEdges)
+                {
+                    allPoints.Add(edge.Curve.IStartPoint());
+                    allPoints.Add(edge.Curve.IEndPoint());
+                }
+
+                List<Point> distinctPoints = Engine.Adapters.Lusas.Query.GetDistinctPoints(allPoints);
+
+                List<Point> existingPoints = ReadPoints();
+                List<Point> pointsToPush = distinctPoints.Except(
+                    existingPoints, new PointDistanceComparer()).ToList();
+
+                ReduceRuntime(true);
+
+                foreach (Point point in pointsToPush)
+                {
+                    IFPoint lusasPoint = CreatePoint(point);
+                }
+
+                ReduceRuntime(false);
+
+                List<IFPoint> lusasPoints = ReadLusasPoints();
+                List<Point> points = new List<Point>();
+
+                foreach (IFPoint point in lusasPoints)
+                {
+                    points.Add(Adapters.Lusas.Convert.ToPoint(point));
+                }
+
+                CreateTags(distinctEdges);
+
+                ReduceRuntime(true);
+
+                foreach (Edge edge in distinctEdges)
+                {
+                    IFPoint startPoint = lusasPoints[points.FindIndex(
+                        m => m.Equals(edge.Curve.IStartPoint().ClosestPoint(points)))];
+                    IFPoint endPoint = lusasPoints[points.FindIndex(
+                        m => m.Equals(edge.Curve.IEndPoint().ClosestPoint(points)))];
+                    IFLine lusasLine = CreateEdge(edge, startPoint, endPoint);
+                }
+
+                ReduceRuntime(false);
             }
-
-            List<Point> distinctPoints = Engine.Adapters.Lusas.Query.GetDistinctPoints(allPoints);
-
-            List<Point> existingPoints = ReadPoints();
-            List<Point> pointsToPush = distinctPoints.Except(
-                existingPoints, new PointDistanceComparer()).ToList();
-
-            ReduceRuntime(true);
-
-            foreach (Point point in pointsToPush)
-            {
-                IFPoint lusasPoint = CreatePoint(point);
-            }
-
-            ReduceRuntime(false);
-
-            List<IFPoint> lusasPoints = ReadLusasPoints();
-            List<Point> points = new List<Point>();
-
-            foreach (IFPoint point in lusasPoints)
-            {
-                points.Add(Adapters.Lusas.Convert.ToPoint(point));
-            }
-
-            CreateTags(distinctEdges);
-
-            ReduceRuntime(true);
-
-            foreach (Edge edge in distinctEdges)
-            {
-                IFPoint startPoint = lusasPoints[points.FindIndex(
-                    m => m.Equals(edge.Curve.IStartPoint().ClosestPoint(points)))];
-                IFPoint endPoint = lusasPoints[points.FindIndex(
-                    m => m.Equals(edge.Curve.IEndPoint().ClosestPoint(points)))];
-                IFLine lusasLine = CreateEdge(edge, startPoint, endPoint);
-            }
-
-            ReduceRuntime(false);
-
             return true;
         }
 
@@ -391,10 +409,10 @@ namespace BH.Adapter.Lusas
             {
                 IFAttribute lusasGeometricLine = CreateGeometricLine(sectionProperty);
 
-                if (lusasGeometricLine == null)
-                {
-                    return false;
-                }
+                //if (lusasGeometricLine == null)
+                //{
+                //    return false;
+                //}
             }
 
             return true;
@@ -408,10 +426,10 @@ namespace BH.Adapter.Lusas
             {
                 IFAttribute lusasMaterial = CreateMaterial(material);
 
-                if (lusasMaterial == null)
-                {
-                    return false;
-                }
+                //if (lusasMaterial == null)
+                //{
+                //    return false;
+                //}
             }
 
             return true;
@@ -425,10 +443,10 @@ namespace BH.Adapter.Lusas
             {
                 IFAttribute lusasGeometricSurface = CreateGeometricSurface(property2D);
 
-                if (lusasGeometricSurface == null)
-                {
-                    return false;
-                }
+                //if (lusasGeometricSurface == null)
+                //{
+                //    return false;
+                //}
             }
 
             return true;
