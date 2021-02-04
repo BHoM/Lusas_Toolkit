@@ -290,7 +290,7 @@ namespace BH.Adapter.Lusas
 
                     foreach (Panel panel in panels)
                     {
-                        if(panel.Openings!=null)
+                        if (panel.Openings != null)
                         {
                             Engine.Reflection.Compute.RecordError("Lusas_Toolkit does not support Panels with Openings.");
                             return true;
@@ -303,13 +303,11 @@ namespace BH.Adapter.Lusas
 
                 List<Edge> panelEdges = new List<Edge>();
 
-                foreach (Panel Panel in panels)
+                foreach (Panel panel in panels)
                 {
-                    if (CheckPropertyWarning(Panel, p => p.ExternalEdges))
-                    {
-                        panelEdges.AddRange(Panel.ExternalEdges);
-
-                    }
+                    if (CheckPropertyWarning(panel, p => p.ExternalEdges))
+                        if (CheckPropertyWarning(panel.ExternalEdges, e => e.Select(x => x.Curve)))
+                            panelEdges.AddRange(panel.ExternalEdges);
                 }
 
                 List<Edge> distinctEdges = Engine.Adapters.Lusas.Query.GetDistinctEdges(panelEdges);
@@ -352,7 +350,10 @@ namespace BH.Adapter.Lusas
             {
                 List<Point> allPoints = new List<Point>();
 
-                List<Edge> distinctEdges = Engine.Adapters.Lusas.Query.GetDistinctEdges(edges);
+                List<Edge> distinctEdges = new List<Edge>();
+
+                if (CheckPropertyWarning(edges, e => e.Select(x => x.Curve)))
+                    distinctEdges = Engine.Adapters.Lusas.Query.GetDistinctEdges(edges);
 
                 foreach (Edge edge in distinctEdges)
                 {

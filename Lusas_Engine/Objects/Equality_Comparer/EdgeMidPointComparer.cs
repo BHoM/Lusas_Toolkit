@@ -21,6 +21,7 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 using BH.oM.Structure.Elements;
 using BH.Engine.Geometry;
 
@@ -59,6 +60,13 @@ namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
             if (ReferenceEquals(edge1, null) || ReferenceEquals(edge2, null))
                 return false;
 
+            if (ReferenceEquals(edge1.Curve, null) || ReferenceEquals(edge2.Curve, null))
+                return false;
+
+            if (!edge1.Curve.IsNurbsCurve() && !edge2.Curve.IsNurbsCurve())
+                if (NonLinearEdgeCheck(edge1) || NonLinearEdgeCheck(edge2))
+                    return false;
+
             //Check if the GUIDs are the same
             if (edge1.BHoM_Guid == edge2.BHoM_Guid)
                 return true;
@@ -78,8 +86,12 @@ namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
             //Check whether the object is null
             if (ReferenceEquals(edge, null)) return 0;
 
-            if(edge.Curve != null) 
-                return edge.Curve.IPointAtParameter(0.5).GetHashCode();
+            if (edge.Curve != null)
+            {
+                if (!edge.Curve.IsNurbsCurve())
+                    if (!NonLinearEdgeCheck(edge))
+                        return edge.Curve.IPointAtParameter(0.5).GetHashCode();
+            }
 
             return 0;
         }
@@ -93,6 +105,27 @@ namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
 
 
         /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        private static bool NonLinearEdgeCheck(Edge edge)
+        {
+            bool isNonLinear = false;
+
+            try
+            {
+                isNonLinear = edge.Curve.ISubParts().Any(e => !e.IIsLinear());
+            }
+            catch (System.Exception)
+            {
+                //Try catch in case of curves not yet supported in the IsNonLinear method.
+                isNonLinear = true;
+            }
+            if (isNonLinear)
+                Engine.Reflection.Compute.RecordWarning("Nonlinear edges will not be pushed. It is recomended that you subsegment all edge curves into linear segements before you push to Lusas. Try using the CollapseToPolyline method. Please check the result of the push in the Lusas model!");
+
+            return isNonLinear;
+        }
 
     }
 }
