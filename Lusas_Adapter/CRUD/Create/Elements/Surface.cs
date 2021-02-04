@@ -26,6 +26,8 @@ using BH.oM.Structure.Elements;
 using Lusas.LPI;
 using BH.oM.Adapters.Lusas.Fragments;
 using BH.Engine.Base;
+using System.Linq;
+using BH.Engine.Reflection;
 
 namespace BH.Adapter.Lusas
 {
@@ -43,44 +45,51 @@ namespace BH.Adapter.Lusas
 
         private IFSurface CreateSurface(Panel panel, IFLine[] lusasLines)
         {
-            IFSurface lusasSurface;
-            if (d_LusasData.existsSurfaceByID(panel.AdapterId<int>(typeof(LusasId))))
+            IFSurface lusasSurface = null;
+            if (panel.HasAdapterIdFragment(typeof(LusasId)))
             {
-                lusasSurface = d_LusasData.getSurfaceByNumber(panel.AdapterId<int>(typeof(LusasId)));
+                if (d_LusasData.existsSurfaceByID(panel.AdapterId<int>(typeof(LusasId))))
+                    lusasSurface = d_LusasData.getSurfaceByNumber(panel.AdapterId<int>(typeof(LusasId)));
             }
             else
             {
-                lusasSurface = d_LusasData.createSurfaceBy(lusasLines);
+                if (lusasLines.Count() == 0)
+                    Engine.Reflection.Compute.RecordError("Panel contains invalid lines that have not been pushed.");
+                else
+                    lusasSurface = d_LusasData.createSurfaceBy(lusasLines);
             }
 
-            int adapterIdName = lusasSurface.getID();
-            panel.SetAdapterId(typeof(LusasId), adapterIdName);
-
-            if (!(panel.Tags.Count == 0))
+            if(lusasSurface != null)
             {
-                AssignObjectSet(lusasSurface, panel.Tags);
-            }
+                int adapterIdName = lusasSurface.getID();
+                panel.SetAdapterId(typeof(LusasId), adapterIdName);
 
-            if (CheckPropertyWarning(panel, p => p.Property))
-            {
-                IFAttribute lusasGeometricSurface = d_LusasData.getAttribute("Surface Geometric", panel.Property.AdapterId<int>(typeof(LusasId)));
-
-                lusasGeometricSurface.assignTo(lusasSurface);
-                if (CheckPropertyWarning(panel, p => p.Property.Material))
+                if (!(panel.Tags.Count == 0))
                 {
-                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", panel.Property.Material.AdapterId<int>(typeof(LusasId)));
-                    lusasMaterial.assignTo(lusasSurface);
+                    AssignObjectSet(lusasSurface, panel.Tags);
                 }
-            }
 
-            if (panel.Fragments.Contains(typeof(MeshSettings2D)))
-            {
-                IFAssignment meshAssignment = m_LusasApplication.newAssignment();
-                meshAssignment.setAllDefaults();
+                if (CheckPropertyWarning(panel, p => p.Property))
+                {
+                    IFAttribute lusasGeometricSurface = d_LusasData.getAttribute("Surface Geometric", panel.Property.AdapterId<int>(typeof(LusasId)));
 
-                MeshSettings2D meshSettings2D = panel.FindFragment<MeshSettings2D>();
-                IFMeshAttr mesh = d_LusasData.getMesh(meshSettings2D.Name);
-                mesh.assignTo(lusasSurface, meshAssignment);
+                    lusasGeometricSurface.assignTo(lusasSurface);
+                    if (CheckPropertyWarning(panel, p => p.Property.Material))
+                    {
+                        IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", panel.Property.Material.AdapterId<int>(typeof(LusasId)));
+                        lusasMaterial.assignTo(lusasSurface);
+                    }
+                }
+
+                if (panel.Fragments.Contains(typeof(MeshSettings2D)))
+                {
+                    IFAssignment meshAssignment = m_LusasApplication.newAssignment();
+                    meshAssignment.setAllDefaults();
+
+                    MeshSettings2D meshSettings2D = panel.FindFragment<MeshSettings2D>();
+                    IFMeshAttr mesh = d_LusasData.getMesh(meshSettings2D.Name);
+                    mesh.assignTo(lusasSurface, meshAssignment);
+                }
             }
 
             return lusasSurface;

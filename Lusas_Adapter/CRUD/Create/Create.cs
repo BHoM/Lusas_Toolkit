@@ -305,9 +305,9 @@ namespace BH.Adapter.Lusas
 
                 foreach (Panel panel in panels)
                 {
-                    if (CheckPropertyWarning(panel, p => p.ExternalEdges))
-                        if (CheckPropertyWarning(panel.ExternalEdges, e => e.Select(x => x.Curve)))
-                            panelEdges.AddRange(panel.ExternalEdges);
+                    if (CheckPropertyError(panel, p => p.ExternalEdges))
+                        if (CheckPropertyError(panel.ExternalEdges, e => e.Select(x => x.Curve)))
+                            panelEdges.AddRange(panel.ExternalEdges.Where(x => CheckPropertyError(x, y => y.Curve)).Where(x => !Engine.Adapters.Lusas.Query.InvalidEdgeCheck(x)).ToList());
                 }
 
                 List<Edge> distinctEdges = Engine.Adapters.Lusas.Query.GetDistinctEdges(panelEdges);
@@ -326,15 +326,28 @@ namespace BH.Adapter.Lusas
                     IFLine[] lusasLines = new IFLine[panel.ExternalEdges.Count];
                     List<Edge> edges = panel.ExternalEdges;
 
-                    for (int i = 0; i < panel.ExternalEdges.Count; i++)
-                    {
-                        Edge edge = distinctEdges[midPoints.FindIndex(
-                            m => m.Equals(edges[i].Curve.IPointAtParameter(0.5).ClosestPoint(midPoints)))];
+                    if (CheckPropertyError(panel, p => p.ExternalEdges))
+                        if (CheckPropertyError(panel.ExternalEdges, e => e.Select(x => x.Curve)))
+                        {
+                            for (int i = 0; i < panel.ExternalEdges.Count; i++)
+                            {
+                                if (!Engine.Adapters.Lusas.Query.InvalidEdgeCheck(panel.ExternalEdges[i]))
+                                {
+                                    Edge edge = distinctEdges[midPoints.FindIndex(
+    m => m.Equals(edges[i].Curve.IPointAtParameter(0.5).ClosestPoint(midPoints)))];
 
-                        lusasLines[i] = d_LusasData.getLineByNumber(edge.AdapterId<int>(typeof(LusasId)));
-                    }
+                                    lusasLines[i] = d_LusasData.getLineByNumber(edge.AdapterId<int>(typeof(LusasId)));
+                                }
+                            }
+                        }
 
-                    IFSurface lusasSurface = CreateSurface(panel, lusasLines);
+
+                    IFSurface lusasSurface;
+
+                    if (!(lusasLines.Count() == panel.ExternalEdges.Count) || lusasLines.Count() == 0)
+                        Engine.Reflection.Compute.RecordError("Panel contains invalid lines that have not been created.");
+                    else
+                        lusasSurface = CreateSurface(panel, lusasLines);
                 }
 
                 ReduceRuntime(false);
@@ -352,8 +365,10 @@ namespace BH.Adapter.Lusas
 
                 List<Edge> distinctEdges = new List<Edge>();
 
-                if (CheckPropertyWarning(edges, e => e.Select(x => x.Curve)))
-                    distinctEdges = Engine.Adapters.Lusas.Query.GetDistinctEdges(edges);
+                distinctEdges = edges.Where(x => CheckPropertyError(x, y => y.Curve))
+                    .Where(x => !Engine.Adapters.Lusas.Query.InvalidEdgeCheck(x)).ToList();
+
+                distinctEdges = Engine.Adapters.Lusas.Query.GetDistinctEdges(distinctEdges);
 
                 foreach (Edge edge in distinctEdges)
                 {
