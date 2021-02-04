@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BH.oM.Structure.Elements;
 using BH.Engine.Geometry;
+using BH.Engine.Adapters.Lusas;
 
 
 namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
@@ -64,7 +65,7 @@ namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
                 return false;
 
             if (!edge1.Curve.IsNurbsCurve() && !edge2.Curve.IsNurbsCurve())
-                if (NonLinearEdgeCheck(edge1) || NonLinearEdgeCheck(edge2))
+                if (Query.InvalidEdgeCheck(edge1) || Query.InvalidEdgeCheck(edge2))
                     return false;
 
             //Check if the GUIDs are the same
@@ -89,7 +90,7 @@ namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
             if (edge.Curve != null)
             {
                 if (!edge.Curve.IsNurbsCurve())
-                    if (!NonLinearEdgeCheck(edge))
+                    if (!Query.InvalidEdgeCheck(edge))
                         return edge.Curve.IPointAtParameter(0.5).GetHashCode();
             }
 
@@ -103,29 +104,7 @@ namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
 
         private PointDistanceComparer m_pointComparer;
 
-
         /***************************************************/
-        /**** Public Methods                            ****/
-        /***************************************************/
-
-        private static bool NonLinearEdgeCheck(Edge edge)
-        {
-            bool isNonLinear = false;
-
-            try
-            {
-                isNonLinear = edge.Curve.ISubParts().Any(e => !e.IIsLinear());
-            }
-            catch (System.Exception)
-            {
-                //Try catch in case of curves not yet supported in the IsNonLinear method.
-                isNonLinear = true;
-            }
-            if (isNonLinear)
-                Engine.Reflection.Compute.RecordWarning("Nonlinear edges will not be pushed. It is recomended that you subsegment all edge curves into linear segements before you push to Lusas. Try using the CollapseToPolyline method. Please check the result of the push in the Lusas model!");
-
-            return isNonLinear;
-        }
 
     }
 }
