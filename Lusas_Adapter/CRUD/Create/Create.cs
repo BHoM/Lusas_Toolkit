@@ -349,7 +349,7 @@ namespace BH.Adapter.Lusas
 
                     IFSurface lusasSurface;
 
-                    if (!(lusasLines.Count() == panel.ExternalEdges.Count) || lusasLines.Count() == 0)
+                    if (!(lusasLines.Count() == panel.ExternalEdges.Count) || lusasLines.Count() == 0 || lusasLines.Any(x => x == null))
                         Engine.Reflection.Compute.RecordError("Panel contains invalid lines that have not been created.");
                     else
                         lusasSurface = CreateSurface(panel, lusasLines);

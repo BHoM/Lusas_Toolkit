@@ -50,6 +50,8 @@ namespace BH.Adapter.Lusas
             {
                 if (d_LusasData.existsSurfaceByID(panel.AdapterId<int>(typeof(LusasId))))
                     lusasSurface = d_LusasData.getSurfaceByNumber(panel.AdapterId<int>(typeof(LusasId)));
+                else
+                    lusasSurface = d_LusasData.createSurfaceBy(lusasLines);
             }
             else
             {
