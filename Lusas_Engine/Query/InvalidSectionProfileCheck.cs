@@ -24,7 +24,8 @@ using System.Collections.Generic;
 using System.Linq;
 using BH.oM.Structure.Elements;
 using BH.Engine.Geometry;
-using BH.oM.Structure.SurfaceProperties;
+using BH.oM.Structure.SectionProperties;
+using BH.oM.Spatial.ShapeProfiles;
 using BH.oM.Geometry;
 
 namespace BH.Engine.Adapters.Lusas
@@ -34,14 +35,16 @@ namespace BH.Engine.Adapters.Lusas
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
-        public static bool InvalidSurfaceProperty(ISurfaceProperty surfaceProperty)
+        public static bool InvalidSectionProfile(ISectionProperty sectionProfile)
         {
-            bool isInvalid = true;
+            bool isInvalid = false;
 
-            if (surfaceProperty is ConstantThickness)
-                isInvalid = false;
-            else
-                Reflection.Compute.RecordWarning("Unsupported SurfaceProperty (Waffle, Ribbed or LoadingPanelProperty) assigned to Panel.");
+            if (sectionProfile is GeneralisedFabricatedBoxProfile ||
+                sectionProfile is GeneralisedTSectionProfile ||
+                sectionProfile is FreeFormProfile ||
+                sectionProfile is KiteProfile)
+                isInvalid = true;
+                Reflection.Compute.RecordWarning("Unsupported SectionProperty (GeneralisedFabricatedBoxProfile, GeneralisedTSectionProfile, FreeformProfile or KiteProfile) assigned to Bar.");
 
             return isInvalid;
         }

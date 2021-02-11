@@ -59,14 +59,14 @@ namespace BH.Adapter.Lusas
                 bar.FEAType == BarFEAType.TensionOnly)
             {
                 Engine.Reflection.Compute.RecordError(
-                    "Lusas does not support " + bar.FEAType.ToString() + " bars");
+                    "Lusas does not support " + bar.FEAType.ToString() + " Bars");
                 return null;
             }
 
-            string stNodeId = GetAdapterId<string>(bar.StartNode);
+            string startNodeId = GetAdapterId<string>(bar.StartNode);
             string endNodeId = GetAdapterId<string>(bar.EndNode);
 
-            if (string.IsNullOrEmpty(stNodeId) || string.IsNullOrEmpty(endNodeId))
+            if (string.IsNullOrEmpty(startNodeId) || string.IsNullOrEmpty(endNodeId))
             {
                 Engine.Reflection.Compute.RecordError("Could not find the ids for at least one end node for at least one Bar. Bar not created.");
                 return null;
@@ -84,7 +84,8 @@ namespace BH.Adapter.Lusas
                 AssignObjectSet(lusasLine, bar.Tags);
             }
 
-            if (CheckPropertyWarning(bar, b => b.SectionProperty))
+            if (CheckPropertyWarning(bar, b => b.SectionProperty) && Engine.Adapters.Lusas.Query.InvalidSectionProperty(bar.SectionProperty))
+                if(Engine.Adapters.Lusas.Query.InvalidSectionProfile(bar.SectionProperty))
             {
                 IFAttribute lusasGeometricLine = d_LusasData.getAttribute("Line Geometric", bar.SectionProperty.AdapterId<int>(typeof(LusasId)));
                 lusasGeometricLine.assignTo(lusasLine);

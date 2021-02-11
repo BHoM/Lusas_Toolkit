@@ -53,34 +53,50 @@ namespace BH.Adapter.Lusas
                 }
                 else
                 {
-                    lusasMaterial = d_LusasData.createIsotropicMaterial(material.DescriptionOrName(),
-                    isotropic.YoungsModulus, isotropic.PoissonsRatio, isotropic.Density, isotropic.ThermalExpansionCoeff);
+                    if (CheckPropertyWarning(isotropic, x => x.YoungsModulus) &&
+                            CheckPropertyWarning(isotropic, x => x.PoissonsRatio) &&
+                            CheckPropertyWarning(isotropic, x => x.ThermalExpansionCoeff) &&
+                            CheckPropertyWarning(isotropic, x => x.Density))
+                        lusasMaterial = d_LusasData.createIsotropicMaterial(material.DescriptionOrName(),
+                            isotropic.YoungsModulus, isotropic.PoissonsRatio, isotropic.Density, isotropic.ThermalExpansionCoeff);
+
+                    int adapterIdName = lusasMaterial.getID();
+                    material.SetAdapterId(typeof(LusasId), adapterIdName);
                 }
             }
             else if (material is IOrthotropic)
             {
-                IOrthotropic iorthotropic = material as IOrthotropic;
+                IOrthotropic orthotropic = material as IOrthotropic;
                 if (d_LusasData.existsAttribute("Material", material.DescriptionOrName()))
                 {
                     lusasMaterial = d_LusasData.getAttribute("Material", material.DescriptionOrName());
                 }
                 else
                 {
-                    lusasMaterial = d_LusasData.createOrthotropicAxisymmetricMaterial(material.DescriptionOrName(),
-                        iorthotropic.YoungsModulus.X, iorthotropic.YoungsModulus.Y, iorthotropic.YoungsModulus.Z,
-                        iorthotropic.ShearModulus.X, iorthotropic.PoissonsRatio.X, iorthotropic.PoissonsRatio.Y, iorthotropic.PoissonsRatio.Z,
-                        0.0, iorthotropic.Density, 0.0);
-                    lusasMaterial.setValue("ax", iorthotropic.ThermalExpansionCoeff.X);
-                    lusasMaterial.setValue("ay", iorthotropic.ThermalExpansionCoeff.Y);
-                    lusasMaterial.setValue("az", iorthotropic.ThermalExpansionCoeff.Z);
+                    if (CheckPropertyWarning(orthotropic, x => x.YoungsModulus) &&
+                        CheckPropertyWarning(orthotropic, x => x.PoissonsRatio) &&
+                        CheckPropertyWarning(orthotropic, x => x.ThermalExpansionCoeff) &&
+                        CheckPropertyWarning(orthotropic, x => x.ShearModulus) &&
+                        CheckPropertyWarning(orthotropic, x => x.Density))
+                    {
+                        lusasMaterial = d_LusasData.createOrthotropicAxisymmetricMaterial(material.DescriptionOrName(),
+                            orthotropic.YoungsModulus.X, orthotropic.YoungsModulus.Y, orthotropic.YoungsModulus.Z,
+                            orthotropic.ShearModulus.X, orthotropic.PoissonsRatio.X, orthotropic.PoissonsRatio.Y, orthotropic.PoissonsRatio.Z,
+                            0.0, orthotropic.Density, 0.0);
 
-                    lusasMaterial.setValue("axy", System.Math.Sqrt(System.Math.Pow(iorthotropic.ThermalExpansionCoeff.X, 2)
-                        + System.Math.Pow(iorthotropic.ThermalExpansionCoeff.Y, 2)));
+                        lusasMaterial.setValue("ax", orthotropic.ThermalExpansionCoeff.X);
+                        lusasMaterial.setValue("ay", orthotropic.ThermalExpansionCoeff.Y);
+                        lusasMaterial.setValue("az", orthotropic.ThermalExpansionCoeff.Z);
+
+                        lusasMaterial.setValue("axy", System.Math.Sqrt(System.Math.Pow(orthotropic.ThermalExpansionCoeff.X, 2)
+                            + System.Math.Pow(orthotropic.ThermalExpansionCoeff.Y, 2)));
+
+                        int adapterIdName = lusasMaterial.getID();
+                        material.SetAdapterId(typeof(LusasId), adapterIdName);
+                    }
+
                 }
             }
-
-            int adapterIdName = lusasMaterial.getID();
-            material.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasMaterial;
         }

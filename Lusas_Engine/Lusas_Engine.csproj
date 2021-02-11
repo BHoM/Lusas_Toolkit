@@ -118,6 +118,9 @@
       <HintPath>C:\ProgramData\BHoM\Assemblies\Reflection_oM.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Spatial_oM">
+      <HintPath>..\..\..\..\..\..\ProgramData\BHoM\Assemblies\Spatial_oM.dll</HintPath>
+    </Reference>
     <Reference Include="Structure_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Structure_Engine.dll</HintPath>
       <Private>False</Private>
@@ -150,6 +153,8 @@
     <Compile Include="Objects\Equality_Comparer\PointDistanceComparer.cs" />
     <Compile Include="Objects\Equality_Comparer\EdgeMidPointComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\InvalidSectionProfileCheck.cs" />
+    <Compile Include="Query\InvalidSectionPropertyCheck.cs" />
     <Compile Include="Query\InvalidSurfacePropertyCheck.cs" />
     <Compile Include="Query\NonLinearEdgeCheck.cs" />
   </ItemGroup>
