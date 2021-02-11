@@ -27,6 +27,7 @@ using Lusas.LPI;
 using BH.oM.Adapters.Lusas.Fragments;
 using BH.Engine.Base;
 using System.Linq;
+using BH.Engine.Adapters.Lusas;
 using BH.Engine.Reflection;
 
 namespace BH.Adapter.Lusas
@@ -71,7 +72,7 @@ namespace BH.Adapter.Lusas
                     AssignObjectSet(lusasSurface, panel.Tags);
                 }
 
-                if (CheckPropertyWarning(panel, p => p.Property))
+                if (CheckPropertyWarning(panel, p => p.Property) && !Engine.Adapters.Lusas.Query.InvalidSurfaceProperty(panel.Property))
                 {
                     IFAttribute lusasGeometricSurface = d_LusasData.getAttribute("Surface Geometric", panel.Property.AdapterId<int>(typeof(LusasId)));
 

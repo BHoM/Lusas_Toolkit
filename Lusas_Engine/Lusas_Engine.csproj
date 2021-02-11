@@ -150,6 +150,7 @@
     <Compile Include="Objects\Equality_Comparer\PointDistanceComparer.cs" />
     <Compile Include="Objects\Equality_Comparer\EdgeMidPointComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\InvalidSurfacePropertyCheck.cs" />
     <Compile Include="Query\NonLinearEdgeCheck.cs" />
   </ItemGroup>
   <ItemGroup>

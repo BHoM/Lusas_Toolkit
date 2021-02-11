@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BH.oM.Structure.Elements;
 using BH.Engine.Geometry;
+using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Geometry;
 
 namespace BH.Engine.Adapters.Lusas
@@ -33,18 +34,14 @@ namespace BH.Engine.Adapters.Lusas
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
-        public static bool InvalidEdgeCheck(Edge edge)
+        public static bool InvalidSurfaceProperty(ISurfaceProperty surfaceProperty)
         {
             bool isInvalid = true;
 
-            if (edge.Curve != null)
-            {
-                if (edge.Curve is Line)
-                    isInvalid = false;
-                else
-                    Reflection.Compute.RecordError("Invalid edges will not be pushed. Lusas_Toolkit only supports Edges defined with Lines.");
-            }
-
+            if (surfaceProperty is ConstantThickness)
+                isInvalid = false;
+            else
+                Reflection.Compute.RecordError("Invalid SurfaceProperty assigned to Panel.");
 
             return isInvalid;
         }
