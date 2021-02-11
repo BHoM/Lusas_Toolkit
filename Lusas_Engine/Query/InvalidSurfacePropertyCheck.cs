@@ -34,7 +34,7 @@ namespace BH.Engine.Adapters.Lusas
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
-        public static bool InvalidSurfaceProperty(ISurfaceProperty surfaceProperty)
+        public static bool InvalidSurfaceProperty(this ISurfaceProperty surfaceProperty)
         {
             bool isInvalid = true;
 

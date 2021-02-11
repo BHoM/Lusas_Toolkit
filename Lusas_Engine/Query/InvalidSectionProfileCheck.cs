@@ -35,7 +35,7 @@ namespace BH.Engine.Adapters.Lusas
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
-        public static bool InvalidSectionProfile(ISectionProperty sectionProfile)
+        public static bool InvalidSectionProfile(this ISectionProperty sectionProfile)
         {
             bool isInvalid = false;
 
