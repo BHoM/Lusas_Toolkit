@@ -319,7 +319,7 @@ namespace BH.Adapter.Lusas
                     if (CheckPropertyError(panel, p => p.ExternalEdges))
                         if (CheckPropertyError(panel.ExternalEdges, e => e.Select(x => x.Curve)))
                             if (panel.ExternalEdges.All(x => x != null) && panel.ExternalEdges.Select(x => x.Curve).All(y => y != null))
-                                panelEdges.AddRange(panel.ExternalEdges.Where(x => !Engine.Adapters.Lusas.Query.InvalidEdgeCheck(x)).ToList());
+                                panelEdges.AddRange(panel.ExternalEdges.Where(x => !Engine.Adapters.Lusas.Query.InvalidEdge(x)).ToList());
 
                 }
 
@@ -345,7 +345,7 @@ namespace BH.Adapter.Lusas
                             {
                                 for (int i = 0; i < panel.ExternalEdges.Count; i++)
                                 {
-                                    if (CheckPropertyError(panel, p => panel.ExternalEdges[i]) && !Engine.Adapters.Lusas.Query.InvalidEdgeCheck(panel.ExternalEdges[i]))
+                                    if (CheckPropertyError(panel, p => panel.ExternalEdges[i]) && !Engine.Adapters.Lusas.Query.InvalidEdge(panel.ExternalEdges[i]))
                                     {
                                         Edge edge = distinctEdges[midPoints.FindIndex(
                                             m => m.Equals(edges[i].Curve.IPointAtParameter(0.5).ClosestPoint(midPoints)))];
@@ -381,7 +381,7 @@ namespace BH.Adapter.Lusas
 
                 //Check List<Curve> is not null and Curve is not invalid (i.e. not a Line)
                 List<Edge> validEdges = edges.Where(x => CheckPropertyError(x, y => y.Curve))
-                    .Where(x => !Engine.Adapters.Lusas.Query.InvalidEdgeCheck(x)).ToList();
+                    .Where(x => !Engine.Adapters.Lusas.Query.InvalidEdge(x)).ToList();
 
                 List<Edge> distinctEdges = new List<Edge>();
 

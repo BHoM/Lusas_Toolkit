@@ -33,7 +33,7 @@ namespace BH.Engine.Adapters.Lusas
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
-        public static bool InvalidEdgeCheck(this Edge edge)
+        public static bool InvalidEdge(this Edge edge)
         {
             bool isInvalid = true;
 

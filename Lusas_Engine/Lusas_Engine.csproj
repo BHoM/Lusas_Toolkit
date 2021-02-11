@@ -120,7 +120,7 @@
     </Reference>
     <Reference Include="Spatial_oM">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Spatial_oM.dll</HintPath>
-	  <Private>False</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Structure_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Structure_Engine.dll</HintPath>
@@ -154,10 +154,10 @@
     <Compile Include="Objects\Equality_Comparer\PointDistanceComparer.cs" />
     <Compile Include="Objects\Equality_Comparer\EdgeMidPointComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Query\InvalidSectionProfileCheck.cs" />
-    <Compile Include="Query\InvalidSectionPropertyCheck.cs" />
-    <Compile Include="Query\InvalidSurfacePropertyCheck.cs" />
-    <Compile Include="Query\NonLinearEdgeCheck.cs" />
+    <Compile Include="Query\InvalidSectionProfile.cs" />
+    <Compile Include="Query\InvalidSectionProperty.cs" />
+    <Compile Include="Query\InvalidSurfaceProperty.cs" />
+    <Compile Include="Query\InvalidEdge.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lusas_oM\Lusas_oM.csproj">
