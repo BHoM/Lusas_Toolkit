@@ -119,7 +119,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Spatial_oM">
-      <HintPath>..\..\..\..\..\..\ProgramData\BHoM\Assemblies\Spatial_oM.dll</HintPath>
+      <HintPath>C:\ProgramData\BHoM\Assemblies\Spatial_oM.dll</HintPath>
     </Reference>
     <Reference Include="Structure_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Structure_Engine.dll</HintPath>
