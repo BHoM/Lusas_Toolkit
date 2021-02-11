@@ -65,7 +65,7 @@ namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
                 return false;
 
             if (!edge1.Curve.IsNurbsCurve() && !edge2.Curve.IsNurbsCurve())
-                if (Query.InvalidEdgeCheck(edge1) || Query.InvalidEdgeCheck(edge2))
+                if (Query.InvalidEdge(edge1) || Query.InvalidEdge(edge2))
                     return false;
 
             //Check if the GUIDs are the same
@@ -90,7 +90,7 @@ namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
             if (edge.Curve != null)
             {
                 if (!edge.Curve.IsNurbsCurve())
-                    if (!Query.InvalidEdgeCheck(edge))
+                    if (!Query.InvalidEdge(edge))
                         return edge.Curve.IPointAtParameter(0.5).GetHashCode();
             }
 
