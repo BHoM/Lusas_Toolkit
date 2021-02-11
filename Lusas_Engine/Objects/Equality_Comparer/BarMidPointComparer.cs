@@ -55,13 +55,21 @@ namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
             //Check whether the compared objects reference the same data.
             if (ReferenceEquals(bar1, bar2)) return true;
 
+            //Check if the GUIDs are the same
+            if (bar1.BHoM_Guid == bar2.BHoM_Guid)
+                return true;
+
             //Check whether any of the compared objects is null.
             if (ReferenceEquals(bar1, null) || ReferenceEquals(bar2, null))
                 return false;
 
-            //Check if the GUIDs are the same
-            if (bar1.BHoM_Guid == bar2.BHoM_Guid)
-                return true;
+            if (ReferenceEquals(bar1.StartNode, null) || ReferenceEquals(bar1.EndNode, null) ||
+                ReferenceEquals(bar2.StartNode, null) || ReferenceEquals(bar2.EndNode, null))
+                return false;
+
+            if (ReferenceEquals(bar1.StartNode.Position, null) || ReferenceEquals(bar1.EndNode.Position, null) ||
+                ReferenceEquals(bar2.StartNode.Position, null) || ReferenceEquals(bar2.EndNode.Position, null))
+                return false;
 
             if (m_pointComparer.Equals(
                 bar1.Geometry().IPointAtParameter(0.5),
@@ -80,9 +88,11 @@ namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
         public int GetHashCode(Bar bar)
         {
             //Check whether the object is null
-            if (ReferenceEquals(bar, null)) return 0;
+            if (!ReferenceEquals(bar, null))
+                if (!ReferenceEquals(bar.StartNode, null) || !ReferenceEquals(bar.EndNode, null))
+                    return bar.StartNode.GetHashCode() ^ bar.EndNode.GetHashCode();
 
-            return bar.StartNode.GetHashCode() ^ bar.EndNode.GetHashCode();
+            return 0;
         }
 
 

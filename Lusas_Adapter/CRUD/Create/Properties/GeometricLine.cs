@@ -74,9 +74,14 @@ namespace BH.Adapter.Lusas
         {
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
-            CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic);
-            if (!(sectionProperty.SectionProfile is TaperedProfile))
-                lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+            if (sectionProperty.SectionProfile != null)
+            {
+                if (CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic))
+                    if (!(sectionProperty.SectionProfile is TaperedProfile))
+                        lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+            }
+
+
             return lusasGeometricLine;
         }
 
@@ -86,9 +91,12 @@ namespace BH.Adapter.Lusas
         {
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
-            CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic);
-            if (!(sectionProperty.SectionProfile is TaperedProfile))
-                lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+            if (sectionProperty.SectionProfile != null)
+            {
+                if (CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic))
+                    if (!(sectionProperty.SectionProfile is TaperedProfile))
+                        lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+            }
             return lusasGeometricLine;
         }
 
@@ -106,9 +114,12 @@ namespace BH.Adapter.Lusas
         {
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
-            CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic);
-            if (!(sectionProperty.SectionProfile is TaperedProfile))
-                lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+            if (sectionProperty.SectionProfile != null)
+            {
+                if (CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic))
+                    if (!(sectionProperty.SectionProfile is TaperedProfile))
+                        lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+            }
             return lusasGeometricLine;
         }
 
@@ -118,9 +129,12 @@ namespace BH.Adapter.Lusas
         {
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
-            CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic);
-            if (!(sectionProperty.SectionProfile is TaperedProfile))
-                lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+            if (sectionProperty.SectionProfile != null)
+            {
+                if (CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic))
+                    if (!(sectionProperty.SectionProfile is TaperedProfile))
+                        lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+            }
             return lusasGeometricLine;
         }
 
@@ -130,15 +144,18 @@ namespace BH.Adapter.Lusas
         {
             IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
             lusasGeometricLine.setValue("elementType", "3D Thick Beam");
-            CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic);
-            if (!(sectionProperty.SectionProfile is TaperedProfile))
-                lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+            if (sectionProperty.SectionProfile != null)
+            {
+                if (CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic))
+                    if (!(sectionProperty.SectionProfile is TaperedProfile))
+                        lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+            }
             return lusasGeometricLine;
         }
 
         /***************************************************/
 
-        private void CreateProfile(string name, RectangleProfile profile)
+        private bool CreateProfile(string name, RectangleProfile profile)
         {
             List<double> dimensionList = new List<double> { profile.Width, profile.Height };
             double[] dimensionArray = dimensionList.ToArray();
@@ -147,11 +164,13 @@ namespace BH.Adapter.Lusas
 
             int lusasType = 1;
             CreateLibrarySection(name, dimensionArray, lusasType);
+
+            return true;
         }
 
         /***************************************************/
 
-        private void CreateProfile(string name, BoxProfile profile)
+        private bool CreateProfile(string name, BoxProfile profile)
         {
             List<double> dimensionList = new List<double> { profile.Width, profile.Height, profile.Thickness, profile.InnerRadius };
             double[] dimensionArray = dimensionList.ToArray();
@@ -160,11 +179,13 @@ namespace BH.Adapter.Lusas
 
             int lusasType = 2;
             CreateLibrarySection(name, dimensionArray, lusasType);
+
+            return true;
         }
 
         /***************************************************/
 
-        private void CreateProfile(string name, FabricatedBoxProfile profile)
+        private bool CreateProfile(string name, FabricatedBoxProfile profile)
         {
             Engine.Reflection.Compute.RecordWarning(
                 "Unequal flange thickness not supported in Lusas for " + profile.GetType().ToString()
@@ -180,11 +201,13 @@ namespace BH.Adapter.Lusas
 
             int lusasType = 15;
             CreateLibrarySection(name, dimensionArray, lusasType);
+
+            return true;
         }
 
         /***************************************************/
 
-        private void CreateProfile(string name, CircleProfile profile)
+        private bool CreateProfile(string name, CircleProfile profile)
         {
             List<double> dimensionList = new List<double> { profile.Diameter };
             double[] dimensionArray = dimensionList.ToArray();
@@ -193,11 +216,13 @@ namespace BH.Adapter.Lusas
 
             int lusasType = 3;
             CreateLibrarySection(name, dimensionArray, lusasType);
+
+            return true;
         }
 
         /***************************************************/
 
-        private void CreateProfile(string name, TubeProfile profile)
+        private bool CreateProfile(string name, TubeProfile profile)
         {
             List<double> dimensionList = new List<double> { profile.Diameter, profile.Thickness };
             double[] dimensionArray = dimensionList.ToArray();
@@ -206,11 +231,13 @@ namespace BH.Adapter.Lusas
 
             int lusasType = 4;
             CreateLibrarySection(name, dimensionArray, lusasType);
+
+            return true;
         }
 
         /***************************************************/
 
-        private void CreateProfile(string name, ISectionProfile profile)
+        private bool CreateProfile(string name, ISectionProfile profile)
         {
             List<double> dimensionList = new List<double> { profile.Width, profile.Height,
             profile.FlangeThickness, profile.WebThickness, profile.RootRadius};
@@ -220,11 +247,13 @@ namespace BH.Adapter.Lusas
 
             int lusasType = 5;
             CreateLibrarySection(name, dimensionArray, lusasType);
+
+            return true;
         }
 
         /***************************************************/
 
-        private void CreateProfile(string name, TSectionProfile profile)
+        private bool CreateProfile(string name, TSectionProfile profile)
         {
             List<double> dimensionList = new List<double> { profile.Height, profile.Width,
             profile.FlangeThickness, profile.WebThickness, profile.RootRadius};
@@ -234,11 +263,13 @@ namespace BH.Adapter.Lusas
 
             int lusasType = 8;
             CreateLibrarySection(name, dimensionArray, lusasType);
+
+            return true;
         }
 
         /***************************************************/
 
-        private void CreateProfile(string name, FabricatedISectionProfile profile)
+        private bool CreateProfile(string name, FabricatedISectionProfile profile)
         {
             List<double> dimensionList = new List<double> { profile.TopFlangeWidth,
                 profile.BotFlangeWidth, profile.Height, profile.TopFlangeThickness, profile.BotFlangeThickness,
@@ -250,13 +281,14 @@ namespace BH.Adapter.Lusas
             int lusasType = 14;
             CreateLibrarySection(name, dimensionArray, lusasType);
 
-            Engine.Reflection.Compute.RecordWarning("Weld size assumed to be root radius for " +
-                profile.GetType().ToString());
+            Engine.Reflection.Compute.RecordWarning("Weld size assumed to be root radius for " + profile.GetType().ToString());
+
+            return true;
         }
 
         /***************************************************/
 
-        private void CreateProfile(string name, AngleProfile profile)
+        private bool CreateProfile(string name, AngleProfile profile)
         {
             List<double> dimensionList = new List<double> {profile.Height, profile.Width, profile.WebThickness,
                 profile.FlangeThickness, profile.RootRadius, profile.ToeRadius};
@@ -267,11 +299,13 @@ namespace BH.Adapter.Lusas
 
             int lusasType = 7;
             CreateLibrarySection(name, dimensionArray, lusasType);
+
+            return true;
         }
 
         /***************************************************/
 
-        private void CreateProfile(string name, ChannelProfile profile)
+        private bool CreateProfile(string name, ChannelProfile profile)
         {
             Engine.Reflection.Compute.RecordWarning("Toe radius not support for ChannelSection");
             List<double> dimensionList = new List<double> { profile.FlangeWidth, profile.Height,
@@ -282,15 +316,16 @@ namespace BH.Adapter.Lusas
 
             int lusasType = 10;
             CreateLibrarySection(name, dimensionArray, lusasType);
+
+            return true;
         }
 
 
         /***************************************************/
 
-        private void CreateProfile(string name, ZSectionProfile profile)
+        private bool CreateProfile(string name, ZSectionProfile profile)
         {
-            Engine.Reflection.Compute.RecordWarning(
-                "Lusas only supports constant thickness Z sections, flange thickness used as thickness");
+            Engine.Reflection.Compute.RecordWarning("Lusas only supports constant thickness Z sections, flange thickness used as thickness");
             Engine.Reflection.Compute.RecordWarning("Toe radius not supported for ZSection");
 
             List<double> dimensionList = new List<double> {
@@ -302,50 +337,45 @@ namespace BH.Adapter.Lusas
 
             int lusasType = 16;
             CreateLibrarySection(name, dimensionArray, lusasType);
+
+            return true;
         }
 
         /***************************************************/
 
-        private IFGeometricLine CreateProfile(GeneralisedFabricatedBoxProfile profile,
-            string lusasName)
-        {
-            Engine.Reflection.Compute.RecordError(
-                "GeneralisedFabricatedBoxProfile not supported in Lusas_Toolkit"
-                );
-            return null;
-        }
-
-        /***************************************************/
-
-        private void CreateProfile(string name, GeneralisedFabricatedBoxProfile profile)
+        private bool CreateProfile(string name, GeneralisedFabricatedBoxProfile profile)
         {
             Engine.Reflection.Compute.RecordError("GeneralisedFabricatedBoxProfile not supported in Lusas_Toolkit");
+            return false;
         }
 
         /***************************************************/
 
-        private void CreateProfile(string name, GeneralisedTSectionProfile profile)
+        private bool CreateProfile(string name, GeneralisedTSectionProfile profile)
         {
             Engine.Reflection.Compute.RecordError("GeneralisedTSectionProfile not supported in Lusas_Toolkit");
+            return false;
         }
 
         /***************************************************/
 
-        private void CreateProfile(string name, FreeFormProfile profile)
+        private bool CreateProfile(string name, FreeFormProfile profile)
         {
             Engine.Reflection.Compute.RecordError("FreeFormProfile not supported in Lusas_Toolkit");
+            return false;
         }
 
         /***************************************************/
 
-        private void CreateProfile(string name, KiteProfile profile)
+        private bool CreateProfile(string name, KiteProfile profile)
         {
             Engine.Reflection.Compute.RecordError("KiteProfile not supported in Lusas_Toolkit");
+            return false;
         }
 
         /***************************************************/
 
-        private void CreateProfile(string name, TaperedProfile profile)
+        private bool CreateProfile(string name, TaperedProfile profile)
         {
             profile.MapPositionDomain();
 
@@ -385,6 +415,8 @@ namespace BH.Adapter.Lusas
             lusasGeometricLine.setVerticalAlignment("CenterToCenter");
             lusasGeometricLine.setHorizontalAlignment("CenterToCenter");
             lusasGeometricLine.setAlignmentSection(1);
+
+            return true;
         }
 
         /***************************************************/
