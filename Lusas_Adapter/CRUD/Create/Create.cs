@@ -214,7 +214,18 @@ namespace BH.Adapter.Lusas
 
                 if (bars.Any(x => x.Fragments.Contains(typeof(MeshSettings1D))))
                 {
-                    var barGroups = bars.GroupBy(m => new { m.FEAType, m.Release.Name });
+
+                    List<Bar> validBars = new List<Bar>();
+                    foreach(Bar bar in bars)
+                    {
+                        if (bar.Release != null)
+                            if (bar.Release.StartRelease != null && bar.Release.EndRelease != null)
+                            validBars.Add(bar);
+                        else
+                            Engine.Reflection.Compute.RecordError("Release assigned to Bar is null, therefore Mesh1DSettings cannot be pushed.");
+                    }
+
+                    var barGroups = validBars.GroupBy(m => new { m.FEAType, m.Release.Name });
 
                     BHoMObjectNameComparer comparer = new BHoMObjectNameComparer();
 
