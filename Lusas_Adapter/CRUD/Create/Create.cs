@@ -448,11 +448,6 @@ namespace BH.Adapter.Lusas
             foreach (ISectionProperty sectionProperty in sectionProperties)
             {
                 IFAttribute lusasGeometricLine = CreateGeometricLine(sectionProperty);
-
-                //if (lusasGeometricLine == null)
-                //{
-                //    return false;
-                //}
             }
 
             return true;
@@ -465,11 +460,6 @@ namespace BH.Adapter.Lusas
             foreach (IMaterialFragment material in materials)
             {
                 IFAttribute lusasMaterial = CreateMaterial(material);
-
-                //if (lusasMaterial == null)
-                //{
-                //    return false;
-                //}
             }
 
             return true;
@@ -482,11 +472,6 @@ namespace BH.Adapter.Lusas
             foreach (ISurfaceProperty property2D in properties2D)
             {
                 IFAttribute lusasGeometricSurface = CreateGeometricSurface(property2D);
-
-                //if (lusasGeometricSurface == null)
-                //{
-                //    return false;
-                //}
             }
 
             return true;
@@ -759,11 +744,6 @@ namespace BH.Adapter.Lusas
             foreach (MeshSettings1D meshSettings1D in meshSettings1Ds)
             {
                 IFMeshLine lusasLineMesh = CreateMeshSettings1D(meshSettings1D);
-
-                if (lusasLineMesh == null)
-                {
-                    return false;
-                }
             }
 
             return true;
@@ -777,11 +757,6 @@ namespace BH.Adapter.Lusas
             foreach (MeshSettings2D meshSettings2D in meshSettings2Ds)
             {
                 IFMeshSurface lusasSurfaceMesh = CreateMeshSettings2D(meshSettings2D);
-
-                if (lusasSurfaceMesh == null)
-                {
-                    return false;
-                }
             }
 
             return true;
