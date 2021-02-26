@@ -273,7 +273,6 @@ namespace BH.Adapter.Lusas
 
                     ReduceRuntime(false);
 
-
                 }
             }
             return true;
