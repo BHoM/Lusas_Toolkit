@@ -41,7 +41,7 @@ namespace BH.Engine.Adapters.Lusas
             if (sectionProperty is ExplicitSection)
                 isInvalid = true;
             else
-                Reflection.Compute.RecordWarning("Invalid SurfaceProperty (ExplicitSection) assigned to Bar.");
+                Reflection.Compute.RecordWarning("Unsupported SectionProperty (ExplicitSection) assigned to Bar.");
 
             return isInvalid;
         }
