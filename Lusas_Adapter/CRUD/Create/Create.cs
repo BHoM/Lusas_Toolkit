@@ -287,30 +287,6 @@ namespace BH.Adapter.Lusas
             {
                 CreateTags(panels);
 
-                if (panels.Any(x => x.Fragments.Contains(typeof(MeshSettings2D))))
-                {
-                    BHoMObjectNameComparer comparer = new BHoMObjectNameComparer();
-                    List<MeshSettings2D> distinctMeshes = panels.Select(x => x.FindFragment<MeshSettings2D>())
-                        .Distinct<MeshSettings2D>(comparer)
-                        .ToList();
-
-                    foreach (MeshSettings2D mesh in distinctMeshes)
-                    {
-                        CreateMeshSettings2D(mesh);
-                    }
-
-                    foreach (Panel panel in panels)
-                    {
-                        if (panel.Openings != null)
-                        {
-                            Engine.Reflection.Compute.RecordError("Lusas_Toolkit does not support Panels with Openings.");
-                            return true;
-
-                        }
-                        panel.AddFragment(distinctMeshes.First(x => comparer.Equals(x, (panel.FindFragment<MeshSettings2D>()))), true);
-                    }
-                }
-
                 List<Edge> panelEdges = new List<Edge>();
 
                 //Check List<Edge> in panel.Edges and List<Curve> in ExternalEdges.Curve
@@ -332,6 +308,24 @@ namespace BH.Adapter.Lusas
                     midPoints.Add(edge.Curve.IPointAtParameter(0.5));
                 }
 
+                if (panels.Any(x => x.Fragments.Contains(typeof(MeshSettings2D))))
+                {
+                    BHoMObjectNameComparer comparer = new BHoMObjectNameComparer();
+                    List<MeshSettings2D> distinctMeshes = panels.Select(x => x.FindFragment<MeshSettings2D>())
+                        .Distinct<MeshSettings2D>(comparer)
+                        .ToList();
+
+                    foreach (MeshSettings2D mesh in distinctMeshes)
+                    {
+                        CreateMeshSettings2D(mesh);
+                    }
+
+                    foreach (Panel panel in panels)
+                    {
+                        panel.AddFragment(distinctMeshes.First(x => comparer.Equals(x, (panel.FindFragment<MeshSettings2D>()))), true);
+                    }
+                }
+
                 ReduceRuntime(true);
 
                 foreach (Panel panel in panels)
@@ -343,16 +337,24 @@ namespace BH.Adapter.Lusas
                         if (CheckPropertyError(panel.ExternalEdges, e => e.Select(x => x.Curve)))
                             if (panel.ExternalEdges.All(x => x != null) && panel.ExternalEdges.Select(x => x.Curve).All(y => y != null))
                             {
-                                for (int i = 0; i < panel.ExternalEdges.Count; i++)
+                                if (panel.IGeometry().IIsPlanar(Tolerance.MacroDistance))
                                 {
-                                    if (CheckPropertyError(panel, p => panel.ExternalEdges[i]) && !Engine.Adapters.Lusas.Query.InvalidEdge(panel.ExternalEdges[i]))
+                                    if (panel.Openings != null || panel.Openings.Count != 0)
+                                        Engine.Reflection.Compute.RecordWarning("Lusas_Toolkit does not support Panels with Openings. The Panel will be pushed if valid, the Openings will not be pushed.");
+                                    for (int i = 0; i < panel.ExternalEdges.Count; i++)
                                     {
-                                        Edge edge = distinctEdges[midPoints.FindIndex(
-                                            m => m.Equals(edges[i].Curve.IPointAtParameter(0.5).ClosestPoint(midPoints)))];
+                                        if (CheckPropertyError(panel, p => panel.ExternalEdges[i]) && !Engine.Adapters.Lusas.Query.InvalidEdge(panel.ExternalEdges[i]))
+                                        {
+                                            Edge edge = distinctEdges[midPoints.FindIndex(
+                                                m => m.Equals(edges[i].Curve.IPointAtParameter(0.5).ClosestPoint(midPoints)))];
 
-                                        lusasLines[i] = d_LusasData.getLineByNumber(edge.AdapterId<int>(typeof(LusasId)));
+                                            lusasLines[i] = d_LusasData.getLineByNumber(edge.AdapterId<int>(typeof(LusasId)));
+                                        }
                                     }
                                 }
+                                else
+                                    Engine.Reflection.Compute.RecordError("The geometry defining the Panel is not Planar, and therefore the Panel will not be created.");
+
                             }
                             else
                                 Engine.Reflection.Compute.RecordError("One or more of the Edges of the Panel are null or the curve defining the curve is null and therefore the panel has not been created.");
