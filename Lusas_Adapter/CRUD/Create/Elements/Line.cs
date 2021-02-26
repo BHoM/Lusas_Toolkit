@@ -79,7 +79,7 @@ namespace BH.Adapter.Lusas
             int adapterIdName = lusasLine.getID();
             bar.SetAdapterId(typeof(LusasId), adapterIdName);
 
-            if (!(bar.Tags.Count == 0))
+            if (bar.Tags.Count != 0)
             {
                 AssignObjectSet(lusasLine, bar.Tags);
             }
@@ -104,7 +104,7 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            if (!(bar.Support == null))
+            if (bar.Support != null)
             {
                 IFAttribute lusasSupport = d_LusasData.getAttribute("Support", System.Convert.ToInt32(bar.Support.AdapterId<int>(typeof(LusasId))));
                 lusasSupport.assignTo(lusasLine);
@@ -130,6 +130,9 @@ namespace BH.Adapter.Lusas
                     meshSettings1D.Name + "\\" + bar.FEAType.ToString() + "|" + CreateReleaseString(bar.Release));
                 mesh.assignTo(lusasLine, meshAssignment);
             }
+
+            if (bar.Offset != null)
+                Engine.Reflection.Compute.RecordWarning("Offsets are currently unsupported.");
 
             return lusasLine;
 

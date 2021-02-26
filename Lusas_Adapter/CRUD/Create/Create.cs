@@ -449,7 +449,11 @@ namespace BH.Adapter.Lusas
         {
             foreach (ISectionProperty sectionProperty in sectionProperties)
             {
-                IFAttribute lusasGeometricLine = CreateGeometricLine(sectionProperty);
+                if(sectionProperties!=null)
+                {
+                    IFAttribute lusasGeometricLine = CreateGeometricLine(sectionProperty);
+                }    
+
             }
 
             return true;
@@ -461,7 +465,10 @@ namespace BH.Adapter.Lusas
         {
             foreach (IMaterialFragment material in materials)
             {
-                IFAttribute lusasMaterial = CreateMaterial(material);
+                if (material != null)
+                {
+                    IFAttribute lusasMaterial = CreateMaterial(material);
+                }
             }
 
             return true;
@@ -469,11 +476,14 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private bool CreateCollection(IEnumerable<ISurfaceProperty> properties2D)
+        private bool CreateCollection(IEnumerable<ISurfaceProperty> surfaceProperties)
         {
-            foreach (ISurfaceProperty property2D in properties2D)
+            foreach (ISurfaceProperty surfaceProperty in surfaceProperties)
             {
-                IFAttribute lusasGeometricSurface = CreateGeometricSurface(property2D);
+                if (surfaceProperty != null)
+                {
+                    IFAttribute lusasGeometricSurface = CreateGeometricSurface(surfaceProperty);
+                }
             }
 
             return true;
@@ -697,11 +707,13 @@ namespace BH.Adapter.Lusas
         {
             foreach (Constraint6DOF constraint in constraints)
             {
-                IFAttribute lusasSupport = CreateSupport(constraint);
-
-                if (lusasSupport == null)
+                if(constraint != null)
                 {
-                    return false;
+                    IFAttribute lusasSupport = CreateSupport(constraint);
+                    if (lusasSupport == null)
+                    {
+                        return false;
+                    }
                 }
             }
 
@@ -712,12 +724,14 @@ namespace BH.Adapter.Lusas
         {
             foreach (Constraint4DOF constraint in constraints)
             {
-                IFAttribute lusasSupport = CreateSupport(constraint);
-
-                if (lusasSupport == null)
+                if(constraint != null)
                 {
-                    return false;
-                }
+                    IFAttribute lusasSupport = CreateSupport(constraint);
+                    if (lusasSupport == null)
+                    {
+                        return false;
+                    }
+                }    
             }
 
             return true;
@@ -742,10 +756,12 @@ namespace BH.Adapter.Lusas
 
         private bool CreateCollection(IEnumerable<MeshSettings1D> meshSettings1Ds)
         {
-
             foreach (MeshSettings1D meshSettings1D in meshSettings1Ds)
             {
-                IFMeshLine lusasLineMesh = CreateMeshSettings1D(meshSettings1D);
+                if(meshSettings1D != null)
+                {
+                    IFMeshLine lusasLineMesh = CreateMeshSettings1D(meshSettings1D);
+                }
             }
 
             return true;
@@ -758,7 +774,10 @@ namespace BH.Adapter.Lusas
 
             foreach (MeshSettings2D meshSettings2D in meshSettings2Ds)
             {
-                IFMeshSurface lusasSurfaceMesh = CreateMeshSettings2D(meshSettings2D);
+                if (meshSettings2D != null)
+                {
+                    IFMeshSurface lusasSurfaceMesh = CreateMeshSettings2D(meshSettings2D);
+                }
             }
 
             return true;
