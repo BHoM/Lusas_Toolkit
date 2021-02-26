@@ -72,10 +72,11 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateSection(SteelSection sectionProperty)
         {
-            IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
-            lusasGeometricLine.setValue("elementType", "3D Thick Beam");
+            IFGeometricLine lusasGeometricLine = null;
             if (sectionProperty.SectionProfile != null)
             {
+                lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
+                lusasGeometricLine.setValue("elementType", "3D Thick Beam");
                 if (CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic))
                     if (!(sectionProperty.SectionProfile is TaperedProfile))
                         lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
@@ -89,10 +90,11 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateSection(ConcreteSection sectionProperty)
         {
-            IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
-            lusasGeometricLine.setValue("elementType", "3D Thick Beam");
+            IFGeometricLine lusasGeometricLine = null;
             if (sectionProperty.SectionProfile != null)
             {
+                lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
+                lusasGeometricLine.setValue("elementType", "3D Thick Beam");
                 if (CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic))
                     if (!(sectionProperty.SectionProfile is TaperedProfile))
                         lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
@@ -104,7 +106,7 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateSection(ExplicitSection sectionProperty)
         {
-            Engine.Reflection.Compute.RecordError("ExplicitSection not supported in Lusas_Toolkit");
+            Engine.Reflection.Compute.RecordError("ExplicitSection is not supported in Lusas_Toolkit.");
             return null;
         }
 
@@ -112,10 +114,11 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateSection(TimberSection sectionProperty)
         {
-            IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
-            lusasGeometricLine.setValue("elementType", "3D Thick Beam");
+            IFGeometricLine lusasGeometricLine = null;
             if (sectionProperty.SectionProfile != null)
             {
+                lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
+                lusasGeometricLine.setValue("elementType", "3D Thick Beam");
                 if (CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic))
                     if (!(sectionProperty.SectionProfile is TaperedProfile))
                         lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
@@ -127,10 +130,11 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateSection(AluminiumSection sectionProperty)
         {
-            IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
-            lusasGeometricLine.setValue("elementType", "3D Thick Beam");
+            IFGeometricLine lusasGeometricLine = null;
             if (sectionProperty.SectionProfile != null)
             {
+                lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
+                lusasGeometricLine.setValue("elementType", "3D Thick Beam");
                 if (CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic))
                     if (!(sectionProperty.SectionProfile is TaperedProfile))
                         lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
@@ -142,10 +146,11 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateSection(GenericSection sectionProperty)
         {
-            IFGeometricLine lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
-            lusasGeometricLine.setValue("elementType", "3D Thick Beam");
+            IFGeometricLine lusasGeometricLine = null;
             if (sectionProperty.SectionProfile != null)
             {
+                lusasGeometricLine = d_LusasData.createGeometricLine(sectionProperty.DescriptionOrName());
+                lusasGeometricLine.setValue("elementType", "3D Thick Beam");
                 if (CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic))
                     if (!(sectionProperty.SectionProfile is TaperedProfile))
                         lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);

@@ -58,8 +58,7 @@ namespace BH.Adapter.Lusas
                 bar.FEAType == BarFEAType.CompressionOnly ||
                 bar.FEAType == BarFEAType.TensionOnly)
             {
-                Engine.Reflection.Compute.RecordError(
-                    "Lusas does not support " + bar.FEAType.ToString() + " Bars");
+                Engine.Reflection.Compute.RecordError("Lusas does not support " + bar.FEAType.ToString() + " Bars");
                 return null;
             }
 
