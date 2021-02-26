@@ -44,7 +44,7 @@ namespace BH.Engine.Adapters.Lusas
                 sectionProfile is FreeFormProfile ||
                 sectionProfile is KiteProfile)
                 isInvalid = true;
-                Reflection.Compute.RecordWarning("Unsupported SectionProperty (GeneralisedFabricatedBoxProfile, GeneralisedTSectionProfile, FreeformProfile or KiteProfile) assigned to Bar.");
+                Reflection.Compute.RecordWarning("Unsupported SectionProfile (GeneralisedFabricatedBoxProfile, GeneralisedTSectionProfile, FreeformProfile or KiteProfile) assigned to Bar SectionProperty.");
 
             return isInvalid;
         }
