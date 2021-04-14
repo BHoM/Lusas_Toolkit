@@ -39,6 +39,7 @@ using BH.Engine.Base.Objects;
 using System;
 using System.Reflection;
 using BH.Engine.Base;
+using BH.Engine.Spatial;
 using BH.oM.Adapters.Lusas.Fragments;
 
 namespace BH.Adapter.Lusas
@@ -216,13 +217,13 @@ namespace BH.Adapter.Lusas
                 {
 
                     List<Bar> validBars = new List<Bar>();
-                    foreach(Bar bar in bars)
+                    foreach (Bar bar in bars)
                     {
                         if (bar.Release != null)
                             if (bar.Release.StartRelease != null && bar.Release.EndRelease != null)
-                            validBars.Add(bar);
-                        else
-                            Engine.Reflection.Compute.RecordError("Release assigned to Bar is null, therefore Mesh1DSettings cannot be pushed.");
+                                validBars.Add(bar);
+                            else
+                                Engine.Reflection.Compute.RecordError("Release assigned to Bar is null, therefore Mesh1DSettings cannot be pushed.");
                     }
 
                     var barGroups = validBars.GroupBy(m => new { m.FEAType, m.Release.Name });
@@ -336,24 +337,28 @@ namespace BH.Adapter.Lusas
                         if (CheckPropertyError(panel.ExternalEdges, e => e.Select(x => x.Curve)))
                             if (panel.ExternalEdges.All(x => x != null) && panel.ExternalEdges.Select(x => x.Curve).All(y => y != null))
                             {
-                                if (panel.IGeometry().IIsPlanar(Tolerance.MacroDistance))
+                                if (panel.Openings != null || panel.Openings.Count != 0)
+                                    Engine.Reflection.Compute.RecordWarning("Lusas_Toolkit does not support Panels with Openings. The Panel will be pushed if valid, the Openings will not be pushed.");
+                                if (panel.ExternalEdges.All(x => !Engine.Adapters.Lusas.Query.InvalidEdge(x)))
                                 {
-                                    if (panel.Openings != null || panel.Openings.Count != 0)
-                                        Engine.Reflection.Compute.RecordWarning("Lusas_Toolkit does not support Panels with Openings. The Panel will be pushed if valid, the Openings will not be pushed.");
-                                    for (int i = 0; i < panel.ExternalEdges.Count; i++)
+                                    if (Engine.Spatial.Query.IsPlanar(panel, false, Tolerance.MacroDistance))
                                     {
-                                        if (CheckPropertyError(panel, p => panel.ExternalEdges[i]) && !Engine.Adapters.Lusas.Query.InvalidEdge(panel.ExternalEdges[i]))
+                                        for (int i = 0; i < panel.ExternalEdges.Count; i++)
                                         {
-                                            Edge edge = distinctEdges[midPoints.FindIndex(
-                                                m => m.Equals(edges[i].Curve.IPointAtParameter(0.5).ClosestPoint(midPoints)))];
+                                            if (CheckPropertyError(panel, p => panel.ExternalEdges[i]) && !Engine.Adapters.Lusas.Query.InvalidEdge(panel.ExternalEdges[i]))
+                                            {
+                                                Edge edge = distinctEdges[midPoints.FindIndex(
+                                                    m => m.Equals(edges[i].Curve.IPointAtParameter(0.5).ClosestPoint(midPoints)))];
 
-                                            lusasLines[i] = d_LusasData.getLineByNumber(edge.AdapterId<int>(typeof(LusasId)));
+                                                lusasLines[i] = d_LusasData.getLineByNumber(edge.AdapterId<int>(typeof(LusasId)));
+                                            }
                                         }
                                     }
+                                    else
+                                        Engine.Reflection.Compute.RecordError("The geometry defining the Panel is not Planar, and therefore the Panel will not be created.");
                                 }
                                 else
-                                    Engine.Reflection.Compute.RecordError("The geometry defining the Panel is not Planar, and therefore the Panel will not be created.");
-
+                                    Engine.Reflection.Compute.RecordError("One or more of the External Edges of the Panel are invalid.");
                             }
                             else
                                 Engine.Reflection.Compute.RecordError("One or more of the Edges of the Panel are null or the curve defining the curve is null and therefore the panel has not been created.");
@@ -448,10 +453,10 @@ namespace BH.Adapter.Lusas
         {
             foreach (ISectionProperty sectionProperty in sectionProperties)
             {
-                if(sectionProperties!=null)
+                if (sectionProperties != null)
                 {
                     IFAttribute lusasGeometricLine = CreateGeometricLine(sectionProperty);
-                }    
+                }
 
             }
 
@@ -706,7 +711,7 @@ namespace BH.Adapter.Lusas
         {
             foreach (Constraint6DOF constraint in constraints)
             {
-                if(constraint != null)
+                if (constraint != null)
                 {
                     IFAttribute lusasSupport = CreateSupport(constraint);
                     if (lusasSupport == null)
@@ -723,14 +728,14 @@ namespace BH.Adapter.Lusas
         {
             foreach (Constraint4DOF constraint in constraints)
             {
-                if(constraint != null)
+                if (constraint != null)
                 {
                     IFAttribute lusasSupport = CreateSupport(constraint);
                     if (lusasSupport == null)
                     {
                         return false;
                     }
-                }    
+                }
             }
 
             return true;
@@ -757,7 +762,7 @@ namespace BH.Adapter.Lusas
         {
             foreach (MeshSettings1D meshSettings1D in meshSettings1Ds)
             {
-                if(meshSettings1D != null)
+                if (meshSettings1D != null)
                 {
                     IFMeshLine lusasLineMesh = CreateMeshSettings1D(meshSettings1D);
                 }

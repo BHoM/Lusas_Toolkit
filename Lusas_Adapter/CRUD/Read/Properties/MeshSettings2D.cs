@@ -50,7 +50,8 @@ namespace BH.Adapter.Lusas
                 MeshSettings2D meshSettings2D = Adapters.Lusas.Convert.ToMeshSettings2D(lusasMesh2D);
                 List<string> analysisName = new List<string> { lusasMesh2D.getAttributeType() };
                 meshSettings2D.Tags = new HashSet<string>(analysisName);
-                meshSettings2Ds.Add(meshSettings2D);
+                if (meshSettings2D != null)
+                    meshSettings2Ds.Add(meshSettings2D);
             }
             return meshSettings2Ds;
         }
