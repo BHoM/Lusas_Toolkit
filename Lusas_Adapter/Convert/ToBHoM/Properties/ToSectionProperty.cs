@@ -74,6 +74,11 @@ namespace BH.Adapter.Adapters.Lusas
                 double asy = lusasAttribute.getValue("Asy", i);
                 double asz = lusasAttribute.getValue("Asz", i);
 
+                if (profile == null)
+                {
+                    return null;
+                }
+
                 profile = Engine.Structure.Compute.Integrate(profile, oM.Geometry.Tolerance.MicroDistance).Item1;
 
                 if (attributeType == "Multiple Varying Geometric")
@@ -93,6 +98,8 @@ namespace BH.Adapter.Adapters.Lusas
             if (lusasAttribute.getAttributeType() == "Multiple Varying Geometric")
             {
                 TaperedProfile taperedProfile = Engine.Spatial.Create.TaperedProfile(positions, profiles, interpolationOrders);
+                if (taperedProfile == null)
+                    return null;
                 section = Engine.Structure.Create.GenericSectionFromProfile(taperedProfile);
             }
 

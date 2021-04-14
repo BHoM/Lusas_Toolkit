@@ -51,7 +51,8 @@ namespace BH.Adapter.Lusas
                 MeshSettings1D meshSettings1D = Adapters.Lusas.Convert.ToMeshSettings1D(lusasMesh1D);
                 List<string> analysisName = new List<string> { lusasMesh1D.getAttributeType() };
                 meshSettings1D.Tags = new HashSet<string>(analysisName);
-                meshSettings1Ds.Add(meshSettings1D);
+                if (meshSettings1D != null)
+                    meshSettings1Ds.Add(meshSettings1D);
             }
 
             return meshSettings1Ds;

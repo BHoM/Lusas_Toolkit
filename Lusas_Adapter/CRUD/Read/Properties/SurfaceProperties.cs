@@ -48,7 +48,8 @@ namespace BH.Adapter.Lusas
             {
                 IFAttribute lusasGeometric = (IFAttribute)lusasGeometrics[i];
                 ISurfaceProperty surfaceProperty = Adapters.Lusas.Convert.ToSurfaceProperty(lusasGeometric);
-                surfaceProperties.Add(surfaceProperty);
+                if (surfaceProperty != null)
+                    surfaceProperties.Add(surfaceProperty);
             }
 
             return surfaceProperties;

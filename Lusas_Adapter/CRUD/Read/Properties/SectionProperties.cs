@@ -48,13 +48,14 @@ namespace BH.Adapter.Lusas
             {
                 IFGeometric lusasSection = (IFGeometric)lusasSections[i];
 
-                switch(lusasSection.getAttributeType())
+                switch (lusasSection.getAttributeType())
                 {
                     case "Surface Geometric":
                         break;
                     default:
                         ISectionProperty sectionProperty = Adapters.Lusas.Convert.ToSection(lusasSection);
-                        sectionProperties.Add(sectionProperty);
+                        if (sectionProperty != null)
+                            sectionProperties.Add(sectionProperty);
                         break;
                 }
             }

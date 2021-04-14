@@ -48,7 +48,8 @@ namespace BH.Adapter.Lusas
             {
                 IFSupportStructural lusasSupport = (IFSupportStructural)lusasSupports[i];
                 Constraint4DOF constraint4DOF = Adapters.Lusas.Convert.ToConstraint4DOF(lusasSupport);
-                constraints4DOFs.Add(constraint4DOF);
+                if (constraint4DOF != null)
+                    constraints4DOFs.Add(constraint4DOF);
             }
 
             return constraints4DOFs;
