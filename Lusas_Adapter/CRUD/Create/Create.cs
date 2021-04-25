@@ -65,43 +65,43 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<Node>);
                 }
-                if (objects.First() is Bar)
+                else if (objects.First() is Bar)
                 {
                     success = CreateCollection(objects as IEnumerable<Bar>);
                 }
-                if (objects.First() is Panel)
+                else if (objects.First() is Panel)
                 {
                     success = CreateCollection(objects as IEnumerable<Panel>);
                 }
-                if (objects.First() is Edge)
+                else if (objects.First() is Edge)
                 {
                     success = CreateCollection(objects as IEnumerable<Edge>);
                 }
-                if (objects.First() is Point)
+                else if (objects.First() is Point)
                 {
                     success = CreateCollection(objects as IEnumerable<Point>);
                 }
-                if (objects.First() is IMaterialFragment)
+                else if (objects.First() is IMaterialFragment)
                 {
                     success = CreateCollection(objects as IEnumerable<IMaterialFragment>);
                 }
-                if (objects.First() is Constraint6DOF)
+                else if (objects.First() is Constraint6DOF)
                 {
                     success = CreateCollection(objects as IEnumerable<Constraint6DOF>);
                 }
-                if (objects.First() is Constraint4DOF)
+                else if (objects.First() is Constraint4DOF)
                 {
                     success = CreateCollection(objects as IEnumerable<Constraint4DOF>);
                 }
-                if (objects.First() is Loadcase)
+                else if (objects.First() is Loadcase)
                 {
                     success = CreateCollection(objects as IEnumerable<Loadcase>);
                 }
-                if (objects.First() is LoadCombination)
+                else if (objects.First() is LoadCombination)
                 {
                     success = CreateCollection(objects as IEnumerable<LoadCombination>);
                 }
-                if (typeof(ILoad).IsAssignableFrom(objects.First().GetType()))
+                else if (typeof(ILoad).IsAssignableFrom(objects.First().GetType()))
                 {
                     string loadType = objects.First().GetType().ToString();
 
@@ -136,21 +136,25 @@ namespace BH.Adapter.Lusas
                             break;
                     }
                 }
-                if (typeof(ISurfaceProperty).IsAssignableFrom(objects.First().GetType()))
+                else if (typeof(ISurfaceProperty).IsAssignableFrom(objects.First().GetType()))
                 {
                     success = CreateCollection(objects as IEnumerable<ISurfaceProperty>);
                 }
-                if (typeof(ISectionProperty).IsAssignableFrom(objects.First().GetType()))
+                else if (typeof(ISectionProperty).IsAssignableFrom(objects.First().GetType()))
                 {
                     success = CreateCollection(objects as IEnumerable<ISectionProperty>);
                 }
-                if (objects.First() is MeshSettings1D)
+                else if (objects.First() is MeshSettings1D)
                 {
                     success = CreateCollection(objects as IEnumerable<MeshSettings1D>);
                 }
-                if (objects.First() is MeshSettings2D)
+                else if (objects.First() is MeshSettings2D)
                 {
                     success = CreateCollection(objects as IEnumerable<MeshSettings2D>);
+                }
+                else
+                {
+                    Engine.Reflection.Compute.RecordError("Object is not supported in the Lusas_Toolkit.");
                 }
             }
 
