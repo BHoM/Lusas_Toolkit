@@ -86,10 +86,15 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            int adapterIdName = lusasSupport.getID();
-            constraint.SetAdapterId(typeof(LusasId), adapterIdName);
+            if(lusasSupport != null)
+            {
+                int adapterIdName = lusasSupport.getID();
+                constraint.SetAdapterId(typeof(LusasId), adapterIdName);
 
-            return lusasSupport;
+                return lusasSupport;
+            }    
+
+            return null;
         }
 
         /***************************************************/
@@ -143,10 +148,16 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            int adapterIdName = lusasSupport.getID();
-            constraint.SetAdapterId(typeof(LusasId), adapterIdName);
+            if (lusasSupport != null)
+            {
+                int adapterIdName = lusasSupport.getID();
+                constraint.SetAdapterId(typeof(LusasId), adapterIdName);
 
-            return lusasSupport;
+                return lusasSupport;
+            }
+
+            return null;
+
         }
 
         /***************************************************/
