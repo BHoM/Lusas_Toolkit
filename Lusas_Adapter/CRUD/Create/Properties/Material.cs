@@ -59,9 +59,6 @@ namespace BH.Adapter.Lusas
                             CheckPropertyWarning(isotropic, x => x.Density))
                         lusasMaterial = d_LusasData.createIsotropicMaterial(material.DescriptionOrName(),
                             isotropic.YoungsModulus, isotropic.PoissonsRatio, isotropic.Density, isotropic.ThermalExpansionCoeff);
-
-                    int adapterIdName = lusasMaterial.getID();
-                    material.SetAdapterId(typeof(LusasId), adapterIdName);
                 }
             }
             else if (material is IOrthotropic)
@@ -90,15 +87,19 @@ namespace BH.Adapter.Lusas
 
                         lusasMaterial.setValue("axy", System.Math.Sqrt(System.Math.Pow(orthotropic.ThermalExpansionCoeff.X, 2)
                             + System.Math.Pow(orthotropic.ThermalExpansionCoeff.Y, 2)));
-
-                        int adapterIdName = lusasMaterial.getID();
-                        material.SetAdapterId(typeof(LusasId), adapterIdName);
                     }
-
                 }
             }
 
-            return lusasMaterial;
+            if(lusasMaterial != null)
+            {
+                int adapterIdName = lusasMaterial.getID();
+                material.SetAdapterId(typeof(LusasId), adapterIdName);
+
+                return lusasMaterial;
+            }
+
+            return null;
         }
 
         /***************************************************/
