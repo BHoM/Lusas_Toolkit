@@ -66,18 +66,23 @@ namespace BH.Adapter.Lusas
             if (d_LusasData.existsAttribute("Mesh", lusasName))
             {
                 lusasLineMesh = (IFMeshLine)d_LusasData.getAttribute("Mesh", lusasName);
-                int adapterNameId = lusasLineMesh.getID();
-                meshSettings1D.SetAdapterId(typeof(LusasId), adapterNameId);
             }
             else
             {
                 lusasLineMesh = d_LusasData.createMeshLine(lusasName);
                 SetSplitMethod(lusasLineMesh, meshSettings1D, barFEAType);
                 SetEndConditions(lusasLineMesh, barRelease);
+            }
+
+            if(lusasLineMesh != null)
+            {
                 int adapterNameId = d_LusasData.getLargestAttributeID("Mesh");
                 meshSettings1D.SetAdapterId(typeof(LusasId), adapterNameId);
+
+                return lusasLineMesh;
             }
-            return lusasLineMesh;
+
+            return null;
         }
 
         /***************************************************/
