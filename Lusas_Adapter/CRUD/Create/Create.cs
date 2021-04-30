@@ -297,35 +297,42 @@ namespace BH.Adapter.Lusas
 
                 foreach (Panel panel in panels)
                 {
-                    if (CheckPropertyError(panel, p => p.ExternalEdges))
-                        if (CheckPropertyError(panel.ExternalEdges, e => e.Select(x => x.Curve)))
-                            if (panel.ExternalEdges.All(x => x != null) && panel.ExternalEdges.Select(x => x.Curve).All(y => y != null))
-                            {
-                                if (panel.Openings != null || panel.Openings.Count != 0)
-                                    Engine.Reflection.Compute.RecordWarning("Lusas_Toolkit does not support Panels with Openings. The Panel will be pushed if valid, the Openings will not be pushed.");
-                                if (panel.ExternalEdges.All(x => !Engine.Adapters.Lusas.Query.InvalidEdge(x)))
+                    if (panel.ExternalEdges.Count > 0)
+                    {
+                        if (CheckPropertyError(panel, p => p.ExternalEdges))
+                            if (CheckPropertyError(panel.ExternalEdges, e => e.Select(x => x.Curve)))
+                                if (panel.ExternalEdges.All(x => x != null) && panel.ExternalEdges.Select(x => x.Curve).All(y => y != null))
                                 {
-                                    if (Engine.Spatial.Query.IsPlanar(panel, false, Tolerance.MacroDistance))
+                                    if (panel.Openings.Count > 0)
+                                        Engine.Reflection.Compute.RecordWarning("Lusas_Toolkit does not support Panels with Openings. The Panel will be pushed if valid, the Openings will not be pushed.");
+                                    if (panel.ExternalEdges.All(x => !Engine.Adapters.Lusas.Query.InvalidEdge(x)))
                                     {
-                                        for (int i = 0; i < panel.ExternalEdges.Count; i++)
+                                        if (Engine.Spatial.Query.IsPlanar(panel, false, Tolerance.MacroDistance))
                                         {
-                                            if (CheckPropertyError(panel, p => panel.ExternalEdges[i]) && !Engine.Adapters.Lusas.Query.InvalidEdge(panel.ExternalEdges[i]))
+                                            for (int i = 0; i < panel.ExternalEdges.Count; i++)
                                             {
-                                                panelEdges.Add(panel.ExternalEdges[i]);
-                                            }
-                                            else
-                                                break;
+                                                if (CheckPropertyError(panel, p => panel.ExternalEdges[i]) && !Engine.Adapters.Lusas.Query.InvalidEdge(panel.ExternalEdges[i]))
+                                                {
+                                                    panelEdges.Add(panel.ExternalEdges[i]);
+                                                }
+                                                else
+                                                    break;
 
-                                            if (i == panel.ExternalEdges.Count - 1)
-                                                validPanels.Add(panel);
+                                                if (i == panel.ExternalEdges.Count - 1)
+                                                    validPanels.Add(panel);
+                                            }
                                         }
+                                        else
+                                            Engine.Reflection.Compute.RecordError("The geometry defining the Panel is not Planar, and therefore the Panel will not be created.");
                                     }
                                     else
-                                        Engine.Reflection.Compute.RecordError("The geometry defining the Panel is not Planar, and therefore the Panel will not be created.");
+                                        Engine.Reflection.Compute.RecordError("One or more of the External Edges of the Panel are invalid.");
                                 }
                                 else
-                                    Engine.Reflection.Compute.RecordError("One or more of the External Edges of the Panel are invalid.");
-                            }
+                                    Engine.Reflection.Compute.RecordError("One of more of the External Edges of the Panel or Curves defining the External Edges are null.");
+                    }
+                    else
+                        Engine.Reflection.Compute.RecordError($"An object of type {panel.GetType().Name} could not be created due to a property of type {typeof(Edge).Name} being null. Please check your input data!");
                 }
 
                 List<Edge> distinctEdges = Engine.Adapters.Lusas.Query.GetDistinctEdges(panelEdges);
