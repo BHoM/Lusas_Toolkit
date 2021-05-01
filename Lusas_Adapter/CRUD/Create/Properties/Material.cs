@@ -91,7 +91,7 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            if(lusasMaterial != null)
+            if (lusasMaterial != null)
             {
                 int adapterIdName = lusasMaterial.getID();
                 material.SetAdapterId(typeof(LusasId), adapterIdName);

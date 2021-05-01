@@ -83,25 +83,30 @@ namespace BH.Adapter.Lusas
                 AssignObjectSet(lusasLine, bar.Tags);
             }
 
-            if (CheckPropertyWarning(bar, b => b.SectionProperty) && Engine.Adapters.Lusas.Query.InvalidSectionProperty(bar.SectionProperty))
-                if(Engine.Adapters.Lusas.Query.InvalidSectionProfile(bar.SectionProperty))
-            {
-                IFAttribute lusasGeometricLine = d_LusasData.getAttribute("Line Geometric", bar.SectionProperty.AdapterId<int>(typeof(LusasId)));
-                lusasGeometricLine.assignTo(lusasLine);
-
-                if(CheckPropertyWarning(bar, b => b.SectionProperty.Material))
+            if (CheckPropertyWarning(bar, b => b.SectionProperty) && !Engine.Adapters.Lusas.Query.InvalidSectionProperty(bar.SectionProperty))
+                if (!Engine.Adapters.Lusas.Query.InvalidSectionProfile(bar.SectionProperty))
                 {
-                    IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", bar.SectionProperty.Material.AdapterId<int>(typeof(LusasId)));
-
-                    if (bar.SectionProperty.Material is IOrthotropic)
+                    //Needed in case the SectionProfile is null and was not created
+                    if (d_LusasData.existsAttribute("Line Geometric", bar.SectionProperty.AdapterId<int>(typeof(LusasId))))
                     {
-                        Engine.Reflection.Compute.RecordWarning($"Orthotropic Material {bar.SectionProperty.Material.DescriptionOrName()} cannot be assigned to Bar {bar.AdapterId<int>(typeof(LusasId))}, " +
-                            $"orthotropic can only be applied to 2D and 3D elements in Lusas.");
+                        IFAttribute lusasGeometricLine = d_LusasData.getAttribute("Line Geometric", bar.SectionProperty.AdapterId<int>(typeof(LusasId)));
+                        lusasGeometricLine.assignTo(lusasLine);
+
                     }
 
-                    lusasMaterial.assignTo(lusasLine);
+                    if (CheckPropertyWarning(bar, b => b.SectionProperty.Material))
+                    {
+                        IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", bar.SectionProperty.Material.AdapterId<int>(typeof(LusasId)));
+
+                        if (bar.SectionProperty.Material is IOrthotropic)
+                        {
+                            Engine.Reflection.Compute.RecordWarning($"Orthotropic Material {bar.SectionProperty.Material.DescriptionOrName()} cannot be assigned to Bar {bar.AdapterId<int>(typeof(LusasId))}, " +
+                                $"orthotropic materials can only be applied to 2D and 3D elements in Lusas.");
+                        }
+
+                        lusasMaterial.assignTo(lusasLine);
+                    }
                 }
-            }
 
             if (bar.Support != null)
             {

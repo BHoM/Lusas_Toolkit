@@ -82,12 +82,16 @@ namespace BH.Adapter.Adapters.Lusas
             if (!(geometricAssignments.Count() == 0))
             {
                 sections.TryGetValue(geometricAssignments[0], out lineSection);
-                if (!(materialAssignments.Count() == 0))
+                if (lineSection != null)
                 {
-                    materials.TryGetValue(materialAssignments[0], out lineMaterial);
-                    lineSection.Material = lineMaterial;
+                    if (!(materialAssignments.Count() == 0))
+                    {
+                        materials.TryGetValue(materialAssignments[0], out lineMaterial);
+                        if (lineMaterial != null)
+                            lineSection.Material = lineMaterial;
+                    }
+                    bar.SectionProperty = lineSection;
                 }
-                bar.SectionProperty = lineSection;
             }
 
             MeshSettings1D lineMesh;
