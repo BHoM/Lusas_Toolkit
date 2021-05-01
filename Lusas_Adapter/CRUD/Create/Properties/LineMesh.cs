@@ -71,10 +71,11 @@ namespace BH.Adapter.Lusas
             {
                 lusasLineMesh = d_LusasData.createMeshLine(lusasName);
                 SetSplitMethod(lusasLineMesh, meshSettings1D, barFEAType);
-                SetEndConditions(lusasLineMesh, barRelease);
+                if (barRelease != null)
+                    SetEndConditions(lusasLineMesh, barRelease);
             }
 
-            if(lusasLineMesh != null)
+            if (lusasLineMesh != null)
             {
                 int adapterNameId = d_LusasData.getLargestAttributeID("Mesh");
                 meshSettings1D.SetAdapterId(typeof(LusasId), adapterNameId);
@@ -87,38 +88,42 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private static string CreateReleaseString(BarRelease barReleases)
+        private static string CreateReleaseString(BarRelease barRelease)
         {
             string releaseString = "";
 
-            if (barReleases.StartRelease.TranslationX == DOFType.Free)
-                releaseString = releaseString + "FX";
-            if (barReleases.StartRelease.TranslationY == DOFType.Free)
-                releaseString = releaseString + "FY";
-            if (barReleases.StartRelease.TranslationZ == DOFType.Free)
-                releaseString = releaseString + "FZ";
-            if (barReleases.StartRelease.RotationX == DOFType.Free)
-                releaseString = releaseString + "MX";
-            if (barReleases.StartRelease.RotationY == DOFType.Free)
-                releaseString = releaseString + "MY";
-            if (barReleases.StartRelease.RotationZ == DOFType.Free)
-                releaseString = releaseString + "MZ";
+            if (barRelease != null)
+                if (barRelease.StartRelease != null && barRelease.EndRelease != null)
+                {
+                    if (barRelease.StartRelease.TranslationX == DOFType.Free)
+                        releaseString = releaseString + "FX";
+                    if (barRelease.StartRelease.TranslationY == DOFType.Free)
+                        releaseString = releaseString + "FY";
+                    if (barRelease.StartRelease.TranslationZ == DOFType.Free)
+                        releaseString = releaseString + "FZ";
+                    if (barRelease.StartRelease.RotationX == DOFType.Free)
+                        releaseString = releaseString + "MX";
+                    if (barRelease.StartRelease.RotationY == DOFType.Free)
+                        releaseString = releaseString + "MY";
+                    if (barRelease.StartRelease.RotationZ == DOFType.Free)
+                        releaseString = releaseString + "MZ";
 
-            if (releaseString != null)
-                releaseString = releaseString + ",";
+                    if (releaseString != "")
+                        releaseString = releaseString + ",";
 
-            if (barReleases.EndRelease.TranslationX == DOFType.Free)
-                releaseString = releaseString + "FX";
-            if (barReleases.EndRelease.TranslationY == DOFType.Free)
-                releaseString = releaseString + "FY";
-            if (barReleases.EndRelease.TranslationZ == DOFType.Free)
-                releaseString = releaseString + "FZ";
-            if (barReleases.EndRelease.RotationX == DOFType.Free)
-                releaseString = releaseString + "MX";
-            if (barReleases.EndRelease.RotationY == DOFType.Free)
-                releaseString = releaseString + "MY";
-            if (barReleases.EndRelease.RotationZ == DOFType.Free)
-                releaseString = releaseString + "MZ";
+                    if (barRelease.EndRelease.TranslationX == DOFType.Free)
+                        releaseString = releaseString + "FX";
+                    if (barRelease.EndRelease.TranslationY == DOFType.Free)
+                        releaseString = releaseString + "FY";
+                    if (barRelease.EndRelease.TranslationZ == DOFType.Free)
+                        releaseString = releaseString + "FZ";
+                    if (barRelease.EndRelease.RotationX == DOFType.Free)
+                        releaseString = releaseString + "MX";
+                    if (barRelease.EndRelease.RotationY == DOFType.Free)
+                        releaseString = releaseString + "MY";
+                    if (barRelease.EndRelease.RotationZ == DOFType.Free)
+                        releaseString = releaseString + "MZ";
+                }
 
             return releaseString;
         }

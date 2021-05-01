@@ -32,26 +32,7 @@ namespace BH.Adapter.Adapters.Lusas
 
         internal static string GetName(IFAttribute lusasAttribute)
         {
-            string attributeName = "";
-
-            if (lusasAttribute.getName().Contains("/"))
-            {
-                if (lusasAttribute.getName().Contains("\\"))
-                {
-                    attributeName = lusasAttribute.getName().Split('/', '\\')[0];
-                }
-                else
-                {
-                    attributeName = lusasAttribute.getName().Substring(
-                        lusasAttribute.getName().LastIndexOf("/") + 1);
-                }
-            }
-            else
-            {
-                attributeName = lusasAttribute.getName();
-            }
-
-            return attributeName;
+            return lusasAttribute.getName();
         }
 
         /***************************************************/
