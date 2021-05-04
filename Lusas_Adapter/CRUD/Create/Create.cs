@@ -217,21 +217,6 @@ namespace BH.Adapter.Lusas
 
                 if (bars.Any(x => x.Fragments.Contains(typeof(MeshSettings1D))))
                 {
-                    //List<Bar> validMeshedBars = new List<Bar>();
-                    //List<Bar> invalidMeshedBars = new List<Bar>();
-                    //foreach (Bar bar in bars)
-                    //{
-                    //    if (bar.Release != null)
-                    //        if (bar.Release.StartRelease != null && bar.Release.EndRelease != null)
-                    //            validMeshedBars.Add(bar);
-                    //        else
-                    //        {
-                    //            invalidMeshedBars.Add(bar);
-                    //            Engine.Reflection.Compute.RecordError("Release assigned to Bar is null, therefore Mesh1DSettings cannot be pushed.");
-                    //        }    
-
-                    //}
-
                     var barGroups = bars.GroupBy(m => new { m.FEAType, m.Release?.Name });
 
                     BHoMObjectNameComparer comparer = new BHoMObjectNameComparer();
@@ -253,11 +238,6 @@ namespace BH.Adapter.Lusas
                         {
                             bar.AddFragment(distinctMeshes.First(x => comparer.Equals(x, bar.FindFragment<MeshSettings1D>())), true);
                             IFLine lusasLine = CreateLine(bar);
-
-                            if (lusasLine == null)
-                            {
-                                return true;
-                            }
                         }
                     }
                     ReduceRuntime(false);
@@ -271,11 +251,6 @@ namespace BH.Adapter.Lusas
                     foreach (Bar bar in bars)
                     {
                         IFLine lusasLine = CreateLine(bar);
-
-                        if (lusasLine == null)
-                        {
-                            return true;
-                        }
                     }
 
                     ReduceRuntime(false);
