@@ -69,7 +69,7 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            if(lusasSurfaceMesh != null)
+            if (lusasSurfaceMesh != null)
             {
                 int adapterIdName = lusasSurfaceMesh.getID();
                 meshSettings2D.SetAdapterId(typeof(LusasId), adapterIdName);
