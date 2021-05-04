@@ -83,7 +83,6 @@ namespace BH.Adapter.Adapters.Lusas
 
                 if (attributeType == "Multiple Varying Geometric")
                 {
-                    interpolationOrders.Add(1);
                     double position = lusasAttribute.getValue("distanceAlongBeam", i);
                     positions.Add(position);
                     profiles.Add(profile);
@@ -97,6 +96,8 @@ namespace BH.Adapter.Adapters.Lusas
 
             if (lusasAttribute.getAttributeType() == "Multiple Varying Geometric")
             {
+                for (int i = 0; i < profiles.Count - 1; i++)
+                    interpolationOrders.Add(1);
                 TaperedProfile taperedProfile = Engine.Spatial.Create.TaperedProfile(positions, profiles, interpolationOrders);
                 if (taperedProfile == null)
                     return null;
