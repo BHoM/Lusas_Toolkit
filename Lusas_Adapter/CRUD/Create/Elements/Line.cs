@@ -96,15 +96,19 @@ namespace BH.Adapter.Lusas
 
                     if (CheckPropertyWarning(bar, b => b.SectionProperty.Material))
                     {
-                        IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", bar.SectionProperty.Material.AdapterId<int>(typeof(LusasId)));
-
                         if (bar.SectionProperty.Material is IOrthotropic)
                         {
                             Engine.Reflection.Compute.RecordWarning($"Orthotropic Material {bar.SectionProperty.Material.DescriptionOrName()} cannot be assigned to Bar {bar.AdapterId<int>(typeof(LusasId))}, " +
                                 $"orthotropic materials can only be applied to 2D and 3D elements in Lusas.");
                         }
-
-                        lusasMaterial.assignTo(lusasLine);
+                        else if(bar.SectionProperty.Material is IIsotropic)
+                        {
+                            if(d_LusasData.existsAttribute("Material", bar.SectionProperty.Material.AdapterId<int>(typeof(LusasId))))
+                            {
+                                IFAttribute lusasMaterial = d_LusasData.getAttribute("Material", bar.SectionProperty.Material.AdapterId<int>(typeof(LusasId)));
+                                lusasMaterial.assignTo(lusasLine);
+                            }
+                        }
                     }
                 }
 

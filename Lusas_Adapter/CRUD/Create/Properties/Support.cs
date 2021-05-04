@@ -86,13 +86,13 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-            if(lusasSupport != null)
+            if (lusasSupport != null)
             {
                 int adapterIdName = lusasSupport.getID();
                 constraint.SetAdapterId(typeof(LusasId), adapterIdName);
 
                 return lusasSupport;
-            }    
+            }
 
             return null;
         }

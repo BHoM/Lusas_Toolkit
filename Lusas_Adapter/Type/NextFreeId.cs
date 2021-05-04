@@ -48,76 +48,20 @@ namespace BH.Adapter.Lusas
         /**** Adapter overload method                   ****/
         /***************************************************/
 
-        protected override object NextFreeId(Type type, bool refresh = false)
+        //protected override object NextFreeId(Type type, bool refresh = false)
+        //{
+        //    //Method that returns the next free index for a specific object type. 
+        //    //Software dependent which type of index to return. Could be int, string, Guid or whatever the specific software is using
+        //    //At the point of index assignment, the objects have not yet been created in the target software. 
+        //    //The if statement below is designed to grab the first free index for the first object being created and after that increment.
+
+        //    //Change from object to what the specific software is using
+        //    int index = 1;
+
+        protected override object NextFreeId(Type objectType, bool refresh)
         {
-            //Method that returns the next free index for a specific object type. 
-            //Software dependent which type of index to return. Could be int, string, Guid or whatever the specific software is using
-            //At the point of index assignment, the objects have not yet been created in the target software. 
-            //The if statement below is designed to grab the first free index for the first object being created and after that increment.
-
-            //Change from object to what the specific software is using
-            int index = 1;
-
-            if (!refresh && m_indexDict.TryGetValue(type, out index))
-            {
-                index++;
-                m_indexDict[type] = index;
-            }
-            else
-            {
-                if (typeof(ICase).IsAssignableFrom(type))
-                {
-                    int largestLoadcaseID = d_LusasData.getNextAvailableLoadcaseID() - 1;
-                    if (largestLoadcaseID == 0)
-                    {
-                        index = 1;
-                    }
-                    else
-                    {
-                        IFLoadset largestLoadset = d_LusasData.getLoadset(largestLoadcaseID);
-                        if (largestLoadset is IFLoadcase)
-                        {
-                            IFLoadcase largestLoadcase = (IFLoadcase)largestLoadset;
-                            index = System.Convert.ToInt32(
-                                Adapters.Lusas.Convert.GetAdapterID(largestLoadcase, 'c')) + 1;
-                        }
-                        else if (largestLoadset is IFBasicCombination)
-                        {
-                            IFBasicCombination largestLoadCombination = (IFBasicCombination)largestLoadset;
-                            index = System.Convert.ToInt32(
-                                Adapters.Lusas.Convert.GetAdapterID(largestLoadCombination, 'c')) + 1;
-                        }
-                    }
-                }
-                if (type == typeof(MeshSettings1D) ||
-                    type == typeof(MeshSettings2D))
-                {
-                    int largestThicknessID = d_LusasData.getLargestAttributeID("Mesh");
-                    if (largestThicknessID == 0)
-                    {
-                        index = 1;
-                    }
-                    else
-                    {
-                        IFAttribute largestAttribute = d_LusasData.getAttribute("Mesh", largestThicknessID);
-                        index = System.Convert.ToInt32(
-                            Adapters.Lusas.Convert.GetAdapterID(largestAttribute, 'e')) + 1;
-                    }
-                }
-                m_indexDict[type] = index;
-            }
-            return index;
+            return -1;
         }
-
-        /***************************************************/
-        /**** Private Fields                            ****/
-        /***************************************************/
-
-        //Change from object to the index type used by the specific software
-        private Dictionary<Type, int> m_indexDict = new Dictionary<Type, int>();
-
-
-        /***************************************************/
 
     }
 }
