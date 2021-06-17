@@ -268,8 +268,6 @@ namespace BH.Adapter.Lusas
             {
                 CreateTags(panels);
 
-                List<Edge> panelEdges = new List<Edge>();
-
                 List<Panel> validPanels = new List<Panel>();
 
                 foreach (Panel panel in panels)
@@ -288,11 +286,7 @@ namespace BH.Adapter.Lusas
                                         {
                                             for (int i = 0; i < panel.ExternalEdges.Count; i++)
                                             {
-                                                if (CheckPropertyError(panel, p => panel.ExternalEdges[i]) && !Engine.Adapters.Lusas.Query.InvalidEdge(panel.ExternalEdges[i]))
-                                                {
-                                                    panelEdges.Add(panel.ExternalEdges[i]);
-                                                }
-                                                else
+                                                if (!CheckPropertyError(panel, p => panel.ExternalEdges[i]) && Engine.Adapters.Lusas.Query.InvalidEdge(panel.ExternalEdges[i]))
                                                     break;
 
                                                 if (i == panel.ExternalEdges.Count - 1)
@@ -312,15 +306,6 @@ namespace BH.Adapter.Lusas
                         Engine.Reflection.Compute.RecordError($"An object of type {panel.GetType().Name} could not be created due to a property of type {typeof(Edge).Name} being null. Please check your input data!");
                 }
 
-                List<Edge> distinctEdges = Engine.Adapters.Lusas.Query.GetDistinctEdges(panelEdges);
-
-                List<Point> midPoints = new List<Point>();
-
-                foreach (Edge edge in distinctEdges)
-                {
-                    midPoints.Add(edge.Curve.IPointAtParameter(0.5));
-                }
-
                 if (validPanels.Any(x => x.Fragments.Contains(typeof(MeshSettings2D))))
                 {
                     BHoMObjectNameComparer comparer = new BHoMObjectNameComparer();
@@ -329,41 +314,18 @@ namespace BH.Adapter.Lusas
                         .ToList();
 
                     foreach (MeshSettings2D mesh in distinctMeshes)
-                    {
                         CreateMeshSettings2D(mesh);
-                    }
 
                     foreach (Panel validPanel in validPanels)
-                    {
                         validPanel.AddFragment(distinctMeshes.First(x => comparer.Equals(x, (validPanel.FindFragment<MeshSettings2D>()))), true);
-                    }
                 }
 
                 ReduceRuntime(true);
 
+                IFSurface lusasSurface = null;
+
                 foreach (Panel validPanel in validPanels)
-                {
-                    IFLine[] lusasLines = new IFLine[validPanel.ExternalEdges.Count];
-                    List<Edge> edges = validPanel.ExternalEdges;
-
-                    for (int i = 0; i < validPanel.ExternalEdges.Count; i++)
-                    {
-                        if (CheckPropertyError(validPanel, p => validPanel.ExternalEdges[i]) && !Engine.Adapters.Lusas.Query.InvalidEdge(validPanel.ExternalEdges[i]))
-                        {
-                            Edge edge = distinctEdges[midPoints.FindIndex(
-                                m => m.Equals(edges[i].Curve.IPointAtParameter(0.5).ClosestPoint(midPoints)))];
-
-                            lusasLines[i] = d_LusasData.getLineByNumber(edge.AdapterId<int>(typeof(LusasId)));
-                        }
-                    }
-
-                    IFSurface lusasSurface;
-
-                    if (!(lusasLines.Count() == validPanel.ExternalEdges.Count) || lusasLines.Count() == 0 || lusasLines.Any(x => x == null))
-                        Engine.Reflection.Compute.RecordError("Panel contains invalid lines that have not been created.");
-                    else
-                        lusasSurface = CreateSurface(validPanel, lusasLines);
-                }
+                    lusasSurface = CreateSurface(validPanel);
 
                 ReduceRuntime(false);
             }
