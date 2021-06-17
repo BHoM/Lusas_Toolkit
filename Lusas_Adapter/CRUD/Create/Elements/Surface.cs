@@ -27,8 +27,7 @@ using Lusas.LPI;
 using BH.oM.Adapters.Lusas.Fragments;
 using BH.Engine.Base;
 using System.Linq;
-using BH.Engine.Adapters.Lusas;
-using BH.Engine.Reflection;
+using System.Collections.Generic;
 
 namespace BH.Adapter.Lusas
 {
@@ -44,25 +43,28 @@ namespace BH.Adapter.Lusas
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private IFSurface CreateSurface(Panel panel, IFLine[] lusasLines)
+        private IFSurface CreateSurface(Panel panel)
         {
-            IFSurface lusasSurface = null;
-            if (panel.HasAdapterIdFragment(typeof(LusasId)))
+            List<IFLine> edges = new List<IFLine>();
+
+            foreach(Edge edge in panel.ExternalEdges)
             {
-                if (d_LusasData.existsSurfaceByID(panel.AdapterId<int>(typeof(LusasId))))
-                    lusasSurface = d_LusasData.getSurfaceByNumber(panel.AdapterId<int>(typeof(LusasId)));
+                string edgeId = GetAdapterId<string>(edge);
+
+                if (string.IsNullOrEmpty(edgeId))
+                {
+                    Engine.Reflection.Compute.RecordError("Could not find the ids for at least one Edge, Panel not created.");
+                    return null;
+                }
                 else
-                    lusasSurface = d_LusasData.createSurfaceBy(lusasLines);
-            }
-            else
-            {
-                if (lusasLines.Count() == 0)
-                    Engine.Reflection.Compute.RecordError("Panel contains invalid lines that have not been pushed.");
-                else
-                    lusasSurface = d_LusasData.createSurfaceBy(lusasLines);
+                {
+                    edges.Add(d_LusasData.getLineByNumber(edgeId));
+                }
             }
 
-            if(lusasSurface != null)
+            IFSurface lusasSurface = d_LusasData.createSurfaceBy(edges.ToArray());
+
+            if (lusasSurface != null)
             {
                 int adapterIdName = lusasSurface.getID();
                 panel.SetAdapterId(typeof(LusasId), adapterIdName);
