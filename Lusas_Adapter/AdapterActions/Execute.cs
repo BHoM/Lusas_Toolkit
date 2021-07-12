@@ -21,6 +21,7 @@
  */
 
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using BH.Engine.Adapter;
 using BH.oM.Adapters.Lusas;
@@ -66,6 +67,9 @@ namespace BH.Adapter.Lusas
             d_LusasData.setVerticalDir("Z");
             m_LusasApplication.fileOpen("%PerMachineAppDataPlatform%\\config\\AfterNewModel");
             d_LusasData.setAnalysisCategory("3D");
+
+            string fileName = @"sections.csv";
+            File.Delete(fileName);
 
             return true;
         }
