@@ -36,6 +36,7 @@ using Lusas.LPI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace BH.Adapter.Lusas
 {
@@ -60,6 +61,7 @@ namespace BH.Adapter.Lusas
         {
             if (active)
             {
+                m_directory = new FileInfo(filePath).Directory.FullName;
                 AdapterIdFragmentType = typeof(LusasId);
 
                 BH.Adapter.Modules.Structure.ModuleLoader.LoadModules(this);
@@ -135,6 +137,7 @@ namespace BH.Adapter.Lusas
 
         //Add any comlink object as a private field here, example named:
 
+        private string m_directory;
         public LusasWinApp m_LusasApplication;
         public IFDatabase d_LusasData;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
