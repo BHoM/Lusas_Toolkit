@@ -68,7 +68,7 @@ namespace BH.Adapter.Lusas
             m_LusasApplication.fileOpen("%PerMachineAppDataPlatform%\\config\\AfterNewModel");
             d_LusasData.setAnalysisCategory("3D");
 
-            string fileName = @"sections.csv";
+            string fileName = $"{m_directory}\\sections.csv";
             File.Delete(fileName);
 
             return true;
