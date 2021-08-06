@@ -78,6 +78,12 @@ namespace BH.Adapter.Lusas
 
         public bool RunCommand(Save command)
         {
+            if (d_LusasData.getDBFilename() == "")
+            {
+                Engine.Reflection.Compute.RecordError("The model file does not have a filename, please SaveAs before attempting to Save.");
+                return false;
+            }
+
             d_LusasData.save();
 
             return true;
