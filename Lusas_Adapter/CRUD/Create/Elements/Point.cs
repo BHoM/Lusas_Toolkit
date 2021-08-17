@@ -76,7 +76,7 @@ namespace BH.Adapter.Lusas
         {
             if(point!=null)
             {
-                Node newNode = Create.Node(new Point { X = point.X, Y = point.Y, Z = point.Z });
+                Node newNode = BH.Engine.Structure.Create.Node(new Point { X = point.X, Y = point.Y, Z = point.Z });
 
                 IFPoint newPoint = CreatePoint(newNode);
 
