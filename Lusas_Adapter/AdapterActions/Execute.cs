@@ -94,6 +94,7 @@ namespace BH.Adapter.Lusas
         public bool RunCommand(SaveAs command)
         {
             d_LusasData.saveAs(command.FileName);
+            m_directory = new FileInfo(command.FileName).Directory.FullName;
 
             return true;
         }
@@ -106,6 +107,7 @@ namespace BH.Adapter.Lusas
             {
                 m_LusasApplication.openDatabase(command.FileName);
                 d_LusasData = m_LusasApplication.getDatabase();
+                m_directory = command.FileName;
 
                 return true;
             }
@@ -138,6 +140,48 @@ namespace BH.Adapter.Lusas
         public bool RunCommand(ClearResults command)
         {
             d_LusasData.closeAllResults();
+
+            return true;
+        }
+
+        /***************************************************/
+
+        public bool RunCommand(Close command)
+        {
+            if (command.SaveBeforeClose)
+            {
+                if (d_LusasData.getDBFilename() == "")
+                {
+                    Engine.Reflection.Compute.RecordError("The model file does not have a filename, please SaveAs before attempting to Save.");
+                    return false;
+                }
+                else
+                    d_LusasData.save();
+            }
+
+            d_LusasData.close();
+
+            return true;
+        }
+
+        /***************************************************/
+
+        public bool RunCommand(Exit command)
+        {
+            if (command.SaveBeforeClose)
+            {
+                if (d_LusasData.getDBFilename() == "")
+                {
+                    Engine.Reflection.Compute.RecordError("The model file does not have a filename, please SaveAs before attempting to Save.");
+                    return false;
+                }
+                else
+                    d_LusasData.save();
+            }
+
+            d_LusasData.close();
+            m_LusasApplication.quit();
+            m_LusasApplication = null;
 
             return true;
         }
