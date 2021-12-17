@@ -142,7 +142,7 @@ namespace BH.Adapter.Lusas
         public IFDatabase d_LusasData;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
         public LusasConfig lusasConfig;
-
+        public const double gravitationalAcceleration = 9.806;
 
         /***************************************************/
 

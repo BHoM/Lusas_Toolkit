@@ -50,8 +50,12 @@ namespace BH.Adapter.Lusas
             }
             else
             {
+                double accelerationX = gravityLoad.GravityDirection.X * gravitationalAcceleration;
+                double accelerationY = gravityLoad.GravityDirection.Y * gravitationalAcceleration;
+                double accelerationZ = gravityLoad.GravityDirection.Z * gravitationalAcceleration;
+
                 lusasGravityLoad = d_LusasData.createLoadingBody(gravityLoad.Name);
-                lusasGravityLoad.setBody(gravityLoad.GravityDirection.X, gravityLoad.GravityDirection.Y, gravityLoad.GravityDirection.Z);
+                lusasGravityLoad.setBody(accelerationX, accelerationY, accelerationZ);
             }
 
             IFAssignment lusasAssignment = m_LusasApplication.assignment();

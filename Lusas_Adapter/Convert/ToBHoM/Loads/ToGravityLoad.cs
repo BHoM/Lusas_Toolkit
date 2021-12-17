@@ -29,6 +29,7 @@ using BH.oM.Structure.Loads;
 using BH.oM.Base;
 using Lusas.LPI;
 using BH.Engine.Adapter;
+using BH.Adapter.Lusas;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -52,6 +53,8 @@ namespace BH.Adapter.Adapters.Lusas
                 Y = lusasGravityLoad.getValue("accY"),
                 Z = lusasGravityLoad.getValue("accZ")
             };
+
+            gravityVector = gravityVector / LusasV17Adapter.gravitationalAcceleration;
 
             IEnumerable<BHoMObject> assignedObjects = GetGeometryAssignments(
                 lusasAssignments, nodes, bars, panels);
