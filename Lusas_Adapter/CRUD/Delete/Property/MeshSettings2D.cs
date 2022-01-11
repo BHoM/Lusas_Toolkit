@@ -42,7 +42,7 @@ namespace BH.Adapter.Lusas
 
             if (ids != null)
             {
-                //Engine.Reflection.Compute.RecordError("The deleting of individual MeshSettings2D is not supported in the Lusas_Toolkit");
+                //Engine.Base.Compute.RecordError("The deleting of individual MeshSettings2D is not supported in the Lusas_Toolkit");
 
                 return 0;
             }

@@ -48,7 +48,7 @@ namespace BH.Adapter.Lusas
             IFAssignment lusasAssignment = m_LusasApplication.assignment();
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(barDistributedLoad.Loadcase.AdapterId<int>(typeof(LusasId)));
 
-            Engine.Reflection.Compute.RecordWarning(
+            Engine.Base.Compute.RecordWarning(
                 barDistributedLoad.GetType().ToString() + " uses parametric distances in the Lusas_Toolkit"
                 );
 
@@ -73,7 +73,7 @@ namespace BH.Adapter.Lusas
                 axis = "projected";
                 if (barDistributedLoad.RelativePositions)
                 {
-                    Engine.Reflection.Compute.RecordError("Projected loads with parametric distances are not supported in Lusas.");
+                    Engine.Base.Compute.RecordError("Projected loads with parametric distances are not supported in Lusas.");
                     return null;
                 }
             }
@@ -139,7 +139,7 @@ namespace BH.Adapter.Lusas
                                 lusasBarDistributedLoads.Add(lusasBarDistributedLoad);
                                 lusasAssignment.setLoadset(assignedLoadcase);
                                 if(barDistributedLoad.Projected || barDistributedLoad.Axis == LoadAxis.Global)
-                                        Engine.Reflection.Compute.RecordWarning("Lusas does not support internal distributed                                                                                 moments in the global axis or as projected loads.");
+                                        Engine.Base.Compute.RecordWarning("Lusas does not support internal distributed                                                                                 moments in the global axis or as projected loads.");
                                 lusasBarDistributedLoad.assignTo(lusasLines, lusasAssignment);
                                 break;
 

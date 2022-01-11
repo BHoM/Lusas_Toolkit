@@ -22,7 +22,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using BH.Engine.Reflection;
+using BH.Engine.Base;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 using BH.oM.Structure.SectionProperties;
@@ -242,7 +242,7 @@ namespace BH.Adapter.Adapters.Lusas
             }
             else if ((bool)releases[0])
             {
-                Engine.Reflection.Compute.RecordWarning(
+                Engine.Base.Compute.RecordWarning(
                     "Lusas joints are not supported in the BHoM, verify the constraint output is correct");
             }
 
@@ -283,7 +283,7 @@ namespace BH.Adapter.Adapters.Lusas
                 type.ToString() == "LMS3" ||
                 type.ToString() == "LMS4")
             {
-                Engine.Reflection.Compute.RecordWarning(
+                Engine.Base.Compute.RecordWarning(
                     type.ToString() + " not supported, FEAType defaulted to Flexural");
             }
 

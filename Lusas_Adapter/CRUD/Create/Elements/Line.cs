@@ -58,7 +58,7 @@ namespace BH.Adapter.Lusas
                 bar.FEAType == BarFEAType.CompressionOnly ||
                 bar.FEAType == BarFEAType.TensionOnly)
             {
-                Engine.Reflection.Compute.RecordError("Lusas does not support " + bar.FEAType.ToString() + " Bars");
+                Engine.Base.Compute.RecordError("Lusas does not support " + bar.FEAType.ToString() + " Bars");
                 return null;
             }
 
@@ -67,7 +67,7 @@ namespace BH.Adapter.Lusas
 
             if (string.IsNullOrEmpty(startNodeId) || string.IsNullOrEmpty(endNodeId))
             {
-                Engine.Reflection.Compute.RecordError("Could not find the ids for at least one end node for at least one Bar. Bar not created.");
+                Engine.Base.Compute.RecordError("Could not find the ids for at least one end node for at least one Bar. Bar not created.");
                 return null;
             }
 
@@ -98,7 +98,7 @@ namespace BH.Adapter.Lusas
                     {
                         if (bar.SectionProperty.Material is IOrthotropic)
                         {
-                            Engine.Reflection.Compute.RecordWarning($"Orthotropic Material {bar.SectionProperty.Material.DescriptionOrName()} cannot be assigned to Bar {bar.AdapterId<int>(typeof(LusasId))}, " +
+                            Engine.Base.Compute.RecordWarning($"Orthotropic Material {bar.SectionProperty.Material.DescriptionOrName()} cannot be assigned to Bar {bar.AdapterId<int>(typeof(LusasId))}, " +
                                 $"orthotropic materials can only be applied to 2D and 3D elements in Lusas.");
                         }
                         else if(bar.SectionProperty.Material is IIsotropic)
@@ -126,7 +126,7 @@ namespace BH.Adapter.Lusas
                 meshAssignment.setAllDefaults();
                 if (bar.OrientationAngle != 0 && bar.FEAType == BarFEAType.Axial)
                 {
-                    Engine.Reflection.Compute.RecordWarning(
+                    Engine.Base.Compute.RecordWarning(
                         "Orientation angle not supported in Lusas for " + bar.FEAType +
                         " element types, this information will be lost when pushed to Lusas");
                 }
@@ -140,7 +140,7 @@ namespace BH.Adapter.Lusas
             }
 
             if (bar.Offset != null)
-                Engine.Reflection.Compute.RecordWarning("Offsets are currently unsupported.");
+                Engine.Base.Compute.RecordWarning("Offsets are currently unsupported.");
 
             return lusasLine;
 

@@ -57,7 +57,7 @@ namespace BH.Adapter.Lusas
                     }
                     catch (System.Runtime.InteropServices.COMException)
                     {
-                        Engine.Reflection.Compute.RecordError("No results file exists for this model, the model needs to be solved before pulling results.");
+                        Engine.Base.Compute.RecordError("No results file exists for this model, the model needs to be solved before pulling results.");
                     }
 
                 }

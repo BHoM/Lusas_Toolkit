@@ -24,7 +24,7 @@ using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Loads;
 using BH.Engine.Adapter;
 using Lusas.LPI;
-using BH.Engine.Reflection;
+using BH.Engine.Base;
 
 namespace BH.Adapter.Lusas
 {

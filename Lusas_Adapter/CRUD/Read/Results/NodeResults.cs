@@ -59,7 +59,7 @@ namespace BH.Adapter.Lusas
                     results = ExtractNodeDisplacement(objectIds, loadCases).ToList();
                     break;
                 default:
-                    Engine.Reflection.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the Lusas_Toolkit.");
+                    Engine.Base.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the Lusas_Toolkit.");
                     results = new List<IResult>();
                     break;
             }

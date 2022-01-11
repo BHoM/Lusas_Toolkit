@@ -41,7 +41,7 @@ namespace BH.Engine.Adapters.Lusas
             if (surfaceProperty is ConstantThickness)
                 isInvalid = false;
             else
-                Reflection.Compute.RecordWarning("Unsupported SurfaceProperty (Waffle, Ribbed or LoadingPanelProperty) assigned to Panel.");
+                Base.Compute.RecordWarning("Unsupported SurfaceProperty (Waffle, Ribbed or LoadingPanelProperty) assigned to Panel.");
 
             return isInvalid;
         }
