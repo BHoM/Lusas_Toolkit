@@ -38,7 +38,7 @@ namespace BH.Engine.Adapters.Lusas
             {
                 if (objectName.Contains(character.ToString()))
                 {
-                    Engine.Reflection.Compute.RecordError(
+                    Engine.Base.Compute.RecordError(
                         "Illegal character: " + character.ToString() + " present in object name: "
                          + objectName);
                     return false;

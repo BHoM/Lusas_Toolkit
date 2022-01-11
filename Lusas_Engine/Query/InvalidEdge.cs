@@ -44,11 +44,11 @@ namespace BH.Engine.Adapters.Lusas
                     if (edge.Curve is Line)
                         isInvalid = false;
                     else
-                        Reflection.Compute.RecordError("Invalid edges will not be pushed. Lusas_Toolkit only supports Edges defined with Lines.");
+                        Base.Compute.RecordError("Invalid edges will not be pushed. Lusas_Toolkit only supports Edges defined with Lines.");
                 }
             }
             else
-                Reflection.Compute.RecordError("Invalid edges will not be pushed. Lusas_Toolkit only supports Edges defined with Lines.");
+                Base.Compute.RecordError("Invalid edges will not be pushed. Lusas_Toolkit only supports Edges defined with Lines.");
 
             return isInvalid;
         }

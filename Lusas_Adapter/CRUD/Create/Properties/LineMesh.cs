@@ -50,7 +50,7 @@ namespace BH.Adapter.Lusas
 
             if (barRelease != null && barFEAType == BarFEAType.Axial)
             {
-                Engine.Reflection.Compute.RecordWarning(
+                Engine.Base.Compute.RecordWarning(
                     barFEAType + " used with barReleases, this information will be lost when pushed to Lusas");
             }
             else if (barRelease == null)

@@ -53,7 +53,7 @@ namespace BH.Adapter.Lusas
 
                 if (string.IsNullOrEmpty(edgeId))
                 {
-                    Engine.Reflection.Compute.RecordError("Could not find the ids for at least one Edge, Panel not created.");
+                    Engine.Base.Compute.RecordError("Could not find the ids for at least one Edge, Panel not created.");
                     return null;
                 }
                 else

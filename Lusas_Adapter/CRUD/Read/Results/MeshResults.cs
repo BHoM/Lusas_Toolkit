@@ -64,7 +64,7 @@ namespace BH.Adapter.Lusas
                     results = ExtractMeshVonMises(objectIds, loadCases, request.Layer).ToList();
                     break;
                 default:
-                    Engine.Reflection.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the Lusas_Toolkit.");
+                    Engine.Base.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the Lusas_Toolkit.");
                     results = new List<IResult>();
                     break;
             }
@@ -217,7 +217,7 @@ namespace BH.Adapter.Lusas
                     break;
                 default:
                     entity = "Stress (middle) - Thick Shell";
-                    Engine.Reflection.Compute.RecordWarning("No valid MeshLayerPosition provided, therefore it has defaulted to middle (i.e. 0.5).");
+                    Engine.Base.Compute.RecordWarning("No valid MeshLayerPosition provided, therefore it has defaulted to middle (i.e. 0.5).");
                     break;
             }
 
@@ -295,7 +295,7 @@ namespace BH.Adapter.Lusas
                     break;
                 default:
                     entity = "Stress (middle) - Thick Shell";
-                    Engine.Reflection.Compute.RecordWarning("No valid MeshLayerPosition provided, therefore it has defaulted to middle (i.e. 0.5).");
+                    Engine.Base.Compute.RecordWarning("No valid MeshLayerPosition provided, therefore it has defaulted to middle (i.e. 0.5).");
                     break;
             }
             string location = "Feature extreme";

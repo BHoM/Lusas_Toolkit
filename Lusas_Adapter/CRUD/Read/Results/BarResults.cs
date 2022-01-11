@@ -64,7 +64,7 @@ namespace BH.Adapter.Lusas
                     results = ExtractBarDisplacement(objectIds, loadCases).ToList();
                     break;
                 default:
-                    Engine.Reflection.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the Lusas_Toolkit.");
+                    Engine.Base.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the Lusas_Toolkit.");
                     results = new List<IResult>();
                     break;
             }
@@ -211,7 +211,7 @@ namespace BH.Adapter.Lusas
                 d_LusasData.flushScriptedResults();
             }
 
-            BH.Engine.Reflection.Compute.RecordWarning("Please note only axial strains will be returned when pulling BarStress results.");
+            BH.Engine.Base.Compute.RecordWarning("Please note only axial strains will be returned when pulling BarStress results.");
 
             return barStresses;
         }
@@ -278,7 +278,7 @@ namespace BH.Adapter.Lusas
                         0,
                         0);
 
-                    BH.Engine.Reflection.Compute.RecordWarning("Please note only axial and shear strains will be returned when pulling BarStrain results.");
+                    BH.Engine.Base.Compute.RecordWarning("Please note only axial and shear strains will be returned when pulling BarStrain results.");
 
                     barStrains.Add(barStrain);
 

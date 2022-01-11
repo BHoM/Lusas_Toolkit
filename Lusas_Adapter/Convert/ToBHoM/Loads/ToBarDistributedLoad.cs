@@ -80,7 +80,7 @@ namespace BH.Adapter.Adapters.Lusas
             LoadAxis axis = LoadAxis.Global;
             bool projected = false;
 
-            BH.Engine.Reflection.Compute.RecordWarning("All BarVaryingDistributedLoads pulled from Lusas are assumed to be in global coordinates and to not be projected.");
+            BH.Engine.Base.Compute.RecordWarning("All BarVaryingDistributedLoads pulled from Lusas are assumed to be in global coordinates and to not be projected.");
 
             BarVaryingDistributedLoad barVarDistributedLoad;
 

@@ -34,17 +34,17 @@ namespace BH.Adapter.Adapters.Lusas
         {
             if (lusasAssignment.getDatabaseObject() is IFPoint)
             {
-                Engine.Reflection.Compute.RecordWarning(
+                Engine.Base.Compute.RecordWarning(
                     lusasAssignment.GetType().ToString() + " does not support assignment to points, these have not been pulled");
             }
             else if (lusasAssignment.getDatabaseObject() is IFLine)
             {
-                Engine.Reflection.Compute.RecordWarning(
+                Engine.Base.Compute.RecordWarning(
                     lusasAssignment.GetType().ToString() + "  does not support assignment to lines, these have not been pulled");
             }
             else if (lusasAssignment.getDatabaseObject() is IFSurface)
             {
-                Engine.Reflection.Compute.RecordWarning(
+                Engine.Base.Compute.RecordWarning(
                     lusasAssignment.GetType().ToString() + " does not support assignment to surfaces, these have not been pulled");
             }
         }
