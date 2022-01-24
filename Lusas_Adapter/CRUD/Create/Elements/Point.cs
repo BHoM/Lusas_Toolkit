@@ -46,7 +46,7 @@ namespace BH.Adapter.Lusas
             if (!CheckPropertyError(node, x => x.Position, true))
                 return null;
 
-            Point position = Engine.Structure.Query.Position(node);
+            Point position = node.Position;
             IFDatabaseOperations databasePoint = d_LusasData.createPoint(
                 position.X, position.Y, position.Z);
             IFPoint lusasPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
@@ -76,7 +76,7 @@ namespace BH.Adapter.Lusas
         {
             if(point!=null)
             {
-                Node newNode = BH.Engine.Structure.Create.Node(new Point { X = point.X, Y = point.Y, Z = point.Z });
+                Node newNode = new Node { Position = new Point { X = point.X, Y = point.Y, Z = point.Z } };
 
                 IFPoint newPoint = CreatePoint(newNode);
 
