@@ -49,10 +49,12 @@ namespace BH.Adapter.Adapters.Lusas
                 constraint6DOFs.TryGetValue(supportAssignments[0], out nodeConstraint);
             }
 
-            Node node = Engine.Structure.Create.Node(
-                new Point { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() },
-                "",
-                nodeConstraint);
+            Node node = new Node
+            {
+                Position = new Point { X = lusasPoint.getX(), Y = lusasPoint.getY(), Z = lusasPoint.getZ() },
+                Name = "",
+                Support = nodeConstraint
+            };
 
             node.Tags = tags;
 

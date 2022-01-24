@@ -65,7 +65,7 @@ namespace BH.Adapter.Adapters.Lusas
 
             string attributeName = GetName(lusasAttribute);
 
-            Constraint4DOF constraint4DOF = Engine.Structure.Create.Constraint4DOF(attributeName);
+            Constraint4DOF constraint4DOF = new Constraint4DOF { Name = attributeName };
 
             constraint4DOF.TranslationX = fixity[0];
             constraint4DOF.TranslationY = fixity[1];
