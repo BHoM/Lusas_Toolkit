@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Lusas_oM")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("https://github.com/BHoM/Lusas_Toolkit")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Lusas_oM")]
