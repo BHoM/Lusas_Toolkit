@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -49,7 +49,7 @@ namespace BH.Adapter.Lusas
                     IFGeometry lusasGeometry = (IFGeometry)lusasAssignment.getDatabaseObject();
                     if (lusasGeometry is IFSurface)
                     {
-                        Engine.Reflection.Compute.RecordWarning(lusasAttribute.getName() + " has been deleted because it was assigned to a surface");
+                        Engine.Base.Compute.RecordWarning(lusasAttribute.getName() + " has been deleted because it was assigned to a surface");
                         d_LusasData.Delete(lusasAttribute);
                         break;
                     }
@@ -62,4 +62,5 @@ namespace BH.Adapter.Lusas
 
     }
 }
+
 

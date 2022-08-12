@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -78,7 +78,7 @@ namespace BH.Adapter.Lusas
 
         private IFGeometricSurface CreateSurfraceProfile(LoadingPanelProperty loadingPanelProperty, string lusasName)
         {
-            Engine.Reflection.Compute.RecordError("LoadingPanelProperty not supported in Lusas_Toolkit");
+            Engine.Base.Compute.RecordError("LoadingPanelProperty not supported in Lusas_Toolkit");
             return null;
         }
 
@@ -86,7 +86,7 @@ namespace BH.Adapter.Lusas
 
         private IFGeometricSurface CreateSurfraceProfile(Ribbed ribbed, string lusasName)
         {
-            Engine.Reflection.Compute.RecordError("Ribbed not supported in Lusas_Toolkit");
+            Engine.Base.Compute.RecordError("Ribbed not supported in Lusas_Toolkit");
             return null;
         }
 
@@ -94,7 +94,7 @@ namespace BH.Adapter.Lusas
 
         private IFGeometricSurface CreateSurfraceProfile(Waffle waffle, string lusasName)
         {
-            Engine.Reflection.Compute.RecordError("Waffle not supported in Lusas_Toolkit");
+            Engine.Base.Compute.RecordError("Waffle not supported in Lusas_Toolkit");
             return null;
         }
 
@@ -102,6 +102,7 @@ namespace BH.Adapter.Lusas
 
     }
 }
+
 
 
 

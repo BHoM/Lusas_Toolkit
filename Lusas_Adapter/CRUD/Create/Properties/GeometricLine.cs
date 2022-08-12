@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -106,7 +106,7 @@ namespace BH.Adapter.Lusas
 
         private IFAttribute CreateSection(ExplicitSection sectionProperty)
         {
-            Engine.Reflection.Compute.RecordError("ExplicitSection is not supported in Lusas_Toolkit.");
+            Engine.Base.Compute.RecordError("ExplicitSection is not supported in Lusas_Toolkit.");
             return null;
         }
 
@@ -192,10 +192,10 @@ namespace BH.Adapter.Lusas
 
         private bool CreateProfile(string name, FabricatedBoxProfile profile)
         {
-            Engine.Reflection.Compute.RecordWarning(
+            Engine.Base.Compute.RecordWarning(
                 "Unequal flange thickness not supported in Lusas for " + profile.GetType().ToString()
                 + ", top flange thickness used as flange thickness");
-            Engine.Reflection.Compute.RecordWarning(
+            Engine.Base.Compute.RecordWarning(
                 "Weld size assumed to be inner radius for " + profile.GetType().ToString());
 
             List<double> dimensionList = new List<double> {
@@ -286,7 +286,7 @@ namespace BH.Adapter.Lusas
             int lusasType = 14;
             CreateLibrarySection(name, dimensionArray, lusasType);
 
-            Engine.Reflection.Compute.RecordWarning("Weld size assumed to be root radius for " + profile.GetType().ToString());
+            Engine.Base.Compute.RecordWarning("Weld size assumed to be root radius for " + profile.GetType().ToString());
 
             return true;
         }
@@ -312,7 +312,7 @@ namespace BH.Adapter.Lusas
 
         private bool CreateProfile(string name, ChannelProfile profile)
         {
-            Engine.Reflection.Compute.RecordWarning("Toe radius not support for ChannelSection");
+            Engine.Base.Compute.RecordWarning("Toe radius not support for ChannelSection");
             List<double> dimensionList = new List<double> { profile.FlangeWidth, profile.Height,
             profile.FlangeThickness, profile.WebThickness, profile.RootRadius};
             double[] dimensionArray = dimensionList.ToArray();
@@ -330,8 +330,8 @@ namespace BH.Adapter.Lusas
 
         private bool CreateProfile(string name, ZSectionProfile profile)
         {
-            Engine.Reflection.Compute.RecordWarning("Lusas only supports constant thickness Z sections, flange thickness used as thickness");
-            Engine.Reflection.Compute.RecordWarning("Toe radius not supported for ZSection");
+            Engine.Base.Compute.RecordWarning("Lusas only supports constant thickness Z sections, flange thickness used as thickness");
+            Engine.Base.Compute.RecordWarning("Toe radius not supported for ZSection");
 
             List<double> dimensionList = new List<double> {
                 profile.Height, profile.FlangeWidth, profile.FlangeWidth,
@@ -350,7 +350,7 @@ namespace BH.Adapter.Lusas
 
         private bool CreateProfile(string name, GeneralisedFabricatedBoxProfile profile)
         {
-            Engine.Reflection.Compute.RecordError("GeneralisedFabricatedBoxProfile not supported in Lusas_Toolkit");
+            Engine.Base.Compute.RecordError("GeneralisedFabricatedBoxProfile not supported in Lusas_Toolkit");
             return false;
         }
 
@@ -358,7 +358,7 @@ namespace BH.Adapter.Lusas
 
         private bool CreateProfile(string name, GeneralisedTSectionProfile profile)
         {
-            Engine.Reflection.Compute.RecordError("GeneralisedTSectionProfile not supported in Lusas_Toolkit");
+            Engine.Base.Compute.RecordError("GeneralisedTSectionProfile not supported in Lusas_Toolkit");
             return false;
         }
 
@@ -366,7 +366,7 @@ namespace BH.Adapter.Lusas
 
         private bool CreateProfile(string name, FreeFormProfile profile)
         {
-            Engine.Reflection.Compute.RecordError("FreeFormProfile not supported in Lusas_Toolkit");
+            Engine.Base.Compute.RecordError("FreeFormProfile not supported in Lusas_Toolkit");
             return false;
         }
 
@@ -374,7 +374,7 @@ namespace BH.Adapter.Lusas
 
         private bool CreateProfile(string name, KiteProfile profile)
         {
-            Engine.Reflection.Compute.RecordError("KiteProfile not supported in Lusas_Toolkit");
+            Engine.Base.Compute.RecordError("KiteProfile not supported in Lusas_Toolkit");
             return false;
         }
 
@@ -435,6 +435,7 @@ namespace BH.Adapter.Lusas
 
     }
 }
+
 
 
 

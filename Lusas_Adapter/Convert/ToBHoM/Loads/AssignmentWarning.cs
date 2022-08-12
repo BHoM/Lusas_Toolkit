@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -34,17 +34,17 @@ namespace BH.Adapter.Adapters.Lusas
         {
             if (lusasAssignment.getDatabaseObject() is IFPoint)
             {
-                Engine.Reflection.Compute.RecordWarning(
+                Engine.Base.Compute.RecordWarning(
                     lusasAssignment.GetType().ToString() + " does not support assignment to points, these have not been pulled");
             }
             else if (lusasAssignment.getDatabaseObject() is IFLine)
             {
-                Engine.Reflection.Compute.RecordWarning(
+                Engine.Base.Compute.RecordWarning(
                     lusasAssignment.GetType().ToString() + "  does not support assignment to lines, these have not been pulled");
             }
             else if (lusasAssignment.getDatabaseObject() is IFSurface)
             {
-                Engine.Reflection.Compute.RecordWarning(
+                Engine.Base.Compute.RecordWarning(
                     lusasAssignment.GetType().ToString() + " does not support assignment to surfaces, these have not been pulled");
             }
         }
@@ -53,4 +53,5 @@ namespace BH.Adapter.Adapters.Lusas
 
     }
 }
+
 

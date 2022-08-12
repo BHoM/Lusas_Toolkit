@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -65,7 +65,7 @@ namespace BH.Adapter.Adapters.Lusas
 
             string attributeName = GetName(lusasAttribute);
 
-            Constraint4DOF constraint4DOF = Engine.Structure.Create.Constraint4DOF(attributeName);
+            Constraint4DOF constraint4DOF = new Constraint4DOF { Name = attributeName };
 
             constraint4DOF.TranslationX = fixity[0];
             constraint4DOF.TranslationY = fixity[1];
@@ -87,5 +87,6 @@ namespace BH.Adapter.Adapters.Lusas
 
     }
 }
+
 
 

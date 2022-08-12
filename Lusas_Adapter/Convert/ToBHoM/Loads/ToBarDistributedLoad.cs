@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -80,7 +80,7 @@ namespace BH.Adapter.Adapters.Lusas
             LoadAxis axis = LoadAxis.Global;
             bool projected = false;
 
-            BH.Engine.Reflection.Compute.RecordWarning("All BarVaryingDistributedLoads pulled from Lusas are assumed to be in global coordinates and to not be projected.");
+            BH.Engine.Base.Compute.RecordWarning("All BarVaryingDistributedLoads pulled from Lusas are assumed to be in global coordinates and to not be projected.");
 
             BarVaryingDistributedLoad barVarDistributedLoad;
 
@@ -111,4 +111,5 @@ namespace BH.Adapter.Adapters.Lusas
 
     }
 }
+
 

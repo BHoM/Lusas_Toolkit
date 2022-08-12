@@ -1,6 +1,6 @@
-﻿/*
+/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -41,9 +41,10 @@ namespace BH.Engine.Adapters.Lusas
             if (surfaceProperty is ConstantThickness)
                 isInvalid = false;
             else
-                Reflection.Compute.RecordWarning("Unsupported SurfaceProperty (Waffle, Ribbed or LoadingPanelProperty) assigned to Panel.");
+                Base.Compute.RecordWarning("Unsupported SurfaceProperty (Waffle, Ribbed or LoadingPanelProperty) assigned to Panel.");
 
             return isInvalid;
         }
     }
 }
+

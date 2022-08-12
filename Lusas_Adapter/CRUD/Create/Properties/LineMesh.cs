@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -50,7 +50,7 @@ namespace BH.Adapter.Lusas
 
             if (barRelease != null && barFEAType == BarFEAType.Axial)
             {
-                Engine.Reflection.Compute.RecordWarning(
+                Engine.Base.Compute.RecordWarning(
                     barFEAType + " used with barReleases, this information will be lost when pushed to Lusas");
             }
             else if (barRelease == null)
@@ -196,4 +196,5 @@ namespace BH.Adapter.Lusas
 
     }
 }
+
 

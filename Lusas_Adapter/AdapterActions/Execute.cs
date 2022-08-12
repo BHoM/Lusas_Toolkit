@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -26,7 +26,7 @@ using System.Linq;
 using BH.Engine.Adapter;
 using BH.oM.Adapters.Lusas;
 using BH.oM.Adapter;
-using BH.oM.Reflection;
+using BH.oM.Base;
 using BH.oM.Adapter.Commands;
 using BH.oM.Structure.Loads;
 using Lusas.LPI;
@@ -80,7 +80,7 @@ namespace BH.Adapter.Lusas
         {
             if (d_LusasData.getDBFilename() == "")
             {
-                Engine.Reflection.Compute.RecordError("The model file does not have a filename, please SaveAs before attempting to Save.");
+                Engine.Base.Compute.RecordError("The model file does not have a filename, please SaveAs before attempting to Save.");
                 return false;
             }
 
@@ -113,7 +113,7 @@ namespace BH.Adapter.Lusas
             }
             else
             {
-                Engine.Reflection.Compute.RecordError("File does not exist");
+                Engine.Base.Compute.RecordError("File does not exist");
                 return false;
             }
         }
@@ -130,7 +130,7 @@ namespace BH.Adapter.Lusas
         public bool RunCommand(AnalyseLoadCases command)
         {
             if (command.LoadCases == null || command.LoadCases.Count() == 0)
-                Engine.Reflection.Compute.RecordNote("No cases provided, all cases will be run");
+                Engine.Base.Compute.RecordNote("No cases provided, all cases will be run");
 
             return Analyse(command.LoadCases);
         }
@@ -152,7 +152,7 @@ namespace BH.Adapter.Lusas
             {
                 if (d_LusasData.getDBFilename() == "")
                 {
-                    Engine.Reflection.Compute.RecordError("The model file does not have a filename, please SaveAs before attempting to Save.");
+                    Engine.Base.Compute.RecordError("The model file does not have a filename, please SaveAs before attempting to Save.");
                     return false;
                 }
                 else
@@ -172,7 +172,7 @@ namespace BH.Adapter.Lusas
             {
                 if (d_LusasData.getDBFilename() == "")
                 {
-                    Engine.Reflection.Compute.RecordError("The model file does not have a filename, please SaveAs before attempting to Save.");
+                    Engine.Base.Compute.RecordError("The model file does not have a filename, please SaveAs before attempting to Save.");
                     return false;
                 }
                 else
@@ -190,7 +190,7 @@ namespace BH.Adapter.Lusas
 
         public bool RunCommand(IExecuteCommand command)
         {
-            Engine.Reflection.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
+            Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
             return false;
         }
 
@@ -205,7 +205,7 @@ namespace BH.Adapter.Lusas
             string filename = d_LusasData.getDBFilename();
             if (filename == "")
             {
-                Engine.Reflection.Compute.RecordError("Model has not been saved with a filename, please SaveAs with a filename");
+                Engine.Base.Compute.RecordError("Model has not been saved with a filename, please SaveAs with a filename");
                 return false;
             }
             d_LusasData.save();
@@ -240,7 +240,7 @@ namespace BH.Adapter.Lusas
                         name = (item as ICase).Name;
                     else
                     {
-                        Engine.Reflection.Compute.RecordWarning("Can not set up cases for running of type " + item.GetType().Name + ". Item " + item.ToString() + " will be ignored. Please provide case names or BHoM cases to be run");
+                        Engine.Base.Compute.RecordWarning("Can not set up cases for running of type " + item.GetType().Name + ". Item " + item.ToString() + " will be ignored. Please provide case names or BHoM cases to be run");
                         continue;
                     }
                     names.Add(name);
@@ -288,3 +288,4 @@ namespace BH.Adapter.Lusas
 
     }
 }
+
