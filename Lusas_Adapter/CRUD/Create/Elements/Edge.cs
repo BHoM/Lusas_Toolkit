@@ -32,6 +32,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV18Adapter
 #elif Debug19 || Release19
     public partial class LusasV19Adapter
+#elif Debug191 || Release191
+    public partial class LusasV191Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -44,7 +46,7 @@ namespace BH.Adapter.Lusas
         {
             IFLine lusasLine = d_LusasData.createLineByPoints(startPoint, endPoint);
 
-            int adapterIdName = lusasLine.getID();
+            long adapterIdName = lusasLine.getID();
             edge.SetAdapterId(typeof(LusasId), adapterIdName);
 
             if (!(edge.Tags.Count == 0))

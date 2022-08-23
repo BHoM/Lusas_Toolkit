@@ -42,8 +42,15 @@ namespace BH.Adapter.Adapters.Lusas
 
             double value = 0;
             Split1D splitMethod = Split1D.Automatic;
+
+#if Debug191 || Release191
+            object meshTypeReference = 0;
+            lusasMeshLine.getMeshDivisions(ref meshTypeReference);
+            int meshType = (int)meshTypeReference;
+#else
             int meshType = 0;
             lusasMeshLine.getMeshDivisions(ref meshType);
+#endif
 
             if (meshType == 0)
             {
@@ -70,7 +77,7 @@ namespace BH.Adapter.Adapters.Lusas
                 SplitParameter = value
             };
 
-            int adapterNameId = GetAdapterID(lusasMeshLine, 'e');
+            long adapterNameId = GetAdapterID(lusasMeshLine, 'e');
             meshSettings1D.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return meshSettings1D;

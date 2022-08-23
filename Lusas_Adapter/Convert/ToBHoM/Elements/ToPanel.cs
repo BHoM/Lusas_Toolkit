@@ -68,7 +68,7 @@ namespace BH.Adapter.Adapters.Lusas
 
             panel.Tags = tags;
 
-            int adapterID = lusasSurface.getID();
+            long adapterID = lusasSurface.getID();
             panel.SetAdapterId(typeof(LusasId), adapterID);
 
             List<string> geometricAssignments = GetAttributeAssignments(lusasSurface, "Geometric");

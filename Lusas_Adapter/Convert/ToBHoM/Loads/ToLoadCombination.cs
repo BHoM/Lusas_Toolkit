@@ -58,11 +58,11 @@ namespace BH.Adapter.Adapters.Lusas
             LoadCombination loadCombination = new LoadCombination
             {
                 Name = GetName(lusasLoadCombination),
-                Number = lusasLoadCombination.getID(),
+                Number = (int)lusasLoadCombination.getID(),
                 LoadCases = factoredLoadcases
             };
 
-            int adapterNameId = lusasLoadCombination.getID();
+            int adapterNameId = (int)lusasLoadCombination.getID();
             loadCombination.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return loadCombination;

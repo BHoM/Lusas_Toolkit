@@ -44,6 +44,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV18Adapter : BHoMAdapter
 #elif Debug19 || Release19
     public partial class LusasV19Adapter : BHoMAdapter
+#elif Debug191 || Release191
+    public partial class LusasV191Adapter : BHoMAdapter
 #else
     public partial class LusasV17Adapter : BHoMAdapter
 #endif
@@ -55,6 +57,8 @@ namespace BH.Adapter.Lusas
         public LusasV18Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
 #elif Debug19 || Release19
         public LusasV19Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
+#elif Debug191 || Release191
+        public LusasV191Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
 #else
         public LusasV17Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
 #endif
@@ -107,6 +111,8 @@ namespace BH.Adapter.Lusas
                     System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.18.0");
 #elif Debug19 || Release19
                     System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.19.0");
+#elif Debug191 || Release191
+                    System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.19.1");
 #endif
                     m_LusasApplication.enableUI(true);
                     m_LusasApplication.setVisible(true);

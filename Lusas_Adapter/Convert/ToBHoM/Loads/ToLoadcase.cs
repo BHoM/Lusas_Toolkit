@@ -38,10 +38,10 @@ namespace BH.Adapter.Adapters.Lusas
             Loadcase loadcase = new Loadcase
             {
                 Name = GetName(lusasLoadcase),
-                Number = lusasLoadcase.getID()
+                Number = (int)lusasLoadcase.getID()
             };
 
-            int adapterNameId = lusasLoadcase.getID();
+            int adapterNameId = (int)lusasLoadcase.getID();
             loadcase.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return loadcase;

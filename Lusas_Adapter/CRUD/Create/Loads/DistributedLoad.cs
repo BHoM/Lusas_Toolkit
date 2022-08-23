@@ -32,6 +32,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV18Adapter
 #elif Debug19 || Release19
     public partial class LusasV19Adapter
+#elif Debug191 || Release191
+    public partial class LusasV191Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -46,7 +48,7 @@ namespace BH.Adapter.Lusas
             IFLoadingGlobalDistributed lusasGlobalDistributed = CreateGlobalDistributed(distributedLoad.Name,
                 "Length", assignedLoadcase, distributedLoad.Force, distributedLoad.Moment, lusasLines);
 
-            int adapterIdName = lusasGlobalDistributed.getID();
+            long adapterIdName = lusasGlobalDistributed.getID();
             distributedLoad.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasGlobalDistributed;
@@ -60,7 +62,7 @@ namespace BH.Adapter.Lusas
             IFLoadingGlobalDistributed lusasGlobalDistributed = CreateGlobalDistributed(distributedLoad.Name,
                 "Area", assignedLoadcase, distributedLoad.Pressure, null, lusasSurfaces);
 
-            int adapterIdName = lusasGlobalDistributed.getID();
+            long adapterIdName = lusasGlobalDistributed.getID();
             distributedLoad.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasGlobalDistributed;
@@ -74,7 +76,7 @@ namespace BH.Adapter.Lusas
             IFLoadingLocalDistributed lusasLocalDistributed = CreateLocalDistributed(distributedLoad.Name,
                 "Line", assignedLoadcase, distributedLoad.Force, lusasLines);
 
-            int adapterIdName = lusasLocalDistributed.getID();
+            long adapterIdName = lusasLocalDistributed.getID();
             distributedLoad.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasLocalDistributed;
@@ -89,7 +91,7 @@ namespace BH.Adapter.Lusas
             IFLoadingLocalDistributed lusasLocalDistributed = CreateLocalDistributed(distributedLoad.Name,
                 "Area", assignedLoadcase, distributedLoad.Pressure, lusasSurfaces);
 
-            int adapterIdName = lusasLocalDistributed.getID();
+            long adapterIdName = lusasLocalDistributed.getID();
             distributedLoad.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasLocalDistributed;

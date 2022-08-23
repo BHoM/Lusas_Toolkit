@@ -71,7 +71,7 @@ namespace BH.Adapter.Adapters.Lusas
                 ElementSize = size
             };
 
-            int adapterNameId = GetAdapterID(lusasAttribute, 'e');
+            long adapterNameId = GetAdapterID(lusasAttribute, 'e');
             meshSettings2D.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return meshSettings2D;

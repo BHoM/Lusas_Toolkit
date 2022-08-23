@@ -30,9 +30,9 @@ namespace BH.Adapter.Adapters.Lusas
         /**** Internal Methods                          ****/
         /***************************************************/
 
-        internal static int GetAdapterID(IFAttribute lusasAttribute, char lastCharacter)
+        internal static long GetAdapterID(IFAttribute lusasAttribute, char lastCharacter)
         {
-            int adapterID = 0;
+            long adapterID = 0;
 
             lusasAttribute.getName();
 
@@ -50,9 +50,9 @@ namespace BH.Adapter.Adapters.Lusas
 
         /***************************************************/
 
-        internal static int GetAdapterID(IFLoadcase lusasLoadcase, char lastCharacter)
+        internal static long GetAdapterID(IFLoadcase lusasLoadcase, char lastCharacter)
         {
-            int adapterID = 0;
+            long adapterID = 0;
 
             lusasLoadcase.getName();
 
@@ -70,9 +70,9 @@ namespace BH.Adapter.Adapters.Lusas
 
         /***************************************************/
 
-        internal static int GetAdapterID(IFBasicCombination lusasLoadCombination, char lastCharacter)
+        internal static long GetAdapterID(IFBasicCombination lusasLoadCombination, char lastCharacter)
         {
-            int adapterID = 0;
+            long adapterID = 0;
 
             lusasLoadCombination.getName();
 
