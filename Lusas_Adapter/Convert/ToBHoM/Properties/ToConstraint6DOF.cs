@@ -68,7 +68,7 @@ namespace BH.Adapter.Adapters.Lusas
             Constraint6DOF constraint6DOF = BH.Engine.Structure.Create.Constraint6DOF(
                attributeName, fixity, stiffness);
 
-            int adapterNameId = lusasAttribute.getID();
+            int adapterNameId = (int)lusasAttribute.getID();
             constraint6DOF.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return constraint6DOF;

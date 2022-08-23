@@ -85,7 +85,7 @@ namespace BH.Adapter.Adapters.Lusas
             }
 
 
-            int adapterNameId = lusasDistributed.getID();
+            int adapterNameId = (int)lusasDistributed.getID();
             barUniformlyDistributed.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return barUniformlyDistributed;

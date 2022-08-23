@@ -77,7 +77,7 @@ namespace BH.Adapter.Adapters.Lusas
                 GetName(lusasDistributed));
             }
 
-            int adapterNameId = lusasDistributed.getID();
+            long adapterNameId = lusasDistributed.getID();
             areaUniformlyDistributedLoad.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return areaUniformlyDistributedLoad;

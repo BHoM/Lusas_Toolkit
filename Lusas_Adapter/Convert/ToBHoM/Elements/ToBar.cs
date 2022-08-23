@@ -32,7 +32,6 @@ using BH.oM.Adapters.Lusas;
 using BH.oM.Adapters.Lusas.Fragments;
 using System;
 using BH.Engine.Adapter;
-using BH.Engine.Base;
 
 namespace BH.Adapter.Adapters.Lusas
 {
