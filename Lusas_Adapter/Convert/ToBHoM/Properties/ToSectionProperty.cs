@@ -43,7 +43,7 @@ namespace BH.Adapter.Adapters.Lusas
             string attributeName = GetName(lusasAttribute);
             string attributeType = lusasAttribute.getAttributeType();
 
-            int rows = lusasAttribute.countRows("A");
+            int rows = (int)lusasAttribute.countRows("A");
 
             IProfile profile;
             GenericSection section = null;
@@ -106,7 +106,7 @@ namespace BH.Adapter.Adapters.Lusas
 
             section.Name = attributeName;
 
-            int adapterNameId = lusasAttribute.getID();
+            int adapterNameId = (int)lusasAttribute.getID();
             section.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return section;

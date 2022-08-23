@@ -77,7 +77,7 @@ namespace BH.Adapter.Adapters.Lusas
             constraint4DOF.TranslationalStiffnessX = stiffness[2];
             constraint4DOF.TranslationalStiffnessX = stiffness[3];
 
-            int adapterNameId = lusasAttribute.getID();
+            int adapterNameId = (int)lusasAttribute.getID();
             constraint4DOF.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return constraint4DOF;

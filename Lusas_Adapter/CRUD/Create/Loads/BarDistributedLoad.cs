@@ -33,6 +33,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV18Adapter
 #elif Debug19 || Release19
     public partial class LusasV19Adapter
+#elif Debug191 || Release191
+    public partial class LusasV191Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -64,7 +66,7 @@ namespace BH.Adapter.Lusas
 
             List<string> keys = new List<string>() { "FX", "FY", "FZ", "MX", "MY", "MZ" };
 
-            List<int> ids = new List<int>();
+            List<long> ids = new List<long>();
 
             string positioning = barDistributedLoad.RelativePositions ? "parametric" : "actual";
             string axis;

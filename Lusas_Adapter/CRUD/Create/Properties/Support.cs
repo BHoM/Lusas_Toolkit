@@ -34,6 +34,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV18Adapter
 #elif Debug19 || Release19
     public partial class LusasV19Adapter
+#elif Debug191 || Release191
+    public partial class LusasV191Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -88,7 +90,7 @@ namespace BH.Adapter.Lusas
 
             if (lusasSupport != null)
             {
-                int adapterIdName = lusasSupport.getID();
+                long adapterIdName = lusasSupport.getID();
                 constraint.SetAdapterId(typeof(LusasId), adapterIdName);
 
                 return lusasSupport;
@@ -150,7 +152,7 @@ namespace BH.Adapter.Lusas
 
             if (lusasSupport != null)
             {
-                int adapterIdName = lusasSupport.getID();
+                long adapterIdName = lusasSupport.getID();
                 constraint.SetAdapterId(typeof(LusasId), adapterIdName);
 
                 return lusasSupport;

@@ -101,7 +101,7 @@ namespace BH.Adapter.Adapters.Lusas
             if (barVarDistributedLoad == null)
                 return null;
 
-            int adapterNameId = lusasBarDistributedLoad.getID();
+            int adapterNameId = (int)lusasBarDistributedLoad.getID();
             barVarDistributedLoad.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return barVarDistributedLoad;

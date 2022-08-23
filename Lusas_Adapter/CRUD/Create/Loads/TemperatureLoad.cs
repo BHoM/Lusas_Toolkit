@@ -31,6 +31,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV18Adapter
 #elif Debug19 || Release19
     public partial class LusasV19Adapter
+#elif Debug191 || Release191
+    public partial class LusasV191Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -46,7 +48,7 @@ namespace BH.Adapter.Lusas
             IFLoadingTemperature lusasTemperatureLoad = CreateTemperatureLoad(
                 temperatureLoad.Name, temperatureLoad.TemperatureChange, lusasLines, assignedLoadcase);
 
-            int adapterIdName = lusasTemperatureLoad.getID();
+            long adapterIdName = lusasTemperatureLoad.getID();
             temperatureLoad.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasTemperatureLoad;
@@ -62,7 +64,7 @@ namespace BH.Adapter.Lusas
             IFLoadingTemperature lusasTemperatureLoad = CreateTemperatureLoad(temperatureLoad.Name,
                 temperatureLoad.TemperatureChange, lusasSurfaces, assignedLoadcase);
 
-            int adapterIdName = lusasTemperatureLoad.getID();
+            long adapterIdName = lusasTemperatureLoad.getID();
             temperatureLoad.SetAdapterId(typeof(LusasId), adapterIdName);
 
             return lusasTemperatureLoad;

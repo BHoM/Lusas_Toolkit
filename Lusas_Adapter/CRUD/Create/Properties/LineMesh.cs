@@ -33,6 +33,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV18Adapter
 #elif Debug19 || Release19
     public partial class LusasV19Adapter
+#elif Debug191 || Release191
+    public partial class LusasV191Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -77,7 +79,7 @@ namespace BH.Adapter.Lusas
 
             if (lusasLineMesh != null)
             {
-                int adapterNameId = d_LusasData.getLargestAttributeID("Mesh");
+                int adapterNameId = (int)d_LusasData.getLargestAttributeID("Mesh");
                 meshSettings1D.SetAdapterId(typeof(LusasId), adapterNameId);
 
                 return lusasLineMesh;
