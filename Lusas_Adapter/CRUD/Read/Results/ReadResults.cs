@@ -89,7 +89,7 @@ namespace BH.Adapter.Lusas
         private List<int> GetAllIds(NodeResultRequest request)
         {
             List<int> ids = new List<int>();
-            int maxIndex = (int)d_LusasData.getLargestNodeID();
+            long maxIndex = d_LusasData.getLargestNodeID();
 
             for (int i = 1; i < maxIndex + 1; i++)
             {
