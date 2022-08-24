@@ -44,7 +44,7 @@ namespace BH.Adapter.Adapters.Lusas
                 Thickness = lusasAttribute.getValue("t")
             };
 
-            int adapterNameId = (int)lusasAttribute.getID();
+            long adapterNameId = lusasAttribute.getID();
             surfaceProperty.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return surfaceProperty;

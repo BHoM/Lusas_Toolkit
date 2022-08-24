@@ -55,14 +55,15 @@ namespace BH.Adapter.Adapters.Lusas
                 factoredLoadcases.Add(factoredLoadcase);
             }
 
+            long adapterNameId = lusasLoadCombination.getID();
+
             LoadCombination loadCombination = new LoadCombination
             {
                 Name = GetName(lusasLoadCombination),
-                Number = (int)lusasLoadCombination.getID(),
+                Number = (int)adapterNameId,
                 LoadCases = factoredLoadcases
             };
 
-            int adapterNameId = (int)lusasLoadCombination.getID();
             loadCombination.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return loadCombination;

@@ -55,7 +55,7 @@ namespace BH.Adapter.Adapters.Lusas
                 false,
                 GetName(lusasTemperatureLoad));
 
-            int adapterNameId = (int)lusasTemperatureLoad.getID();
+            long adapterNameId = lusasTemperatureLoad.getID();
             barUniformTemperatureLoad.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return barUniformTemperatureLoad;
