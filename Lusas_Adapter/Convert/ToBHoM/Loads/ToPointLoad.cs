@@ -68,7 +68,7 @@ namespace BH.Adapter.Adapters.Lusas
                 LoadAxis.Global,
                 GetName(lusasPointLoad));
 
-            int adapterNameId = (int)lusasPointLoad.getID();
+            long adapterNameId = lusasPointLoad.getID();
             pointLoad.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return pointLoad;
