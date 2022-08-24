@@ -61,7 +61,7 @@ namespace BH.Adapter.Adapters.Lusas
                     lusasAttribute.getValue("rho"), 0);
             }
 
-            int adapterNameId = (int)lusasAttribute.getID();
+            long adapterNameId = lusasAttribute.getID();
             material.SetAdapterId(typeof(LusasId), adapterNameId);
 
 

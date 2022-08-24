@@ -79,7 +79,7 @@ namespace BH.Adapter.Lusas
 
             if (lusasLineMesh != null)
             {
-                int adapterNameId = (int)d_LusasData.getLargestAttributeID("Mesh");
+                long adapterNameId = d_LusasData.getLargestAttributeID("Mesh");
                 meshSettings1D.SetAdapterId(typeof(LusasId), adapterNameId);
 
                 return lusasLineMesh;

@@ -58,7 +58,7 @@ namespace BH.Adapter.Adapters.Lusas
             GravityLoad gravityLoad = Engine.Structure.Create.GravityLoad(
                 loadcase, gravityVector, assignedObjects, GetName(lusasGravityLoad));
 
-            int adapterNameId = (int)lusasGravityLoad.getID();
+            long adapterNameId = lusasGravityLoad.getID();
             gravityLoad.SetAdapterId(typeof(LusasId), adapterNameId);
 
             return gravityLoad;
