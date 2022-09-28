@@ -66,7 +66,7 @@ namespace BH.Adapter.Adapters.Lusas
             };
 
             if (adapterNameId > int.MaxValue)
-                Engine.Base.Compute.RecordWarning($"The Number for {loadcase.Name} exceeds {int.MaxValue} and has been assigned {int.MaxValue}. Please verify the Load Combinations are still valid.");
+                Engine.Base.Compute.RecordWarning($"The Number for {loadcase.Name} exceeds {int.MaxValue} and has been assigned {int.MaxValue}.");
 
             loadCombination.SetAdapterId(typeof(LusasId), adapterNameId);
 
