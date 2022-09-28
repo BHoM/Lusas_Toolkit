@@ -96,6 +96,7 @@ namespace BH.Adapter.Lusas
                     {typeof(RigidLink), new List<Type> { typeof(LinkConstraint), typeof(Node) } },
                     {typeof(ISurfaceProperty), new List<Type> { typeof(IMaterialFragment) } },
                     {typeof(ILoad), new List<Type> {typeof(Loadcase) } },
+                    {typeof(LoadCombination), new List<Type> {typeof(Loadcase) } },
                 };
 
                 if (string.IsNullOrWhiteSpace(filePath))
