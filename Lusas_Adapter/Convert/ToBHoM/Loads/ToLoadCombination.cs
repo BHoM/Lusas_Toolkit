@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using BH.Engine.Adapter;
 using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Loads;
@@ -60,9 +61,12 @@ namespace BH.Adapter.Adapters.Lusas
             LoadCombination loadCombination = new LoadCombination
             {
                 Name = GetName(lusasLoadCombination),
-                Number = (int)adapterNameId,
+                Number = System.Convert.ToInt32(Math.Max(Math.Min(adapterNameId, int.MaxValue), int.MinValue)),
                 LoadCases = factoredLoadcases
             };
+
+            if (adapterNameId > int.MaxValue)
+                Engine.Base.Compute.RecordWarning($"The Number for {loadcase.Name} exceeds {int.MaxValue} and has been assigned {int.MaxValue}. Please verify the Load Combinations are still valid.");
 
             loadCombination.SetAdapterId(typeof(LusasId), adapterNameId);
 
