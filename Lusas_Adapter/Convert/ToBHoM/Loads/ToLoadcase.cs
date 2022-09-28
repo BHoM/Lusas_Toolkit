@@ -20,6 +20,7 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System;
 using BH.Engine.Adapter;
 using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Loads;
@@ -40,8 +41,11 @@ namespace BH.Adapter.Adapters.Lusas
             Loadcase loadcase = new Loadcase
             {
                 Name = GetName(lusasLoadcase),
-                Number = (int)adapterNameId,
+                Number = System.Convert.ToInt32(Math.Max(Math.Min(adapterNameId, int.MaxValue), int.MinValue)),
             };
+
+            if (adapterNameId > int.MaxValue)
+                Engine.Base.Compute.RecordWarning($"The Number for {loadcase.Name} exceeds {int.MaxValue} and has been assigned {int.MaxValue}. Please verify the Load Combinations are still valid.");
 
             loadcase.SetAdapterId(typeof(LusasId), adapterNameId);
 
