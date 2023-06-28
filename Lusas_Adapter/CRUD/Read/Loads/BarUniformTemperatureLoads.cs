@@ -51,9 +51,8 @@ namespace BH.Adapter.Lusas
 
             if (!(lusasTemperatureLoads.Count() == 0))
             {
-                List<Bar> barsList = ReadBars();
-                Dictionary<string, Bar> bars = barsList.ToDictionary(
-                    x => x.AdapterId<string>(typeof(LusasId)));
+                List<Bar> barsList = GetCachedOrRead<Bar>();
+                Dictionary<string, Bar> bars = barsList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
 
