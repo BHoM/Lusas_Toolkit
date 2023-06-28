@@ -48,9 +48,8 @@ namespace BH.Adapter.Lusas
 
             if (!(lusasCombinations.Count() == 0))
             {
-                List<Loadcase> lusasLoadcases = ReadLoadcases();
-                Dictionary<string, Loadcase> loadcaseDictionary = lusasLoadcases.ToDictionary(
-                    x => x.Number.ToString());
+                List<Loadcase> lusasLoadcases = GetCachedOrRead<Loadcase>();
+                Dictionary<string, Loadcase> loadcaseDictionary = lusasLoadcases.ToDictionary(x => x.Number.ToString());
 
                 for (int i = 0; i < lusasCombinations.Count(); i++)
                 {

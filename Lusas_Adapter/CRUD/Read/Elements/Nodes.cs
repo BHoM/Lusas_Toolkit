@@ -51,9 +51,8 @@ namespace BH.Adapter.Lusas
             {
                 HashSet<string> groupNames = ReadTags();
 
-                IEnumerable<Constraint6DOF> constraints6DOFList = Read6DOFConstraints();
-                Dictionary<string, Constraint6DOF> constraints6DOF = constraints6DOFList.ToDictionary(
-                    x => x.Name.ToString());
+                IEnumerable<Constraint6DOF> constraints6DOFList = GetCachedOrRead<Constraint6DOF>();
+                Dictionary<string, Constraint6DOF> constraints6DOF = constraints6DOFList.ToDictionary(x => x.Name.ToString());
 
                 for (int i = 0; i < lusasPoints.Count(); i++)
                 {

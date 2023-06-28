@@ -57,9 +57,8 @@ namespace BH.Adapter.Lusas
 
             if (!(lusasDistributedLoads.Count() == 0))
             {
-                List<Panel> panelsList = ReadPanels();
-                Dictionary<string, Panel> panels = panelsList.ToDictionary(
-                    x => x.AdapterId<string>(typeof(LusasId)));
+                List<Panel> panelsList = GetCachedOrRead<Panel>();
+                Dictionary<string, Panel> panels = panelsList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
 

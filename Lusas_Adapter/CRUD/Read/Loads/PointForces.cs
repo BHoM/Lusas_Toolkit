@@ -52,9 +52,8 @@ namespace BH.Adapter.Lusas
 
             if (!(lusasConcentratedLoads.Count() == 0))
             {
-                List<Node> nodesList = ReadNodes();
-                Dictionary<string, Node> nodes = nodesList.ToDictionary(
-                    x => x.AdapterId<string>(typeof(LusasId)));
+                List<Node> nodesList = GetCachedOrRead<Node>();
+                Dictionary<string, Node> nodes = nodesList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
 
