@@ -54,25 +54,20 @@ namespace BH.Adapter.Lusas
 
             if (!(lusasLines.Count() == 0))
             {
-                IEnumerable<Node> nodesList = ReadNodes();
-                Dictionary<string, Node> nodes = nodesList.ToDictionary(
-                    x => x.AdapterId<string>(typeof(LusasId)));
+                IEnumerable<Node> nodesList = GetCachedOrRead<Node>();
+                Dictionary<string, Node> nodes = nodesList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
 
-                IEnumerable<Constraint4DOF> supportsList = Read4DOFConstraints();
-                Dictionary<string, Constraint4DOF> supports = supportsList.ToDictionary(
-                    x => x.Name);
+                IEnumerable<Constraint4DOF> supportsList = GetCachedOrRead<Constraint4DOF>();
+                Dictionary<string, Constraint4DOF> supports = supportsList.ToDictionary(x => x.Name);
 
-                IEnumerable<IMaterialFragment> materialList = ReadMaterials();
-                Dictionary<string, IMaterialFragment> materials = materialList.ToDictionary(
-                    x => x.Name.ToString());
+                IEnumerable<IMaterialFragment> materialList = GetCachedOrRead<IMaterialFragment>();
+                Dictionary<string, IMaterialFragment> materials = materialList.ToDictionary(x => x.Name.ToString());
 
-                IEnumerable<ISectionProperty> sectionPropertiesList = ReadSectionProperties();
-                Dictionary<string, ISectionProperty> sectionProperties = sectionPropertiesList.ToDictionary(
-                    x => x.Name.ToString());
+                IEnumerable<ISectionProperty> sectionPropertiesList = GetCachedOrRead<ISectionProperty>();
+                Dictionary<string, ISectionProperty> sectionProperties = sectionPropertiesList.ToDictionary(x => x.Name.ToString());
 
-                List<MeshSettings1D> meshesList = ReadMeshSettings1D();
-                Dictionary<string, MeshSettings1D> meshes = meshesList.ToDictionary(
-                    x => x.Name.ToString());
+                List<MeshSettings1D> meshesList = GetCachedOrRead<MeshSettings1D>();
+                Dictionary<string, MeshSettings1D> meshes = meshesList.ToDictionary(x => x.Name.ToString());
 
                 HashSet<string> groupNames = ReadTags();
 
