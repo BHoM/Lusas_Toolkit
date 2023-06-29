@@ -43,7 +43,7 @@ namespace BH.Adapter.Adapters.Lusas
             double value = 0;
             Split1D splitMethod = Split1D.Automatic;
 
-#if Debug191 || Release191
+#if Debug191 || Release191 || Debug200 || Release200
             object meshTypeReference = 0;
             lusasMeshLine.getMeshDivisions(ref meshTypeReference);
             int meshType = (int)meshTypeReference;
