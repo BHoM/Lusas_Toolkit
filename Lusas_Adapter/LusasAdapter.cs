@@ -45,7 +45,7 @@ namespace BH.Adapter.Lusas
 #elif Debug19 || Release19
     public partial class LusasV19Adapter : BHoMAdapter
 #elif Debug191 || Release191
-    public partial class LusasV191Adapter
+    public partial class LusasV191Adapter : BHoMAdapter
 #elif Debug200 || Release200
     public partial class LusasV200Adapter : BHoMAdapter
 #elif Debug200 || Release200
