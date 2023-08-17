@@ -48,8 +48,6 @@ namespace BH.Adapter.Lusas
     public partial class LusasV191Adapter : BHoMAdapter
 #elif Debug200 || Release200
     public partial class LusasV200Adapter : BHoMAdapter
-#elif Debug200 || Release200
-    public partial class LusasV200Adapter : BHoMAdapter
 #else
     public partial class LusasV17Adapter : BHoMAdapter
 #endif
