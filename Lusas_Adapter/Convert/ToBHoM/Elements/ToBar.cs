@@ -162,13 +162,23 @@ namespace BH.Adapter.Adapters.Lusas
 
         private static BarRelease GetBarRelease(IFMeshLine lusasLineMesh)
         {
+            Constraint6DOF startConstraint = null;
+            Constraint6DOF endConstraint = null;
+
+#if Debug200 || Release200
+
+            startConstraint = GetConstraint(lusasLineMesh, "Start");
+            endConstraint = GetConstraint(lusasLineMesh, "End");
+#else
             object[] startReleases = lusasLineMesh.getValue("start");
             object[] endReleases = lusasLineMesh.getValue("end");
-            List<DOFType> startReleaseType = GetConstraints(startReleases);
-            List<DOFType> endReleaseType = GetConstraints(endReleases);
 
-            Constraint6DOF startConstraint = SetConstraint(startReleaseType);
-            Constraint6DOF endConstraint = SetConstraint(endReleaseType);
+            List<DOFType> startReleaseType = GetReleases(startReleases);
+            List<DOFType> endReleaseType = GetReleases(endReleases);
+
+            startConstraint = SetConstraint(startReleaseType);
+            endConstraint = SetConstraint(endReleaseType);
+#endif
 
             BarRelease barRelease = new BarRelease
             {
@@ -198,7 +208,7 @@ namespace BH.Adapter.Adapters.Lusas
 
         /***************************************************/
 
-        private static List<DOFType> GetConstraints(object[] releases)
+        private static List<DOFType> GetReleases(object[] releases)
         {
 
             List<DOFType> releaseType = new List<DOFType>();
@@ -288,6 +298,28 @@ namespace BH.Adapter.Adapters.Lusas
 
             return barFEAType;
         }
+
+        /***************************************************/
+
+        // This method is required for Lusas v200 because the default method no longer works due to API changes, so each DOF must be requested individually
+        private static Constraint6DOF GetConstraint(IFMeshLine mesh, string location)
+        {
+            List<string> freedoms = new List<string>() { "U", "V", "W", "THX", "THY", "THZ" };
+            List<DOFType> dofs = new List<DOFType>();
+
+            foreach(string freedom in freedoms)
+            {
+                if (mesh.getEndRelease(location, freedom) == 0)
+                    dofs.Add(DOFType.Free);
+                else
+                    dofs.Add(DOFType.Fixed);
+            }
+
+            Constraint6DOF constraint = SetConstraint(dofs);
+
+            return constraint;
+        }
+
 
         /***************************************************/
 
