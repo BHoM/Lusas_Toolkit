@@ -63,13 +63,15 @@ namespace BH.Adapter.Adapters.Lusas
 
             BarPointLoad barPointLoad;
 
+            LoadAxis loadAxis = lusasBarPointLoad.getValue("LoadDirection") == "Local(beam)" ? LoadAxis.Local : LoadAxis.Global;
+
             barPointLoad = Engine.Structure.Create.BarPointLoad(
                 loadcase,
                 forcePosition,
                 assignedBars,
                 forceVector,
                 momentVector,
-                LoadAxis.Global,
+                loadAxis,
                 GetName(lusasBarPointLoad));
 
             long adapterNameId = lusasBarPointLoad.getID();

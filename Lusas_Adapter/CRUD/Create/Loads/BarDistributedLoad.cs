@@ -77,7 +77,8 @@ namespace BH.Adapter.Lusas
                 axis = "projected";
                 if (barDistributedLoad.RelativePositions)
                 {
-                    Engine.Base.Compute.RecordError("Projected loads with parametric distances are not supported in Lusas.");
+                    Engine.Base.Compute.RecordError(barDistributedLoad.Name + " has not been pushed because the positions are relative and the loads " +
+                        "are projected. Lusas only supports projected BarVaryingLoad and actual distances.");
                     return null;
                 }
             }

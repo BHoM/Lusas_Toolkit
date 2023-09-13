@@ -77,10 +77,12 @@ namespace BH.Adapter.Adapters.Lusas
             double endPosition = lusasBarDistributedLoad.getValue("endDistance");
 
             bool relativePositions = lusasBarDistributedLoad.getValue("Type") == "Parametric" ? true : false;
-            LoadAxis axis = LoadAxis.Global;
-            bool projected = false;
 
-            BH.Engine.Base.Compute.RecordWarning("All BarVaryingDistributedLoads pulled from Lusas are assumed to be in global coordinates and to not be projected.");
+            string loadDirection = lusasBarDistributedLoad.getValue("LoadDirection");
+            bool projected = loadDirection == "Projected(beam)" ? true : false;
+            LoadAxis axis = loadDirection == "Local(beam)" ? LoadAxis.Local : LoadAxis.Global;
+
+            Engine.Base.Compute.RecordWarning("All BarVaryingDistributedLoads pulled from Lusas are assumed to be in global coordinates and to not be projected.");
 
             BarVaryingDistributedLoad barVarDistributedLoad;
 
