@@ -52,9 +52,8 @@ namespace BH.Adapter.Lusas
             IFAssignment lusasAssignment = m_LusasApplication.assignment();
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(barDistributedLoad.Loadcase.AdapterId<int>(typeof(LusasId)));
 
-            Engine.Base.Compute.RecordWarning(
-                barDistributedLoad.GetType().ToString() + " uses parametric distances in the Lusas_Toolkit"
-                );
+            if(!barDistributedLoad.RelativePositions)
+                Engine.Base.Compute.RecordWarning(barDistributedLoad.GetType().ToString() + " uses parametric distances in the Lusas_Toolkit");
 
             List<double> valuesAtA = new List<double> {
                     barDistributedLoad.ForceAtStart.X, barDistributedLoad.ForceAtStart.Y,barDistributedLoad.ForceAtStart.Z,
