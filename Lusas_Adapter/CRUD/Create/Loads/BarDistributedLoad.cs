@@ -78,7 +78,7 @@ namespace BH.Adapter.Lusas
                 if (barDistributedLoad.RelativePositions)
                 {
                     Engine.Base.Compute.RecordError(barDistributedLoad.Name + " has not been pushed because the positions are relative and the loads " +
-                        "are projected. Lusas only supports projected BarVaryingLoad and actual distances.");
+                        "are projected (this combination is not supported in Lusas).");
                     return null;
                 }
             }
