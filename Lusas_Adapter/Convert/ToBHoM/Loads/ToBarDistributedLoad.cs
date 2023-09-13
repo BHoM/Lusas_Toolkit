@@ -85,7 +85,7 @@ namespace BH.Adapter.Adapters.Lusas
             BarVaryingDistributedLoad barVarDistributedLoad = null;
 
 #if Debug17 || Release17 || Debug18 || Release18 || Debug19 || Release19
-            Engine.Base.Compute.RecordError("The " + barVarDistributedLoad.GetType().ToString() + " will have load axis set to Global and projected loads set" +
+            Engine.Base.Compute.RecordWarning("The " + barVarDistributedLoad.GetType().ToString() + " will have load axis set to Global and projected loads set" +
                 "to false. This bug is fixed in Lusas v19.1 and above.");
 #endif
 
