@@ -108,9 +108,9 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private List<long> GetAllIds(BarResultRequest request)
+        private List<int> GetAllIds(BarResultRequest request)
         {
-            List<long> ids = new List<long>();
+            List<int> ids = new List<int>();
             long maxIndex = d_LusasData.getLargestLineID();
 
             for (int i = 1; i < maxIndex + 1; i++)
@@ -128,9 +128,9 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private List<long> GetAllIds(MeshResultRequest request)
+        private List<int> GetAllIds(MeshResultRequest request)
         {
-            List<long> ids = new List<long>();
+            List<int> ids = new List<int>();
             long maxIndex = d_LusasData.getLargestSurfaceID();
 
             for (int i = 1; i < maxIndex + 1; i++)
