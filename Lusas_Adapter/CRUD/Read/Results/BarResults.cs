@@ -215,7 +215,7 @@ namespace BH.Adapter.Lusas
                 d_LusasData.flushScriptedResults();
             }
 
-            BH.Engine.Base.Compute.RecordWarning("Please note only axial strains will be returned when pulling BarStress results.");
+            BH.Engine.Base.Compute.RecordWarning("Please note only axial stress will be returned when pulling BarStress results.");
 
             return barStresses;
         }
