@@ -1,0 +1,10 @@
+BHoM/Lusas_Toolkit/Debug17
+BHoM/Lusas_Toolkit/Debug18
+BHoM/Lusas_Toolkit/Debug19
+BHoM/Lusas_Toolkit/Debug191
+BHoM/Lusas_Toolkit/Debug200
+BHoM/Lusas_Toolkit/Release17
+BHoM/Lusas_Toolkit/Release18
+BHoM/Lusas_Toolkit/Release19
+BHoM/Lusas_Toolkit/Release191
+BHoM/Lusas_Toolkit/Release200

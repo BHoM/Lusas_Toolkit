@@ -39,6 +39,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV19Adapter
 #elif Debug191 || Release191
     public partial class LusasV191Adapter
+#elif Debug200 || Release200
+    public partial class LusasV200Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -54,26 +56,22 @@ namespace BH.Adapter.Lusas
 
             if (!(lusasSurfaces.Count() == 0))
             {
-                IEnumerable<Edge> edgesList = ReadEdges();
-                Dictionary<string, Edge> edges = edgesList.ToDictionary(
-                    x => x.AdapterId<string>(typeof(LusasId)));
+                IEnumerable<Edge> edgesList = GetCachedOrRead<Edge>();
+                Dictionary<string, Edge> edges = edgesList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
 
                 HashSet<string> groupNames = ReadTags();
-                IEnumerable<IMaterialFragment> materialList = ReadMaterials();
-                Dictionary<string, IMaterialFragment> materials = materialList.ToDictionary(
-                    x => x.Name.ToString());
 
-                IEnumerable<ISurfaceProperty> sectionPropertiesList = Read2DProperties();
-                Dictionary<string, ISurfaceProperty> sectionProperties = sectionPropertiesList.ToDictionary(
-                    x => x.Name.ToString());
+                IEnumerable<IMaterialFragment> materialList = GetCachedOrRead<IMaterialFragment>();
+                Dictionary<string, IMaterialFragment> materials = materialList.ToDictionary(x => x.Name.ToString());
 
-                IEnumerable<Constraint4DOF> supportsList = Read4DOFConstraints();
-                Dictionary<string, Constraint4DOF> supports = supportsList.ToDictionary(
-                    x => x.Name);
+                IEnumerable<ISurfaceProperty> sectionPropertiesList = GetCachedOrRead<ISurfaceProperty>();
+                Dictionary<string, ISurfaceProperty> sectionProperties = sectionPropertiesList.ToDictionary(x => x.Name.ToString());
 
-                List<MeshSettings2D> meshesList = ReadMeshSettings2D();
-                Dictionary<string, MeshSettings2D> meshes = meshesList.ToDictionary(
-                    x => x.Name.ToString());
+                IEnumerable<Constraint4DOF> supportsList = GetCachedOrRead<Constraint4DOF>();
+                Dictionary<string, Constraint4DOF> supports = supportsList.ToDictionary(x => x.Name);
+
+                List<MeshSettings2D> meshesList = GetCachedOrRead<MeshSettings2D>();
+                Dictionary<string, MeshSettings2D> meshes = meshesList.ToDictionary(x => x.Name.ToString());
 
                 for (int i = 0; i < lusasSurfaces.Count(); i++)
                 {

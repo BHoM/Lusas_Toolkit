@@ -40,7 +40,9 @@ namespace BH.Adapter.Lusas
 #elif Debug19 || Release19
     public partial class LusasV19Adapter : BHoMAdapter
 #elif Debug191 || Release191
-    public partial class LusasV191Adapter : BHoMAdapter
+    public partial class LusasV191Adapter
+#elif Debug200 || Release200
+    public partial class LusasV200Adapter : BHoMAdapter
 #else
     public partial class LusasV17Adapter : BHoMAdapter
 #endif
@@ -106,9 +108,9 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private List<long> GetAllIds(BarResultRequest request)
+        private List<int> GetAllIds(BarResultRequest request)
         {
-            List<long> ids = new List<long>();
+            List<int> ids = new List<int>();
             long maxIndex = d_LusasData.getLargestLineID();
 
             for (int i = 1; i < maxIndex + 1; i++)
@@ -126,9 +128,9 @@ namespace BH.Adapter.Lusas
 
         /***************************************************/
 
-        private List<long> GetAllIds(MeshResultRequest request)
+        private List<int> GetAllIds(MeshResultRequest request)
         {
-            List<long> ids = new List<long>();
+            List<int> ids = new List<int>();
             long maxIndex = d_LusasData.getLargestSurfaceID();
 
             for (int i = 1; i < maxIndex + 1; i++)

@@ -50,6 +50,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV19Adapter
 #elif Debug191 || Release191
     public partial class LusasV191Adapter
+#elif Debug200 || Release200
+    public partial class LusasV200Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -340,8 +342,6 @@ namespace BH.Adapter.Lusas
         {
             if (edges != null)
             {
-                List<Point> allPoints = new List<Point>();
-
                 //Check List<Curve> is not null and Curve is not invalid (i.e. not a Line)
                 List<Edge> validEdges = edges.Where(x => CheckPropertyError(x, y => y.Curve))
                     .Where(x => !Engine.Adapters.Lusas.Query.InvalidEdge(x)).ToList();
@@ -355,19 +355,10 @@ namespace BH.Adapter.Lusas
                         distinctEdges.Add(edge);
                 }
 
-                distinctEdges = Engine.Adapters.Lusas.Query.GetDistinctEdges(distinctEdges);
-
-                foreach (Edge edge in distinctEdges)
-                {
-                    allPoints.Add(edge.Curve.IStartPoint());
-                    allPoints.Add(edge.Curve.IEndPoint());
-                }
-
-                List<Point> distinctPoints = Engine.Adapters.Lusas.Query.GetDistinctPoints(allPoints);
+                List<Point> distinctPoints = distinctEdges.Select(x => x.Curve.IStartPoint()).Union(edges.Select(x => x.Curve.IEndPoint())).ToList();
 
                 List<Point> existingPoints = ReadPoints();
-                List<Point> pointsToPush = distinctPoints.Except(
-                    existingPoints, new PointDistanceComparer()).ToList();
+                List<Point> pointsToPush = distinctPoints.Except(existingPoints, new PointDistanceComparer()).ToList();
 
                 ReduceRuntime(true);
 
@@ -378,13 +369,9 @@ namespace BH.Adapter.Lusas
 
                 ReduceRuntime(false);
 
-                List<IFPoint> lusasPoints = ReadLusasPoints();
-                List<Point> points = new List<Point>();
+                List<Point> points = ReadPoints();
 
-                foreach (IFPoint point in lusasPoints)
-                {
-                    points.Add(Adapters.Lusas.Convert.ToPoint(point));
-                }
+                List<IFPoint> lusasPoints = ReadLusasPoints();
 
                 CreateTags(distinctEdges);
 

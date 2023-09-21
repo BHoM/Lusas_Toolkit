@@ -36,6 +36,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV19Adapter
 #elif Debug191 || Release191
     public partial class LusasV191Adapter
+#elif Debug200 || Release200
+    public partial class LusasV200Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -55,9 +57,8 @@ namespace BH.Adapter.Lusas
 
             if (!(lusasDistributedLoads.Count() == 0))
             {
-                List<Bar> barsList = ReadBars();
-                Dictionary<string, Bar> bars = barsList.ToDictionary(
-                    x => x.AdapterId<string>(typeof(LusasId)));
+                List<Bar> barsList = GetCachedOrRead<Bar>();
+                Dictionary<string, Bar> bars = barsList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
 

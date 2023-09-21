@@ -36,6 +36,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV19Adapter
 #elif Debug191 || Release191
     public partial class LusasV191Adapter
+#elif Debug200 || Release200
+    public partial class LusasV200Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -213,7 +215,7 @@ namespace BH.Adapter.Lusas
                 d_LusasData.flushScriptedResults();
             }
 
-            BH.Engine.Base.Compute.RecordWarning("Please note only axial strains will be returned when pulling BarStress results.");
+            BH.Engine.Base.Compute.RecordWarning("Please note only axial stress will be returned when pulling BarStress results.");
 
             return barStresses;
         }

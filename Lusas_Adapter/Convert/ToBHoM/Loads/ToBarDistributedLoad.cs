@@ -77,12 +77,12 @@ namespace BH.Adapter.Adapters.Lusas
             double endPosition = lusasBarDistributedLoad.getValue("endDistance");
 
             bool relativePositions = lusasBarDistributedLoad.getValue("Type") == "Parametric" ? true : false;
-            LoadAxis axis = LoadAxis.Global;
-            bool projected = false;
 
-            BH.Engine.Base.Compute.RecordWarning("All BarVaryingDistributedLoads pulled from Lusas are assumed to be in global coordinates and to not be projected.");
+            string loadDirection = lusasBarDistributedLoad.getValue("LoadDirection");
+            bool projected = loadDirection == "Projected(beam)" ? true : false;
+            LoadAxis axis = loadDirection == "Local(beam)" ? LoadAxis.Local : LoadAxis.Global;
 
-            BarVaryingDistributedLoad barVarDistributedLoad;
+            BarVaryingDistributedLoad barVarDistributedLoad = null;
 
             barVarDistributedLoad = Engine.Structure.Create.BarVaryingDistributedLoad(
                 loadcase,
@@ -97,6 +97,11 @@ namespace BH.Adapter.Adapters.Lusas
                 axis,
                 projected,
                 GetName(lusasBarDistributedLoad));
+
+#if Debug17 || Release17 || Debug18 || Release18 || Debug19 || Release19
+            Engine.Base.Compute.RecordWarning("The " + barVarDistributedLoad.GetType().ToString() + " will have load axis set to Global and projected loads set" +
+                " to false. This bug is fixed in Lusas v19.1 and above.");
+#endif
 
             if (barVarDistributedLoad == null)
                 return null;

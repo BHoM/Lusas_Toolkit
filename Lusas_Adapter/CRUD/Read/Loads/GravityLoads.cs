@@ -36,6 +36,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV19Adapter
 #elif Debug191 || Release191
     public partial class LusasV191Adapter
+#elif Debug200 || Release200
+    public partial class LusasV200Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -51,15 +53,12 @@ namespace BH.Adapter.Lusas
 
             if (!(lusasBodyForces.Count() == 0))
             {
-                List<Node> nodesList = ReadNodes();
-                List<Bar> barsList = ReadBars();
-                List<Panel> panelsList = ReadPanels();
-                Dictionary<string, Node> nodes = nodesList.ToDictionary(
-                    x => x.AdapterId<string>(typeof(LusasId)));
-                Dictionary<string, Bar> bars = barsList.ToDictionary(
-                    x => x.AdapterId<string>(typeof(LusasId)));
-                Dictionary<string, Panel> panels = panelsList.ToDictionary(
-                    x => x.AdapterId<string>(typeof(LusasId)));
+                List<Node> nodeList = GetCachedOrRead<Node>();
+                Dictionary<string, Node> nodes = nodeList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
+                List<Bar> barsList = GetCachedOrRead<Bar>();
+                Dictionary<string, Bar> bars = barsList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
+                List<Panel> panelsList = GetCachedOrRead<Panel>();
+                Dictionary<string, Panel> panels = panelsList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
 
                 List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
 
