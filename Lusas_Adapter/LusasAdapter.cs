@@ -131,6 +131,11 @@ namespace BH.Adapter.Lusas
                     {
                         throw new Exception("An exception has been flagged by Lusas, it is likely the file is from a higher version of Lusas than the adapter being used.");
                     }
+
+                    if (lusasConfig != null)
+                    {
+                        d_LusasData.getOptions().setDouble("TOLMRG", lusasConfig.MergeTolerance);
+                    }
                 }
             }
         }
