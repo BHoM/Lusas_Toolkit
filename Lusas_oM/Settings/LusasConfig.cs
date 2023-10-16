@@ -32,6 +32,8 @@ namespace BH.oM.Adapters.Lusas
 
         public virtual LibrarySettings LibrarySettings { get; set; } = new LibrarySettings();
 
+        public virtual double MergingTolerance { get; set; } = 1.0e-6;
+
         /***************************************************/
     }
 }
