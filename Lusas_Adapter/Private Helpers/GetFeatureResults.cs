@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using System;
 using Lusas.LPI;
+using System.ComponentModel;
 
 namespace BH.Adapter.Lusas
 {
@@ -45,6 +46,7 @@ namespace BH.Adapter.Lusas
         private Dictionary<string, double> GetFeatureResults(List<string> components, Dictionary<string, IFResultsComponentSet> resultsSets, IFUnitSet unitSet, int id, string suffix, int resultType = 6)
         {
             Dictionary<string, double> featureResults = new Dictionary<string, double>();
+            bool recordedWarning = false;
             IFResultsComponentSet resultsSet = null;
 
             foreach (string component in components)
@@ -99,10 +101,15 @@ namespace BH.Adapter.Lusas
                 if (!(resultsSet.isValidValue(featureResult)))
                 {
                     featureResult = 0;
-                    Engine.Base.Compute.RecordWarning($"{suffix}{id} {component} is an invalid result and will be set to zero");
+                    recordedWarning = true;
                 }
 
                 featureResults.Add(component, featureResult);
+            }
+
+            if (recordedWarning)
+            { 
+                Engine.Base.Compute.RecordWarning($"Invalid results (i.e. where DOF is released) will be set to zero");
             }
 
             return featureResults;
