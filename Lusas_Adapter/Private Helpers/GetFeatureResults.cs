@@ -23,7 +23,6 @@
 using System.Collections.Generic;
 using System;
 using Lusas.LPI;
-using System.ComponentModel;
 
 namespace BH.Adapter.Lusas
 {
