@@ -45,7 +45,7 @@ namespace BH.Adapter.Lusas
         private Dictionary<string, double> GetFeatureResults(List<string> components, Dictionary<string, IFResultsComponentSet> resultsSets, IFUnitSet unitSet, int id, string suffix, int resultType = 6)
         {
             Dictionary<string, double> featureResults = new Dictionary<string, double>();
-            bool recordedWarning = false;
+            bool invalidResult = false;
             IFResultsComponentSet resultsSet = null;
 
             foreach (string component in components)
