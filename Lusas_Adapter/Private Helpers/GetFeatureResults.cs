@@ -108,7 +108,7 @@ namespace BH.Adapter.Lusas
 
             if (recordedWarning)
             { 
-                Engine.Base.Compute.RecordWarning($"Invalid results (i.e. where DOF is released) will be set to zero");
+                Engine.Base.Compute.RecordWarning($"Invalid results (i.e. where DOF is released) will be set to zero.");
             }
 
             return featureResults;
