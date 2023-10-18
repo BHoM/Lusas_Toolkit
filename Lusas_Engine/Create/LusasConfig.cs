@@ -21,6 +21,7 @@
  */
 
 using BH.oM.Adapters.Lusas;
+using BH.oM.Geometry;
 
 namespace BH.Engine.Adapters.Lusas
 {
@@ -30,7 +31,7 @@ namespace BH.Engine.Adapters.Lusas
         /****           Public Constructors             ****/
         /***************************************************/
 
-        public static LusasConfig LusasConfig(LibrarySettings librarySettings = null, double mergeTolerance = double.NaN)
+        public static LusasConfig LusasConfig(LibrarySettings librarySettings = null, double mergeTolerance = Tolerance.Distance)
         {
             LusasConfig lusasConfig = new LusasConfig();
             if (librarySettings != null)
