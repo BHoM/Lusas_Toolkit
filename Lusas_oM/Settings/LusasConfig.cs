@@ -21,6 +21,9 @@
  */
 
 using BH.oM.Base;
+using System.ComponentModel;
+using Geometry_oM;
+using BH.oM.Geometry;
 
 namespace BH.oM.Adapters.Lusas
 {
@@ -32,7 +35,8 @@ namespace BH.oM.Adapters.Lusas
 
         public virtual LibrarySettings LibrarySettings { get; set; } = new LibrarySettings();
 
-        public virtual double MergeTolerance { get; set; } = 1.0e-6;
+        [Description("Sets the merging tolerance in Lusas and the distance comparers used by the Lusas_Adapter.")]
+        public virtual double MergeTolerance { get; set; } = Tolerance.Distance;
 
         /***************************************************/
     }
