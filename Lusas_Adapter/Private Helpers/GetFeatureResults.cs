@@ -100,13 +100,13 @@ namespace BH.Adapter.Lusas
                 if (!(resultsSet.isValidValue(featureResult)))
                 {
                     featureResult = 0;
-                    recordedWarning = true;
+                    invalidResult = true;
                 }
 
                 featureResults.Add(component, featureResult);
             }
 
-            if (recordedWarning)
+            if (invalidResult)
             { 
                 Engine.Base.Compute.RecordWarning($"Invalid results (i.e. where DOF is released) will be set to zero.");
             }
