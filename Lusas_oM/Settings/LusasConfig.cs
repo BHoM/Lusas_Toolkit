@@ -22,7 +22,6 @@
 
 using BH.oM.Base;
 using System.ComponentModel;
-using Geometry_oM;
 using BH.oM.Geometry;
 
 namespace BH.oM.Adapters.Lusas
