@@ -45,6 +45,7 @@ namespace BH.Adapter.Lusas
         private Dictionary<string, double> GetFeatureResults(List<string> components, Dictionary<string, IFResultsComponentSet> resultsSets, IFUnitSet unitSet, int id, string suffix, int resultType = 6)
         {
             Dictionary<string, double> featureResults = new Dictionary<string, double>();
+            bool invalidResult = false;
             IFResultsComponentSet resultsSet = null;
 
             foreach (string component in components)
@@ -99,10 +100,15 @@ namespace BH.Adapter.Lusas
                 if (!(resultsSet.isValidValue(featureResult)))
                 {
                     featureResult = 0;
-                    Engine.Base.Compute.RecordWarning($"{suffix}{id} {component} is an invalid result and will be set to zero");
+                    invalidResult = true;
                 }
 
                 featureResults.Add(component, featureResult);
+            }
+
+            if (invalidResult)
+            { 
+                Engine.Base.Compute.RecordWarning($"Invalid results (i.e. where DOF is released) will be set to zero.");
             }
 
             return featureResults;
