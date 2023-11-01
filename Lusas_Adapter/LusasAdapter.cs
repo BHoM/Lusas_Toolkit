@@ -134,7 +134,8 @@ namespace BH.Adapter.Lusas
 
                     if (lusasConfig != null)
                     {
-                        d_LusasData.getOptions().setDouble("TOLMRG", lusasConfig.MergeTolerance);
+                        m_mergeTolerance = lusasConfig.MergeTolerance;
+                        d_LusasData.getOptions().setDouble("TOLMRG", m_mergeTolerance);
                     }
                 }
             }
@@ -156,6 +157,7 @@ namespace BH.Adapter.Lusas
         //Add any comlink object as a private field here, example named:
 
         private string m_directory;
+        public double m_mergeTolerance;
         public LusasWinApp m_LusasApplication;
         public IFDatabase d_LusasData;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
