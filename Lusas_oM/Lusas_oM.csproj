@@ -124,6 +124,11 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Adapter_oM">
+      <HintPath>$(ProgramData)\BHoM\Assemblies\Adapter_oM.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="BHoM">
       <HintPath>$(ProgramData)\BHoM\Assemblies\BHoM.dll</HintPath>
       <Private>False</Private>
@@ -137,7 +142,7 @@
     <Reference Include="Geometry_oM">
       <HintPath>$(ProgramData)\BHoM\Assemblies\Geometry_oM.dll</HintPath>
       <Private>False</Private>
-      <SpecificVersion>False</SpecificVersion>    
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -154,7 +159,7 @@
     <Compile Include="Enum\Split2D.cs" />
     <Compile Include="Fragments\LusasId.cs" />
     <Compile Include="Settings\LibrarySettings.cs" />
-    <Compile Include="Settings\LusasConfig.cs" />
+    <Compile Include="Settings\LusasSettings.cs" />
     <Compile Include="Fragments\MeshSettings2D.cs" />
     <Compile Include="Fragments\MeshSettings1D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

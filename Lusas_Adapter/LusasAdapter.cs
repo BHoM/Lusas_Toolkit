@@ -62,7 +62,7 @@ namespace BH.Adapter.Lusas
 #elif Debug191 || Release191
         public LusasV191Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
 #elif Debug200 || Release200
-        public LusasV200Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
+        public LusasV200Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #else
         public LusasV17Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
 #endif
@@ -132,9 +132,9 @@ namespace BH.Adapter.Lusas
                         throw new Exception("An exception has been flagged by Lusas, it is likely the file is from a higher version of Lusas than the adapter being used.");
                     }
 
-                    if (lusasConfig != null && !double.IsNaN(lusasConfig.MergeTolerance))
+                    if (lusasSettings != null && !double.IsNaN(lusasSettings.MergeTolerance))
                     {
-                        m_mergeTolerance = lusasConfig.MergeTolerance;
+                        m_mergeTolerance = lusasSettings.MergeTolerance;
                         d_LusasData.getOptions().setDouble("TOLMRG", m_mergeTolerance);
                     }
                 }
@@ -161,7 +161,7 @@ namespace BH.Adapter.Lusas
         public LusasWinApp m_LusasApplication;
         public IFDatabase d_LusasData;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
-        public LusasConfig lusasConfig;
+        public LusasSettings lusasConfig;
 
 
         /***************************************************/

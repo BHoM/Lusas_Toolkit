@@ -20,28 +20,23 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Adapters.Lusas;
-using BH.oM.Geometry;
+using BH.oM.Base;
+using System.ComponentModel;
+using BH.oM.Adapter;
 
-namespace BH.Engine.Adapters.Lusas
+namespace BH.oM.Adapters.Lusas
 {
-    public static partial class Create
+    public class LusasSettings : AdapterSettings
     {
         /***************************************************/
-        /****           Public Constructors             ****/
+        /****            Public Properties              ****/
         /***************************************************/
+ 
+        [Description("Sets the merging tolerance in Lusas and the distance comparers used by the Lusas_Adapter.")]
+        public virtual double MergeTolerance { get; set; } = double.NaN;
 
-        public static LusasConfig LusasConfig(double mergeTolerance, LibrarySettings librarySettings = null)
-        {
-            LusasConfig lusasConfig = new LusasConfig();
+        public virtual LibrarySettings LibrarySettings { get; set; } = new LibrarySettings();
 
-            lusasConfig.MergeTolerance = mergeTolerance;
-
-            if (librarySettings != null)
-                lusasConfig.LibrarySettings = librarySettings;
-
-            return lusasConfig;
-        }
         /***************************************************/
     }
 }
