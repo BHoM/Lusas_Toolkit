@@ -21,6 +21,6 @@
   "MessageForDeleted": {
   },
   "MessageForNoUpgrade": {
-    "BH.oM.Adapters.Lusas.LusasConfig" : "This class has been renamed to LusasSettings and changed to inherit from AdaperSettings. Please replace this component with LusasSettings. For further assistance, please raise an issue on https://github.com/BHoM/Lusas_Toolkit/issues",
+    "BH.oM.Adapters.Lusas.LusasConfig" : "This class has been renamed to LusasSettings and changed to inherit from AdaperSettings. Please replace this component with LusasSettings. For further assistance, please raise an issue on https://github.com/BHoM/Lusas_Toolkit/issues"
   }
 }

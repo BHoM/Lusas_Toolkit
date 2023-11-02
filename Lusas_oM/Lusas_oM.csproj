@@ -167,6 +167,9 @@
   <ItemGroup>
     <Folder Include="Structural\Properties\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Versioning_63.json" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
