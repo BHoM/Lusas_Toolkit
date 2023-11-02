@@ -71,7 +71,8 @@ namespace BH.Adapter.Lusas
             d_LusasData.setVerticalDir("Z");
             m_LusasApplication.fileOpen("%PerMachineAppDataPlatform%\\config\\AfterNewModel");
             d_LusasData.setAnalysisCategory("3D");
-            d_LusasData.getOptions().setDouble("TOLMRG", m_mergeTolerance);
+            if (!double.IsNaN(m_mergeTolerance))
+                d_LusasData.getOptions().setDouble("TOLMRG", m_mergeTolerance);
 
             string fileName = $"{m_directory}\\sections.csv";
             File.Delete(fileName);
@@ -112,7 +113,8 @@ namespace BH.Adapter.Lusas
             {
                 m_LusasApplication.openDatabase(command.FileName);
                 d_LusasData = m_LusasApplication.getDatabase();
-                d_LusasData.getOptions().setDouble("TOLMRG", m_mergeTolerance);
+                if (!double.IsNaN(m_mergeTolerance))
+                    d_LusasData.getOptions().setDouble("TOLMRG", m_mergeTolerance);
                 m_directory = command.FileName;
 
                 return true;

@@ -132,7 +132,7 @@ namespace BH.Adapter.Lusas
                         throw new Exception("An exception has been flagged by Lusas, it is likely the file is from a higher version of Lusas than the adapter being used.");
                     }
 
-                    if (lusasConfig != null && lusasConfig.MergeTolerance != double.NaN)
+                    if (lusasConfig != null && !double.IsNaN(lusasConfig.MergeTolerance))
                     {
                         m_mergeTolerance = lusasConfig.MergeTolerance;
                         d_LusasData.getOptions().setDouble("TOLMRG", m_mergeTolerance);
@@ -157,7 +157,7 @@ namespace BH.Adapter.Lusas
         //Add any comlink object as a private field here, example named:
 
         private string m_directory;
-        public double m_mergeTolerance = Tolerance.Distance;
+        public double m_mergeTolerance = double.NaN;
         public LusasWinApp m_LusasApplication;
         public IFDatabase d_LusasData;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
