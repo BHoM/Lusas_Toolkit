@@ -1,0 +1,26 @@
+{
+  "Namespace": {
+    "ToNew": {
+    },
+    "ToOld": {
+    }
+  },
+  "Type": {
+    "ToNew": {
+
+    },
+    "ToOld": {
+    }
+  },
+  "Property": {
+    "ToNew": {
+    },
+    "ToOld": {
+    }
+  },
+  "MessageForDeleted": {
+  },
+  "MessageForNoUpgrade": {
+    "BH.oM.Adapters.Lusas.Create.LusasConfig(BH.oM.Adapters.Lusas.LusasConfig)" : "This method is not available any more. Replace with default constructor for LusasSettings which has replaced LusasConfig. For further assistance, please raise an issue on https://github.com/BHoM/Lusas_Toolkit/issues"
+  }
+}

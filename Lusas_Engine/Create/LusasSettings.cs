@@ -21,7 +21,6 @@
  */
 
 using BH.oM.Adapters.Lusas;
-using BH.oM.Geometry;
 
 namespace BH.Engine.Adapters.Lusas
 {
