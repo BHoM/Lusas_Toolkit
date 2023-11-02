@@ -113,7 +113,6 @@ namespace BH.Adapter.Lusas
                 m_LusasApplication.openDatabase(command.FileName);
                 d_LusasData = m_LusasApplication.getDatabase();
                 d_LusasData.getOptions().setDouble("TOLMRG", m_mergeTolerance);
-
                 m_directory = command.FileName;
 
                 return true;

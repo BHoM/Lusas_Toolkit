@@ -31,14 +31,14 @@ namespace BH.Engine.Adapters.Lusas
         /****           Public Constructors             ****/
         /***************************************************/
 
-        public static LusasConfig LusasConfig(LibrarySettings librarySettings = null, double mergeTolerance = Tolerance.Distance)
+        public static LusasConfig LusasConfig(double mergeTolerance, LibrarySettings librarySettings = null)
         {
             LusasConfig lusasConfig = new LusasConfig();
+
+            lusasConfig.MergeTolerance = mergeTolerance;
+
             if (librarySettings != null)
                 lusasConfig.LibrarySettings = librarySettings;
-
-            if (mergeTolerance != double.NaN)
-                lusasConfig.MergeTolerance = mergeTolerance;
 
             return lusasConfig;
         }

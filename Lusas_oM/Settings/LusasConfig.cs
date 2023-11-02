@@ -31,11 +31,11 @@ namespace BH.oM.Adapters.Lusas
         /***************************************************/
         /****            Public Properties              ****/
         /***************************************************/
+ 
+        [Description("Sets the merging tolerance in Lusas and the distance comparers used by the Lusas_Adapter.")]
+        public virtual double MergeTolerance { get; set; }
 
         public virtual LibrarySettings LibrarySettings { get; set; } = new LibrarySettings();
-
-        [Description("Sets the merging tolerance in Lusas and the distance comparers used by the Lusas_Adapter.")]
-        public virtual double MergeTolerance { get; set; } = Tolerance.Distance;
 
         /***************************************************/
     }
