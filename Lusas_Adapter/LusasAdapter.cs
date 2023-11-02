@@ -56,15 +56,15 @@ namespace BH.Adapter.Lusas
         /**** Constructors                              ****/
         /***************************************************/
 #if Debug18 || Release18
-        public LusasV18Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
+        public LusasV18Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #elif Debug19 || Release19
-        public LusasV19Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
+        public LusasV19Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #elif Debug191 || Release191
-        public LusasV191Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
+        public LusasV191Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #elif Debug200 || Release200
         public LusasV200Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #else
-        public LusasV17Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
+        public LusasV17Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #endif
         {
             if (active)
@@ -161,7 +161,7 @@ namespace BH.Adapter.Lusas
         public LusasWinApp m_LusasApplication;
         public IFDatabase d_LusasData;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
-        public LusasSettings lusasConfig;
+        public LusasSettings lusasSettings;
 
 
         /***************************************************/
