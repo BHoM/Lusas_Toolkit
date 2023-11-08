@@ -203,9 +203,6 @@
       <Name>Lusas_oM</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Versioning_63.json" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition="" />
   <PropertyGroup>
     <PostBuildEvent>
