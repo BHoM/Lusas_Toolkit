@@ -31,7 +31,7 @@ namespace BH.Engine.Adapters.Lusas
         /****           Public Constructors             ****/
         /***************************************************/
 
-        [PreviousVersion("6.3", "BH.Engine.Adaters.Lusas.Create.LusasConfig(BH.oM.Adapters.Lusas.LibrarySettings)")]
+        [PreviousVersion("7.0", "BH.Engine.Adapters.Lusas.Create.LusasConfig(BH.oM.Adapters.Lusas.LibrarySettings)")]
         public static LusasSettings LusasSettings(double mergeTolerance, LibrarySettings librarySettings = null)
         {
             LusasSettings lusasSettings = new LusasSettings();

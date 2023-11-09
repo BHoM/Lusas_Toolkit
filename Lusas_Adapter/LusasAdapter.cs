@@ -57,19 +57,19 @@ namespace BH.Adapter.Lusas
         /**** Constructors                              ****/
         /***************************************************/
 #if Debug18 || Release18
-        [PreviousVersion("6.3", "BH.Adapter.Lusas.LusasV18Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
+        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV18Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
         public LusasV18Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #elif Debug19 || Release19
-        [PreviousVersion("6.3", "BH.Adapter.Lusas.LusasV19Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
+        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV19Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
         public LusasV19Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #elif Debug191 || Release191
-        [PreviousVersion("6.3", "BH.Adapter.Lusas.LusasV191Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
+        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV191Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
         public LusasV191Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #elif Debug200 || Release200
-        [PreviousVersion("6.3", "BH.Adapter.Lusas.LusasV200Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
+        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV200Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
         public LusasV200Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #else
-        [PreviousVersion("6.3", "BH.Adapter.Lusas.LusasV17Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
+        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV17Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
         public LusasV17Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #endif
         {
