@@ -18,7 +18,7 @@
     }
   },
   "MessageForDeleted": {
-    "BH.oM.Adapters.Lusas.LusasConfig": "This object has been replaced by the LusasSettings object. For further assistance, please raise an issue on https://github.com/BHoM/Lusas_Toolkit/issues."
+    "BH.oM.Adapters.Lusas.LusasConfig": "This object has been replaced by the LusasSettings object. For further information, please see the pull request associated with the change: https://github.com/BHoM/Lusas_Toolkit/pull/374."
   },
   "MessageForNoUpgrade": {
   }

@@ -22,6 +22,7 @@
 
 using BH.oM.Adapters.Lusas;
 using BH.oM.Base.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.Adapters.Lusas
 {
@@ -32,6 +33,10 @@ namespace BH.Engine.Adapters.Lusas
         /***************************************************/
 
         [PreviousVersion("7.0", "BH.Engine.Adapters.Lusas.Create.LusasConfig(BH.oM.Adapters.Lusas.LibrarySettings)")]
+        [Description("Lusas adapter settings.")]
+        [Input("mergeTolerance", "Sets the merging tolerance used in Lusas.")]
+        [Input("librarySettings", "Sets the library settings.")]
+        [Output("Lusas specific adapter settings to be used by the adapter.")]
         public static LusasSettings LusasSettings(double mergeTolerance, LibrarySettings librarySettings = null)
         {
             LusasSettings lusasSettings = new LusasSettings();

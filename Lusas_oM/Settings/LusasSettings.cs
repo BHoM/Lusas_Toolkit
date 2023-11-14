@@ -32,9 +32,10 @@ namespace BH.oM.Adapters.Lusas
         /****            Public Properties              ****/
         /***************************************************/
  
-        [Description("Sets the merging tolerance in Lusas and the distance comparers used by the Lusas_Adapter.")]
+        [Description("Sets the merging tolerance used in Lusas.")]
         public virtual double MergeTolerance { get; set; } = double.NaN;
 
+        [Description("Sets the library settings.")]
         public virtual LibrarySettings LibrarySettings { get; set; } = new LibrarySettings();
 
         /***************************************************/
