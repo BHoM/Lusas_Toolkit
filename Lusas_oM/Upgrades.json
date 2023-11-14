@@ -1,0 +1,40 @@
+{
+  "Namespace": {
+    "ToNew": {
+      
+    },
+    "ToOld": {
+      
+    }
+  },
+  "Type": {
+    "ToNew": {
+
+    },
+    "ToOld": {
+      
+    }
+  },
+  "Method": {
+    "ToNew": {
+
+      },
+    "ToOld": {
+      
+    }
+  },
+  "Property": {
+    "ToNew": {
+
+    },
+    "ToOld": {
+
+    }
+  },
+  "MessageForDeleted": {
+    "BH.oM.Adapters.Lusas.LusasConfig": "This objects has been replaced by the LusasSettings object. For further assistance, please raise an issue on https://github.com/BHoM/Lusas_Toolkit/issues."
+  },
+  "MessageForNoUpgrade": {
+   
+  }
+}
