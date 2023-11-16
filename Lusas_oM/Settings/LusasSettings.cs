@@ -21,15 +21,21 @@
  */
 
 using BH.oM.Base;
+using System.ComponentModel;
+using BH.oM.Adapter;
 
 namespace BH.oM.Adapters.Lusas
 {
-    public class LusasConfig : BHoMObject
+    public class LusasSettings : AdapterSettings
     {
         /***************************************************/
         /****            Public Properties              ****/
         /***************************************************/
+ 
+        [Description("Sets the merging tolerance used in Lusas.")]
+        public virtual double MergeTolerance { get; set; } = double.NaN;
 
+        [Description("Sets the library settings.")]
         public virtual LibrarySettings LibrarySettings { get; set; } = new LibrarySettings();
 
         /***************************************************/

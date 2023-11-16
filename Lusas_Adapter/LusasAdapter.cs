@@ -37,6 +37,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using BH.oM.Base.Attributes;
 
 namespace BH.Adapter.Lusas
 {
@@ -56,15 +57,20 @@ namespace BH.Adapter.Lusas
         /**** Constructors                              ****/
         /***************************************************/
 #if Debug18 || Release18
-        public LusasV18Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
+        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV18Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
+        public LusasV18Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #elif Debug19 || Release19
-        public LusasV19Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
+        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV19Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
+        public LusasV19Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #elif Debug191 || Release191
-        public LusasV191Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
+        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV191Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
+        public LusasV191Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #elif Debug200 || Release200
-        public LusasV200Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
+        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV200Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
+        public LusasV200Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #else
-        public LusasV17Adapter(string filePath, LusasConfig lusasConfig = null, bool active = false)
+        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV17Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
+        public LusasV17Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #endif
         {
             if (active)
@@ -131,6 +137,12 @@ namespace BH.Adapter.Lusas
                     {
                         throw new Exception("An exception has been flagged by Lusas, it is likely the file is from a higher version of Lusas than the adapter being used.");
                     }
+
+                    if (lusasSettings != null && !double.IsNaN(lusasSettings.MergeTolerance))
+                    {
+                        m_mergeTolerance = lusasSettings.MergeTolerance;
+                        d_LusasData.getOptions().setDouble("TOLMRG", m_mergeTolerance);
+                    }
                 }
             }
         }
@@ -151,10 +163,11 @@ namespace BH.Adapter.Lusas
         //Add any comlink object as a private field here, example named:
 
         private string m_directory;
+        public double m_mergeTolerance = double.NaN;
         public LusasWinApp m_LusasApplication;
         public IFDatabase d_LusasData;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
-        public LusasConfig lusasConfig;
+        public LusasSettings lusasSettings;
 
 
         /***************************************************/
