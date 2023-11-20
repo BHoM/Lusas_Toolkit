@@ -32,6 +32,7 @@ using BH.oM.Structure.Requests;
 using System.Linq;
 using BH.Engine.Adapters.Lusas;
 using BH.oM.Adapters.Lusas;
+using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
@@ -176,6 +177,14 @@ namespace BH.Adapter.Lusas
                         caseNums.Add(System.Convert.ToInt32(lCase.Item2.Number));
                     }
                     caseNums.Add((lComb as LoadCombination).AdapterId<int>(typeof(LusasId)));
+                }
+            }
+
+            else if (cases.Count == 0)
+            {
+                for (int i = 1; i <= d_LusasData.getLargestLoadsetID(); i++)
+                {
+                    caseNums.Add(i);
                 }
             }
 
