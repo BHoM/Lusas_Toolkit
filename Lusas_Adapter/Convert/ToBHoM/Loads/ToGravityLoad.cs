@@ -48,10 +48,15 @@ namespace BH.Adapter.Adapters.Lusas
             Loadcase loadcase = ToLoadcase(assignedLoadcase);
             Vector gravityVector = new Vector
             {
-                X = lusasGravityLoad.getValue("accX"),
-                Y = lusasGravityLoad.getValue("accY"),
-                Z = lusasGravityLoad.getValue("accZ")
+                X = lusasGravityLoad.getValue("accX") / 9.806,
+                Y = lusasGravityLoad.getValue("accY") / 9.806,
+                Z = lusasGravityLoad.getValue("accZ") / 9.806
             };
+
+            if (!(9.81 < lusasGravityLoad.getValue("accX") < 10.0 || 9.81 < lusasGravityLoad.getValue("accY") < 10.0 || 9.81 < lusasGravityLoad.getValue("accZ") < 10.0))
+            {
+                Engine.Base.Compute.RecordWarning($"The the gravitational acceleration of {lusasGravityLoad.getName()} is outside of the range 9.81 to 10.0.");
+            }
 
             IEnumerable<BHoMObject> assignedObjects = GetGeometryAssignments(
                 lusasAssignments, nodes, bars, panels);
