@@ -56,13 +56,13 @@ namespace BH.Adapter.Lusas
             else
             {
                 lusasGravityLoad = d_LusasData.createLoadingBody(gravityLoad.Name);
-                lusasGravityLoad.setBody(gravityLoad.GravityDirection.X * 9.806, gravityLoad.GravityDirection.Y * 9.806, gravityLoad.GravityDirection.Z * 9.806);
+                lusasGravityLoad.setBody(gravityLoad.GravityDirection.X * 9.80665, gravityLoad.GravityDirection.Y * 9.80665, gravityLoad.GravityDirection.Z * 9.80665);
                 if (!
-                    ((9.81 < lusasGravityLoad.getValue("accX") && lusasGravityLoad.getValue("accX") < 10.0 || lusasGravityLoad.getValue("accX") == 0.0)
-                    || (9.81 < lusasGravityLoad.getValue("accY") && lusasGravityLoad.getValue("accY") < 10.0 || lusasGravityLoad.getValue("accY") == 0.0)
-                    || (9.81 < lusasGravityLoad.getValue("accZ") && lusasGravityLoad.getValue("accZ") < 10.0 || lusasGravityLoad.getValue("accZ") == 0.0)))
+                    ((9.8 < lusasGravityLoad.getValue("accX") && lusasGravityLoad.getValue("accX") < 10.0 || lusasGravityLoad.getValue("accX") == 0.0)
+                    || (9.8 < lusasGravityLoad.getValue("accY") && lusasGravityLoad.getValue("accY") < 10.0 || lusasGravityLoad.getValue("accY") == 0.0)
+                    || (9.8 < lusasGravityLoad.getValue("accZ") && lusasGravityLoad.getValue("accZ") < 10.0 || lusasGravityLoad.getValue("accZ") == 0.0)))
                 {
-                    Engine.Base.Compute.RecordWarning($"The the gravitational acceleration of {lusasGravityLoad.getName()} is outside of the range 9.81 to 10.0 m/s^2.");
+                    Engine.Base.Compute.RecordWarning($"The the gravitational acceleration of {lusasGravityLoad.getName()} is outside of the range 9.8 to 10.0 m/s^2.");
                 }
             }
 
