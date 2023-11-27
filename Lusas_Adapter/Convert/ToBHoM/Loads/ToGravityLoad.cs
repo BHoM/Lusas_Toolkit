@@ -53,9 +53,12 @@ namespace BH.Adapter.Adapters.Lusas
                 Z = lusasGravityLoad.getValue("accZ") / 9.806
             };
 
-            if (!(9.81 < lusasGravityLoad.getValue("accX") < 10.0 || 9.81 < lusasGravityLoad.getValue("accY") < 10.0 || 9.81 < lusasGravityLoad.getValue("accZ") < 10.0))
+            if (!
+                    ((9.81 < lusasGravityLoad.getValue("accX") && lusasGravityLoad.getValue("accX") < 10.0 || lusasGravityLoad.getValue("accX") == 0.0)
+                    || (9.81 < lusasGravityLoad.getValue("accY") && lusasGravityLoad.getValue("accY") < 10.0 || lusasGravityLoad.getValue("accY") == 0.0)
+                    || (9.81 < lusasGravityLoad.getValue("accZ") && lusasGravityLoad.getValue("accZ") < 10.0 || lusasGravityLoad.getValue("accZ") == 0.0)))
             {
-                Engine.Base.Compute.RecordWarning($"The the gravitational acceleration of {lusasGravityLoad.getName()} is outside of the range 9.81 to 10.0.");
+                Engine.Base.Compute.RecordWarning($"The the gravitational acceleration of {lusasGravityLoad.getName()} outside of the range 9.81 to 10.0.");
             }
 
             IEnumerable<BHoMObject> assignedObjects = GetGeometryAssignments(
