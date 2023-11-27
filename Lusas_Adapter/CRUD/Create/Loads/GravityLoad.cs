@@ -28,7 +28,8 @@ using BH.oM.Geometry;
 
 namespace BH.Adapter.Lusas
 {
-#if Debug18 || Release18    public partial class LusasV18Adapter
+#if Debug18 || Release18
+    public partial class LusasV18Adapter
 #elif Debug19 || Release19
     public partial class LusasV19Adapter
 #elif Debug191 || Release191
@@ -54,12 +55,11 @@ namespace BH.Adapter.Lusas
             }
             else
             {
-                double g = 9.8065;
                 lusasGravityLoad = d_LusasData.createLoadingBody(gravityLoad.Name);
                 lusasGravityLoad.setBody(gravityLoad.GravityDirection.X * 9.806, gravityLoad.GravityDirection.Y * 9.806, gravityLoad.GravityDirection.Z * 9.806);
                 if (!(9.81 < lusasGravityLoad.getValue("accX") < 10.0 || 9.81 < lusasGravityLoad.getValue("accY") < 10.0 || 9.81 < lusasGravityLoad.getValue("accZ") < 10.0))
-                {       
-                    Engine.Base.Compute.RecordWarning($"The the gravitational acceleration of {lusasGravityLoad.getName()} is outside of the range 9.81 to 10.0");
+                {
+                    Engine.Base.Compute.RecordWarning($"The the gravitational acceleration of {lusasGravityLoad.getName()} is outside of the range 9.81 to 10.0.");
                 }
             }
 
