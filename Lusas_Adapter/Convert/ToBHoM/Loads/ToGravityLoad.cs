@@ -42,15 +42,17 @@ namespace BH.Adapter.Adapters.Lusas
             IEnumerable<IFAssignment> lusasAssignments,
             Dictionary<string, Node> nodes,
             Dictionary<string, Bar> bars,
-            Dictionary<string, Panel> panels)
+            Dictionary<string, Panel> panels,
+            double g)
+
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
             Loadcase loadcase = ToLoadcase(assignedLoadcase);
             Vector gravityVector = new Vector
             {
-                X = lusasGravityLoad.getValue("accX"),
-                Y = lusasGravityLoad.getValue("accY"),
-                Z = lusasGravityLoad.getValue("accZ")
+                X = lusasGravityLoad.getValue("accX") / g,
+                Y = lusasGravityLoad.getValue("accY") / g,
+                Z = lusasGravityLoad.getValue("accZ") / g
             };
 
             IEnumerable<BHoMObject> assignedObjects = GetGeometryAssignments(
