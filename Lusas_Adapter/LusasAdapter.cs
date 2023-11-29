@@ -192,7 +192,7 @@ namespace BH.Adapter.Lusas
 
         private string m_directory;
         public double m_mergeTolerance = double.NaN;
-        public double g = 9.807;
+        public double m_g = 9.807;
         public LusasWinApp m_LusasApplication;
         public IFDatabase d_LusasData;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
