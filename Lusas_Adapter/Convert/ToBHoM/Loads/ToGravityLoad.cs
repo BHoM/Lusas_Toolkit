@@ -42,24 +42,18 @@ namespace BH.Adapter.Adapters.Lusas
             IEnumerable<IFAssignment> lusasAssignments,
             Dictionary<string, Node> nodes,
             Dictionary<string, Bar> bars,
-            Dictionary<string, Panel> panels)
+            Dictionary<string, Panel> panels,
+            double g)
+
         {
             IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
             Loadcase loadcase = ToLoadcase(assignedLoadcase);
             Vector gravityVector = new Vector
             {
-                X = lusasGravityLoad.getValue("accX") / 9.80665,
-                Y = lusasGravityLoad.getValue("accY") / 9.80665,
-                Z = lusasGravityLoad.getValue("accZ") / 9.80665
+                X = lusasGravityLoad.getValue("accX") / g,
+                Y = lusasGravityLoad.getValue("accY") / g,
+                Z = lusasGravityLoad.getValue("accZ") / g
             };
-
-            if (!
-                    ((9.8 < lusasGravityLoad.getValue("accX") && lusasGravityLoad.getValue("accX") < 10.0 || lusasGravityLoad.getValue("accX") == 0.0)
-                    || (9.8 < lusasGravityLoad.getValue("accY") && lusasGravityLoad.getValue("accY") < 10.0 || lusasGravityLoad.getValue("accY") == 0.0)
-                    || (9.8 < lusasGravityLoad.getValue("accZ") && lusasGravityLoad.getValue("accZ") < 10.0 || lusasGravityLoad.getValue("accZ") == 0.0)))
-            {
-                Engine.Base.Compute.RecordWarning($"The the gravitational acceleration of {lusasGravityLoad.getName()} outside of the range 9.8 to 10.0.");
-            }
 
             IEnumerable<BHoMObject> assignedObjects = GetGeometryAssignments(
                 lusasAssignments, nodes, bars, panels);

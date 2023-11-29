@@ -169,6 +169,8 @@ namespace BH.Adapter.Lusas
                         m_mergeTolerance = lusasSettings.MergeTolerance;
                         d_LusasData.getOptions().setDouble("TOLMRG", m_mergeTolerance);
                     }
+
+                    if (lusasSettings != null) { g = lusasSettings.GravitationalForceEquivalent; }
                 }
             }
         }
@@ -190,6 +192,7 @@ namespace BH.Adapter.Lusas
 
         private string m_directory;
         public double m_mergeTolerance = double.NaN;
+        public double g = 9.807;
         public LusasWinApp m_LusasApplication;
         public IFDatabase d_LusasData;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();

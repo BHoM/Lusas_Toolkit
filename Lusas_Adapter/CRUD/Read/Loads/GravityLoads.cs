@@ -72,9 +72,9 @@ namespace BH.Adapter.Lusas
                     foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
                     {
                         List<string> analysisName = new List<string> { lusasBodyForce.getAttributeType() };
-
+                        
                         GravityLoad gravityLoad = Adapters.Lusas.Convert.ToGravityLoad(
-                            lusasBodyForce, groupedAssignment, nodes, bars, panels);
+                            lusasBodyForce, groupedAssignment, nodes, bars, panels, g);
                         gravityLoad.Tags = new HashSet<string>(analysisName);
                         gravityLoads.Add(gravityLoad);
                     }

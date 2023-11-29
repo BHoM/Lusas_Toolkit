@@ -38,6 +38,9 @@ namespace BH.oM.Adapters.Lusas
         [Description("Sets the library settings.")]
         public virtual LibrarySettings LibrarySettings { get; set; } = new LibrarySettings();
 
+        [Description("Sets the gravitational force equivalent. Used when converting gravity loads between BHoM and Lusas.")]
+        public virtual double GravitationalForceEquivalent { get; set; } = 9.807;
+
         /***************************************************/
     }
 }
