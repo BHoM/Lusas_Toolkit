@@ -38,7 +38,7 @@ namespace BH.oM.Adapters.Lusas
         [Description("Sets the library settings.")]
         public virtual LibrarySettings LibrarySettings { get; set; } = new LibrarySettings();
 
-        [Acceleration]
+        //[Acceleration]
         [Description("Sets the standard gravity i.e. the acceleration due to gravity. This is used when GravityLoads are pushed/pulled from Lusas as the BHoM uses a factor of g, whereas Lusas uses a specific acceleration.")]
         public virtual double StandardGravity { get; set; } = 9.80665;
 

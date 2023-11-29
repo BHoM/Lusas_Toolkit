@@ -56,7 +56,7 @@ namespace BH.Adapter.Lusas
             else
             {
                 lusasGravityLoad = d_LusasData.createLoadingBody(gravityLoad.Name);
-                lusasGravityLoad.setBody(gravityLoad.GravityDirection.X * g, gravityLoad.GravityDirection.Y * g, gravityLoad.GravityDirection.Z * g);
+                lusasGravityLoad.setBody(gravityLoad.GravityDirection.X * m_g, gravityLoad.GravityDirection.Y * m_g, gravityLoad.GravityDirection.Z * m_g);
             }
 
             IFAssignment lusasAssignment = m_LusasApplication.assignment();

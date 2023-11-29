@@ -38,7 +38,7 @@ namespace BH.Engine.Adapters.Lusas
         [Input("librarySettings", "Sets the library settings.")]
         [Input("g", "Sets the standard gravity i.e. the acceleration due to gravity. This is used when GravityLoads are pushed/pulled from Lusas as the BHoM uses a factor of g, whereas Lusas uses a specific acceleration.")]
         [Output("Lusas specific adapter settings to be used by the adapter.")]
-        public static LusasSettings LusasSettings(double mergeTolerance, LibrarySettings librarySettings = null, double g = 9.807)
+        public static LusasSettings LusasSettings(double mergeTolerance, LibrarySettings librarySettings = null, double g = 9.80665)
         {
             LusasSettings lusasSettings = new LusasSettings();
 
@@ -47,7 +47,7 @@ namespace BH.Engine.Adapters.Lusas
             if (librarySettings != null)
                 lusasSettings.LibrarySettings = librarySettings;
 
-            lusasSettings.GravitationalForceEquivalent = g;
+            lusasSettings.StandardGravity = g;
 
             return lusasSettings;
         }

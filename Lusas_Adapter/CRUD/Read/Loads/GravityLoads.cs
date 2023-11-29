@@ -74,7 +74,7 @@ namespace BH.Adapter.Lusas
                         List<string> analysisName = new List<string> { lusasBodyForce.getAttributeType() };
                         
                         GravityLoad gravityLoad = Adapters.Lusas.Convert.ToGravityLoad(
-                            lusasBodyForce, groupedAssignment, nodes, bars, panels, g);
+                            lusasBodyForce, groupedAssignment, nodes, bars, panels, m_g);
                         gravityLoad.Tags = new HashSet<string>(analysisName);
                         gravityLoads.Add(gravityLoad);
                     }
