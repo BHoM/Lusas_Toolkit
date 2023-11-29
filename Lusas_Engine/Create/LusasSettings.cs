@@ -36,7 +36,7 @@ namespace BH.Engine.Adapters.Lusas
         [Description("Lusas adapter settings.")]
         [Input("mergeTolerance", "Sets the merging tolerance used in Lusas.")]
         [Input("librarySettings", "Sets the library settings.")]
-        [Input("m_g", "Sets the gravitational force equivalent. Used when converting gravity loads between BHoM and Lusas.")]
+        [Input("g", "Sets the standard gravity i.e. the acceleration due to gravity. This is used when GravityLoads are pushed/pulled from Lusas as the BHoM uses a factor of g, whereas Lusas uses a specific acceleration.")]
         [Output("Lusas specific adapter settings to be used by the adapter.")]
         public static LusasSettings LusasSettings(double mergeTolerance, LibrarySettings librarySettings = null, double m_g = 9.807)
         {
