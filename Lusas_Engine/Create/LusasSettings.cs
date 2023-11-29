@@ -47,7 +47,7 @@ namespace BH.Engine.Adapters.Lusas
             if (librarySettings != null)
                 lusasSettings.LibrarySettings = librarySettings;
 
-            lusasSettings.GravitationalForceEquivalent = m_g;
+            lusasSettings.GravitationalForceEquivalent = g;
 
             return lusasSettings;
         }
