@@ -51,10 +51,18 @@ namespace BH.Adapter.Lusas
             if (d_LusasData.existsLoadset(loadcase.Name))
             {
                 lusasLoadcase = (IFLoadcase)d_LusasData.getLoadset(loadcase.Name);
+                if (lusasLoadcase.getID() != loadcase.Number) 
+                {
+                    Compute.RecordError($"A loadcase with the name {loadcase.Name} already exists but the number does not match with the loadcase being pushed./nMake sure you are using a unique name and number."); 
+                };
             }
             if (d_LusasData.existsLoadset(loadcase.Number))
             {
                 lusasLoadcase = (IFLoadcase)d_LusasData.getLoadset(loadcase.Number);
+                if (lusasLoadcase.getName() != loadcase.Name)
+                { 
+                    Compute.RecordError($"A loadcase with the number {loadcase.Number} already exists but the name does not match with the loadcase being pushed./nMake sure you are using a unique name and number.");         
+                };
             }
             else
             {
