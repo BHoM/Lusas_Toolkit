@@ -52,6 +52,10 @@ namespace BH.Adapter.Lusas
             {
                 lusasLoadcase = (IFLoadcase)d_LusasData.getLoadset(loadcase.Name);
             }
+            if (d_LusasData.existsLoadset(loadcase.Number))
+            {
+                lusasLoadcase = (IFLoadcase)d_LusasData.getLoadset(loadcase.Number);
+            }
             else
             {
                 if (loadcase.Number == 0)
