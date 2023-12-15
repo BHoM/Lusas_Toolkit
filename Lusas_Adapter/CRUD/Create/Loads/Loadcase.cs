@@ -54,18 +54,20 @@ namespace BH.Adapter.Lusas
                 if (lusasLoadcase.getID() != loadcase.Number) 
                 {
                     Compute.RecordWarning(
-                        $"The loadcase {loadcase.Name} already exists but the number {lusasLoadcase.getID()} does not match with the loadcase being pushed: {loadcase.Name}, {loadcase.Number}. \n" +
-                        $"The loadcase {lusasLoadcase.getName()} has been used."); 
+                    $"The loadcase {loadcase.Name} already exists but the number {lusasLoadcase.getID()} does not match with the loadcase being pushed: {loadcase.Name}, {loadcase.Number}. \n" +
+                    $"The loadcase {lusasLoadcase.getName()} has been used.");
+                    loadcase.Number = (int)lusasLoadcase.getID();
                 };
             }
             if (d_LusasData.existsLoadset(loadcase.Number))
             {
                 lusasLoadcase = (IFLoadcase)d_LusasData.getLoadset(loadcase.Number);
                 if (lusasLoadcase.getName() != loadcase.Name)
-                { 
+                {
                     Compute.RecordWarning(
-                        $"A loadcase with the number {loadcase.Number} already exists but the name {lusasLoadcase.getName()} does not match with the loadcase being pushed: {loadcase.Name}, {loadcase.Number}. /n" +
-                        $"Make sure you are using a unique name and number. {lusasLoadcase.getName()} has been used");         
+                    $"The loadcase {loadcase.Number} already exists but the number {lusasLoadcase.getID()} does not match with the loadcase being pushed: {loadcase.Name}, {loadcase.Number}. \n" +
+                    $"The loadcase {lusasLoadcase.getName()} has been used.");
+                    loadcase.Name = lusasLoadcase.getName();
                 };
             }
             else
