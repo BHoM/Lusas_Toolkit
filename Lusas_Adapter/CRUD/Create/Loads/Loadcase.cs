@@ -54,8 +54,8 @@ namespace BH.Adapter.Lusas
                 if (lusasLoadcase.getID() != loadcase.Number) 
                 {
                     Compute.RecordWarning(
-                        $"A loadcase with the name {loadcase.Name} already exists but the number {lusasLoadcase.getID()} does not match with the loadcase being pushed: {loadcase.Name}, {loadcase.Number}. /n" +
-                        $"Make sure you are using a unique name and number. {lusasLoadcase.getName()} has been used"); 
+                        $"The loadcase {loadcase.Name} already exists but the number {lusasLoadcase.getID()} does not match with the loadcase being pushed: {loadcase.Name}, {loadcase.Number}. \n" +
+                        $"The loadcase {lusasLoadcase.getName()} has been used."); 
                 };
             }
             if (d_LusasData.existsLoadset(loadcase.Number))
