@@ -48,9 +48,16 @@ namespace BH.Adapter.Lusas
         {
             IFLoadcase lusasLoadcase;
 
-            if (d_LusasData.existsLoadset(loadcase.Name))
+            if (d_LusasData.existsLoadset(loadcase.Number))
             {
-                lusasLoadcase = (IFLoadcase)d_LusasData.getLoadset(loadcase.Name);
+                lusasLoadcase = (IFLoadcase)d_LusasData.getLoadset(loadcase.Number);
+                if (lusasLoadcase.getName() != loadcase.Name)
+                {
+                    Compute.RecordWarning(
+                    $"The loadcase {loadcase.Number} already exists but the number {lusasLoadcase.getID()} does not match with the loadcase being pushed: {loadcase.Name}, {loadcase.Number}. \n" +
+                    $"The loadcase {lusasLoadcase.getName()} has been used.");
+                    loadcase.Name = lusasLoadcase.getName();
+                };
             }
             else
             {
