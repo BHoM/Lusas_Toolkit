@@ -257,6 +257,8 @@ namespace BH.Adapter.Lusas
             int lusasType = 5;
             CreateLibrarySection(name, dimensionArray, lusasType);
 
+            Engine.Base.Compute.RecordWarning("Toe radius not supported in Lusas. 0 is used for toe radius");
+
             return true;
         }
 
