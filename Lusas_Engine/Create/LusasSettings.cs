@@ -20,18 +20,37 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Base;
+using BH.oM.Adapters.Lusas;
+using BH.oM.Base.Attributes;
+using System.ComponentModel;
 
-namespace BH.oM.Adapters.Lusas
+namespace BH.Engine.Adapters.Lusas
 {
-    public class LusasConfig : BHoMObject
+    public static partial class Create
     {
         /***************************************************/
-        /****            Public Properties              ****/
+        /****           Public Constructors             ****/
         /***************************************************/
 
-        public virtual LibrarySettings LibrarySettings { get; set; } = new LibrarySettings();
+        [PreviousVersion("7.0", "BH.Engine.Adapters.Lusas.Create.LusasConfig(BH.oM.Adapters.Lusas.LibrarySettings)")]
+        [Description("Lusas adapter settings.")]
+        [Input("mergeTolerance", "Sets the merging tolerance used in Lusas.")]
+        [Input("librarySettings", "Sets the library settings.")]
+        [Input("g", "Sets the standard gravity i.e. the acceleration due to gravity. This is used when GravityLoads are pushed/pulled from Lusas as the BHoM uses a factor of g, whereas Lusas uses a specific acceleration.")]
+        [Output("Lusas specific adapter settings to be used by the adapter.")]
+        public static LusasSettings LusasSettings(double mergeTolerance, LibrarySettings librarySettings = null, double g = 9.80665)
+        {
+            LusasSettings lusasSettings = new LusasSettings();
 
+            lusasSettings.MergeTolerance = mergeTolerance;
+
+            if (librarySettings != null)
+                lusasSettings.LibrarySettings = librarySettings;
+
+            lusasSettings.StandardGravity = g;
+
+            return lusasSettings;
+        }
         /***************************************************/
     }
 }

@@ -24,6 +24,7 @@ using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Loads;
 using BH.Engine.Adapter;
 using Lusas.LPI;
+using BH.oM.Geometry;
 
 namespace BH.Adapter.Lusas
 {
@@ -47,7 +48,7 @@ namespace BH.Adapter.Lusas
         {
             IFLoadingBody lusasGravityLoad;
             IFLoadcase assignedLoadcase = (IFLoadcase)d_LusasData.getLoadset(gravityLoad.Loadcase.AdapterId<int>(typeof(LusasId)));
-
+           
             if (d_LusasData.existsAttribute("Loading", gravityLoad.Name))
             {
                 lusasGravityLoad = (IFLoadingBody)d_LusasData.getAttributes("Loading", gravityLoad.Name);
@@ -55,7 +56,7 @@ namespace BH.Adapter.Lusas
             else
             {
                 lusasGravityLoad = d_LusasData.createLoadingBody(gravityLoad.Name);
-                lusasGravityLoad.setBody(gravityLoad.GravityDirection.X, gravityLoad.GravityDirection.Y, gravityLoad.GravityDirection.Z);
+                lusasGravityLoad.setBody(gravityLoad.GravityDirection.X * m_g, gravityLoad.GravityDirection.Y * m_g, gravityLoad.GravityDirection.Z * m_g);
             }
 
             IFAssignment lusasAssignment = m_LusasApplication.assignment();

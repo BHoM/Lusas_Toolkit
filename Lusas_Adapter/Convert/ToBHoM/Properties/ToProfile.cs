@@ -82,7 +82,7 @@ namespace BH.Adapter.Adapters.Lusas
                             lusasAttribute.getValue("tw",i),
                             lusasAttribute.getValue("tf",i),
                             lusasAttribute.getValue("r",i),
-                            lusasAttribute.getValue("r",i)
+                            0
                         );
                         break;
                     }
