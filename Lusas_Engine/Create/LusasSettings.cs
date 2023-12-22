@@ -32,7 +32,6 @@ namespace BH.Engine.Adapters.Lusas
         /****           Public Constructors             ****/
         /***************************************************/
 
-        [PreviousVersion("7.0", "BH.Engine.Adapters.Lusas.Create.LusasConfig(BH.oM.Adapters.Lusas.LibrarySettings)")]
         [Description("Lusas adapter settings.")]
         [Input("mergeTolerance", "Sets the merging tolerance used in Lusas.")]
         [Input("librarySettings", "Sets the library settings.")]
