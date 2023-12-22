@@ -58,7 +58,6 @@ namespace BH.Adapter.Lusas
         /**** Constructors                              ****/
         /***************************************************/
 #if Debug18 || Release18
-        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV18Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
         [Description("Adapter to connect to a Lusas .mdl file.")]
         [Input("filePath", "Path to the Lusas .mdl file to be used.")]
         [Input("lusasSettings", "General settings that are applicable to all actions performed by this adapter, e.g. merge tolerance to be used.")]
@@ -66,7 +65,6 @@ namespace BH.Adapter.Lusas
         [Output("adapter", "Adapter for Lusas.")]
         public LusasV18Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #elif Debug19 || Release19
-        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV19Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
         [Description("Adapter to connect to a Lusas .mdl file.")]
         [Input("filePath", "Path to the Lusas .mdl file to be used.")]
         [Input("lusasSettings", "General settings that are applicable to all actions performed by this adapter, e.g. merge tolerance to be used.")]
@@ -74,7 +72,6 @@ namespace BH.Adapter.Lusas
         [Output("adapter", "Adapter for Lusas.")]
         public LusasV19Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #elif Debug191 || Release191
-        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV191Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
         [Description("Adapter to connect to a Lusas .mdl file.")]
         [Input("filePath", "Path to the Lusas .mdl file to be used.")]
         [Input("lusasSettings", "General settings that are applicable to all actions performed by this adapter, e.g. merge tolerance to be used.")]
@@ -82,7 +79,6 @@ namespace BH.Adapter.Lusas
         [Output("adapter", "Adapter for Lusas.")]
         public LusasV191Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #elif Debug200 || Release200
-        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV200Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
         [Description("Adapter to connect to a Lusas .mdl file.")]
         [Input("filePath", "Path to the Lusas .mdl file to be used.")]
         [Input("lusasSettings", "General settings that are applicable to all actions performed by this adapter, e.g. merge tolerance to be used.")]
@@ -90,7 +86,6 @@ namespace BH.Adapter.Lusas
         [Output("adapter", "Adapter for Lusas.")]
         public LusasV200Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #else
-        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV17Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
         [Description("Adapter to connect to a Lusas .mdl file.")]
         [Input("filePath", "Path to Lusas the .mdl file to be used.")]
         [Input("lusasSettings", "General settings that are applicable to all actions performed by this adapter, e.g. merge tolerance to be used.")]
