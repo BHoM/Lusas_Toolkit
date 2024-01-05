@@ -63,7 +63,7 @@ namespace BH.Adapter.Adapters.Lusas
 
             BarPointLoad barPointLoad;
 
-#if Debug191 || Release191 || Debug200 || Release200
+#if Debug191 || Release191 || Debug200 || Release200 || Debug210 || Release210
             LoadAxis loadAxis = lusasBarPointLoad.getValue("LoadDirection") == "Local(beam)" ? LoadAxis.Local : LoadAxis.Global;
 #else       
             LoadAxis loadAxis = lusasBarPointLoad.getValue("LoadDirection") == 4 ? LoadAxis.Local : LoadAxis.Global; //4 for local, 3 for global (only two possible values)
