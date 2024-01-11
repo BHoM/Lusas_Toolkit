@@ -63,7 +63,7 @@ namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
             //Check whether the object is null
             if (ReferenceEquals(bar, null)) return 0;
 
-            return bar.StartNode.GetHashCode() ^ bar.EndNode.GetHashCode();
+            return bar.Start.GetHashCode() ^ bar.End.GetHashCode();
         }
 
     }

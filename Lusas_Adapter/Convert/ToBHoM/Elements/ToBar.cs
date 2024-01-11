@@ -66,8 +66,8 @@ namespace BH.Adapter.Adapters.Lusas
 
             Bar bar = new Bar
             {
-                StartNode = startNode,
-                EndNode = endNode,
+                Start = startNode,
+                End = endNode,
                 Tags = tags,
                 Support = barConstraint
             };
