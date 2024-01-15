@@ -51,7 +51,6 @@ namespace BH.Adapter.Adapters.Lusas
 
         {
             object[] lusasSurfaceLines = lusasSurface.getLOFs();
-            List<ICurve> dummyCurve = new List<ICurve>();
 
             int n = lusasSurfaceLines.Length;
             HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasSurface, groupNames));
@@ -64,7 +63,7 @@ namespace BH.Adapter.Adapters.Lusas
                 surfaceEdges.Add(edge);
             }
 
-            Panel panel = Engine.Structure.Create.Panel(surfaceEdges, dummyCurve);
+            Panel panel = Engine.Structure.Create.Panel(surfaceEdges);
 
             panel.Tags = tags;
 
