@@ -20,10 +20,13 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System;
+using System.Reflection;
+using System.IO;
+using System.Diagnostics;
 using BH.Engine.Geometry;
 using BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer;
 using BH.oM.Adapter;
-using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 using BH.oM.Structure.Constraints;
@@ -31,15 +34,11 @@ using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.MaterialFragments;
-using BH.Engine.Adapter;
 using Lusas.LPI;
 using System.Collections.Generic;
 using System.Linq;
 using BH.Engine.Base.Objects;
-using System;
-using System.Reflection;
 using BH.Engine.Base;
-using BH.Engine.Spatial;
 using BH.oM.Adapters.Lusas.Fragments;
 
 namespace BH.Adapter.Lusas
@@ -177,15 +176,13 @@ namespace BH.Adapter.Lusas
             {
                 CreateTags(nodes);
 
-                ReduceRuntime(true);
-
                 foreach (Node node in nodes)
                 {
                     IFPoint lusasPoint = CreatePoint(node);
                 }
 
-                ReduceRuntime(false);
             }
+
             return true;
         }
 
@@ -201,15 +198,12 @@ namespace BH.Adapter.Lusas
 
                 List<Point> lusasPoints = distinctPoints.Except(existingPoints).ToList();
 
-                ReduceRuntime(true);
-
                 foreach (Point point in lusasPoints)
                 {
                     IFPoint lusasPoint = CreatePoint(point);
                 }
-
-                ReduceRuntime(false);
             }
+
             return true;
         }
 
@@ -226,8 +220,6 @@ namespace BH.Adapter.Lusas
                     var barGroups = bars.GroupBy(m => new { m.FEAType, m.Release?.Name });
 
                     BHoMObjectNameComparer comparer = new BHoMObjectNameComparer();
-
-                    ReduceRuntime(true);
 
                     foreach (var barGroup in barGroups)
                     {
@@ -246,23 +238,19 @@ namespace BH.Adapter.Lusas
                             IFLine lusasLine = CreateLine(bar);
                         }
                     }
-                    ReduceRuntime(false);
+
                     d_LusasData.resetMesh();
                     d_LusasData.updateMesh();
                 }
                 else
                 {
-                    ReduceRuntime(true);
-
                     foreach (Bar bar in bars)
                     {
                         IFLine lusasLine = CreateLine(bar);
                     }
-
-                    ReduceRuntime(false);
-
                 }
             }
+
             return true;
         }
 
@@ -326,15 +314,13 @@ namespace BH.Adapter.Lusas
                         validPanel.AddFragment(distinctMeshes.First(x => comparer.Equals(x, (validPanel.FindFragment<MeshSettings2D>()))), true);
                 }
 
-                ReduceRuntime(true);
-
                 IFSurface lusasSurface = null;
 
                 foreach (Panel validPanel in validPanels)
                     lusasSurface = CreateSurface(validPanel);
 
-                ReduceRuntime(false);
             }
+
             return true;
         }
 
@@ -362,22 +348,16 @@ namespace BH.Adapter.Lusas
                 List<Point> existingPoints = ReadPoints();
                 List<Point> pointsToPush = distinctPoints.Except(existingPoints, new PointDistanceComparer()).ToList();
 
-                ReduceRuntime(true);
-
                 foreach (Point point in pointsToPush)
                 {
                     IFPoint lusasPoint = CreatePoint(point);
                 }
-
-                ReduceRuntime(false);
 
                 List<Point> points = ReadPoints();
 
                 List<IFPoint> lusasPoints = ReadLusasPoints();
 
                 CreateTags(distinctEdges);
-
-                ReduceRuntime(true);
 
                 foreach (Edge edge in distinctEdges)
                 {
@@ -387,9 +367,8 @@ namespace BH.Adapter.Lusas
                         m => m.Equals(edge.Curve.IEndPoint().ClosestPoint(points)))];
                     IFLine lusasLine = CreateEdge(edge, startPoint, endPoint);
                 }
-
-                ReduceRuntime(false);
             }
+
             return true;
         }
 
@@ -403,7 +382,6 @@ namespace BH.Adapter.Lusas
                 {
                     IFAttribute lusasGeometricLine = CreateGeometricLine(sectionProperty);
                 }
-
             }
 
             return true;
@@ -737,9 +715,3 @@ namespace BH.Adapter.Lusas
 
     }
 }
-
-
-
-
-
-

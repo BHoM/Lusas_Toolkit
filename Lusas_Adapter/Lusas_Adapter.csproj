@@ -56,7 +56,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-	<PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug210</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
@@ -66,7 +66,7 @@
     <AssemblyName>LusasV210_Adapter</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-	</PropertyGroup>
+  </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Release17</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -122,7 +122,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-    <PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Release210</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
@@ -132,7 +132,7 @@
     <AssemblyName>LusasV210_Adapter</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    </PropertyGroup>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\Build\</OutputPath>
@@ -285,7 +285,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV200_Adapter</AssemblyName>
   </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release210|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release210|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -377,7 +377,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV200_Adapter</AssemblyName>
   </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug210|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug210|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -449,7 +449,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV200_Adapter</AssemblyName>
   </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release210|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release210|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -542,7 +542,7 @@
       <HintPath>..\libs\Version 200\Lusas.Interop.dll</HintPath>
       <Private>False</Private>
     </Reference>
-        <Reference Include="Lusas.Interop, Version=21.0.1601.44691, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86" Condition="'$(Configuration)'=='Debug210' Or '$(Configuration)'=='Release210'">
+    <Reference Include="Lusas.Interop, Version=21.0.1601.44691, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86" Condition="'$(Configuration)'=='Debug210' Or '$(Configuration)'=='Release210'">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\libs\Version 210\Lusas.Interop.dll</HintPath>
@@ -682,7 +682,6 @@
     <Compile Include="Private Helpers\GetFeatureResults.cs" />
     <Compile Include="Private Helpers\GetResultsSets.cs" />
     <Compile Include="Private Helpers\NameSearch.cs" />
-    <Compile Include="Private Helpers\RuntimeReduction.cs" />
     <Compile Include="CRUD\Read\Properties\MeshSettings1D.cs" />
     <Compile Include="CRUD\Read\Properties\MeshSettings2D.cs" />
     <Compile Include="CRUD\Read\Properties\SurfaceProperties.cs" />
