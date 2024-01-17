@@ -20,10 +20,13 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System;
+using System.Reflection;
+using System.IO;
+using System.Diagnostics;
 using BH.Engine.Geometry;
 using BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer;
 using BH.oM.Adapter;
-using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 using BH.oM.Structure.Constraints;
@@ -31,15 +34,11 @@ using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.MaterialFragments;
-using BH.Engine.Adapter;
 using Lusas.LPI;
 using System.Collections.Generic;
 using System.Linq;
 using BH.Engine.Base.Objects;
-using System;
-using System.Reflection;
 using BH.Engine.Base;
-using BH.Engine.Spatial;
 using BH.oM.Adapters.Lusas.Fragments;
 
 namespace BH.Adapter.Lusas
@@ -177,6 +176,8 @@ namespace BH.Adapter.Lusas
             {
                 CreateTags(nodes);
 
+                Stopwatch watch = Stopwatch.StartNew();
+
                 ReduceRuntime(true);
 
                 foreach (Node node in nodes)
@@ -185,7 +186,16 @@ namespace BH.Adapter.Lusas
                 }
 
                 ReduceRuntime(false);
+
+                watch.Stop();
+                long elapsedMs = watch.ElapsedMilliseconds;
+
+                using (StreamWriter write = new StreamWriter("C:\\Temp\\LusasTime.txt", true))
+                {
+                    write.WriteLine($"Time to push Nodes: {elapsedMs} ");
+                }
             }
+
             return true;
         }
 
@@ -201,6 +211,8 @@ namespace BH.Adapter.Lusas
 
                 List<Point> lusasPoints = distinctPoints.Except(existingPoints).ToList();
 
+                Stopwatch watch = Stopwatch.StartNew();
+
                 ReduceRuntime(true);
 
                 foreach (Point point in lusasPoints)
@@ -209,6 +221,15 @@ namespace BH.Adapter.Lusas
                 }
 
                 ReduceRuntime(false);
+
+                watch.Stop();
+                long elapsedMs = watch.ElapsedMilliseconds;
+
+                using (StreamWriter write = new StreamWriter("C:\\Temp\\LusasTime.txt", true))
+                {
+                    write.WriteLine($"Time to push Points: {elapsedMs} ");
+                }
+
             }
             return true;
         }
@@ -226,6 +247,8 @@ namespace BH.Adapter.Lusas
                     var barGroups = bars.GroupBy(m => new { m.FEAType, m.Release?.Name });
 
                     BHoMObjectNameComparer comparer = new BHoMObjectNameComparer();
+
+                    Stopwatch watch = Stopwatch.StartNew();
 
                     ReduceRuntime(true);
 
@@ -247,11 +270,22 @@ namespace BH.Adapter.Lusas
                         }
                     }
                     ReduceRuntime(false);
+
+                    watch.Stop();
+                    long elapsedMs = watch.ElapsedMilliseconds;
+
+                    using (StreamWriter write = new StreamWriter("C:\\Temp\\LusasTime.txt", true))
+                    {
+                        write.WriteLine($"Time to push Bars with Mesh: {elapsedMs} ");
+                    }
+
                     d_LusasData.resetMesh();
                     d_LusasData.updateMesh();
                 }
                 else
                 {
+                    Stopwatch watch = Stopwatch.StartNew();
+
                     ReduceRuntime(true);
 
                     foreach (Bar bar in bars)
@@ -261,6 +295,13 @@ namespace BH.Adapter.Lusas
 
                     ReduceRuntime(false);
 
+                    watch.Stop();
+                    long elapsedMs = watch.ElapsedMilliseconds;
+
+                    using (StreamWriter write = new StreamWriter("C:\\Temp\\LusasTime.txt", true))
+                    {
+                        write.WriteLine($"Time to push Bars: {elapsedMs} ");
+                    }
                 }
             }
             return true;
@@ -326,6 +367,8 @@ namespace BH.Adapter.Lusas
                         validPanel.AddFragment(distinctMeshes.First(x => comparer.Equals(x, (validPanel.FindFragment<MeshSettings2D>()))), true);
                 }
 
+                Stopwatch watch = Stopwatch.StartNew();
+
                 ReduceRuntime(true);
 
                 IFSurface lusasSurface = null;
@@ -334,6 +377,14 @@ namespace BH.Adapter.Lusas
                     lusasSurface = CreateSurface(validPanel);
 
                 ReduceRuntime(false);
+
+                watch.Stop();
+                long elapsedMs = watch.ElapsedMilliseconds;
+
+                using (StreamWriter write = new StreamWriter("C:\\Temp\\LusasTime.txt", true))
+                {
+                    write.WriteLine($"Time to push Panels: {elapsedMs} ");
+                }
             }
             return true;
         }
@@ -362,20 +413,18 @@ namespace BH.Adapter.Lusas
                 List<Point> existingPoints = ReadPoints();
                 List<Point> pointsToPush = distinctPoints.Except(existingPoints, new PointDistanceComparer()).ToList();
 
-                ReduceRuntime(true);
-
                 foreach (Point point in pointsToPush)
                 {
                     IFPoint lusasPoint = CreatePoint(point);
                 }
-
-                ReduceRuntime(false);
 
                 List<Point> points = ReadPoints();
 
                 List<IFPoint> lusasPoints = ReadLusasPoints();
 
                 CreateTags(distinctEdges);
+
+                Stopwatch watch = Stopwatch.StartNew();
 
                 ReduceRuntime(true);
 
@@ -389,6 +438,14 @@ namespace BH.Adapter.Lusas
                 }
 
                 ReduceRuntime(false);
+
+                watch.Stop();
+                long elapsedMs = watch.ElapsedMilliseconds;
+
+                using (StreamWriter write = new StreamWriter("C:\\Temp\\LusasTime.txt", true))
+                {
+                    write.WriteLine($"Time to push Edges: {elapsedMs} ");
+                }
             }
             return true;
         }
