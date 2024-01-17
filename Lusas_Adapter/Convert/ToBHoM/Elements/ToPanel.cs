@@ -63,7 +63,7 @@ namespace BH.Adapter.Adapters.Lusas
                 surfaceEdges.Add(edge);
             }
 
-            Panel panel = Engine.Structure.Create.Panel(surfaceEdges);
+            Panel panel = new Panel() { ExternalEdges = surfaceEdges };
 
             panel.Tags = tags;
 
