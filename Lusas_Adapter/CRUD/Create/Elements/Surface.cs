@@ -28,6 +28,7 @@ using BH.oM.Adapters.Lusas.Fragments;
 using BH.Engine.Base;
 using System.Linq;
 using System.Collections.Generic;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BH.Adapter.Lusas
 {
@@ -89,7 +90,19 @@ namespace BH.Adapter.Lusas
                     }
                 }
                 IFSurface internalLusasSurface = d_LusasData.createSurfaceBy(internalEdges.ToArray());
-                lusasSurface.trim(internalEdges);
+
+                IFObjectSet lusasSelection = m_LusasApplication.newObjectSet();
+                IFGeometryData lusasGeometryData = m_LusasApplication.newGeometryData();
+
+                lusasGeometryData.setAllDefaults();
+                lusasGeometryData.trimOuterBoundaryOff();
+                lusasGeometryData.trimDeleteOuterBoundaryOff();
+                lusasGeometryData.trimDeleteTrimmingLinesOn();
+
+                lusasSelection.add(lusasSurface, "Surface");
+                lusasSelection.add(internalLusasSurface, "Surface");
+
+                lusasSelection.trim(lusasGeometryData);
             }
 
             if (lusasSurface != null)
