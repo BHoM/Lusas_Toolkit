@@ -40,6 +40,7 @@ using System.Linq;
 using BH.Engine.Base.Objects;
 using BH.Engine.Base;
 using BH.oM.Adapters.Lusas.Fragments;
+using System.Windows.Forms.VisualStyles;
 
 namespace BH.Adapter.Lusas
 {
@@ -81,6 +82,10 @@ namespace BH.Adapter.Lusas
                 else if (objects.First() is Edge)
                 {
                     success = CreateCollection(objects as IEnumerable<Edge>);
+                }
+                else if (objects.First() is Opening)
+                {
+                    success = CreateCollection(objects as IEnumerable<Opening>);
                 }
                 else if (objects.First() is Point)
                 {
@@ -271,7 +276,7 @@ namespace BH.Adapter.Lusas
                         if (CheckPropertyError(panel, p => p.ExternalEdges))
                             if (CheckPropertyError(panel.ExternalEdges, e => e.Select(x => x.Curve)))
                                 if (panel.ExternalEdges.All(x => x != null) && panel.ExternalEdges.Select(x => x.Curve).All(y => y != null))
-                                {                                    
+                                {
                                     if (panel.ExternalEdges.All(x => !Engine.Adapters.Lusas.Query.InvalidEdge(x)))
                                     {
                                         if (Engine.Spatial.Query.IsPlanar(panel, false, Tolerance.MacroDistance))
@@ -281,9 +286,14 @@ namespace BH.Adapter.Lusas
                                                 if (!CheckPropertyError(panel, p => panel.ExternalEdges[i]) && Engine.Adapters.Lusas.Query.InvalidEdge(panel.ExternalEdges[i]))
                                                     break;
 
-                                                if (panel.Openings.Count > 0)
-                                                    Engine.Base.Compute.RecordWarning("Lusas_Toolkit does not support Panels with Openings. The Panel will be pushed if valid, the Openings will not be pushed.");
-                                                
+                                                //Add Check for all internal edges. 
+                                                //Probably dont need the panels with openings in a seperate list. Just check so the internal edges are valid here.
+                                                //if (panel.Openings.Count > 0)
+                                                //{
+                                                //    if (i == panel.ExternalEdges.Count - 1)
+                                                //        validPanelsWithOpenings.Add(panel);
+                                                //}
+
                                                 if (i == panel.ExternalEdges.Count - 1)
                                                     validPanels.Add(panel);
                                             }
@@ -345,6 +355,55 @@ namespace BH.Adapter.Lusas
                 }
 
                 List<Point> distinctPoints = distinctEdges.Select(x => x.Curve.IStartPoint()).Union(edges.Select(x => x.Curve.IEndPoint())).ToList();
+
+                List<Point> existingPoints = ReadPoints();
+                List<Point> pointsToPush = distinctPoints.Except(existingPoints, new PointDistanceComparer()).ToList();
+
+                foreach (Point point in pointsToPush)
+                {
+                    IFPoint lusasPoint = CreatePoint(point);
+                }
+
+                List<Point> points = ReadPoints();
+
+                List<IFPoint> lusasPoints = ReadLusasPoints();
+
+                CreateTags(distinctEdges);
+
+                foreach (Edge edge in distinctEdges)
+                {
+                    IFPoint startPoint = lusasPoints[points.FindIndex(
+                        m => m.Equals(edge.Curve.IStartPoint().ClosestPoint(points)))];
+                    IFPoint endPoint = lusasPoints[points.FindIndex(
+                        m => m.Equals(edge.Curve.IEndPoint().ClosestPoint(points)))];
+                    IFLine lusasLine = CreateEdge(edge, startPoint, endPoint);
+                }
+            }
+
+            return true;
+        }
+
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<Opening> openings)
+        {
+            List<Edge> distinctEdges = new List<Edge>();
+
+            foreach (Opening opening in openings)
+            {
+                if (opening != null)
+                {
+                    foreach (Edge edge in opening.Edges)
+                    {
+                        if (edge != null)
+                        {
+                            if (!(edge.Curve == null))
+                                distinctEdges.Add(edge);
+                        }
+                    }
+                }
+
+                List<Point> distinctPoints = distinctEdges.Select(x => x.Curve.IStartPoint()).Union(opening.Edges.Select(x => x.Curve.IEndPoint())).ToList();
 
                 List<Point> existingPoints = ReadPoints();
                 List<Point> pointsToPush = distinctPoints.Except(existingPoints, new PointDistanceComparer()).ToList();
