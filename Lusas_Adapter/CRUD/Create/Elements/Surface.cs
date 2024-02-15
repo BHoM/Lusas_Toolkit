@@ -71,27 +71,8 @@ namespace BH.Adapter.Lusas
 
             IFSurface lusasSurface = d_LusasData.createSurfaceBy(edges.ToArray());
 
-            if (panel.Openings.Count == 1) // Start testing with one opening. 
+            if (panel.Openings.Count > 0) // Start testing with one opening. 
             {
-                List<IFLine> internalEdges = new List<IFLine>();
-
-                foreach (Edge edge in panel.Openings[0].Edges)
-                {
-                    string edgeId = GetAdapterId<string>(edge);
-
-                    if (string.IsNullOrEmpty(edgeId))
-                    {
-                        Engine.Base.Compute.RecordError("Could not find the ids for at least one internal Edge, Opening not created.");
-                        break;
-                    }
-                    else
-                    {
-                        internalEdges.Add(d_LusasData.getLineByNumber(edgeId));
-                    }
-                }
-                //Create the internal Surface
-                IFSurface internalLusasSurface = d_LusasData.createSurfaceBy(internalEdges.ToArray());
-
                 //Creating information needed to create the hole in Lusas. 
                 IFObjectSet lusasSelection = m_LusasApplication.newObjectSet();
                 IFGeometryData lusasGeometryData = m_LusasApplication.newGeometryData();
@@ -102,7 +83,29 @@ namespace BH.Adapter.Lusas
                 lusasGeometryData.trimDeleteTrimmingLinesOn();
 
                 lusasSelection.add(lusasSurface, "Surface");
-                lusasSelection.add(internalLusasSurface, "Surface");
+
+                for (int i = 0; i < panel.Openings.Count; i++)
+                {
+                    List<IFLine> internalEdges = new List<IFLine>();
+
+                    foreach (Edge edge in panel.Openings[i].Edges)
+                    {
+                        string edgeId = GetAdapterId<string>(edge);
+
+                        if (string.IsNullOrEmpty(edgeId))
+                        {
+                            Engine.Base.Compute.RecordError("Could not find the ids for at least one internal Edge, Opening not created.");
+                            break;
+                        }
+                        else
+                        {
+                            internalEdges.Add(d_LusasData.getLineByNumber(edgeId));
+                        }
+                    }
+                    //Create the internal Surface
+                    IFSurface internalLusasSurface = d_LusasData.createSurfaceBy(internalEdges.ToArray());
+                    lusasSelection.add(internalLusasSurface, "Surface");
+                }
 
                 lusasSelection.trim(lusasGeometryData);
             }
