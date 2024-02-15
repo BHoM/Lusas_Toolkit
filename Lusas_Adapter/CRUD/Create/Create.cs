@@ -271,9 +271,7 @@ namespace BH.Adapter.Lusas
                         if (CheckPropertyError(panel, p => p.ExternalEdges))
                             if (CheckPropertyError(panel.ExternalEdges, e => e.Select(x => x.Curve)))
                                 if (panel.ExternalEdges.All(x => x != null) && panel.ExternalEdges.Select(x => x.Curve).All(y => y != null))
-                                {
-                                    if (panel.Openings.Count > 0)
-                                        Engine.Base.Compute.RecordWarning("Lusas_Toolkit does not support Panels with Openings. The Panel will be pushed if valid, the Openings will not be pushed.");
+                                {                                    
                                     if (panel.ExternalEdges.All(x => !Engine.Adapters.Lusas.Query.InvalidEdge(x)))
                                     {
                                         if (Engine.Spatial.Query.IsPlanar(panel, false, Tolerance.MacroDistance))
@@ -283,6 +281,9 @@ namespace BH.Adapter.Lusas
                                                 if (!CheckPropertyError(panel, p => panel.ExternalEdges[i]) && Engine.Adapters.Lusas.Query.InvalidEdge(panel.ExternalEdges[i]))
                                                     break;
 
+                                                if (panel.Openings.Count > 0)
+                                                    Engine.Base.Compute.RecordWarning("Lusas_Toolkit does not support Panels with Openings. The Panel will be pushed if valid, the Openings will not be pushed.");
+                                                
                                                 if (i == panel.ExternalEdges.Count - 1)
                                                     validPanels.Add(panel);
                                             }
