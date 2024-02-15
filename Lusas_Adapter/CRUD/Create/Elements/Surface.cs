@@ -69,7 +69,7 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-                    IFSurface lusasSurface = d_LusasData.createSurfaceBy(edges.ToArray());
+            IFSurface lusasSurface = d_LusasData.createSurfaceBy(edges.ToArray());
 
             if (panel.Openings.Count == 1) // Start testing with one opening. 
             {
@@ -89,8 +89,10 @@ namespace BH.Adapter.Lusas
                         internalEdges.Add(d_LusasData.getLineByNumber(edgeId));
                     }
                 }
+                //Create the internal Surface
                 IFSurface internalLusasSurface = d_LusasData.createSurfaceBy(internalEdges.ToArray());
 
+                //Creating information needed to create the hole in Lusas. 
                 IFObjectSet lusasSelection = m_LusasApplication.newObjectSet();
                 IFGeometryData lusasGeometryData = m_LusasApplication.newGeometryData();
 
