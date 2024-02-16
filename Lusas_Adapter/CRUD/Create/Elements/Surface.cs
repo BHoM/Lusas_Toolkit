@@ -71,7 +71,7 @@ namespace BH.Adapter.Lusas
 
             IFSurface lusasSurface = d_LusasData.createSurfaceBy(edges.ToArray());
 
-            if (panel.Openings.Count > 0) // Start testing with one opening. 
+            if (panel.Openings.Count > 0) 
             {
                 //Creating information needed to create the hole in Lusas. 
                 IFObjectSet lusasSelection = m_LusasApplication.newObjectSet();
