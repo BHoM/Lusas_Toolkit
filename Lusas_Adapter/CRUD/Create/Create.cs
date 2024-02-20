@@ -41,6 +41,7 @@ using BH.Engine.Base.Objects;
 using BH.Engine.Base;
 using BH.oM.Adapters.Lusas.Fragments;
 using System.Windows.Forms.VisualStyles;
+using BH.Engine.Spatial;
 
 namespace BH.Adapter.Lusas
 {
@@ -271,7 +272,7 @@ namespace BH.Adapter.Lusas
 
                 foreach (Panel panel in panels)
                 {
-                    if (panel.ExternalEdges.Count > 0)
+                    if (panel.ExternalEdges.Count > 0 ) //&& panel.Openings.Count == 0) //Panels without openings.
                     {
                         if (CheckPropertyError(panel, p => p.ExternalEdges))
                             if (CheckPropertyError(panel.ExternalEdges, e => e.Select(x => x.Curve)))
@@ -286,16 +287,51 @@ namespace BH.Adapter.Lusas
                                                 if (!CheckPropertyError(panel, p => panel.ExternalEdges[i]) && Engine.Adapters.Lusas.Query.InvalidEdge(panel.ExternalEdges[i]))
                                                     break;
 
-                                                //Add Check for all internal edges. 
-                                                //Probably dont need the panels with openings in a seperate list. Just check so the internal edges are valid here.
-                                                //if (panel.Openings.Count > 0)
-                                                //{
-                                                //    if (i == panel.ExternalEdges.Count - 1)
-                                                //        validPanelsWithOpenings.Add(panel);
-                                                //}
-
                                                 if (i == panel.ExternalEdges.Count - 1)
-                                                    validPanels.Add(panel);
+                                                {
+                                                    if (panel.Openings.Count > 0) //Going through same checks for openings. If no openings exist panel is added to validPanels here.
+                                                    {
+                                                        for (int j = 0; j < panel.Openings.Count; j++)
+                                                        {
+                                                            if (CheckPropertyError(panel, p => p.Openings[j].Edges))
+                                                                if (CheckPropertyError(panel.Openings[j].Edges, e => e.Select(x => x.Curve)))
+                                                                {
+                                                                    if (panel.Openings[j].Edges.All(x => !Engine.Adapters.Lusas.Query.InvalidEdge(x)))
+                                                                    {                                                                    
+                                                                        if (Engine.Spatial.Query.IsPlanar(panel.Openings[j], false, Tolerance.MacroDistance)) //Check if this works.
+                                                                        {
+                                                                            if (Engine.Geometry.Query.IsCoplanar(panel.Openings[j].FitPlane(), panel.FitPlane(), Tolerance.MacroDistance)) //Fix this check
+                                                                                {
+                                                                                for (int k = 0; k < panel.Openings[j].Edges.Count; k++)
+                                                                                {
+                                                                                    //Need to have a think which errors should give a warning and which should give an error... 
+                                                                                    //Not fun to have it structured like this. Surely there is a better way...
+
+                                                                                    if (!CheckPropertyError(panel, p => panel.Openings[j].Edges[k]) && Engine.Adapters.Lusas.Query.InvalidEdge(panel.Openings[j].Edges[k]))
+                                                                                        break;
+
+                                                                                    if (k == panel.Openings[j].Edges.Count - 1 && j == panel.Openings.Count - 1)
+                                                                                        validPanels.Add(panel);
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                                Engine.Base.Compute.RecordError("The geometry defining the Panel is not Coplanar with at least one of the Openings, and therefore the Panel will not be created.");
+                                                                        }
+                                                                        else
+                                                                            Engine.Base.Compute.RecordError("The geometry defining one of the Openings of the Panel is not Planar, and therefore the Panel will not be created.");
+                                                                    }
+                                                                    else
+                                                                        Engine.Base.Compute.RecordError("One or more of the Internal Edges of the Panel are invalid.");
+                                                                }
+                                                                else
+                                                                    Engine.Base.Compute.RecordError("One of more of the Internal Edges of the Panel or Curves defining the Opening are null.");
+                                                        }
+
+                                                    }
+
+                                                    else
+                                                       validPanels.Add(panel);
+                                                }
                                             }
                                         }
                                         else
@@ -306,7 +342,7 @@ namespace BH.Adapter.Lusas
                                 }
                                 else
                                     Engine.Base.Compute.RecordError("One of more of the External Edges of the Panel or Curves defining the External Edges are null.");
-                    }
+                    }                   
                     else
                         Engine.Base.Compute.RecordError($"An object of type {panel.GetType().Name} could not be created due to a property of type {typeof(Edge).Name} being null. Please check your input data!");
                 }
