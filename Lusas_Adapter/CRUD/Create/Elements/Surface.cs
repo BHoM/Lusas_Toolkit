@@ -29,6 +29,7 @@ using BH.Engine.Base;
 using System.Linq;
 using System.Collections.Generic;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Windows.Forms.VisualStyles;
 
 namespace BH.Adapter.Lusas
 {
@@ -71,9 +72,18 @@ namespace BH.Adapter.Lusas
 
             IFSurface lusasSurface = d_LusasData.createSurfaceBy(edges.ToArray());
 
-            if (panel.Openings.Count > 0) 
-            {
-                //Creating information needed to create the hole in Lusas. 
+            List<IFSurface> openings = new List<IFSurface>();
+
+            foreach (Opening opening in panel.Openings)
+               {
+                string openingID = GetAdapterId<string>(opening);
+
+                if (string.IsNullOrEmpty(openingID))
+                {
+                    Engine.Base.Compute.RecordError("Could not find the ids for at least one Opening, that Opening not created.");
+                    return null;
+                }
+                //Needed to create the opening in Lusas. 
                 IFObjectSet lusasSelection = m_LusasApplication.newObjectSet();
                 IFGeometryData lusasGeometryData = m_LusasApplication.newGeometryData();
 
@@ -83,34 +93,12 @@ namespace BH.Adapter.Lusas
                 lusasGeometryData.trimDeleteTrimmingLinesOn();
 
                 lusasSelection.add(lusasSurface, "Surface");
-
-                for (int i = 0; i < panel.Openings.Count; i++)
-                {
-                    List<IFLine> internalEdges = new List<IFLine>();
-
-                    foreach (Edge edge in panel.Openings[i].Edges)
-                    {
-                        string edgeId = GetAdapterId<string>(edge);
-
-                        if (string.IsNullOrEmpty(edgeId))
-                        {
-                            Engine.Base.Compute.RecordError("Could not find the ids for at least one internal Edge, Opening not created.");
-                            break;
-                        }
-                        else
-                        {
-                            internalEdges.Add(d_LusasData.getLineByNumber(edgeId));
-                        }
-                    }
-                    //Create the internal Surface
-                    IFSurface internalLusasSurface = d_LusasData.createSurfaceBy(internalEdges.ToArray());
-                    lusasSelection.add(internalLusasSurface, "Surface");
-                }
+                lusasSelection.add(d_LusasData.getSurfaceByNumber(openingID), "Surface");
 
                 lusasSelection.trim(lusasGeometryData);
             }
 
-            if (lusasSurface != null)
+                if (lusasSurface != null)
             {
                 long adapterIdName = lusasSurface.getID();
                 panel.SetAdapterId(typeof(LusasId), adapterIdName);
@@ -141,6 +129,44 @@ namespace BH.Adapter.Lusas
                     IFMeshAttr mesh = d_LusasData.getMesh(meshSettings2D.Name);
                     mesh.assignTo(lusasSurface, meshAssignment);
                 }
+            }
+
+            return lusasSurface;
+        }
+
+        /***************************************************/
+
+        private IFSurface CreateSurface(Opening opening)
+        {
+            List<IFLine> edges = new List<IFLine>();
+
+            foreach (Edge edge in opening.Edges)
+            {
+                string edgeId = GetAdapterId<string>(edge);
+
+                if (string.IsNullOrEmpty(edgeId))
+                {
+                    Engine.Base.Compute.RecordError("Could not find the ids for at least one Edge, Panel not created.");
+                    return null;
+                }
+                else
+                {
+                    edges.Add(d_LusasData.getLineByNumber(edgeId));
+                }
+            }
+
+            IFSurface lusasSurface = d_LusasData.createSurfaceBy(edges.ToArray());
+
+            if (lusasSurface != null) //Is this neccesary ?
+            {
+                long adapterIdName = lusasSurface.getID();
+                opening.SetAdapterId(typeof(LusasId), adapterIdName);
+
+                if (!(opening.Tags.Count == 0))
+                {
+                    AssignObjectSet(lusasSurface, opening.Tags);
+                }
+
             }
 
             return lusasSurface;

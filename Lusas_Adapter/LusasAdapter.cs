@@ -129,6 +129,7 @@ namespace BH.Adapter.Lusas
                 DependencyTypes = new Dictionary<Type, List<Type>>
                 {
                     {typeof(Panel), new List<Type> { typeof(ISurfaceProperty), typeof(Edge), typeof(Opening) } },
+                    {typeof(Opening), new List<Type> {typeof(Edge) } },
                     {typeof(Edge), new List<Type> { typeof(Constraint4DOF), typeof(Constraint6DOF) } },
                     {typeof(Bar), new List<Type> { typeof(Node) , typeof(ISectionProperty), typeof(Constraint4DOF) } },
                     {typeof(Node), new List<Type> { typeof(Constraint6DOF) } },
