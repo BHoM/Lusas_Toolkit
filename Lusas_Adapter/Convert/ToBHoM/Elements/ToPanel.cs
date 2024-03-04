@@ -43,6 +43,7 @@ namespace BH.Adapter.Adapters.Lusas
 
         public static Panel ToPanel(this IFSurface lusasSurface,
             Dictionary<string, Edge> edges,
+            Dictionary<string, Opening> openings,
             HashSet<string> groupNames,
             Dictionary<string, ISurfaceProperty> surfaceProperties,
             Dictionary<string, IMaterialFragment> materials,
@@ -64,6 +65,16 @@ namespace BH.Adapter.Adapters.Lusas
             }
 
             Panel panel = Engine.Structure.Create.Panel(surfaceEdges);
+
+            List<Opening> panelOpenings = new List<Opening>();
+
+            for (int i = 1; i < lusasSurface.countBoundaries(); i++)
+            {
+                Opening opening = GetOpening(lusasSurface.getID(), i, openings);
+                panelOpenings.Add(opening);
+            }
+
+            panel.Openings = panelOpenings;
 
             panel.Tags = tags;
 
@@ -110,6 +121,13 @@ namespace BH.Adapter.Adapters.Lusas
             IFLine lusasEdge = lusasSurf.getBoundaryLOFs(0)[lineIndex];
             bars.TryGetValue(lusasEdge.getID().ToString(), out edge);
             return edge;
+        }
+
+        private static Opening GetOpening(int surfaceID, int boundaryIndex, Dictionary<string, Opening> openings)
+        {
+            Opening opening;
+            openings.TryGetValue(surfaceID.ToString()+"_"+boundaryIndex.ToString(), out opening);
+            return opening;
         }
 
         /***************************************************/
