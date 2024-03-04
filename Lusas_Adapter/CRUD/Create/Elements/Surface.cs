@@ -30,6 +30,8 @@ using System.Linq;
 using System.Collections.Generic;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Windows.Forms.VisualStyles;
+using BH.Engine.Spatial;
+using BH.oM.Geometry;
 
 namespace BH.Adapter.Lusas
 {
@@ -80,10 +82,16 @@ namespace BH.Adapter.Lusas
 
                 if (string.IsNullOrEmpty(openingID))
                 {
-                    Engine.Base.Compute.RecordError("Could not find the ids for at least one Opening, that Opening not created.");
-                    return null;
+                    Engine.Base.Compute.RecordWarning("Could not find the ids for at least one Opening, Opening not created.");
+                    continue;
                 }
-                //Needed to create the opening in Lusas. 
+
+                if (Engine.Geometry.Query.IsCoplanar(opening.FitPlane(), panel.FitPlane(), Tolerance.MacroDistance))
+                {
+                    Engine.Base.Compute.RecordWarning("The geometry defining the Panel is not Coplanar with at least one Opening, Opening not created.");
+                    continue;   
+                }
+                
                 IFObjectSet lusasSelection = m_LusasApplication.newObjectSet();
                 IFGeometryData lusasGeometryData = m_LusasApplication.newGeometryData();
 
