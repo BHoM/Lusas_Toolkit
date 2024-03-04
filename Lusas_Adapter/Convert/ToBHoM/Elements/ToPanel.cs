@@ -50,7 +50,7 @@ namespace BH.Adapter.Adapters.Lusas
             Dictionary<string, MeshSettings2D> meshes)
 
         {
-            object[] lusasSurfaceLines = lusasSurface.getLOFs();
+            object[] lusasSurfaceLines = lusasSurface.getBoundaryLOFs(0);
 
             int n = lusasSurfaceLines.Length;
             HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasSurface, groupNames));
@@ -59,7 +59,7 @@ namespace BH.Adapter.Adapters.Lusas
 
             for (int i = 0; i < n; i++)
             {
-                Edge edge = GetEdge(lusasSurface, i, edges);
+                Edge edge = GetOuterEdge(lusasSurface, i, edges);
                 surfaceEdges.Add(edge);
             }
 
@@ -104,10 +104,10 @@ namespace BH.Adapter.Adapters.Lusas
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private static Edge GetEdge(IFSurface lusasSurf, int lineIndex, Dictionary<string, Edge> bars)
+        private static Edge GetOuterEdge(IFSurface lusasSurf, int lineIndex, Dictionary<string, Edge> bars)
         {
             Edge edge;
-            IFLine lusasEdge = lusasSurf.getLOFs()[lineIndex];
+            IFLine lusasEdge = lusasSurf.getBoundaryLOFs(0)[lineIndex];
             bars.TryGetValue(lusasEdge.getID().ToString(), out edge);
             return edge;
         }
