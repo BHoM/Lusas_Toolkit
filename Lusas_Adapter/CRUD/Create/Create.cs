@@ -40,8 +40,6 @@ using System.Linq;
 using BH.Engine.Base.Objects;
 using BH.Engine.Base;
 using BH.oM.Adapters.Lusas.Fragments;
-using System.Windows.Forms.VisualStyles;
-using BH.Engine.Spatial;
 
 namespace BH.Adapter.Lusas
 {
@@ -413,13 +411,13 @@ namespace BH.Adapter.Lusas
                                         //Engine.Base.Compute.RecordError("The geometry defining the Panel is not Coplanar with at least one of the Openings, and therefore the Panel will not be created.");
                                 }
                                 else
-                                    Engine.Base.Compute.RecordError("The geometry defining one of the Openings of the Panel is not Planar, and therefore the Panel will not be created.");
+                                    Engine.Base.Compute.RecordWarning("The geometry defining one of the Openings of the Panel is not Planar, and therefore the Opening will not be created.");
                             }
                             else
-                                Engine.Base.Compute.RecordError("One or more of the Internal Edges of the Panel are invalid.");
+                                Engine.Base.Compute.RecordWarning("One or more of the Internal Edges of the Panel are invalid, and therefore the Opening will not be created.");
                         }
                         else
-                            Engine.Base.Compute.RecordError("One of more of the Internal Edges of the Panel or Curves defining the Opening are null.");
+                            Engine.Base.Compute.RecordWarning("One of more of the Internal Edges of the Panel or Curves defining the Opening are null.");
                 }
 
 
