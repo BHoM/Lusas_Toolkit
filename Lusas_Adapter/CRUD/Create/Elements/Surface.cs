@@ -86,10 +86,10 @@ namespace BH.Adapter.Lusas
                     continue;
                 }
 
-                if (Engine.Geometry.Query.IsCoplanar(opening.FitPlane(), panel.FitPlane(), Tolerance.MacroDistance))
+                if (!Engine.Geometry.Query.IsCoplanar(opening.FitPlane(), panel.FitPlane(), Tolerance.MacroDistance))
                 {
                     Engine.Base.Compute.RecordWarning("The geometry defining the Panel is not Coplanar with at least one Opening, Opening not created.");
-                    continue;   
+                    continue;
                 }
                 
                 IFObjectSet lusasSelection = m_LusasApplication.newObjectSet();
