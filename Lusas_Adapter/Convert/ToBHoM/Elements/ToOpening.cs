@@ -59,9 +59,9 @@ namespace BH.Adapter.Adapters.Lusas
             for (int i = 0; i < lusasSurfaceLines.Length; i++)
             {
                 Edge edge = GetInnerEdge(lusasSurface, boundaryIndex, i, edges);
-                openingEdges.Add(edge.Curve);
+                openingEdges.Insert(0, edge.Curve);
             }
-       
+            
             Opening opening = Engine.Structure.Create.Opening(openingEdges);
 
             opening.Tags = tags;
