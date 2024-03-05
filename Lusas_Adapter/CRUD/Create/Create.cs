@@ -393,22 +393,14 @@ namespace BH.Adapter.Lusas
                             {
                                 if (Engine.Spatial.Query.IsPlanar(opening, false, Tolerance.MacroDistance)) //Check if this works.
                                 {
-                                    //if (Engine.Geometry.Query.IsCoplanar(opening.FitPlane(), panel.FitPlane(), Tolerance.MacroDistance)) //Fix this check. Move this check.
-                                    //{
                                         for (int i = 0; i < opening.Edges.Count; i++)
                                         {
-                                            //Need to have a think which errors should give a warning and which should give an error... 
-                                            //Not fun to have it structured like this. Surely there is a better way...
-
                                             if (!CheckPropertyError(opening, p => opening.Edges[i]) && Engine.Adapters.Lusas.Query.InvalidEdge(opening.Edges[i]))
                                                 break;
 
                                             if (i == opening.Edges.Count - 1)
                                                 validOpenings.Add(opening);
-                                        }
-                                    //}
-                                    //else
-                                        //Engine.Base.Compute.RecordError("The geometry defining the Panel is not Coplanar with at least one of the Openings, and therefore the Panel will not be created.");
+                                        }                               
                                 }
                                 else
                                     Engine.Base.Compute.RecordWarning("The geometry defining one of the Openings of the Panel is not Planar, and therefore the Opening will not be created.");
