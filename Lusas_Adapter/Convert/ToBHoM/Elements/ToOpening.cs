@@ -52,8 +52,6 @@ namespace BH.Adapter.Adapters.Lusas
 
             HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasSurface, groupNames));
 
-            //No create method taking edges. Using curves and joining them instead.
-            //FIX Why it does not give me a closed curve here.
             List<ICurve> openingEdges = new List<ICurve>();
 
             for (int i = 0; i < lusasSurfaceLines.Length; i++)
@@ -66,6 +64,7 @@ namespace BH.Adapter.Adapters.Lusas
 
             opening.Tags = tags;
 
+            //Takes both the ID of the surface and the index of the "hole" from Lusas.
             string adapterID = lusasSurface.getID().ToString() + "_" + boundaryIndex.ToString();
             opening.SetAdapterId(typeof(LusasId), adapterID);
 

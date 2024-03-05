@@ -126,7 +126,7 @@ namespace BH.Adapter.Adapters.Lusas
         private static Opening GetOpening(int surfaceID, int boundaryIndex, Dictionary<string, Opening> openings)
         {
             Opening opening;
-            openings.TryGetValue(surfaceID.ToString()+"_"+boundaryIndex.ToString(), out opening);
+            openings.TryGetValue(surfaceID.ToString() + "_" + boundaryIndex.ToString(), out opening);
             return opening;
         }
 
