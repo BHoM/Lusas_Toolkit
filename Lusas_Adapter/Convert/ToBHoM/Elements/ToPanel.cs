@@ -70,7 +70,7 @@ namespace BH.Adapter.Adapters.Lusas
 
             for (int i = 1; i < lusasSurface.countBoundaries(); i++)
             {
-                Opening opening = GetOpening(lusasSurface.getID(), i, openings);
+                Opening opening = GetOpening((int)lusasSurface.getID(), i, openings);
                 panelOpenings.Add(opening);
             }
 
