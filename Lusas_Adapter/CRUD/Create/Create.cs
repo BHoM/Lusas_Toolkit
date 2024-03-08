@@ -278,7 +278,7 @@ namespace BH.Adapter.Lusas
                                 {                                    
                                     if (panel.ExternalEdges.All(x => !Engine.Adapters.Lusas.Query.InvalidEdge(x)))
                                     {
-                                        if (Engine.Spatial.Query.IsPlanar(panel, true, Tolerance.MacroDistance))
+                                        if (Engine.Spatial.Query.IsPlanar(panel, true, m_mergeTolerance))
                                         {
                                             for (int i = 0; i < panel.ExternalEdges.Count; i++)
                                             {
@@ -391,7 +391,7 @@ namespace BH.Adapter.Lusas
                         {
                             if (opening.Edges.All(x => !Engine.Adapters.Lusas.Query.InvalidEdge(x)))
                             {
-                                if (Engine.Spatial.Query.IsPlanar(opening, false, Tolerance.MacroDistance)) //Check if this works.
+                                if (Engine.Spatial.Query.IsPlanar(opening, false, m_mergeTolerance)) //Check if this works.
                                 {
                                         for (int i = 0; i < opening.Edges.Count; i++)
                                         {
