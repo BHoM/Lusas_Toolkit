@@ -28,11 +28,8 @@ using BH.oM.Adapters.Lusas.Fragments;
 using BH.Engine.Base;
 using System.Linq;
 using System.Collections.Generic;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Windows.Forms.VisualStyles;
 using BH.Engine.Spatial;
 using BH.oM.Geometry;
-using System.Runtime.ExceptionServices;
 using BH.Engine.Geometry;
 
 namespace BH.Adapter.Lusas
