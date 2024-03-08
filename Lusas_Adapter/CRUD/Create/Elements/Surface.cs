@@ -82,7 +82,7 @@ namespace BH.Adapter.Lusas
 
                 if (string.IsNullOrEmpty(openingID))
                 {
-                    Engine.Base.Compute.RecordWarning("Could not find the ids for at least one Opening, Opening not created.");
+                    Engine.Base.Compute.RecordError($"Could not find the ids for at least one of the Openings on Surface {GetAdapterId<string>(panel)}, Opening not created.");
                     continue;
                 }
 

@@ -403,13 +403,13 @@ namespace BH.Adapter.Lusas
                                         }                               
                                 }
                                 else
-                                    Engine.Base.Compute.RecordWarning("The geometry defining one of the Openings of the Panel is not Planar, and therefore the Opening will not be created.");
+                                    Engine.Base.Compute.RecordError("The geometry defining one of the Openings of the Panel is not Planar, and therefore the Opening will not be created.");
                             }
                             else
-                                Engine.Base.Compute.RecordWarning("One or more of the Internal Edges of the Panel are invalid, and therefore the Opening will not be created.");
+                                Engine.Base.Compute.RecordError("One or more of the Internal Edges of the Panel are invalid, and therefore the Opening will not be created.");
                         }
                         else
-                            Engine.Base.Compute.RecordWarning("One of more of the Internal Edges of the Panel or Curves defining the Opening are null.");
+                            Engine.Base.Compute.RecordError("One of more of the Internal Edges of the Panel or Curves defining the Opening are null.");
                 }
 
 
