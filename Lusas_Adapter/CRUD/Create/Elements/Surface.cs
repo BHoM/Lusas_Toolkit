@@ -32,6 +32,8 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Windows.Forms.VisualStyles;
 using BH.Engine.Spatial;
 using BH.oM.Geometry;
+using System.Runtime.ExceptionServices;
+using BH.Engine.Geometry;
 
 namespace BH.Adapter.Lusas
 {
@@ -86,9 +88,17 @@ namespace BH.Adapter.Lusas
                     continue;
                 }
 
+
+                if (EdgeIntersection(opening.Edges, panel.ExternalEdges))
+                {
+                    Engine.Base.Compute.RecordError($"At least one Edge defining the Panel {GetAdapterId<string>(panel)} intersects with at least one Edge defining the Opening {GetAdapterId<string>(opening)}, Opening not created.");
+                    continue;
+                }
+                   
+
                 if (!Engine.Geometry.Query.IsCoplanar(opening.FitPlane(), panel.FitPlane(), m_mergeTolerance))
                 {
-                    Engine.Base.Compute.RecordError("The geometry defining the Panel is not Coplanar with at least one Opening, Opening not created.");
+                    Engine.Base.Compute.RecordError($"The geometry defining the Panel {GetAdapterId<string>(panel)} is not Coplanar the Opening {GetAdapterId<string>(opening)}, Opening not created.");
                     continue;
                 }
                 
@@ -143,6 +153,21 @@ namespace BH.Adapter.Lusas
         }
 
         /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private static bool EdgeIntersection(List<Edge> openingEdges, List<Edge> panelEdges)
+        {
+            foreach (Edge openingEdge in openingEdges)
+            {
+                foreach (Edge panelEdge in panelEdges)
+                {
+                    if (openingEdge.Curve.ICurveIntersections(panelEdge.Curve).Count != 0)
+                        return true;
+                }
+            }
+            return false;
+        }
 
         private IFSurface CreateSurface(Opening opening)
         {
