@@ -86,9 +86,9 @@ namespace BH.Adapter.Lusas
                     continue;
                 }
 
-                if (!Engine.Geometry.Query.IsCoplanar(opening.FitPlane(), panel.FitPlane(), Tolerance.MacroDistance))
+                if (!Engine.Geometry.Query.IsCoplanar(opening.FitPlane(), panel.FitPlane(), m_mergeTolerance))
                 {
-                    Engine.Base.Compute.RecordWarning("The geometry defining the Panel is not Coplanar with at least one Opening, Opening not created.");
+                    Engine.Base.Compute.RecordError("The geometry defining the Panel is not Coplanar with at least one Opening, Opening not created.");
                     continue;
                 }
                 
@@ -154,7 +154,7 @@ namespace BH.Adapter.Lusas
 
                 if (string.IsNullOrEmpty(edgeId))
                 {
-                    Engine.Base.Compute.RecordError("Could not find the ids for at least one Edge, Panel not created.");
+                    Engine.Base.Compute.RecordError("Could not find the ids for at least one Edge, Opening not created.");
                     return null;
                 }
                 else
@@ -165,7 +165,7 @@ namespace BH.Adapter.Lusas
 
             IFSurface lusasSurface = d_LusasData.createSurfaceBy(edges.ToArray());
 
-            if (lusasSurface != null) //Is this neccesary ?
+            if (lusasSurface != null)
             {
                 long adapterIdName = lusasSurface.getID();
                 opening.SetAdapterId(typeof(LusasId), adapterIdName);
