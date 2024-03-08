@@ -82,6 +82,10 @@ namespace BH.Adapter.Lusas
                 {
                     success = CreateCollection(objects as IEnumerable<Edge>);
                 }
+                else if (objects.First() is Opening)
+                {
+                    success = CreateCollection(objects as IEnumerable<Opening>);
+                }
                 else if (objects.First() is Point)
                 {
                     success = CreateCollection(objects as IEnumerable<Point>);
@@ -271,12 +275,10 @@ namespace BH.Adapter.Lusas
                         if (CheckPropertyError(panel, p => p.ExternalEdges))
                             if (CheckPropertyError(panel.ExternalEdges, e => e.Select(x => x.Curve)))
                                 if (panel.ExternalEdges.All(x => x != null) && panel.ExternalEdges.Select(x => x.Curve).All(y => y != null))
-                                {
-                                    if (panel.Openings.Count > 0)
-                                        Engine.Base.Compute.RecordWarning("Lusas_Toolkit does not support Panels with Openings. The Panel will be pushed if valid, the Openings will not be pushed.");
+                                {                                    
                                     if (panel.ExternalEdges.All(x => !Engine.Adapters.Lusas.Query.InvalidEdge(x)))
                                     {
-                                        if (Engine.Spatial.Query.IsPlanar(panel, false, Tolerance.MacroDistance))
+                                        if (Engine.Spatial.Query.IsPlanar(panel, true, m_mergeTolerance))
                                         {
                                             for (int i = 0; i < panel.ExternalEdges.Count; i++)
                                             {
@@ -369,6 +371,53 @@ namespace BH.Adapter.Lusas
                 }
             }
 
+            return true;
+        }
+
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<Opening> openings)
+        {
+            if (openings != null)
+            {
+                CreateTags(openings);
+
+                List<Opening> validOpenings = new List<Opening>();
+
+                foreach (Opening opening in openings)
+                {
+                    if (CheckPropertyError(opening, p => p.Edges))
+                        if (CheckPropertyError(opening.Edges, e => e.Select(x => x.Curve)))
+                        {
+                            if (opening.Edges.All(x => !Engine.Adapters.Lusas.Query.InvalidEdge(x)))
+                            {
+                                if (Engine.Spatial.Query.IsPlanar(opening, false, m_mergeTolerance)) //Check if this works.
+                                {
+                                        for (int i = 0; i < opening.Edges.Count; i++)
+                                        {
+                                            if (!CheckPropertyError(opening, p => opening.Edges[i]) && Engine.Adapters.Lusas.Query.InvalidEdge(opening.Edges[i]))
+                                                break;
+
+                                            if (i == opening.Edges.Count - 1)
+                                                validOpenings.Add(opening);
+                                        }                               
+                                }
+                                else
+                                    Engine.Base.Compute.RecordError("The geometry defining one of the Openings of the Panel is not Planar, and therefore the Opening will not be created.");
+                            }
+                            else
+                                Engine.Base.Compute.RecordError("One or more of the Internal Edges of the Panel are invalid, and therefore the Opening will not be created.");
+                        }
+                        else
+                            Engine.Base.Compute.RecordError("One of more of the Internal Edges of the Panel or Curves defining the Opening are null.");
+                }
+
+
+                IFSurface lusasSurface = null;
+
+                foreach (Opening validOpening in validOpenings)
+                    lusasSurface = CreateSurface(validOpening);
+            }
             return true;
         }
 

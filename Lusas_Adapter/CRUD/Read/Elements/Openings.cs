@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
@@ -30,6 +30,8 @@ using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.MaterialFragments;
 using BH.Engine.Adapter;
 using Lusas.LPI;
+using BH.oM.Physical.Materials;
+using System.Windows.Forms.VisualStyles;
 
 namespace BH.Adapter.Lusas
 {
@@ -51,57 +53,35 @@ namespace BH.Adapter.Lusas
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private List<Panel> ReadPanels(List<string> ids = null)
+        private List<Opening> ReadOpenings(List<string> ids = null)
         {
             object[] lusasSurfaces = d_LusasData.getObjects("Surface");
-            List<Panel> panels = new List<Panel>();
+            List<Opening> openings = new List<Opening>();
 
             if (!(lusasSurfaces.Count() == 0))
             {
                 IEnumerable<Edge> edgesList = GetCachedOrRead<Edge>();
                 Dictionary<string, Edge> edges = edgesList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
 
-                IEnumerable<Opening> openingsList = GetCachedOrRead<Opening>();
-                Dictionary<string, Opening> openings = openingsList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
-
                 HashSet<string> groupNames = ReadTags();
 
-                IEnumerable<IMaterialFragment> materialList = GetCachedOrRead<IMaterialFragment>();
-                Dictionary<string, IMaterialFragment> materials = materialList.ToDictionary(x => x.Name.ToString());
-
-                IEnumerable<ISurfaceProperty> sectionPropertiesList = GetCachedOrRead<ISurfaceProperty>();
-                Dictionary<string, ISurfaceProperty> sectionProperties = sectionPropertiesList.ToDictionary(x => x.Name.ToString());
-
-                IEnumerable<Constraint4DOF> supportsList = GetCachedOrRead<Constraint4DOF>();
-                Dictionary<string, Constraint4DOF> supports = supportsList.ToDictionary(x => x.Name);
-
-                List<MeshSettings2D> meshesList = GetCachedOrRead<MeshSettings2D>();
-                Dictionary<string, MeshSettings2D> meshes = meshesList.ToDictionary(x => x.Name.ToString());
 
                 for (int i = 0; i < lusasSurfaces.Count(); i++)
                 {
                     IFSurface lusasSurface = (IFSurface)lusasSurfaces[i];
-                    Panel panel = Adapters.Lusas.Convert.ToPanel(lusasSurface,
-                        edges,
-                        openings,
-                        groupNames,
-                        sectionProperties,
-                        materials,
-                        supports,
-                        meshes);
+                    for (int j = 1; j < lusasSurface.countBoundaries(); j++)
+                    {
+                        Opening opening = Adapters.Lusas.Convert.ToOpening(lusasSurface, j, edges, groupNames);
 
-                    panels.Add(panel);
+                        openings.Add(opening);
+                    }
                 }
             }
 
-            return panels;
+            return openings;
         }
 
         /***************************************************/
 
     }
 }
-
-
-
-

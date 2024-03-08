@@ -594,6 +594,7 @@
     <Compile Include="Convert\ToBHoM\Elements\ToBar.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToEdge.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToNode.cs" />
+    <Compile Include="Convert\ToBHoM\Elements\ToOpening.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToPanel.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToPoint.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToAreaUniformTemperatureLoad.cs" />
@@ -657,6 +658,7 @@
     <Compile Include="CRUD\Delete\Property\SectionProperties.cs" />
     <Compile Include="CRUD\Delete\Property\SurfaceProperties.cs" />
     <Compile Include="CRUD\Delete\Delete.cs" />
+    <Compile Include="CRUD\Read\Elements\Openings.cs" />
     <Compile Include="CRUD\Read\Results\BarResults.cs" />
     <Compile Include="CRUD\Read\Results\MeshResults.cs" />
     <Compile Include="CRUD\Read\Results\NodeResults.cs" />

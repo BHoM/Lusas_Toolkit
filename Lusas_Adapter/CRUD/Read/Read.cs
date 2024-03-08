@@ -71,6 +71,8 @@ namespace BH.Adapter.Lusas
                 return ReadEdges(ids as dynamic);
             else if (type == typeof(Point))
                 return ReadPoints(ids as dynamic);
+            else if (type == typeof(Opening))
+                return ReadOpenings(ids as dynamic);
             else if (type == typeof(Constraint6DOF))
                 return Read6DOFConstraints(ids as dynamic);
             else if (type == typeof(Constraint4DOF))
