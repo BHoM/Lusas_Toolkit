@@ -176,6 +176,10 @@ namespace BH.Adapter.Lusas
                         m_mergeTolerance = lusasSettings.MergeTolerance;
                         d_LusasData.getOptions().setDouble("TOLMRG", m_mergeTolerance);
                     }
+                    else
+                    {
+                        Engine.Base.Compute.RecordWarning($"A merge tolerance has not been set and the default value of {Tolerance.Distance} has been used.");
+                    }
 
                     if (lusasSettings != null) { m_g = lusasSettings.StandardGravity; }
                 }
