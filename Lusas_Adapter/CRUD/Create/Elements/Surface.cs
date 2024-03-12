@@ -88,14 +88,14 @@ namespace BH.Adapter.Lusas
 
                 if (EdgeIntersection(opening.Edges, panel.ExternalEdges))
                 {
-                    Engine.Base.Compute.RecordError($"At least one Edge defining the Panel {lusasSurface.getID()} intersects with at least one Edge defining the Opening {openingID}, Opening not created.");
+                    Engine.Base.Compute.RecordError($"At least one Edge defining the Panel {lusasSurface.getID()} intersects with at least one Edge defining the Opening, Opening not created.");
                     continue;
                 }
                    
 
                 if (!Engine.Geometry.Query.IsCoplanar(opening.FitPlane(), panel.FitPlane(), m_mergeTolerance))
                 {
-                    Engine.Base.Compute.RecordError($"The geometry defining the Panel {lusasSurface.getID()} is not Coplanar with the Opening {openingID}, Opening not created.");
+                    Engine.Base.Compute.RecordError($"The geometry defining the Panel {lusasSurface.getID()} is not Coplanar with the Opening, Opening not created.");
                     continue;
                 }
                 
