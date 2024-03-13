@@ -88,7 +88,7 @@ namespace BH.Adapter.Lusas
 
                 if (EdgeIntersection(opening.Edges, panel.ExternalEdges))
                 {
-                    Engine.Base.Compute.RecordError($"At least one Edge defining the Panel {lusasSurface.getID()} intersects with at least one Edge defining the Opening, Opening not created.");
+                    Engine.Base.Compute.RecordError($"At least one Edge defining Panel {lusasSurface.getID()} intersects with at least one Edge defining an Opening, this Opening has not been created.");
                     continue;
                 }
                    
