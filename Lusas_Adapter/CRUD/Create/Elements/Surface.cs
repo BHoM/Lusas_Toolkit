@@ -95,7 +95,7 @@ namespace BH.Adapter.Lusas
 
                 if (!Engine.Geometry.Query.IsCoplanar(opening.FitPlane(), panel.FitPlane(), m_mergeTolerance))
                 {
-                    Engine.Base.Compute.RecordError($"The geometry defining the Panel {lusasSurface.getID()} is not Coplanar with the Opening, Opening not created.");
+                    Engine.Base.Compute.RecordError($"The geometry defining Panel {lusasSurface.getID()} is not Coplanar with an Opening, this Opening has not been created.");
                     continue;
                 }
                 
