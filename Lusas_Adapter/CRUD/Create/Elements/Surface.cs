@@ -81,7 +81,7 @@ namespace BH.Adapter.Lusas
 
                 if (string.IsNullOrEmpty(openingID))
                 {
-                    Engine.Base.Compute.RecordError($"Could not find the ids for at least one of the Openings on Surface {lusasSurface.getID()}, Opening not created.");
+                    Engine.Base.Compute.RecordError($"Could not find the ids for at least one of the Openings on Panel {lusasSurface.getID()}, this Opening has not been created.");
                     continue;
                 }
 
