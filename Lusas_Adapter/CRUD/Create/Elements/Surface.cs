@@ -81,21 +81,21 @@ namespace BH.Adapter.Lusas
 
                 if (string.IsNullOrEmpty(openingID))
                 {
-                    Engine.Base.Compute.RecordError($"Could not find the ids for at least one of the Openings on Surface {GetAdapterId<string>(panel)}, Opening not created.");
+                    Engine.Base.Compute.RecordError($"Could not find the ids for at least one of the Openings on Panel {lusasSurface.getID()}, this Opening has not been created.");
                     continue;
                 }
 
 
                 if (EdgeIntersection(opening.Edges, panel.ExternalEdges))
                 {
-                    Engine.Base.Compute.RecordError($"At least one Edge defining the Panel {GetAdapterId<string>(panel)} intersects with at least one Edge defining the Opening {GetAdapterId<string>(opening)}, Opening not created.");
+                    Engine.Base.Compute.RecordError($"At least one Edge defining Panel {lusasSurface.getID()} intersects with at least one Edge defining an Opening, this Opening has not been created.");
                     continue;
                 }
                    
 
                 if (!Engine.Geometry.Query.IsCoplanar(opening.FitPlane(), panel.FitPlane(), m_mergeTolerance))
                 {
-                    Engine.Base.Compute.RecordError($"The geometry defining the Panel {GetAdapterId<string>(panel)} is not Coplanar the Opening {GetAdapterId<string>(opening)}, Opening not created.");
+                    Engine.Base.Compute.RecordError($"The geometry defining Panel {lusasSurface.getID()} is not Coplanar with an Opening, this Opening has not been created.");
                     continue;
                 }
                 
@@ -148,10 +148,6 @@ namespace BH.Adapter.Lusas
 
             return lusasSurface;
         }
-
-        /***************************************************/
-        /**** Private Methods                           ****/
-        /***************************************************/
 
         private static bool EdgeIntersection(List<Edge> openingEdges, List<Edge> panelEdges)
         {

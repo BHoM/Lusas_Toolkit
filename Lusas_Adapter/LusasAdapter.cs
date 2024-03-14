@@ -176,6 +176,10 @@ namespace BH.Adapter.Lusas
                         m_mergeTolerance = lusasSettings.MergeTolerance;
                         d_LusasData.getOptions().setDouble("TOLMRG", m_mergeTolerance);
                     }
+                    else
+                    {
+                        Engine.Base.Compute.RecordWarning($"A merge tolerance has not been set and the default value of {Tolerance.Distance} has been used.");
+                    }
 
                     if (lusasSettings != null) { m_g = lusasSettings.StandardGravity; }
                 }
@@ -198,7 +202,7 @@ namespace BH.Adapter.Lusas
         //Add any comlink object as a private field here, example named:
 
         private string m_directory;
-        public double m_mergeTolerance = double.NaN;
+        public double m_mergeTolerance = Tolerance.Distance;
         public double m_g = 9.80665;
         public LusasWinApp m_LusasApplication;
         public IFDatabase d_LusasData;
