@@ -35,7 +35,7 @@ namespace BH.Engine.Adapters.Lusas
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static List<Point> GetDistinctPoints(IEnumerable<Point> points)
+        public static List<Point> GetDistinctPoints(this IEnumerable<Point> points)
         {
             List<Point> distinctPoints = points.GroupBy(m => new
             {

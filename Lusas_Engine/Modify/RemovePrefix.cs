@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Base.Attributes;
+
 namespace BH.Engine.Adapters.Lusas
 {
     public static partial class Modify
@@ -28,6 +30,7 @@ namespace BH.Engine.Adapters.Lusas
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [ToBeRemoved("7.1","Method is no longer used or required.")]
         public static string RemovePrefix(this string name, string forRemoval)
         {
             string adapterID;

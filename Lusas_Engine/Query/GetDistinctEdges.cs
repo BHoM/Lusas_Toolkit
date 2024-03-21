@@ -35,7 +35,7 @@ namespace BH.Engine.Adapters.Lusas
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static List<Edge> GetDistinctEdges(IEnumerable<Edge> edges)
+        public static List<Edge> GetDistinctEdges(this IEnumerable<Edge> edges)
         {
             List<Edge> distinctEdges = edges.GroupBy(m => new
             {
