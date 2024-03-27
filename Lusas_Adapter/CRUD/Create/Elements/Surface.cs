@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -28,6 +28,9 @@ using BH.oM.Adapters.Lusas.Fragments;
 using BH.Engine.Base;
 using System.Linq;
 using System.Collections.Generic;
+using BH.Engine.Spatial;
+using BH.oM.Geometry;
+using BH.Engine.Geometry;
 
 namespace BH.Adapter.Lusas
 {
@@ -39,6 +42,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV191Adapter
 #elif Debug200 || Release200
     public partial class LusasV200Adapter
+#elif Debug210 || Release210
+    public partial class LusasV210Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -51,7 +56,7 @@ namespace BH.Adapter.Lusas
         {
             List<IFLine> edges = new List<IFLine>();
 
-            foreach(Edge edge in panel.ExternalEdges)
+            foreach (Edge edge in panel.ExternalEdges)
             {
                 string edgeId = GetAdapterId<string>(edge);
 
@@ -68,7 +73,47 @@ namespace BH.Adapter.Lusas
 
             IFSurface lusasSurface = d_LusasData.createSurfaceBy(edges.ToArray());
 
-            if (lusasSurface != null)
+            List<IFSurface> openings = new List<IFSurface>();
+
+            foreach (Opening opening in panel.Openings)
+               {
+                string openingID = GetAdapterId<string>(opening);
+
+                if (string.IsNullOrEmpty(openingID))
+                {
+                    Engine.Base.Compute.RecordError($"Could not find the ids for at least one of the Openings on Panel {lusasSurface.getID()}, this Opening has not been created.");
+                    continue;
+                }
+
+
+                if (EdgeIntersection(opening.Edges, panel.ExternalEdges))
+                {
+                    Engine.Base.Compute.RecordError($"At least one Edge defining Panel {lusasSurface.getID()} intersects with at least one Edge defining an Opening, this Opening has not been created.");
+                    continue;
+                }
+                   
+
+                if (!Engine.Geometry.Query.IsCoplanar(opening.FitPlane(), panel.FitPlane(), m_mergeTolerance))
+                {
+                    Engine.Base.Compute.RecordError($"The geometry defining Panel {lusasSurface.getID()} is not Coplanar with an Opening, this Opening has not been created.");
+                    continue;
+                }
+                
+                IFObjectSet lusasSelection = m_LusasApplication.newObjectSet();
+                IFGeometryData lusasGeometryData = m_LusasApplication.newGeometryData();
+
+                lusasGeometryData.setAllDefaults();
+                lusasGeometryData.trimOuterBoundaryOff();
+                lusasGeometryData.trimDeleteOuterBoundaryOff();
+                lusasGeometryData.trimDeleteTrimmingLinesOn();
+
+                lusasSelection.add(lusasSurface, "Surface");
+                lusasSelection.add(d_LusasData.getSurfaceByNumber(openingID), "Surface");
+
+                lusasSelection.trim(lusasGeometryData);
+            }
+
+                if (lusasSurface != null)
             {
                 long adapterIdName = lusasSurface.getID();
                 panel.SetAdapterId(typeof(LusasId), adapterIdName);
@@ -104,9 +149,59 @@ namespace BH.Adapter.Lusas
             return lusasSurface;
         }
 
+        private static bool EdgeIntersection(List<Edge> openingEdges, List<Edge> panelEdges)
+        {
+            foreach (Edge openingEdge in openingEdges)
+            {
+                foreach (Edge panelEdge in panelEdges)
+                {
+                    if (openingEdge.Curve.ICurveIntersections(panelEdge.Curve).Count != 0)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        private IFSurface CreateSurface(Opening opening)
+        {
+            List<IFLine> edges = new List<IFLine>();
+
+            foreach (Edge edge in opening.Edges)
+            {
+                string edgeId = GetAdapterId<string>(edge);
+
+                if (string.IsNullOrEmpty(edgeId))
+                {
+                    Engine.Base.Compute.RecordError("Could not find the ids for at least one Edge, Opening not created.");
+                    return null;
+                }
+                else
+                {
+                    edges.Add(d_LusasData.getLineByNumber(edgeId));
+                }
+            }
+
+            IFSurface lusasSurface = d_LusasData.createSurfaceBy(edges.ToArray());
+
+            if (lusasSurface != null)
+            {
+                long adapterIdName = lusasSurface.getID();
+                opening.SetAdapterId(typeof(LusasId), adapterIdName);
+
+                if (!(opening.Tags.Count == 0))
+                {
+                    AssignObjectSet(lusasSurface, opening.Tags);
+                }
+
+            }
+
+            return lusasSurface;
+        }
+
         /***************************************************/
 
     }
 }
+
 
 

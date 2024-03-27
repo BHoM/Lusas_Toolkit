@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
@@ -22,12 +22,16 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using BH.Engine.Adapter;
-using BH.oM.Adapters.Lusas;
-using BH.oM.Geometry;
+using BH.oM.Adapters.Lusas.Fragments;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Loads;
+using BH.oM.Structure.SurfaceProperties;
+using BH.oM.Structure.Constraints;
+using BH.oM.Geometry;
+using BH.oM.Structure.MaterialFragments;
 using Lusas.LPI;
+using BH.oM.Adapters.Lusas;
+using BH.Engine.Adapter;
+using BH.Engine.Base;
 
 namespace BH.Adapter.Adapters.Lusas
 {
@@ -37,44 +41,49 @@ namespace BH.Adapter.Adapters.Lusas
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static PointDisplacement ToPointDisplacement(IFLoading lusasPrescribedDisplacement,
-            IEnumerable<IFAssignment> lusasAssignments, Dictionary<string, Node> nodes)
+        public static Opening ToOpening(this IFSurface lusasSurface,
+            int boundaryIndex,
+            Dictionary<string, Edge> edges,
+            HashSet<string> groupNames
+            )
+
         {
-            IFLoadcase assignedLoadcase = (IFLoadcase)lusasAssignments.First().getAssignmentLoadset();
-            Loadcase loadcase = ToLoadcase(assignedLoadcase);
+            object[] lusasSurfaceLines = lusasSurface.getBoundaryLOFs(boundaryIndex);
 
-            IEnumerable<Node> assignedNodes = GetPointAssignments(lusasAssignments, nodes);
+            HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasSurface, groupNames));
 
-            Vector translationVector = new Vector
+            List<ICurve> openingEdges = new List<ICurve>();
+
+            for (int i = 0; i < lusasSurfaceLines.Length; i++)
             {
-                X = lusasPrescribedDisplacement.getValue("U"),
-                Y = lusasPrescribedDisplacement.getValue("V"),
-                Z = lusasPrescribedDisplacement.getValue("W")
-            };
+                Edge edge = GetInnerEdge(lusasSurface, boundaryIndex, i, edges);
+                openingEdges.Insert(0, edge.Curve);
+            }
+            
+            Opening opening = Engine.Structure.Create.Opening(openingEdges);
 
-            Vector rotationVector = new Vector
-            {
-                X = lusasPrescribedDisplacement.getValue("THX"),
-                Y = lusasPrescribedDisplacement.getValue("THY"),
-                Z = lusasPrescribedDisplacement.getValue("THZ")
-            };
+            opening.Tags = tags;
 
-            PointDisplacement pointDisplacement = BH.Engine.Structure.Create.PointDisplacement(
-                loadcase, assignedNodes, translationVector, rotationVector, LoadAxis.Global,
-                GetName(lusasPrescribedDisplacement));
+            //Takes both the ID of the surface and the index of the "hole" from Lusas.
+            string adapterID = lusasSurface.getID().ToString() + "_" + boundaryIndex.ToString();
+            opening.SetAdapterId(typeof(LusasId), adapterID);
 
-            long adapterNameId = lusasPrescribedDisplacement.getID();
-            pointDisplacement.SetAdapterId(typeof(LusasId), adapterNameId);
-            // Needs to be a bit here that determines whether it is global or local - actually this cannot be done as the 
-            //attribute is applied to a group, and within the group the axis could local or global
-
-            return pointDisplacement;
+            return opening;
         }
 
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+       private static Edge GetInnerEdge(IFSurface lusasSurf, int boundaryIndex, int lineIndex, Dictionary<string, Edge> edges)
+        {
+            Edge edge;
+            IFLine lusasEdge = lusasSurf.getBoundaryLOFs(boundaryIndex)[lineIndex];
+            edges.TryGetValue(lusasEdge.getID().ToString(), out edge);
+            return edge;
+        }
+ 
         /***************************************************/
 
     }
 }
-
-
-

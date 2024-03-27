@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -50,6 +50,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV191Adapter : BHoMAdapter
 #elif Debug200 || Release200
     public partial class LusasV200Adapter : BHoMAdapter
+#elif Debug210 || Release210
+    public partial class LusasV210Adapter : BHoMAdapter
 #else
     public partial class LusasV17Adapter : BHoMAdapter
 #endif
@@ -58,7 +60,6 @@ namespace BH.Adapter.Lusas
         /**** Constructors                              ****/
         /***************************************************/
 #if Debug18 || Release18
-        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV18Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
         [Description("Adapter to connect to a Lusas .mdl file.")]
         [Input("filePath", "Path to the Lusas .mdl file to be used.")]
         [Input("lusasSettings", "General settings that are applicable to all actions performed by this adapter, e.g. merge tolerance to be used.")]
@@ -66,7 +67,6 @@ namespace BH.Adapter.Lusas
         [Output("adapter", "Adapter for Lusas.")]
         public LusasV18Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #elif Debug19 || Release19
-        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV19Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
         [Description("Adapter to connect to a Lusas .mdl file.")]
         [Input("filePath", "Path to the Lusas .mdl file to be used.")]
         [Input("lusasSettings", "General settings that are applicable to all actions performed by this adapter, e.g. merge tolerance to be used.")]
@@ -74,7 +74,6 @@ namespace BH.Adapter.Lusas
         [Output("adapter", "Adapter for Lusas.")]
         public LusasV19Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #elif Debug191 || Release191
-        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV191Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
         [Description("Adapter to connect to a Lusas .mdl file.")]
         [Input("filePath", "Path to the Lusas .mdl file to be used.")]
         [Input("lusasSettings", "General settings that are applicable to all actions performed by this adapter, e.g. merge tolerance to be used.")]
@@ -82,15 +81,20 @@ namespace BH.Adapter.Lusas
         [Output("adapter", "Adapter for Lusas.")]
         public LusasV191Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #elif Debug200 || Release200
-        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV200Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
         [Description("Adapter to connect to a Lusas .mdl file.")]
         [Input("filePath", "Path to the Lusas .mdl file to be used.")]
         [Input("lusasSettings", "General settings that are applicable to all actions performed by this adapter, e.g. merge tolerance to be used.")]
         [Input("active", "Initiate the adapter by setting to True. Open a session of Lusas and close any dialogue boxes before setting to True.")]
         [Output("adapter", "Adapter for Lusas.")]
         public LusasV200Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
+#elif Debug210 || Release210
+        [Description("Adapter to connect to a Lusas .mdl file.")]
+        [Input("filePath", "Path to the Lusas .mdl file to be used.")]
+        [Input("lusasSettings", "General settings that are applicable to all actions performed by this adapter, e.g. merge tolerance to be used.")]
+        [Input("active", "Initiate the adapter by setting to True. Open a session of Lusas and close any dialogue boxes before setting to True.")]
+        [Output("adapter", "Adapter for Lusas.")]
+        public LusasV210Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #else
-        [PreviousVersion("7.0", "BH.Adapter.Lusas.LusasV17Adapter(System.String, BH.oM.Adapters.Lusas.LusasConfig, System.Boolean)")]
         [Description("Adapter to connect to a Lusas .mdl file.")]
         [Input("filePath", "Path to Lusas the .mdl file to be used.")]
         [Input("lusasSettings", "General settings that are applicable to all actions performed by this adapter, e.g. merge tolerance to be used.")]
@@ -124,7 +128,8 @@ namespace BH.Adapter.Lusas
 
                 DependencyTypes = new Dictionary<Type, List<Type>>
                 {
-                    {typeof(Panel), new List<Type> { typeof(ISurfaceProperty), typeof(Edge)} },
+                    {typeof(Panel), new List<Type> { typeof(ISurfaceProperty), typeof(Edge), typeof(Opening) } },
+                    {typeof(Opening), new List<Type> {typeof(Edge) } },
                     {typeof(Edge), new List<Type> { typeof(Constraint4DOF), typeof(Constraint6DOF) } },
                     {typeof(Bar), new List<Type> { typeof(Node) , typeof(ISectionProperty), typeof(Constraint4DOF) } },
                     {typeof(Node), new List<Type> { typeof(Constraint6DOF) } },
@@ -152,6 +157,8 @@ namespace BH.Adapter.Lusas
                     System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.19.1");
 #elif Debug200 || Release200
                     System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.20.0");
+#elif Debug210 || Release210
+                    System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.21.0");
 #endif
                     m_LusasApplication.enableUI(true);
                     m_LusasApplication.setVisible(true);
@@ -168,6 +175,10 @@ namespace BH.Adapter.Lusas
                     {
                         m_mergeTolerance = lusasSettings.MergeTolerance;
                         d_LusasData.getOptions().setDouble("TOLMRG", m_mergeTolerance);
+                    }
+                    else
+                    {
+                        Engine.Base.Compute.RecordWarning($"A merge tolerance has not been set and the default value of {Tolerance.Distance} has been used.");
                     }
 
                     if (lusasSettings != null) { m_g = lusasSettings.StandardGravity; }
@@ -191,7 +202,7 @@ namespace BH.Adapter.Lusas
         //Add any comlink object as a private field here, example named:
 
         private string m_directory;
-        public double m_mergeTolerance = double.NaN;
+        public double m_mergeTolerance = Tolerance.Distance;
         public double m_g = 9.80665;
         public LusasWinApp m_LusasApplication;
         public IFDatabase d_LusasData;
@@ -204,6 +215,7 @@ namespace BH.Adapter.Lusas
 
     }
 }
+
 
 
 

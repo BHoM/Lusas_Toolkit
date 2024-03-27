@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -43,7 +43,7 @@ namespace BH.Adapter.Adapters.Lusas
             double value = 0;
             Split1D splitMethod = Split1D.Automatic;
 
-#if Debug191 || Release191 || Debug200 || Release200
+#if Debug191 || Release191 || Debug200 || Release200 || Debug210 || Release210
             object meshTypeReference = 0;
             lusasMeshLine.getMeshDivisions(ref meshTypeReference);
             int meshType = (int)meshTypeReference;
@@ -87,6 +87,7 @@ namespace BH.Adapter.Adapters.Lusas
 
     }
 }
+
 
 
 

@@ -1,6 +1,6 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -20,6 +20,19 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System.Collections.Generic;
+using System.Linq;
+using BH.oM.Adapters.Lusas;
+using BH.oM.Adapters.Lusas.Fragments;
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.Constraints;
+using BH.oM.Structure.SurfaceProperties;
+using BH.oM.Structure.MaterialFragments;
+using BH.Engine.Adapter;
+using Lusas.LPI;
+using BH.oM.Physical.Materials;
+using System.Windows.Forms.VisualStyles;
+
 namespace BH.Adapter.Lusas
 {
 #if Debug18 || Release18
@@ -30,6 +43,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV191Adapter
 #elif Debug200 || Release200
     public partial class LusasV200Adapter
+#elif Debug210 || Release210
+    public partial class LusasV210Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -38,28 +53,35 @@ namespace BH.Adapter.Lusas
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private void ReduceRuntime(bool active)
+        private List<Opening> ReadOpenings(List<string> ids = null)
         {
-            //    if(active)
-            //    {
-            //        m_LusasApplication.enableUI(false);
-            //        m_LusasApplication.enableTrees(false);
-            //        m_LusasApplication.suppressMessages(1);
-            //        m_LusasApplication.setManualRefresh(true);
-            //        d_LusasData.beginCommandBatch("label", "undoable");
-            //    }
-            //    else
-            //    {
-            //        d_LusasData.closeCommandBatch();
-            //        m_LusasApplication.enableTrees(true);
-            //        m_LusasApplication.enableUI(true);
-            //        m_LusasApplication.suppressMessages(0);
-            //        m_LusasApplication.setManualRefresh(false);
-            //        m_LusasApplication.updateAllViews();
-            //    }
+            object[] lusasSurfaces = d_LusasData.getObjects("Surface");
+            List<Opening> openings = new List<Opening>();
+
+            if (!(lusasSurfaces.Count() == 0))
+            {
+                IEnumerable<Edge> edgesList = GetCachedOrRead<Edge>();
+                Dictionary<string, Edge> edges = edgesList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
+
+                HashSet<string> groupNames = ReadTags();
+
+
+                for (int i = 0; i < lusasSurfaces.Count(); i++)
+                {
+                    IFSurface lusasSurface = (IFSurface)lusasSurfaces[i];
+                    for (int j = 1; j < lusasSurface.countBoundaries(); j++)
+                    {
+                        Opening opening = Adapters.Lusas.Convert.ToOpening(lusasSurface, j, edges, groupNames);
+
+                        openings.Add(opening);
+                    }
+                }
+            }
+
+            return openings;
         }
+
+        /***************************************************/
+
     }
 }
-
-
-

@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -32,7 +32,6 @@ namespace BH.Engine.Adapters.Lusas
         /****           Public Constructors             ****/
         /***************************************************/
 
-        [PreviousVersion("7.0", "BH.Engine.Adapters.Lusas.Create.LusasConfig(BH.oM.Adapters.Lusas.LibrarySettings)")]
         [Description("Lusas adapter settings.")]
         [Input("mergeTolerance", "Sets the merging tolerance used in Lusas.")]
         [Input("librarySettings", "Sets the library settings.")]
@@ -54,6 +53,7 @@ namespace BH.Engine.Adapters.Lusas
         /***************************************************/
     }
 }
+
 
 
 

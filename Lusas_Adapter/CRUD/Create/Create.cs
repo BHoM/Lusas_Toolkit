@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -20,10 +20,13 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System;
+using System.Reflection;
+using System.IO;
+using System.Diagnostics;
 using BH.Engine.Geometry;
 using BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer;
 using BH.oM.Adapter;
-using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 using BH.oM.Structure.Constraints;
@@ -31,15 +34,11 @@ using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.MaterialFragments;
-using BH.Engine.Adapter;
 using Lusas.LPI;
 using System.Collections.Generic;
 using System.Linq;
 using BH.Engine.Base.Objects;
-using System;
-using System.Reflection;
 using BH.Engine.Base;
-using BH.Engine.Spatial;
 using BH.oM.Adapters.Lusas.Fragments;
 
 namespace BH.Adapter.Lusas
@@ -52,6 +51,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV191Adapter
 #elif Debug200 || Release200
     public partial class LusasV200Adapter
+#elif Debug210 || Release210
+    public partial class LusasV210Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -80,6 +81,10 @@ namespace BH.Adapter.Lusas
                 else if (objects.First() is Edge)
                 {
                     success = CreateCollection(objects as IEnumerable<Edge>);
+                }
+                else if (objects.First() is Opening)
+                {
+                    success = CreateCollection(objects as IEnumerable<Opening>);
                 }
                 else if (objects.First() is Point)
                 {
@@ -175,15 +180,13 @@ namespace BH.Adapter.Lusas
             {
                 CreateTags(nodes);
 
-                ReduceRuntime(true);
-
                 foreach (Node node in nodes)
                 {
                     IFPoint lusasPoint = CreatePoint(node);
                 }
 
-                ReduceRuntime(false);
             }
+
             return true;
         }
 
@@ -199,15 +202,12 @@ namespace BH.Adapter.Lusas
 
                 List<Point> lusasPoints = distinctPoints.Except(existingPoints).ToList();
 
-                ReduceRuntime(true);
-
                 foreach (Point point in lusasPoints)
                 {
                     IFPoint lusasPoint = CreatePoint(point);
                 }
-
-                ReduceRuntime(false);
             }
+
             return true;
         }
 
@@ -224,8 +224,6 @@ namespace BH.Adapter.Lusas
                     var barGroups = bars.GroupBy(m => new { m.FEAType, m.Release?.Name });
 
                     BHoMObjectNameComparer comparer = new BHoMObjectNameComparer();
-
-                    ReduceRuntime(true);
 
                     foreach (var barGroup in barGroups)
                     {
@@ -244,23 +242,19 @@ namespace BH.Adapter.Lusas
                             IFLine lusasLine = CreateLine(bar);
                         }
                     }
-                    ReduceRuntime(false);
+
                     d_LusasData.resetMesh();
                     d_LusasData.updateMesh();
                 }
                 else
                 {
-                    ReduceRuntime(true);
-
                     foreach (Bar bar in bars)
                     {
                         IFLine lusasLine = CreateLine(bar);
                     }
-
-                    ReduceRuntime(false);
-
                 }
             }
+
             return true;
         }
 
@@ -281,12 +275,10 @@ namespace BH.Adapter.Lusas
                         if (CheckPropertyError(panel, p => p.ExternalEdges))
                             if (CheckPropertyError(panel.ExternalEdges, e => e.Select(x => x.Curve)))
                                 if (panel.ExternalEdges.All(x => x != null) && panel.ExternalEdges.Select(x => x.Curve).All(y => y != null))
-                                {
-                                    if (panel.Openings.Count > 0)
-                                        Engine.Base.Compute.RecordWarning("Lusas_Toolkit does not support Panels with Openings. The Panel will be pushed if valid, the Openings will not be pushed.");
+                                {                                    
                                     if (panel.ExternalEdges.All(x => !Engine.Adapters.Lusas.Query.InvalidEdge(x)))
                                     {
-                                        if (Engine.Spatial.Query.IsPlanar(panel, false, Tolerance.MacroDistance))
+                                        if (Engine.Spatial.Query.IsPlanar(panel, true, m_mergeTolerance))
                                         {
                                             for (int i = 0; i < panel.ExternalEdges.Count; i++)
                                             {
@@ -324,15 +316,13 @@ namespace BH.Adapter.Lusas
                         validPanel.AddFragment(distinctMeshes.First(x => comparer.Equals(x, (validPanel.FindFragment<MeshSettings2D>()))), true);
                 }
 
-                ReduceRuntime(true);
-
                 IFSurface lusasSurface = null;
 
                 foreach (Panel validPanel in validPanels)
                     lusasSurface = CreateSurface(validPanel);
 
-                ReduceRuntime(false);
             }
+
             return true;
         }
 
@@ -360,22 +350,16 @@ namespace BH.Adapter.Lusas
                 List<Point> existingPoints = ReadPoints();
                 List<Point> pointsToPush = distinctPoints.Except(existingPoints, new PointDistanceComparer()).ToList();
 
-                ReduceRuntime(true);
-
                 foreach (Point point in pointsToPush)
                 {
                     IFPoint lusasPoint = CreatePoint(point);
                 }
-
-                ReduceRuntime(false);
 
                 List<Point> points = ReadPoints();
 
                 List<IFPoint> lusasPoints = ReadLusasPoints();
 
                 CreateTags(distinctEdges);
-
-                ReduceRuntime(true);
 
                 foreach (Edge edge in distinctEdges)
                 {
@@ -385,8 +369,54 @@ namespace BH.Adapter.Lusas
                         m => m.Equals(edge.Curve.IEndPoint().ClosestPoint(points)))];
                     IFLine lusasLine = CreateEdge(edge, startPoint, endPoint);
                 }
+            }
 
-                ReduceRuntime(false);
+            return true;
+        }
+
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<Opening> openings)
+        {
+            if (openings != null)
+            {
+                CreateTags(openings);
+
+                List<Opening> validOpenings = new List<Opening>();
+
+                foreach (Opening opening in openings)
+                {
+                    if (CheckPropertyError(opening, p => p.Edges))
+                        if (CheckPropertyError(opening.Edges, e => e.Select(x => x.Curve)))
+                        {
+                            if (opening.Edges.All(x => !Engine.Adapters.Lusas.Query.InvalidEdge(x)))
+                            {
+                                if (Engine.Spatial.Query.IsPlanar(opening, false, m_mergeTolerance)) //Check if this works.
+                                {
+                                        for (int i = 0; i < opening.Edges.Count; i++)
+                                        {
+                                            if (!CheckPropertyError(opening, p => opening.Edges[i]) && Engine.Adapters.Lusas.Query.InvalidEdge(opening.Edges[i]))
+                                                break;
+
+                                            if (i == opening.Edges.Count - 1)
+                                                validOpenings.Add(opening);
+                                        }                               
+                                }
+                                else
+                                    Engine.Base.Compute.RecordError("The geometry defining one of the Openings of the Panel is not Planar, and therefore the Opening will not be created.");
+                            }
+                            else
+                                Engine.Base.Compute.RecordError("One or more of the Internal Edges of the Panel are invalid, and therefore the Opening will not be created.");
+                        }
+                        else
+                            Engine.Base.Compute.RecordError("One of more of the Internal Edges of the Panel or Curves defining the Opening are null.");
+                }
+
+
+                IFSurface lusasSurface = null;
+
+                foreach (Opening validOpening in validOpenings)
+                    lusasSurface = CreateSurface(validOpening);
             }
             return true;
         }
@@ -401,7 +431,6 @@ namespace BH.Adapter.Lusas
                 {
                     IFAttribute lusasGeometricLine = CreateGeometricLine(sectionProperty);
                 }
-
             }
 
             return true;
@@ -735,8 +764,3 @@ namespace BH.Adapter.Lusas
 
     }
 }
-
-
-
-
-

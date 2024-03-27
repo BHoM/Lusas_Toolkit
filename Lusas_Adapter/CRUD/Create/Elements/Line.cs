@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -42,6 +42,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV191Adapter
 #elif Debug200 || Release200
     public partial class LusasV200Adapter
+#elif Debug210 || Release210
+    public partial class LusasV210Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -52,8 +54,8 @@ namespace BH.Adapter.Lusas
 
         private IFLine CreateLine(Bar bar)
         {
-            if (!CheckPropertyError(bar, b => b.StartNode, true) || !CheckPropertyError(bar, b => b.EndNode, true) ||
-                !CheckPropertyError(bar, b => b.StartNode.Position, true) || !CheckPropertyError(bar, b => b.EndNode.Position, true))
+            if (!CheckPropertyError(bar, b => b.Start, true) || !CheckPropertyError(bar, b => b.End, true) ||
+                !CheckPropertyError(bar, b => b.Start.Position, true) || !CheckPropertyError(bar, b => b.End.Position, true))
             {
                 return null;
             }
@@ -66,8 +68,8 @@ namespace BH.Adapter.Lusas
                 return null;
             }
 
-            string startNodeId = GetAdapterId<string>(bar.StartNode);
-            string endNodeId = GetAdapterId<string>(bar.EndNode);
+            string startNodeId = GetAdapterId<string>(bar.Start);
+            string endNodeId = GetAdapterId<string>(bar.End);
 
             if (string.IsNullOrEmpty(startNodeId) || string.IsNullOrEmpty(endNodeId))
             {
@@ -75,8 +77,8 @@ namespace BH.Adapter.Lusas
                 return null;
             }
 
-            IFPoint startPoint = d_LusasData.getPointByNumber(bar.StartNode.AdapterId<int>(typeof(LusasId)));
-            IFPoint endPoint = d_LusasData.getPointByNumber(bar.EndNode.AdapterId<int>(typeof(LusasId)));
+            IFPoint startPoint = d_LusasData.getPointByNumber(bar.Start.AdapterId<int>(typeof(LusasId)));
+            IFPoint endPoint = d_LusasData.getPointByNumber(bar.End.AdapterId<int>(typeof(LusasId)));
             IFLine lusasLine = d_LusasData.createLineByPoints(startPoint, endPoint);
 
             long adapterIdName = lusasLine.getID();
@@ -154,6 +156,7 @@ namespace BH.Adapter.Lusas
 
     }
 }
+
 
 
 

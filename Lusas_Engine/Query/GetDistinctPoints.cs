@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -35,7 +35,7 @@ namespace BH.Engine.Adapters.Lusas
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static List<Point> GetDistinctPoints(IEnumerable<Point> points)
+        public static List<Point> GetDistinctPoints(this IEnumerable<Point> points)
         {
             List<Point> distinctPoints = points.GroupBy(m => new
             {
@@ -53,6 +53,7 @@ namespace BH.Engine.Adapters.Lusas
 
     }
 }
+
 
 
 

@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -66,8 +66,8 @@ namespace BH.Adapter.Adapters.Lusas
 
             Bar bar = new Bar
             {
-                StartNode = startNode,
-                EndNode = endNode,
+                Start = startNode,
+                End = endNode,
                 Tags = tags,
                 Support = barConstraint
             };
@@ -165,7 +165,7 @@ namespace BH.Adapter.Adapters.Lusas
             Constraint6DOF startConstraint = null;
             Constraint6DOF endConstraint = null;
 
-#if Debug200 || Release200
+#if Debug200 || Release200 || Debug210 || Release210 
 
             startConstraint = GetConstraint(lusasLineMesh, "Start");
             endConstraint = GetConstraint(lusasLineMesh, "End");
@@ -325,6 +325,7 @@ namespace BH.Adapter.Adapters.Lusas
 
     }
 }
+
 
 
 

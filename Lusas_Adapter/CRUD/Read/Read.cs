@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -47,6 +47,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV191Adapter
 #elif Debug200 || Release200
     public partial class LusasV200Adapter
+#elif Debug210 || Release210
+    public partial class LusasV210Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -69,6 +71,8 @@ namespace BH.Adapter.Lusas
                 return ReadEdges(ids as dynamic);
             else if (type == typeof(Point))
                 return ReadPoints(ids as dynamic);
+            else if (type == typeof(Opening))
+                return ReadOpenings(ids as dynamic);
             else if (type == typeof(Constraint6DOF))
                 return Read6DOFConstraints(ids as dynamic);
             else if (type == typeof(Constraint4DOF))
@@ -101,6 +105,7 @@ namespace BH.Adapter.Lusas
 
     }
 }
+
 
 
 

@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -63,12 +63,12 @@ namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
             if (ReferenceEquals(bar1, null) || ReferenceEquals(bar2, null))
                 return false;
 
-            if (ReferenceEquals(bar1.StartNode, null) || ReferenceEquals(bar1.EndNode, null) ||
-                ReferenceEquals(bar2.StartNode, null) || ReferenceEquals(bar2.EndNode, null))
+            if (ReferenceEquals(bar1.Start, null) || ReferenceEquals(bar1.End, null) ||
+                ReferenceEquals(bar2.Start, null) || ReferenceEquals(bar2.End, null))
                 return false;
 
-            if (ReferenceEquals(bar1.StartNode.Position, null) || ReferenceEquals(bar1.EndNode.Position, null) ||
-                ReferenceEquals(bar2.StartNode.Position, null) || ReferenceEquals(bar2.EndNode.Position, null))
+            if (ReferenceEquals(bar1.Start.Position, null) || ReferenceEquals(bar1.End.Position, null) ||
+                ReferenceEquals(bar2.Start.Position, null) || ReferenceEquals(bar2.End.Position, null))
                 return false;
 
             if (m_pointComparer.Equals(
@@ -89,8 +89,8 @@ namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
         {
             //Check whether the object is null
             if (!ReferenceEquals(bar, null))
-                if (!ReferenceEquals(bar.StartNode, null) || !ReferenceEquals(bar.EndNode, null))
-                    return bar.StartNode.GetHashCode() ^ bar.EndNode.GetHashCode();
+                if (!ReferenceEquals(bar.Start, null) || !ReferenceEquals(bar.End, null))
+                    return bar.Start.GetHashCode() ^ bar.End.GetHashCode();
 
             return 0;
         }
@@ -106,6 +106,7 @@ namespace BH.Engine.Adapters.Lusas.Object_Comparer.Equality_Comparer
 
     }
 }
+
 
 
 

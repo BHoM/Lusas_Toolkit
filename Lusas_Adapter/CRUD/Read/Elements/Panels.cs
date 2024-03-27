@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -41,6 +41,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV191Adapter
 #elif Debug200 || Release200
     public partial class LusasV200Adapter
+#elif Debug210 || Release210
+    public partial class LusasV210Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -58,6 +60,9 @@ namespace BH.Adapter.Lusas
             {
                 IEnumerable<Edge> edgesList = GetCachedOrRead<Edge>();
                 Dictionary<string, Edge> edges = edgesList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
+
+                IEnumerable<Opening> openingsList = GetCachedOrRead<Opening>();
+                Dictionary<string, Opening> openings = openingsList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
 
                 HashSet<string> groupNames = ReadTags();
 
@@ -78,6 +83,7 @@ namespace BH.Adapter.Lusas
                     IFSurface lusasSurface = (IFSurface)lusasSurfaces[i];
                     Panel panel = Adapters.Lusas.Convert.ToPanel(lusasSurface,
                         edges,
+                        openings,
                         groupNames,
                         sectionProperties,
                         materials,
@@ -95,6 +101,7 @@ namespace BH.Adapter.Lusas
 
     }
 }
+
 
 
 
