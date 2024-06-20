@@ -59,7 +59,7 @@ namespace BH.Adapter.Adapters.Lusas
             else if (meshType == 1)
             {
                 splitMethod = Split1D.Divisions;
-                object[] ratios = lusasMeshLine.getValue("ratio");
+                object[] ratios = lusasMeshLine.getMeshDivisions(0);
                 value = ratios.Count();
                 if (value == 0)
                     value = 4;
