@@ -37,15 +37,17 @@ using Lusas.LPI;
 namespace BH.Adapter.Lusas
 {
 #if Debug18 || Release18
-    public partial class LusasV18Adapter : BHoMAdapter
+    public partial class LusasV18Adapter
 #elif Debug19 || Release19
-    public partial class LusasV19Adapter : BHoMAdapter
+    public partial class LusasV19Adapter
 #elif Debug191 || Release191
     public partial class LusasV191Adapter
 #elif Debug200 || Release200
     public partial class LusasV200Adapter
 #elif Debug210 || Release210
-    public partial class LusasV210Adapter : BHoMAdapter
+    public partial class LusasV210Adapter
+#elif Debug211 || Release211
+    public partial class LusasV211Adapter
 #else
     public partial class LusasV17Adapter : BHoMAdapter
 #endif
