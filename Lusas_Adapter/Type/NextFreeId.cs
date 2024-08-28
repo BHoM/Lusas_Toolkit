@@ -73,9 +73,3 @@ namespace BH.Adapter.Lusas
 
     }
 }
-
-
-
-
-
-

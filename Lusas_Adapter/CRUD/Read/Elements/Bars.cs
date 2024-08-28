@@ -57,7 +57,7 @@ namespace BH.Adapter.Lusas
         {
             object[] lusasLines = d_LusasData.getObjects("Line");
             List<Bar> bars = new List<Bar>();
-            
+
             if (!(lusasLines.Count() == 0))
             {
                 IEnumerable<Node> nodesList = GetCachedOrRead<Node>();
@@ -102,7 +102,3 @@ namespace BH.Adapter.Lusas
 
     }
 }
-
-
-
-
