@@ -621,7 +621,7 @@
     <Reference Include="Lusas.Interop, Version=21.1.1610.48335, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86" Condition="'$(Configuration)'=='Debug211' Or '$(Configuration)'=='Release211'">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\libs\Version 210\Lusas.Interop.dll</HintPath>
+      <HintPath>..\libs\Version 211\Lusas.Interop.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Physical_oM">
