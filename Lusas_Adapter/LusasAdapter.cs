@@ -52,6 +52,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV200Adapter : BHoMAdapter
 #elif Debug210 || Release210
     public partial class LusasV210Adapter : BHoMAdapter
+#elif Debug211 || Release211
+    public partial class LusasV211Adapter : BHoMAdapter
 #else
     public partial class LusasV17Adapter : BHoMAdapter
 #endif
@@ -94,6 +96,13 @@ namespace BH.Adapter.Lusas
         [Input("active", "Initiate the adapter by setting to True. Open a session of Lusas and close any dialogue boxes before setting to True.")]
         [Output("adapter", "Adapter for Lusas.")]
         public LusasV210Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
+#elif Debug211 || Release211
+        [Description("Adapter to connect to a Lusas .mdl file.")]
+        [Input("filePath", "Path to the Lusas .mdl file to be used.")]
+        [Input("lusasSettings", "General settings that are applicable to all actions performed by this adapter, e.g. merge tolerance to be used.")]
+        [Input("active", "Initiate the adapter by setting to True. Open a session of Lusas and close any dialogue boxes before setting to True.")]
+        [Output("adapter", "Adapter for Lusas.")]
+        public LusasV211Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #else
         [Description("Adapter to connect to a Lusas .mdl file.")]
         [Input("filePath", "Path to Lusas the .mdl file to be used.")]
@@ -159,6 +168,8 @@ namespace BH.Adapter.Lusas
                     System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.20.0");
 #elif Debug210 || Release210
                     System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.21.0");
+#elif Debug211 || Release211
+                    System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.21.1");
 #endif
                     m_LusasApplication.enableUI(true);
                     m_LusasApplication.setVisible(true);

@@ -165,7 +165,7 @@ namespace BH.Adapter.Adapters.Lusas
             Constraint6DOF startConstraint = null;
             Constraint6DOF endConstraint = null;
 
-#if Debug200 || Release200 || Debug210 || Release210 
+#if Debug200 || Release200 || Debug210 || Release210 || Debug211 || Release211
 
             startConstraint = GetConstraint(lusasLineMesh, "Start");
             endConstraint = GetConstraint(lusasLineMesh, "End");
@@ -179,7 +179,7 @@ namespace BH.Adapter.Adapters.Lusas
             startConstraint = SetConstraint(startReleaseType);
             endConstraint = SetConstraint(endReleaseType);
 #endif
-
+            
             BarRelease barRelease = new BarRelease
             {
                 StartRelease = startConstraint,

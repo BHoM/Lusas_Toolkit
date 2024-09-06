@@ -26,6 +26,7 @@ using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.Engine.Adapter;
 using Lusas.LPI;
+using BH.oM.Structure.Constraints;
 
 namespace BH.Adapter.Lusas
 {
@@ -39,6 +40,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV200Adapter
 #elif Debug210 || Release210
     public partial class LusasV210Adapter
+#elif Debug211 || Release211
+    public partial class LusasV211Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -57,12 +60,15 @@ namespace BH.Adapter.Lusas
                 List<Node> nodesList = GetCachedOrRead<Node>();
                 Dictionary<string, Node> nodes = nodesList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
 
+                IEnumerable<Constraint6DOF> supportsList = GetCachedOrRead<Constraint6DOF>();
+                Dictionary<string, Constraint6DOF> supports = supportsList.ToDictionary(x => x.Name);
+
                 HashSet<string> groupNames = ReadTags();
 
                 for (int i = 0; i < lusasLines.Count(); i++)
                 {
                     IFLine lusasLine = (IFLine)lusasLines[i];
-                    Edge edge = Adapters.Lusas.Convert.ToEdge(lusasLine, nodes, groupNames);
+                    Edge edge = Adapters.Lusas.Convert.ToEdge(lusasLine, nodes, supports, groupNames);
                     edges.Add(edge);
                 }
             }
@@ -74,7 +80,3 @@ namespace BH.Adapter.Lusas
 
     }
 }
-
-
-
-
