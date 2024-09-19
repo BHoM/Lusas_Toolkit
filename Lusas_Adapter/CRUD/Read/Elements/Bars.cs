@@ -43,6 +43,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV200Adapter
 #elif Debug210 || Release210
     public partial class LusasV210Adapter
+#elif Debug211 || Release211
+    public partial class LusasV211Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -100,7 +102,3 @@ namespace BH.Adapter.Lusas
 
     }
 }
-
-
-
-

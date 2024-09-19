@@ -23,9 +23,11 @@
 using System.Collections.Generic;
 using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
+using BH.oM.Structure.Constraints;
 using BH.oM.Geometry;
 using Lusas.LPI;
 using BH.Engine.Adapter;
+using System.Linq;
 
 
 namespace BH.Adapter.Adapters.Lusas
@@ -37,7 +39,7 @@ namespace BH.Adapter.Adapters.Lusas
         /***************************************************/
 
         public static Edge ToEdge(this IFLine lusasLine,
-            Dictionary<string, Node> nodes, HashSet<string> groupNames)
+            Dictionary<string, Node> nodes, Dictionary<string, Constraint6DOF> supports, HashSet<string> groupNames)
         {
             Node startNode = GetNode(lusasLine, 0, nodes);
             Node endNode = GetNode(lusasLine, 1, nodes);
@@ -47,8 +49,16 @@ namespace BH.Adapter.Adapters.Lusas
 
             HashSet<string> tags = new HashSet<string>(IsMemberOf(lusasLine, groupNames));
 
+            List<string> supportAssignments = GetAttributeAssignments(lusasLine, "Support");
+
+            Constraint6DOF barConstraint = null;
+            if (!(supportAssignments.Count() == 0))
+            {
+                supports.TryGetValue(supportAssignments[0], out barConstraint);
+            }
+
             Line line = new Line { Start = startPoint, End = endPoint };
-            Edge edge = new Edge { Curve = line, Tags = tags };
+            Edge edge = new Edge { Curve = line, Tags = tags, Support = barConstraint };
 
             string adapterID = lusasLine.getID().ToString();
             edge.SetAdapterId(typeof(LusasId), adapterID);
@@ -60,8 +70,3 @@ namespace BH.Adapter.Adapters.Lusas
 
     }
 }
-
-
-
-
-
