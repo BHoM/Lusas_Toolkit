@@ -91,7 +91,8 @@ namespace BH.Adapter.Lusas
             IFView view = m_LusasApplication.getCurrentView();
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
 
-            string entity = "Force/Moment - Thick 3D Beam";
+            string entityBeam = "Force/Moment - Thick 3D Beam";
+            string entityBar = "Force/Moment - Bar";
             string location = "Feature extreme";
 
             foreach (int loadcaseId in loadcaseIds)
@@ -108,9 +109,11 @@ namespace BH.Adapter.Lusas
                 double lengthSIConversion = 1 / unitSet.getLengthFactor();
 
                 List<string> components = new List<string>() { "Fx", "Fy", "Fz", "Mx", "My", "Mz" };
+                List<string> components2 = new List<string>() {"Fx"};
                 d_LusasData.startUsingScriptedResults();
 
-                Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
+                Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entityBar, components2, location, resultsContext);
+                
 
                 foreach (int barId in ids)
                 {
