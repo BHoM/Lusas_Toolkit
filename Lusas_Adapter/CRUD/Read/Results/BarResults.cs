@@ -27,6 +27,11 @@ using BH.oM.Structure.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Lusas.LPI;
+using BH.oM.Structure.Elements;
+using BH.Engine.Base;
+using BH.oM.Geometry;
+using Microsoft.SqlServer.Server;
+using BH.Adapter.Adapters.Lusas;
 
 namespace BH.Adapter.Lusas
 {
@@ -90,11 +95,27 @@ namespace BH.Adapter.Lusas
 
             IFView view = m_LusasApplication.getCurrentView();
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
-
             string entityBeam = "Force/Moment - Thick 3D Beam";
             string entityBar = "Force/Moment - Bar";
             string location = "Feature extreme";
 
+            // Extract the BarType for all ids provided
+            // List ids for beams, and ids for bars
+            List<int> barIds = new List<int>();
+            List<int> beamIds = new List<int>();
+            foreach (int id in ids)
+            {
+                string barType = d_LusasData.getElementByNumber(id).getElementType().ToLower();
+
+                if (barType == "brs2")
+                    barIds.Add(id);
+                else if (barType == "bmi21")
+                    beamIds.Add(id);
+            }
+            if (beamIds.Count()==0)
+               BH.Engine.Base.Compute.RecordError("No BeamIds were pulled");
+            if (barIds.Count() == 0)
+                BH.Engine.Base.Compute.RecordError("No BarIds were pulled");
             foreach (int loadcaseId in loadcaseIds)
             {
                 IFLoadset loadset = d_LusasData.getLoadset(loadcaseId);
@@ -108,16 +129,26 @@ namespace BH.Adapter.Lusas
                 double forceSIConversion = 1 / unitSet.getForceFactor();
                 double lengthSIConversion = 1 / unitSet.getLengthFactor();
 
-                List<string> components = new List<string>() { "Fx", "Fy", "Fz", "Mx", "My", "Mz" };
-                List<string> components2 = new List<string>() {"Fx"};
+                List<string> componentsBeam = new List<string>() { "Fx", "Fy", "Fz", "Mx", "My", "Mz" };
+                List<string> componentsBar = new List<string>() { "Fx" };
+
                 d_LusasData.startUsingScriptedResults();
+                Dictionary<string, IFResultsComponentSet> resultsSetsBeams = new Dictionary<string, IFResultsComponentSet>();
+                Dictionary<string, IFResultsComponentSet> resultsSetsBars = new Dictionary<string, IFResultsComponentSet>();
 
-                Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entityBar, components2, location, resultsContext);
-                
+                // if statement if count of list for Beams > 0
+                if (beamIds.Count() > 0)
+                    resultsSetsBeams = GetResultsSets(entityBeam, componentsBeam, location, resultsContext); 
+                else if (barIds.Count() > 0)
+                    resultsSetsBars = GetResultsSets(entityBar, componentsBar, location, resultsContext); 
 
-                foreach (int barId in ids)
+                foreach (int id in ids)
                 {
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L", 6);
+                    Dictionary<string, double> featureResults = new Dictionary<string, double>();
+                    if (barIds.Contains(id))
+                        featureResults=GetFeatureResults(componentsBar, resultsSetsBars, unitSet, id, "L", 6);
+                    if (beamIds.Contains(id))
+                        featureResults = GetFeatureResults(componentsBeam, resultsSetsBeams, unitSet, id, "L", 6);
 
                     double fX = 0; double fY = 0; double fZ = 0; double mX = 0; double mY = 0; double mZ = 0;
                     featureResults.TryGetValue("Fx", out fX); featureResults.TryGetValue("Fy", out fY); featureResults.TryGetValue("Fz", out fZ);
@@ -130,7 +161,7 @@ namespace BH.Adapter.Lusas
                     int divisions = 0;
 
                     BarForce barForce = new BarForce(
-                        barId,
+                        id,
                         Adapters.Lusas.Convert.GetName(loadset.getName()),
                         mode,
                         timeStep,
@@ -144,236 +175,235 @@ namespace BH.Adapter.Lusas
                         mZ * forceSIConversion * lengthSIConversion
                         );
                     barForces.Add(barForce);
-
                 }
-
-                d_LusasData.stopUsingScriptedResults();
-                d_LusasData.flushScriptedResults();
             }
+
+            d_LusasData.stopUsingScriptedResults();
+            d_LusasData.flushScriptedResults();
 
             return barForces;
         }
 
-        /***************************************************/
+    /***************************************************/
 
-        private IEnumerable<IResult> ExtractBarStress(List<int> ids, List<int> loadcaseIds)
+    private IEnumerable<IResult> ExtractBarStress(List<int> ids, List<int> loadcaseIds)
+    {
+        List<BarStress> barStresses = new List<BarStress>();
+
+        IFView view = m_LusasApplication.getCurrentView();
+        IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
+
+        string entity = "Stress - Thick 3D Beam";
+        string location = "Feature extreme";
+
+        foreach (int loadcaseId in loadcaseIds)
         {
-            List<BarStress> barStresses = new List<BarStress>();
+            IFLoadset loadset = d_LusasData.getLoadset(loadcaseId);
 
-            IFView view = m_LusasApplication.getCurrentView();
-            IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
-
-            string entity = "Stress - Thick 3D Beam";
-            string location = "Feature extreme";
-
-            foreach (int loadcaseId in loadcaseIds)
+            if (!loadset.needsAssociatedValues())
             {
-                IFLoadset loadset = d_LusasData.getLoadset(loadcaseId);
-
-                if (!loadset.needsAssociatedValues())
-                {
-                    resultsContext.setActiveLoadset(loadset);
-                }
-
-                IFUnitSet unitSet = d_LusasData.getModelUnits();
-                double forceSIConversion = 1 / unitSet.getForceFactor();
-                double lengthSIConversion = 1 / unitSet.getLengthFactor();
-
-                List<string> components = new List<string>() { "Sx(Fx)" };
-                d_LusasData.startUsingScriptedResults();
-
-                Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
-
-                foreach (int barId in ids)
-                {
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L", 6);
-
-                    double axial = 0;
-                    featureResults.TryGetValue("Sx(Fx)", out axial);
-
-                    //TODO: resolve below identifiers extractable through the API
-                    int mode = -1;
-                    double timeStep = 0;
-                    double position = 0;
-                    int divisions = 0;
-
-                    BarStress barStress = new BarStress(
-                        barId,
-                        Adapters.Lusas.Convert.GetName(loadset.getName()),
-                        mode,
-                        timeStep,
-                        position,
-                        divisions,
-                        axial * forceSIConversion * lengthSIConversion * lengthSIConversion,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0);
-
-                    barStresses.Add(barStress);
-
-                }
-
-                d_LusasData.stopUsingScriptedResults();
-                d_LusasData.flushScriptedResults();
+                resultsContext.setActiveLoadset(loadset);
             }
 
-            BH.Engine.Base.Compute.RecordWarning("Please note only axial stress will be returned when pulling BarStress results.");
+            IFUnitSet unitSet = d_LusasData.getModelUnits();
+            double forceSIConversion = 1 / unitSet.getForceFactor();
+            double lengthSIConversion = 1 / unitSet.getLengthFactor();
 
-            return barStresses;
-        }
+            List<string> components = new List<string>() { "Sx(Fx)" };
+            d_LusasData.startUsingScriptedResults();
 
-        /***************************************************/
+            Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
 
-        private IEnumerable<IResult> ExtractBarStrain(List<int> ids, List<int> loadcaseIds)
-        {
-            List<BarStrain> barStrains = new List<BarStrain>();
-
-            IFView view = m_LusasApplication.getCurrentView();
-            IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
-
-            string entity = "Strain - Thick 3D Beam";
-            string location = "Feature extreme";
-
-            foreach (int loadcaseId in loadcaseIds)
+            foreach (int barId in ids)
             {
-                IFLoadset loadset = d_LusasData.getLoadset(loadcaseId);
+                Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L", 6);
 
-                if (!loadset.needsAssociatedValues())
-                {
-                    resultsContext.setActiveLoadset(loadset);
-                }
+                double axial = 0;
+                featureResults.TryGetValue("Sx(Fx)", out axial);
 
-                IFUnitSet unitSet = d_LusasData.getModelUnits();
-                double forceSIConversion = 1 / unitSet.getForceFactor();
-                double lengthSIConversion = 1 / unitSet.getLengthFactor();
+                //TODO: resolve below identifiers extractable through the API
+                int mode = -1;
+                double timeStep = 0;
+                double position = 0;
+                int divisions = 0;
 
-                List<string> components = new List<string>() { "Ex", "Ey", "Ez", "Bx", "By", "Bz" };
-                d_LusasData.startUsingScriptedResults();
+                BarStress barStress = new BarStress(
+                    barId,
+                    Adapters.Lusas.Convert.GetName(loadset.getName()),
+                    mode,
+                    timeStep,
+                    position,
+                    divisions,
+                    axial * forceSIConversion * lengthSIConversion * lengthSIConversion,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0);
 
-                Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
+                barStresses.Add(barStress);
 
-                foreach (int barId in ids)
-                {
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L", 6);
-                    List<string> keys = featureResults.Keys.ToList();
-
-                    double eX = 0; double eY = 0; double eZ = 0; double bX = 0; double bY = 0; double bZ = 0;
-                    featureResults.TryGetValue("Ex", out eX); featureResults.TryGetValue("Ey", out eY); featureResults.TryGetValue("Ez", out eZ);
-                    featureResults.TryGetValue("Bx", out bX); featureResults.TryGetValue("By", out bY); featureResults.TryGetValue("Bz", out bZ);
-
-                    //TODO: resolve below identifiers extractable through the API
-                    int mode = -1;
-                    double timeStep = 0;
-                    double position = 0;
-                    int divisions = 0;
-
-                    BarStrain barStrain = new BarStrain(
-                        barId,
-                        Adapters.Lusas.Convert.GetName(loadset.getName()),
-                        mode,
-                        timeStep,
-                        position,
-                        divisions,
-                        eX,
-                        eY,
-                        eZ,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0);
-
-                    BH.Engine.Base.Compute.RecordWarning("Please note only axial and shear strains will be returned when pulling BarStrain results.");
-
-                    barStrains.Add(barStrain);
-
-                }
-
-                d_LusasData.stopUsingScriptedResults();
-                d_LusasData.flushScriptedResults();
             }
 
-            return barStrains;
+            d_LusasData.stopUsingScriptedResults();
+            d_LusasData.flushScriptedResults();
         }
 
-        /***************************************************/
+        BH.Engine.Base.Compute.RecordWarning("Please note only axial stress will be returned when pulling BarStress results.");
 
-        private IEnumerable<IResult> ExtractBarDisplacement(List<int> ids, List<int> loadcaseIds)
-        {
-            List<BarDisplacement> barDisplacements = new List<BarDisplacement>();
-
-            IFView view = m_LusasApplication.getCurrentView();
-            IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
-
-            string entity = "Displacement";
-            string location = "Feature extreme";
-
-            foreach (int loadcaseId in loadcaseIds)
-            {
-                IFLoadset loadset = d_LusasData.getLoadset(loadcaseId);
-
-                if (!loadset.needsAssociatedValues())
-                {
-                    resultsContext.setActiveLoadset(loadset);
-                }
-
-                IFUnitSet unitSet = d_LusasData.getModelUnits();
-                double lengthSIConversion = 1 / unitSet.getLengthFactor();
-
-                List<string> components = new List<string>() { "DX", "DY", "DZ", "THX", "THY", "THZ" };
-                d_LusasData.startUsingScriptedResults();
-
-                Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
-
-                foreach (int barId in ids)
-                {
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L", 6);
-
-                    double uX = 0; double uY = 0; double uZ = 0; double rX = 0; double rY = 0; double rZ = 0;
-                    featureResults.TryGetValue("DX", out uX); featureResults.TryGetValue("DY", out uY); featureResults.TryGetValue("DZ", out uZ);
-                    featureResults.TryGetValue("THX", out rX); featureResults.TryGetValue("THY", out rY); featureResults.TryGetValue("THZ", out rZ);
-
-                    //TODO: resolve below identifiers extractable through the API
-                    int mode = -1;
-                    double timeStep = 0;
-                    double position = 0;
-                    int divisions = 0;
-
-                    BarDisplacement barDisplacement = new BarDisplacement(
-                        barId,
-                        Adapters.Lusas.Convert.GetName(loadset.getName()),
-                        mode,
-                        timeStep,
-                        position,
-                        divisions,
-                        uX * lengthSIConversion,
-                        uY * lengthSIConversion,
-                        uZ * lengthSIConversion,
-                        rX,
-                        rY,
-                        rZ
-                        );
-
-                    barDisplacements.Add(barDisplacement);
-
-                }
-
-                d_LusasData.stopUsingScriptedResults();
-                d_LusasData.flushScriptedResults();
-            }
-
-            return barDisplacements;
-        }
-
-        /***************************************************/
-
+        return barStresses;
     }
+
+    /***************************************************/
+
+    private IEnumerable<IResult> ExtractBarStrain(List<int> ids, List<int> loadcaseIds)
+    {
+        List<BarStrain> barStrains = new List<BarStrain>();
+
+        IFView view = m_LusasApplication.getCurrentView();
+        IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
+
+        string entity = "Strain - Thick 3D Beam";
+        string location = "Feature extreme";
+
+        foreach (int loadcaseId in loadcaseIds)
+        {
+            IFLoadset loadset = d_LusasData.getLoadset(loadcaseId);
+
+            if (!loadset.needsAssociatedValues())
+            {
+                resultsContext.setActiveLoadset(loadset);
+            }
+
+            IFUnitSet unitSet = d_LusasData.getModelUnits();
+            double forceSIConversion = 1 / unitSet.getForceFactor();
+            double lengthSIConversion = 1 / unitSet.getLengthFactor();
+
+            List<string> components = new List<string>() { "Ex", "Ey", "Ez", "Bx", "By", "Bz" };
+            d_LusasData.startUsingScriptedResults();
+
+            Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
+
+            foreach (int barId in ids)
+            {
+                Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L", 6);
+                List<string> keys = featureResults.Keys.ToList();
+
+                double eX = 0; double eY = 0; double eZ = 0; double bX = 0; double bY = 0; double bZ = 0;
+                featureResults.TryGetValue("Ex", out eX); featureResults.TryGetValue("Ey", out eY); featureResults.TryGetValue("Ez", out eZ);
+                featureResults.TryGetValue("Bx", out bX); featureResults.TryGetValue("By", out bY); featureResults.TryGetValue("Bz", out bZ);
+
+                //TODO: resolve below identifiers extractable through the API
+                int mode = -1;
+                double timeStep = 0;
+                double position = 0;
+                int divisions = 0;
+
+                BarStrain barStrain = new BarStrain(
+                    barId,
+                    Adapters.Lusas.Convert.GetName(loadset.getName()),
+                    mode,
+                    timeStep,
+                    position,
+                    divisions,
+                    eX,
+                    eY,
+                    eZ,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0);
+
+                BH.Engine.Base.Compute.RecordWarning("Please note only axial and shear strains will be returned when pulling BarStrain results.");
+
+                barStrains.Add(barStrain);
+
+            }
+
+            d_LusasData.stopUsingScriptedResults();
+            d_LusasData.flushScriptedResults();
+        }
+
+        return barStrains;
+    }
+
+    /***************************************************/
+
+    private IEnumerable<IResult> ExtractBarDisplacement(List<int> ids, List<int> loadcaseIds)
+    {
+        List<BarDisplacement> barDisplacements = new List<BarDisplacement>();
+
+        IFView view = m_LusasApplication.getCurrentView();
+        IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
+
+        string entity = "Displacement";
+        string location = "Feature extreme";
+
+        foreach (int loadcaseId in loadcaseIds)
+        {
+            IFLoadset loadset = d_LusasData.getLoadset(loadcaseId);
+
+            if (!loadset.needsAssociatedValues())
+            {
+                resultsContext.setActiveLoadset(loadset);
+            }
+
+            IFUnitSet unitSet = d_LusasData.getModelUnits();
+            double lengthSIConversion = 1 / unitSet.getLengthFactor();
+
+            List<string> components = new List<string>() { "DX", "DY", "DZ", "THX", "THY", "THZ" };
+            d_LusasData.startUsingScriptedResults();
+
+            Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
+
+            foreach (int barId in ids)
+            {
+                Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L", 6);
+
+                double uX = 0; double uY = 0; double uZ = 0; double rX = 0; double rY = 0; double rZ = 0;
+                featureResults.TryGetValue("DX", out uX); featureResults.TryGetValue("DY", out uY); featureResults.TryGetValue("DZ", out uZ);
+                featureResults.TryGetValue("THX", out rX); featureResults.TryGetValue("THY", out rY); featureResults.TryGetValue("THZ", out rZ);
+
+                //TODO: resolve below identifiers extractable through the API
+                int mode = -1;
+                double timeStep = 0;
+                double position = 0;
+                int divisions = 0;
+
+                BarDisplacement barDisplacement = new BarDisplacement(
+                    barId,
+                    Adapters.Lusas.Convert.GetName(loadset.getName()),
+                    mode,
+                    timeStep,
+                    position,
+                    divisions,
+                    uX * lengthSIConversion,
+                    uY * lengthSIConversion,
+                    uZ * lengthSIConversion,
+                    rX,
+                    rY,
+                    rZ
+                    );
+
+                barDisplacements.Add(barDisplacement);
+
+            }
+
+            d_LusasData.stopUsingScriptedResults();
+            d_LusasData.flushScriptedResults();
+        }
+
+        return barDisplacements;
+    }
+
+    /***************************************************/
+
+}
 }
 
 
