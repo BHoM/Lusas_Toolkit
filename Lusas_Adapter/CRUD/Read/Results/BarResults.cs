@@ -32,6 +32,9 @@ using BH.Engine.Base;
 using BH.oM.Geometry;
 using Microsoft.SqlServer.Server;
 using BH.Adapter.Adapters.Lusas;
+using BH.oM.Structure.Constraints;
+using System.Dynamic;
+using System.ComponentModel;
 
 namespace BH.Adapter.Lusas
 {
@@ -105,17 +108,44 @@ namespace BH.Adapter.Lusas
             List<int> beamIds = new List<int>();
             foreach (int id in ids)
             {
-                string barType = d_LusasData.getElementByNumber(id).getElementType().ToLower();
+                IFLine lusasLine = d_LusasData.getLineByNumber(id);
 
-                if (barType == "brs2")
-                    barIds.Add(id);
-                else if (barType == "bmi21")
-                    beamIds.Add(id);
-            }
+                object[] meshAssignments = lusasLine.getAssignments("Mesh");
+
+                if (meshAssignments.Length > 0)
+                {
+                    foreach (object assignment in meshAssignments)
+                    {
+                        IFAssignment lusasAssignment = (IFAssignment)assignment;
+                        IFAttribute lusasMesh = lusasAssignment.getAttribute();
+                        IFMeshLine lusasLineMesh = (IFMeshLine)lusasMesh;
+
+                        object[] barMeshName = lusasLineMesh.getElementNames();
+                        int id2 = int.Parse(lusasLineMesh.getID().ToString());
+                        foreach (object type in barMeshName)
+                        {
+                            if (type.ToString() == "BMI21" ||
+                                type.ToString() == "BMI31" ||
+                                type.ToString() == "BMX21" ||
+                                type.ToString() == "BMX31" ||
+                                type.ToString() == "BMI21W" ||
+                                type.ToString() == "BMI31W" ||
+                                type.ToString() == "BMX21W" ||
+                                type.ToString() == "BMX31W")
+                                beamIds.Add(id);
+                            else if (
+                                type.ToString() == "BRS2" ||
+                                type.ToString() == "BRS3")
+                                barIds.Add(id);
+                        }
+                    }
+                }
+            }    
+     
             if (beamIds.Count()==0)
-               BH.Engine.Base.Compute.RecordError("No BeamIds were pulled");
+               BH.Engine.Base.Compute.RecordWarning("No BeamIds were pulled");
             if (barIds.Count() == 0)
-                BH.Engine.Base.Compute.RecordError("No BarIds were pulled");
+                BH.Engine.Base.Compute.RecordWarning("No BarIds were pulled");
             foreach (int loadcaseId in loadcaseIds)
             {
                 IFLoadset loadset = d_LusasData.getLoadset(loadcaseId);
@@ -137,10 +167,10 @@ namespace BH.Adapter.Lusas
                 Dictionary<string, IFResultsComponentSet> resultsSetsBars = new Dictionary<string, IFResultsComponentSet>();
 
                 // if statement if count of list for Beams > 0
-                if (beamIds.Count() > 0)
-                    resultsSetsBeams = GetResultsSets(entityBeam, componentsBeam, location, resultsContext); 
-                else if (barIds.Count() > 0)
-                    resultsSetsBars = GetResultsSets(entityBar, componentsBar, location, resultsContext); 
+                if (beamIds.Count()>0==true)
+                    resultsSetsBeams = GetResultsSets(entityBeam, componentsBeam, location, resultsContext);
+                if (barIds.Count() > 0 == true)
+                    resultsSetsBars.Add("Fx", d_LusasData.getResultsComponentSet(entityBar, "Fx" , location, resultsContext));
 
                 foreach (int id in ids)
                 {
@@ -151,8 +181,13 @@ namespace BH.Adapter.Lusas
                         featureResults = GetFeatureResults(componentsBeam, resultsSetsBeams, unitSet, id, "L", 6);
 
                     double fX = 0; double fY = 0; double fZ = 0; double mX = 0; double mY = 0; double mZ = 0;
-                    featureResults.TryGetValue("Fx", out fX); featureResults.TryGetValue("Fy", out fY); featureResults.TryGetValue("Fz", out fZ);
-                    featureResults.TryGetValue("Mx", out mX); featureResults.TryGetValue("My", out mY); featureResults.TryGetValue("Mz", out mZ);
+                    if (beamIds.Contains(id))
+                    {
+                        featureResults.TryGetValue("Fx", out fX); featureResults.TryGetValue("Fy", out fY); featureResults.TryGetValue("Fz", out fZ);
+                        featureResults.TryGetValue("Mx", out mX); featureResults.TryGetValue("My", out mY); featureResults.TryGetValue("Mz", out mZ);
+                    }
+                    if (barIds.Contains(id))
+                        featureResults.TryGetValue("Fx", out fX);
 
                     //TODO: resolve below identifiers extractable through the API
                     int mode = -1;
