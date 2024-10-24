@@ -142,10 +142,9 @@ namespace BH.Adapter.Lusas
                 }
             }    
      
-            if (beamIds.Count()==0)
-               BH.Engine.Base.Compute.RecordWarning("No BeamIds were pulled");
-            if (barIds.Count() == 0)
-                BH.Engine.Base.Compute.RecordWarning("No BarIds were pulled");
+            if (beamIds.Count() + barIds.Count() == 0)
+               BH.Engine.Base.Compute.RecordError("No matching IDs found");
+            
             foreach (int loadcaseId in loadcaseIds)
             {
                 IFLoadset loadset = d_LusasData.getLoadset(loadcaseId);
