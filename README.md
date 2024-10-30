@@ -13,6 +13,11 @@ Lusas Modeller v18
 
 Lusas Modeller v19
 
+Lusas Modeller v20
+
+Lusas Modeller v21
+
+
 ### Documentation
 For more information about functionality see the [Lusas_Toolkit Wiki](https://github.com/BHoM/Lusas_Toolkit/wiki)
 
