@@ -28,8 +28,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Lusas.LPI;
 
-using BH.Adapter.Adapters.Lusas;
-
 
 
 namespace BH.Adapter.Lusas
@@ -160,8 +158,10 @@ namespace BH.Adapter.Lusas
                 List<string> componentsBar = new List<string>() {"Fx"};
 
                 d_LusasData.startUsingScriptedResults();
+
                 Dictionary<string, IFResultsComponentSet> resultsSetsBeam = new Dictionary<string, IFResultsComponentSet>();
                 Dictionary<string, IFResultsComponentSet> resultsSetsBar = new Dictionary<string, IFResultsComponentSet>();
+
                 if (beamIds.Count()>0==true)
                     resultsSetsBeam = GetResultsSets(entityBeam, componentsBeam, location, resultsContext);
                 if (barIds.Count() > 0 == true)
@@ -172,6 +172,11 @@ namespace BH.Adapter.Lusas
                 foreach (int id in ids)
                 {
                     Dictionary<string, double> featureResults = new Dictionary<string, double>();
+
+                    if (barIds.Contains(id))
+                        featureResults = GetFeatureResults(componentsBar, resultsSetsBar, unitSet, id, "L", 6);
+                    if (beamIds.Contains(id))
+                        featureResults = GetFeatureResults(componentsBeam, resultsSetsBeam, unitSet, id, "L", 6);
 
                     double fX = 0; double fY = 0; double fZ = 0; double mX = 0; double mY = 0; double mZ = 0;
                     if (beamIds.Contains(id))
