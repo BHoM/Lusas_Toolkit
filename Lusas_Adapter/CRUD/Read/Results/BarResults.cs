@@ -27,14 +27,8 @@ using BH.oM.Structure.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Lusas.LPI;
-using BH.oM.Structure.Elements;
-using BH.Engine.Base;
-using BH.oM.Geometry;
-using Microsoft.SqlServer.Server;
 using BH.Adapter.Adapters.Lusas;
-using BH.oM.Structure.Constraints;
-using System.Dynamic;
-using System.ComponentModel;
+
 
 namespace BH.Adapter.Lusas
 {
