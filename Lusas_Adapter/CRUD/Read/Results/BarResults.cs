@@ -145,7 +145,7 @@ namespace BH.Adapter.Lusas
             if (beamIds.Count() + barIds.Count() == 0)
             {
                 BH.Engine.Base.Compute.RecordWarning("The element type does not match the types currently supported, the adapter will attempt to pull results for a Thick 3D Beam");
-                beamIds = ids;
+                 beamIds = ids;
             }
 
             foreach (int loadcaseId in loadcaseIds)
