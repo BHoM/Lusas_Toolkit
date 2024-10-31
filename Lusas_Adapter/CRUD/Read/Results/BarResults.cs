@@ -140,11 +140,14 @@ namespace BH.Adapter.Lusas
                         }
                     }
                 }
-            }    
-     
+            }
+
             if (beamIds.Count() + barIds.Count() == 0)
-               BH.Engine.Base.Compute.RecordError("No matching IDs found");
-            
+            {
+                BH.Engine.Base.Compute.RecordWarning("The element type does not match the types currently supported, the adapter will attempt to pull results for a Thick 3D Beam");
+                beamIds = ids;
+            }
+
             foreach (int loadcaseId in loadcaseIds)
             {
                 IFLoadset loadset = d_LusasData.getLoadset(loadcaseId);
@@ -169,7 +172,7 @@ namespace BH.Adapter.Lusas
                 if (beamIds.Count()>0==true)
                     resultsSetsBeams = GetResultsSets(entityBeam, componentsBeam, location, resultsContext);
                 if (barIds.Count() > 0 == true)
-                    resultsSetsBars.Add("Fx", d_LusasData.getResultsComponentSet(entityBar, "Fx" , location, resultsContext));
+                    resultsSetsBars.Add(componentsBar[0], d_LusasData.getResultsComponentSet(entityBar, componentsBar[0] , location, resultsContext));
 
                 foreach (int id in ids)
                 {
