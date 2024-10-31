@@ -27,7 +27,9 @@ using BH.oM.Structure.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Lusas.LPI;
+
 using BH.Adapter.Adapters.Lusas;
+
 
 
 namespace BH.Adapter.Lusas
@@ -92,12 +94,11 @@ namespace BH.Adapter.Lusas
 
             IFView view = m_LusasApplication.getCurrentView();
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
+
             string entityBeam = "Force/Moment - Thick 3D Beam";
             string entityBar = "Force/Moment - Bar";
             string location = "Feature extreme";
 
-            // Extract the BarType for all ids provided
-            // List ids for beams, and ids for bars
             List<int> barIds = new List<int>();
             List<int> beamIds = new List<int>();
             foreach (int id in ids)
@@ -156,25 +157,21 @@ namespace BH.Adapter.Lusas
                 double lengthSIConversion = 1 / unitSet.getLengthFactor();
 
                 List<string> componentsBeam = new List<string>() { "Fx", "Fy", "Fz", "Mx", "My", "Mz" };
-                List<string> componentsBar = new List<string>() { "Fx" };
+                List<string> componentsBar = new List<string>() {"Fx"};
 
                 d_LusasData.startUsingScriptedResults();
-                Dictionary<string, IFResultsComponentSet> resultsSetsBeams = new Dictionary<string, IFResultsComponentSet>();
-                Dictionary<string, IFResultsComponentSet> resultsSetsBars = new Dictionary<string, IFResultsComponentSet>();
-
-                // if statement if count of list for Beams > 0
+                Dictionary<string, IFResultsComponentSet> resultsSetsBeam = new Dictionary<string, IFResultsComponentSet>();
+                Dictionary<string, IFResultsComponentSet> resultsSetsBar = new Dictionary<string, IFResultsComponentSet>();
                 if (beamIds.Count()>0==true)
-                    resultsSetsBeams = GetResultsSets(entityBeam, componentsBeam, location, resultsContext);
+                    resultsSetsBeam = GetResultsSets(entityBeam, componentsBeam, location, resultsContext);
                 if (barIds.Count() > 0 == true)
-                    resultsSetsBars.Add(componentsBar[0], d_LusasData.getResultsComponentSet(entityBar, componentsBar[0] , location, resultsContext));
+                    resultsSetsBar.Add(componentsBar[0], d_LusasData.getResultsComponentSet(entityBar, componentsBar[0] , location, resultsContext));
+
+                
 
                 foreach (int id in ids)
                 {
                     Dictionary<string, double> featureResults = new Dictionary<string, double>();
-                    if (barIds.Contains(id))
-                        featureResults=GetFeatureResults(componentsBar, resultsSetsBars, unitSet, id, "L", 6);
-                    if (beamIds.Contains(id))
-                        featureResults = GetFeatureResults(componentsBeam, resultsSetsBeams, unitSet, id, "L", 6);
 
                     double fX = 0; double fY = 0; double fZ = 0; double mX = 0; double mY = 0; double mZ = 0;
                     if (beamIds.Contains(id))
@@ -206,11 +203,12 @@ namespace BH.Adapter.Lusas
                         mZ * forceSIConversion * lengthSIConversion
                         );
                     barForces.Add(barForce);
-                }
-            }
 
-            d_LusasData.stopUsingScriptedResults();
-            d_LusasData.flushScriptedResults();
+                }
+
+                d_LusasData.stopUsingScriptedResults();
+                d_LusasData.flushScriptedResults();
+            }
 
             return barForces;
         }
