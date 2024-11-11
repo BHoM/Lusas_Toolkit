@@ -170,7 +170,7 @@ namespace BH.Adapter.Lusas
 
         private bool CreateProfile(string name, RectangleProfile profile)
         {
-            List<double> dimensionList = new List<double> { profile.Width, profile.Height };
+            List<double> dimensionList = new List<double> { Engine.Units.Convert.ToLength(profile.Width, m_lengthUnit), Engine.Units.Convert.ToLength(profile.Height, m_lengthUnit) };
             double[] dimensionArray = dimensionList.ToArray();
 
             //List<string> valueList = new List<string> { "B", "D" };
@@ -185,7 +185,12 @@ namespace BH.Adapter.Lusas
 
         private bool CreateProfile(string name, BoxProfile profile)
         {
-            List<double> dimensionList = new List<double> { profile.Width, profile.Height, profile.Thickness, profile.InnerRadius };
+            List<double> dimensionList = new List<double> { 
+                Engine.Units.Convert.ToLength(profile.Width, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.Height, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.Thickness, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.InnerRadius, m_lengthUnit) };
+
             double[] dimensionArray = dimensionList.ToArray();
 
             //List<string> valueList = new List<string> { "B", "D", "t", "r" };
@@ -207,7 +212,11 @@ namespace BH.Adapter.Lusas
                 "Weld size assumed to be inner radius for " + profile.GetType().ToString());
 
             List<double> dimensionList = new List<double> {
-                profile.Width, profile.Height, profile.TopFlangeThickness,profile.WebThickness, profile.WeldSize};
+                Engine.Units.Convert.ToLength(profile.Width, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.Height, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.TopFlangeThickness, m_lengthUnit),
+                Engine.Units.Convert.ToLength(profile.WebThickness, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.WeldSize, m_lengthUnit)};
             double[] dimensionArray = dimensionList.ToArray();
 
             //List<string> valueList = new List<string> { "B", "D", "tf", "tw", "r" };
@@ -222,7 +231,7 @@ namespace BH.Adapter.Lusas
 
         private bool CreateProfile(string name, CircleProfile profile)
         {
-            List<double> dimensionList = new List<double> { profile.Diameter };
+            List<double> dimensionList = new List<double> { Engine.Units.Convert.ToLength(profile.Diameter, m_lengthUnit) };
             double[] dimensionArray = dimensionList.ToArray();
 
             //List<string> valueList = new List<string> { "D" };
@@ -237,7 +246,9 @@ namespace BH.Adapter.Lusas
 
         private bool CreateProfile(string name, TubeProfile profile)
         {
-            List<double> dimensionList = new List<double> { profile.Diameter, profile.Thickness };
+            List<double> dimensionList = new List<double> { 
+                Engine.Units.Convert.ToLength(profile.Diameter, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.Thickness, m_lengthUnit) };
             double[] dimensionArray = dimensionList.ToArray();
 
             //List<string> valueList = new List<string> { "D", "t" };
@@ -252,8 +263,12 @@ namespace BH.Adapter.Lusas
 
         private bool CreateProfile(string name, ISectionProfile profile)
         {
-            List<double> dimensionList = new List<double> { profile.Width, profile.Height,
-            profile.FlangeThickness, profile.WebThickness, profile.RootRadius};
+            List<double> dimensionList = new List<double> { 
+                Engine.Units.Convert.ToLength(profile.Width, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.Height, m_lengthUnit),
+                Engine.Units.Convert.ToLength(profile.FlangeThickness, m_lengthUnit),
+                Engine.Units.Convert.ToLength(profile.WebThickness, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.RootRadius, m_lengthUnit)};
             double[] dimensionArray = dimensionList.ToArray();
 
             //List<string> valueList = new List<string> { "B", "D", "tf", "tw", "r" };
@@ -270,8 +285,12 @@ namespace BH.Adapter.Lusas
 
         private bool CreateProfile(string name, TSectionProfile profile)
         {
-            List<double> dimensionList = new List<double> { profile.Height, profile.Width,
-            profile.FlangeThickness, profile.WebThickness, profile.RootRadius};
+            List<double> dimensionList = new List<double> {
+                Engine.Units.Convert.ToLength(profile.Height, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.Width, m_lengthUnit),
+                Engine.Units.Convert.ToLength(profile.FlangeThickness, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.WebThickness, m_lengthUnit),
+                Engine.Units.Convert.ToLength(profile.RootRadius, m_lengthUnit)};
             double[] dimensionArray = dimensionList.ToArray();
 
             //List<string> valueList = new List<string> { "D", "B", "tf", "tw", "r" };
@@ -286,9 +305,14 @@ namespace BH.Adapter.Lusas
 
         private bool CreateProfile(string name, FabricatedISectionProfile profile)
         {
-            List<double> dimensionList = new List<double> { profile.TopFlangeWidth,
-                profile.BotFlangeWidth, profile.Height, profile.TopFlangeThickness, profile.BotFlangeThickness,
-            profile.WebThickness, profile.WeldSize};
+            List<double> dimensionList = new List<double> { 
+                Engine.Units.Convert.ToLength(profile.TopFlangeWidth, m_lengthUnit),
+                Engine.Units.Convert.ToLength(profile.BotFlangeWidth, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.Height, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.TopFlangeThickness, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.BotFlangeThickness, m_lengthUnit),
+                Engine.Units.Convert.ToLength(profile.WebThickness, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.WeldSize, m_lengthUnit)};
             double[] dimensionArray = dimensionList.ToArray();
 
             //List<string> valueList = new List<string> { "Bt", "Bb", "D", "tft", "bft", "tw", "r" };
@@ -305,8 +329,13 @@ namespace BH.Adapter.Lusas
 
         private bool CreateProfile(string name, AngleProfile profile)
         {
-            List<double> dimensionList = new List<double> {profile.Height, profile.Width, profile.WebThickness,
-                profile.FlangeThickness, profile.RootRadius, profile.ToeRadius};
+            List<double> dimensionList = new List<double> {
+                Engine.Units.Convert.ToLength(profile.Height, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.Width, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.WebThickness, m_lengthUnit),
+                Engine.Units.Convert.ToLength(profile.FlangeThickness, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.RootRadius, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.ToeRadius, m_lengthUnit)};
 
             double[] dimensionArray = dimensionList.ToArray();
 
@@ -323,8 +352,12 @@ namespace BH.Adapter.Lusas
         private bool CreateProfile(string name, ChannelProfile profile)
         {
             Engine.Base.Compute.RecordWarning("Toe radius not support for ChannelSection");
-            List<double> dimensionList = new List<double> { profile.FlangeWidth, profile.Height,
-            profile.FlangeThickness, profile.WebThickness, profile.RootRadius};
+            List<double> dimensionList = new List<double> { 
+                Engine.Units.Convert.ToLength(profile.FlangeWidth, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.Height, m_lengthUnit),
+                Engine.Units.Convert.ToLength(profile.FlangeThickness, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.WebThickness, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.RootRadius, m_lengthUnit)};
             double[] dimensionArray = dimensionList.ToArray();
 
             //List<string> valueList = new List<string> { "B", "D", "tf", "tw", "r" };
@@ -344,8 +377,11 @@ namespace BH.Adapter.Lusas
             Engine.Base.Compute.RecordWarning("Toe radius not supported for ZSection");
 
             List<double> dimensionList = new List<double> {
-                profile.Height, profile.FlangeWidth, profile.FlangeWidth,
-            profile.FlangeThickness, profile.RootRadius};
+                Engine.Units.Convert.ToLength(profile.Height, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.FlangeWidth, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.FlangeWidth, m_lengthUnit),
+                Engine.Units.Convert.ToLength(profile.FlangeThickness, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(profile.RootRadius, m_lengthUnit)};
             double[] dimensionArray = dimensionList.ToArray();
 
             //List<string> valueList = new List<string> { "D", "E", "F", "t", "r" };
