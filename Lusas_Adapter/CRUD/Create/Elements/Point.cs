@@ -25,6 +25,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 using BH.Engine.Structure;
 using BH.Engine.Adapter;
+using BH.Engine.Units;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -56,7 +57,9 @@ namespace BH.Adapter.Lusas
 
             Point position = node.Position;
             IFDatabaseOperations databasePoint = d_LusasData.createPoint(
-                position.X, position.Y, position.Z);
+                Engine.Units.Convert.ToLength(position.X, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(position.Y, m_lengthUnit), 
+                Engine.Units.Convert.ToLength(position.Z, m_lengthUnit));
             IFPoint lusasPoint = d_LusasData.getPointByNumber(d_LusasData.getLargestPointID());
 
 
