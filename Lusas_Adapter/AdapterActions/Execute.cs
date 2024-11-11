@@ -121,6 +121,14 @@ namespace BH.Adapter.Lusas
                     d_LusasData.getOptions().setDouble("TOLMRG", m_mergeTolerance);
                 m_directory = command.FileName;
 
+                IFUnitSet units = d_LusasData.getModelUnits();
+                units.getLengthLongName();
+                units.getForceLongName();
+                units.getTemperatureLongName();
+                units.getEnergyLongName();
+                units.getMassLongName();
+                units.getTimeLongName();
+
                 return true;
             }
             else
