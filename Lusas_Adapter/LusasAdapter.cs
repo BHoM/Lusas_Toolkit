@@ -32,6 +32,7 @@ using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.MaterialFragments;
+using BH.oM.Units;
 using Lusas.LPI;
 using System;
 using System.Collections.Generic;
@@ -219,8 +220,13 @@ namespace BH.Adapter.Lusas
         public IFDatabase d_LusasData;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
         public LusasSettings lusasSettings;
+        private LengthUnit m_lengthUnit = LengthUnit.Meter;
+        private ForceUnit m_forceUnit = ForceUnit.Newton;
+        private TemperatureUnit m_temperatureUnit = TemperatureUnit.Kelvin;
+        private EnergyUnit m_energyUnit = EnergyUnit.Joule;
+        private MassUnit m_massUnit = MassUnit.Kilogram;
 
-
+        // Time? 
         /***************************************************/
 
 
