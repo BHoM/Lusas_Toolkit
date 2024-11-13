@@ -57,7 +57,6 @@ namespace BH.Adapter.Lusas
             { 
                 IFLine lusasLine = d_LusasData.getLineByNumber(id);
                 object[] meshAssignments = lusasLine.getAssignments("Mesh");
-                string barType = string.Empty;
 
                 if (meshAssignments.Length > 0)
                 {
