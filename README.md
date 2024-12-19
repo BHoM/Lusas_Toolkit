@@ -7,11 +7,16 @@ This toolkit allows interoperability between the BHoM and Lusas. It enables crea
 https://www.lusas.com/
 
 ### Known Versions of Software Supported
-Lusas Modeller v17
+Lusas Modeller v17.0
 
-Lusas Modeller v18
+Lusas Modeller v18.0
 
-Lusas Modeller v19
+Lusas Modeller v19.0, 19.1
+
+Lusas Modeller v20.0
+
+Lusas Modeller v21.0, 21.1
+
 
 ### Documentation
 For more information about functionality see the [Lusas_Toolkit Wiki](https://github.com/BHoM/Lusas_Toolkit/wiki)
