@@ -1,6 +1,6 @@
 ﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -25,6 +25,8 @@ using System;
 using Lusas.LPI;
 using BH.oM.Structure.Constraints;
 using BH.oM.Structure.Elements;
+using BH.oM.Base.Attributes;
+using System.ComponentModel;
 
 namespace BH.Adapter.Lusas
 {
@@ -47,6 +49,8 @@ namespace BH.Adapter.Lusas
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
+        [Description("Sorts a list of Lusas Bar IDs based on if they have the properties of a thick beam or of a bar. This is returned as a Tuple with two lists (Bar IDs, Beam IDs)")]
+        [Input("IDs", "The list of IDs to be split")]
 
         private Tuple<List<int>, List<int>> GetBarType(List<int> ids)
         {
@@ -54,7 +58,7 @@ namespace BH.Adapter.Lusas
             List<int> beamIds = new List<int>();
 
             foreach (int id in ids)
-            { 
+            {
                 IFLine lusasLine = d_LusasData.getLineByNumber(id);
                 object[] meshAssignments = lusasLine.getAssignments("Mesh");
 
@@ -91,12 +95,12 @@ namespace BH.Adapter.Lusas
                 }
             }
 
-                Tuple<List<int>, List<int>> sortedIds =
-                new Tuple<List<int>, List<int>>(barIds, beamIds);
-                return sortedIds;
-            
+            Tuple<List<int>, List<int>> sortedIds =
+            new Tuple<List<int>, List<int>>(barIds, beamIds);
+            return sortedIds;
+
         }
-            /***************************************************/
-        
+        /***************************************************/
+
     }
 }
