@@ -743,6 +743,7 @@
     <Compile Include="Convert\ToBHoM\GetAdapterID.cs" />
     <Compile Include="Convert\ToBHoM\Elements\GetAttributeAssignments.cs" />
     <Compile Include="Convert\ToBHoM\Loads\GetLineAssignments.cs" />
+    <Compile Include="Private Helpers\GetBarType.cs" />
     <Compile Include="Private Helpers\GetLoadAssignments.cs" />
     <Compile Include="Convert\ToBHoM\GetName.cs" />
     <Compile Include="Convert\ToBHoM\Elements\GetNode.cs" />
