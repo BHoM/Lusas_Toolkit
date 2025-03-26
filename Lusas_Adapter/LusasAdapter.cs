@@ -157,19 +157,19 @@ namespace BH.Adapter.Lusas
                 {
                     m_LusasApplication = new LusasWinApp();
 #if Debug17 || Release17
-                    System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.17.0");
+                    Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.17.0");
 #elif Debug18 || Release18
-                    System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.18.0");
+                    Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.18.0");
 #elif Debug19 || Release19
-                    System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.19.0");
+                    Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.19.0");
 #elif Debug191 || Release191
-                    System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.19.1");
+                    Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.19.1");
 #elif Debug200 || Release200
-                    System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.20.0");
+                    Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.20.0");
 #elif Debug210 || Release210
-                    System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.21.0");
+                    Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.21.0");
 #elif Debug211 || Release211
-                    System.Runtime.InteropServices.Marshal.GetActiveObject("Lusas.Modeller.21.1");
+                    Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.21.1");
 #endif
                     m_LusasApplication.enableUI(true);
                     m_LusasApplication.setVisible(true);
