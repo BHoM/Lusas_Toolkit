@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
@@ -21,12 +21,12 @@
  */
 
 using System.Collections.Generic;
-using System.Linq;
-using BH.oM.Adapters.Lusas;
-using BH.oM.Structure.Elements;
-using BH.oM.Structure.Loads;
-using BH.Engine.Adapter;
+using System;
 using Lusas.LPI;
+using BH.oM.Structure.Constraints;
+using BH.oM.Structure.Elements;
+using BH.oM.Base.Attributes;
+using System.ComponentModel;
 
 namespace BH.Adapter.Lusas
 {
@@ -49,65 +49,58 @@ namespace BH.Adapter.Lusas
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
+        [Description("Sorts a list of Lusas Bar IDs based on if they have the properties of a thick beam or of a bar. This is returned as a Tuple with two lists (Bar IDs, Beam IDs)")]
+        [Input("IDs", "The list of IDs to be split")]
 
-        private List<ILoad> ReadBarUniformTemperatureLoads(List<string> ids = null)
+        private Tuple<List<int>, List<int>> GetBarType(List<int> ids)
         {
-            List<ILoad> barUniformTemperatureLoads = new List<ILoad>();
-            object[] lusasTemperatureLoads = d_LusasData.getAttributes("Temperature");
+            List<int> barIds = new List<int>();
+            List<int> beamIds = new List<int>();
 
-            if (!(lusasTemperatureLoads.Count() == 0))
+            foreach (int id in ids)
             {
-                List<Bar> barsList = GetCachedOrRead<Bar>();
-                Dictionary<string, Bar> bars = barsList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
+                IFLine lusasLine = d_LusasData.getLineByNumber(id);
+                object[] meshAssignments = lusasLine.getAssignments("Mesh");
 
-                List<IFLoadcase> allLoadcases = new List<IFLoadcase>();
-
-                for (int i = 0; i < lusasTemperatureLoads.Count(); i++)
+                if (meshAssignments.Length > 0)
                 {
-                    IFLoading lusasTemperatureLoad = (IFLoading)lusasTemperatureLoads[i];
-
-                    IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
-                       GetLoadAssignments(lusasTemperatureLoad);
-
-                    foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
+                    foreach (object assignment in meshAssignments)
                     {
-                        List<IFAssignment> assignments = new List<IFAssignment>();
+                        IFAssignment lusasAssignment = (IFAssignment)assignment;
+                        IFAttribute lusasMesh = lusasAssignment.getAttribute();
+                        IFMeshLine lusasLineMesh = (IFMeshLine)lusasMesh;
 
-                        foreach (IFAssignment assignment in groupedAssignment)
+                        object[] barMeshName = lusasLineMesh.getElementNames();
+
+                        foreach (object type in barMeshName)
                         {
-                            IFLine tryLine = assignment.getDatabaseObject() as IFLine;
-
-                            if (tryLine != null)
+                            if (
+                                    type.ToString() == "BMI21" ||
+                                    type.ToString() == "BMI31" ||
+                                    type.ToString() == "BMX21" ||
+                                    type.ToString() == "BMX31" ||
+                                    type.ToString() == "BMI21W" ||
+                                    type.ToString() == "BMI31W" ||
+                                    type.ToString() == "BMX21W" ||
+                                    type.ToString() == "BMX31W")
                             {
-                                assignments.Add(assignment);
+                                beamIds.Add(id);
                             }
-                        }
-
-                        List<string> analysisName = new List<string> { lusasTemperatureLoad.getAttributeType() };
-
-                        if (assignments.Count != 0)
-                        {
-                            BarUniformTemperatureLoad barUniformTemperatureLoad =
-                                Adapter.Adapters.Lusas.Convert.ToBarUniformTemperatureLoad(
-                                    lusasTemperatureLoad, groupedAssignment, bars);
-
-                            barUniformTemperatureLoad.Tags = new HashSet<string>(analysisName);
-                            barUniformTemperatureLoads.Add(barUniformTemperatureLoad);
+                            else if (
+                                type.ToString() == "BRS2" ||
+                                type.ToString() == "BRS3")
+                                barIds.Add(id);
                         }
                     }
                 }
             }
 
-            return barUniformTemperatureLoads;
-        }
+            Tuple<List<int>, List<int>> sortedIds =
+            new Tuple<List<int>, List<int>>(barIds, beamIds);
+            return sortedIds;
 
+        }
         /***************************************************/
 
     }
 }
-
-
-
-
-
-

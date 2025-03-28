@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -27,6 +27,7 @@ using BH.oM.Structure.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Lusas.LPI;
+using System;
 
 namespace BH.Adapter.Lusas
 {
@@ -91,8 +92,18 @@ namespace BH.Adapter.Lusas
             IFView view = m_LusasApplication.getCurrentView();
             IFResultsContext resultsContext = m_LusasApplication.newResultsContext(view);
 
-            string entity = "Force/Moment - Thick 3D Beam";
+            string entityBeam = "Force/Moment - Thick 3D Beam";
+            string entityBar = "Force/Moment - Bar";
+            
             string location = "Feature extreme";
+
+            Tuple <List<int>,List<int>> sortedIds= GetBarType(ids);
+
+            List<int> barIds =sortedIds.Item1;
+            List<int> beamIds =sortedIds.Item2;
+
+            if (beamIds.Count + barIds.Count == 0)
+                BH.Engine.Base.Compute.RecordError("The recorded element types does not match the types currently supported");
 
             foreach (int loadcaseId in loadcaseIds)
             {
@@ -107,18 +118,36 @@ namespace BH.Adapter.Lusas
                 double forceSIConversion = 1 / unitSet.getForceFactor();
                 double lengthSIConversion = 1 / unitSet.getLengthFactor();
 
-                List<string> components = new List<string>() { "Fx", "Fy", "Fz", "Mx", "My", "Mz" };
+                List<string> componentsBeam = new List<string>() { "Fx", "Fy", "Fz", "Mx", "My", "Mz" };
+                List<string> componentsBar = new List<string>() { "Fx" };
+
                 d_LusasData.startUsingScriptedResults();
 
-                Dictionary<string, IFResultsComponentSet> resultsSets = GetResultsSets(entity, components, location, resultsContext);
+                Dictionary<string, IFResultsComponentSet> resultsSetsBeam = new Dictionary<string, IFResultsComponentSet>();
+                Dictionary<string, IFResultsComponentSet> resultsSetsBar = new Dictionary<string, IFResultsComponentSet>();
 
-                foreach (int barId in ids)
-                {
-                    Dictionary<string, double> featureResults = GetFeatureResults(components, resultsSets, unitSet, barId, "L", 6);
+                if (beamIds.Count() > 0 == true)
+                    resultsSetsBeam = GetResultsSets(entityBeam, componentsBeam, location, resultsContext);
+                if (barIds.Count() > 0 == true)
+                    resultsSetsBar = GetResultsSets(entityBar, componentsBar, location, resultsContext);
 
+                foreach (int id in ids)
+                { 
+                    Dictionary<string, double> featureResults = new Dictionary<string, double>();
                     double fX = 0; double fY = 0; double fZ = 0; double mX = 0; double mY = 0; double mZ = 0;
-                    featureResults.TryGetValue("Fx", out fX); featureResults.TryGetValue("Fy", out fY); featureResults.TryGetValue("Fz", out fZ);
-                    featureResults.TryGetValue("Mx", out mX); featureResults.TryGetValue("My", out mY); featureResults.TryGetValue("Mz", out mZ);
+
+                    if (barIds.Contains(id))
+                    {
+                        featureResults = GetFeatureResults(componentsBar, resultsSetsBar, unitSet, id, "L", 6);
+                        featureResults.TryGetValue("Fx", out fX);
+                    }
+                    if (beamIds.Contains(id))
+                    {
+                        featureResults = GetFeatureResults(componentsBeam, resultsSetsBeam, unitSet, id, "L", 6);
+
+                        featureResults.TryGetValue("Fx", out fX); featureResults.TryGetValue("Fy", out fY); featureResults.TryGetValue("Fz", out fZ);
+                        featureResults.TryGetValue("Mx", out mX); featureResults.TryGetValue("My", out mY); featureResults.TryGetValue("Mz", out mZ);
+                    }
 
                     //TODO: resolve below identifiers extractable through the API
                     int mode = -1;
@@ -127,7 +156,7 @@ namespace BH.Adapter.Lusas
                     int divisions = 0;
 
                     BarForce barForce = new BarForce(
-                        barId,
+                        id,
                         Adapters.Lusas.Convert.GetName(loadset.getName()),
                         mode,
                         timeStep,
@@ -372,6 +401,7 @@ namespace BH.Adapter.Lusas
 
     }
 }
+
 
 
 
