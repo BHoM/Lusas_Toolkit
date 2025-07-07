@@ -644,6 +644,12 @@
       <HintPath>..\libs\Version 211\Lusas.Interop.dll</HintPath>
       <Private>False</Private>
     </Reference>
+<Reference Include="Lusas.Interop, Version=22.0.1601.51518, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86" Condition="'$(Configuration)'=='Debug220' Or '$(Configuration)'=='Release220'">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\libs\Version 220\Lusas.Interop.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Physical_oM">
       <HintPath>$(ProgramData)\BHoM\Assemblies\Physical_oM.dll</HintPath>
       <Private>False</Private>
