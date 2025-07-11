@@ -54,6 +54,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV210Adapter : BHoMAdapter
 #elif Debug211 || Release211
     public partial class LusasV211Adapter : BHoMAdapter
+#elif Debug220 || Release220
+    public partial class LusasV220Adapter : BHoMAdapter
 #else
     public partial class LusasV17Adapter : BHoMAdapter
 #endif
@@ -103,6 +105,13 @@ namespace BH.Adapter.Lusas
         [Input("active", "Initiate the adapter by setting to True. Open a session of Lusas and close any dialogue boxes before setting to True.")]
         [Output("adapter", "Adapter for Lusas.")]
         public LusasV211Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
+#elif Debug220 || Release220
+        [Description("Adapter to connect to a Lusas .mdl file.")]
+        [Input("filePath", "Path to the Lusas .mdl file to be used.")]
+        [Input("lusasSettings", "General settings that are applicable to all actions performed by this adapter, e.g. merge tolerance to be used.")]
+        [Input("active", "Initiate the adapter by setting to True. Open a session of Lusas and close any dialogue boxes before setting to True.")]
+        [Output("adapter", "Adapter for Lusas.")]
+        public LusasV220Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #else
         [Description("Adapter to connect to a Lusas .mdl file.")]
         [Input("filePath", "Path to Lusas the .mdl file to be used.")]
@@ -170,6 +179,8 @@ namespace BH.Adapter.Lusas
                     Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.21.0");
 #elif Debug211 || Release211
                     Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.21.1");
+#elif Debug220 || Release220
+                    Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.22.0");
 #endif
                     m_LusasApplication.enableUI(true);
                     m_LusasApplication.setVisible(true);
