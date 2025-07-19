@@ -81,6 +81,9 @@ namespace BH.Adapter.Lusas
                 case "BarVaryingDistributedLoad":
                     readLoads = ReadBarVaryingDistributedLoads(ids as dynamic);
                     break;
+                default:
+                    Engine.Base.Compute.RecordError($"{type} not supported in the Lusas_Toolkit.");
+                    break;
             }
 
             return readLoads;

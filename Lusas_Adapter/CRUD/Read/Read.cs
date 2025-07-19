@@ -99,8 +99,10 @@ namespace BH.Adapter.Lusas
                 return ReadMeshSettings2D(ids as dynamic);
             else if (typeof(IResult).IsAssignableFrom(type))
                 Modules.Structure.ErrorMessages.ReadResultsError(type);
+            else
+                Engine.Base.Compute.RecordError($"{type} not supported in the Lusas_Toolkit.");
 
-            return null;
+                return null;
 
 
         }

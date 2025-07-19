@@ -147,6 +147,9 @@ namespace BH.Adapter.Lusas
                         case "BH.oM.Structure.Loads.BarVaryingDistributedLoad":
                             success = CreateCollection(objects as IEnumerable<BarVaryingDistributedLoad>);
                             break;
+                        default:
+                            Engine.Base.Compute.RecordError($"{loadType} is not supported in the Lusas_Toolkit.");
+                            break;
                     }
                 }
                 else if (typeof(ISurfaceProperty).IsAssignableFrom(objects.First().GetType()))
@@ -167,7 +170,7 @@ namespace BH.Adapter.Lusas
                 }
                 else
                 {
-                    Engine.Base.Compute.RecordError("Object is not supported in the Lusas_Toolkit.");
+                    Engine.Base.Compute.RecordError($"{objects.GetType()} is not supported in the Lusas_Toolkit.");
                 }
             }
 
