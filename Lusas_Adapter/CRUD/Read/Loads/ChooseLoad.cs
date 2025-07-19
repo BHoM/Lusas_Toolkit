@@ -50,7 +50,7 @@ namespace BH.Adapter.Lusas
 
         private List<ILoad> ChooseLoad(Type type, List<string> ids = null)
         {
-            List<ILoad> readLoads = null;
+            List<ILoad> readLoads = new List<ILoad>();
             string typeName = type.Name;
             switch (typeName)
             {
@@ -82,7 +82,7 @@ namespace BH.Adapter.Lusas
                     readLoads = ReadBarVaryingDistributedLoads(ids as dynamic);
                     break;
                 default:
-                    Engine.Base.Compute.RecordError($"{type} not supported in the Lusas_Toolkit.");
+                    Engine.Base.Compute.RecordError($"{type} is not supported in the Lusas_Toolkit.");
                     break;
             }
 
