@@ -51,6 +51,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV210Adapter
 #elif Debug211 || Release211
     public partial class LusasV211Adapter
+#elif Debug220 || Release220
+    public partial class LusasV220Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -97,8 +99,10 @@ namespace BH.Adapter.Lusas
                 return ReadMeshSettings2D(ids as dynamic);
             else if (typeof(IResult).IsAssignableFrom(type))
                 Modules.Structure.ErrorMessages.ReadResultsError(type);
+            else
+                Engine.Base.Compute.RecordError($"{type} not supported in the Lusas_Toolkit.");
 
-            return null;
+                return null;
 
 
         }
