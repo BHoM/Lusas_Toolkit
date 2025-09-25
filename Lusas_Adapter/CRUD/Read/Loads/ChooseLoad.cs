@@ -38,6 +38,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV210Adapter
 #elif Debug211 || Release211
     public partial class LusasV211Adapter
+#elif Debug220 || Release220
+    public partial class LusasV220Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -48,7 +50,7 @@ namespace BH.Adapter.Lusas
 
         private List<ILoad> ChooseLoad(Type type, List<string> ids = null)
         {
-            List<ILoad> readLoads = null;
+            List<ILoad> readLoads = new List<ILoad>();
             string typeName = type.Name;
             switch (typeName)
             {
@@ -78,6 +80,9 @@ namespace BH.Adapter.Lusas
                     break;
                 case "BarVaryingDistributedLoad":
                     readLoads = ReadBarVaryingDistributedLoads(ids as dynamic);
+                    break;
+                default:
+                    Engine.Base.Compute.RecordError($"{type} is not supported in the Lusas_Toolkit.");
                     break;
             }
 

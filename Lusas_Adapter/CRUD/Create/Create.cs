@@ -55,6 +55,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV210Adapter
 #elif Debug211 || Release211
     public partial class LusasV211Adapter
+#elif Debug220 || Release220
+    public partial class LusasV220Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -145,6 +147,9 @@ namespace BH.Adapter.Lusas
                         case "BH.oM.Structure.Loads.BarVaryingDistributedLoad":
                             success = CreateCollection(objects as IEnumerable<BarVaryingDistributedLoad>);
                             break;
+                        default:
+                            Engine.Base.Compute.RecordError($"{loadType} is not supported in the Lusas_Toolkit.");
+                            break;
                     }
                 }
                 else if (typeof(ISurfaceProperty).IsAssignableFrom(objects.First().GetType()))
@@ -165,7 +170,7 @@ namespace BH.Adapter.Lusas
                 }
                 else
                 {
-                    Engine.Base.Compute.RecordError("Object is not supported in the Lusas_Toolkit.");
+                    Engine.Base.Compute.RecordError($"{objects.GetType()} is not supported in the Lusas_Toolkit.");
                 }
             }
 
