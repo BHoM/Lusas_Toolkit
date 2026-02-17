@@ -9,6 +9,10 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <Configurations>Debug;Debug17;Debug18;Debug19;Debug191;Debug200;Debug210;Debug211;Debug220;Debug230;Release;Release17;Release18;Release19;Release191;Release200;Release210;Release211;Release220;Release230</Configurations>
     <Configuration>Release230</Configuration>
+	<Description>https://github.com/BHoM/Lusas_Toolkit</Description>
+    <Copyright>Copyright © https://github.com/BHoM</Copyright>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <FileVersion>9.1.0.0</FileVersion>
   </PropertyGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy &quot;$(TargetDir)$(TargetFileName)&quot;  &quot;C:\ProgramData\BHoM\Assemblies&quot; /Y" />
