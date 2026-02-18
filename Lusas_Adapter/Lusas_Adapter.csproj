@@ -382,6 +382,12 @@
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Lusas.Interop, Version=17.0.1633.29698, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86" Condition="'$(Configuration)'=='Debug17' Or '$(Configuration)'=='Release17'">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\libs\Version 211\Lusas.Interop.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Lusas.Interop, Version=18.0.1637.31413, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86" Condition="'$(Configuration)'=='Debug18' Or '$(Configuration)'=='Release18'">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -410,6 +416,12 @@
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\libs\Version 210\Lusas.Interop.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Lusas.Interop, Version=21.1.1610.48335, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86" Condition="'$(Configuration)'=='Debug211' Or '$(Configuration)'=='Release211'">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\libs\Version 211\Lusas.Interop.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Lusas.Interop, Version=22.0.1601.51518, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86" Condition="'$(Configuration)'=='Debug220' Or '$(Configuration)'=='Release220'">
