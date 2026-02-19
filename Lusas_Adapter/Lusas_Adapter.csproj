@@ -1,211 +1,25 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+<TargetFramework>net472</TargetFramework>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug17</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV17_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug18</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV18_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug19</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV19_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug191</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV191_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug200</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV200_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug210</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV210_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug211</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV211_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug220</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV220_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug230</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BH.Adapter.Lusas</RootNamespace>
     <AssemblyName>LusasV230_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <Configurations>Debug;Debug17;Debug18;Debug19;Debug191;Debug200;Debug210;Debug211;Debug220;Debug230;Release;Release17;Release18;Release19;Release191;Release200;Release210;Release211;Release220;Release230</Configurations>
+    <Configuration>Release230</Configuration>
+	<Description>https://github.com/BHoM/Lusas_Toolkit</Description>
+    <Copyright>Copyright © https://github.com/BHoM</Copyright>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <FileVersion>9.1.0.0</FileVersion>
   </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release17</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV17_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release18</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV18_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release19</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV19_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release191</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV191_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release200</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV200_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release210</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV210_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release211</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV211_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release220</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV220_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release230</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{896D021A-34E8-4EDA-B69D-8F92C6B5243B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV230_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(TargetDir)$(TargetFileName)&quot;  &quot;C:\ProgramData\BHoM\Assemblies&quot; /Y" />
+  </Target>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug17</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV17_Adapter</AssemblyName>
   </PropertyGroup>
@@ -213,235 +27,156 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;Release17</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV17_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug17|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug17</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV17_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug18|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug18</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV18_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug19|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug19</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV19_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug191|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug191</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV191_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug200|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug200</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV200_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug210|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug210</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV210_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug211|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug211</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV211_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug220|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug220</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV220_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug230|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug230</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV230_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release17|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release17</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV17_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release18|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release18</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV18_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release19|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release19</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV19_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release191|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release191</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV191_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release200|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release200</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV200_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release210|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release210</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV210_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release211|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release211</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV211_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release220|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release220</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV220_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release230|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release230</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV230_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug17</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV17_Adapter</AssemblyName>
   </PropertyGroup>
@@ -449,225 +184,150 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;Release17</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV17_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug17|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug17</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV17_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug18|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug18</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV18_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug19|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug19</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV19_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug191|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug191</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV191_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug200|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug200</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV200_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug210|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug210</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV210_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug211|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug211</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV211_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug220|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug220</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV220_Adapter</AssemblyName>
   </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug230|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug230|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Debug230</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV230_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release17|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release17</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV17_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release18|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release18</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV18_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release19|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release19</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV19_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release191|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release191</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV191_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release200|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release200</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV200_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release210|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release210</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV210_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release211|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release211</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV211_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release220|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release220</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV220_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release230|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Release230</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV230_Adapter</AssemblyName>
   </PropertyGroup>
@@ -770,7 +430,7 @@
       <HintPath>..\libs\Version 220\Lusas.Interop.dll</HintPath>
       <Private>False</Private>
     </Reference>
-	<Reference Include="Lusas.Interop, Version=23.0.1603.54227, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86" Condition="'$(Configuration)'=='Debug230' Or '$(Configuration)'=='Release230'">
+    <Reference Include="Lusas.Interop, Version=23.0.1603.54227, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86" Condition="'$(Configuration)'=='Debug230' Or '$(Configuration)'=='Release230'">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\libs\Version 230\Lusas.Interop.dll</HintPath>
@@ -806,170 +466,14 @@
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdapterActions\Execute.cs" />
-    <Compile Include="Convert\Double.cs" />
-    <Compile Include="Convert\ToBHoM\Elements\ToBar.cs" />
-    <Compile Include="Convert\ToBHoM\Elements\ToEdge.cs" />
-    <Compile Include="Convert\ToBHoM\Elements\ToNode.cs" />
-    <Compile Include="Convert\ToBHoM\Elements\ToOpening.cs" />
-    <Compile Include="Convert\ToBHoM\Elements\ToPanel.cs" />
-    <Compile Include="Convert\ToBHoM\Elements\ToPoint.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToAreaUniformTemperatureLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToAreaUniformlyDistributedLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToBarDistributedLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToBarPointLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToBarUniformTemperatureLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToBarUniformlyDistributedLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToGravityLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToLoadcase.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToLoadCombination.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToPointDisplacement.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToPointLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToConstraint4DOF.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToConstraint6DOF.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToMaterial.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToMeshSettings1D.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToMeshSettings2D.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToProfile.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToSectionProperty.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToSurfaceProperty.cs" />
-    <Compile Include="Convert\ToLusas\_ToLusas.cs" />
-    <Compile Include="CRUD\Create\Error.cs" />
-    <Compile Include="CRUD\Create\Loads\BarPointLoad.cs" />
-    <Compile Include="CRUD\Create\Loads\BarDistributedLoad.cs" />
-    <Compile Include="CRUD\Create\Properties\SurfaceMesh.cs" />
-    <Compile Include="CRUD\Create\Properties\LineMesh.cs" />
-    <Compile Include="CRUD\Create\Loads\DistributedLoad.cs" />
-    <Compile Include="CRUD\Create\Loads\GravityLoad.cs" />
-    <Compile Include="CRUD\Create\Properties\GeometricSurface.cs" />
-    <Compile Include="CRUD\Create\Loads\ConcentratedLoad.cs" />
-    <Compile Include="CRUD\Create\Elements\Edge.cs" />
-    <Compile Include="CRUD\Create\Loads\Loadcase.cs" />
-    <Compile Include="CRUD\Create\Loads\LoadCombination.cs" />
-    <Compile Include="CRUD\Create\Properties\LocalCoordinate.cs" />
-    <Compile Include="CRUD\Create\Properties\GeometricLine.cs" />
-    <Compile Include="CRUD\Create\Properties\Material.cs" />
-    <Compile Include="CRUD\Create\Loads\PrescribedDisplacement.cs" />
-    <Compile Include="CRUD\Create\Properties\Support.cs" />
-    <Compile Include="CRUD\Create\Elements\Surface.cs" />
-    <Compile Include="CRUD\Create\Elements\Line.cs" />
-    <Compile Include="CRUD\Create\Elements\Point.cs" />
-    <Compile Include="CRUD\Create\Loads\TemperatureLoad.cs" />
-    <Compile Include="CRUD\Create\Create.cs" />
-    <Compile Include="CRUD\Delete\Elements\Lines.cs" />
-    <Compile Include="CRUD\Delete\Elements\Points.cs" />
-    <Compile Include="CRUD\Delete\Load\AreaTemperatureLoads.cs" />
-    <Compile Include="CRUD\Delete\Load\AreaUniformlyDistributeds.cs" />
-    <Compile Include="CRUD\Delete\Load\BarPointLoads.cs" />
-    <Compile Include="CRUD\Delete\Load\BarTemperatureLoads.cs" />
-    <Compile Include="CRUD\Delete\Load\BarUniformlyDistributedLoads.cs" />
-    <Compile Include="CRUD\Delete\Load\Loadcases.cs" />
-    <Compile Include="CRUD\Delete\Load\LoadCombinations.cs" />
-    <Compile Include="CRUD\Delete\Load\PointDisplacements.cs" />
-    <Compile Include="CRUD\Delete\Load\PointForces.cs" />
-    <Compile Include="CRUD\Delete\Property\4DOFConstraints.cs" />
-    <Compile Include="CRUD\Delete\Property\6DOFConstraints.cs" />
-    <Compile Include="CRUD\Delete\Property\Materials.cs" />
-    <Compile Include="CRUD\Delete\Property\MeshSettings1D.cs" />
-    <Compile Include="CRUD\Delete\Property\MeshSettings2D.cs" />
-    <Compile Include="CRUD\Delete\Property\SectionProperties.cs" />
-    <Compile Include="CRUD\Delete\Property\SurfaceProperties.cs" />
-    <Compile Include="CRUD\Delete\Delete.cs" />
-    <Compile Include="CRUD\Read\Elements\Openings.cs" />
-    <Compile Include="CRUD\Read\Results\BarResults.cs" />
-    <Compile Include="CRUD\Read\Results\MeshResults.cs" />
-    <Compile Include="CRUD\Read\Results\NodeResults.cs" />
-    <Compile Include="CRUD\Read\Results\ReadResults.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\AssignmentWarning.cs" />
-    <Compile Include="Convert\ToBHoM\GetAdapterID.cs" />
-    <Compile Include="Convert\ToBHoM\Elements\GetAttributeAssignments.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\GetLineAssignments.cs" />
-    <Compile Include="Private Helpers\GetBarType.cs" />
-    <Compile Include="Private Helpers\GetLoadAssignments.cs" />
-    <Compile Include="Convert\ToBHoM\GetName.cs" />
-    <Compile Include="Convert\ToBHoM\Elements\GetNode.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\GetPointAssignments.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\GetSurfaceAssignments.cs" />
-    <Compile Include="Convert\ToBHoM\Elements\IsMemberOf.cs" />
-    <Compile Include="Type\NextFreeId.cs" />
-    <Compile Include="CRUD\Delete\Elements\Surface.cs" />
-    <Compile Include="Private Helpers\AssignObjectSet.cs" />
-    <Compile Include="Private Helpers\DeleteLineAssignment.cs" />
-    <Compile Include="Private Helpers\DeletePointAssignment.cs" />
-    <Compile Include="Private Helpers\CreateTags.cs" />
-    <Compile Include="Private Helpers\DeleteSurfaceAssignment.cs" />
-    <Compile Include="Private Helpers\GetAssignedObjects.cs" />
-    <Compile Include="Private Helpers\GetFeatureResults.cs" />
-    <Compile Include="Private Helpers\GetResultsSets.cs" />
-    <Compile Include="Private Helpers\NameSearch.cs" />
-    <Compile Include="CRUD\Read\Properties\MeshSettings1D.cs" />
-    <Compile Include="CRUD\Read\Properties\MeshSettings2D.cs" />
-    <Compile Include="CRUD\Read\Properties\SurfaceProperties.cs" />
-    <Compile Include="CRUD\Read\Properties\4DOFConstraints.cs" />
-    <Compile Include="CRUD\Read\Properties\6DOFConstraints.cs" />
-    <Compile Include="CRUD\Read\ReadAll.cs" />
-    <Compile Include="CRUD\Read\Loads\AreaUniformTemperatureLoads.cs" />
-    <Compile Include="CRUD\Read\Loads\AreaUniformlyDistributedLoads.cs" />
-    <Compile Include="CRUD\Read\Loads\BarPointLoads.cs" />
-    <Compile Include="CRUD\Read\Elements\Bars.cs" />
-    <Compile Include="CRUD\Read\Loads\BarUniformlyDistributedLoads.cs" />
-    <Compile Include="CRUD\Read\Loads\BarUniformTemperatureLoads.cs" />
-    <Compile Include="CRUD\Read\Loads\BarVaryingDistributedLoads.cs" />
-    <Compile Include="CRUD\Read\Loads\ChooseLoad.cs" />
-    <Compile Include="CRUD\Read\Elements\Edges.cs" />
-    <Compile Include="CRUD\Read\Elements\Elements.cs" />
-    <Compile Include="CRUD\Read\Loads\GravityLoads.cs" />
-    <Compile Include="CRUD\Read\Loads\Loadcases.cs" />
-    <Compile Include="CRUD\Read\Loads\LoadCombinations.cs" />
-    <Compile Include="CRUD\Read\Elements\LusasPoints.cs" />
-    <Compile Include="CRUD\Read\Properties\Materials.cs" />
-    <Compile Include="CRUD\Read\Elements\Nodes.cs" />
-    <Compile Include="CRUD\Read\Elements\Panels.cs" />
-    <Compile Include="CRUD\Read\Loads\PointDisplacements.cs" />
-    <Compile Include="CRUD\Read\Loads\PointForces.cs" />
-    <Compile Include="CRUD\Read\Elements\Points.cs" />
-    <Compile Include="CRUD\Read\Properties\SectionProperties.cs" />
-    <Compile Include="CRUD\Read\Properties\Tags.cs" />
-    <Compile Include="CRUD\Read\Read.cs" />
-    <Compile Include="CRUD\Update\UpdateObjects.cs" />
-    <Compile Include="LusasAdapter.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Lusas_Engine\Lusas_Engine.csproj">
-      <Project>{41133f8e-e73a-415e-87f5-8e1d8bfc7ea0}</Project>
-      <Name>Lusas_Engine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lusas_oM\Lusas_oM.csproj">
-      <Project>{963a4a5c-0455-40a5-ba48-01838dd5bb5b}</Project>
-      <Name>Lusas_oM</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Lusas_Engine\Lusas_Engine.csproj" />
+    <ProjectReference Include="..\Lusas_oM\Lusas_oM.csproj" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-xcopy "$(TargetDir)$(TargetFileName)"  "C:\ProgramData\BHoM\Assemblies" /Y
-    </PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

@@ -1,19 +1,19 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lusas_Engine", "Lusas_Engine\Lusas_Engine.csproj", "{41133F8E-E73A-415E-87F5-8E1D8BFC7EA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lusas_Engine", "Lusas_Engine\Lusas_Engine.csproj", "{41133F8E-E73A-415E-87F5-8E1D8BFC7EA0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{963A4A5C-0455-40A5-BA48-01838DD5BB5B} = {963A4A5C-0455-40A5-BA48-01838DD5BB5B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lusas_Adapter", "Lusas_Adapter\Lusas_Adapter.csproj", "{896D021A-34E8-4EDA-B69D-8F92C6B5243B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lusas_Adapter", "Lusas_Adapter\Lusas_Adapter.csproj", "{896D021A-34E8-4EDA-B69D-8F92C6B5243B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{963A4A5C-0455-40A5-BA48-01838DD5BB5B} = {963A4A5C-0455-40A5-BA48-01838DD5BB5B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lusas_oM", "Lusas_oM\Lusas_oM.csproj", "{963A4A5C-0455-40A5-BA48-01838DD5BB5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lusas_oM", "Lusas_oM\Lusas_oM.csproj", "{963A4A5C-0455-40A5-BA48-01838DD5BB5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
