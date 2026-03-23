@@ -25,6 +25,8 @@ using System.Linq;
 using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.MaterialFragments;
+using BH.oM.Structure.Offsets;
+using BH.oM.Geometry;
 using BH.Engine.Adapter;
 using BH.Engine.Geometry;
 using Lusas.LPI;
@@ -152,7 +154,42 @@ namespace BH.Adapter.Lusas
             }
 
             if (bar.Offset != null)
-                Engine.Base.Compute.RecordWarning("Offsets are currently unsupported.");
+            {
+                Offset offset = bar.Offset;
+
+                if (offset.Start.X != 0 || offset.End.X != 0)
+                    Engine.Base.Compute.RecordWarning("Tangential (X) offset is not supported in Lusas. The X component of the offset will be ignored.");
+
+                if (offset.Start.Y != offset.End.Y || offset.Start.Z != offset.End.Z)
+                    Engine.Base.Compute.RecordWarning("Lusas only supports a constant offset along the bar. The Start offset values will be used.");
+
+                double ey0 = -offset.Start.Y;
+                double ez0 = offset.Start.Z;
+
+                if (ey0 != 0 || ez0 != 0)
+                {
+                    string baseName = bar.SectionProperty.DescriptionOrName();
+                    string offsetName = baseName + "|ey:" + ey0 + "|ez:" + ez0;
+
+                    IFAttribute lusasOffsetGeom;
+                    if (d_LusasData.existsAttribute("Line Geometric", offsetName))
+                    {
+                        lusasOffsetGeom = d_LusasData.getAttribute("Line Geometric", offsetName);
+                    }
+                    else
+                    {
+                        IFGeometricLine lusasOffsetGeomLine = d_LusasData.createGeometricLine(offsetName);
+                        lusasOffsetGeomLine.setValue("elementType", "3D Thick Beam");
+                        lusasOffsetGeomLine.setFromLibrary("User Sections", "Local", baseName, 0, 0);
+                        lusasOffsetGeomLine.setEccentricityOrigin("Centroid", "Centroid", "", "");
+                        lusasOffsetGeomLine.setValue("ey0", ey0, 0);
+                        lusasOffsetGeomLine.setValue("ez0", ez0, 0);
+                        lusasOffsetGeom = lusasOffsetGeomLine;
+                    }
+
+                    lusasOffsetGeom.assignTo(lusasLine);
+                }
+            }
 
             return lusasLine;
 
