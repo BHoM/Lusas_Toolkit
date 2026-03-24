@@ -43,7 +43,9 @@ namespace BH.Adapter.Adapters.Lusas
             object zOriginType = "";
             object yFibreLabel = "";
             object zFibreLabel = "";
+#if !Debug18 && !Release18 && !Debug19 && !Release19 && !Debug191 && !Release191
             lusasAttribute.getEccentricityOrigin(ref yOriginType, ref zOriginType, ref yFibreLabel, ref zFibreLabel);
+#endif
 
             if ((int)yOriginType == 1)
             {

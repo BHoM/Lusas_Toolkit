@@ -181,7 +181,9 @@ namespace BH.Adapter.Lusas
                         IFGeometricLine lusasOffsetGeomLine = d_LusasData.createGeometricLine(offsetName);
                         lusasOffsetGeomLine.setValue("elementType", "3D Thick Beam");
                         lusasOffsetGeomLine.setFromLibrary("User Sections", "Local", baseName, 0, 0);
+#if !Debug18 && !Release18 && !Debug19 && !Release19 && !Debug191 && !Release191
                         lusasOffsetGeomLine.setEccentricityOrigin("Centroid", "Centroid", "", "");
+#endif
                         lusasOffsetGeomLine.setValue("ey0", ey0, 0);
                         lusasOffsetGeomLine.setValue("ez0", ez0, 0);
                         lusasOffsetGeom = lusasOffsetGeomLine;
