@@ -26,6 +26,8 @@ using BH.oM.Structure.Elements;
 using BH.Engine.Geometry;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.Adapters.Lusas
 {
@@ -34,6 +36,9 @@ namespace BH.Engine.Adapters.Lusas
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
+        [Description("Checks whether a surface property is unsupported in Lusas. Only ConstantThickness is currently supported.")]
+        [Input("surfaceProperty", "The surface property to check for compatibility with Lusas.")]
+        [Output("isInvalid", "True if the surface property is unsupported in Lusas, false otherwise.")]
         public static bool InvalidSurfaceProperty(this ISurfaceProperty surfaceProperty)
         {
             bool isInvalid = true;

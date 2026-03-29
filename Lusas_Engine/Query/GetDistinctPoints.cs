@@ -26,6 +26,8 @@ using System;
 using BH.oM.Structure.Elements;
 using BH.Engine.Geometry;
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.Adapters.Lusas
 {
@@ -35,6 +37,9 @@ namespace BH.Engine.Adapters.Lusas
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Returns a distinct list of points by comparing their X, Y, and Z coordinates, rounded to 3 decimal places.")]
+        [Input("points", "The collection of points to filter for distinct values.")]
+        [Output("distinctPoints", "A list of distinct points with duplicates removed based on coordinate values.")]
         public static List<Point> GetDistinctPoints(this IEnumerable<Point> points)
         {
             List<Point> distinctPoints = points.GroupBy(m => new

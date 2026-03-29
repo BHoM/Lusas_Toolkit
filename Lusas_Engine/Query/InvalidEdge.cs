@@ -25,6 +25,8 @@ using System.Linq;
 using BH.oM.Structure.Elements;
 using BH.Engine.Geometry;
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.Adapters.Lusas
 {
@@ -33,6 +35,9 @@ namespace BH.Engine.Adapters.Lusas
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
+        [Description("Checks whether an edge is invalid for use in Lusas. An edge is invalid if it is null, has a null curve, or is defined by a curve that is not a Line.")]
+        [Input("edge", "The edge to validate for compatibility with Lusas.")]
+        [Output("isInvalid", "True if the edge is invalid for Lusas, false if it is valid.")]
         public static bool InvalidEdge(this Edge edge)
         {
             bool isInvalid = true;
