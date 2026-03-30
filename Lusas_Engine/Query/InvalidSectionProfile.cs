@@ -27,6 +27,8 @@ using BH.Engine.Geometry;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Spatial.ShapeProfiles;
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.Adapters.Lusas
 {
@@ -35,6 +37,9 @@ namespace BH.Engine.Adapters.Lusas
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
+        [Description("Checks whether a section property's profile is unsupported in Lusas. Unsupported profiles include GeneralisedFabricatedBoxProfile, GeneralisedTSectionProfile, FreeFormProfile, and KiteProfile.")]
+        [Input("sectionProfile", "The section property to check for an unsupported profile type.")]
+        [Output("isInvalid", "True if the section profile is unsupported in Lusas, false otherwise.")]
         public static bool InvalidSectionProfile(this ISectionProperty sectionProfile)
         {
             bool isInvalid = false;

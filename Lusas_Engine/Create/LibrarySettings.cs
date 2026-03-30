@@ -21,6 +21,8 @@
  */
 
 using BH.oM.Adapters.Lusas;
+using BH.oM.Base.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.Adapters.Lusas
 {
@@ -30,6 +32,9 @@ namespace BH.Engine.Adapters.Lusas
         /****           Public Constructors             ****/
         /***************************************************/
 
+        [Description("Creates a LibrarySettings object for configuring the section library used in Lusas.")]
+        [Input("sectionLibrary", "The section library to use when looking up section profiles. Defaults to UK_Sections.")]
+        [Output("librarySettings", "A LibrarySettings object with the specified section library configuration.")]
         public static LibrarySettings LibrarySettings(SectionLibrary sectionLibrary = SectionLibrary.UK_Sections)
         {
             LibrarySettings librarySettings = new LibrarySettings();

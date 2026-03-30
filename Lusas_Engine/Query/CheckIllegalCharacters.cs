@@ -21,6 +21,8 @@
  */
 
 using System.Collections.Generic;
+using BH.oM.Base.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.Adapters.Lusas
 {
@@ -30,6 +32,9 @@ namespace BH.Engine.Adapters.Lusas
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Checks whether an object name contains illegal characters that are not supported by Lusas.")]
+        [Input("objectName", "The name of the object to check for illegal characters.")]
+        [Output("isValid", "True if the object name contains no illegal characters, false otherwise.")]
         public static bool CheckIllegalCharacters(string objectName)
         {
             List<char> illegalCharacters = new List<char>() { '/', '|', '\\' };

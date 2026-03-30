@@ -26,6 +26,8 @@ using BH.oM.Structure.Elements;
 using BH.Engine.Geometry;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.Adapters.Lusas
 {
@@ -34,6 +36,9 @@ namespace BH.Engine.Adapters.Lusas
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
+        [Description("Checks whether a section property is unsupported in Lusas. ExplicitSection is currently not supported.")]
+        [Input("sectionProperty", "The section property to check for compatibility with Lusas.")]
+        [Output("isInvalid", "True if the section property is unsupported in Lusas, false otherwise.")]
         public static bool InvalidSectionProperty(this ISectionProperty sectionProperty)
         {
             bool isInvalid = false;
