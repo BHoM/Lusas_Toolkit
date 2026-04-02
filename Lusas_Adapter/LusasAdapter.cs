@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2026, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -56,6 +56,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV211Adapter : BHoMAdapter
 #elif Debug220 || Release220
     public partial class LusasV220Adapter : BHoMAdapter
+#elif Debug230 || Release230
+    public partial class LusasV230Adapter : BHoMAdapter
 #else
     public partial class LusasV17Adapter : BHoMAdapter
 #endif
@@ -112,6 +114,13 @@ namespace BH.Adapter.Lusas
         [Input("active", "Initiate the adapter by setting to True. Open a session of Lusas and close any dialogue boxes before setting to True.")]
         [Output("adapter", "Adapter for Lusas.")]
         public LusasV220Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
+#elif Debug230 || Release230
+        [Description("Adapter to connect to a Lusas .mdl file.")]
+        [Input("filePath", "Path to the Lusas .mdl file to be used.")]
+        [Input("lusasSettings", "General settings that are applicable to all actions performed by this adapter, e.g. merge tolerance to be used.")]
+        [Input("active", "Initiate the adapter by setting to True. Open a session of Lusas and close any dialogue boxes before setting to True.")]
+        [Output("adapter", "Adapter for Lusas.")]
+        public LusasV230Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #else
         [Description("Adapter to connect to a Lusas .mdl file.")]
         [Input("filePath", "Path to Lusas the .mdl file to be used.")]
@@ -181,6 +190,8 @@ namespace BH.Adapter.Lusas
                     Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.21.1");
 #elif Debug220 || Release220
                     Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.22.0");
+#elif Debug230 || Release230
+                    Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.23.0");
 #endif
                     m_LusasApplication.enableUI(true);
                     m_LusasApplication.setVisible(true);
@@ -237,6 +248,7 @@ namespace BH.Adapter.Lusas
 
     }
 }
+
 
 
 

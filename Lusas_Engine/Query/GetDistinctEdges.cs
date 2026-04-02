@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2026, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -26,6 +26,8 @@ using System;
 using BH.oM.Structure.Elements;
 using BH.Engine.Geometry;
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.Adapters.Lusas
 {
@@ -35,6 +37,9 @@ namespace BH.Engine.Adapters.Lusas
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Returns a distinct list of edges by comparing the midpoint of each edge's curve, rounded to 3 decimal places.")]
+        [Input("edges", "The collection of edges to filter for distinct values.")]
+        [Output("distinctEdges", "A list of distinct edges with duplicates removed based on curve midpoint coordinates.")]
         public static List<Edge> GetDistinctEdges(this IEnumerable<Edge> edges)
         {
             List<Edge> distinctEdges = edges.GroupBy(m => new
@@ -53,6 +58,7 @@ namespace BH.Engine.Adapters.Lusas
 
     }
 }
+
 
 
 

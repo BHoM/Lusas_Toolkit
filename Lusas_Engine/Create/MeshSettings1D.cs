@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2026, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -22,6 +22,8 @@
 
 using BH.oM.Adapters.Lusas;
 using BH.oM.Adapters.Lusas.Fragments;
+using BH.oM.Base.Attributes;
+using System.ComponentModel;
 
 
 namespace BH.Engine.Adapters.Lusas
@@ -32,6 +34,11 @@ namespace BH.Engine.Adapters.Lusas
         /****           Public Constructors             ****/
         /***************************************************/
 
+        [Description("Creates a MeshSettings1D object defining the 1D mesh configuration for Lusas.")]
+        [Input("splitMethod", "The method used to split 1D elements along their length.")]
+        [Input("splitParameter", "The parameter controlling the split, such as the number of divisions or target element length.")]
+        [Input("name", "The name of the mesh settings.")]
+        [Output("meshSettings1D", "A MeshSettings1D object with the specified 1D meshing configuration.")]
         public static MeshSettings1D MeshSettings1D(Split1D splitMethod,
             double splitParameter = 4, string name = null)
         {
@@ -47,6 +54,7 @@ namespace BH.Engine.Adapters.Lusas
 
     }
 }
+
 
 
 

@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2026, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -22,6 +22,8 @@
 
 using BH.oM.Adapters.Lusas;
 using BH.oM.Adapters.Lusas.Fragments;
+using BH.oM.Base.Attributes;
+using System.ComponentModel;
 
 
 namespace BH.Engine.Adapters.Lusas
@@ -32,6 +34,13 @@ namespace BH.Engine.Adapters.Lusas
         /****           Public Constructors             ****/
         /***************************************************/
 
+        [Description("Creates a MeshSettings2D object defining the 2D mesh configuration for Lusas.")]
+        [Input("splitMethod", "The method used to split 2D elements across their surface.")]
+        [Input("xDivisions", "The number of element divisions in the x direction.")]
+        [Input("yDivisions", "The number of element divisions in the y direction.")]
+        [Input("size", "The target element size.")]
+        [Input("name", "The name of the mesh settings.")]
+        [Output("meshSettings2D", "A MeshSettings2D object with the specified 2D meshing configuration.")]
         public static MeshSettings2D MeshSettings2D(Split2D splitMethod,
             int xDivisions = 0, int yDivisions = 0, double size = 1, string name = null)
         {
@@ -49,6 +58,7 @@ namespace BH.Engine.Adapters.Lusas
 
     }
 }
+
 
 
 

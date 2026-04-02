@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2026, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -57,6 +57,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV211Adapter
 #elif Debug220 || Release220
     public partial class LusasV220Adapter
+#elif Debug230 || Release230
+    public partial class LusasV230Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -240,7 +242,8 @@ namespace BH.Adapter.Lusas
 
                         foreach (MeshSettings1D mesh in distinctMeshes)
                         {
-                            CreateMeshSettings1D(mesh, barGroup.First().FEAType, barGroup.First().Release);
+                            if (mesh != null)
+                                CreateMeshSettings1D(mesh, barGroup.First().FEAType, barGroup.First().Release);
                         }
 
                         foreach (Bar bar in barGroup)
@@ -282,7 +285,7 @@ namespace BH.Adapter.Lusas
                         if (CheckPropertyError(panel, p => p.ExternalEdges))
                             if (CheckPropertyError(panel.ExternalEdges, e => e.Select(x => x.Curve)))
                                 if (panel.ExternalEdges.All(x => x != null) && panel.ExternalEdges.Select(x => x.Curve).All(y => y != null))
-                                {                                    
+                                {
                                     if (panel.ExternalEdges.All(x => !Engine.Adapters.Lusas.Query.InvalidEdge(x)))
                                     {
                                         if (Engine.Spatial.Query.IsPlanar(panel, true, m_mergeTolerance))
@@ -317,7 +320,11 @@ namespace BH.Adapter.Lusas
                         .ToList();
 
                     foreach (MeshSettings2D mesh in distinctMeshes)
-                        CreateMeshSettings2D(mesh);
+                    {
+                        if(mesh != null)
+                            CreateMeshSettings2D(mesh);
+                    }
+
 
                     foreach (Panel validPanel in validPanels)
                         validPanel.AddFragment(distinctMeshes.First(x => comparer.Equals(x, (validPanel.FindFragment<MeshSettings2D>()))), true);
@@ -400,14 +407,14 @@ namespace BH.Adapter.Lusas
                             {
                                 if (Engine.Spatial.Query.IsPlanar(opening, false, m_mergeTolerance)) //Check if this works.
                                 {
-                                        for (int i = 0; i < opening.Edges.Count; i++)
-                                        {
-                                            if (!CheckPropertyError(opening, p => opening.Edges[i]) && Engine.Adapters.Lusas.Query.InvalidEdge(opening.Edges[i]))
-                                                break;
+                                    for (int i = 0; i < opening.Edges.Count; i++)
+                                    {
+                                        if (!CheckPropertyError(opening, p => opening.Edges[i]) && Engine.Adapters.Lusas.Query.InvalidEdge(opening.Edges[i]))
+                                            break;
 
-                                            if (i == opening.Edges.Count - 1)
-                                                validOpenings.Add(opening);
-                                        }                               
+                                        if (i == opening.Edges.Count - 1)
+                                            validOpenings.Add(opening);
+                                    }
                                 }
                                 else
                                     Engine.Base.Compute.RecordError("The geometry defining one of the Openings of the Panel is not Planar, and therefore the Opening will not be created.");
@@ -771,3 +778,4 @@ namespace BH.Adapter.Lusas
 
     }
 }
+

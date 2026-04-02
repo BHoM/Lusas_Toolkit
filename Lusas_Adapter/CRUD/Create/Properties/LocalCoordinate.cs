@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2026, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -41,6 +41,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV211Adapter
 #elif Debug220 || Release220
     public partial class LusasV220Adapter
+#elif Debug230 || Release230
+    public partial class LusasV230Adapter
 #else
     public partial class LusasV17Adapter
 #endif
@@ -104,6 +106,7 @@ namespace BH.Adapter.Lusas
 
     }
 }
+
 
 
 

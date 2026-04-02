@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2026, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -165,11 +165,8 @@ namespace BH.Adapter.Adapters.Lusas
             Constraint6DOF startConstraint = null;
             Constraint6DOF endConstraint = null;
 
-#if Debug200 || Release200 || Debug210 || Release210 || Debug211 || Release211 || Debug220 || Release220
-
-            startConstraint = GetConstraint(lusasLineMesh, "Start");
-            endConstraint = GetConstraint(lusasLineMesh, "End");
-#else
+#if Debug17 || Release17 || Debug18 || Release18 || Debug19 || Release19 || Debug191 || Release191
+            
             object[] startReleases = lusasLineMesh.getValue("start");
             object[] endReleases = lusasLineMesh.getValue("end");
 
@@ -178,8 +175,11 @@ namespace BH.Adapter.Adapters.Lusas
 
             startConstraint = SetConstraint(startReleaseType);
             endConstraint = SetConstraint(endReleaseType);
+#else
+            startConstraint = GetConstraint(lusasLineMesh, "Start");
+            endConstraint = GetConstraint(lusasLineMesh, "End");
 #endif
-            
+
             BarRelease barRelease = new BarRelease
             {
                 StartRelease = startConstraint,
@@ -325,6 +325,7 @@ namespace BH.Adapter.Adapters.Lusas
 
     }
 }
+
 
 
 
