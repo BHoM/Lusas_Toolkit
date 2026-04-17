@@ -26,6 +26,8 @@ using BH.oM.Adapters.Lusas;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.Offsets;
+using BH.oM.Structure.SectionProperties;
+using BH.oM.Spatial.ShapeProfiles;
 using BH.oM.Geometry;
 using BH.Engine.Adapter;
 using BH.Engine.Geometry;
@@ -178,14 +180,22 @@ namespace BH.Adapter.Lusas
                     }
                     else
                     {
-                        IFGeometricLine lusasOffsetGeomLine = d_LusasData.createGeometricLine(offsetName);
-                        lusasOffsetGeomLine.setValue("elementType", "3D Thick Beam");
-                        lusasOffsetGeomLine.setFromLibrary("User Sections", "Local", baseName, 0, 0);
+                        ISectionProperty sectProp = bar.SectionProperty;
+                        sectProp.Name = offsetName;
+                        IFGeometricLine lusasOffsetGeomLine = (IFGeometricLine)CreateGeometricLine(sectProp);
 #if !Debug18 && !Release18 && !Debug19 && !Release19 && !Debug191 && !Release191
                         lusasOffsetGeomLine.setEccentricityOrigin("Centroid", "Centroid", "", "");
 #endif
-                        lusasOffsetGeomLine.setValue("ey0", ey0, 0);
-                        lusasOffsetGeomLine.setValue("ez0", ez0, 0);
+                        int sectionCount = 1;
+                        if (bar.SectionProperty is IGeometricalSection geomSection && geomSection.SectionProfile is TaperedProfile taperedProfile)
+                            sectionCount = taperedProfile.Profiles.Count;
+
+                        for (int i = 0; i < sectionCount; i++)
+                        {
+                            lusasOffsetGeomLine.setValue("ey0", ey0, i);
+                            lusasOffsetGeomLine.setValue("ez0", ez0, i);
+                        }
+
                         lusasOffsetGeom = lusasOffsetGeomLine;
                     }
 
