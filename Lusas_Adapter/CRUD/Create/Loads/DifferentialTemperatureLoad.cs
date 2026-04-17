@@ -93,6 +93,16 @@ namespace BH.Adapter.Lusas
             Dictionary<double, double> temperatureProfile, string loadDirection,
             object[] lusasGeometry, IFLoadcase assignedLoadcase)
         {
+            if (temperatureProfile.Count > 2)
+            {
+                Engine.Base.Compute.RecordError(
+                    $"The TemperatureProfile for '{name}' contains {temperatureProfile.Count} positions. " +
+                    "Multi-layer differential temperature profiles are not currently supported in the Lusas_Toolkit " +
+                    "because BHoM uses normalised (parametric) positions whereas Lusas requires absolute thicknesses. " +
+                    "Only profiles with exactly two positions (bottom = 0 and top = 1) can be pushed.");
+                return null;
+            }
+
             IFTemperatureProfileLoad lusasProfileLoad;
 
             if (d_LusasData.existsAttribute("Loading", name))
@@ -101,34 +111,16 @@ namespace BH.Adapter.Lusas
             }
             else
             {
-                lusasProfileLoad = d_LusasData.createLoadingTemperatureProfile(name);
-
                 List<KeyValuePair<double, double>> sortedProfile = temperatureProfile
                     .OrderBy(kv => kv.Key)
                     .ToList();
 
+                lusasProfileLoad = d_LusasData.createLoadingTemperatureProfile(name);
                 lusasProfileLoad.setTopTemperature(sortedProfile.Last().Value);
+                lusasProfileLoad.setBottomTemperature(sortedProfile.First().Value);
                 lusasProfileLoad.setForceType("Axial and Flexural");
                 lusasProfileLoad.setLoadDirection(loadDirection);
                 lusasProfileLoad.setAnalysisCategory("3D");
-
-                if (sortedProfile.Count == 2)
-                {
-                    // Simple linear gradient: only a top and bottom boundary, no intermediate rows needed.
-                    lusasProfileLoad.setBottomTemperature(sortedProfile.First().Value);
-                }
-                else
-                {
-                    // Multi-layer: define the full profile using only upper rows so that Lusas does not
-                    // generate a separate lower profile from setBottomTemperature. Rows span from the top
-                    // position (1) all the way down to position 0, covering every zone.
-                    for (int i = sortedProfile.Count - 2; i >= 0; i--)
-                    {
-                        double thickness = sortedProfile[i + 1].Key - sortedProfile[i].Key;
-                        double temperature = sortedProfile[i].Value;
-                        lusasProfileLoad.addUpperRow(thickness, temperature);
-                    }
-                }
             }
 
             IFAssignment lusasAssignment = m_LusasApplication.assignment();

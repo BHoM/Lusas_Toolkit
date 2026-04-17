@@ -20,7 +20,6 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
 using System.Collections.Generic;
 using Lusas.LPI;
 
@@ -32,47 +31,19 @@ namespace BH.Adapter.Adapters.Lusas
         /**** Public Methods                            ****/
         /***************************************************/
 
-        // NOTE: The field names "TTop", "TBot", "thickness", and "temperature" are the Lusas LPI
-        // internal parameter names for IFTemperatureProfileLoad. These should be verified against
-        // the Lusas LPI documentation or confirmed via getValue inspection during integration testing.
+        // NOTE: The field names "TTop" and "TBot" are the Lusas LPI internal parameter names for
+        // IFTemperatureProfileLoad. These should be verified against the Lusas LPI documentation
+        // or confirmed via getValue inspection during integration testing.
         public static Dictionary<double, double> ExtractTemperatureProfile(IFTemperatureProfileLoad profileLoad)
         {
             double topTemperature = (double)profileLoad.getValue("TTop");
-            long rowCount = profileLoad.countRows("thickness");
+            double bottomTemperature = (double)profileLoad.getValue("TBot");
 
-            if (rowCount == 0)
+            return new Dictionary<double, double>
             {
-                // Simple linear profile defined by top and bottom boundary temperatures only.
-                double bottomTemperature = (double)profileLoad.getValue("TBot");
-                return new Dictionary<double, double>
-                {
-                    { 0.0, bottomTemperature },
-                    { 1.0, topTemperature }
-                };
-            }
-
-            // Multi-layer profile defined entirely by upper rows. Reconstruct normalised positions
-            // by subtracting each row's fractional thickness from the top (position 1) downward.
-            Dictionary<double, double> profile = new Dictionary<double, double>
-            {
+                { 0.0, bottomTemperature },
                 { 1.0, topTemperature }
             };
-
-            double cumulativePosition = 1.0;
-#if Debug220 || Release220 || Debug230 || Release230
-                for (long i = 0; i < rowCount; i++)
-
-#else
-            for (int i = 0; i < rowCount; i++)
-#endif
-            {
-                double thickness = (double)profileLoad.getRowValue("thickness", i, Type.Missing);
-                double temperature = (double)profileLoad.getRowValue("temperature", i, Type.Missing);
-                cumulativePosition -= thickness;
-                profile[Math.Round(cumulativePosition, 10)] = temperature;
-            }
-
-            return profile;
         }
 
         /***************************************************/
