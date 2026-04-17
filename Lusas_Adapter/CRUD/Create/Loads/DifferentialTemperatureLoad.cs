@@ -65,8 +65,8 @@ namespace BH.Adapter.Lusas
 
             IFTemperatureProfileLoad lusasProfileLoad = CreateProfileTemperatureLoad(
                 temperatureLoad.Name, temperatureLoad.TemperatureProfile, loadDirection, lusasLines, assignedLoadcase);
-
-            temperatureLoad.SetAdapterId(typeof(LusasId), lusasProfileLoad.getID());
+            if (lusasProfileLoad != null)
+                temperatureLoad.SetAdapterId(typeof(LusasId), lusasProfileLoad.getID());
 
             return lusasProfileLoad;
         }
@@ -82,7 +82,8 @@ namespace BH.Adapter.Lusas
             IFTemperatureProfileLoad lusasProfileLoad = CreateProfileTemperatureLoad(
                 temperatureLoad.Name, temperatureLoad.TemperatureProfile, "local z", lusasSurfaces, assignedLoadcase);
 
-            temperatureLoad.SetAdapterId(typeof(LusasId), lusasProfileLoad.getID());
+            if (lusasProfileLoad != null)
+                temperatureLoad.SetAdapterId(typeof(LusasId), lusasProfileLoad.getID());
 
             return lusasProfileLoad;
         }
