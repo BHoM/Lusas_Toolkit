@@ -140,6 +140,12 @@ namespace BH.Adapter.Lusas
                         case "BH.oM.Structure.Loads.AreaUniformTemperatureLoad":
                             success = CreateCollection(objects as IEnumerable<AreaUniformTemperatureLoad>);
                             break;
+                        case "BH.oM.Structure.Loads.BarDifferentialTemperatureLoad":
+                            success = CreateCollection(objects as IEnumerable<BarDifferentialTemperatureLoad>);
+                            break;
+                        case "BH.oM.Structure.Loads.AreaDifferentialTemperatureLoad":
+                            success = CreateCollection(objects as IEnumerable<AreaDifferentialTemperatureLoad>);
+                            break;
                         case "BH.oM.Structure.Loads.PointDisplacement":
                             success = CreateCollection(objects as IEnumerable<PointDisplacement>);
                             break;
@@ -629,6 +635,44 @@ namespace BH.Adapter.Lusas
                     CreateAreaUniformTemperatureLoad(areaUniformTemperatureLoad, assignedLines);
 
                 if (lusasAreaUniformTemperatureLoad == null)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<BarDifferentialTemperatureLoad> barDifferentialTemperatureLoads)
+        {
+            foreach (BarDifferentialTemperatureLoad barDifferentialTemperatureLoad in barDifferentialTemperatureLoads)
+            {
+                object[] assignedLines = GetAssignedLines(barDifferentialTemperatureLoad);
+                IFTemperatureProfileLoad lusasBarDifferentialTemperatureLoad =
+                    CreateBarDifferentialTemperatureLoad(barDifferentialTemperatureLoad, assignedLines);
+
+                if (lusasBarDifferentialTemperatureLoad == null)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<AreaDifferentialTemperatureLoad> areaDifferentialTemperatureLoads)
+        {
+            foreach (AreaDifferentialTemperatureLoad areaDifferentialTemperatureLoad in areaDifferentialTemperatureLoads)
+            {
+                object[] assignedSurfaces = GetAssignedSurfaces(areaDifferentialTemperatureLoad);
+                IFTemperatureProfileLoad lusasAreaDifferentialTemperatureLoad =
+                    CreateAreaDifferentialTemperatureLoad(areaDifferentialTemperatureLoad, assignedSurfaces);
+
+                if (lusasAreaDifferentialTemperatureLoad == null)
                 {
                     return false;
                 }
