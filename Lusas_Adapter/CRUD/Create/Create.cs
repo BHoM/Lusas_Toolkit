@@ -327,7 +327,7 @@ namespace BH.Adapter.Lusas
 
                     foreach (MeshSettings2D mesh in distinctMeshes)
                     {
-                        if(mesh != null)
+                        if (mesh != null)
                             CreateMeshSettings2D(mesh);
                     }
 
