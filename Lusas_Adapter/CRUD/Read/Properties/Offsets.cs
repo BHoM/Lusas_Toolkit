@@ -21,15 +21,10 @@
  */
 
 using System.Collections.Generic;
-using System.Linq;
-using BH.Engine.Adapter;
-using BH.oM.Structure.Elements;
-using BH.oM.Structure.Constraints;
-using BH.oM.Structure.SectionProperties;
-using BH.oM.Structure.MaterialFragments;
-using BH.oM.Structure.Offsets;
 using BH.oM.Adapters.Lusas;
-using BH.oM.Adapters.Lusas.Fragments;
+using BH.oM.Structure.Offsets;
+using BH.oM.Structure.SectionProperties;
+using BH.Engine.Adapter;
 using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
@@ -58,58 +53,27 @@ namespace BH.Adapter.Lusas
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private List<Bar> ReadBars(List<string> ids = null)
+        private List<Offset> ReadOffsets(List<string> ids = null)
         {
-            object[] lusasLines = d_LusasData.getObjects("Line");
-            List<Bar> bars = new List<Bar>();
+            IEnumerable<ISectionProperty> sectionProperties = GetCachedOrRead<ISectionProperty>();
+            List<Offset> offsets = new List<Offset>();
 
-            if (!(lusasLines.Count() == 0))
+            foreach (ISectionProperty sectionProperty in sectionProperties)
             {
-                IEnumerable<Node> nodesList = GetCachedOrRead<Node>();
-                Dictionary<string, Node> nodes = nodesList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
-
-                IEnumerable<Constraint4DOF> supportsList = GetCachedOrRead<Constraint4DOF>();
-                Dictionary<string, Constraint4DOF> supports = supportsList.ToDictionary(x => x.Name);
-
-                IEnumerable<IMaterialFragment> materialList = GetCachedOrRead<IMaterialFragment>();
-                Dictionary<string, IMaterialFragment> materials = materialList.ToDictionary(x => x.Name.ToString());
-
-                IEnumerable<ISectionProperty> sectionPropertiesList = GetCachedOrRead<ISectionProperty>();
-                Dictionary<string, ISectionProperty> sectionProperties = sectionPropertiesList.ToDictionary(x => x.Name.ToString());
-
-                List<MeshSettings1D> meshesList = GetCachedOrRead<MeshSettings1D>();
-                Dictionary<string, MeshSettings1D> meshes = meshesList.ToDictionary(x => x.Name.ToString());
-
-                IEnumerable<Offset> offsetsList = GetCachedOrRead<Offset>();
-                Dictionary<string, Offset> offsets = offsetsList.ToDictionary(x => x.Name);
-
-                HashSet<string> groupNames = ReadTags();
-
-                for (int i = 0; i < lusasLines.Count(); i++)
+                int lusasId = sectionProperty.AdapterId<int>(typeof(LusasId));
+                if (d_LusasData.existsAttribute("Line Geometric", lusasId))
                 {
-                    IFLine lusasLine = (IFLine)lusasLines[i];
-                    Bar bar = Adapters.Lusas.Convert.ToBar
-                        (
-                        lusasLine,
-                        nodes,
-                        supports,
-                        groupNames,
-                        materials,
-                        sectionProperties,
-                        meshes,
-                        offsets
-                        );
-
-                    bars.Add(bar);
+                    IFGeometricLine lusasGeometric = (IFGeometricLine)d_LusasData.getAttribute("Line Geometric", lusasId);
+                    Offset offset = Adapters.Lusas.Convert.ToOffset(lusasGeometric);
+                    if (offset != null)
+                        offsets.Add(offset);
                 }
             }
 
-            return bars;
+            return offsets;
         }
 
         /***************************************************/
 
     }
 }
-
-

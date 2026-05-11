@@ -396,7 +396,7 @@ namespace BH.Adapter.Lusas
 
         private bool CreateProfile(string name, TaperedProfile profile)
         {
-            profile.MapPositionDomain();
+            profile = profile.MapPositionDomain();
 
             IFGeometricLine lusasGeometricLine = (IFGeometricLine)d_LusasData.getAttribute("Line Geometric", name);
             lusasGeometricLine.setMultipleVarying(true);
