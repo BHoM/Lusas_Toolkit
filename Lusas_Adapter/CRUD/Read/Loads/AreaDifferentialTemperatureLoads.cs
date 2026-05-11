@@ -20,9 +20,13 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
 using System.Collections.Generic;
+using System.Linq;
+using BH.Engine.Adapter;
+using BH.oM.Adapters.Lusas;
+using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
+using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
@@ -50,61 +54,54 @@ namespace BH.Adapter.Lusas
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private List<ILoad> ChooseLoad(Type type, List<string> ids = null)
+        private List<ILoad> ReadAreaDifferentialTemperatureLoads(List<string> ids = null)
         {
-            List<ILoad> readLoads = new List<ILoad>();
-            string typeName = type.Name;
-            switch (typeName)
+            List<ILoad> areaDifferentialTemperatureLoads = new List<ILoad>();
+            object[] lusasProfileLoads = d_LusasData.getAttributes("Profile Temperature Load");
+
+            if (lusasProfileLoads.Count() == 0)
+                return areaDifferentialTemperatureLoads;
+
+            List<Panel> panelsList = GetCachedOrRead<Panel>();
+            Dictionary<string, Panel> panels = panelsList.ToDictionary(x => x.AdapterId<string>(typeof(LusasId)));
+
+            for (int i = 0; i < lusasProfileLoads.Count(); i++)
             {
-                case "PointLoad":
-                    readLoads = ReadPointLoads(ids as dynamic);
-                    break;
-                case "GravityLoad":
-                    readLoads = ReadGravityLoads(ids as dynamic);
-                    break;
-                case "BarUniformlyDistributedLoad":
-                    readLoads = ReadBarUniformlyDistributedLoads(ids as dynamic);
-                    break;
-                case "AreaUniformlyDistributedLoad":
-                    readLoads = ReadAreaUniformlyDistributedLoads(ids as dynamic);
-                    break;
-                case "BarUniformTemperatureLoad":
-                    readLoads = ReadBarUniformTemperatureLoads(ids as dynamic);
-                    break;
-                case "AreaUniformTemperatureLoad":
-                    readLoads = ReadAreaUniformTemperatureLoads(ids as dynamic);
-                    break;
-                case "BarDifferentialTemperatureLoad":
-                    readLoads = ReadBarDifferentialTemperatureLoads(ids as dynamic);
-                    break;
-                case "AreaDifferentialTemperatureLoad":
-                    readLoads = ReadAreaDifferentialTemperatureLoads(ids as dynamic);
-                    break;
-                case "PointDisplacement":
-                    readLoads = ReadPointDisplacements(ids as dynamic);
-                    break;
-                case "BarPointLoad":
-                    readLoads = ReadBarPointLoads(ids as dynamic);
-                    break;
-                case "BarVaryingDistributedLoad":
-                    readLoads = ReadBarVaryingDistributedLoads(ids as dynamic);
-                    break;
-                default:
-                    Engine.Base.Compute.RecordError($"{type} is not supported in the Lusas_Toolkit.");
-                    break;
+                IFLoading lusasProfileLoad = (IFLoading)lusasProfileLoads[i];
+
+                IEnumerable<IGrouping<string, IFAssignment>> groupedByLoadcases =
+                    GetLoadAssignments(lusasProfileLoad);
+
+                foreach (IEnumerable<IFAssignment> groupedAssignment in groupedByLoadcases)
+                {
+                    List<IFAssignment> surfaceAssignments = new List<IFAssignment>();
+
+                    foreach (IFAssignment assignment in groupedAssignment)
+                    {
+                        IFSurface trySurf = assignment.getDatabaseObject() as IFSurface;
+
+                        if (trySurf != null)
+                            surfaceAssignments.Add(assignment);
+                    }
+
+                    if (surfaceAssignments.Count == 0)
+                        continue;
+
+                    List<string> analysisName = new List<string> { lusasProfileLoad.getAttributeType() };
+
+                    AreaDifferentialTemperatureLoad areaDifferentialTemperatureLoad =
+                        Adapter.Adapters.Lusas.Convert.ToAreaDifferentialTemperatureLoad(
+                            lusasProfileLoad, groupedAssignment, panels);
+
+                    areaDifferentialTemperatureLoad.Tags = new HashSet<string>(analysisName);
+                    areaDifferentialTemperatureLoads.Add(areaDifferentialTemperatureLoad);
+                }
             }
 
-            return readLoads;
+            return areaDifferentialTemperatureLoads;
         }
 
         /***************************************************/
 
     }
 }
-
-
-
-
-
-
-
