@@ -140,6 +140,12 @@ namespace BH.Adapter.Lusas
                         case "BH.oM.Structure.Loads.AreaUniformTemperatureLoad":
                             success = CreateCollection(objects as IEnumerable<AreaUniformTemperatureLoad>);
                             break;
+                        case "BH.oM.Structure.Loads.BarDifferentialTemperatureLoad":
+                            success = CreateCollection(objects as IEnumerable<BarDifferentialTemperatureLoad>);
+                            break;
+                        case "BH.oM.Structure.Loads.AreaDifferentialTemperatureLoad":
+                            success = CreateCollection(objects as IEnumerable<AreaDifferentialTemperatureLoad>);
+                            break;
                         case "BH.oM.Structure.Loads.PointDisplacement":
                             success = CreateCollection(objects as IEnumerable<PointDisplacement>);
                             break;
@@ -321,7 +327,7 @@ namespace BH.Adapter.Lusas
 
                     foreach (MeshSettings2D mesh in distinctMeshes)
                     {
-                        if(mesh != null)
+                        if (mesh != null)
                             CreateMeshSettings2D(mesh);
                     }
 
@@ -487,11 +493,6 @@ namespace BH.Adapter.Lusas
             foreach (Loadcase loadcase in loadcases)
             {
                 IFLoadcase lusasLoadcase = CreateLoadcase(loadcase);
-
-                if (lusasLoadcase == null)
-                {
-                    return false;
-                }
             }
 
             return true;
@@ -506,11 +507,6 @@ namespace BH.Adapter.Lusas
             {
                 object[] assignedPoints = GetAssignedPoints(PointLoad);
                 IFLoadingConcentrated lusasPointLoad = CreateConcentratedLoad(PointLoad, assignedPoints);
-
-                if (lusasPointLoad == null)
-                {
-                    return false;
-                }
             }
 
             return true;
@@ -524,11 +520,6 @@ namespace BH.Adapter.Lusas
             {
                 IFGeometry[] assignedGeometry = GetAssignedObjects(gravityLoad);
                 IFLoadingBody lusasGravityLoad = CreateGravityLoad(gravityLoad, assignedGeometry);
-
-                if (lusasGravityLoad == null)
-                {
-                    return false;
-                }
             }
 
             return true;
@@ -546,21 +537,11 @@ namespace BH.Adapter.Lusas
                 {
                     IFLoadingGlobalDistributed lusasGlobalDistributed =
                         CreateGlobalDistributedLine(barUniformlyDistributedLoad, assignedLines);
-
-                    if (lusasGlobalDistributed == null)
-                    {
-                        return false;
-                    }
                 }
                 else if (barUniformlyDistributedLoad.Axis == LoadAxis.Local)
                 {
                     IFLoadingLocalDistributed lusasLocalDistributed =
                         CreateLocalDistributedLine(barUniformlyDistributedLoad, assignedLines);
-
-                    if (lusasLocalDistributed == null)
-                    {
-                        return false;
-                    }
                 }
             }
 
@@ -578,21 +559,11 @@ namespace BH.Adapter.Lusas
                 {
                     IFLoadingGlobalDistributed lusasGlobalDistributed =
                         CreateGlobalDistributedLoadSurface(areaUniformlyDistributedLoad, assignedSurfaces);
-
-                    if (lusasGlobalDistributed == null)
-                    {
-                        return false;
-                    }
                 }
                 else if (areaUniformlyDistributedLoad.Axis == LoadAxis.Local)
                 {
                     IFLoadingLocalDistributed lusasLocalDistributed =
                         CreateLocalDistributedSurface(areaUniformlyDistributedLoad, assignedSurfaces);
-
-                    if (lusasLocalDistributed == null)
-                    {
-                        return false;
-                    }
                 }
             }
 
@@ -608,11 +579,6 @@ namespace BH.Adapter.Lusas
                 object[] arrayLines = GetAssignedLines(barUniformTemperatureLoad);
                 IFLoadingTemperature lusasBarUniformTemperatureLoad =
                     CreateBarUniformTemperatureLoad(barUniformTemperatureLoad, arrayLines);
-
-                if (lusasBarUniformTemperatureLoad == null)
-                {
-                    return false;
-                }
             }
 
             return true;
@@ -627,11 +593,34 @@ namespace BH.Adapter.Lusas
                 object[] assignedLines = GetAssignedSurfaces(areaUniformTemperatureLoad);
                 IFLoadingTemperature lusasAreaUniformTemperatureLoad =
                     CreateAreaUniformTemperatureLoad(areaUniformTemperatureLoad, assignedLines);
+            }
 
-                if (lusasAreaUniformTemperatureLoad == null)
-                {
-                    return false;
-                }
+            return true;
+        }
+
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<BarDifferentialTemperatureLoad> barDifferentialTemperatureLoads)
+        {
+            foreach (BarDifferentialTemperatureLoad barDifferentialTemperatureLoad in barDifferentialTemperatureLoads)
+            {
+                object[] assignedLines = GetAssignedLines(barDifferentialTemperatureLoad);
+                IFTemperatureProfileLoad lusasBarDifferentialTemperatureLoad =
+                    CreateBarDifferentialTemperatureLoad(barDifferentialTemperatureLoad, assignedLines);
+            }
+
+            return true;
+        }
+
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<AreaDifferentialTemperatureLoad> areaDifferentialTemperatureLoads)
+        {
+            foreach (AreaDifferentialTemperatureLoad areaDifferentialTemperatureLoad in areaDifferentialTemperatureLoads)
+            {
+                object[] assignedSurfaces = GetAssignedSurfaces(areaDifferentialTemperatureLoad);
+                IFTemperatureProfileLoad lusasAreaDifferentialTemperatureLoad =
+                    CreateAreaDifferentialTemperatureLoad(areaDifferentialTemperatureLoad, assignedSurfaces);
             }
 
             return true;
@@ -646,11 +635,6 @@ namespace BH.Adapter.Lusas
                 object[] assignedPoints = GetAssignedPoints(pointDisplacement);
                 IFPrescribedDisplacementLoad lusasPrescribedDisplacement =
                     CreatePrescribedDisplacement(pointDisplacement, assignedPoints);
-
-                if (lusasPrescribedDisplacement == null)
-                {
-                    return false;
-                }
             }
 
             return true;
@@ -667,10 +651,6 @@ namespace BH.Adapter.Lusas
                 IFLoadingBeamPoint lusasGlobalDistributed =
                     CreateBarPointLoad(barPointLoad, assignedLines);
 
-                if (lusasGlobalDistributed == null)
-                {
-                    return false;
-                }
             }
 
             return true;
@@ -701,10 +681,6 @@ namespace BH.Adapter.Lusas
                 if (constraint != null)
                 {
                     IFAttribute lusasSupport = CreateSupport(constraint);
-                    if (lusasSupport == null)
-                    {
-                        return false;
-                    }
                 }
             }
 
@@ -718,10 +694,6 @@ namespace BH.Adapter.Lusas
                 if (constraint != null)
                 {
                     IFAttribute lusasSupport = CreateSupport(constraint);
-                    if (lusasSupport == null)
-                    {
-                        return false;
-                    }
                 }
             }
 
@@ -733,11 +705,6 @@ namespace BH.Adapter.Lusas
             foreach (LoadCombination loadcombination in loadcombinations)
             {
                 IFBasicCombination lusasLoadCombination = CreateLoadCombination(loadcombination);
-
-                if (lusasLoadCombination == null)
-                {
-                    return false;
-                }
             }
 
             return true;

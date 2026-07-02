@@ -21,7 +21,11 @@
  */
 
 using System.Collections.Generic;
-using BH.oM.Base;
+using BH.oM.Adapters.Lusas;
+using BH.oM.Structure.Offsets;
+using BH.oM.Structure.SectionProperties;
+using BH.Engine.Adapter;
+using Lusas.LPI;
 
 namespace BH.Adapter.Lusas
 {
@@ -45,37 +49,31 @@ namespace BH.Adapter.Lusas
     public partial class LusasV17Adapter
 #endif
     {
-        private List<IBHoMObject> ReadAll(List<string> ids = null)
-        {
-            List<IBHoMObject> objects = new List<IBHoMObject>();
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
 
-            objects.AddRange(ReadNodes());
-            objects.AddRange(ReadBars());
-            objects.AddRange(ReadPanels());
-            objects.AddRange(Read2DProperties());
-            objects.AddRange(ReadMaterials());
-            objects.AddRange(Read4DOFConstraints());
-            objects.AddRange(Read6DOFConstraints());
-            objects.AddRange(ReadLoadcases());
-            objects.AddRange(ReadLoadCombinations());
-            objects.AddRange(ReadPointLoads());
-            objects.AddRange(ReadPointDisplacements());
-            objects.AddRange(ReadBarUniformlyDistributedLoads());
-            objects.AddRange(ReadBarPointLoads());
-            objects.AddRange(ReadBarVaryingDistributedLoads());
-            objects.AddRange(ReadAreaUniformlyDistributedLoads());
-            objects.AddRange(ReadBarUniformTemperatureLoads());
-            objects.AddRange(ReadAreaUniformTemperatureLoads());
-            objects.AddRange(ReadBarDifferentialTemperatureLoads());
-            objects.AddRange(ReadAreaDifferentialTemperatureLoads());
-            objects.AddRange(ReadGravityLoads());
-            return objects;
+        private List<Offset> ReadOffsets(List<string> ids = null)
+        {
+            IEnumerable<ISectionProperty> sectionProperties = GetCachedOrRead<ISectionProperty>();
+            List<Offset> offsets = new List<Offset>();
+
+            foreach (ISectionProperty sectionProperty in sectionProperties)
+            {
+                int lusasId = sectionProperty.AdapterId<int>(typeof(LusasId));
+                if (d_LusasData.existsAttribute("Line Geometric", lusasId))
+                {
+                    IFGeometricLine lusasGeometric = (IFGeometricLine)d_LusasData.getAttribute("Line Geometric", lusasId);
+                    Offset offset = Adapters.Lusas.Convert.ToOffset(lusasGeometric);
+                    if (offset != null)
+                        offsets.Add(offset);
+                }
+            }
+
+            return offsets;
         }
+
+        /***************************************************/
+
     }
 }
-
-
-
-
-
-

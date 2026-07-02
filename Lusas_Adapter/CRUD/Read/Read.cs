@@ -35,6 +35,7 @@ using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.MaterialFragments;
+using BH.oM.Structure.Offsets;
 using BH.oM.Structure.Results;
 
 namespace BH.Adapter.Lusas
@@ -99,6 +100,8 @@ namespace BH.Adapter.Lusas
                 return ReadMeshSettings1D(ids as dynamic);
             else if (type == typeof(MeshSettings2D))
                 return ReadMeshSettings2D(ids as dynamic);
+            else if (type == typeof(Offset))
+                return ReadOffsets(ids as dynamic);
             else if (typeof(IResult).IsAssignableFrom(type))
                 Modules.Structure.ErrorMessages.ReadResultsError(type);
             else

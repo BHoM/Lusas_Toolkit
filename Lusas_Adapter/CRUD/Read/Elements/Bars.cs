@@ -27,6 +27,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.MaterialFragments;
+using BH.oM.Structure.Offsets;
 using BH.oM.Adapters.Lusas;
 using BH.oM.Adapters.Lusas.Fragments;
 using Lusas.LPI;
@@ -79,6 +80,9 @@ namespace BH.Adapter.Lusas
                 List<MeshSettings1D> meshesList = GetCachedOrRead<MeshSettings1D>();
                 Dictionary<string, MeshSettings1D> meshes = meshesList.ToDictionary(x => x.Name.ToString());
 
+                IEnumerable<Offset> offsetsList = GetCachedOrRead<Offset>();
+                Dictionary<string, Offset> offsets = offsetsList.ToDictionary(x => x.Name);
+
                 HashSet<string> groupNames = ReadTags();
 
                 for (int i = 0; i < lusasLines.Count(); i++)
@@ -92,7 +96,8 @@ namespace BH.Adapter.Lusas
                         groupNames,
                         materials,
                         sectionProperties,
-                        meshes
+                        meshes,
+                        offsets
                         );
 
                     bars.Add(bar);

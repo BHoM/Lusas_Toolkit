@@ -27,6 +27,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.MaterialFragments;
+using BH.oM.Structure.Offsets;
 using Lusas.LPI;
 using BH.oM.Adapters.Lusas;
 using BH.oM.Adapters.Lusas.Fragments;
@@ -47,7 +48,8 @@ namespace BH.Adapter.Adapters.Lusas
             HashSet<string> lusasGroups,
             Dictionary<string, IMaterialFragment> materials,
             Dictionary<string, ISectionProperty> sections,
-            Dictionary<string, MeshSettings1D> meshes
+            Dictionary<string, MeshSettings1D> meshes,
+            Dictionary<string, Offset> offsets
             )
 
         {
@@ -91,6 +93,10 @@ namespace BH.Adapter.Adapters.Lusas
                     }
                     bar.SectionProperty = lineSection;
                 }
+
+                Offset barOffset;
+                if (offsets.TryGetValue(geometricAssignments[0], out barOffset))
+                    bar.Offset = barOffset;
             }
 
             MeshSettings1D lineMesh;
