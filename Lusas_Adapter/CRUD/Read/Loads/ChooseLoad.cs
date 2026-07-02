@@ -74,12 +74,6 @@ namespace BH.Adapter.Lusas
                 case "AreaUniformTemperatureLoad":
                     readLoads = ReadAreaUniformTemperatureLoads(ids as dynamic);
                     break;
-                case "BarDifferentialTemperatureLoad":
-                    readLoads = ReadBarDifferentialTemperatureLoads(ids as dynamic);
-                    break;
-                case "AreaDifferentialTemperatureLoad":
-                    readLoads = ReadAreaDifferentialTemperatureLoads(ids as dynamic);
-                    break;
                 case "PointDisplacement":
                     readLoads = ReadPointDisplacements(ids as dynamic);
                     break;
@@ -90,7 +84,7 @@ namespace BH.Adapter.Lusas
                     readLoads = ReadBarVaryingDistributedLoads(ids as dynamic);
                     break;
                 default:
-                    Engine.Base.Compute.RecordError($"{type} is not supported in the Lusas_Toolkit.");
+                    Engine.Base.Compute.RecordError($"{type} pulling is not supported in the Lusas_Toolkit.");
                     break;
             }
 
