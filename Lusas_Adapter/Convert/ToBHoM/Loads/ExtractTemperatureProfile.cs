@@ -31,13 +31,10 @@ namespace BH.Adapter.Adapters.Lusas
         /**** Public Methods                            ****/
         /***************************************************/
 
-        // NOTE: The field names "TTop" and "TBot" are the Lusas LPI internal parameter names for
-        // IFTemperatureProfileLoad. These should be verified against the Lusas LPI documentation
-        // or confirmed via getValue inspection during integration testing.
         public static Dictionary<double, double> ExtractTemperatureProfile(IFTemperatureProfileLoad profileLoad)
         {
-            double topTemperature = (double)profileLoad.getValue("TTop");
-            double bottomTemperature = (double)profileLoad.getValue("TBot");
+            double topTemperature = double.Parse(profileLoad.getValue("topTemp"));
+            double bottomTemperature = double.Parse(profileLoad.getValue("bottomTemp"));
 
             return new Dictionary<double, double>
             {
