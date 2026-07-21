@@ -5,7 +5,7 @@
     <OutputPath>..\Build\</OutputPath>
     <DebugSymbols>true</DebugSymbols>
     <Optimize>true</Optimize>
-    <Configurations>Debug;Debug17;Debug18;Debug19;Debug191;Debug200;Debug210;Debug211;Debug220;Debug230;Release;Release17;Release18;Release19;Release191;Release200;Release210;Release211;Release220;Release230</Configurations>
+    <Configurations>Debug;Debug17;Debug18;Debug19;Debug191;Debug200;Debug210;Debug211;Debug220;Debug230;Debug240;Release;Release17;Release18;Release19;Release191;Release200;Release210;Release211;Release220;Release230;Release240</Configurations>
     <AssemblyTitle>Lusas_oM</AssemblyTitle>
     <Description>https://github.com/BHoM/Lusas_Toolkit</Description>
     <Product>Lusas_oM</Product>
@@ -73,6 +73,14 @@
     <OutputPath>..\Build\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release230|AnyCPU'">
+    <OutputPath>..\Build\</OutputPath>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug240|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\Build\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release240|AnyCPU'">
     <OutputPath>..\Build\</OutputPath>
     <Optimize>true</Optimize>
   </PropertyGroup>
