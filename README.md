@@ -7,11 +7,13 @@ This toolkit allows interoperability between the BHoM and Lusas. It enables crea
 https://www.lusas.com/
 
 ### Known Versions of Lusas Supported (**included in installer**)
+Lusas **v24.0**
+
 Lusas **v23.0**
 
 Lusas **v22.0**
 
-Lusas v21.0, **21.1**
+Lusas v21.0, 21.1
 
 Lusas v20.0
 
