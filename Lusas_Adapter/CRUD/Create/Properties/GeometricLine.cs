@@ -92,7 +92,17 @@ namespace BH.Adapter.Lusas
                 if (CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic))
                     if (!(sectionProperty.SectionProfile is TaperedProfile))
                         lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+
+                if (sectionProperty.SectionProfile.Shape == ShapeType.Angle ||
+                    sectionProperty.SectionProfile.Shape == ShapeType.Channel ||
+                    sectionProperty.SectionProfile.Shape == ShapeType.Tee)
+                {
+                    IFGeometricLine geoLine = (IFGeometricLine)lusasGeometricLine;
+                    int mirrorFlag = IGetMirrorFlag(sectionProperty.SectionProfile);
+                    geoLine.setMirrorFlag(0, mirrorFlag);
+                }
             }
+
 
 
             return lusasGeometricLine;
@@ -110,7 +120,16 @@ namespace BH.Adapter.Lusas
                 if (CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic))
                     if (!(sectionProperty.SectionProfile is TaperedProfile))
                         lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+                if (sectionProperty.SectionProfile.Shape == ShapeType.Angle ||
+                    sectionProperty.SectionProfile.Shape == ShapeType.Channel ||
+                    sectionProperty.SectionProfile.Shape == ShapeType.Tee)
+                {
+                    IFGeometricLine geoLine = (IFGeometricLine)lusasGeometricLine;
+                    int mirrorFlag = IGetMirrorFlag(sectionProperty.SectionProfile);
+                    geoLine.setMirrorFlag(0, mirrorFlag);
+                }
             }
+
             return lusasGeometricLine;
         }
 
@@ -134,6 +153,14 @@ namespace BH.Adapter.Lusas
                 if (CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic))
                     if (!(sectionProperty.SectionProfile is TaperedProfile))
                         lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+                if (sectionProperty.SectionProfile.Shape == ShapeType.Angle ||
+                    sectionProperty.SectionProfile.Shape == ShapeType.Channel ||
+                    sectionProperty.SectionProfile.Shape == ShapeType.Tee)
+                {
+                    IFGeometricLine geoLine = (IFGeometricLine)lusasGeometricLine;
+                    int mirrorFlag = IGetMirrorFlag(sectionProperty.SectionProfile);
+                    geoLine.setMirrorFlag(0, mirrorFlag);
+                }
             }
             return lusasGeometricLine;
         }
@@ -150,6 +177,14 @@ namespace BH.Adapter.Lusas
                 if (CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic))
                     if (!(sectionProperty.SectionProfile is TaperedProfile))
                         lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+                if (sectionProperty.SectionProfile.Shape == ShapeType.Angle ||
+                    sectionProperty.SectionProfile.Shape == ShapeType.Channel ||
+                    sectionProperty.SectionProfile.Shape == ShapeType.Tee)
+                {
+                    IFGeometricLine geoLine = (IFGeometricLine)lusasGeometricLine;
+                    int mirrorFlag = IGetMirrorFlag(sectionProperty.SectionProfile);
+                    geoLine.setMirrorFlag(0, mirrorFlag);
+                }
             }
             return lusasGeometricLine;
         }
@@ -166,6 +201,14 @@ namespace BH.Adapter.Lusas
                 if (CreateProfile(sectionProperty.DescriptionOrName(), sectionProperty.SectionProfile as dynamic))
                     if (!(sectionProperty.SectionProfile is TaperedProfile))
                         lusasGeometricLine.setFromLibrary("User Sections", "Local", sectionProperty.DescriptionOrName(), 0, 0);
+                if (sectionProperty.SectionProfile.Shape == ShapeType.Angle ||
+                    sectionProperty.SectionProfile.Shape == ShapeType.Channel ||
+                    sectionProperty.SectionProfile.Shape == ShapeType.Tee)
+                {
+                    IFGeometricLine geoLine = (IFGeometricLine)lusasGeometricLine;
+                    int mirrorFlag = IGetMirrorFlag(sectionProperty.SectionProfile);
+                    geoLine.setMirrorFlag(0, mirrorFlag);
+                }
             }
             return lusasGeometricLine;
         }
@@ -436,6 +479,76 @@ namespace BH.Adapter.Lusas
             lusasGeometricLine.setAlignmentSection(1);
 
             return true;
+        }
+
+        /***************************************************/
+
+        private int IGetMirrorFlag(IProfile profile)
+        {
+            if (!profile.IsNull())
+                return GetMirrorFlag(profile as dynamic);
+
+            return 0; // default no mirror
+        }
+
+        /***************************************************/
+
+        private int GetMirrorFlag(AngleProfile profile)
+        {
+            bool mirrorY = profile.MirrorAboutLocalY;
+            bool mirrorZ = profile.MirrorAboutLocalZ; // this is opposite to the BHoM convention
+            if (mirrorY && !mirrorZ)
+            {
+                BH.Engine.Base.Compute.RecordError($"Lusas does not support mirroring of profiles in two directions. No mirror has been applied to {profile.DescriptionOrName()}.");
+                return 0;
+            }
+            else if (!mirrorY && mirrorZ)
+                return 0;
+            else if (mirrorY && !mirrorZ)
+                return 1;
+            else if (!mirrorY && !mirrorZ)
+                return 2;
+            else
+                return 1;
+        }
+
+        /***************************************************/
+
+        private int GetMirrorFlag(ChannelProfile profile)
+        {
+            if (profile.MirrorAboutLocalZ)
+                return 0;
+            else
+                return 2;
+        }
+
+        /***************************************************/
+
+        private int GetMirrorFlag(TSectionProfile profile)
+        {
+            if (profile.MirrorAboutLocalY)
+                return 1;
+            else
+                return 0;
+        }
+
+        /***************************************************/
+
+        private int GetMirrorFlag(ZSectionProfile profile)
+        {
+            if (profile.MirrorAboutLocalZ)
+                return 0;
+            else
+                return 2;
+        }
+
+        /***************************************************/
+
+        private int GetMirrorFlag(IProfile profile)
+        {
+            Engine.Base.Compute.RecordError($"The profile {profile.DescriptionOrName()} does not contain a mirror flag.");
+
+            return 0;
         }
 
         /***************************************************/
