@@ -50,6 +50,8 @@ namespace BH.Adapter.Lusas
     public partial class LusasV220Adapter
 #elif Debug230 || Release230
     public partial class LusasV230Adapter
+#elif Debug240 || Release240
+    public partial class LusasV240Adapter
 #else
     public partial class LusasV17Adapter
 #endif

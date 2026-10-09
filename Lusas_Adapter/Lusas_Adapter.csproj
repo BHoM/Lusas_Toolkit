@@ -7,7 +7,7 @@
     <AssemblyName>LusasV230_Adapter</AssemblyName>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <Configurations>Debug;Debug17;Debug18;Debug19;Debug191;Debug200;Debug210;Debug211;Debug220;Debug230;Release;Release17;Release18;Release19;Release191;Release200;Release210;Release211;Release220;Release230</Configurations>
+    <Configurations>Debug;Debug17;Debug18;Debug19;Debug191;Debug200;Debug210;Debug211;Debug220;Debug230;Debug240;Release;Release17;Release18;Release19;Release191;Release200;Release210;Release211;Release220;Release230;Release240</Configurations>
     <Configuration>Release230</Configuration>
 	<Description>https://github.com/BHoM/Lusas_Toolkit</Description>
     <Copyright>Copyright © https://github.com/BHoM</Copyright>
@@ -102,6 +102,14 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV230_Adapter</AssemblyName>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug240|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<Optimize>false</Optimize>
+	<OutputPath>..\Build\</OutputPath>
+	<DefineConstants>TRACE;DEBUG;Debug240</DefineConstants>
+	<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+	<AssemblyName>LusasV240_Adapter</AssemblyName>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release17|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
@@ -173,6 +181,14 @@
     <DefineConstants>TRACE;DEBUG;Release230</DefineConstants>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV230_Adapter</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release240|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<Optimize>false</Optimize>
+	<OutputPath>..\Build\</OutputPath>
+	<DefineConstants>TRACE;DEBUG;Release240</DefineConstants>
+	<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+	<AssemblyName>LusasV240_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <OutputPath>..\Build\</OutputPath>
@@ -259,6 +275,14 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV230_Adapter</AssemblyName>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug240|x86' ">
+	<DebugSymbols>true</DebugSymbols>
+	<Optimize>false</Optimize>
+	<OutputPath>..\Build\</OutputPath>
+	<DefineConstants>TRACE;DEBUG;Debug240</DefineConstants>
+	<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+	<AssemblyName>LusasV240_Adapter</AssemblyName>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release17|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
@@ -330,6 +354,14 @@
     <DefineConstants>TRACE;DEBUG;Release230</DefineConstants>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AssemblyName>LusasV230_Adapter</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release240|x86' ">
+	<DebugSymbols>true</DebugSymbols>
+	<Optimize>false</Optimize>
+	<OutputPath>..\Build\</OutputPath>
+	<DefineConstants>TRACE;DEBUG;Release240</DefineConstants>
+	<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+	<AssemblyName>LusasV240_Adapter</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Adapter_Engine">
@@ -436,6 +468,12 @@
       <HintPath>..\libs\Version 230\Lusas.Interop.dll</HintPath>
       <Private>False</Private>
     </Reference>
+	  <Reference Include="Lusas.Interop, Version=24.0.1609.57830, Culture=neutral, PublicKeyToken=ee620220e102840a, processorArchitecture=x86" Condition="'$(Configuration)'=='Debug240' Or '$(Configuration)'=='Release240'">
+		  <SpecificVersion>False</SpecificVersion>
+		  <EmbedInteropTypes>True</EmbedInteropTypes>
+		  <HintPath>..\libs\Version 240\Lusas.Interop.dll</HintPath>
+		  <Private>False</Private>
+	  </Reference>
     <Reference Include="Physical_oM">
       <HintPath>$(ProgramData)\BHoM\Assemblies\Physical_oM.dll</HintPath>
       <Private>False</Private>
