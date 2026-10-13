@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
 <TargetFramework>net472</TargetFramework>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug17</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug240</Configuration>
     <OutputType>Library</OutputType>
     <RootNamespace>BH.Adapter.Lusas</RootNamespace>
-    <AssemblyName>LusasV230_Adapter</AssemblyName>
+    <AssemblyName>LusasV240_Adapter</AssemblyName>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <Configurations>Debug;Debug17;Debug18;Debug19;Debug191;Debug200;Debug210;Debug211;Debug220;Debug230;Debug240;Release;Release17;Release18;Release19;Release191;Release200;Release210;Release211;Release220;Release230;Release240</Configurations>
-    <Configuration>Release230</Configuration>
+    <Configuration>Release240</Configuration>
 	<Description>https://github.com/BHoM/Lusas_Toolkit</Description>
     <Copyright>Copyright © https://github.com/BHoM</Copyright>
     <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -19,16 +19,16 @@
   </Target>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <OutputPath>..\Build\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;Debug17</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;Debug240</DefineConstants>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <AssemblyName>LusasV17_Adapter</AssemblyName>
+    <AssemblyName>LusasV240_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\Build\</OutputPath>
-    <DefineConstants>TRACE;Release17</DefineConstants>
+    <DefineConstants>TRACE;Release240</DefineConstants>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <AssemblyName>LusasV17_Adapter</AssemblyName>
+    <AssemblyName>LusasV240_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug17|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -192,16 +192,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <OutputPath>..\Build\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;Debug17</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;Debug240</DefineConstants>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <AssemblyName>LusasV17_Adapter</AssemblyName>
+    <AssemblyName>LusasV240_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\Build\</OutputPath>
-    <DefineConstants>TRACE;Release17</DefineConstants>
+    <DefineConstants>TRACE;Release240</DefineConstants>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <AssemblyName>LusasV17_Adapter</AssemblyName>
+    <AssemblyName>LusasV240_Adapter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug17|x86' ">
     <DebugSymbols>true</DebugSymbols>
