@@ -44,7 +44,7 @@ namespace BH.Adapter.Lusas
 {
 #if Debug17 || Release17
     public partial class LusasV17Adapter : BHoMAdapter
-#elif Debug18 || Release18                     
+#elif Debug18 || Release18
     public partial class LusasV18Adapter : BHoMAdapter
 #elif Debug19 || Release19
     public partial class LusasV19Adapter : BHoMAdapter
@@ -60,7 +60,7 @@ namespace BH.Adapter.Lusas
     public partial class LusasV220Adapter : BHoMAdapter
 #elif Debug230 || Release230
     public partial class LusasV230Adapter : BHoMAdapter
-#elif Debug240 || Release240
+#else
     public partial class LusasV240Adapter : BHoMAdapter
 #endif
     {
@@ -130,7 +130,7 @@ namespace BH.Adapter.Lusas
         [Input("active", "Initiate the adapter by setting to True. Open a session of Lusas and close any dialogue boxes before setting to True.")]
         [Output("adapter", "Adapter for Lusas.")]
         public LusasV230Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
-#elif Debug240 || Release240
+#else
         [PreviousVersion("10.0", "BH.Adapter.Lusas.LusasV17Adapter(System.String, BH.oM.Adapters.Lusas.LusasSettings, System.Boolean)")]
         [PreviousVersion("10.0", "BH.Adapter.Lusas.LusasV18Adapter(System.String, BH.oM.Adapters.Lusas.LusasSettings, System.Boolean)")]
         [PreviousVersion("10.0", "BH.Adapter.Lusas.LusasV19Adapter(System.String, BH.oM.Adapters.Lusas.LusasSettings, System.Boolean)")]
@@ -208,7 +208,7 @@ namespace BH.Adapter.Lusas
                     Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.22.0");
 #elif Debug230 || Release230
                     Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.23.0");
-#elif Debug240 || Release240
+#else
                     Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.24.0");
 #endif
                     m_LusasApplication.enableUI(true);
