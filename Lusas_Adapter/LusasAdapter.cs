@@ -42,7 +42,9 @@ using System.ComponentModel;
 
 namespace BH.Adapter.Lusas
 {
-#if Debug18 || Release18
+#if Debug17 || Release17
+    public partial class LusasV17Adapter : BHoMAdapter
+#elif Debug18 || Release18
     public partial class LusasV18Adapter : BHoMAdapter
 #elif Debug19 || Release19
     public partial class LusasV19Adapter : BHoMAdapter
@@ -59,13 +61,20 @@ namespace BH.Adapter.Lusas
 #elif Debug230 || Release230
     public partial class LusasV230Adapter : BHoMAdapter
 #else
-    public partial class LusasV17Adapter : BHoMAdapter
+    public partial class LusasV240Adapter : BHoMAdapter
 #endif
     {
         /***************************************************/
         /**** Constructors                              ****/
         /***************************************************/
-#if Debug18 || Release18
+#if Debug17 || Release17
+        [Description("Adapter to connect to a Lusas .mdl file.")]
+        [Input("filePath", "Path to Lusas the .mdl file to be used.")]
+        [Input("lusasSettings", "General settings that are applicable to all actions performed by this adapter, e.g. merge tolerance to be used.")]
+        [Input("active", "Initiate the adapter by setting to True. Open a session of Lusas and close any dialogue boxes before setting to True.")]
+        [Output("adapter", "Adapter for Lusas.")]
+        public LusasV17Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
+#elif Debug18 || Release18
         [Description("Adapter to connect to a Lusas .mdl file.")]
         [Input("filePath", "Path to the Lusas .mdl file to be used.")]
         [Input("lusasSettings", "General settings that are applicable to all actions performed by this adapter, e.g. merge tolerance to be used.")]
@@ -122,12 +131,19 @@ namespace BH.Adapter.Lusas
         [Output("adapter", "Adapter for Lusas.")]
         public LusasV230Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #else
+        [PreviousVersion("10.0", "BH.Adapter.Lusas.LusasV17Adapter(System.String, BH.oM.Adapters.Lusas.LusasSettings, System.Boolean)")]
+        [PreviousVersion("10.0", "BH.Adapter.Lusas.LusasV18Adapter(System.String, BH.oM.Adapters.Lusas.LusasSettings, System.Boolean)")]
+        [PreviousVersion("10.0", "BH.Adapter.Lusas.LusasV19Adapter(System.String, BH.oM.Adapters.Lusas.LusasSettings, System.Boolean)")]
+        [PreviousVersion("10.0", "BH.Adapter.Lusas.LusasV191Adapter(System.String, BH.oM.Adapters.Lusas.LusasSettings, System.Boolean)")]
+        [PreviousVersion("10.0", "BH.Adapter.Lusas.LusasV200Adapter(System.String, BH.oM.Adapters.Lusas.LusasSettings, System.Boolean)")]
+        [PreviousVersion("10.0", "BH.Adapter.Lusas.LusasV210Adapter(System.String, BH.oM.Adapters.Lusas.LusasSettings, System.Boolean)")]
+        [PreviousVersion("10.0", "BH.Adapter.Lusas.LusasV211Adapter(System.String, BH.oM.Adapters.Lusas.LusasSettings, System.Boolean)")]
         [Description("Adapter to connect to a Lusas .mdl file.")]
-        [Input("filePath", "Path to Lusas the .mdl file to be used.")]
+        [Input("filePath", "Path to the Lusas .mdl file to be used.")]
         [Input("lusasSettings", "General settings that are applicable to all actions performed by this adapter, e.g. merge tolerance to be used.")]
         [Input("active", "Initiate the adapter by setting to True. Open a session of Lusas and close any dialogue boxes before setting to True.")]
         [Output("adapter", "Adapter for Lusas.")]
-        public LusasV17Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
+        public LusasV240Adapter(string filePath, LusasSettings lusasSettings = null, bool active = false)
 #endif
         {
             if (active)
@@ -192,6 +208,8 @@ namespace BH.Adapter.Lusas
                     Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.22.0");
 #elif Debug230 || Release230
                     Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.23.0");
+#else
+                    Engine.Adapter.Query.GetActiveObject("Lusas.Modeller.24.0");
 #endif
                     m_LusasApplication.enableUI(true);
                     m_LusasApplication.setVisible(true);
@@ -248,10 +266,3 @@ namespace BH.Adapter.Lusas
 
     }
 }
-
-
-
-
-
-
-
